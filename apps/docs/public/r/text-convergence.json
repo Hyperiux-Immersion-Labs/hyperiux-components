@@ -1,0 +1,25 @@
+{
+  "name": "text-convergence",
+  "type": "registry:component",
+  "title": "Text Convergence",
+  "description": "Horizontal scroll-driven text marquee where characters fly in from random positions and converge into place as you scroll",
+  "category": "scroll",
+  "categories": [
+    "scroll"
+  ],
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/text-convergence",
+  "coverImage": "/assets/listing/text-convergence.png",
+  "videoUrl": "text-convergence",
+  "files": [
+    {
+      "path": "text-convergence.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/text-convergence.jsx",
+      "content": "'use client'\n\nimport { useEffect, useRef, useMemo } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { SplitText } from \"gsap/SplitText\";\n\ngsap.registerPlugin(ScrollTrigger, SplitText);\n\nexport function TextConvergence({\n  text = \"Build faster. Animate better. Ship smarter.\",\n  bgColor = \"#111111\",\n  textColor = \"#4F39F6\",\n}) {\n  const sectionRef = useRef(null);\n  const textRef = useRef(null);\n\n  const dynamicHeight = useMemo(() => {\n    const words = text.trim().split(/\\s+/).length;\n    const baseHeight = 600;\n    const baseWords = 20;\n    const scale = words / baseWords;\n    const clamped = Math.max(300, Math.min(baseHeight * scale, 2000));\n    return `${clamped}vh`;\n  }, [text]);\n\n  useEffect(() => {\n    const ctx = gsap.context(() => {\n      const textEl = textRef.current;\n      const split = SplitText.create(textEl, { type: \"chars,words\" });\n\n      const scrollTween = gsap.to(textEl, {\n        xPercent: -100,\n        ease: \"linear\",\n        scrollTrigger: {\n          trigger: sectionRef.current,\n          start: \"top top\",\n          end: \"bottom 70%\",\n          scrub: true,\n          scroller: window,\n          invalidateOnRefresh: true,\n        },\n      });\n\n      split.chars.forEach((char) => {\n        gsap.from(char, {\n          yPercent: gsap.utils.random(-200, 200),\n          rotation: gsap.utils.random(-20, 20),\n          ease: \"elastic.out(1,0.8)\",\n          scrollTrigger: {\n            trigger: char,\n            containerAnimation: scrollTween,\n            start: \"left 100%\",\n            end: \"left 30%\",\n            scrub: 1,\n          },\n        });\n      });\n    }, sectionRef);\n\n    return () => ctx.revert();\n  }, [text]);\n\n  return (\n    <div ref={sectionRef} style={{ position: \"relative\", height: dynamicHeight, background: bgColor }}>\n      <div style={{ position: \"sticky\", top: 0, height: \"100vh\", overflow: \"hidden\", display: \"flex\", alignItems: \"center\" }}>\n        <h3\n          ref={textRef}\n          style={{\n            display: \"flex\",\n            whiteSpace: \"nowrap\",\n            gap: \"4vw\",\n            fontFamily: \"sans-serif\",\n            letterSpacing: \"-0.05em\",\n            paddingLeft: \"100vw\",\n            fontWeight: 700,\n            lineHeight: 1.1,\n            fontSize: \"clamp(2rem, 10vw, 12rem)\",\n            width: \"max-content\",\n            color: textColor,\n          }}\n        >\n          {text}\n        </h3>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

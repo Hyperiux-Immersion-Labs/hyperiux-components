@@ -1,0 +1,10 @@
+{
+  "name": "circle-text-reveal",
+  "type": "registry:component",
+  "title": "Circle Text Reveal",
+  "description": "Cursor-following circle mask that reveals hidden text underneath on hover",
+  "category": "text",
+  "dependencies": ["framer-motion"],
+  "registryDependencies": [],
+  "previewUrl": "/circle-reveal"
+}

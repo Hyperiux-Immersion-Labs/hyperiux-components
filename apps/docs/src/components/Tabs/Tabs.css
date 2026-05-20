@@ -1,0 +1,121 @@
+.tabs {
+  width: 100%;
+  height: 100%;
+  padding: 4vw 7vw;
+}
+
+/* HEADER */
+.tabs__header {
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tabs__labels {
+  display: flex;
+  gap: 2vw;
+  overflow-x: auto;
+}
+
+/* LABEL */
+.tabs__label {
+  position: relative;
+  padding: 1vw 2vw;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.tabs__label span {
+  font-size: 1.2vw;
+  font-weight: 500;
+}
+
+.tabs__label--active {
+  color: #ff6b00;
+}
+
+.tabs__label--inactive {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* ACTIVE LINE */
+.tabs__active-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: #ff6b00;
+}
+
+/* CONTENT */
+.tabs__content {
+  width: 100%;
+  padding-top: 2vw;
+  min-height: 24vw;
+  position: relative;
+}
+
+.tabs__panel {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================= */
+/* 📱 TABLET (≤1024px) */
+/* ========================= */
+
+@media (max-width: 1024px) {
+  .tabs {
+    padding: 6vw;
+  }
+
+  .tabs__labels {
+    gap: 3vw;
+  }
+
+  .tabs__label {
+    padding: 1.5vw 2.5vw;
+  }
+
+  .tabs__label span {
+    font-size: 2.2vw;
+  }
+
+  .tabs__content {
+    padding-top: 4vw;
+    min-height: 32vw;
+  }
+}
+
+/* ========================= */
+/* 📱 MOBILE (≤540px) */
+/* ========================= */
+
+@media (max-width: 540px) {
+  .tabs {
+    padding: 8vw 5vw;
+  }
+
+  .tabs__labels {
+    gap: 4vw;
+  }
+
+  .tabs__label {
+    padding: 2.5vw 3vw;
+  }
+
+  .tabs__label span {
+    font-size: 4vw;
+  }
+
+  .tabs__content {
+    padding-top: 5vw;
+    min-height: 48vw;
+  }
+
+  .tabs__active-line {
+    height: 1.5px;
+  }
+}

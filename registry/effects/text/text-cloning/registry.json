@@ -1,0 +1,10 @@
+{
+  "name": "text-cloning",
+  "type": "registry:component",
+  "title": "Text Cloning",
+  "description": "Canvas 2D effect that renders 9 depth-layered clones of any text string, offset by mouse parallax to create a 3D depth illusion. Includes a live text input and a subtle star-field background.",
+  "category": "text",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/text-cloning"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "scroll-stack",
+  "type": "registry:component",
+  "title": "Scroll Stack",
+  "description": "Successive content cards that hand off focus and fade as the next section enters",
+  "category": "scroll",
+  "categories": [
+    "scroll"
+  ],
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/stacked-card",
+  "coverImage": "/assets/listing/scroll-stack.png",
+  "videoUrl": "scroll-stack",
+  "files": [
+    {
+      "path": "scroll-stack.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/scroll-stack.jsx",
+      "content": "\"use client\";\n\nimport { useEffect, useRef } from \"react\";\nimport gsap from \"gsap\";\nimport ScrollTrigger from \"gsap/dist/ScrollTrigger\";\n\ngsap.registerPlugin(ScrollTrigger);\n\nexport default function ScrollStack({ bgColor = \"bg-white\", cards = [] }) {\n  const sectionRef = useRef(null);\n  const rowRefs = useRef([]);\n  const cardRefs = useRef([]);\n\n  useEffect(() => {\n    rowRefs.current = rowRefs.current.slice(0, cards.length);\n    cardRefs.current = cardRefs.current.slice(0, cards.length);\n\n    const context = gsap.context(() => {\n      const currentCards = cardRefs.current.filter(Boolean);\n      const currentRows = rowRefs.current.filter(Boolean);\n\n      currentCards.forEach((card, index) => {\n        gsap.set(card, {\n          autoAlpha: 1,\n          scale: index === 0 ? 1 : 1.1,\n          transformOrigin: \"center center\",\n        });\n      });\n\n      currentCards.slice(0, -1).forEach((card, index) => {\n        const nextRow = currentRows[index + 1];\n        const nextCard = currentCards[index + 1];\n        if (!nextRow || !nextCard) return;\n\n        const handoff = gsap.timeline({\n          scrollTrigger: {\n            trigger: nextRow,\n            start: \"top bottom+=20%\",\n            end: \"top top-=28%\",\n            scrub: true,\n            invalidateOnRefresh: true,\n          },\n        });\n\n        handoff.to(nextCard, { scale: 1, ease: \"none\" }, 0);\n\n        gsap.to(card, {\n          autoAlpha: 0,\n          ease: \"none\",\n          scrollTrigger: {\n            trigger: nextRow,\n            start: \"top top+=14%\",\n            end: \"top top+=2%\",\n            scrub: true,\n            invalidateOnRefresh: true,\n          },\n        });\n      });\n\n      ScrollTrigger.refresh();\n    }, sectionRef);\n\n    return () => context.revert();\n  }, [cards]);\n\n  return (\n    <section\n      ref={sectionRef}\n      className={`py-[7%] max-sm:py-[15%] ${bgColor}`}\n    >\n      <div className=\"flex w-full flex-col items-center px-[5%] py-[10vw]\">\n        {cards.map((item, index) => (\n          <div\n            key={item.id}\n            ref={(element) => {\n              rowRefs.current[index] = element;\n            }}\n            className={`relative w-full min-h-[180vh] max-sm:min-h-[130vh] ${\n              index === 0 ? \"\" : \"-mt-[70vh] max-sm:-mt-[50vh]\"\n            }`}\n          >\n            <div className=\"sticky top-[15vh] max-sm:top-[10vh]\" style={{ zIndex: index + 1 }}>\n              <div\n                ref={(element) => {\n                  cardRefs.current[index] = element;\n                }}\n                className=\"mx-auto flex h-[32vw] w-[80%] items-center justify-between gap-[4vw] rounded-[45px] px-[4vw] py-[3vw] max-sm:h-auto max-sm:min-h-[50vw] max-sm:w-full max-sm:flex-col max-sm:rounded-[9vw] max-sm:px-[8vw] max-sm:py-[15vw]\"\n                style={{ backgroundColor: item.bgColor }}\n              >\n                <div className=\"w-[50%] max-sm:w-full\">\n                  <h2\n                    className=\"w-full text-[5.5vw] font-medium leading-[1.1] max-sm:text-[10vw]\"\n                    style={{ color: item.textColor }}\n                  >\n                    {item.title}\n                  </h2>\n                </div>\n                <div className=\"flex w-[50%] flex-col justify-center gap-[2vw] max-sm:w-full max-sm:gap-[7vw]\">\n                  <p\n                    className=\"w-full text-justify text-[1.3vw] leading-[1.5] max-sm:text-center max-sm:text-[4.5vw]\"\n                    style={{ color: item.textColor }}\n                  >\n                    {item.description}\n                  </p>\n                </div>\n              </div>\n            </div>\n          </div>\n        ))}\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "parallax-footer",
+  "type": "registry:component",
+  "title": "Parallax Footer",
+  "description": "Fixed footer that reveals with a parallax scrolling effect",
+  "category": "scroll",
+  "categories": [
+    "scroll"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/parallax-footer",
+  "coverImage": "/assets/listing/parallax-footer.png",
+  "videoUrl": "parallax-footer",
+  "files": [
+    {
+      "path": "parallax-footer.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/parallax-footer.jsx",
+      "content": "\"use client\"\nimport React, { useEffect, useRef, useState } from \"react\";\n\nexport function ParallaxFooter({\n  children,\n  id = \"footer\",\n  outerClassName = \"\",\n  footerClassName = \"\",\n}) {\n  const footerRef = useRef(null);\n  const [height, setHeight] = useState(0);\n\n  useEffect(() => {\n    if (!footerRef.current) return;\n\n    const updateHeight = () => {\n      const rect = footerRef.current.getBoundingClientRect();\n      setHeight(rect.height);\n    };\n\n    updateHeight();\n\n    const resizeObserver = new ResizeObserver(updateHeight);\n    resizeObserver.observe(footerRef.current);\n\n    window.addEventListener(\"resize\", updateHeight);\n\n    return () => {\n      resizeObserver.disconnect();\n      window.removeEventListener(\"resize\", updateHeight);\n    };\n  }, []);\n\n  return (\n    <div\n      id={id}\n      className={`w-screen z-1 ${outerClassName}`}\n      style={{\n        height: height || \"auto\",\n        clipPath: \"rect(0px, 100%, 100%, 0px)\",\n      }}\n    >\n      <footer\n        ref={footerRef}\n        className={`w-screen fixed bottom-0 left-0 ${footerClassName}`}\n      >\n        {children}\n      </footer>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

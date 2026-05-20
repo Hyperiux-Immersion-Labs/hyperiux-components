@@ -1,0 +1,26 @@
+{
+  "name": "parallax-slider",
+  "type": "registry:component",
+  "title": "Parallax Slider",
+  "description": "Pinned horizontal gallery with clip-path reveals and image parallax",
+  "category": "scroll",
+  "categories": [
+    "scroll"
+  ],
+  "dependencies": [
+    "gsap",
+    "next"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/parallax-slider",
+  "coverImage": "/assets/listing/parallax-slider.png",
+  "videoUrl": "parallax-slider",
+  "files": [
+    {
+      "path": "parallax-slider.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/parallax-slider.jsx",
+      "content": "\"use client\";\n\nimport { useEffect, useRef } from \"react\";\nimport Image from \"next/image\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\n\ngsap.registerPlugin(ScrollTrigger);\n\nconst SLIDE_WIDE = 65;\nconst SLIDE_NARROW = 33;\nconst GAP = 1.6;\nconst PAD_X = \"5vw\";\n\nexport default function ParallaxSlider({ images = [], bgColor = \"#000000\" }) {\n  const outerRef = useRef(null);\n  const trackRef = useRef(null);\n\n  useEffect(() => {\n    const outer = outerRef.current;\n    const track = trackRef.current;\n    if (!outer || !track) return;\n\n    const update = () => {\n      const travel = track.scrollWidth - window.innerWidth;\n      outer.style.height = `${travel + window.innerHeight}px`;\n    };\n\n    update();\n\n    const resizeObserver = new ResizeObserver(update);\n    resizeObserver.observe(track);\n    window.addEventListener(\"resize\", update);\n\n    return () => {\n      resizeObserver.disconnect();\n      window.removeEventListener(\"resize\", update);\n    };\n  }, [images]);\n\n  useEffect(() => {\n    const outer = outerRef.current;\n    const track = trackRef.current;\n    if (!outer || !track) return;\n\n    const context = gsap.context(() => {\n      const horizontalTween = gsap.to(track, {\n        x: () => -(track.scrollWidth - window.innerWidth),\n        ease: \"none\",\n        scrollTrigger: {\n          trigger: outer,\n          start: \"top top\",\n          end: () => `+=${track.scrollWidth - window.innerWidth}`,\n          scrub: 1,\n          invalidateOnRefresh: true,\n        },\n      });\n\n      gsap.fromTo(\n        \".parallax-slider__slide\",\n        { clipPath: \"inset(0 100% 0 0)\" },\n        {\n          clipPath: \"inset(0 0% 0 0)\",\n          ease: \"power3.inOut\",\n          duration: 0.6,\n          scrollTrigger: {\n            trigger: outer,\n            start: \"5% bottom\",\n            toggleActions: \"play none none none\",\n          },\n        }\n      );\n\n      gsap.utils.toArray(\".parallax-slider__image\").forEach((element) => {\n        gsap.fromTo(\n          element,\n          { x: \"-25%\", scale: 1.25 },\n          {\n            x: \"25%\",\n            scale: 1.25,\n            ease: \"none\",\n            scrollTrigger: {\n              trigger: element,\n              containerAnimation: horizontalTween,\n              start: \"left right\",\n              end: \"right left\",\n              scrub: true,\n            },\n          }\n        );\n      });\n    }, outer);\n\n    return () => context.revert();\n  }, [images]);\n\n  return (\n    <div\n      ref={outerRef}\n      className=\"relative\"\n      style={{ height: \"400vh\", backgroundColor: bgColor }}\n    >\n      <div className=\"sticky top-0 flex h-screen items-center overflow-hidden\">\n        <div\n          ref={trackRef}\n          className=\"flex items-center will-change-transform\"\n          style={{\n            gap: `${GAP}vw`,\n            paddingLeft: PAD_X,\n            paddingRight: PAD_X,\n          }}\n        >\n          {images.map((src, index) => {\n            const isWide = index % 2 === 0;\n            const width = isWide ? SLIDE_WIDE : SLIDE_NARROW;\n            const slideClass = isWide\n              ? \"h-[43vw] w-[65vw] max-sm:h-[50vh] max-sm:w-[80vw]\"\n              : \"h-[43vw] w-[33vw] max-sm:h-[50vh] max-sm:w-[45vw]\";\n\n            return (\n              <div\n                key={src}\n                className={`parallax-slider__slide relative shrink-0 overflow-hidden ${slideClass}`}\n                style={{ clipPath: \"inset(0 100% 0 0)\" }}\n              >\n                <Image\n                  src={src}\n                  alt={`Slide ${index + 1}`}\n                  fill\n                  sizes={`${width}vw`}\n                  className=\"parallax-slider__image object-cover\"\n                  priority={index < 3}\n                  draggable={false}\n                />\n                <div className=\"pointer-events-none absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent\" />\n              </div>\n            );\n          })}\n        </div>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

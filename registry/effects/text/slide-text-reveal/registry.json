@@ -1,0 +1,10 @@
+{
+  "name": "slide-text-reveal",
+  "type": "registry:component",
+  "title": "Slide Text Reveal",
+  "description": "Characters slide in from the right with staggered fade animation on scroll",
+  "category": "text",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/slide-text-reveal"
+}

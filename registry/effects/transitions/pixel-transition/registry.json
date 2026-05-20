@@ -1,0 +1,10 @@
+{
+  "name": "pixel-transition",
+  "type": "registry:component",
+  "title": "Pixel Transition",
+  "description": "Canvas 2D page transition that fills and clears a grid of pixels in a diagonal wave. Leave sweeps pixels up from the bottom-right; enter clears them from the top-left. Supports an optional content shift blur effect.",
+  "category": "transitions",
+  "dependencies": ["gsap", "next-transition-router"],
+  "registryDependencies": [],
+  "previewUrl": "/page-transitions/pixels"
+}

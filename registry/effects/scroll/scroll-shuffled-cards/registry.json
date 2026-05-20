@@ -1,0 +1,10 @@
+{
+  "name": "scroll-shuffled-cards",
+  "type": "registry:component",
+  "title": "Scroll Shuffled Cards",
+  "description": "Pinned scroll section that drifts a shuffled stack of editorial cards across the viewport",
+  "category": "scroll",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/scroll-shuffled-cards"
+}

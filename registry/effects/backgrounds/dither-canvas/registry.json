@@ -1,0 +1,10 @@
+{
+  "name": "dither-canvas",
+  "type": "registry:component",
+  "title": "Dither Canvas",
+  "description": "Interactive ASCII-style dither canvas with fluid mouse distortion over video",
+  "category": "backgrounds",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/binary-effect"
+}

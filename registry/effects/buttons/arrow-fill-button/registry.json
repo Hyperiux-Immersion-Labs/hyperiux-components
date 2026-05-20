@@ -1,0 +1,10 @@
+{
+  "name": "arrow-fill-button",
+  "type": "registry:component",
+  "title": "Arrow Fill Button",
+  "description": "Button with expanding circle fill and animated arrow icon on hover",
+  "category": "buttons",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/buttons/arrow-fill-button"
+}

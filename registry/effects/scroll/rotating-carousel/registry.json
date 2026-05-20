@@ -1,0 +1,10 @@
+{
+  "name": "rotating-carousel",
+  "type": "registry:component",
+  "title": "Rotating Carousel",
+  "description": "Scroll-driven circular carousel that rotates a ring of editorial cards through view",
+  "category": "scroll",
+  "dependencies": ["gsap", "lucide-react"],
+  "registryDependencies": [],
+  "previewUrl": "/circular-slider"
+}

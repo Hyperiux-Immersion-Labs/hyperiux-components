@@ -1,0 +1,10 @@
+{
+  "name": "split-canvas",
+  "type": "registry:component",
+  "title": "Split Canvas",
+  "description": "Scroll-synced canvas transition that reveals images through sliced pixel-grid shutters",
+  "category": "scroll",
+  "dependencies": ["gsap", "three"],
+  "registryDependencies": [],
+  "previewUrl": "/dgrees-pixel-scroll"
+}

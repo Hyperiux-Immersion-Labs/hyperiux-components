@@ -1,0 +1,10 @@
+{
+  "name": "interactive-list-preview",
+  "type": "registry:component",
+  "title": "Interactive List Preview",
+  "description": "Hover-driven table list that reveals clipped images with a sliding highlight bar and mix-blend-mode difference inversion effect",
+  "category": "components",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/interactive-list-preview"
+}

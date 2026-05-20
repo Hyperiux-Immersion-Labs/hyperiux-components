@@ -1,0 +1,10 @@
+{
+  "name": "cappen",
+  "type": "registry:component",
+  "title": "Cappen Loader",
+  "description": "Stack-to-spread image intro loader with GSAP SplitText word animations and staggered image choreography",
+  "category": "loaders",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/loaders/cappen"
+}

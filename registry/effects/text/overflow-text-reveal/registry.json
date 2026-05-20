@@ -1,0 +1,10 @@
+{
+  "name": "overflow-text-reveal",
+  "type": "registry:component",
+  "title": "Overflow Text Reveal",
+  "description": "Text lines slide up from hidden overflow with smooth stagger animation on scroll",
+  "category": "text",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/overflow-text-reveal"
+}

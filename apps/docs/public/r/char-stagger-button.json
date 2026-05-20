@@ -1,0 +1,31 @@
+{
+  "name": "char-stagger-button",
+  "type": "registry:component",
+  "title": "Character Stagger Button",
+  "description": "Link button with staggered character animation on hover",
+  "category": "buttons",
+  "categories": [
+    "buttons"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/buttons/char-stagger-button",
+  "coverImage": "/assets/listing/char-stagger-button.png",
+  "videoUrl": "char-stagger-button",
+  "files": [
+    {
+      "path": "char-stagger-button.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/char-stagger-button.jsx",
+      "content": "\"use client\";\n\nimport React, { useEffect, useRef } from \"react\";\nimport Link from \"next/link\";\nimport { ArrowRight } from \"lucide-react\";\nimport \"./char-stagger-button.css\";\n\nexport function CharStaggerButton({\n  text = \"\",\n  href = \"#\",\n  className = \"\",\n  textClassName = \"\",\n  linkProps = {},\n  children,\n  staggerStep = 0.01,\n  showLine = false,\n  lineClassName = \"\",\n  hoverColor = \"#ff6b00\",\n  showArrow = false,\n  icon: Icon = ArrowRight,\n  iconClassName = \"\",\n  onClick,\n  ...props\n}) {\n  const textRef = useRef(null);\n\n  useEffect(() => {\n    const el = textRef.current;\n    if (!el) return;\n\n    const sourceText = text || el.getAttribute(\"data-text\") || \"\";\n    el.innerHTML = \"\";\n\n    [...sourceText].forEach((char, index) => {\n      const span = document.createElement(\"span\");\n      span.textContent = char;\n      span.style.transitionDelay = `${index * staggerStep}s`;\n\n      if (char === \" \") {\n        span.style.whiteSpace = \"pre\";\n      }\n\n      el.appendChild(span);\n    });\n  }, [text, staggerStep]);\n\n  return (\n    <Link\n      href={href}\n      {...linkProps}\n      {...props}\n      onClick={onClick}\n      className={`char-stagger-link group inline-flex items-center gap-2 ${className}`}\n      style={{ \"--char-hover-color\": hoverColor }}\n    >\n      <div className=\"mt-[0.3vw]\">\n        <span\n          className={`char-stagger-link__inner ${\n            showLine ? `link-line ${lineClassName}` : \"\"\n          }`}\n        >\n          <span\n            ref={textRef}\n            data-text={typeof children === \"string\" ? children : text}\n            className={`char-stagger-link__text ${textClassName}`}\n          >\n            {typeof children === \"string\" ? children : text}\n          </span>\n        </span>\n      </div>\n\n      {showArrow && Icon && (\n        <div className={`char-stagger-link__icon ${iconClassName}`}>\n          <div className={`icon-wrapper ${iconClassName}`}>\n            <Icon className=\"char-stagger-link__svg\" />\n            <Icon className=\"char-stagger-link__svg\" />\n          </div>\n        </div>\n      )}\n    </Link>\n  );\n}\n"
+    },
+    {
+      "path": "char-stagger-button.css",
+      "type": "registry:style",
+      "target": "styles/char-stagger-button.css",
+      "content": ".char-stagger-link {\n  display: inline-flex;\n  text-decoration: none;\n  color: inherit;\n  transition: color 0.5s cubic-bezier(0.625, 0.05, 0, 1);\n}\n\n.char-stagger-link:hover {\n  color: var(--char-hover-color, currentColor);\n}\n\n.char-stagger-link__inner {\n  display: inline-block;\n  position: relative;\n}\n\n.char-stagger-link__text {\n  overflow: hidden;\n  position: relative;\n  display: inline-block;\n  line-height: 1.2;\n}\n\n.char-stagger-link__text span {\n  display: inline-block;\n  position: relative;\n  text-shadow: 0px 1.3em currentColor;\n  transform: translateY(0em) rotate(0.001deg);\n  transition: transform 0.6s cubic-bezier(0.625, 0.05, 0, 1);\n  will-change: transform;\n}\n\n.char-stagger-link:hover .char-stagger-link__text span {\n  transform: translateY(-1.3em) rotate(0.001deg);\n}\n\n.link-line {\n  position: relative;\n  width: fit-content;\n}\n\n.link-line::after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  bottom: 15%;\n  width: 100%;\n  height: 1.5px;\n  background-color: currentColor;\n  transform: scaleX(0);\n  transform-origin: right;\n  transition: transform 0.5s cubic-bezier(0.625, 0.05, 0, 1);\n}\n\n.char-stagger-link:hover .link-line::after {\n  transform: scaleX(1);\n  transform-origin: left;\n}\n\n.char-stagger-link__icon {\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n}\n\n.icon-wrapper {\n  display: flex;\n  width: max-content;\n  transform: translateX(-100%);\n  transition: transform 0.5s cubic-bezier(0.625, 0.05, 0, 1);\n  will-change: transform;\n}\n\n.char-stagger-link:hover .icon-wrapper {\n  transform: translateX(5%);\n}\n\n.char-stagger-link__svg {\n  flex: 0 0 auto;\n  width: 100%;\n  height: 100%;\n}\n"
+    }
+  ]
+}

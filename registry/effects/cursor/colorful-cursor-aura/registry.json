@@ -1,0 +1,10 @@
+{
+  "name": "colorful-cursor-aura",
+  "type": "registry:component",
+  "title": "Colorful Cursor Aura",
+  "description": "Layered radial color aura that follows the cursor across oversized headline text",
+  "category": "cursor",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/aero"
+}

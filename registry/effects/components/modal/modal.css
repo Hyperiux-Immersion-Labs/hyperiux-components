@@ -1,0 +1,43 @@
+.custom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.custom-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.custom-modal__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+}
+
+.custom-modal__close {
+  position: absolute;
+  top: 1.5vw;
+  right: 1.5vw;
+  z-index: 20;
+  display: flex;
+  min-width: 42px;
+  min-height: 42px;
+  width: 3vw;
+  height: 3vw;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}

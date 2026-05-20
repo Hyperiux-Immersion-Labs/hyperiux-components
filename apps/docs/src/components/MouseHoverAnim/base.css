@@ -1,0 +1,42 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.content__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 17vw;
+  height: 30vh;
+  max-width: none;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  border-radius: 0.7vw;
+}
+
+@media (max-width: 1024px) {
+  .content__img {
+    width: 24vw;
+    height: 24vh;
+    border-radius: 1.2vw;
+  }
+}
+
+@media (max-width: 540px) {
+  .content__img {
+    width: 38vw;
+    height: 22vh;
+    border-radius: 3vw;
+  }
+}

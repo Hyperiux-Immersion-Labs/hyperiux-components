@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hyperiux-ui.vercel.app/schema.json",
+  "title": "Hyperiux Configuration",
+  "description": "Configuration file for Hyperiux UI CLI",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "tailwind": {
+      "type": "object",
+      "description": "Tailwind CSS configuration paths",
+      "properties": {
+        "config": {
+          "type": "string",
+          "description": "Path to your tailwind.config.js file",
+          "default": "tailwind.config.js"
+        },
+        "css": {
+          "type": "string",
+          "description": "Path to your global CSS file",
+          "default": "src/app/globals.css"
+        }
+      },
+      "additionalProperties": false
+    },
+    "aliases": {
+      "type": "object",
+      "description": "Path aliases used when writing effect files",
+      "properties": {
+        "components": {
+          "type": "string",
+          "description": "Alias for your components directory",
+          "default": "@/components"
+        },
+        "effects": {
+          "type": "string",
+          "description": "Alias for where effect files will be installed",
+          "default": "@/components/effects"
+        },
+        "hooks": {
+          "type": "string",
+          "description": "Alias for your hooks directory",
+          "default": "@/hooks"
+        },
+        "lib": {
+          "type": "string",
+          "description": "Alias for your lib/utilities directory",
+          "default": "@/lib"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,23 @@
+{
+  "name": "text-cloning",
+  "type": "registry:component",
+  "title": "Text Cloning",
+  "description": "Canvas 2D effect that renders 9 depth-layered clones of any text string, offset by mouse parallax to create a 3D depth illusion. Includes a live text input and a subtle star-field background.",
+  "category": "text",
+  "categories": [
+    "text"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/text-cloning",
+  "coverImage": "/assets/listing/text-cloning.png",
+  "videoUrl": "text-cloning",
+  "files": [
+    {
+      "path": "text-cloning.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/text-cloning.jsx",
+      "content": "\"use client\";\nimport React, { useEffect, useRef, useState } from \"react\";\n\nexport function TextCloning() {\n  const canvasRef = useRef(null);\n  const [text, setText] = useState(\"404\");\n\n  useEffect(() => {\n    const canvas = canvasRef.current;\n    const ctx = canvas.getContext(\"2d\");\n\n    let w, h, dpr;\n    let raf;\n\n    let mouse = { x: 0, y: 0 };\n    let target = { x: 0, y: 0 };\n\n    const lerp = (a, b, t) => a + (b - a) * t;\n\n    const resize = () => {\n      dpr = window.devicePixelRatio || 1;\n      w = window.innerWidth;\n      h = window.innerHeight;\n\n      canvas.width = w * dpr;\n      canvas.height = h * dpr;\n      canvas.style.width = `${w}px`;\n      canvas.style.height = `${h}px`;\n\n      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);\n\n      mouse.x = target.x = w / 2;\n      mouse.y = target.y = h / 2;\n    };\n\n    const drawText = (value, x, y, size, alpha) => {\n      ctx.font = `900 ${size}px Arial Black, Impact, sans-serif`;\n      ctx.textAlign = \"center\";\n      ctx.textBaseline = \"middle\";\n      ctx.lineWidth = 2;\n      ctx.strokeStyle = `rgba(245,245,245,${alpha})`;\n      ctx.strokeText(value, x, y);\n    };\n\n    const drawClones = () => {\n      const dx = (mouse.x - w / 2) / w;\n      const dy = (mouse.y - h / 2) / h;\n\n      const depthX = dx * 220;\n      const depthY = dy * 220;\n\n      const layers = 9;\n      const size = Math.min(w / Math.max(text.length * 0.72, 3), h * 0.42);\n\n      for (let i = layers; i >= 0; i--) {\n        const p = i / layers;\n\n        drawText(\n          text,\n          w / 2 - depthX * p,\n          h / 2 - depthY * p,\n          size * (1 - p * 0.12),\n          0.16 + (1 - p) * 0.78\n        );\n      }\n    };\n\n    const drawStars = () => {\n      for (let i = 0; i < 100; i++) {\n        const x = (i * 91.7) % w;\n        const y = (i * 47.3) % h;\n\n        ctx.beginPath();\n        ctx.fillStyle = \"rgba(255,255,255,0.28)\";\n        ctx.arc(x, y, 0.8, 0, Math.PI * 2);\n        ctx.fill();\n      }\n    };\n\n    const render = () => {\n      mouse.x = lerp(mouse.x, target.x, 0.08);\n      mouse.y = lerp(mouse.y, target.y, 0.08);\n\n      ctx.clearRect(0, 0, w, h);\n      ctx.fillStyle = \"#101010\";\n      ctx.fillRect(0, 0, w, h);\n\n      drawStars();\n      drawClones();\n\n      raf = requestAnimationFrame(render);\n    };\n\n    const onMove = (e) => {\n      target.x = e.clientX;\n      target.y = e.clientY;\n    };\n\n    resize();\n    render();\n\n    window.addEventListener(\"resize\", resize);\n    window.addEventListener(\"mousemove\", onMove);\n\n    return () => {\n      cancelAnimationFrame(raf);\n      window.removeEventListener(\"resize\", resize);\n      window.removeEventListener(\"mousemove\", onMove);\n    };\n  }, [text]);\n\n  return (\n    <>\n      <input\n        value={text}\n        onChange={(e) => setText(e.target.value || \" \")}\n        placeholder=\"Type text\"\n        style={{\n          position: \"fixed\",\n          top: 24,\n          left: \"50%\",\n          transform: \"translateX(-50%)\",\n          zIndex: 2,\n          width: 220,\n          padding: \"10px 14px\",\n          borderRadius: 999,\n          border: \"1px solid rgba(255,255,255,0.25)\",\n          background: \"rgba(0,0,0,0.35)\",\n          color: \"white\",\n          outline: \"none\",\n          textAlign: \"center\",\n          fontSize: 16,\n        }}\n      />\n\n      <canvas\n        ref={canvasRef}\n        style={{\n          position: \"fixed\",\n          inset: 0,\n          width: \"100vw\",\n          height: \"100vh\",\n          background: \"#101010\",\n          display: \"block\",\n        }}\n      />\n    </>\n  );\n}\n"
+    }
+  ]
+}

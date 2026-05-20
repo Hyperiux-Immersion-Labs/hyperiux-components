@@ -1,0 +1,25 @@
+{
+  "name": "scramble-text",
+  "type": "registry:component",
+  "title": "Scramble Text",
+  "description": "Hacker-style text scramble effect that reveals text character by character on scroll",
+  "category": "text",
+  "categories": [
+    "text"
+  ],
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/scramble-text",
+  "coverImage": "/assets/listing/scramble-text.png",
+  "videoUrl": "scramble-text",
+  "files": [
+    {
+      "path": "scramble-text.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/scramble-text.jsx",
+      "content": "\"use client\";\n\nimport React, { useEffect, useRef } from \"react\";\nimport gsap from \"gsap\";\nimport { SplitText } from \"gsap/SplitText\";\nimport { ScrambleTextPlugin } from \"gsap/ScrambleTextPlugin\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\n\ngsap.registerPlugin(SplitText, ScrambleTextPlugin, ScrollTrigger);\n\nexport function ScrambleText({\n  text,\n  speed = 0.6,\n  charType = \"lowercase\",\n  className = \"\",\n  as: Tag = \"p\",\n}) {\n  const elRef = useRef(null);\n  const splitRef = useRef(null);\n  const tlRef = useRef(null);\n\n  useEffect(() => {\n    let isCancelled = false;\n\n    const setup = async () => {\n      try {\n        if (document?.fonts?.ready) {\n          await document.fonts.ready;\n        } else {\n          await new Promise((r) => requestAnimationFrame(() => r(null)));\n        }\n      } catch {}\n\n      if (isCancelled || !elRef.current) return;\n\n      tlRef.current?.kill();\n      splitRef.current?.revert();\n      splitRef.current = null;\n\n      const ctx = gsap.context(() => {\n        const el = elRef.current;\n\n        const originalHeight = el.offsetHeight;\n        gsap.set(el, { minHeight: originalHeight });\n\n        const split = new SplitText(el, { type: \"words,chars\" });\n        splitRef.current = split;\n\n        const chars = split.chars;\n        const words = split.words;\n\n        gsap.set(words, {\n          display: \"inline-block\",\n          whiteSpace: \"nowrap\",\n        });\n\n        gsap.set(el, {\n          wordBreak: \"keep-all\",\n        });\n\n        gsap.set(chars, {\n          display: \"inline-block\",\n        });\n\n        el.removeAttribute(\"aria-label\");\n        chars.forEach((c) => c.removeAttribute(\"aria-label\"));\n\n        gsap.set(chars, { opacity: 0 });\n\n        const originals = chars.map((c) => c.textContent || \"\");\n\n        const tl = gsap.timeline({\n          paused: true,\n          defaults: { ease: \"none\" },\n          onComplete: () => {\n            gsap.set(el, { minHeight: \"auto\" });\n          },\n        });\n\n        tlRef.current = tl;\n\n        tl.to(chars, {\n          duration: 0.7,\n          scrambleText: {\n            text: (i) => originals[i],\n            chars: charType || \"lowercase\",\n            speed,\n            revealDelay: 0.2,\n          },\n          opacity: 1,\n          stagger: 0.04,\n        });\n\n        tl.to(\n          chars,\n          {\n            opacity: 1,\n            duration: 0.4,\n            stagger: 0.02,\n            ease: \"power1.out\",\n          },\n          \">-0.2\"\n        );\n\n        ScrollTrigger.create({\n          trigger: el,\n          start: \"top 40%\",\n          once: true,\n          onEnter: () => tl.play(),\n        });\n      }, elRef);\n\n      return () => ctx.revert();\n    };\n\n    const clean = setup();\n\n    return () => {\n      (async () => {\n        await clean;\n      })();\n      tlRef.current?.kill();\n      splitRef.current?.revert();\n    };\n  }, [text, speed, charType]);\n\n  return (\n    <Tag\n      ref={elRef}\n      className={className}\n      style={{\n        wordBreak: \"keep-all\",\n        overflowWrap: \"normal\",\n      }}\n    >\n      {text}\n    </Tag>\n  );\n}\n\nexport default ScrambleText;\n"
+    }
+  ]
+}

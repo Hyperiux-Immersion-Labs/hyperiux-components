@@ -1,0 +1,10 @@
+{
+  "name": "perspective-text-reveal",
+  "type": "registry:component",
+  "title": "Perspective Text Reveal",
+  "description": "3D perspective rotation text reveal with lines flipping into view on scroll",
+  "category": "text",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/perspective-text-reveal"
+}

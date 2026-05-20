@@ -1,0 +1,253 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
+.scene {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #000000;
+}
+
+.topLeftControls {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 50;
+  pointer-events: auto;
+}
+
+.rightControls {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 60;
+  pointer-events: auto;
+}
+
+.canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  cursor: crosshair;
+}
+
+/* ─── Leva titlebar header ──────────────────────────────────── */
+.levaHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 10px 10px 10px;
+  border-radius: 12px;
+  border: 1px solid #232323;
+  background: #0f0f0f;
+}
+
+.levaHeaderTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.levaHeaderBottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Hide Leva's internal titlebar (we render our own header on the left) */
+.rightControls :global([class*="TitleBar"]) {
+  display: none !important;
+}
+
+.levaBrand {
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+}
+
+.levaToggle {
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid #2a2a2a;
+  background: #141414;
+}
+
+.levaToggleBtn {
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #bdbdbd;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.levaToggleBtn:hover {
+  background: #1f1f1f;
+  color: #ffffff;
+}
+
+.levaActive {
+  background: #ff5f00;
+  border-color: #ff5f00;
+  color: #000000;
+}
+
+.levaTextInput {
+  height: 30px;
+  width: 100%;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid #2a2a2a;
+  background: #141414;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.levaTextInput:focus {
+  outline: none;
+  border-color: #ff5f00;
+}
+
+.levaUpload {
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid #2a2a2a;
+  background: #141414;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.levaUpload:hover {
+  border-color: #ff5f00;
+  background: #1f1f1f;
+}
+
+/* ─── Panel (black/white/orange) ─────────────────────────────── */
+.rightControls :global(div[class*="Panel"]) {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  border: 1px solid #232323 !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35) !important;
+  background: #0f0f0f !important;
+}
+
+.rightControls :global([class*="Label"]),
+.rightControls :global([class*="label"]) {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  color: #ffffff !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.rightControls :global(input[type="number"]) {
+  color: #ffffff !important;
+  font-size: 11px !important;
+  background: #141414 !important;
+  border: 1px solid #2a2a2a !important;
+  border-radius: 6px !important;
+  text-align: right !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+/* ─── Slider thumb: white pill ───────────────────────────────── */
+.rightControls :global([class*="Thumb"]),
+.rightControls :global([class*="thumb"]) {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 2px rgba(255, 95, 0, 0.4) !important;
+}
+
+/* .scene :global([class*="Thumb"]):hover,
+.scene :global([class*="thumb"]):hover {
+  box-shadow: 0 0 0 4px rgba(255, 95, 0, 0.5) !important;
+} */
+
+/* ─── Text input (the "DESIGN" field) ───────────────────────── */
+.rightControls :global(input[type="text"]) {
+  background: #1a1a1a !important;
+  border: 1px solid #2e2e2e !important;
+  border-radius: 6px !important;
+  color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.rightControls :global(input[type="text"]):focus {
+  border-color: #ff5f00 !important;
+  outline: none !important;
+}
+
+/* ─── Upload SVG button ──────────────────────────────────────── */
+.rightControls :global(button[class*="Button"]) {
+  background: #1a1a1a !important;
+  border: 1px solid #2e2e2e !important;
+  border-radius: 6px !important;
+  color: #cccccc !important;
+  font-size: 12px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  transition: border-color 0.15s, color 0.15s !important;
+}
+
+.rightControls :global(button[class*="Button"]):hover {
+  border-color: #ff5f00 !important;
+  color: #ffffff !important;
+  background: #1f1f1f !important;
+}
+
+/* Mask source tabs are custom in the top-left header (not inside Leva). */
+
+/* ─── Color swatches ─────────────────────────────────────────── */
+.scene :global([class*="Swatch"]),
+.scene :global([class*="swatch"]) {
+  border-radius: 4px !important;
+  border: 1px solid #3a3a3a !important;
+  width: 44px !important;
+  height: 20px !important;
+}
+
+/* ─── Disabled / readonly (SVG filename) ─────────────────────── */
+.scene :global(input[disabled]),
+.scene :global(input[readonly]) {
+  background: transparent !important;
+  border: none !important;
+  color: #444444 !important;
+  font-size: 11px !important;
+}
+
+/* ─── Kill any remaining blue from Leva defaults ─────────────── */
+.scene :global([style*="rgb(0, 122, 255)"]),
+.scene :global([style*="#007aff"]),
+.scene :global([style*="hsl(210"]) {
+  background-color: #ff5f00 !important;
+  border-color: #ff5f00 !important;
+  color: #ff5f00 !important;
+}
+
+/* ─── Thin scrollbar ─────────────────────────────────────────── */
+.scene :global(*)::-webkit-scrollbar { width: 3px !important; }
+.scene :global(*)::-webkit-scrollbar-track { background: transparent !important; }
+.scene :global(*)::-webkit-scrollbar-thumb { background: #2a2a2a !important; border-radius: 2px !important; }
+.scene :global(*)::-webkit-scrollbar-thumb:hover { background: #ff5f00 !important; }

@@ -1,0 +1,10 @@
+{
+  "name": "rectangular-text-reveal",
+  "type": "registry:component",
+  "title": "Rectangular Text Reveal",
+  "description": "Text reveal animation with colored rectangles sliding across each line",
+  "category": "text",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/rectangular-text-reveal"
+}

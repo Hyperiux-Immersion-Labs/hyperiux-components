@@ -1,0 +1,10 @@
+{
+  "name": "depth-card-stack",
+  "type": "registry:component",
+  "title": "Depth Card Stack",
+  "description": "3D stacked card carousel with perspective depth, gyroscopic tilt on hover, texture reveal effect, physics throw animation, and autoplay",
+  "category": "components",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/depth-card-stack"
+}

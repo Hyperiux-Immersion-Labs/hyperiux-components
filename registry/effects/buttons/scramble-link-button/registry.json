@@ -1,0 +1,10 @@
+{
+  "name": "scramble-link-button",
+  "type": "registry:component",
+  "title": "Scramble Link Button",
+  "description": "Link button with text scramble effect on hover, optional underline and arrow",
+  "category": "buttons",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/buttons/scramble-link-button"
+}

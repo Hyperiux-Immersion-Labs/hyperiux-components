@@ -1,0 +1,33 @@
+.css-drag-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.css-drag-marquee__drag-layer {
+  will-change: transform;
+}
+
+.css-drag-marquee__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: css-drag-marquee-scroll var(--marquee-duration, 20s) linear infinite;
+}
+
+.css-drag-marquee__track--reverse {
+  animation-direction: reverse;
+}
+
+.css-drag-marquee--pause:hover .css-drag-marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes css-drag-marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(calc(var(--marquee-shift, 33.333333%) * -1), 0, 0);
+  }
+}

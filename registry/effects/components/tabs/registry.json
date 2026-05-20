@@ -1,0 +1,10 @@
+{
+  "name": "tabs",
+  "type": "registry:component",
+  "title": "Tabs",
+  "description": "Animated tabs with a moving active indicator and panel transitions",
+  "category": "components",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/tabs"
+}

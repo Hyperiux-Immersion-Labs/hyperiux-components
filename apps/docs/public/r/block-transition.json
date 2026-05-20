@@ -1,0 +1,26 @@
+{
+  "name": "block-transition",
+  "type": "registry:component",
+  "title": "Block Transition",
+  "description": "Horizontal split-block route transition with row-based stagger and optional content shift blur using GSAP.",
+  "category": "transitions",
+  "categories": [
+    "transitions"
+  ],
+  "dependencies": [
+    "gsap",
+    "next-transition-router"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/page-transitions/block",
+  "coverImage": "/assets/listing/block-transition.png",
+  "videoUrl": "block-transition",
+  "files": [
+    {
+      "path": "block-transition.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/block-transition.jsx",
+      "content": "'use client'\n\nimport { TransitionRouter } from 'next-transition-router'\nimport React, { useEffect, useRef } from 'react'\nimport gsap from 'gsap'\n\nconst ROWS = 5\nconst COLOR = '#000000'\n\nexport default function BlockTransition({ children, enableContentShift = false }) {\n  const wrapperRef = useRef(null)\n  const rowRefs = useRef([])\n\n  const getRows = () => rowRefs.current.filter(Boolean)\n\n  const buildRowsAnimation = (timeline, direction) => {\n    const rows = getRows()\n    const orderedRows = direction === 'cover' ? rows : [...rows].reverse()\n\n    orderedRows.forEach((row, index) => {\n      const [leftBlock, rightBlock] = row.children\n      const delay = index * 0.12\n\n      if (direction === 'cover') {\n        timeline.to(\n          [leftBlock, rightBlock],\n          {\n            xPercent: 0,\n            duration: 0.72,\n            ease: 'power3.inOut',\n          },\n          delay\n        )\n      } else {\n        timeline.to(\n          leftBlock,\n          {\n            xPercent: -100,\n            duration: 0.68,\n            ease: 'power3.inOut',\n          },\n          delay\n        )\n        timeline.to(\n          rightBlock,\n          {\n            xPercent: 100,\n            duration: 0.68,\n            ease: 'power3.inOut',\n          },\n          delay\n        )\n      }\n    })\n  }\n\n  useEffect(() => {\n    rowRefs.current.filter(Boolean).forEach((row) => {\n      const [leftBlock, rightBlock] = row.children\n      gsap.set(leftBlock, { xPercent: -100 })\n      gsap.set(rightBlock, { xPercent: 100 })\n    })\n  }, [])\n\n  return (\n    <TransitionRouter\n      auto\n      leave={(next) => {\n        const timeline = gsap.timeline({ onComplete: next })\n\n        if (enableContentShift) {\n          timeline.fromTo(\n            wrapperRef.current,\n            { scale: 1, filter: 'blur(0px)', opacity: 1 },\n            { scale: 0.98, filter: 'blur(4px)', opacity: 0.85, duration: 0.7, ease: 'power2.inOut' },\n            0\n          )\n        }\n\n        buildRowsAnimation(timeline, 'cover')\n\n        return () => timeline.kill()\n      }}\n      enter={(next) => {\n        const timeline = gsap.timeline({ onComplete: next })\n\n        if (enableContentShift) {\n          timeline.fromTo(\n            wrapperRef.current,\n            { scale: 1.02, filter: 'blur(4px)', opacity: 0.85 },\n            { scale: 1, filter: 'blur(0px)', opacity: 1, duration: 0.8, ease: 'power2.out' },\n            0.08\n          )\n        }\n\n        buildRowsAnimation(timeline, 'reveal')\n\n        return () => timeline.kill()\n      }}\n    >\n      <div className='pointer-events-none fixed top-0 left-0 z-999 h-screen w-screen overflow-hidden'>\n        {Array.from({ length: ROWS }).map((_, index) => (\n          <div\n            key={index}\n            ref={(node) => {\n              rowRefs.current[index] = node\n            }}\n            className='absolute left-0 w-full overflow-hidden'\n            style={{\n              top: `${(index / ROWS) * 100}%`,\n              height: `${100 / ROWS}%`,\n            }}\n          >\n            <span\n              className='absolute top-0 left-0 h-full w-1/2 will-change-transform'\n              style={{ backgroundColor: COLOR }}\n            />\n            <span\n              className='absolute top-0 right-0 h-full w-1/2 will-change-transform'\n              style={{ backgroundColor: COLOR }}\n            />\n          </div>\n        ))}\n      </div>\n      <div className='relative h-full w-full'>\n        <div ref={wrapperRef} className='h-full w-full will-change-transform'>\n          {children}\n        </div>\n      </div>\n    </TransitionRouter>\n  )\n}\n"
+    }
+  ]
+}

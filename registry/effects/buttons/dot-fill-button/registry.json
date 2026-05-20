@@ -1,0 +1,10 @@
+{
+  "name": "dot-fill-button",
+  "type": "registry:component",
+  "title": "Dot Fill Button",
+  "description": "Button with expanding dot that fills the background on hover with character stagger",
+  "category": "buttons",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/buttons/dot-fill-button"
+}

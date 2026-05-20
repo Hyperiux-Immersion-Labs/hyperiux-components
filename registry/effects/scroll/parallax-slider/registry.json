@@ -1,0 +1,10 @@
+{
+  "name": "parallax-slider",
+  "type": "registry:component",
+  "title": "Parallax Slider",
+  "description": "Pinned horizontal gallery with clip-path reveals and image parallax",
+  "category": "scroll",
+  "dependencies": ["gsap", "next"],
+  "registryDependencies": [],
+  "previewUrl": "/parallax-slider"
+}

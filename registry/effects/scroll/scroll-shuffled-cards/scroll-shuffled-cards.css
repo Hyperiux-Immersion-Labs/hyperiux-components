@@ -1,0 +1,179 @@
+.vault-card {
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vw;
+}
+
+.ssc {
+  position: relative;
+  width: 100vw;
+}
+
+.ssc__sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ssc__cards {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: fit-content;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+}
+
+.ssc__card-wrap {
+  position: relative;
+  height: fit-content;
+  width: fit-content;
+  flex-shrink: 0;
+  will-change: transform;
+}
+
+.ssc__card {
+  height: 30vw !important;
+  width: 25vw !important;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.ssc__card-inner {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.5vw 1.5vw 1.2vw;
+}
+
+.ssc__card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vw;
+}
+
+.ssc__eyebrow {
+  font-size: 0.85vw;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.ssc__description {
+  width: 85%;
+  font-size: 1.05vw;
+  line-height: 1.35;
+}
+
+.ssc__title {
+  font-size: 4.6vw;
+  font-weight: 600;
+  line-height: 0.78;
+}
+
+.ssc__heading-wrap {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ssc__heading {
+  width: 100%;
+  padding-inline: 2vw;
+  text-align: center;
+  font-size: 5.5vw;
+  font-weight: 600;
+  line-height: 0.95;
+  color: #1a1a1a;
+}
+
+@media (max-width: 1024px) {
+  .ssc__cards {
+    gap: 4vw !important;
+  }
+
+  .ssc__card {
+    height: 42vw !important;
+    width: 34vw !important;
+  }
+
+  .ssc__card-inner {
+    padding: 3vw 2vw 1.8vw;
+  }
+
+  .ssc__card-top {
+    gap: 1.8vw;
+  }
+
+  .ssc__eyebrow {
+    font-size: 1.3vw;
+  }
+
+  .ssc__description {
+    width: 92%;
+    font-size: 1.5vw;
+  }
+
+  .ssc__title {
+    font-size: 6vw;
+  }
+
+  .ssc__heading {
+    font-size: 7.5vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .ssc__cards {
+    gap: 3vw !important;
+  }
+
+  .ssc__card {
+    height: 78vw !important;
+    width: 62vw !important;
+  }
+
+  .ssc__card-inner {
+    padding: 4.5vw 4vw 3vw;
+  }
+
+  .ssc__card-top {
+    gap: 3.2vw;
+  }
+
+  .ssc__eyebrow {
+    font-size: 2.4vw;
+  }
+
+  .ssc__description {
+    width: 100%;
+    font-size: 3.2vw;
+    line-height: 1.35;
+  }
+
+  .ssc__title {
+    font-size: 9vw;
+    line-height: 0.86;
+  }
+
+  .ssc__heading {
+    padding-inline: 4vw;
+    font-size: 10vw;
+  }
+}

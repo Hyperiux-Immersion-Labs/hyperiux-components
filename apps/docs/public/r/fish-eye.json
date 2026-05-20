@@ -1,0 +1,27 @@
+{
+  "name": "fish-eye",
+  "type": "registry:component",
+  "title": "Fish Eye",
+  "description": "WebGPU fish-eye lens distortion on images using Three.js TSL node materials with smooth cursor tracking",
+  "category": "cursor",
+  "categories": [
+    "cursor"
+  ],
+  "dependencies": [
+    "@react-three/fiber",
+    "@react-three/drei",
+    "three"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/cursors/fish-eye",
+  "coverImage": "/assets/listing/fish-eye.png",
+  "videoUrl": "fish-eye",
+  "files": [
+    {
+      "path": "fish-eye.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/fish-eye.jsx",
+      "content": "'use client'\n\nimport React, { useMemo, useRef } from 'react'\nimport { Canvas, useFrame, useThree } from '@react-three/fiber'\nimport { useTexture } from '@react-three/drei'\nimport * as THREE from 'three/webgpu'\nimport { texture, uv, uniform, sub, length, mul, add, oneMinus } from 'three/tsl'\n\nconst damp = (current, target, lambda, delta) =>\n  current + (target - current) * (1 - Math.exp(-lambda * delta))\n\nfunction ImageNodeMaterial({ src }) {\n  const map = useTexture(src)\n  const { size, camera } = useThree()\n\n  const height = 2 * Math.tan((camera.fov * Math.PI) / 180 / 2) * camera.position.z\n  const width = height * (size.width / size.height)\n\n  const mouse = useRef(new THREE.Vector2(0.5, 0.5))\n  const target = useRef(new THREE.Vector2(0.5, 0.5))\n  const strength = useRef(0)\n  const strengthTarget = useRef(0)\n\n  const material = useMemo(() => {\n    map.colorSpace = THREE.SRGBColorSpace\n\n    const mat = new THREE.MeshBasicNodeMaterial()\n    const mouseU = uniform(mouse.current)\n    const strengthU = uniform(0)\n\n    const baseUV = uv()\n    const diff = sub(baseUV, mouseU)\n    const dist = length(diff)\n    const falloff = oneMinus(dist).pow(2)\n    const displacement = mul(diff, falloff).mul(strengthU.negate())\n    const distortedUV = add(baseUV, displacement)\n\n    mat.colorNode = texture(map, distortedUV)\n    mat.userData.mouseU = mouseU\n    mat.userData.strengthU = strengthU\n\n    return mat\n  }, [map])\n\n  useFrame((_, delta) => {\n    mouse.current.x = damp(mouse.current.x, target.current.x, 12, delta)\n    mouse.current.y = damp(mouse.current.y, target.current.y, 12, delta)\n    strength.current = damp(strength.current, strengthTarget.current, 8, delta)\n    material.userData.strengthU.value = strength.current\n  })\n\n  return (\n    <mesh\n      material={material}\n      onPointerMove={(e) => {\n        if (!e.uv) return\n        target.current.copy(e.uv)\n        strengthTarget.current = 1\n      }}\n      onPointerLeave={() => {\n        target.current.set(0.5, 0.5)\n        strengthTarget.current = 0\n      }}\n    >\n      <planeGeometry args={[width, height]} />\n    </mesh>\n  )\n}\n\nexport function FishEyeImage({ src }) {\n  return (\n    <Canvas\n      dpr={[1, 2]}\n      camera={{ position: [0, 0, 5], fov: 45 }}\n      style={{ height: '100%', width: '100%' }}\n      gl={({ canvas }) => {\n        const renderer = new THREE.WebGPURenderer({\n          canvas,\n          antialias: true,\n        })\n        renderer.outputColorSpace = THREE.SRGBColorSpace\n        renderer.toneMapping = THREE.NoToneMapping\n        renderer.init()\n        return renderer\n      }}\n    >\n      <ImageNodeMaterial src={src} />\n    </Canvas>\n  )\n}\n"
+    }
+  ]
+}

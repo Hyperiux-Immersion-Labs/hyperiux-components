@@ -1,0 +1,10 @@
+{
+  "name": "modal",
+  "type": "registry:component",
+  "title": "Modal",
+  "description": "Backdrop-blurred fullscreen modal with escape, backdrop, and close-button support",
+  "category": "components",
+  "dependencies": ["lucide-react"],
+  "registryDependencies": [],
+  "previewUrl": "/modal"
+}

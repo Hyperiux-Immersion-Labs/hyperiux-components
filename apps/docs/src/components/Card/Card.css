@@ -1,0 +1,91 @@
+.card {
+  
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+
+  padding: var(--card-padding);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vw;
+
+  /* transition: all 0.3s ease; */
+}
+
+/* optional shadow */
+.card--shadow {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* header */
+.card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vw;
+}
+
+.card__title {
+  font-size: 1.4vw;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.card__subtitle {
+  font-size: 0.9vw;
+  opacity: 0.6;
+}
+
+/* content */
+.card__content {
+  font-size: 1vw;
+  line-height: 1.7;
+  opacity: 0.8;
+}
+
+/* footer */
+.card__footer {
+  margin-top: 0.5vw;
+}
+
+/* ========================= */
+/* <= 1024 */
+/* ========================= */
+@media screen and (max-width: 1024px) {
+  .card {
+    gap: 2vw;
+  }
+
+  .card__title {
+    font-size: 3.5vw;
+  }
+
+  .card__subtitle {
+    font-size: 2.2vw;
+  }
+
+  .card__content {
+    font-size: 2.4vw;
+  }
+}
+
+/* ========================= */
+/* <= 540 */
+/* ========================= */
+@media screen and (max-width: 540px) {
+  .card {
+    width: 100%;
+    gap: 4vw;
+  }
+
+  .card__title {
+    font-size: 5.5vw;
+  }
+
+  .card__subtitle {
+    font-size: 3.8vw;
+  }
+
+  .card__content {
+    font-size: 4vw;
+  }
+}

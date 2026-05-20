@@ -1,0 +1,10 @@
+{
+  "name": "glitchy-text",
+  "type": "registry:component",
+  "title": "Glitchy Text",
+  "description": "GSAP SplitText effect that stagger-animates four overlapping char layers — two white and two yellow — out and in at slightly different delays, creating a chromatic glitch swap. Plays on mount and replays on button click.",
+  "category": "text",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/glitchy-text"
+}

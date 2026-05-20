@@ -1,0 +1,10 @@
+{
+  "name": "mask-text-reveal",
+  "type": "registry:component",
+  "title": "Mask Text Reveal",
+  "description": "Text reveal animation with gradient mask effect that sweeps across each line on scroll",
+  "category": "text",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/mask-text-reveal"
+}

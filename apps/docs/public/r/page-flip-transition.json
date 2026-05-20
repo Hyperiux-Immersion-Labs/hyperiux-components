@@ -1,0 +1,26 @@
+{
+  "name": "page-flip-transition",
+  "type": "registry:component",
+  "title": "Page Flip Transition",
+  "description": "Angular full-screen route wipe with a folding panel and staggered indicator bars",
+  "category": "transitions",
+  "categories": [
+    "transitions"
+  ],
+  "dependencies": [
+    "gsap",
+    "next-transition-router"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/page-transitions/flip",
+  "coverImage": "/assets/listing/page-flip-transition.png",
+  "videoUrl": "page-flip-transition",
+  "files": [
+    {
+      "path": "page-flip-transition.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/page-flip-transition.jsx",
+      "content": "'use client'\n\nimport { TransitionRouter } from 'next-transition-router'\nimport { useEffect, useRef } from 'react'\nimport gsap from 'gsap'\n\nexport default function PageFlipTransition({\n  children,\n  config = {\n    enableBlur: false,\n    overlayColor: '#DE4013',\n    duration: 0.5,\n  },\n}) {\n  const { enableBlur, overlayColor, duration } = config\n  const blackOverlayRef = useRef(null)\n  const flipOverlayRef = useRef(null)\n  const boxesRef = useRef(null)\n\n  useEffect(() => {\n    gsap.set(blackOverlayRef.current, { opacity: 0 })\n    gsap.set(flipOverlayRef.current, {\n      clipPath: 'polygon(0 0, 100% 0, 0 0, 0 100%)',\n      opacity: 1,\n    })\n    gsap.set(boxesRef.current.children, { scaleY: 0 })\n  }, [])\n\n  return (\n    <TransitionRouter\n      auto\n      leave={(next) => {\n        const timeline = gsap.timeline({ onComplete: next })\n\n        timeline\n          .to(\n            blackOverlayRef.current,\n            {\n              opacity: 1,\n              duration: 0.3,\n              ease: 'power2.inOut',\n            },\n            0\n          )\n          .to(\n            flipOverlayRef.current,\n            {\n              clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 100%)',\n              duration,\n              ease: 'linear',\n            },\n            0\n          )\n          .to(flipOverlayRef.current, {\n            clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',\n            duration,\n            ease: 'linear',\n          })\n          .to(\n            boxesRef.current.children,\n            {\n              scaleY: 1,\n              opacity: 1,\n              transformOrigin: 'bottom',\n              duration,\n              stagger: 0.1,\n              ease: 'power2.out',\n            },\n            '-=0.3'\n          )\n\n        return () => timeline.kill()\n      }}\n      enter={(next) => {\n        const timeline = gsap.timeline({ onComplete: next })\n\n        timeline.to(boxesRef.current.children, {\n          scaleY: 0,\n          transformOrigin: 'top',\n          duration,\n          stagger: 0.05,\n          ease: 'power2.in',\n        })\n        timeline.to(flipOverlayRef.current, {\n          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 0)',\n          duration,\n          delay: 0.3,\n          ease: 'linear',\n        })\n        timeline.to(flipOverlayRef.current, {\n          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 100% 0)',\n          duration,\n          ease: 'linear',\n        })\n        timeline.to(blackOverlayRef.current, {\n          duration,\n          opacity: 0,\n          ease: 'power2.inOut',\n        })\n        timeline.set(flipOverlayRef.current, {\n          clipPath: 'polygon(0 0, 100% 0, 0 0, 0 100%)',\n        })\n\n        return () => timeline.kill()\n      }}\n    >\n      <div\n        ref={blackOverlayRef}\n        className={`pointer-events-none fixed inset-0 z-[998] bg-black/20 opacity-0 ${\n          enableBlur ? 'backdrop-blur-xl' : ''\n        }`}\n      />\n\n      <div\n        ref={flipOverlayRef}\n        className=\"fixed top-0 left-0 z-[999] flex h-full w-full items-center justify-center opacity-0\"\n        style={{ backgroundColor: overlayColor }}\n      >\n        <div ref={boxesRef} className=\"flex h-fit w-fit gap-2\">\n          <span className=\"block h-7 w-4 bg-black\" />\n          <span className=\"block h-7 w-4 bg-black\" />\n          <span className=\"block h-7 w-4 bg-black\" />\n          <span className=\"block h-7 w-4 bg-black\" />\n        </div>\n      </div>\n\n      <div>{children}</div>\n    </TransitionRouter>\n  )\n}\n"
+    }
+  ]
+}

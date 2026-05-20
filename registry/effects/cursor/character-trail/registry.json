@@ -1,0 +1,10 @@
+{
+  "name": "character-trail",
+  "type": "registry:component",
+  "title": "Character Trail",
+  "description": "Cursor wrapper that leaves a snake-like grid trail of character tiles as the mouse moves. Tiles snap to a 50px grid, cycle through a configurable alphabet and color palette, pop in with a spring animation, then stagger-fade out after the cursor idles.",
+  "category": "cursor",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/character-trail"
+}

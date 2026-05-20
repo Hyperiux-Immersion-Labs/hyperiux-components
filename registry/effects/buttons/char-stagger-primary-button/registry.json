@@ -1,0 +1,10 @@
+{
+  "name": "char-stagger-primary-button",
+  "type": "registry:component",
+  "title": "Character Stagger Primary Button",
+  "description": "Primary button with staggered character animation on hover",
+  "category": "buttons",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/buttons/char-stagger-primary-button"
+}

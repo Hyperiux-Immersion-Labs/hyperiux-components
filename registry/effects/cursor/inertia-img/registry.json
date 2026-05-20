@@ -1,0 +1,10 @@
+{
+  "name": "inertia-img",
+  "type": "registry:component",
+  "title": "Inertia Image",
+  "description": "Image grid with physics-based inertia and wobble effect on mouse hover using GSAP InertiaPlugin.",
+  "category": "cursor",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/inertia-img"
+}

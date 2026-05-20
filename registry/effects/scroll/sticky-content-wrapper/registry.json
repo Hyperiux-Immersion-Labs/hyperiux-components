@@ -1,0 +1,10 @@
+{
+  "name": "sticky-content-wrapper",
+  "type": "registry:component",
+  "title": "Sticky Content Wrapper",
+  "description": "Split-screen sticky scroll with content on one side and images on the other, revealing on scroll",
+  "category": "scroll",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/sticky-content-wrapper"
+}

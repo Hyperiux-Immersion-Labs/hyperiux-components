@@ -1,0 +1,10 @@
+{
+  "name": "animated-toggle",
+  "type": "registry:component",
+  "title": "Animated Toggle",
+  "description": "Pure CSS animated icon components: ChevronBird (chevron/arrow), Cross (plus to X), and Plus (open/close). No animation libraries required.",
+  "category": "buttons",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/buttons/animated-toggle"
+}

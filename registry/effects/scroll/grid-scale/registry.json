@@ -1,0 +1,10 @@
+{
+  "name": "grid-scale",
+  "type": "registry:component",
+  "title": "Grid Scale",
+  "description": "Scroll-driven animation where a centered clip-path panel expands to fullscreen while corner boxes fly in, grid lines dissolve, and floating keyword pills converge to the center.",
+  "category": "scroll",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/scroll-based-effects/grid-scale"
+}

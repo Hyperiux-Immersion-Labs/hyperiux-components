@@ -1,0 +1,29 @@
+.link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.92);
+  overflow: hidden;
+}
+
+.link::before {
+  position: absolute;
+  inset: 0;
+  content: attr(data-content);
+  color: var(--color-primary); /* orange text */
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transition: clip-path 300ms ease;
+  /* pointer-events: none; */
+}
+
+.link:hover::before,
+.link:focus-visible::before,
+.link[data-active="true"]::before {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link::before {
+    transition: none;
+  }
+}

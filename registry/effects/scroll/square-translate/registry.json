@@ -1,0 +1,12 @@
+{
+  "name": "square-translate",
+  "type": "registry:component",
+  "title": "Square Translate",
+  "description": "Scroll-driven list where a rotating square marker tracks progress and nudges nearby rows",
+  "category": "scroll",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/scroll-based-effects/square-translate",
+  "coverImage": "/assets/listing/square-translate.png",
+  "videoUrl": "square-translate"
+}

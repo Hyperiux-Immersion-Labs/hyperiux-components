@@ -1,0 +1,10 @@
+{
+  "name": "progressive-bloom-valley",
+  "type": "registry:component",
+  "title": "Progressive Bloom Valley",
+  "description": "WebGL particle valley flythrough with scroll-driven camera path, proximity bloom, magnetic flower interaction, film grain, and edge blur post-processing",
+  "category": "webgl",
+  "dependencies": ["@react-three/fiber", "@react-three/drei", "@react-three/postprocessing", "three", "postprocessing"],
+  "registryDependencies": [],
+  "previewUrl": "/webgl/progressive-bloom-valley"
+}

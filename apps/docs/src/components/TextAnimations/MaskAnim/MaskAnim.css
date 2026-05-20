@@ -1,0 +1,8 @@
+.Headingline {
+  mask-size: 500% 100%;
+  mask-image: linear-gradient(
+    150deg,
+    #e8e8e8 33.3%,
+    rgba(255, 255, 255, 0) 66.6%
+  );
+}

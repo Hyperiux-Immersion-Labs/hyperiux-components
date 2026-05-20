@@ -1,0 +1,10 @@
+{
+  "name": "parallax-footer",
+  "type": "registry:component",
+  "title": "Parallax Footer",
+  "description": "Fixed footer that reveals with a parallax scrolling effect",
+  "category": "scroll",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/parallax-footer"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "rope-cursor",
+  "type": "registry:component",
+  "title": "Rope Cursor",
+  "description": "Soft trailing rope that lags behind the pointer with a smooth SVG path",
+  "category": "cursor",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/cursors/rope",
+  "coverImage": "/assets/listing/rope-cursor.png",
+  "videoUrl": "rope-cursor"
+}

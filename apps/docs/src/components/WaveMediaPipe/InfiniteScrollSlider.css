@@ -1,0 +1,80 @@
+.surf-strip {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #f3f3f1;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.surf-strip.is-ready {
+  opacity: 1;
+}
+
+.surf-strip__viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1800px;
+  perspective-origin: 50% 44%;
+  overflow: hidden;
+}
+
+.surf-strip__track {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.surf-strip__card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 350px;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 0;
+  background: #ddd;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  opacity: 1;
+  filter: none;
+}
+
+.surf-strip__card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  backface-visibility: hidden;
+}
+
+@media (max-width: 1024px) {
+  .surf-strip__viewport {
+    perspective: 1400px;
+  }
+
+  .surf-strip__card {
+    width: 210px;
+    height: 290px;
+  }
+}
+
+@media (max-width: 540px) {
+  .surf-strip__viewport {
+    perspective: 1100px;
+    perspective-origin: 50% 46%;
+  }
+
+  .surf-strip__card {
+    width: 150px;
+    height: 210px;
+  }
+}

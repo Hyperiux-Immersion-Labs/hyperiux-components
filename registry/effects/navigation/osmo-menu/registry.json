@@ -1,0 +1,10 @@
+{
+  "name": "osmo-menu",
+  "type": "registry:component",
+  "title": "Osmo Menu",
+  "description": "Animated multi-column mega menu with GSAP timelines, square cursor indicators, and hover-fill link transitions.",
+  "category": "navigation",
+  "dependencies": ["gsap", "next"],
+  "registryDependencies": [],
+  "previewUrl": "/osmo-menu"
+}

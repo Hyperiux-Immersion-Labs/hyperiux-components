@@ -1,0 +1,10 @@
+{
+  "name": "link-button",
+  "type": "registry:component",
+  "title": "Link Button",
+  "description": "Minimal link button with animated underline and rotating arrow icon",
+  "category": "buttons",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/buttons/link-button"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "blur-text",
+  "type": "registry:component",
+  "title": "Blur Text",
+  "description": "Text that reveals with a blur-to-focus animation on scroll",
+  "category": "text",
+  "dependencies": ["framer-motion"],
+  "registryDependencies": [],
+  "previewUrl": "/blur-text-reveal"
+}

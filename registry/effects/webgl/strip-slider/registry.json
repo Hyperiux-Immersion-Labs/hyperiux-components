@@ -1,0 +1,11 @@
+{
+  "name": "strip-slider",
+  "type": "registry:component",
+  "title": "Strip Slider",
+  "description": "WebGL image slider that splits each slide into vertical strips, transitioning with a staggered wave distortion using Three.js shader materials and GSAP",
+  "category": "webgl",
+  "categories": ["webgl", "scroll"],
+  "dependencies": ["three", "gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/strip-slider"
+}

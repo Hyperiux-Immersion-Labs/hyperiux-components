@@ -1,0 +1,12 @@
+{
+  "name": "scroll-distortion",
+  "type": "registry:component",
+  "title": "Scroll Distortion",
+  "description": "Scroll-synced WebGL image transition with displacement distortion and fullscreen typography",
+  "category": "scroll",
+  "dependencies": ["gsap", "lenis", "three"],
+  "registryDependencies": [],
+  "previewUrl": "/scroll-based-effects/scroll-distortion",
+  "coverImage": "/assets/listing/scroll-distortion.png",
+  "videoUrl": "scroll-distortion"
+}

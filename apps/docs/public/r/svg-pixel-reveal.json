@@ -1,0 +1,25 @@
+{
+  "name": "svg-pixel-reveal",
+  "type": "registry:component",
+  "title": "SVG Pixel Reveal",
+  "description": "Scroll-driven image that transitions from pixelated to crisp using an SVG filter and GSAP ScrollTrigger",
+  "category": "scroll",
+  "categories": [
+    "scroll"
+  ],
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/svg-pixel-reveal",
+  "coverImage": "/assets/listing/svg-pixel-reveal.png",
+  "videoUrl": "svg-pixel-reveal",
+  "files": [
+    {
+      "path": "svg-pixel-reveal.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/svg-pixel-reveal.jsx",
+      "content": "\"use client\";\n\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/dist/ScrollTrigger\";\n\ngsap.registerPlugin(ScrollTrigger);\n\nfunction PixelateSvgFilter({ id, size, crossLayers }) {\n  return (\n    <svg aria-hidden=\"true\" style={{ pointerEvents: \"none\", position: \"absolute\", height: 0, width: 0, overflow: \"hidden\" }}>\n      <defs>\n        <filter id={id} x=\"0\" y=\"0\" width=\"1\" height=\"1\">\n          <feConvolveMatrix kernelMatrix=\"1 1 1 1 1 1 1 1 1\" result=\"AVG\" />\n          <feFlood x=\"1\" y=\"1\" width=\"1\" height=\"1\" />\n          <feComposite operator=\"arithmetic\" k1=\"0\" k2=\"1\" k3=\"0\" k4=\"0\" width={size} height={size} />\n          <feTile result=\"TILE\" />\n          <feComposite in=\"AVG\" in2=\"TILE\" operator=\"in\" />\n          <feMorphology operator=\"dilate\" radius={size / 2} result=\"NORMAL\" />\n\n          {crossLayers && (\n            <>\n              <feConvolveMatrix kernelMatrix=\"1 1 1 1 1 1 1 1 1\" result=\"AVG\" />\n              <feFlood x=\"1\" y=\"1\" width=\"1\" height=\"1\" />\n              <feComposite in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"0\" k2=\"1\" k3=\"0\" k4=\"0\" width={size / 2} height={size} />\n              <feTile result=\"TILE\" />\n              <feComposite in=\"AVG\" in2=\"TILE\" operator=\"in\" />\n              <feMorphology operator=\"dilate\" radius={size / 2} result=\"FALLBACKX\" />\n\n              <feConvolveMatrix kernelMatrix=\"1 1 1 1 1 1 1 1 1\" result=\"AVG\" />\n              <feFlood x=\"1\" y=\"1\" width=\"1\" height=\"1\" />\n              <feComposite in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"0\" k2=\"1\" k3=\"0\" k4=\"0\" width={size} height={size / 2} />\n              <feTile result=\"TILE\" />\n              <feComposite in=\"AVG\" in2=\"TILE\" operator=\"in\" />\n              <feMorphology operator=\"dilate\" radius={size / 2} result=\"FALLBACKY\" />\n\n              <feMerge>\n                <feMergeNode in=\"FALLBACKX\" />\n                <feMergeNode in=\"FALLBACKY\" />\n                <feMergeNode in=\"NORMAL\" />\n              </feMerge>\n            </>\n          )}\n\n          {!crossLayers && <feMergeNode in=\"NORMAL\" />}\n        </filter>\n      </defs>\n    </svg>\n  );\n}\n\nexport function SvgPixelReveal({\n  src,\n  alt = \"Image\",\n  initialPixelSize = 22,\n  finalPixelSize = 1,\n  start = \"top 50%\",\n  end = \"bottom 35%\",\n  crossLayers = true,\n  style = {},\n}) {\n  const containerRef = useRef(null);\n  const filterId = useId().replace(/:/g, \"\");\n  const [pixelSize, setPixelSize] = useState(initialPixelSize);\n  const shouldApplyFilter = pixelSize > finalPixelSize + 0.01;\n\n  useEffect(() => {\n    const container = containerRef.current;\n    if (!container) return;\n\n    const animatedState = { size: initialPixelSize };\n\n    const tween = gsap.to(animatedState, {\n      size: finalPixelSize,\n      duration: 1.0,\n      ease: \"none\",\n      paused: true,\n      onUpdate: () => setPixelSize(animatedState.size),\n    });\n\n    const trigger = ScrollTrigger.create({\n      trigger: container,\n      start,\n      end,\n      animation: tween,\n      invalidateOnRefresh: true,\n    });\n\n    return () => { trigger.kill(); tween.kill(); };\n  }, [end, finalPixelSize, initialPixelSize, start]);\n\n  return (\n    <div ref={containerRef} style={{ position: \"relative\", ...style }}>\n      <PixelateSvgFilter id={filterId} size={pixelSize} crossLayers={crossLayers} />\n      <div\n        style={{\n          position: \"relative\", height: \"100%\", width: \"100%\", overflow: \"hidden\",\n          filter: shouldApplyFilter ? `url(#${filterId})` : undefined,\n        }}\n      >\n        <img src={src} alt={alt} style={{ width: \"100%\", height: \"100%\", objectFit: \"cover\", display: \"block\" }} />\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

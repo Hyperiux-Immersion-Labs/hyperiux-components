@@ -1,0 +1,25 @@
+{
+  "name": "text-fill-animation",
+  "type": "registry:component",
+  "title": "Text Fill Animation",
+  "description": "Scroll-synced text color fill animation with customizable color sweep effect",
+  "category": "text",
+  "categories": [
+    "text"
+  ],
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/text-fill-animation",
+  "coverImage": "/assets/listing/text-fill-animation.png",
+  "videoUrl": "text-fill-animation",
+  "files": [
+    {
+      "path": "text-fill-animation.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/text-fill-animation.jsx",
+      "content": "\"use client\";\n\nimport { useEffect, useRef } from \"react\";\nimport gsap from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\nimport { SplitText } from \"gsap/SplitText\";\n\nif (typeof window !== \"undefined\") {\n  gsap.registerPlugin(ScrollTrigger, SplitText);\n}\n\nexport function TextFillAnimation({\n  text = \"Your text content goes here. Add any message you want to animate.\",\n  textColor = \"#111111\",\n  primaryColor = \"#ff6b00\",\n  dimColor = \"#dddddd\",\n  backgroundColor = \"#FBFBFB\",\n  className = \"\",\n  id = \"text-fill-section\",\n  textSize = \"5vw\",\n  textWidth = \"80%\",\n  containerClassName = \"\",\n  mobileTextSize = \"8vw\",\n  mobileTextWidth = \"95%\",\n}) {\n  const sectionRef = useRef(null);\n  const textRef = useRef(null);\n\n  useEffect(() => {\n    const styleId = `tfa-style-${id}`;\n\n    const style = document.createElement(\"style\");\n    style.id = styleId;\n    style.textContent = `\n      @keyframes color-transition-${id} {\n        0%   { color: ${dimColor}; }\n        30%  { color: ${primaryColor}; }\n        100% { color: ${textColor}; }\n      }\n\n      #${id} .split__wrapper .split-chars {\n        transition: color 0.4s;\n        color: ${dimColor};\n      }\n\n      #${id} .split__wrapper .split-chars.show {\n        animation: color-transition-${id} 0.5s;\n        color: ${textColor};\n      }\n\n      #${id} .tfa-text-wrapper {\n        width: ${textWidth};\n      }\n\n      #${id} .tfa-heading {\n        font-size: ${textSize};\n      }\n\n      @media (max-width: 640px) {\n        #${id} .tfa-text-wrapper {\n          width: ${mobileTextWidth};\n        }\n\n        #${id} .tfa-heading {\n          font-size: ${mobileTextSize};\n        }\n      }\n    `;\n    document.head.appendChild(style);\n\n    const ctx = gsap.context(() => {\n      const split = SplitText.create(textRef.current, {\n        type: \"words chars\",\n        aria: false,\n        tag: \"span\",\n        charsClass: \"split-chars\",\n      });\n\n      const chars = Array.from(\n        textRef.current.querySelectorAll(\".split-chars\")\n      );\n\n      const isDesktop = globalThis.innerWidth > 1024;\n\n      gsap\n        .timeline({\n          scrollTrigger: {\n            trigger: sectionRef.current,\n            start: isDesktop ? \"top top\" : \"top top\",\n            end: isDesktop ? \"bottom bottom\" : \"bottom bottom\",\n            scrub: 0.25,\n          },\n        })\n        .to(\n          chars,\n          {\n            className: \"split-chars show\",\n            duration: 0.4,\n            stagger: 0.05,\n            ease: \"power2.inOut\",\n          },\n          0\n        );\n    });\n\n    return () => {\n      ctx.revert();\n      document.getElementById(styleId)?.remove();\n    };\n  }, [\n    id,\n    textColor,\n    primaryColor,\n    dimColor,\n    textSize,\n    textWidth,\n    mobileTextSize,\n    mobileTextWidth,\n  ]);\n\n  return (\n    <section\n      id={id}\n      ref={sectionRef}\n      className={`relative h-[250vh] w-full px-[4vw] max-sm:px-2 ${containerClassName}`}\n      style={{ backgroundColor }}\n    >\n      <div className=\"sticky top-0 h-screen flex items-center justify-center\">\n        <div className=\"split__wrapper h-fit tfa-text-wrapper text-center mx-auto\">\n          <h2\n            ref={textRef}\n            className={`font-medium leading-[1.2] tfa-heading ${className}`}\n          >\n            {text}\n          </h2>\n        </div>\n      </div>\n    </section>\n  );\n}\n\nexport default TextFillAnimation;\n"
+    }
+  ]
+}

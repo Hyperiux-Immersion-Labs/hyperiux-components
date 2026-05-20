@@ -1,0 +1,10 @@
+{
+  "name": "glass-pill-header",
+  "type": "registry:component",
+  "title": "Glass Pill Header",
+  "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
+  "category": "navigation",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/navigation/glass-pill-header"
+}

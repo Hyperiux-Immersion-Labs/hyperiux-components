@@ -1,0 +1,26 @@
+{
+  "name": "brush-stroke",
+  "type": "registry:component",
+  "title": "Brush Stroke Transition",
+  "description": "SVG brush stroke page transition using GSAP DrawSVGPlugin and next-transition-router, with configurable color, width, duration, and optional backdrop blur",
+  "category": "transitions",
+  "categories": [
+    "transitions"
+  ],
+  "dependencies": [
+    "gsap",
+    "next-transition-router"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/page-transitions/brush-strokes",
+  "coverImage": "/assets/listing/brush-stroke.png",
+  "videoUrl": "brush-stroke.mp4",
+  "files": [
+    {
+      "path": "brush-stroke.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/brush-stroke.jsx",
+      "content": "'use client'\n\nimport { TransitionRouter } from 'next-transition-router'\nimport React, { useEffect, useRef } from 'react'\nimport gsap from 'gsap'\nimport { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'\n\ngsap.registerPlugin(DrawSVGPlugin)\n\nexport function BrushStroke({\n  children,\n  config = {\n    enableBlur: false,\n    strokeColor: '#82A0FF',\n    strokeWidth: 2,\n    duration: 1.5,\n  },\n}) {\n  const { enableBlur, strokeColor, strokeWidth, duration } = config\n  const transitionOverlayRef = useRef(null)\n  const svgPathRef = useRef(null)\n\n  useEffect(() => {\n    if (svgPathRef.current) {\n      gsap.set(svgPathRef.current, { drawSVG: '0%', strokeWidth })\n      gsap.config({ force3D: true })\n    }\n  }, [])\n\n  return (\n    <TransitionRouter\n      auto\n      leave={(next) => {\n        const tl = gsap.timeline({ onComplete: next })\n        tl.to(transitionOverlayRef.current, {\n          opacity: 1,\n          backdropFilter: enableBlur ? 'blur(10px)' : 'none',\n          duration: 0.5,\n          ease: 'power2.inOut',\n        }).to(\n          svgPathRef.current,\n          { drawSVG: '100%', strokeWidth: 300, duration, ease: 'power2.inOut' },\n          0\n        )\n        return () => tl.kill()\n      }}\n      enter={(next) => {\n        const tl = gsap.timeline({ onComplete: next })\n        tl.to(svgPathRef.current, {\n          drawSVG: '100% 100%',\n          strokeWidth,\n          duration,\n          ease: 'power2.inOut',\n        })\n          .to(\n            transitionOverlayRef.current,\n            {\n              opacity: 0,\n              backdropFilter: enableBlur ? 'blur(10px)' : 'none',\n              duration: 0.5,\n              ease: 'power2.inOut',\n            },\n            1\n          )\n          .set(svgPathRef.current, { drawSVG: '0%', strokeWidth })\n        return () => tl.kill()\n      }}\n    >\n      <div\n        ref={transitionOverlayRef}\n        style={{\n          position: 'fixed',\n          inset: 0,\n          pointerEvents: 'none',\n          zIndex: 999,\n          display: 'flex',\n          alignItems: 'center',\n          justifyContent: 'center',\n          opacity: 0,\n        }}\n      >\n        <svg\n          width=\"100%\"\n          height=\"100%\"\n          viewBox=\"0 0 1316 664\"\n          fill=\"none\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n          style={{ width: '100%', height: '100%', transform: 'scale(1.3)' }}\n          preserveAspectRatio=\"xMidYMid slice\"\n        >\n          <path\n            ref={svgPathRef}\n            d=\"M13.4746 291.27C13.4746 291.27 100.646 -18.6724 255.617 16.8418C410.588 52.356 61.0296 431.197 233.017 546.326C431.659 679.299 444.494 21.0125 652.73 100.784C860.967 180.556 468.663 430.709 617.216 546.326C765.769 661.944 819.097 48.2722 988.501 120.156C1174.21 198.957 809.424 543.841 988.501 636.726C1189.37 740.915 1301.67 149.213 1301.67 149.213\"\n            stroke={strokeColor}\n            strokeWidth={strokeWidth}\n            strokeLinecap=\"round\"\n            strokeLinejoin=\"round\"\n          />\n        </svg>\n      </div>\n      {children}\n    </TransitionRouter>\n  )\n}\n"
+    }
+  ]
+}

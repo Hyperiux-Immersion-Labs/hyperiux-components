@@ -1,0 +1,10 @@
+{
+  "name": "interactive-blur-reveal",
+  "type": "registry:component",
+  "title": "Interactive Blur Reveal",
+  "description": "WebGL2 fullscreen shader that keeps the image frosted/blurred by default and reveals a sharp, clear version wherever the cursor trails. Uses a fluid mouse-trail mask with multi-octave noise distortion, animated film grain, and a subtle vignette.",
+  "category": "webgl",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/webgl/interactive-blur-reveal"
+}

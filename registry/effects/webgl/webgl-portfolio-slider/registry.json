@@ -1,0 +1,11 @@
+{
+  "name": "webgl-portfolio-slider",
+  "type": "registry:component",
+  "title": "WebGL Portfolio Slider",
+  "description": "Infinite scroll slider with a Three.js WebGL fullscreen plane, cosine zoom distortion, a circular thumbnail ring, and GSAP text transitions",
+  "category": "webgl",
+  "categories": ["webgl", "scroll"],
+  "dependencies": ["three", "gsap", "lenis"],
+  "registryDependencies": [],
+  "previewUrl": "/webgl-portfolio-slider"
+}

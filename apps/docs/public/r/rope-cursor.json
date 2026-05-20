@@ -1,0 +1,25 @@
+{
+  "name": "rope-cursor",
+  "type": "registry:component",
+  "title": "Rope Cursor",
+  "description": "Soft trailing rope that lags behind the pointer with a smooth SVG path",
+  "category": "cursor",
+  "categories": [
+    "cursor"
+  ],
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/cursors/rope",
+  "coverImage": "/assets/listing/rope-cursor.png",
+  "videoUrl": "rope-cursor",
+  "files": [
+    {
+      "path": "rope-cursor.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/rope-cursor.jsx",
+      "content": "\"use client\"\n\nimport { useEffect, useRef, useState } from \"react\"\nimport gsap from \"gsap\"\n\nexport default function RopeCursor({\n  ropeColor = \"#bda985\",\n  ropeWidth = 2,\n  ropeOpacity = 0.6,\n  segmentLength = 0,\n  segmentCount = 8,\n}) {\n  const pathRef = useRef(null)\n  const ropeSegments = useRef([])\n  const mousePosition = useRef({ x: null, y: null })\n  const [isVisible, setIsVisible] = useState(false)\n\n  useEffect(() => {\n    let isInitialized = false\n    let frameId = null\n\n    const initialize = (x, y) => {\n      ropeSegments.current = Array.from({ length: segmentCount }, () => ({ x, y }))\n      isInitialized = true\n      setIsVisible(true)\n    }\n\n    const handleMouseMove = (event) => {\n      mousePosition.current.x = event.clientX\n      mousePosition.current.y = event.clientY\n\n      if (!isInitialized) initialize(event.clientX, event.clientY)\n    }\n\n    const updateLeadingSegment = (segments, targetX, targetY) => {\n      gsap.to(segments[0], {\n        x: targetX,\n        y: targetY,\n        duration: 0.05,\n        ease: \"power2.out\",\n      })\n    }\n\n    const updateFollowingSegments = (segments) => {\n      for (let index = 1; index < segmentCount; index += 1) {\n        const previousSegment = segments[index - 1]\n        const currentSegment = segments[index]\n        const dx = previousSegment.x - currentSegment.x\n        const dy = previousSegment.y - currentSegment.y\n        const distance = Math.sqrt(dx * dx + dy * dy)\n\n        if (distance > segmentLength) {\n          const angle = Math.atan2(dy, dx)\n          const nextX = previousSegment.x - Math.cos(angle) * segmentLength\n          const nextY = previousSegment.y - Math.sin(angle) * segmentLength\n\n          gsap.to(currentSegment, {\n            x: nextX,\n            y: nextY,\n            duration: 0.15 + index * 0.01,\n            ease: \"power2.out\",\n          })\n        }\n      }\n    }\n\n    const buildPath = (segments) => {\n      let path = `M ${segments[0].x} ${segments[0].y}`\n\n      for (let index = 1; index < segmentCount - 1; index += 1) {\n        const controlX = (segments[index].x + segments[index + 1].x) / 2\n        const controlY = (segments[index].y + segments[index + 1].y) / 2\n        path += ` Q ${segments[index].x} ${segments[index].y} ${controlX} ${controlY}`\n      }\n\n      const last = segments[segmentCount - 1]\n      path += ` L ${last.x} ${last.y}`\n      return path\n    }\n\n    const animate = () => {\n      if (isInitialized && mousePosition.current.x !== null) {\n        const segments = ropeSegments.current\n        updateLeadingSegment(segments, mousePosition.current.x, mousePosition.current.y)\n        updateFollowingSegments(segments)\n        if (pathRef.current) pathRef.current.setAttribute(\"d\", buildPath(segments))\n      }\n\n      frameId = requestAnimationFrame(animate)\n    }\n\n    window.addEventListener(\"mousemove\", handleMouseMove)\n    frameId = requestAnimationFrame(animate)\n\n    return () => {\n      window.removeEventListener(\"mousemove\", handleMouseMove)\n      cancelAnimationFrame(frameId)\n    }\n  }, [segmentCount, segmentLength])\n\n  return (\n    <svg className=\"absolute inset-0 h-full w-full\" style={{ opacity: isVisible ? 1 : 0 }}>\n      <path\n        ref={pathRef}\n        fill=\"none\"\n        stroke={ropeColor}\n        strokeWidth={ropeWidth}\n        strokeLinecap=\"round\"\n        strokeLinejoin=\"round\"\n        opacity={ropeOpacity}\n      />\n    </svg>\n  )\n}\n"
+    }
+  ]
+}

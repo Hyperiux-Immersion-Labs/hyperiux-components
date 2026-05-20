@@ -1,0 +1,10 @@
+{
+  "name": "interactive-arrows",
+  "type": "registry:component",
+  "title": "Interactive Arrows",
+  "description": "Canvas 2D collection of six cursor-reactive arrow and line effects: a hover-push arrow grid, an opacity-fade variant, a smooth-easing sparse grid, a particle-lines dot field, a persistent lines field, and a playful full-screen grid with center cutout. Scroll-driven background color transitions via GSAP ScrollTrigger.",
+  "category": "cursor",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/interactive-arrows"
+}

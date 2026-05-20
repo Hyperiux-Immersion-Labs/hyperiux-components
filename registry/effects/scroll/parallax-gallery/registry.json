@@ -1,0 +1,10 @@
+{
+  "name": "parallax-gallery",
+  "type": "registry:component",
+  "title": "Parallax Gallery",
+  "description": "Pinned frame gallery with snapping slides and mirrored thumbnail rails",
+  "category": "scroll",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/frame-slider"
+}

@@ -1,0 +1,26 @@
+{
+  "name": "svg-draw-page-transition",
+  "type": "registry:component",
+  "title": "Svg Draw Page Transition",
+  "description": "Brush-stroke navigation transition that draws a large SVG path across the viewport",
+  "category": "transitions",
+  "categories": [
+    "transitions"
+  ],
+  "dependencies": [
+    "gsap",
+    "next-transition-router"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/page-transitions/brush-strokes",
+  "coverImage": "/assets/listing/svg-draw-page-transition.png",
+  "videoUrl": "svg-draw-page-transition",
+  "files": [
+    {
+      "path": "svg-draw-page-transition.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/svg-draw-page-transition.jsx",
+      "content": "'use client'\n\nimport { TransitionRouter } from 'next-transition-router'\nimport { useEffect, useRef } from 'react'\nimport gsap from 'gsap'\nimport { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'\n\ngsap.registerPlugin(DrawSVGPlugin)\n\nexport default function SvgDrawPageTransition({\n  children,\n  config = {\n    enableBlur: false,\n    strokeColor: '#82A0FF',\n    strokeWidth: 2,\n    duration: 1.5,\n  },\n}) {\n  const { enableBlur, strokeColor, strokeWidth, duration } = config\n  const overlayRef = useRef(null)\n  const pathRef = useRef(null)\n\n  useEffect(() => {\n    if (!pathRef.current) return\n\n    gsap.set(pathRef.current, {\n      drawSVG: '0%',\n      strokeWidth,\n    })\n\n    gsap.config({ force3D: true })\n  }, [strokeWidth])\n\n  return (\n    <TransitionRouter\n      auto\n      leave={(next) => {\n        const timeline = gsap.timeline({ onComplete: next })\n\n        timeline\n          .to(overlayRef.current, {\n            opacity: 1,\n            backdropFilter: enableBlur ? 'blur(10px)' : 'none',\n            duration: 0.5,\n            ease: 'power2.inOut',\n          })\n          .to(\n            pathRef.current,\n            {\n              drawSVG: '100%',\n              strokeWidth: 300,\n              duration,\n              ease: 'power2.inOut',\n            },\n            0\n          )\n\n        return () => timeline.kill()\n      }}\n      enter={(next) => {\n        const timeline = gsap.timeline({ onComplete: next })\n\n        timeline\n          .to(pathRef.current, {\n            drawSVG: '100% 100%',\n            strokeWidth,\n            duration,\n            ease: 'power2.inOut',\n          })\n          .to(\n            overlayRef.current,\n            {\n              opacity: 0,\n              backdropFilter: enableBlur ? 'blur(10px)' : 'none',\n              duration: 0.5,\n              ease: 'power2.inOut',\n            },\n            1\n          )\n          .set(pathRef.current, {\n            drawSVG: '0%',\n            strokeWidth,\n          })\n\n        return () => timeline.kill()\n      }}\n    >\n      <div\n        ref={overlayRef}\n        className=\"pointer-events-none fixed inset-0 z-[999] flex items-center justify-center opacity-0\"\n      >\n        <svg\n          width=\"100%\"\n          height=\"100%\"\n          viewBox=\"0 0 1316 664\"\n          fill=\"none\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n          className=\"h-full w-full scale-[1.3]\"\n          preserveAspectRatio=\"xMidYMid slice\"\n        >\n          <path\n            ref={pathRef}\n            d=\"M13.4746 291.27C13.4746 291.27 100.646 -18.6724 255.617 16.8418C410.588 52.356 61.0296 431.197 233.017 546.326C431.659 679.299 444.494 21.0125 652.73 100.784C860.967 180.556 468.663 430.709 617.216 546.326C765.769 661.944 819.097 48.2722 988.501 120.156C1174.21 198.957 809.424 543.841 988.501 636.726C1189.37 740.915 1301.67 149.213 1301.67 149.213\"\n            stroke={strokeColor}\n            strokeWidth={strokeWidth}\n            strokeLinecap=\"round\"\n            strokeLinejoin=\"round\"\n          />\n        </svg>\n      </div>\n      {children}\n    </TransitionRouter>\n  )\n}\n"
+    }
+  ]
+}

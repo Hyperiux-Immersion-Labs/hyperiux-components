@@ -1,0 +1,25 @@
+{
+  "name": "inertia-img",
+  "type": "registry:component",
+  "title": "Inertia Image",
+  "description": "Image grid with physics-based inertia and wobble effect on mouse hover using GSAP InertiaPlugin.",
+  "category": "cursor",
+  "categories": [
+    "cursor"
+  ],
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/inertia-img",
+  "coverImage": "/assets/listing/inertia-img.png",
+  "videoUrl": "inertia-img",
+  "files": [
+    {
+      "path": "inertia-img.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/inertia-img.jsx",
+      "content": "\"use client\";\nimport { useEffect, useRef } from \"react\";\nimport Image from \"next/image\";\nimport { gsap } from \"gsap\";\nimport { InertiaPlugin } from \"gsap/InertiaPlugin\";\n\ngsap.registerPlugin(InertiaPlugin);\n\nexport function InertiaImg({ images = [] }) {\n  const rootRef = useRef(null);\n  const deltaRef = useRef({ x: 0, y: 0, oldX: 0, oldY: 0 });\n\n  useEffect(() => {\n    const root = rootRef.current;\n    if (!root) return;\n    if (window.matchMedia(\"(hover: none), (pointer: coarse)\").matches) return;\n\n    const onMouseMove = (e) => {\n      const d = deltaRef.current;\n      d.x = e.clientX - d.oldX;\n      d.y = e.clientY - d.oldY;\n      d.oldX = e.clientX;\n      d.oldY = e.clientY;\n    };\n\n    root.addEventListener(\"mousemove\", onMouseMove);\n\n    const mediaEls = root.querySelectorAll(\".media-item\");\n    const cleanups = [];\n\n    mediaEls.forEach((el) => {\n      const onMouseEnter = () => {\n        const image = el.querySelector(\"img\");\n        const { x, y } = deltaRef.current;\n\n        const tl = gsap.timeline({\n          onComplete: () => tl.kill(),\n        });\n        tl.timeScale(1.2);\n\n        tl.to(image, {\n          inertia: {\n            x: { velocity: x * 30, end: 0 },\n            y: { velocity: y * 30, end: 0 },\n          },\n        });\n\n        tl.fromTo(\n          image,\n          { rotate: 0 },\n          {\n            duration: 0.4,\n            rotate: (Math.random() - 0.5) * 30,\n            yoyo: true,\n            repeat: 1,\n            ease: \"power1.inOut\",\n          },\n          \"<\"\n        );\n      };\n\n      el.addEventListener(\"mouseenter\", onMouseEnter);\n      cleanups.push(() => el.removeEventListener(\"mouseenter\", onMouseEnter));\n    });\n\n    return () => {\n      root.removeEventListener(\"mousemove\", onMouseMove);\n      cleanups.forEach((fn) => fn());\n    };\n  }, []);\n\n  return (\n    <section\n      ref={rootRef}\n      className=\"relative grid min-h-[85vh] w-full place-items-center overflow-hidden\"\n    >\n      <div className=\"grid grid-cols-4 gap-[1vw] max-sm:gap-[5vw] max-md:grid-cols-3 max-sm:grid-cols-2\">\n        {images.map((src, i) => (\n          <div\n            key={i}\n            className=\"media-item relative h-[11vw] w-[11vw] max-sm:h-[35vw] max-sm:w-[35vw]\"\n          >\n            <Image\n              src={src}\n              alt=\"\"\n              fill\n              sizes=\"(max-width: 640px) 35vw, 11vw\"\n              className=\"pointer-events-none block rounded-[4%] object-contain will-change-transform\"\n            />\n          </div>\n        ))}\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ]
+}

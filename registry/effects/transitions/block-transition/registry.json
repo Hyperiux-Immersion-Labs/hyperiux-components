@@ -1,0 +1,10 @@
+{
+  "name": "block-transition",
+  "type": "registry:component",
+  "title": "Block Transition",
+  "description": "Horizontal split-block route transition with row-based stagger and optional content shift blur using GSAP.",
+  "category": "transitions",
+  "dependencies": ["gsap", "next-transition-router"],
+  "registryDependencies": [],
+  "previewUrl": "/page-transitions/block"
+}

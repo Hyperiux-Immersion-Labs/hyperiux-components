@@ -1,0 +1,23 @@
+{
+  "name": "dot-fill-button",
+  "type": "registry:component",
+  "title": "Dot Fill Button",
+  "description": "Button with expanding dot that fills the background on hover with character stagger",
+  "category": "buttons",
+  "categories": [
+    "buttons"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/buttons/dot-fill-button",
+  "coverImage": "/assets/listing/dot-fill-button.png",
+  "videoUrl": "dot-fill-button",
+  "files": [
+    {
+      "path": "dot-fill-button.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/dot-fill-button.jsx",
+      "content": "\"use client\";\n\nimport { useEffect, useRef } from \"react\";\n\nconst injectStyles = () => {\n  if (typeof document === \"undefined\") return;\n  if (document.getElementById(\"dot-fill-btn-styles\")) return;\n\n  const style = document.createElement(\"style\");\n  style.id = \"dot-fill-btn-styles\";\n  style.textContent = `\n    .dot-fill-btn {\n      position: relative;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      height: 3rem;\n      padding-left: 2rem;\n      padding-right: 1.5rem;\n      border-radius: 1000px;\n      background: var(--btn-bg);\n      color: var(--btn-text);\n      font-size: 0.875rem;\n      font-weight: 500;\n      overflow: hidden;\n      white-space: nowrap;\n      text-decoration: none;\n      cursor: pointer;\n      border: none;\n    }\n\n    .dot-fill-btn__dot {\n      position: absolute;\n      left: 1rem;\n      top: 50%;\n      width: 0.5rem;\n      height: 0.5rem;\n      background: var(--btn-dot);\n      border-radius: 50%;\n      transform: translateY(-50%) scale(1);\n      transform-origin: center;\n      z-index: 1;\n      transition: transform 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);\n    }\n\n    .dot-fill-btn__text-wrap {\n      position: relative;\n      z-index: 2;\n      display: inline-block;\n    }\n\n    .dot-fill-btn__text {\n      overflow: hidden;\n      position: relative;\n      display: inline-block;\n      line-height: 1.2;\n    }\n\n    .dot-fill-btn__text span {\n      display: inline-block;\n      position: relative;\n      text-shadow: 0px 1.3em currentColor;\n      transform: translateY(0em) rotate(0.001deg);\n      transition:\n        transform 0.6s cubic-bezier(0.625, 0.05, 0, 1),\n        color 0.6s cubic-bezier(0.625, 0.05, 0, 1);\n      will-change: transform;\n    }\n\n    .dot-fill-btn:hover {\n      color: var(--btn-hover-text);\n    }\n\n    .dot-fill-btn:hover .dot-fill-btn__dot {\n      transform: translateY(-50%) scale(120);\n    }\n\n    .dot-fill-btn:hover .dot-fill-btn__text span {\n      transform: translateY(-1.3em) rotate(0.001deg);\n    }\n  `;\n  document.head.appendChild(style);\n};\n\nexport function DotFillButton({\n  children,\n  className = \"\",\n  textClassName = \"\",\n  staggerStep = 0.01,\n  bgColor = \"#ff6b00\",\n  textColor = \"#ffffff\",\n  fillColor = \"#ffffff\",\n  hoverTextColor = \"#ff6b00\",\n  dotColor,\n  as: Component = \"a\",\n  ...props\n}) {\n  const textRef = useRef(null);\n  const hasInjected = useRef(false);\n\n  const text = typeof children === \"string\" ? children : \"\";\n\n  useEffect(() => {\n    if (!hasInjected.current) {\n      injectStyles();\n      hasInjected.current = true;\n    }\n  }, []);\n\n  useEffect(() => {\n    const el = textRef.current;\n    if (!el || !text) return;\n\n    el.innerHTML = \"\";\n\n    [...text].forEach((char, index) => {\n      const span = document.createElement(\"span\");\n      span.textContent = char;\n      span.style.transitionDelay = `${index * staggerStep}s`;\n\n      if (char === \" \") {\n        span.style.whiteSpace = \"pre\";\n      }\n\n      el.appendChild(span);\n    });\n  }, [text, staggerStep]);\n\n  return (\n    <Component\n      {...props}\n      className={`dot-fill-btn ${className}`}\n      style={{\n        \"--btn-bg\": bgColor,\n        \"--btn-text\": textColor,\n        \"--btn-fill\": fillColor,\n        \"--btn-hover-text\": hoverTextColor,\n        \"--btn-dot\": dotColor || fillColor,\n      }}\n    >\n      <span className=\"dot-fill-btn__dot\" />\n\n      <span className=\"dot-fill-btn__text-wrap\">\n        <span ref={textRef} className={`dot-fill-btn__text ${textClassName}`}>\n          {text}\n        </span>\n      </span>\n    </Component>\n  );\n}\n\nexport default DotFillButton;\n"
+    }
+  ]
+}

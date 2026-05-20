@@ -1,0 +1,10 @@
+{
+  "name": "scramble-text",
+  "type": "registry:component",
+  "title": "Scramble Text",
+  "description": "Hacker-style text scramble effect that reveals text character by character on scroll",
+  "category": "text",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/scramble-text"
+}

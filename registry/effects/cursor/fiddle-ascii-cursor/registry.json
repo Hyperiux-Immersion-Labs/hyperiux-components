@@ -1,0 +1,12 @@
+{
+  "name": "fiddle-ascii-cursor",
+  "type": "registry:component",
+  "title": "Fiddle Ascii Cursor",
+  "description": "Cursor-reactive media grid that swaps nearby cells into a textured ASCII collage",
+  "category": "cursor",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/cursors/feddle-ascii-cursor",
+  "coverImage": "/assets/listing/fiddle-ascii-cursor.png",
+  "videoUrl": "fiddle-ascii-cursor"
+}

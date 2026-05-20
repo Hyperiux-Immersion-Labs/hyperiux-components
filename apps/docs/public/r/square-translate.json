@@ -1,0 +1,25 @@
+{
+  "name": "square-translate",
+  "type": "registry:component",
+  "title": "Square Translate",
+  "description": "Scroll-driven list where a rotating square marker tracks progress and nudges nearby rows",
+  "category": "scroll",
+  "categories": [
+    "scroll"
+  ],
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/scroll-based-effects/square-translate",
+  "coverImage": "/assets/listing/square-translate.png",
+  "videoUrl": "square-translate",
+  "files": [
+    {
+      "path": "square-translate.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/square-translate.jsx",
+      "content": "\"use client\"\n\nimport { useRef, useEffect } from 'react'\nimport gsap from 'gsap'\nimport { ScrollTrigger } from 'gsap/dist/ScrollTrigger'\n\ngsap.registerPlugin(ScrollTrigger)\n\nconst defaultItems = [\n  \"Websites, web apps, landing pages\",\n  \"Animation and interaction design\",\n  \"Figma to production code\",\n  \"Core Web Vitals and load time optimization\",\n  \"Webflow development\",\n  \"React / Next.js / Vue / Nuxt development\",\n  \"GSAP / Framer Motion animation\",\n  \"Unlimited revisions\",\n  \"Direct Slack communication\",\n  \"Senior developers on every project\",\n]\n\nexport default function SquareTranslate({\n  items = defaultItems,\n  textClassName = 'text-[1vw]',\n  textColor = 'text-black',\n  squareClassName = 'w-[.6vw] h-[.6vw] bg-[#FB450F]',\n  containerClassName = 'w-[50vw]',\n  translateValue = 50,\n  borderColor = 'border-black/10',\n  totalTranslateImpact = 3,\n}) {\n  const containerRef = useRef(null)\n  const squareRef = useRef(null)\n  const itemRefs = useRef([])\n\n  useEffect(() => {\n    const container = containerRef.current\n    const square = squareRef.current\n    const itemElements = itemRefs.current.filter(Boolean)\n    if (!container || !square || !itemElements.length) return\n\n    gsap.set([square, ...itemElements], { willChange: 'transform', force3D: true })\n    gsap.set(square, { scale: 0, y: 0, rotation: 0 })\n\n    const getScale = (progress) => {\n      if (progress < 0.1) return progress / 0.1\n      if (progress > 0.9) return (1 - progress) / 0.1\n      return 1\n    }\n\n    const getTranslateProgress = (progress) => {\n      if (progress < 0.1) return 0\n      if (progress > 0.9) return 1\n      return (progress - 0.1) / 0.8\n    }\n\n    const getRotation = (progress) => {\n      if (progress < 0.1) return 0\n      if (progress > 0.9) return 360\n      return ((progress - 0.1) / 0.8) * 360\n    }\n\n    const trigger = ScrollTrigger.create({\n      trigger: container,\n      start: \"top 50%\",\n      end: \"bottom 50%\",\n      scrub: true,\n      onUpdate: ({ progress }) => {\n        const totalTravel = container.offsetHeight - square.offsetHeight\n        const translateProgress = getTranslateProgress(progress)\n        const currentIndex = translateProgress * (items.length - 1)\n\n        gsap.to(square, {\n          rotation: getRotation(progress),\n          y: translateProgress * totalTravel,\n          scale: getScale(progress),\n          duration: 0.4,\n          ease: \"power2.out\",\n          overwrite: true,\n        })\n\n        itemElements.forEach((item, index) => {\n          const distance = Math.min(Math.abs(index - currentIndex) / totalTranslateImpact, 1)\n          gsap.to(item, {\n            x: translateValue * (1 - distance),\n            duration: 0.4,\n            ease: \"power2.out\",\n            overwrite: true,\n          })\n        })\n      },\n      onLeave: () => gsap.to(itemElements, { x: 0, duration: 0.6, ease: \"power2.out\", overwrite: true }),\n      onLeaveBack: () => gsap.to(itemElements, { x: 0, duration: 0.6, ease: \"power2.out\", overwrite: true }),\n    })\n\n    return () => {\n      trigger.kill()\n      gsap.set([square, ...itemElements], { clearProps: 'willChange' })\n    }\n  }, [items, totalTranslateImpact, translateValue])\n\n  return (\n    <div ref={containerRef} className={`${containerClassName} relative h-fit`}>\n      <div\n        ref={squareRef}\n        className={`${squareClassName} pointer-events-none absolute top-0 left-0 z-10 scale-0`}\n      />\n      {items.map((item, index) => (\n        <ul\n          key={index}\n          ref={(element) => {\n            itemRefs.current[index] = element\n          }}\n          className={`list-none py-[.8vw] ${textColor} ${index > 0 ? `border-t ${borderColor}` : ''}`}\n        >\n          <li className={textClassName}>{item}</li>\n        </ul>\n      ))}\n    </div>\n  )\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+.cylindrical-scroll-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #020202;
+  overflow: hidden;
+}
+
+.cylindrical-scroll-stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  perspective: var(--scene-perspective, 1800px);
+  perspective-origin: center center;
+}
+
+.cylindrical-scroll-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.cylindrical-scroll-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--card-width, 220px);
+  height: var(--card-height, 300px);
+  margin-left: calc(var(--card-width, 220px) / -2);
+  margin-top: calc(var(--card-height, 300px) / -2);
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.cylindrical-scroll-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.cylindrical-scroll-card-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.22),
+    0 4px 12px rgba(0, 0, 0, 0.16);
+}
+
+.cylindrical-scroll-card-front {
+  background: #f2eee2;
+  transform: rotateY(0deg) translateZ(1px);
+}
+
+.cylindrical-scroll-card-back {
+  background: #111111;
+  transform: rotateY(180deg) translateZ(1px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cylindrical-scroll-card-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cylindrical-scroll-card-back-content {
+  width: 100%;
+  height: 100%;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.4;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+    #111111;
+}
+
+.cylindrical-scroll-section::before,
+.cylindrical-scroll-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 14%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.cylindrical-scroll-section::before {
+  top: 0;
+  background: linear-gradient(to bottom, #020202 0%, rgba(2, 2, 2, 0) 100%);
+}
+
+.cylindrical-scroll-section::after {
+  bottom: 0;
+  background: linear-gradient(to top, #020202 0%, rgba(2, 2, 2, 0) 100%);
+}
+
+@media (max-width: 1024px) {
+  .cylindrical-scroll-section {
+    --card-width: 180px;
+    --card-height: 245px;
+  }
+}
+
+@media (max-width: 540px) {
+  .cylindrical-scroll-section {
+    --card-width: 140px;
+    --card-height: 190px;
+  }
+}

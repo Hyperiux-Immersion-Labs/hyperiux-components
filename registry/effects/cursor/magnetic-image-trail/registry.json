@@ -1,0 +1,10 @@
+{
+  "name": "magnetic-image-trail",
+  "type": "registry:component",
+  "title": "Magnetic Image Trail",
+  "description": "Canvas 2D effect that orbits a cluster of images around the cursor in a diagonal loop. Images scale up in the direction of movement and push forward/upward based on mouse velocity, creating a magnetic pull feel.",
+  "category": "cursor",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/magnetic-image-trail"
+}

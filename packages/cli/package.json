@@ -1,0 +1,50 @@
+{
+  "name": "hyperiux",
+  "version": "0.1.0",
+  "description": "CLI for adding Hyperiux UI effects to your project",
+  "type": "module",
+  "bin": {
+    "hyperiux": "./src/index.js"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "echo 'No build step required'",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "ora": "^8.1.1",
+    "prompts": "^2.4.2"
+  },
+  "keywords": [
+    "hyperiux",
+    "ui",
+    "effects",
+    "animations",
+    "cli",
+    "components",
+    "nextjs",
+    "gsap",
+    "three",
+    "webgl"
+  ],
+  "author": "Hyperiux <hello@hyperiux.com>",
+  "license": "MIT",
+  "homepage": "https://ui.hyperiux.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyperiux/hyperiux-ui"
+  },
+  "bugs": {
+    "url": "https://github.com/hyperiux/hyperiux-ui/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

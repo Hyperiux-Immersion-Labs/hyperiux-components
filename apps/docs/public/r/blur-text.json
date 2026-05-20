@@ -1,0 +1,25 @@
+{
+  "name": "blur-text",
+  "type": "registry:component",
+  "title": "Blur Text",
+  "description": "Text that reveals with a blur-to-focus animation on scroll",
+  "category": "text",
+  "categories": [
+    "text"
+  ],
+  "dependencies": [
+    "framer-motion"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/blur-text-reveal",
+  "coverImage": "/assets/listing/blur-text.png",
+  "videoUrl": "blur-text",
+  "files": [
+    {
+      "path": "blur-text.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/blur-text.jsx",
+      "content": "\"use client\";\n\nimport { useRef, useEffect, useState } from \"react\";\nimport { motion, useInView } from \"framer-motion\";\n\nexport function BlurText({\n  children,\n  delay = 0,\n  duration = 0.5,\n  blur = 10,\n  className = \"\",\n}) {\n  const ref = useRef(null);\n  const isInView = useInView(ref, { once: true, margin: \"-100px\" });\n  const [hasAnimated, setHasAnimated] = useState(false);\n\n  useEffect(() => {\n    if (isInView && !hasAnimated) {\n      setHasAnimated(true);\n    }\n  }, [isInView, hasAnimated]);\n\n  const words = typeof children === \"string\" ? children.split(\" \") : [children];\n\n  return (\n    <span ref={ref} className={className}>\n      {words.map((word, index) => (\n        <motion.span\n          key={index}\n          initial={{ opacity: 0, filter: `blur(${blur}px)` }}\n          animate={\n            hasAnimated\n              ? { opacity: 1, filter: \"blur(0px)\" }\n              : { opacity: 0, filter: `blur(${blur}px)` }\n          }\n          transition={{\n            duration,\n            delay: delay + index * 0.1,\n            ease: \"easeOut\",\n          }}\n          style={{ display: \"inline-block\", marginRight: \"0.25em\" }}\n        >\n          {word}\n        </motion.span>\n      ))}\n    </span>\n  );\n}\n"
+    }
+  ]
+}

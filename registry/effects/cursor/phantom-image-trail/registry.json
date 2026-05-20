@@ -1,0 +1,10 @@
+{
+  "name": "phantom-image-trail",
+  "type": "registry:component",
+  "title": "Phantom Image Trail",
+  "description": "Cursor-driven image trail that spawns and fades stacked visuals as you move",
+  "category": "cursor",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/mouse-hover-image"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "slide-text-reveal",
+  "type": "registry:component",
+  "title": "Slide Text Reveal",
+  "description": "Characters slide in from the right with staggered fade animation on scroll",
+  "category": "text",
+  "categories": [
+    "text"
+  ],
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/slide-text-reveal",
+  "coverImage": "/assets/listing/slide-text-reveal.png",
+  "videoUrl": "slide-text-reveal",
+  "files": [
+    {
+      "path": "slide-text-reveal.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/slide-text-reveal.jsx",
+      "content": "\"use client\";\n\nimport React, { useEffect, useRef } from \"react\";\nimport gsap from \"gsap\";\nimport { SplitText } from \"gsap/SplitText\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\n\ngsap.registerPlugin(SplitText, ScrollTrigger);\n\nexport function SlideTextReveal({\n  children,\n  animateOnScroll = true,\n  delay = 0,\n  className = \"\",\n  scrub = true,\n}) {\n  const containerRef = useRef(null);\n  const splitRefs = useRef([]);\n  const charsRef = useRef([]);\n\n  useEffect(() => {\n    if (!containerRef.current) return;\n\n    splitRefs.current = [];\n    charsRef.current = [];\n\n    const elements = containerRef.current.hasAttribute(\"data-copy-wrapper\")\n      ? Array.from(containerRef.current.children)\n      : [containerRef.current];\n\n    let ctx;\n\n    const init = async () => {\n      await document.fonts.ready;\n\n      ctx = gsap.context(() => {\n        elements.forEach((element) => {\n          const split = SplitText.create(element, {\n            type: \"lines,chars\",\n            charsClass: \"char\",\n            reduceWhiteSpace: false,\n          });\n\n          splitRefs.current.push(split);\n          charsRef.current.push(...split.chars);\n        });\n\n        gsap.set(charsRef.current, {\n          x: 20,\n          opacity: 0,\n          willChange: \"transform\",\n        });\n\n        const animationProps = {\n          x: 0,\n          opacity: 1,\n          duration: 0.5,\n          stagger: 0.03,\n          ease: \"power3.out\",\n          delay,\n        };\n\n        if (animateOnScroll) {\n          gsap.to(charsRef.current, {\n            ...animationProps,\n            scrollTrigger: {\n              trigger: containerRef.current,\n              start: \"top 80%\",\n              end: \"bottom 60%\",\n              scrub,\n            },\n          });\n        } else {\n          gsap.to(charsRef.current, animationProps);\n        }\n      }, containerRef);\n    };\n\n    init();\n\n    return () => {\n      if (ctx) ctx.revert();\n      splitRefs.current.forEach((split) => split?.revert());\n    };\n  }, [animateOnScroll, delay, scrub]);\n\n  return (\n    <div ref={containerRef} data-copy-wrapper=\"true\" className={className}>\n      {children}\n    </div>\n  );\n}\n\nexport default SlideTextReveal;\n"
+    }
+  ]
+}

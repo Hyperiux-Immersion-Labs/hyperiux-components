@@ -1,0 +1,10 @@
+{
+  "name": "mouse-pixelation",
+  "type": "registry:component",
+  "title": "Mouse Pixelation",
+  "description": "Three R3F WebGL mouse-reactive pixelation effects behind a version-switcher header. V1: GLSL pixel-circle shader with animated orbiting circles and GSAP scroll pin. V2: image texture with velocity-driven block displacement. V3: extruded pixel trail grid paired with a deforming bloom-lit cube that auto-cycles neon colors.",
+  "category": "webgl",
+  "dependencies": ["three", "@react-three/fiber", "@react-three/postprocessing", "gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/mouse-pixelation-effects"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "clippath-slider",
+  "type": "registry:component",
+  "title": "Clip Path Slider",
+  "description": "Fullscreen image slider where transitions sweep via two canvas-drawn radial clip-path arcs. Includes a dual-layer background crossfade, GSAP SplitText line reveals, and a smooth custom cursor that flips direction arrows left/right.",
+  "category": "carousels",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/carousels/clippath-slider"
+}

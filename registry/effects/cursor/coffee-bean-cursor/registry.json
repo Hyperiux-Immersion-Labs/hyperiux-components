@@ -1,0 +1,12 @@
+{
+  "name": "coffee-bean-cursor",
+  "type": "registry:component",
+  "title": "Coffee Bean Cursor",
+  "description": "Mouse-reactive 3D coffee bean flow with velocity-based lighting and fluid drift",
+  "category": "cursor",
+  "dependencies": ["@react-three/drei", "@react-three/fiber", "three"],
+  "registryDependencies": [],
+  "previewUrl": "/cursors/coffee",
+  "coverImage": "/assets/listing/coffee-bean-cursor.png",
+  "videoUrl": "coffee-bean-cursor"
+}

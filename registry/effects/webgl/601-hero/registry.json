@@ -1,0 +1,10 @@
+{
+  "name": "601-hero",
+  "type": "registry:component",
+  "title": "601 Hero",
+  "description": "Immersive WebGL hero with a 3D room, interactive TV screen with pixelated video transition, mouse-tracked lighting, edge blur, and film grain post-processing.",
+  "category": "webgl",
+  "dependencies": ["@react-three/fiber", "@react-three/drei", "@react-three/postprocessing", "postprocessing", "gsap", "three"],
+  "registryDependencies": [],
+  "previewUrl": "/601-hero"
+}

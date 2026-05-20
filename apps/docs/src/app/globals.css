@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/assets/fonts/Aeonik-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Coinbase-inspired color palette */
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #ff5f00;
+  --primary-hover: #ff9253;
+  --secondary-surface: #101010;
+  --dark-surface: #000000;
+  --dark-card: #141414;
+  --border: #BCBCBC;
+  --muted: #d2d2d2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary-surface: var(--secondary-surface);
+  --color-dark-surface: var(--dark-surface);
+  --color-dark-card: var(--dark-card);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --font-aeonik: "Aeonik", var(--font-sans), system-ui, sans-serif;
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* Border radius scale from Coinbase design */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 40px;
+  --radius-pill: 56px;
+  --radius-full: 100000px;
+
+  --breakpoint-md: 1025px;
+  --breakpoint-sm: 768px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  line-height: 1.5;
+  font-size: 16px;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+html,
+body {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Typography hierarchy inspired by Coinbase */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.display-hero {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 80px;
+  font-weight: 400;
+  line-height: 1.0;
+}
+
+.display-secondary {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 1.0;
+}
+
+.display-third {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1.0;
+}
+
+/* Button base style - Coinbase pill */
+.btn-pill {
+  border-radius: 56px;
+  padding: 12px 32px;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.16px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-pill-primary {
+  background: var(--secondary-surface);
+  color: var(--foreground);
+  border: 1px solid var(--secondary-surface);
+}
+
+.btn-pill-primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: #ffffff;
+}
+
+.btn-pill-outline {
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--primary);
+}
+
+.btn-pill-outline:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: #ffffff;
+}
+
+/* Custom scrollbar for webkit browsers */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    0deg,
+    #ff5f00 0%,
+    #ff7b2c 40%,
+    #1a1a1a 100%
+  );
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    0deg,
+    #ff9253 0%,
+    #ff6a00 40%,
+    #000000 100%
+  );
+}
+
+/* Selection color */
+::selection {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 542px) {
+  body {
+    font-size: 4vw;
+  }
+}

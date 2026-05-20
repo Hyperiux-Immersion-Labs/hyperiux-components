@@ -1,0 +1,10 @@
+{
+  "name": "text-convergence",
+  "type": "registry:component",
+  "title": "Text Convergence",
+  "description": "Horizontal scroll-driven text marquee where characters fly in from random positions and converge into place as you scroll",
+  "category": "scroll",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/text-convergence"
+}

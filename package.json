@@ -1,0 +1,19 @@
+{
+  "name": "hyperiux-ui",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "build:registry": "turbo build:registry"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.4"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

@@ -1,0 +1,70 @@
+.scramble-link-btn {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.35s ease;
+}
+
+.scramble-link-btn:hover {
+  color: var(--scramble-hover-color, currentColor);
+}
+
+.scramble-link-btn__inner {
+  position: relative;
+  display: inline-block;
+}
+
+.scramble-link-btn__ghost {
+  display: inline-block;
+  visibility: hidden;
+  white-space: pre;
+  pointer-events: none;
+  user-select: none;
+  font-variant-ligatures: none;
+}
+
+.scramble-link-btn__text {
+  position: absolute;
+  inset: 0;
+  display: inline-block;
+  white-space: pre;
+  font-variant-ligatures: none;
+}
+
+.scramble-link-line {
+  position: relative;
+  width: fit-content;
+}
+
+.scramble-link-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4%;
+  width: 100%;
+  height: 1.5px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s cubic-bezier(0.625, 0.05, 0, 1);
+}
+
+.scramble-link-btn:hover .scramble-link-line::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.scramble-link-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scramble-link-btn__svg {
+  transition: transform 0.3s ease;
+}
+
+.scramble-link-btn:hover .scramble-link-btn__svg {
+  transform: rotate(-45deg);
+}

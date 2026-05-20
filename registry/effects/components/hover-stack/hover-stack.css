@@ -1,0 +1,137 @@
+.shc {
+  position: relative;
+  width: 100%;
+  padding: 0 7vw;
+}
+
+.shc__desktop {
+  position: relative;
+  width: var(--stack-width);
+  height: var(--stack-height);
+  margin: 0 auto;
+}
+
+.shc__mobile {
+  display: none;
+}
+
+.shc__card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--card-width);
+  height: var(--card-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  padding: 24px;
+  cursor: pointer;
+  transform-origin: center center;
+  user-select: none;
+  will-change: transform;
+}
+
+.shc__card--static {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 260px;
+  border-radius: 18px;
+  transform: none !important;
+  transition: none !important;
+  cursor: default;
+}
+
+.shc__body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.shc__quote {
+  max-width: 92%;
+  margin: 0;
+  font-size: 1.9rem;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.shc__footer {
+  position: relative;
+  z-index: 2;
+}
+
+.shc__divider {
+  width: 100%;
+  height: 1px;
+  margin-bottom: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.shc__footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.shc__explore-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.shc__explore-icon {
+  display: flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.shc__explore-text {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.shc__index {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .shc__desktop {
+    display: none;
+  }
+
+  .shc__mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .shc__card--static {
+    padding: 22px;
+    border-radius: 22px;
+  }
+
+  .shc__quote {
+    max-width: 100%;
+    font-size: 1.55rem;
+    line-height: 1;
+  }
+}

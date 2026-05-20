@@ -1,0 +1,10 @@
+{
+  "name": "text-stream",
+  "type": "registry:component",
+  "title": "Text Stream",
+  "description": "Infinite vertical text marquee that accelerates and reverses direction based on scroll velocity, with a hard-edge mask and static prefix label",
+  "category": "text",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/text-stream"
+}
