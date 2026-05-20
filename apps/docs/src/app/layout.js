@@ -1,6 +1,7 @@
 import { Space_Grotesk, Inter, Geist_Mono } from "next/font/google";
 import "highlight.js/styles/github-dark.css";
 import "./globals.css";
+import { Analytics } from '@vercel/analytics/next';
 
 
 // Display font - for hero headlines (similar to CoinbaseDisplay)
@@ -44,6 +45,7 @@ export default function RootLayout({ children }) {
       >
      
         {children}
+        <Analytics />
       </body>
     </html>
   );
