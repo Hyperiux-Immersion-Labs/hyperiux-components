@@ -3,7 +3,15 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": [
+        "CLOUDINARY_API_KEY",
+        "CLOUDINARY_API_SECRET",
+        "SENTRY_ORG",
+        "SENTRY_PROJECT",
+        "SENTRY_AUTH_TOKEN",
+        "ENABLE_EXPERIMENTAL_COREPACK"
+      ]
     },
     "dev": {
       "cache": false,

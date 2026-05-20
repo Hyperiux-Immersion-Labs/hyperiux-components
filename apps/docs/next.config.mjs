@@ -2,6 +2,15 @@ import { withSentryConfig } from "@sentry/nextjs";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/effects',
+        permanent: false,
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       {

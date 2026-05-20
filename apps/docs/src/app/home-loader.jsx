@@ -3,33 +3,31 @@
 import { useCallback, useEffect, useState } from'react'
 import { useRouter } from'next/navigation'
 import NumericTunnel from'@/components/Loaders/NumericTunnel'
+
 export default function HomeLoader({ children }) {
- const router = useRouter()
-  const [showLoader, setShowLoader] = useState(false)
- const [ready, setReady] = useState(false)
+  const router = useRouter()
+  const [state, setState] = useState('loading') // 'loading' | 'loader' | 'redirecting'
 
- useEffect(() => {
-  const hasPlayed = sessionStorage.getItem('loaderPlayed')
-  if (hasPlayed) {
-   router.replace('/effects')
-  } else {
-   setShowLoader(true)
-  }
-  setReady(true)
- }, [router])
+  useEffect(() => {
+    const hasPlayed = sessionStorage.getItem('loaderPlayed')
+    if (hasPlayed) {
+      setState('redirecting')
+      router.replace('/effects')
+    } else {
+      setState('loader')
+    }
+  }, [router])
 
- const handleComplete = useCallback(() => {
+  const handleComplete = useCallback(() => {
     sessionStorage.setItem('loaderPlayed', 'true')
-  router.replace('/effects')
- }, [router])
+    setState('redirecting')
+    router.replace('/effects')
+  }, [router])
 
- // Don't render anything until we've checked sessionStorage (avoids flash)
- if (!ready) return null
+  if (state === 'loader') {
+    return <NumericTunnel onComplete={handleComplete} />
+  }
 
- if (showLoader) {
-  return <NumericTunnel onComplete={handleComplete} />
- }
-
- // Fallback while redirecting
- return null
+  // 'loading' (pre-hydration) and 'redirecting' — render nothing
+  return null
 }
