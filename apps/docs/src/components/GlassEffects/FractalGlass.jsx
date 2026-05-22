@@ -101,8 +101,8 @@ const fragmentShader = `
 
 export default function GlassStripParallax({
  imageSrc ="/assets/img/image10.jpg", // ← new prop: path/URL to image file
- videoSrc = null, // ← new prop: path/URL to video file
- mediaType ="image", // ← new prop:"image" |"video"
+ videoSrc = null, 
+ mediaType ="image", 
  stripesFrequency = 8.0,
  glassStrength = 0.8,
  glassSmoothness = 0.5,
@@ -243,17 +243,43 @@ export default function GlassStripParallax({
  parallaxStrength, distortionMultiplier, edgePadding]);
 
  return (
- <div
- ref={mountRef}
- style={{
- position:"fixed",
- inset: 0,
- width:"100vw",
- height:"100vh",
- overflow:"hidden",
- background:"#000",
- }}
- />
+  <div
+    ref={mountRef}
+    style={{
+      position: "fixed",
+      inset: 0,
+      width: "100vw",
+      height: "100vh",
+      overflow: "hidden",
+      background: "#000",
+    }}
+  >
+    {/* Mobile message */}
+    <div
+      className="
+        hidden
+        max-sm:flex
+        fixed
+        bottom-6
+        left-1/2
+        -translate-x-1/2
+        z-50
+        px-4
+        py-2
+        rounded-full
+        bg-white/10
+        backdrop-blur-md
+        text-white
+        text-center
+        text-sm
+        leading-tight
+        pointer-events-none
+      "
+    >
+      Works best on desktop  <br />
+      Here, tap & drag to explore
+    </div>
+  </div>
  );
 }
 

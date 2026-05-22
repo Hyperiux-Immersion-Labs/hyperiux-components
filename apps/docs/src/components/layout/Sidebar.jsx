@@ -53,7 +53,7 @@ export function Sidebar({
             }}
         >
             <div
-                className={`relative flex h-full max-sm:h-fit max-sm:w-[80vw] max-sm:bg-black flex-col rounded-lg overflow-visible transition-transform duration-300 ease-out w-[16rem] ${
+                className={`relative flex h-full max-sm:h-fit max-sm:pb-4 max-sm:w-[80vw] max-sm:bg-black flex-col rounded-lg overflow-visible transition-transform duration-300 ease-out w-[16rem] ${
                     isExpanded ? "translate-x-0 max-sm:ml-6" : "max-sm:-translate-x-[calc(100%+0.75rem)] -translate-x-full"
                 }`}
             >
@@ -87,10 +87,10 @@ export function Sidebar({
 
                 <div
                     aria-hidden={!isExpanded}
-                    className={`relative flex h-full w-full flex-col rounded-lg ${isExpanded ? "" : "pointer-events-none"}`}
+                    className={`relative flex h-full min-h-0 w-full flex-col rounded-lg ${isExpanded ? "" : "pointer-events-none"}`}
                 >
                     <div
-                        className="h-fit w-full border border-border/60 p-4 rounded-lg bg-black/20 backdrop-blur-md"
+                        className="flex flex-col min-h-0 max-h-full max-sm:max-h-[85vh] w-full border border-border/60 rounded-lg bg-black/20 backdrop-blur-md overflow-y-auto overscroll-contain"
                         onClick={(e) => {
                             if (!isExpanded) return;
                             if (e.target === e.currentTarget) close();
@@ -98,7 +98,7 @@ export function Sidebar({
                     >
                         <>
                             {/* Navigation */}
-                            <nav className="flex-1 overflow-y-auto z-99">
+                            <nav data-lenis-prevent className="flex-1 z-99 min-h-0 max-sm:b-4 p-4">
                                 {/* The Vault section */}
                                 <div className="mb-6">
                                     <Link

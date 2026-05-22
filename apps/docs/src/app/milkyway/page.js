@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useMemo, useEffect, useCallback, useState } from'react'
+import React, { useRef, useMemo, useEffect, useSyncExternalStore } from'react'
 import { Canvas, useFrame, useThree } from'@react-three/fiber'
 import { Center } from'@react-three/drei'
 import * as THREE from'three'
@@ -873,27 +873,41 @@ function ResponsiveCamera() {
  return null
 }
 
+const MOBILE_QUERY = '(max-width: 767px)'
+
+function subscribeToViewportChange(callback) {
+ if (typeof window ==='undefined') return () => {}
+ const mobileQuery = window.matchMedia(MOBILE_QUERY)
+ window.addEventListener('resize', callback)
+ mobileQuery.addEventListener('change', callback)
+ return () => {
+ window.removeEventListener('resize', callback)
+ mobileQuery.removeEventListener('change', callback)
+ }
+}
+
+function getDprSnapshot() {
+ if (typeof window ==='undefined') return 1
+ return Math.max(1, Math.min(2, window.devicePixelRatio || 1))
+}
+
+function getMobileSnapshot() {
+ if (typeof window ==='undefined') return true
+ return window.matchMedia(MOBILE_QUERY).matches
+}
+
 // ─────────────────────────────────────────────────────────────
 // Page
 // ─────────────────────────────────────────────────────────────
 export default function Page() {
- const [dpr, setDpr] = useState(1)
-
- const onResize = useCallback(() => {
- if (typeof window ==='undefined') return
- setDpr(Math.max(1, Math.min(2, window.devicePixelRatio || 1)))
- }, [])
-
- useEffect(() => {
- onResize()
- window.addEventListener('resize', onResize)
- return () => window.removeEventListener('resize', onResize)
- }, [onResize])
+ const dpr = useSyncExternalStore(subscribeToViewportChange, getDprSnapshot, () => 1)
+ const isMobile = useSyncExternalStore(subscribeToViewportChange, getMobileSnapshot, () => true)
 
  return (
  <section style={{ width:'100%', height:'100vh', background:'#000' }}>
 
 
+ {!isMobile ? (
  <Canvas
  dpr={dpr}
  gl={{ antialias: false, powerPreference:'high-performance' }}
@@ -919,15 +933,22 @@ export default function Page() {
  <Vignette opacity={.5} offset={.8} darkness={.7}/>
  </EffectComposer>
  </Canvas>
+ ) : (
+ <div className='absolute inset-0 flex items-center justify-center px-6 text-center text-white'>
+ <p className=' rounded-full bg-white/10 px-5 py-3 w-[60%] text-base backdrop-blur-sm'>
+ Open in desktop to experience this effect.
+ </p>
+ </div>
+ )}
 
- <div className=" h-screen w-full absolute left-0 top-0 z-299 flex items-center justify-center">
+ <div className=" h-screen w-full absolute left-0 top-0 max-sm:top-5 z-299 flex items-center justify-center">
 
 
  <div className='h-full w-full relative'>
  {/* Navbar (leave unchanged) */}
- <div className='w-full absolute top-0 left-0 pt-[2vw] px-[2vw] flex items-center justify-between h-fit'>
+ <div className='w-full absolute top-0 left-0 pt-[2vw] px-[2vw] flex items-center max-sm:flex-col max-sm:gap-5 justify-between h-fit'>
  <p className='text-4xl font-medium'>Galaxy</p>
- <div className="flex items-center">
+ <div className="flex items-center max-sm:gap-2">
  {[
 "Spiral Arms",
 "Stellar Map",
@@ -937,7 +958,7 @@ export default function Page() {
  <Link
  href={"#"}
  key={item}
- className='bg-white/20 hover:bg-white hover:text-black transition-all duration-500 cursor-pointer backdrop-blur-sm rounded-full text-sm px-[2vw] py-[.5vw]'
+ className='bg-white/20 hover:bg-white hover:text-black max-sm:text-sm transition-all duration-500 cursor-pointer backdrop-blur-sm rounded-full text-sm px-[2vw] py-[.5vw]'
  >
  {item}
  </Link>
@@ -946,24 +967,27 @@ export default function Page() {
  
  </div>
  {/* Enhanced cosmic hero section */}
- <div className="absolute bottom-[4vw] left-[4vw] max-w-[70vw]">
- <p className='flex items-center bg-white/20 backdrop-blur-sm rounded-full text-xs px-[1vw] py-[.5vw] w-fit gap-2'><Stars size={12} />Data Driven And Creative</p>
- <h1 className="text-[7vw] mt-[1vw] font leading-[1.1] text-white drop-shadow-[0_0_32px_rgba(100,96,255,0.17)]">
+ <div className="absolute bottom-[4vw] max-sm:bottom-[12vw] left-[4vw] max-w-[70vw]">
+ <p className='flex items-center bg-white/20  max-sm:text-sm backdrop-blur-sm rounded-full text-xs px-[1vw] py-[.5vw] w-fit gap-2'><Stars size={12} />Data Driven And Creative</p>
+ <h1 className="text-[7vw] mt-[1vw] max-sm:mt-[3vw] font leading-[1.1] text-white drop-shadow-[0_0_32px_rgba(100,96,255,0.17)]">
  Particles Galaxy
 
  </h1>
- <h1 className='text-[7vw] -mt-[1vw] drop-shadow-[0_0_32px_rgba(100,96,255,0.17)]'>Milkyway</h1>
+ <h1 className='text-[7vw]  -mt-[1vw] drop-shadow-[0_0_32px_rgba(100,96,255,0.17)]'>Milkyway</h1>
  </div>
 
-
+ {!isMobile && (
  <div className='h-fit cursor-pointer w-fit absolute bottom-[2vw] right-[4vw] p-[1.5vw]'>
+
 
  <CircularText
  text="EXPLORE THE GALAXY"
  spinDuration={20}
  onHover="speedUp"
  />
+
  </div>
+  )}
 
  </div>
 

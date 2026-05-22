@@ -37,9 +37,16 @@ export default function Page() {
  return (
  <div className="relative flex h-dvh w-dvw flex-col gap-15 items-center justify-center">
 
- <h2 className="text-5xl text-center">
+ <h2 className="text-5xl text-center max-sm:hidden">
  Move your cursor.
  <br />See the pixels react
+ </h2>
+
+ <h2 className="hidden max-sm:block text-center text-2xl">
+    Tap the image to reveal the blur. 
+    <br />
+    Desktop gives you the full interactive magic
+
  </h2>
 
  {/* SVG Filter */}

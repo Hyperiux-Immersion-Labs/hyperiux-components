@@ -15,8 +15,22 @@ export default function RopeCursor({
 	const ropeSegments = useRef([])
 	const mousePosition = useRef({ x: null, y: null })
 	const [isVisible, setIsVisible] = useState(false)
+	const [isMobile, setIsMobile] = useState(false)
 
 	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth < 640)
+		}
+
+		checkMobile()
+		window.addEventListener('resize', checkMobile)
+
+		return () => window.removeEventListener('resize', checkMobile)
+	}, [])
+
+	useEffect(() => {
+		if (isMobile) return
+
  let isInitialized = false
  let animationFrameId = null
 
@@ -112,7 +126,9 @@ export default function RopeCursor({
  window.removeEventListener('mousemove', handleMouseMove)
  cancelAnimationFrame(animationFrameId)
  }
-	}, [segmentCount, segmentLength])
+	}, [segmentCount, segmentLength, isMobile])
+
+	if (isMobile) return null
 
 	return (
  <svg

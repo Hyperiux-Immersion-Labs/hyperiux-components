@@ -51,7 +51,8 @@ export default function PixelScrollCanvas({ wrapperRef }) {
  let isMounted = true;
  let animationId;
 
- const canvasSize = 599;
+ const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+ const canvasSize = isMobile ? 300 : 599;
  const numSlices = 32;
 
  const init = (canvasTextures) => {
@@ -217,7 +218,7 @@ export default function PixelScrollCanvas({ wrapperRef }) {
  return (
  <div
  ref={containerRef}
- className="w-150 h-150 border-r border-t border-black/20"
+ className="w-150 h-150 max-sm:w-[300px] max-sm:h-[300px] border-r border-t border-black/20"
  />
  );
 }

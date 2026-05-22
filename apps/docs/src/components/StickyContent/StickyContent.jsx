@@ -67,6 +67,7 @@ const StickyContentWrapper = ({
 
  images.forEach((image, index) => {
  gsap.set(image, {
+ autoAlpha: 1,
  zIndex: items.length - index,
  clipPath:"inset(0% 0% 0% 0%)",
  scale: enableImageScaleFlow
@@ -184,7 +185,7 @@ const StickyContentWrapper = ({
  <div
  key={`content-${index}`}
  ref={addContentRef}
- className={`sticky-content__panel ${contentClassName}`}
+ className={`sticky-content__panel opacity-0 ${contentClassName}`}
  >
  {item.renderContent ? (
  item.renderContent(item, index)
@@ -207,7 +208,7 @@ const StickyContentWrapper = ({
  <div
  key={`image-${index}`}
  ref={addImageRef}
- className={`sticky-content__image-layer ${imageClassName}`}
+ className={`sticky-content__image-layer opacity-0 ${imageClassName}`}
  >
  {item.renderImage ? (
  item.renderImage(item, index)

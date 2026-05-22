@@ -103,7 +103,7 @@ export default function SquareTranslate({
             {items.map((item, i) => (
                 <ul key={i}
                     ref={el => itemRefs.current[i] = el}
-                    className={`list-none py-[.8vw] ${textColor} ${i > 0 ? `border-t ${borderColor}` : ''} ${i === items.length - 1 ? '' : ''}`}
+                    className={`list-none py-[.8vw] max-sm:py-[2vw] ${textColor} ${i > 0 ? `border-t ${borderColor}` : ''} ${i === items.length - 1 ? '' : ''}`}
                 >
                     <li className={textClassName}>{item}</li>
                 </ul>

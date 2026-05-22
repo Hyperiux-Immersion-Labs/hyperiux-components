@@ -348,9 +348,16 @@ function DeformingCube({ mousePositionRef, mouseVelocityRef, trailStrengthRef })
     target: colorOptions[0].color.clone(),
     currentEmissive: colorOptions[0].emissive.clone(),
     targetEmissive: colorOptions[0].emissive.clone(),
-    lastSwitch: Date.now(),
-    interval: 1200 + Math.random() * 5000, // ms
+    lastSwitch: 0,
+    interval: 0,
   });
+
+  useEffect(() => {
+    // Initialize timers after mount (keeps render pure).
+    if (colorState.current.lastSwitch === 0) colorState.current.lastSwitch = Date.now();
+    if (colorState.current.interval === 0)
+      colorState.current.interval = 1200 + Math.random() * 5000;
+  }, []);
 
   // Set initial geometry
   useEffect(() => {
@@ -490,6 +497,11 @@ export default function EnhancedPixelCube() {
     <>
      
         <div style={{ width: '100vw', height: '100vh', background: '#000' }}>
+          <div className="pointer-events-none absolute left-0 top-30 z-10 w-full px-5 pt-5 hidden max-sm:block">
+            <p className="inline-flex max-w-[92vw] rounded-sm border border-white/15 bg-black/40 px-4 py-2 text-[3.5vw] font-medium  text-white/75 backdrop-blur">
+              Best on desktop: whip your mouse to see the trail snap, bloom, and bend the grid.
+            </p>
+          </div>
           <Canvas
             camera={{ position: [0, 0, 4], fov: 75 }}
             gl={{ antialias: true }}

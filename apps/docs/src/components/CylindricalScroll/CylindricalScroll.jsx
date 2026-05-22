@@ -61,39 +61,59 @@ export default function CylindricalScrollCards({
             const totalTravel = baseCount * verticalSpacing;
 
             const render = (travel) => {
+                const isMobile = window.innerWidth < 640;
+
+                const currentSnakeAmplitude = isMobile
+                    ? snakeAmplitude * 0.85
+                    : snakeAmplitude;
+
+                const currentDepthAmplitude = isMobile
+                    ? depthAmplitude * 0.55
+                    : depthAmplitude;
+
                 cards.forEach((card, i) => {
                     const localIndex = i - baseCount;
                     const flowY = localIndex * verticalSpacing - travel;
 
                     const phase = (flowY / verticalSpacing) * snakeTightness;
 
-                    const x = Math.sin(phase) * snakeAmplitude;
-                    const z = Math.cos(phase) * depthAmplitude;
+                    const x = Math.sin(phase) * currentSnakeAmplitude;
+                    const z = Math.cos(phase) * currentDepthAmplitude;
                     const y = flowY;
 
                     const scale = clamp(
-                        gsap.utils.mapRange(-depthAmplitude, depthAmplitude, scaleMin, 1, z),
+                        gsap.utils.mapRange(
+                            -currentDepthAmplitude,
+                            currentDepthAmplitude,
+                            scaleMin,
+                            1,
+                            z
+                        ),
                         scaleMin,
                         1
                     );
 
-                    const dx_dPhase = Math.cos(phase) * snakeAmplitude;
-                    const dz_dPhase = -Math.sin(phase) * depthAmplitude;
+                    const dx_dPhase = Math.cos(phase) * currentSnakeAmplitude;
+                    const dz_dPhase = -Math.sin(phase) * currentDepthAmplitude;
 
                     const rotationY = clamp(
-                        (-dx_dPhase / Math.max(snakeAmplitude, 1)) * maxYRotation * yRotateStrength,
+                        (-dx_dPhase / Math.max(currentSnakeAmplitude, 1)) *
+                            maxYRotation *
+                            yRotateStrength,
                         -maxYRotation,
                         maxYRotation
                     );
 
                     const rotationZ = clamp(
-                        (dx_dPhase / Math.max(snakeAmplitude, 1)) * maxZRotation * zRotateStrength,
+                        (dx_dPhase / Math.max(currentSnakeAmplitude, 1)) *
+                            maxZRotation *
+                            zRotateStrength,
                         -maxZRotation,
                         maxZRotation
                     );
 
                     const rotationX = clamp(
-                        (dz_dPhase / Math.max(depthAmplitude, 1)) * 8,
+                        (dz_dPhase / Math.max(currentDepthAmplitude, 1)) * 8,
                         -8,
                         8
                     );

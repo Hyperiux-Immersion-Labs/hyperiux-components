@@ -72,6 +72,7 @@ const fragmentShader = () => `
 
 function PlaneWithShader({ texture }) {
   const materialRef = useRef();
+  const shaderMaterialRef = useRef(null);
   const { size, viewport } = useThree();
   const clock = useRef(new THREE.Clock());
   const isMovingRef = useRef(1.0);
@@ -105,6 +106,10 @@ function PlaneWithShader({ texture }) {
       }),
     [texture]
   );
+
+  useEffect(() => {
+    shaderMaterialRef.current = shaderMaterial;
+  }, [shaderMaterial]);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -141,24 +146,27 @@ function PlaneWithShader({ texture }) {
   }, [size]);
 
   useFrame((state, delta) => {
-    shaderMaterial.uniforms.uTime.value = clock.current.getElapsedTime();
+    const material = shaderMaterialRef.current;
+    if (!material) return;
+
+    material.uniforms.uTime.value = clock.current.getElapsedTime();
 
     // Smooth mouse position
-    const currentMouse = shaderMaterial.uniforms.uMouse.value;
+    const currentMouse = material.uniforms.uMouse.value;
     currentMouse.lerp(targetMouseRef.current, 0.15);
 
     // Identical two-stage smoothing for both X and Y
     smoothedVelocityRef.current.lerp(targetVelocityRef.current, 0.06);
 
-    const currentVelocity = shaderMaterial.uniforms.uVelocity.value;
+    const currentVelocity = material.uniforms.uVelocity.value;
     currentVelocity.lerp(smoothedVelocityRef.current, 0.15);
 
     // Gradual velocity decay
     targetVelocityRef.current.multiplyScalar(0.96);
 
     // Smooth movement state transition
-    shaderMaterial.uniforms.uIsMoving.value = THREE.MathUtils.lerp(
-      shaderMaterial.uniforms.uIsMoving.value,
+    material.uniforms.uIsMoving.value = THREE.MathUtils.lerp(
+      material.uniforms.uIsMoving.value,
       isMovingRef.current,
       0.05
     );
@@ -193,8 +201,12 @@ function Scene({ img }) {
 export default function Zanjo({ img = "/assets/img/image06.png" }) {
   return (
     <>
-      
           <div className="h-screen w-full relative">
+            <div className="pointer-events-none absolute left-0 top-40 z-10 w-full px-5 pt-5 hidden max-sm:block">
+              <p className="inline-flex max-w-[92vw] rounded-sm border border-white/15 bg-black/40 px-4 py-2 text-[3.5vw] font-medium text-white/75 backdrop-blur">
+                Heads up: the pixel-drift responds to cursor velocity - desktop is the sweet spot.
+              </p>
+            </div>
            
             <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
               <color attach="background" args={["#000000"]} />

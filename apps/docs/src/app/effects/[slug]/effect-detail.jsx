@@ -45,7 +45,6 @@ export function EffectDetailContent({
     setIsWishlisted(!isWishlisted);
   };
 
-  // Generate usage code
   const componentName = slug
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -65,6 +64,92 @@ export default function MyComponent() {
 
   const showVideo = videoPreviewUrl && !videoError && videoReady;
 
+  // Extracted sidebar JSX — rendered in two places (mobile inline + desktop column)
+  const sidebarContent = (
+    <div className="space-y-6">
+      {/* Action buttons */}
+      <div className="flex items-center gap-3">
+        <Link
+          href={effect.previewUrl || `/effects/${slug}/preview`}
+          target="_blank"
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 backdrop-blur-md text-foreground bg-primary hover:bg-primary/80 hover:text-white rounded-md hover:border-transparent transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+          Live Preview
+        </Link>
+
+        <button
+          onClick={toggleWishlist}
+          className={`p-2.5 backdrop-blur-sm rounded-full transition-colors cursor-pointer ${
+            isWishlisted
+              ? "bg-primary text-white border border-transparent"
+              : "bg-black/20 border border-border/60 text-foreground hover:bg-primary hover:text-white"
+          }`}
+          aria-label="Add to wishlist"
+        >
+          <svg
+            className="w-4 h-4"
+            fill={isWishlisted ? "currentColor" : "none"}
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Resource details card */}
+      <div className="bg-secondary-surface/60 backdrop-blur-md rounded-md border border-border/60 p-5 space-y-4">
+        <h3 className="font-medium text-foreground">Resource details</h3>
+
+        <div className="space-y-3 text-sm">
+          <div className="flex justify-between gap-6">
+            <span className="text-muted">Category</span>
+            <span className="text-foreground capitalize text-right">
+              {(effect.categories?.length ? effect.categories : [effect.category]).join(", ")}
+            </span>
+          </div>
+          <div className="flex justify-between gap-6">
+            <span className="text-muted">Dependencies</span>
+            <span className="text-foreground text-right">
+              {effect.dependencies?.join(", ") || "None"}
+            </span>
+          </div>
+          <div className="flex justify-between gap-6">
+            <span className="text-muted">License</span>
+            <span className="text-foreground text-right">MIT</span>
+          </div>
+        </div>
+
+        <div className="pt-3 border-t border-border/60">
+          <div className="flex flex-wrap gap-2">
+            {(effect.categories?.length ? effect.categories : [effect.category]).map((cat) => (
+              <span key={cat} className="px-2.5 py-1 bg-white border border-border/60 rounded-full text-xs text-[#3C3C3C] capitalize">
+                {cat}
+              </span>
+            ))}
+            {effect.dependencies?.map((dep) => (
+              <span
+                key={dep}
+                className="px-2.5 py-1 bg-white border border-border/60 rounded-full text-xs text-[#3C3C3C]"
+              >
+                {dep}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <VaultLayout
       effectCounts={effectCounts}
@@ -72,28 +157,27 @@ export default function MyComponent() {
       bgImageSrc=""
       activeCategory={effect.categories?.[0] || effect.category}
     >
-      <div className="min-h-screen bg-black text-foreground px-15">
+      <div className="min-h-screen bg-black text-foreground px-15 max-sm:px-6">
         {/* Sticky Header with Breadcrumb */}
         <Suspense fallback={<div className="h-12" />}>
           <VaultHeader effectName={effect.title} showSearch={false} />
         </Suspense>
 
         {/* Main content */}
-        <div className=" mx-auto px-8 pt-28 pb-8">
+        <div className="mx-auto px-8 pt-28 pb-8 max-sm:px-0">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-            {/* Left: Title + Preview + Documentation */}
+            {/* Left: Title + Preview + (mobile sidebar) + Documentation */}
             <div className="lg:col-span-2 space-y-8">
               {/* Title Section */}
               <div>
-                <h1 className="text-5xl text-foreground mb-4">
+                <h1 className="text-5xl max-sm:text-center text-foreground mb-4">
                   {effect.title}
                 </h1>
-                <p className="text-[#d2d2d2] w-[80%]">{effect.description}</p>
+                <p className="text-[#d2d2d2] w-[80%] max-sm:w-full max-sm:text-center">{effect.description}</p>
               </div>
 
               {/* Preview */}
-              <div className="h-[65vh] overflow-hidden relative bg-black/20 ">
-                {/* Cover Image — always rendered, hidden when video is ready */}
+              <div className="h-[65vh] max-sm:h-[25vh] overflow-hidden relative bg-black/20">
                 <Image
                   src={effect.coverImage || "/assets/img/image01.webp"}
                   alt={effect.title || slug}
@@ -105,7 +189,6 @@ export default function MyComponent() {
                   }`}
                 />
 
-                {/* Video — only mounted if a URL exists and no error */}
                 {videoPreviewUrl && !videoError && (
                   <video
                     ref={videoRef}
@@ -123,29 +206,30 @@ export default function MyComponent() {
                 )}
               </div>
 
+              {/* Sidebar injected here on mobile only — after preview, before docs */}
+              <div className="sm:hidden">
+                {sidebarContent}
+              </div>
+
               {/* Documentation */}
               <div className="space-y-10">
                 <h2 className="text-4xl font-semibold text-foreground tracking-tighter">Documentation</h2>
 
-                {/* Installation */}
                 <div className="space-y-3">
                   <h3 className="font-medium text-muted text-2xl tracking-tighter">Installation</h3>
                   <CodeBlock code={installCode} language="bash" />
                 </div>
 
-                {/* Usage */}
                 <div className="space-y-3">
                   <h3 className="font-medium text-muted text-2xl tracking-tighter">Usage</h3>
                   <CodeBlock code={usageCode} language="jsx" />
                 </div>
 
-                {/* Component Code */}
                 <div className="space-y-3">
                   <h3 className="font-medium text-muted text-2xl tracking-tighter">Component Code</h3>
                   <CodeBlock code={code} language="jsx" filename={`${slug}.jsx`} />
                 </div>
 
-                {/* Props Table */}
                 {config?.props?.length > 0 && (
                   <div className="space-y-3">
                     <h3 className="font-medium text-muted">Props</h3>
@@ -178,90 +262,10 @@ export default function MyComponent() {
               </div>
             </div>
 
-            {/* Right: Action Buttons + Resource Details (Sticky) */}
-            <div className="lg:col-span-1 self-stretch">
-              <div className="sticky top-28 space-y-6 h-fit">
-                {/* Action buttons */}
-                <div className="flex items-center gap-3">
-                  <Link
-                    href={effect.previewUrl || `/effects/${slug}/preview`}
-                    target="_blank"
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5  backdrop-blur-md text-foreground bg-primary hover:bg-primary/80 hover:text-white rounded-md hover:border-transparent transition-colors"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                    Live Preview
-                  </Link>
-
-                  <button
-                    onClick={toggleWishlist}
-                    className={`p-2.5 backdrop-blur-sm rounded-full transition-colors cursor-pointer ${
-                      isWishlisted
-                        ? "bg-primary text-white border border-transparent"
-                        : "bg-black/20 border border-border/60 text-foreground hover:bg-primary hover:text-white"
-                    }`}
-                    aria-label="Add to wishlist"
-                  >
-                    <svg
-                      className="w-4 h-4"
-                      fill={isWishlisted ? "currentColor" : "none"}
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-
-                {/* Resource details card */}
-                <div className="bg-secondary-surface/60 backdrop-blur-md rounded-md border border-border/60 p-5 space-y-4">
-                  <h3 className="font-medium text-foreground">Resource details</h3>
-
-                  <div className="space-y-3 text-sm">
-                    <div className="flex justify-between gap-6">
-                      <span className="text-muted">Category</span>
-                      <span className="text-foreground capitalize text-right">
-                        {(effect.categories?.length ? effect.categories : [effect.category]).join(", ")}
-                      </span>
-                    </div>
-                    <div className="flex justify-between gap-6">
-                      <span className="text-muted">Dependencies</span>
-                      <span className="text-foreground text-right">
-                        {effect.dependencies?.join(", ") || "None"}
-                      </span>
-                    </div>
-                    <div className="flex justify-between gap-6">
-                      <span className="text-muted">License</span>
-                      <span className="text-foreground text-right">MIT</span>
-                    </div>
-                  </div>
-
-                  {/* Tags */}
-                  <div className="pt-3 border-t border-border/60">
-                    <div className="flex flex-wrap gap-2">
-                      {(effect.categories?.length ? effect.categories : [effect.category]).map((cat) => (
-                        <span key={cat} className="px-2.5 py-1 bg-white border border-border/60 rounded-full text-xs text-[#3C3C3C] capitalize">
-                          {cat}
-                        </span>
-                      ))}
-                      {effect.dependencies?.map((dep) => (
-                        <span
-                          key={dep}
-                          className="px-2.5 py-1 bg-white border border-border/60 rounded-full text-xs text-[#3C3C3C]"
-                        >
-                          {dep}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+            {/* Right: Sticky sidebar — hidden on mobile, shown on desktop */}
+            <div className="lg:col-span-1 self-stretch max-sm:hidden">
+              <div className="sticky top-28 h-fit">
+                {sidebarContent}
               </div>
             </div>
           </div>
@@ -278,7 +282,63 @@ export default function MyComponent() {
             </div>
           )}
         </div>
+
+        <footer className="relative overflow-hidden rounded-3xl border border-border/60 bg-[#555555]/33 backdrop-blur-md max-sm:px-6 pt-10 pb-5 mb-8 px-12">
+          <div className="relative z-10 flex flex-col items-center text-center max-sm:gap-2">
+            <div className="mb-3 flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl text-xl font-bold text-black">
+                <Image src="/hyperiux.svg" alt="Hyperiux" width={30} height={30} />
+              </div>
+              <h2 className="text-3xl font-semibold tracking-tight text-white">Hyperiux UI</h2>
+            </div>
+
+            <p className="max-w-[20vw] max-sm:max-w-[80vw] text-lg leading-[1.4]">
+              Crafting futuristic UI experiences for modern teams.
+            </p>
+
+            <div className="mt-6 flex items-center gap-5">
+              {socialIcons.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.link}
+                  className="flex h-12 w-12 p-3.5! items-center justify-center rounded-full border border-primary transition hover:scale-105"
+                >
+                  <Image src={item.icon} alt={item.name} width={26} height={26} className="h-full w-full object-contain" />
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-sm text-zinc-300 md:gap-8">
+              {["Overview", "Components", "Templates", "Pricing", "Documentation", "Blog", "Contact"].map((item, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <Link href="#" className="cursor-pointer text-base max-sm:text-lg transition hover:text-primary">
+                    {item}
+                  </Link>
+                  {i !== 6 && <span className="text-primary max-sm:text-xl">•</span>}
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 max-sm:pb-2 flex w-full flex-col items-center justify-between gap-4 border-t border-white/5 pt-6 text-sm text-zinc-500 md:flex-row max-sm:text-base max-sm:gap-4">
+              <p>© 2026 Hyperiux UI. All rights reserved.</p>
+              <div className="flex items-center max-sm:text-sm gap-5">
+                <span className="cursor-pointer transition hover:text-white">Terms of Use</span>
+                <span>|</span>
+                <span className="cursor-pointer transition hover:text-white">Privacy Policy</span>
+                <span>|</span>
+                <span className="cursor-pointer transition hover:text-white">Cookies</span>
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </VaultLayout>
   );
 }
+
+const socialIcons = [
+  { name: "facebook", icon: "/assets/social-icons/facebook.svg", link: "#" },
+  { name: "instagram", icon: "/assets/social-icons/linkedIn.svg", link: "#" },
+  { name: "twitter", icon: "/assets/social-icons/twitter.svg", link: "#" },
+  { name: "mail", icon: "/assets/social-icons/instagram.svg", link: "#" },
+];

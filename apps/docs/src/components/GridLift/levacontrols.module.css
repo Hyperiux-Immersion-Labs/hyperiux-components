@@ -59,6 +59,16 @@
   gap: 10px;
 }
 
+.mobileHint {
+  display: none;
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 3.5vw;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+
 /* Hide Leva's internal titlebar (we render our own header on the left) */
 .rightControls :global([class*="TitleBar"]) {
   display: none !important;
@@ -251,3 +261,31 @@
 .scene :global(*)::-webkit-scrollbar-track { background: transparent !important; }
 .scene :global(*)::-webkit-scrollbar-thumb { background: #2a2a2a !important; border-radius: 2px !important; }
 .scene :global(*)::-webkit-scrollbar-thumb:hover { background: #ff5f00 !important; }
+
+@media (max-width: 640px) {
+  .topLeftControls {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+  }
+
+  .levaHeader {
+    width: 100%;
+    border-radius: 16px;
+  }
+
+  .levaHeaderBottom {
+    width: 100%;
+  }
+
+  .levaTextInput {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mobileHint {
+    display: block;
+  }
+}

@@ -450,6 +450,9 @@ export default function GridLift() {
  </button>
  )}
  </div>
+ <div className={styles.mobileHint}>
+ Best on desktop: hover and drift through the grid - mobile shows a preview.
+ </div>
  </div>
  </div>
  <canvas

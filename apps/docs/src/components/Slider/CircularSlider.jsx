@@ -17,7 +17,7 @@ export default function WebGLInfiniteSlider({ items }) {
  let scene, camera, renderer;
  let planes = [];
  let rafId;
- let currentRadius = 35;
+let currentRadius = window.innerWidth < 640 ? 22 : 35;
 
  const container = containerRef.current;
 
@@ -51,10 +51,18 @@ export default function WebGLInfiniteSlider({ items }) {
  2 * Math.tan((camera.fov * Math.PI) / 360) * camera.position.z;
  const frustumWidth = frustumHeight * camera.aspect;
 
- const planeWidth = frustumWidth / 2;
- const planeHeight = frustumHeight;
+ // MOBILE → show one image full screen
+// MOBILE → show ~90% of one image
+const isMobile = window.innerWidth < 640;
 
- const spacing = planeWidth;
+const planeWidth = isMobile
+  ? frustumWidth * 0.85
+  : frustumWidth / 2;
+
+const planeHeight = frustumHeight;
+
+// small gap only on mobile
+const spacing = planeWidth;
 
  // Speed factor: converts scroll pixels → Three.js world units
  const speedFactor = 0.01;
@@ -168,7 +176,14 @@ export default function WebGLInfiniteSlider({ items }) {
 
  const scrollOffset = offset * speedFactor;
 
- const targetRadius = Math.min(35 + Math.abs(delta) * 0.2, 55);
+// smaller expansion on mobile
+const baseRadius = window.innerWidth < 640 ? 20 : 35;
+const maxRadius = window.innerWidth < 640 ? 30 : 55;
+
+const targetRadius = Math.min(
+  baseRadius + Math.abs(delta) * 0.12,
+  maxRadius
+);
  currentRadius += (targetRadius - currentRadius) * 0.1;
 
  if (circleRef.current) {
@@ -226,11 +241,16 @@ export default function WebGLInfiniteSlider({ items }) {
  const maxDist = frustumWidth;
  const norm = Math.min(dist / maxDist, 1);
 
- // Cosine arc: 1 at center → 0 at edge (smooth circular curve)
- const arc = Math.cos(norm * Math.PI * 0.5);
- const targetZoom = 1 + (1 - arc) * 1.5;
 
- plane.material.uniforms.uZoom.value = targetZoom;
+// Cosine arc: 1 at center → 0 at edge
+const arc = Math.cos(norm * Math.PI * 0.5);
+
+// lower zoom intensity on mobile
+const zoomFactor = window.innerWidth < 640 ? 0.7 : 1.5;
+
+const targetZoom = 1 + (1 - arc) * zoomFactor;
+
+plane.material.uniforms.uZoom.value = targetZoom;
  });
 
  renderer.render(scene, camera);

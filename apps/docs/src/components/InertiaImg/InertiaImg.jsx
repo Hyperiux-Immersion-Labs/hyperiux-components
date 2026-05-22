@@ -7,67 +7,114 @@ import { InertiaPlugin } from"gsap/InertiaPlugin";
 gsap.registerPlugin(InertiaPlugin);
 
 export default function InertiaImage({ images = [] }) {
- const rootRef = useRef(null);
- const deltaRef = useRef({ x: 0, y: 0, oldX: 0, oldY: 0 });
+  const rootRef = useRef(null);
+  const deltaRef = useRef({ x: 0, y: 0, oldX: null, oldY: null });
+  const isTouchRef = useRef(false);
 
- useEffect(() => {
- const root = rootRef.current;
- if (!root) return;
- if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
 
- const onMouseMove = (e) => {
- const d = deltaRef.current;
- d.x = e.clientX - d.oldX;
- d.y = e.clientY - d.oldY;
- d.oldX = e.clientX;
- d.oldY = e.clientY;
- };
+    if (typeof window !== "undefined") {
+      isTouchRef.current = window.matchMedia("(hover: none), (pointer: coarse)").matches || 
+                           ('ontouchstart' in window) || 
+                           (navigator.maxTouchPoints > 0);
+    }
 
- root.addEventListener("mousemove", onMouseMove);
+    const detectTouch = () => {
+      isTouchRef.current = true;
+    };
+    window.addEventListener("touchstart", detectTouch, { passive: true });
 
- const mediaEls = root.querySelectorAll(".media-item");
- const cleanups = [];
+    const onMouseMove = (e) => {
+      const d = deltaRef.current;
+      if (d.oldX === null || d.oldY === null) {
+        d.oldX = e.clientX;
+        d.oldY = e.clientY;
+        d.x = 0;
+        d.y = 0;
+        return;
+      }
+      d.x = e.clientX - d.oldX;
+      d.y = e.clientY - d.oldY;
+      d.oldX = e.clientX;
+      d.oldY = e.clientY;
+    };
 
- mediaEls.forEach((el) => {
- const onMouseEnter = () => {
- const image = el.querySelector("img");
- const { x, y } = deltaRef.current;
+    const onTouchStart = (e) => {
+      isTouchRef.current = true;
+      const touch = e.touches[0];
+      const d = deltaRef.current;
+      d.oldX = touch.clientX;
+      d.oldY = touch.clientY;
+      d.x = 0;
+      d.y = 0;
+    };
 
- const tl = gsap.timeline({
- onComplete: () => tl.kill(),
- });
- tl.timeScale(1.2);
+    const onTouchMove = (e) => {
+      isTouchRef.current = true;
+      const touch = e.touches[0];
+      const d = deltaRef.current;
+      d.x = touch.clientX - d.oldX;
+      d.y = touch.clientY - d.oldY;
+      d.oldX = touch.clientX;
+      d.oldY = touch.clientY;
+    };
 
- tl.to(image, {
- inertia: {
- x: { velocity: x * 30, end: 0 },
- y: { velocity: y * 30, end: 0 },
- },
- });
+    root.addEventListener("mousemove", onMouseMove);
+    root.addEventListener("touchstart", onTouchStart, { passive: true });
+    root.addEventListener("touchmove", onTouchMove, { passive: true });
 
- tl.fromTo(
- image,
- { rotate: 0 },
- {
- duration: 0.4,
- rotate: (Math.random() - 0.5) * 30,
- yoyo: true,
- repeat: 1,
- ease:"power1.inOut",
- },
-"<"
- );
- };
+    const mediaEls = root.querySelectorAll(".media-item");
+    const cleanups = [];
 
- el.addEventListener("mouseenter", onMouseEnter);
- cleanups.push(() => el.removeEventListener("mouseenter", onMouseEnter));
- });
+    mediaEls.forEach((el) => {
+      const onMouseEnter = () => {
+        const image = el.querySelector("img");
+        const { x, y } = deltaRef.current;
 
- return () => {
- root.removeEventListener("mousemove", onMouseMove);
- cleanups.forEach((fn) => fn());
- };
- }, []);
+        const isTouch = isTouchRef.current;
+        const velocityMultiplier = isTouch ? 2 : 30;
+        const rotationRange = isTouch ? 50 : 60;
+
+        const tl = gsap.timeline({
+          onComplete: () => tl.kill(),
+        });
+        tl.timeScale(1.2);
+
+        tl.to(image, {
+          inertia: {
+            x: { velocity: x * velocityMultiplier, end: 0 },
+            y: { velocity: y * velocityMultiplier, end: 0 },
+          },
+        });
+
+        tl.fromTo(
+          image,
+          { rotate: 0 },
+          {
+            duration: 0.4,
+            rotate: (Math.random() - 0.5) * rotationRange,
+            yoyo: true,
+            repeat: 1,
+            ease: "power1.inOut",
+          },
+          "<"
+        );
+      };
+
+      el.addEventListener("mouseenter", onMouseEnter);
+      cleanups.push(() => el.removeEventListener("mouseenter", onMouseEnter));
+    });
+
+    return () => {
+      window.removeEventListener("touchstart", detectTouch);
+      root.removeEventListener("mousemove", onMouseMove);
+      root.removeEventListener("touchstart", onTouchStart);
+      root.removeEventListener("touchmove", onTouchMove);
+      cleanups.forEach((fn) => fn());
+    };
+  }, []);
 
  return (
  <section

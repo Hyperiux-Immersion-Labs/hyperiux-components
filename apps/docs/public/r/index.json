@@ -12,7 +12,7 @@
         "gsap"
       ],
       "previewUrl": "/draggable-marquee",
-      "coverImage": "/assets/listing/draggable-marquee.png",
+      "coverImage": "/assets/list/draggable-marquee.png",
       "videoUrl": "draggable-marquee",
       "addedAt": 1776937386240.6501
     },
@@ -28,7 +28,7 @@
         "gsap"
       ],
       "previewUrl": "/scroll-based-effects/grid-scale",
-      "coverImage": "/assets/listing/grid-scale.png",
+      "coverImage": "/assets/list/grid-scale.png",
       "videoUrl": "grid-scale",
       "addedAt": 1777877418531.936
     },
@@ -44,7 +44,7 @@
         "gsap"
       ],
       "previewUrl": "/cylindrical-scroll",
-      "coverImage": "/assets/listing/helix-slider.png",
+      "coverImage": "/assets/list/helix-slider.png",
       "videoUrl": "helix-slider",
       "addedAt": 1776937386240.8901
     },
@@ -60,7 +60,7 @@
         "gsap"
       ],
       "previewUrl": "/horizontal-scroll-section",
-      "coverImage": "/assets/listing/horizon-scroll.png",
+      "coverImage": "/assets/list/horizon-scroll.png",
       "videoUrl": "horizon-scroll",
       "addedAt": 1776937386241.0713
     },
@@ -76,7 +76,7 @@
         "gsap"
       ],
       "previewUrl": "/surf-index",
-      "coverImage": "/assets/listing/infinite-perspective-slider.png",
+      "coverImage": "/assets/list/infinite-perspective-slider.png",
       "videoUrl": "infinite-perspective-slider",
       "addedAt": 1776937386241.2588
     },
@@ -92,7 +92,7 @@
         "gsap"
       ],
       "previewUrl": "/circular-split-roll",
-      "coverImage": "/assets/listing/orbit-slider.png",
+      "coverImage": "/assets/list/orbit-slider.png",
       "videoUrl": "orbit-slider",
       "addedAt": 1776937386241.5
     },
@@ -106,7 +106,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/parallax-footer",
-      "coverImage": "/assets/listing/parallax-footer.png",
+      "coverImage": "/assets/list/parallax-footer.png",
       "videoUrl": "parallax-footer",
       "addedAt": 1776937386241.6577
     },
@@ -122,7 +122,7 @@
         "gsap"
       ],
       "previewUrl": "/frame-slider",
-      "coverImage": "/assets/listing/parallax-gallery.png",
+      "coverImage": "/assets/list/parallax-gallery.png",
       "videoUrl": "parallax-gallery",
       "addedAt": 1776937386241.8418
     },
@@ -138,7 +138,7 @@
         "gsap"
       ],
       "previewUrl": "/parallax-image-animation",
-      "coverImage": "/assets/listing/parallax-image.png",
+      "coverImage": "/assets/list/parallax-image.png",
       "videoUrl": "parallax-image",
       "addedAt": 1776937386241.9958
     },
@@ -155,7 +155,7 @@
         "next"
       ],
       "previewUrl": "/parallax-slider",
-      "coverImage": "/assets/listing/parallax-slider.png",
+      "coverImage": "/assets/list/parallax-slider.png",
       "videoUrl": "parallax-slider",
       "addedAt": 1776937386242.151
     },
@@ -175,7 +175,7 @@
         "postprocessing"
       ],
       "previewUrl": "/webgl/progressive-bloom-valley",
-      "coverImage": "/assets/listing/progressive-bloom-valley.png",
+      "coverImage": "/assets/list/progressive-bloom-valley.png",
       "videoUrl": "progressive-bloom-valley",
       "addedAt": 1777541715965.7407
     },
@@ -192,7 +192,7 @@
         "lucide-react"
       ],
       "previewUrl": "/circular-slider",
-      "coverImage": "/assets/listing/rotating-carousel.png",
+      "coverImage": "/assets/list/rotating-carousel.png",
       "videoUrl": "rotating-carousel",
       "addedAt": 1776937386242.931
     },
@@ -209,7 +209,7 @@
         "next"
       ],
       "previewUrl": "/scroll-based-effects/rotation-slider",
-      "coverImage": "/assets/listing/rotation-slider.png",
+      "coverImage": "/assets/list/rotation-slider.png",
       "videoUrl": "rotation-slider",
       "addedAt": 1777877418532.2446
     },
@@ -227,7 +227,7 @@
         "three"
       ],
       "previewUrl": "/scroll-based-effects/scroll-distortion",
-      "coverImage": "/assets/listing/scroll-distortion.png",
+      "coverImage": "/assets/list/scroll-distortion.png",
       "videoUrl": "scroll-distortion",
       "addedAt": 1776937386243.0935
     },
@@ -243,7 +243,7 @@
         "gsap"
       ],
       "previewUrl": "/scroll-shuffled-cards",
-      "coverImage": "/assets/listing/scroll-shuffled-cards.png",
+      "coverImage": "/assets/list/scroll-shuffled-cards.png",
       "videoUrl": "scroll-shuffled-cards",
       "addedAt": 1776937386243.2417
     },
@@ -259,13 +259,13 @@
         "gsap"
       ],
       "previewUrl": "/stacked-card",
-      "coverImage": "/assets/listing/scroll-stack.png",
+      "coverImage": "/assets/list/scroll-stack.png",
       "videoUrl": "scroll-stack",
       "addedAt": 1776937386243.4756
     },
     {
-      "name": "smooth-scroll-animation",
-      "title": "Smooth Scroll Animation",
+      "name": "inertia-scroll-effect",
+      "title": "Inertia Scroll Effect",
       "description": "Three-phase scroll-driven sequence: parallax hero, image flies in with text, 5×5 grid materialises and shrinks hero to a cell, then grid scrolls off while the last image expands into a centred overlay. Powered by GSAP ScrollTrigger with Lenis infinite scroll.",
       "category": "scroll",
       "categories": [
@@ -275,9 +275,9 @@
         "gsap",
         "lenis"
       ],
-      "previewUrl": "/smooth-scroll-animation",
-      "coverImage": "/assets/listing/smooth-scroll-animation.png",
-      "videoUrl": "smooth-scroll-animation",
+      "previewUrl": "/inertia-scroll-effect",
+      "coverImage": "/assets/list/inertia-scroll-effect.png",
+      "videoUrl": "inertia-scroll-effect",
       "addedAt": 1777877418532.769
     },
     {
@@ -293,7 +293,7 @@
         "three"
       ],
       "previewUrl": "/dgrees-pixel-scroll",
-      "coverImage": "/assets/listing/split-canvas.png",
+      "coverImage": "/assets/list/split-canvas.png",
       "videoUrl": "split-canvas",
       "addedAt": 1776937386243.6394
     },
@@ -309,7 +309,7 @@
         "gsap"
       ],
       "previewUrl": "/scroll-based-effects/square-translate",
-      "coverImage": "/assets/listing/square-translate.png",
+      "coverImage": "/assets/list/square-translate.png",
       "videoUrl": "square-translate",
       "addedAt": 1776937386243.7983
     },
@@ -326,7 +326,7 @@
         "next"
       ],
       "previewUrl": "/stacking-cards",
-      "coverImage": "/assets/listing/stacking-cards.png",
+      "coverImage": "/assets/list/stacking-cards.png",
       "videoUrl": "stacking-cards",
       "addedAt": 1776937386243.9614
     },
@@ -342,7 +342,7 @@
         "gsap"
       ],
       "previewUrl": "/sticky-content-wrapper",
-      "coverImage": "/assets/listing/sticky-content-wrapper.png",
+      "coverImage": "/assets/list/sticky-content-wrapper.png",
       "videoUrl": "sticky-content-wrapper",
       "addedAt": 1776937386244.1335
     },
@@ -358,7 +358,7 @@
         "motion"
       ],
       "previewUrl": "/svg-path",
-      "coverImage": "/assets/listing/svg-path-marquee.png",
+      "coverImage": "/assets/list/svg-path-marquee.png",
       "videoUrl": "svg-path-marquee",
       "addedAt": 1777541715966.0222
     },
@@ -374,7 +374,7 @@
         "gsap"
       ],
       "previewUrl": "/svg-pixel-reveal",
-      "coverImage": "/assets/listing/svg-pixel-reveal.png",
+      "coverImage": "/assets/list/svg-pixel-reveal.png",
       "videoUrl": "svg-pixel-reveal",
       "addedAt": 1777541715966.2297
     },
@@ -390,7 +390,7 @@
         "gsap"
       ],
       "previewUrl": "/text-convergence",
-      "coverImage": "/assets/listing/text-convergence.png",
+      "coverImage": "/assets/list/text-convergence.png",
       "videoUrl": "text-convergence",
       "addedAt": 1777541715966.3743
     },
@@ -408,7 +408,7 @@
         "three"
       ],
       "previewUrl": "/cursors/butterflies",
-      "coverImage": "/assets/listing/butterfly-trail-cursor.png",
+      "coverImage": "/assets/list/butterfly-trail-cursor.png",
       "videoUrl": "butterfly-trail-cursor",
       "addedAt": 1776937386237.8916
     },
@@ -422,7 +422,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/character-trail",
-      "coverImage": "/assets/listing/character-trail.png",
+      "coverImage": "/assets/list/character-trail.png",
       "videoUrl": "character-trail",
       "addedAt": 1778822903800.0466
     },
@@ -440,7 +440,7 @@
         "three"
       ],
       "previewUrl": "/cursors/coffee",
-      "coverImage": "/assets/listing/coffee-bean-cursor.png",
+      "coverImage": "/assets/list/coffee-bean-cursor.png",
       "videoUrl": "coffee-bean-cursor",
       "addedAt": 1776937386238.0608
     },
@@ -456,22 +456,22 @@
         "gsap"
       ],
       "previewUrl": "/aero",
-      "coverImage": "/assets/listing/colorful-cursor-aura.png",
+      "coverImage": "/assets/list/colorful-cursor-aura.png",
       "videoUrl": "colorful-cursor-aura",
       "addedAt": 1776937386238.2236
     },
     {
-      "name": "fiddle-ascii-cursor",
-      "title": "Fiddle Ascii Cursor",
+      "name": "pixel-bloom",
+      "title": "Pixel Bloom Cursor",
       "description": "Cursor-reactive media grid that swaps nearby cells into a textured ASCII collage",
       "category": "cursor",
       "categories": [
         "cursor"
       ],
       "dependencies": [],
-      "previewUrl": "/cursors/feddle-ascii-cursor",
-      "coverImage": "/assets/listing/fiddle-ascii-cursor.png",
-      "videoUrl": "fiddle-ascii-cursor",
+      "previewUrl": "/cursors/pixel-bloom",
+      "coverImage": "/assets/list/pixel-bloom.png",
+      "videoUrl": "pixel-bloom",
       "addedAt": 1776937386238.3813
     },
     {
@@ -488,7 +488,7 @@
         "three"
       ],
       "previewUrl": "/cursors/fish-eye",
-      "coverImage": "/assets/listing/fish-eye.png",
+      "coverImage": "/assets/list/fish-eye.png",
       "videoUrl": "fish-eye",
       "addedAt": 1777541715962.9568
     },
@@ -504,7 +504,7 @@
         "gsap"
       ],
       "previewUrl": "/inertia-img",
-      "coverImage": "/assets/listing/inertia-img.png",
+      "coverImage": "/assets/list/inertia-img.png",
       "videoUrl": "inertia-img",
       "addedAt": 1777541715963.1536
     },
@@ -520,7 +520,7 @@
         "gsap"
       ],
       "previewUrl": "/interactive-arrows",
-      "coverImage": "/assets/listing/interactive-arrows.png",
+      "coverImage": "/assets/list/interactive-arrows.png",
       "videoUrl": "interactive-arrows",
       "addedAt": 1778822903801.0388
     },
@@ -536,7 +536,7 @@
         "gsap"
       ],
       "previewUrl": "/liquid-glass-cursor",
-      "coverImage": "/assets/listing/liquid-glass-cursor.png",
+      "coverImage": "/assets/list/liquid-glass-cursor.png",
       "videoUrl": "liquid-glass-cursor",
       "addedAt": 1777877418530.652
     },
@@ -550,7 +550,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/magnetic-image-trail",
-      "coverImage": "/assets/listing/magnetic-image-trail.png",
+      "coverImage": "/assets/list/magnetic-image-trail.png",
       "videoUrl": "magnetic-image-trail",
       "addedAt": 1778822903801.4631
     },
@@ -566,7 +566,7 @@
         "three"
       ],
       "previewUrl": "/cursors/noiseripple",
-      "coverImage": "/assets/listing/noise-ripple-cursor.png",
+      "coverImage": "/assets/list/noise-ripple-cursor.png",
       "videoUrl": "noise-ripple-cursor",
       "addedAt": 1776937386238.8503
     },
@@ -582,7 +582,7 @@
         "gsap"
       ],
       "previewUrl": "/mouse-hover-image",
-      "coverImage": "/assets/listing/phantom-image-trail.png",
+      "coverImage": "/assets/list/phantom-image-trail.png",
       "videoUrl": "phantom-image-trail",
       "addedAt": 1776937386239.015
     },
@@ -596,7 +596,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/pixelated-image-effect",
-      "coverImage": "/assets/listing/pixelated-image-effect.png",
+      "coverImage": "/assets/list/pixelated-image-effect.png",
       "videoUrl": "pixelated-image-effect",
       "addedAt": 1777541715963.3599
     },
@@ -612,7 +612,7 @@
         "gsap"
       ],
       "previewUrl": "/cursors/rope",
-      "coverImage": "/assets/listing/rope-cursor.png",
+      "coverImage": "/assets/list/rope-cursor.png",
       "videoUrl": "rope-cursor",
       "addedAt": 1776937386239.2598
     },
@@ -626,7 +626,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/binary-effect",
-      "coverImage": "/assets/listing/dither-canvas.png",
+      "coverImage": "/assets/list/dither-canvas.png",
       "videoUrl": "dither-canvas",
       "addedAt": 1776937386234.4556
     },
@@ -640,7 +640,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/dotted-grid",
-      "coverImage": "/assets/listing/dotted-grid.png",
+      "coverImage": "/assets/list/dotted-grid.png",
       "videoUrl": "dotted-grid",
       "addedAt": 1778822903798.4846
     },
@@ -654,7 +654,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/spider-particles",
-      "coverImage": "/assets/listing/spider-particles.png",
+      "coverImage": "/assets/list/spider-particles.png",
       "videoUrl": "spider-particles",
       "addedAt": 1777541715962.084
     },
@@ -671,7 +671,7 @@
         "next-transition-router"
       ],
       "previewUrl": "/page-transitions/block",
-      "coverImage": "/assets/listing/block-transition.png",
+      "coverImage": "/assets/list/block-transition.png",
       "videoUrl": "block-transition",
       "addedAt": 1778822903804.004
     },
@@ -688,7 +688,7 @@
         "next-transition-router"
       ],
       "previewUrl": "/page-transitions/chess-grids",
-      "coverImage": "/assets/listing/chess-grid-transition.png",
+      "coverImage": "/assets/list/chess-grid-transition.png",
       "videoUrl": "chess-grid-transition",
       "addedAt": 1776937386247.3496
     },
@@ -705,7 +705,7 @@
         "next-transition-router"
       ],
       "previewUrl": "/page-transitions/flip",
-      "coverImage": "/assets/listing/page-flip-transition.png",
+      "coverImage": "/assets/list/page-flip-transition.png",
       "videoUrl": "page-flip-transition",
       "addedAt": 1776937386247.5562
     },
@@ -722,7 +722,7 @@
         "next-transition-router"
       ],
       "previewUrl": "/page-transitions/pie-rotation",
-      "coverImage": "/assets/listing/pie-rotation-transition.png",
+      "coverImage": "/assets/list/pie-rotation-transition.png",
       "videoUrl": "pie-rotation-transition",
       "addedAt": 1777541715967.434
     },
@@ -739,7 +739,7 @@
         "next-transition-router"
       ],
       "previewUrl": "/page-transitions/pixels",
-      "coverImage": "/assets/listing/pixel-transition.png",
+      "coverImage": "/assets/list/pixel-transition.png",
       "videoUrl": "pixel-transition",
       "addedAt": 1778822903804.4028
     },
@@ -756,7 +756,7 @@
         "next-transition-router"
       ],
       "previewUrl": "/page-transitions/brush-strokes",
-      "coverImage": "/assets/listing/svg-draw-page-transition.png",
+      "coverImage": "/assets/list/svg-draw-page-transition.png",
       "videoUrl": "svg-draw-page-transition",
       "addedAt": 1776937386247.657
     },
@@ -772,7 +772,7 @@
         "framer-motion"
       ],
       "previewUrl": "/blur-text-reveal",
-      "coverImage": "/assets/listing/blur-text.png",
+      "coverImage": "/assets/list/blur-text.png",
       "videoUrl": "blur-text",
       "addedAt": 1776937386244.89
     },
@@ -788,7 +788,7 @@
         "framer-motion"
       ],
       "previewUrl": "/circle-reveal",
-      "coverImage": "/assets/listing/circle-text-reveal.png",
+      "coverImage": "/assets/list/circle-text-reveal.png",
       "videoUrl": "circle-text-reveal",
       "addedAt": 1776937386245.0579
     },
@@ -804,7 +804,7 @@
         "gsap"
       ],
       "previewUrl": "/glitchy-text",
-      "coverImage": "/assets/listing/glitchy-text.png",
+      "coverImage": "/assets/list/glitchy-text.png",
       "videoUrl": "glitchy-text",
       "addedAt": 1778822903802.031
     },
@@ -820,7 +820,7 @@
         "gsap"
       ],
       "previewUrl": "/mask-text-reveal",
-      "coverImage": "/assets/listing/mask-text-reveal.png",
+      "coverImage": "/assets/list/mask-text-reveal.png",
       "videoUrl": "mask-text-reveal",
       "addedAt": 1776937386245.2302
     },
@@ -836,7 +836,7 @@
         "gsap"
       ],
       "previewUrl": "/overflow-stagger-text",
-      "coverImage": "/assets/listing/overflow-stagger-text.png",
+      "coverImage": "/assets/list/overflow-stagger-text.png",
       "videoUrl": "overflow-stagger-text",
       "addedAt": 1776937386245.4065
     },
@@ -852,7 +852,7 @@
         "gsap"
       ],
       "previewUrl": "/overflow-text-reveal",
-      "coverImage": "/assets/listing/overflow-text-reveal.png",
+      "coverImage": "/assets/list/overflow-text-reveal.png",
       "videoUrl": "overflow-text-reveal",
       "addedAt": 1776937386245.5762
     },
@@ -868,7 +868,7 @@
         "gsap"
       ],
       "previewUrl": "/perspective-text-reveal",
-      "coverImage": "/assets/listing/perspective-text-reveal.png",
+      "coverImage": "/assets/list/perspective-text-reveal.png",
       "videoUrl": "perspective-text-reveal",
       "addedAt": 1776937386245.7556
     },
@@ -884,7 +884,7 @@
         "gsap"
       ],
       "previewUrl": "/rectangular-text-reveal",
-      "coverImage": "/assets/listing/rectangular-text-reveal.png",
+      "coverImage": "/assets/list/rectangular-text-reveal.png",
       "videoUrl": "rectangular-text-reveal",
       "addedAt": 1776937386245.9448
     },
@@ -900,7 +900,7 @@
         "gsap"
       ],
       "previewUrl": "/scramble-text",
-      "coverImage": "/assets/listing/scramble-text.png",
+      "coverImage": "/assets/list/scramble-text.png",
       "videoUrl": "scramble-text",
       "addedAt": 1776937386246.047
     },
@@ -916,7 +916,7 @@
         "gsap"
       ],
       "previewUrl": "/slide-text-reveal",
-      "coverImage": "/assets/listing/slide-text-reveal.png",
+      "coverImage": "/assets/list/slide-text-reveal.png",
       "videoUrl": "slide-text-reveal",
       "addedAt": 1776937386246.2395
     },
@@ -930,7 +930,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/spotlight-text",
-      "coverImage": "/assets/listing/spotlight-text.png",
+      "coverImage": "/assets/list/spotlight-text.png",
       "videoUrl": "spotlight-text",
       "addedAt": 1777541715966.5222
     },
@@ -944,7 +944,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/text-cloning",
-      "coverImage": "/assets/listing/text-cloning.png",
+      "coverImage": "/assets/list/text-cloning.png",
       "videoUrl": "text-cloning",
       "addedAt": 1778822903802.3489
     },
@@ -960,7 +960,7 @@
         "gsap"
       ],
       "previewUrl": "/text-fill-animation",
-      "coverImage": "/assets/listing/text-fill-animation.png",
+      "coverImage": "/assets/list/text-fill-animation.png",
       "videoUrl": "text-fill-animation",
       "addedAt": 1776937386246.632
     },
@@ -976,7 +976,7 @@
         "gsap"
       ],
       "previewUrl": "/text-hover",
-      "coverImage": "/assets/listing/text-hover-expand.png",
+      "coverImage": "/assets/list/text-hover-expand.png",
       "videoUrl": "text-hover-expand",
       "addedAt": 1776937386246.8228
     },
@@ -992,7 +992,7 @@
         "gsap"
       ],
       "previewUrl": "/text-stream",
-      "coverImage": "/assets/listing/text-stream.png",
+      "coverImage": "/assets/list/text-stream.png",
       "videoUrl": "text-stream",
       "addedAt": 1777541715966.6736
     },
@@ -1006,7 +1006,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/buttons/animated-toggle",
-      "coverImage": "/assets/listing/animated-toggle.png",
+      "coverImage": "/assets/list/animated-toggle.png",
       "videoUrl": "animated-toggle",
       "addedAt": 1777541715962.4275
     },
@@ -1020,7 +1020,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/buttons/arrow-fill-button",
-      "coverImage": "/assets/listing/arrow-fill-button.png",
+      "coverImage": "/assets/list/arrow-fill-button.png",
       "videoUrl": "arrow-fill-button",
       "addedAt": 1776937386234.853
     },
@@ -1036,7 +1036,7 @@
         "lucide-react"
       ],
       "previewUrl": "/buttons/char-stagger-button",
-      "coverImage": "/assets/listing/char-stagger-button.png",
+      "coverImage": "/assets/list/char-stagger-button.png",
       "videoUrl": "char-stagger-button",
       "addedAt": 1776937386235.0989
     },
@@ -1050,7 +1050,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/buttons/char-stagger-primary-button",
-      "coverImage": "/assets/listing/char-stagger-primary-button.png",
+      "coverImage": "/assets/list/char-stagger-primary-button.png",
       "videoUrl": "char-stagger-primary-button",
       "addedAt": 1776937386235.302
     },
@@ -1064,7 +1064,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/buttons/dot-fill-button",
-      "coverImage": "/assets/listing/dot-fill-button.png",
+      "coverImage": "/assets/list/dot-fill-button.png",
       "videoUrl": "dot-fill-button",
       "addedAt": 1776937386235.484
     },
@@ -1078,7 +1078,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/buttons/link-button",
-      "coverImage": "/assets/listing/link-button.png",
+      "coverImage": "/assets/list/link-button.png",
       "videoUrl": "link-button",
       "addedAt": 1776937386235.6453
     },
@@ -1092,7 +1092,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/buttons/scramble-link-button",
-      "coverImage": "/assets/listing/scramble-link-button.png",
+      "coverImage": "/assets/list/scramble-link-button.png",
       "videoUrl": "scramble-link-button",
       "addedAt": 1776937386235.7437
     },
@@ -1108,7 +1108,7 @@
         "gsap"
       ],
       "previewUrl": "/carousels/clippath-slider",
-      "coverImage": "/assets/listing/clippath-slider.png",
+      "coverImage": "/assets/list/clippath-slider.png",
       "videoUrl": "clippath-slider",
       "addedAt": 1777877418527.706
     },
@@ -1124,7 +1124,7 @@
         "gsap"
       ],
       "previewUrl": "/webgl/zoom-slider",
-      "coverImage": "/assets/listing/zoom-slider.png",
+      "coverImage": "/assets/list/zoom-slider.png",
       "videoUrl": "zoom-slider",
       "addedAt": 1778822903798.7476
     },
@@ -1140,7 +1140,7 @@
         "gsap"
       ],
       "previewUrl": "/animated-faq",
-      "coverImage": "/assets/listing/animated-faq.png",
+      "coverImage": "/assets/list/animated-faq.png",
       "videoUrl": "animated-faq",
       "addedAt": 1776937386236.0447
     },
@@ -1156,7 +1156,7 @@
         "lucide-react"
       ],
       "previewUrl": "/video-player",
-      "coverImage": "/assets/listing/custom-video-player.png",
+      "coverImage": "/assets/list/custom-video-player.png",
       "videoUrl": "custom-video-player",
       "addedAt": 1776937386236.3
     },
@@ -1172,7 +1172,7 @@
         "gsap"
       ],
       "previewUrl": "/depth-card-stack",
-      "coverImage": "/assets/listing/depth-card-stack.png",
+      "coverImage": "/assets/list/depth-card-stack.png",
       "videoUrl": "depth-card-stack",
       "addedAt": 1777541715962.6367
     },
@@ -1188,7 +1188,7 @@
         "gsap"
       ],
       "previewUrl": "/file-encryption",
-      "coverImage": "/assets/listing/file-encryption.png",
+      "coverImage": "/assets/list/file-encryption.png",
       "videoUrl": "file-encryption",
       "addedAt": 1777877418528.1873
     },
@@ -1202,7 +1202,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/form",
-      "coverImage": "/assets/listing/form.png",
+      "coverImage": "/assets/list/form.png",
       "videoUrl": "form",
       "addedAt": 1776937386236.6875
     },
@@ -1216,13 +1216,13 @@
       ],
       "dependencies": [],
       "previewUrl": "/gooey-counter",
-      "coverImage": "/assets/listing/gooey-counter.png",
+      "coverImage": "/assets/list/gooey-counter.png",
       "videoUrl": "gooey-counter",
       "addedAt": 1777877418529.0657
     },
     {
-      "name": "hover-slider",
-      "title": "Hover Slider",
+      "name": "interactive-hover-slider",
+      "title": "Interactive Hover Slider",
       "description": "WebGL-powered list where hovering a row reveals a vertically-scrolling image stack with circular-arc curvature, velocity-based elastic snap, and GSAP-driven fade/curve transitions.",
       "category": "components",
       "categories": [
@@ -1232,9 +1232,9 @@
         "three",
         "gsap"
       ],
-      "previewUrl": "/hover-slider",
-      "coverImage": "/assets/listing/hover-slider.png",
-      "videoUrl": "hover-slider",
+      "previewUrl": "/interactive-hover-slider",
+      "coverImage": "/assets/list/interactive-hover-slider.png",
+      "videoUrl": "interactive-hover-slider",
       "addedAt": 1777877418529.6467
     },
     {
@@ -1247,7 +1247,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/stack-hovered-cards",
-      "coverImage": "/assets/listing/hover-stack.png",
+      "coverImage": "/assets/list/hover-stack.png",
       "videoUrl": "hover-stack",
       "addedAt": 1776937386236.9097
     },
@@ -1263,7 +1263,7 @@
         "gsap"
       ],
       "previewUrl": "/interactive-list-preview",
-      "coverImage": "/assets/listing/interactive-list-preview.png",
+      "coverImage": "/assets/list/interactive-list-preview.png",
       "videoUrl": "interactive-list-preview",
       "addedAt": 1777541715962.802
     },
@@ -1279,7 +1279,7 @@
         "lucide-react"
       ],
       "previewUrl": "/modal",
-      "coverImage": "/assets/listing/modal.png",
+      "coverImage": "/assets/list/modal.png",
       "videoUrl": "modal",
       "addedAt": 1776937386237.3052
     },
@@ -1295,7 +1295,7 @@
         "gsap"
       ],
       "previewUrl": "/tabs",
-      "coverImage": "/assets/listing/tabs.png",
+      "coverImage": "/assets/list/tabs.png",
       "videoUrl": "tabs",
       "addedAt": 1776937386237.3901
     },
@@ -1313,7 +1313,7 @@
         "next"
       ],
       "previewUrl": "/testimonial",
-      "coverImage": "/assets/listing/testimonial-swiper.png",
+      "coverImage": "/assets/list/testimonial-swiper.png",
       "videoUrl": "testimonial-swiper",
       "addedAt": 1776937386237.6147
     },
@@ -1329,13 +1329,13 @@
         "gsap"
       ],
       "previewUrl": "/navigation/directional-menu",
-      "coverImage": "/assets/listing/directional-menu.png",
+      "coverImage": "/assets/list/directional-menu.png",
       "videoUrl": "directional-menu",
       "addedAt": 1777541715964.7678
     },
     {
-      "name": "full-screen-navigation",
-      "title": "Full Screen Navigation",
+      "name": "immersive-full-screen-navigation",
+      "title": "Immersive Full screen Navigation",
       "description": "Clip-path powered full-screen navigation overlay with animated hamburger transitions",
       "category": "navigation",
       "categories": [
@@ -1344,9 +1344,9 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/navigation/fullscreen-nav",
-      "coverImage": "/assets/listing/full-screen-navigation.png",
-      "videoUrl": "full-screen-navigation",
+      "previewUrl": "/navigation/immersive-fullscreen-nav",
+      "coverImage": "/assets/list/immersive-full-screen-navigation.png",
+      "videoUrl": "immersive-full-screen-navigation",
       "addedAt": 1777541715964.875
     },
     {
@@ -1361,13 +1361,13 @@
         "gsap"
       ],
       "previewUrl": "/navigation/glass-pill-header",
-      "coverImage": "/assets/listing/glass-pill-header.png",
+      "coverImage": "/assets/list/glass-pill-header.png",
       "videoUrl": "glass-pill-header",
       "addedAt": 1777541715965.061
     },
     {
-      "name": "osmo-menu",
-      "title": "Osmo Menu",
+      "name": "expanding-navbar",
+      "title": "Expanding Navbar",
       "description": "Animated multi-column mega menu with GSAP timelines, square cursor indicators, and hover-fill link transitions.",
       "category": "navigation",
       "categories": [
@@ -1377,14 +1377,14 @@
         "gsap",
         "next"
       ],
-      "previewUrl": "/osmo-menu",
-      "coverImage": "/assets/listing/osmo-menu.png",
-      "videoUrl": "osmo-menu",
+      "previewUrl": "/expanding-navbar",
+      "coverImage": "/assets/list/expanding-navbar.png",
+      "videoUrl": "expanding-navbar",
       "addedAt": 1777877418531.3184
     },
     {
-      "name": "cappen",
-      "title": "Cappen Loader",
+      "name": "stack-loader",
+      "title": "Stack Loader",
       "description": "Stack-to-spread image intro loader with GSAP SplitText word animations and staggered image choreography",
       "category": "loaders",
       "categories": [
@@ -1393,9 +1393,9 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/loaders/cappen",
-      "coverImage": "/assets/listing/cappen.png",
-      "videoUrl": "cappen",
+      "previewUrl": "/loaders/stack-loader",
+      "coverImage": "/assets/list/stack-loader.png",
+      "videoUrl": "stack-loader",
       "addedAt": 1777541715963.5903
     },
     {
@@ -1410,7 +1410,7 @@
         "gsap"
       ],
       "previewUrl": "/loaders/lines-loading",
-      "coverImage": "/assets/listing/lines-loader.png",
+      "coverImage": "/assets/list/lines-loader.png",
       "videoUrl": "lines-loader",
       "addedAt": 1777541715964.377
     },
@@ -1429,13 +1429,13 @@
         "three"
       ],
       "previewUrl": "/loaders/numeric-tunnel",
-      "coverImage": "/assets/listing/numeric-tunnel.png",
+      "coverImage": "/assets/list/numeric-tunnel.png",
       "videoUrl": "numeric-tunnel",
       "addedAt": 1777541715964.6282
     },
     {
-      "name": "601-hero",
-      "title": "601 Hero",
+      "name": "hero-banner-animated",
+      "title": "Hero Banner Animated",
       "description": "Immersive WebGL hero with a 3D room, interactive TV screen with pixelated video transition, mouse-tracked lighting, edge blur, and film grain post-processing.",
       "category": "webgl",
       "categories": [
@@ -1449,9 +1449,9 @@
         "gsap",
         "three"
       ],
-      "previewUrl": "/601-hero",
-      "coverImage": "/assets/listing/601-hero.png",
-      "videoUrl": "601-hero",
+      "previewUrl": "/hero-banner-animated",
+      "coverImage": "/assets/list/hero-banner-animated.png",
+      "videoUrl": "hero-banner-animated",
       "addedAt": 1777877418534.695
     },
     {
@@ -1467,7 +1467,7 @@
         "gsap"
       ],
       "previewUrl": "/curved-plane",
-      "coverImage": "/assets/listing/curved-plane.png",
+      "coverImage": "/assets/list/curved-plane.png",
       "videoUrl": "curved-plane",
       "addedAt": 1778822903804.9653
     },
@@ -1484,7 +1484,7 @@
         "gsap"
       ],
       "previewUrl": "/curved-plane/v2",
-      "coverImage": "/assets/listing/curved-plane-v2.png",
+      "coverImage": "/assets/list/curved-plane-v2.png",
       "videoUrl": "curved-plane-v2",
       "addedAt": 1778822903804.726
     },
@@ -1500,7 +1500,7 @@
         "gsap"
       ],
       "previewUrl": "/webgl/draggable-canvas",
-      "coverImage": "/assets/listing/draggable-canvas.png",
+      "coverImage": "/assets/list/draggable-canvas.png",
       "videoUrl": "draggable-canvas",
       "addedAt": 1778822903805.375
     },
@@ -1516,7 +1516,7 @@
         "three"
       ],
       "previewUrl": "/webgl/fractal-glass",
-      "coverImage": "/assets/listing/fractal-glass.png",
+      "coverImage": "/assets/list/fractal-glass.png",
       "videoUrl": "fractal-glass",
       "addedAt": 1777877418535.5237
     },
@@ -1532,7 +1532,7 @@
         "leva"
       ],
       "previewUrl": "/webgl/grid-lift",
-      "coverImage": "/assets/listing/grid-lift.png",
+      "coverImage": "/assets/list/grid-lift.png",
       "videoUrl": "grid-lift",
       "addedAt": 1777877418536.2043
     },
@@ -1550,7 +1550,7 @@
         "three"
       ],
       "previewUrl": "/grid-tunnel",
-      "coverImage": "/assets/listing/grid-tunnel.png",
+      "coverImage": "/assets/list/grid-tunnel.png",
       "videoUrl": "grid-tunnel",
       "addedAt": 1778822903805.9995
     },
@@ -1564,7 +1564,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/webgl/interactive-blur-reveal",
-      "coverImage": "/assets/listing/interactive-blur-reveal.png",
+      "coverImage": "/assets/list/interactive-blur-reveal.png",
       "videoUrl": "interactive-blur-reveal",
       "addedAt": 1778822903806.4944
     },
@@ -1586,7 +1586,7 @@
         "gsap"
       ],
       "previewUrl": "/milkyway",
-      "coverImage": "/assets/listing/milkyway.png",
+      "coverImage": "/assets/list/milkyway.png",
       "videoUrl": "milkyway",
       "addedAt": 1777877418537.1843
     },
@@ -1605,7 +1605,7 @@
         "gsap"
       ],
       "previewUrl": "/mouse-pixelation-effects",
-      "coverImage": "/assets/listing/mouse-pixelation.png",
+      "coverImage": "/assets/list/mouse-pixelation.png",
       "videoUrl": "mouse-pixelation",
       "addedAt": 1778822903807.1772
     },
@@ -1623,13 +1623,13 @@
         "gsap"
       ],
       "previewUrl": "/strip-slider",
-      "coverImage": "/assets/listing/strip-slider.png",
+      "coverImage": "/assets/list/strip-slider.png",
       "videoUrl": "strip-slider",
       "addedAt": 1777541715967.6514
     },
     {
-      "name": "webgl-portfolio-slider",
-      "title": "WebGL Portfolio Slider",
+      "name": "3d-portfolio-slider",
+      "title": "3D Portfolio Slider",
       "description": "Infinite scroll slider with a Three.js WebGL fullscreen plane, cosine zoom distortion, a circular thumbnail ring, and GSAP text transitions",
       "category": "webgl",
       "categories": [
@@ -1641,9 +1641,9 @@
         "gsap",
         "lenis"
       ],
-      "previewUrl": "/webgl-portfolio-slider",
-      "coverImage": "/assets/listing/webgl-portfolio-slider.png",
-      "videoUrl": "webgl-portfolio-slider",
+      "previewUrl": "/3d-portfolio-slider",
+      "coverImage": "/assets/list/3d-portfolio-slider.png",
+      "videoUrl": "3d-portfolio-slider",
       "addedAt": 1777541715967.9314
     },
     {
@@ -1658,7 +1658,7 @@
         "gsap"
       ],
       "previewUrl": "/card-drift",
-      "coverImage": "/assets/listing/card-drift.png",
+      "coverImage": "/assets/list/card-drift.png",
       "videoUrl": "card-drift",
       "addedAt": 1777541715965.2654
     }

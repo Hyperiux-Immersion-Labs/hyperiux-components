@@ -111,12 +111,12 @@ export default function RoomModel({ onClick, isZoomed, videoRef, ...props }) {
  // =========================
  // 📺 TEXTURES
  // =========================
- const TVtexture = useTexture("/601/tvtex2.png");
+ const TVtexture = useTexture("/601/tvtexture.png");
  TVtexture.colorSpace = THREE.SRGBColorSpace;
  TVtexture.flipY = false;
 
  const videoTexture = useVideoTexture(
-"https://media.fiddle.digital/uploads/feature_kaleida_f406072b29.mp4",
+"/showreel.mp4",
  { start: false }
  );
  videoTexture.colorSpace = THREE.SRGBColorSpace;

@@ -1,10 +1,10 @@
 {
-  "name": "full-screen-navigation",
+  "name": "immersive-full-screen-navigation",
   "type": "registry:component",
-  "title": "Full Screen Navigation",
+  "title": "Immersive Full screen Navigation",
   "description": "Clip-path powered full-screen navigation overlay with animated hamburger transitions",
   "category": "navigation",
   "dependencies": ["gsap"],
   "registryDependencies": [],
-  "previewUrl": "/navigation/fullscreen-nav"
+  "previewUrl": "/navigation/immersive-fullscreen-nav"
 }

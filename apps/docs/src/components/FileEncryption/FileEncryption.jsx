@@ -6,7 +6,8 @@ import gsap from"gsap";
 
 const CARD_W = 380;
 const CARD_H = 240;
-const CARD_GAP = 200;
+const DESKTOP_CARD_GAP = 200;
+const MOBILE_CARD_GAP = 60;
 const AUTO_SPEED = 55;
 const PARTICLE_COUNT = 1500;
 const BEAM_COLOR ="#a855f7";
@@ -577,10 +578,21 @@ export default function FileEncryption({ cards = [] }) {
  ];
  }, [cards]);
 
- const singleGroupWidth = useMemo(
- () => cards.length * (CARD_W + CARD_GAP),
- [cards.length]
- );
+  const [cardGap, setCardGap] = useState(DESKTOP_CARD_GAP);
+
+  useEffect(() => {
+    const updateGap = () => {
+      setCardGap(window.innerWidth < 768 ? MOBILE_CARD_GAP : DESKTOP_CARD_GAP);
+    };
+    updateGap();
+    window.addEventListener("resize", updateGap);
+    return () => window.removeEventListener("resize", updateGap);
+  }, []);
+
+  const singleGroupWidth = useMemo(
+    () => cards.length * (CARD_W + cardGap),
+    [cards.length, cardGap]
+  );
 
  const primaryColor = BEAM_COLOR;
 
@@ -618,6 +630,7 @@ export default function FileEncryption({ cards = [] }) {
  root.addEventListener("pointerdown", onDown);
  window.addEventListener("pointermove", onMove);
  window.addEventListener("pointerup", onUp);
+  window.addEventListener("pointercancel", onUp);
 
  const update = (_time, delta) => {
  const dt = Math.min(delta, 50);
@@ -689,6 +702,7 @@ export default function FileEncryption({ cards = [] }) {
  root.removeEventListener("pointerdown", onDown);
  window.removeEventListener("pointermove", onMove);
  window.removeEventListener("pointerup", onUp);
+  window.removeEventListener("pointercancel", onUp);
  };
  }, [cards.length, singleGroupWidth, beamStateRef]);
 
@@ -698,7 +712,7 @@ export default function FileEncryption({ cards = [] }) {
  <section
  ref={rootRef}
  className="relative overflow-hidden select-none"
- style={{ height: CARD_H + 80, cursor:"grab" }}
+ style={{ height: CARD_H + 80, cursor:"grab", touchAction:"none" }}
  aria-label="Encrypted cards marquee"
  >
  {/* WebGL beam canvas — full section coverage, screen blend */}
@@ -731,7 +745,10 @@ export default function FileEncryption({ cards = [] }) {
  <div
  ref={trackRef}
  className="absolute top-1/2 left-0 flex will-change-transform"
- style={{ gap: CARD_GAP, marginTop: -(CARD_H / 2) }}
+style={{
+  gap: cardGap,
+  marginTop: -(CARD_H / 2),
+}}
  >
  {allCards.map((card) => (
  <CardShell key={card._uid} card={card} settersRef={settersRef} />

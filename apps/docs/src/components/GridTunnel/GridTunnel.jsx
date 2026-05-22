@@ -107,7 +107,8 @@ function GridChunkContent() {
 }
 
 function ImageChunkContent({ images, slotIndex }) {
- const { viewport } = useThree();
+ const { viewport, size } = useThree();
+ const canvasWidth = size?.width ?? 0;
 
  const panels = useMemo(() => {
  const random = seededRandom(200 + slotIndex * 13);
@@ -119,10 +120,17 @@ function ImageChunkContent({ images, slotIndex }) {
  const cellH = TUNNEL_HEIGHT / GRID_Y;
  const cellD = TUNNEL_DEPTH / GRID_Z;
 
- const pxToWorld =
- typeof window !=="undefined" ? viewport.width / window.innerWidth : 0.01;
+ const pxToWorld = canvasWidth ? viewport.width / canvasWidth : 0.01;
 
- const paddingWorld = pxToWorld * 10;
+ // Reduce padding on smaller screens so images read larger on mobile.
+ const paddingPx = canvasWidth
+ ? canvasWidth < 640
+ ? 4
+ : canvasWidth < 1024
+ ? 8
+ : 10
+ : 10;
+ const paddingWorld = pxToWorld * paddingPx;
 
  return Array.from({ length: IMAGE_COUNT_PER_CHUNK }).map((_, i) => {
  const side = Math.floor(random() * 4);
@@ -200,13 +208,14 @@ function ImageChunkContent({ images, slotIndex }) {
  scale,
  };
  });
- }, [images, slotIndex, viewport.width]);
+ }, [canvasWidth, images, slotIndex, viewport.width]);
 
  return (
  <>
  {panels.map((panel) => (
  <Suspense key={panel.id} fallback={null}>
  <Image
+ alt=""
  url={panel.url}
  position={panel.position}
  rotation={panel.rotation}
@@ -267,8 +276,13 @@ function InfiniteTunnelWorld({ images }) {
 
 function InfiniteScrollCamera() {
  const { camera } = useThree();
+ const cameraRef = useRef(null);
  const targetZ = useRef(CAMERA_START_Z);
  const scrollVelocity = useRef(0);
+
+ useEffect(() => {
+ cameraRef.current = camera;
+ }, [camera]);
 
  useEffect(() => {
  const preventPageScroll = (event) => {
@@ -295,8 +309,11 @@ function InfiniteScrollCamera() {
  }, []);
 
  useFrame((_, delta) => {
- camera.position.x = 0;
- camera.position.y = 0;
+ const cam = cameraRef.current;
+ if (!cam) return;
+
+ cam.position.x = 0;
+ cam.position.y = 0;
 
  // Decay velocity so the tunnel eases out after scrolling stops.
  const damping = Math.exp(-SCROLL_DAMPING * delta);
@@ -313,13 +330,13 @@ function InfiniteScrollCamera() {
 
  // Frame-rate independent follow lerp.
  const follow = 1 - Math.exp(-CAMERA_FOLLOW * delta);
- camera.position.z = THREE.MathUtils.lerp(
- camera.position.z,
+ cam.position.z = THREE.MathUtils.lerp(
+ cam.position.z,
  targetZ.current,
  follow
  );
 
- camera.lookAt(0, 0, camera.position.z - 12);
+ cam.lookAt(0, 0, cam.position.z - 12);
  });
 
  return null;
@@ -376,18 +393,18 @@ function Header() {
 function HeroContent() {
   return (
     <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6">
-      <div className="mt-16 max-w-[40vw] text-center">
+      <div className="mt-16 max-w-[40vw] text-center max-sm:max-w-[80vw]">
  <h1 className="text-[10vw] font-medium leading-[1.1]! text-center! tracking-[-0.08em] text-black">
   Hyperiux Library.
 </h1>
 
-        <p className="mx-auto mt-15 max-w-[60vw] text-[1.3vw] font-medium leading-tight text-neutral-600">
+        <p className="mx-auto mt-15 max-w-[60vw] text-[1.3vw] font-medium leading-tight text-neutral-600 max-sm:text-[4vw] max-sm:max-w-[90vw]! max-sm:mt-10">
           A curated collection of modern UI components, smooth animations,
           creative backgrounds and premium interactions for
           <span className="text-[#ff5f00]"> Next.js developers.</span>
         </p>
 
-        <div className="pointer-events-auto mt-10 flex items-center justify-center gap-8">
+        <div className="pointer-events-auto mt-10 flex items-center justify-center gap-8 max-sm:flex-col">
           <Link href="/effects">
 
           <button

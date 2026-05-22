@@ -63,6 +63,7 @@ export default function DraggableTestimonial({
  y,
  rotation: gsap.utils.random(-3, 3),
  zIndex: i + 1,
+ opacity: 1,
  });
 
  let lastX = x;
@@ -188,7 +189,7 @@ export default function DraggableTestimonial({
 
 function Card({ item, cardBg, cardTextColor, barBg }) {
  return (
- <div className="testimonial-card absolute cursor-grab active:cursor-grabbing">
+ <div className="testimonial-card opacity-0 absolute cursor-grab active:cursor-grabbing">
  <div className={`w-96 max-sm:w-50 shadow-2xl ${cardBg} ${cardTextColor}`}>
  {/* Top bar */}
  <div

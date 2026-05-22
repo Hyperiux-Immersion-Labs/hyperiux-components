@@ -6,9 +6,9 @@ const page = () => {
  return (
  <>
  <LenisSmoothScroll />
- <div className='flex items-center flex-col gap-20 justify-center h-screen bg-neutral-900'>
+ <div className='flex items-center flex-col gap-20 max-sm:gap-20 max-sm:py-[15%] justify-center h-screen max-sm:h-full bg-neutral-900'>
 
- <h2 className='font-mono max-md:ml-[4vw] text-white text-3xl'>
+ <h2 className='font-mono max-sm:text-center max-sm:px-10  text-white text-3xl'>
  Elevating interaction through motion
  </h2>
 

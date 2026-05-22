@@ -34,7 +34,7 @@ Scroll-driven animations built on GSAP ScrollTrigger — parallax galleries, pin
 ### WebGL
 Three.js and R3F scenes with custom GLSL shaders — image carousels that curve on drag, pixel trail grids, frosted glass refraction, GPU particle galaxies, and full immersive 3D heroes.
 
-`curved-plane` · `curved-plane-v2` · `draggable-canvas` · `fractal-glass` · `grid-tunnel` · `interactive-blur-reveal` · `milkyway` · `mouse-pixelation` · `progressive-bloom-valley` · `strip-slider` · `webgl-portfolio-slider` · `601-hero` · [+more](https://hyperiux-ui.vercel.app/effects)
+`curved-plane` · `curved-plane-v2` · `draggable-canvas` · `fractal-glass` · `grid-tunnel` · `interactive-blur-reveal` · `milkyway` · `mouse-pixelation` · `progressive-bloom-valley` · `strip-slider` · `webgl-portfolio-slider` · `hero-banner-animated` · [+more](https://hyperiux-ui.vercel.app/effects)
 
 ### Cursor
 Canvas 2D and Three.js cursor effects — butterfly swarms, rope followers, liquid glass morphing, image trails, ASCII art, and character grids that wake on hover.

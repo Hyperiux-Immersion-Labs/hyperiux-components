@@ -284,19 +284,23 @@ export default function BinaryEffect() {
  const trail = [];
  const now = () => performance.now();
 
+ // detect mobile
+ const isMobile = () => window.matchMedia("(max-width: 639px)").matches;
+
  const onMove = (e) => {
- const px = mouse.x, py = mouse.y;
- mouse.vx = e.clientX - px; mouse.vy = e.clientY - py;
- mouse.x = e.clientX; mouse.y = e.clientY;
- if (px < 0 || py < 0) { trail.unshift({ x: mouse.x, y: mouse.y, vx: 0, vy: 0, b: now() }); return; }
- const d = Math.hypot(mouse.vx, mouse.vy);
- if (d < 0.5) return;
- const steps = Math.max(1, Math.ceil(d / TS)), b = now();
- for (let s = 1; s <= steps; s++) {
- const t = s / steps;
- trail.unshift({ x: px + mouse.vx * t, y: py + mouse.vy * t, vx: mouse.vx / steps, vy: mouse.vy / steps, b });
- if (trail.length > TM) trail.length = TM;
- }
+  if (isMobile()) return;
+  const px = mouse.x, py = mouse.y;
+  mouse.vx = e.clientX - px; mouse.vy = e.clientY - py;
+  mouse.x = e.clientX; mouse.y = e.clientY;
+  if (px < 0 || py < 0) { trail.unshift({ x: mouse.x, y: mouse.y, vx: 0, vy: 0, b: now() }); return; }
+  const d = Math.hypot(mouse.vx, mouse.vy);
+  if (d < 0.5) return;
+  const steps = Math.max(1, Math.ceil(d / TS)), b = now();
+  for (let s = 1; s <= steps; s++) {
+   const t = s / steps;
+   trail.unshift({ x: px + mouse.vx * t, y: py + mouse.vy * t, vx: mouse.vx / steps, vy: mouse.vy / steps, b });
+   if (trail.length > TM) trail.length = TM;
+  }
  };
  window.addEventListener("mousemove", onMove);
 
@@ -391,9 +395,14 @@ export default function BinaryEffect() {
  }, []);
 
  return (
- <canvas
- ref={ref}
- className="absolute inset-0 block h-full w-full bg-black"
- />
+  <>
+   <canvas
+    ref={ref}
+    className="absolute inset-0 block h-full w-full bg-black"
+   />
+   <p className="max-sm:block hidden absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-xs text-white/50 pointer-events-none select-none px-4">
+    Open on desktop for the full experience — cursor effect included.
+   </p>
+  </>
  );
 }

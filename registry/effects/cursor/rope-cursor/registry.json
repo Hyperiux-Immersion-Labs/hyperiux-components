@@ -7,6 +7,6 @@
   "dependencies": ["gsap"],
   "registryDependencies": [],
   "previewUrl": "/cursors/rope",
-  "coverImage": "/assets/listing/rope-cursor.png",
+  "coverImage": "/assets/list/rope-cursor.png",
   "videoUrl": "rope-cursor"
 }

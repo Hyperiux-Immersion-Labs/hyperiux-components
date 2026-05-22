@@ -213,7 +213,6 @@ const DraggableMarquee = ({
 
         window.addEventListener("resize", handleResize);
 
-        // Observe track and first-set items for dynamic width changes
         const children = Array.from(track.children);
         const setSize = Math.floor(children.length / repeatCount);
         const firstSetChildren = children.slice(0, setSize);
@@ -221,6 +220,7 @@ const DraggableMarquee = ({
         const trackObserver = new ResizeObserver(() => {
             scheduleMeasure();
         });
+
         trackObserver.observe(track);
         observers.push(trackObserver);
 
@@ -228,10 +228,12 @@ const DraggableMarquee = ({
             const ro = new ResizeObserver(() => {
                 scheduleMeasure();
             });
+
             ro.observe(child);
             observers.push(ro);
 
             const imgs = child.querySelectorAll("img");
+
             imgs.forEach((img) => {
                 if (!img.complete) {
                     img.addEventListener("load", scheduleMeasure, { once: false });
@@ -256,8 +258,10 @@ const DraggableMarquee = ({
             observers.forEach((observer) => observer.disconnect());
 
             const cleanupChildren = Array.from(track.children);
+
             cleanupChildren.forEach((child) => {
                 const imgs = child.querySelectorAll("img");
+
                 imgs.forEach((img) => {
                     img.removeEventListener("load", scheduleMeasure);
                 });
@@ -305,7 +309,7 @@ const DraggableMarquee = ({
                                 alt={item.alt || "marquee-item"}
                                 width={item.width || 400}
                                 height={item.height || 500}
-                                className={item.imageClassName || "h-auto w-auto object-cover"}
+                                className={`${item.imageClassName || "h-auto w-auto object-cover"} max-sm:w-[320px] max-sm:h-105`}
                             />
                         )}
                     </div>

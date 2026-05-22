@@ -129,7 +129,7 @@ async function buildRegistry() {
         registryDependencies: registryJson.registryDependencies || [],
         previewUrl: registryJson.previewUrl || null,
         coverImage:
-          registryJson.coverImage || `/assets/listing/${registryJson.name}.png`,
+          registryJson.coverImage || `/assets/list/${registryJson.name}.png`,
         videoUrl: registryJson.videoUrl || registryJson.name,
         files: fileContents,
       };
@@ -150,7 +150,7 @@ async function buildRegistry() {
         dependencies: registryJson.dependencies || [],
         previewUrl: registryJson.previewUrl || null,
         coverImage:
-          registryJson.coverImage || `/assets/listing/${registryJson.name}.png`,
+          registryJson.coverImage || `/assets/list/${registryJson.name}.png`,
         videoUrl: registryJson.videoUrl || registryJson.name,
         addedAt,
       });

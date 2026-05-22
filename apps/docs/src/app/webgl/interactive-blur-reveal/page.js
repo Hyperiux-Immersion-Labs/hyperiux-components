@@ -26,12 +26,15 @@ const page = () => {
  </header>
 <section className='px-10 flex flex-col items-start justify-center h-full w-full'>
  <div className="mt-[-12%]">
- <h1 className=" max-w-[60vw] text-[7vw] leading-[0.9] font-light tracking-tighter">
+ <h1 className=" max-w-[60vw] text-[7vw] leading-[0.9] font-light tracking-tighter max-sm:text-[10vw] max-sm:max-w-full">
  Design that feels discovered,<br/> not displayed.
  </h1>
+ <p className="mt-4 hidden max-sm:block text-[3vw] font-medium tracking-wide text-white/70">
+ For the full frosted-glass magic, open this on desktop.
+ </p>
  </div>
 
- <p className="absolute right-10 bottom-10 max-w-[39vw] text-[1.25vw] leading-[1.45] opacity-70 max-sm:left-5 max-sm:bottom-7 text-shadow-lg">
+ <p className="absolute right-10 bottom-10 max-w-[39vw] text-[1.25vw] leading-[1.45] opacity-70 max-sm:left-5 max-sm:bottom-7 text-shadow-lg max-sm:text-[3vw] max-sm:max-w-[70vw]">
  We build digital spaces with texture, motion, and atmosphere - where every scroll, hover, and transition feels less like an interface and more like stepping through glass into another world.
  </p>
  </section>

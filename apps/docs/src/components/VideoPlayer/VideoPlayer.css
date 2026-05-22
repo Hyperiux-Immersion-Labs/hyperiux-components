@@ -271,8 +271,8 @@
 @media screen and (max-width: 540px) {
   
   .video-player__close {
-    top: 4vw;
-    right: 4vw;
+    top: 16px;
+    right: 16px;
     width: 11vw;
     height: 11vw;
   }

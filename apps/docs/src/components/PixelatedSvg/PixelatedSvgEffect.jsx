@@ -1,8 +1,9 @@
 export default function PixelateSvgFilter({
  id ="pixelate-filter",
- size = 16,
+ size: propSize = 16,
  crossLayers = false
 }) {
+ const size = Math.max(2, propSize);
  return (
  <svg
  aria-hidden="true"

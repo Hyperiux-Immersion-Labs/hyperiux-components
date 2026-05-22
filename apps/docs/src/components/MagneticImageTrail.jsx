@@ -356,8 +356,9 @@ export default function ImageTrail() {
  padding:"0 20px",
  }}
  >
- No algorithms.No ads.No overwhelm.
- Justgreatcurationby (real people).
+ Interfaces people remember.
+ <br />
+Components developers love.
  </div>
  <canvas
  ref={canvasRef}

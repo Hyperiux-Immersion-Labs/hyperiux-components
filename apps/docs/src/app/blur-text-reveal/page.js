@@ -177,7 +177,7 @@ const Page = () => {
  </p>
  </div>
 
- <div className="grid gap-4 sm:col-span-2 lg:col-span-1">
+ <div className="grid gap-4 sm:col-span-2 lg:col-span-1 max-sm:px-4">
  {steps.map(({ step, label, desc }, index) => (
  <div
  key={step}

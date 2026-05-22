@@ -142,7 +142,7 @@
 /* mobile */
 @media (max-width: 640px) {
   .shc__mobile {
-    gap: 0.85rem;
+    gap: 2.2rem;
   }
 
   .shc__card--static {

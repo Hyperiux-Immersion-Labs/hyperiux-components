@@ -38,12 +38,13 @@ function DemoContent({
   showText = true,
   navRefs,
   rowRefs,
+  rowHeight = ROW_H,
 } = {}) {
   const isDark = theme === "dark";
 
   const navItems = useMemo(
     () => [
-      { left: <span className="font-bold tracking-tighter">HYPERIUX UI</span> },
+      { left: <span className="font-bold tracking-tighter max-sm:text-2xl">HYPERIUX UI</span> },
       { left: "INDEX (22)" },
       { left: "(CONTACT)" },
       { left: "(SERVICES)" },
@@ -150,7 +151,7 @@ function DemoContent({
         <>
           <div
             className={[
-              "grid items-center px-5.5 text-[12px] uppercase select-none",
+              "grid items-center px-5.5 text-[12px] uppercase select-none max-sm:!text-[14px]",
               GRID_CLASS,
               isDark ? "text-white/55" : "text-black/55",
             ].join(" ")}
@@ -194,7 +195,7 @@ function DemoContent({
                   rowRefs.current[idx] = el;
                 }}
                 className={[
-                  "grid items-center gap-4.5 px-5.5 text-[13px] leading-[1.2]",
+                  "grid items-center gap-4.5 px-5.5 text-[13px] leading-[1.2] max-sm:text-[15px]",
                   GRID_CLASS,
                   "will-change-[filter,transform,opacity]",
                   idx < 9
@@ -205,11 +206,11 @@ function DemoContent({
                       ? "text-white/55"
                       : "text-black/55",
                 ].join(" ")}
-                style={{ height: ROW_H }}
+                style={{ height: rowHeight }}
               >
                 <div
                   className={[
-                    "col-span-2 max-md:w-full max-md:whitespace-nowrap max-md:text-[11px]",
+                    "col-span-2 max-md:w-full max-md:whitespace-nowrap max-md:text-[11px] max-sm:!text-[15px]",
                     isDark ? "text-white/90" : "text-neutral-900",
                   ].join(" ")}
                 >
@@ -250,6 +251,7 @@ export default function LineRevealLoader({ onComplete } = {}) {
   });
 
   const [done, setDone] = useState(false);
+  const [rowHeight, setRowHeight] = useState(ROW_H);
 
   const recomputeLayout = useCallback(() => {
     const el = containerRef.current;
@@ -265,13 +267,17 @@ export default function LineRevealLoader({ onComplete } = {}) {
     const coneBottomPad = 110;
     const flatTop = NAV_H;
 
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+    const rH = isMobile ? 32 : ROW_H;
+    setRowHeight(rH);
+
     for (let i = 0; i < LINE_COUNT; i++) {
       const t = LINE_COUNT === 1 ? 0 : i / (LINE_COUNT - 1);
 
       const yCone = lerp(coneTop, h - coneBottomPad, Math.pow(t, 1.55));
       const wPctCone = lerp(0.66, 0.035, Math.pow(t, 1.12));
 
-      const yFlat = flatTop + i * ROW_H;
+      const yFlat = flatTop + i * rH;
 
       coneY.push(yCone);
       flatY.push(yFlat);
@@ -474,6 +480,7 @@ export default function LineRevealLoader({ onComplete } = {}) {
             theme="dark"
             navRefs={darkNavTextRefs}
             rowRefs={darkRowTextRefs}
+            rowHeight={rowHeight}
           />
         </div>
         <div className="pointer-events-none absolute inset-0">
@@ -496,6 +503,7 @@ export default function LineRevealLoader({ onComplete } = {}) {
           theme="light"
           navRefs={lightNavTextRefs}
           rowRefs={lightRowTextRefs}
+          rowHeight={rowHeight}
         />
         <div className="pointer-events-none absolute inset-0">
           {Array.from({ length: LINE_COUNT }, (_, i) => (

@@ -21,11 +21,11 @@ export default function DgreesPixelScrollPage() {
                 <section className="h-screen flex flex-col items-center justify-center relative">
                     <div className="flex items-center gap-3">
                         <span className="w-1.5 h-1.5 bg-black rounded-full" />
-                        <h1 className="text-[64px] md:text-[72px] font-normal tracking-[-0.02em]">
+                        <h1 className="text-[72px] max-md:text-[64px] font-normal tracking-[-0.02em]">
                             Approach
                         </h1>
                     </div>
-                    <p className="text-sm md:text-base text-black/50 mt-2">
+                    <p className="text-base max-md:text-sm text-black/50 mt-2">
                         {'{ Five principles in the age of AI }'}
                     </p>
                 </section>
@@ -46,27 +46,31 @@ export default function DgreesPixelScrollPage() {
                         {sections.map((section, i) => (
                             <div
                                 key={i}
-                                className="h-screen flex py-24 border-t border-black/40"
+                                className="h-screen flex py-24 max-sm:py-10 border-t border-black/40"
                             >
-                                <div className="w-full mx-auto px-8 md:px-12 lg:px-16 flex justify-between items-start">
+                                <div className="w-full h-full mx-auto px-16 max-md:px-12 max-sm:px-0 flex flex-row justify-between items-start max-sm:flex-col max-sm:justify-end max-sm:items-center pb-0 max-sm:pb-0">
                                     {/* Left Column - Number & Title */}
-                                    <div className="w-70 md:w-80 shrink-0">
+                                    <div className="w-80 shrink-0 flex flex-col items-start text-left max-md:w-70 max-sm:w-full max-sm:items-center max-sm:text-center">
                                         <span className="text-[11px] tracking-wider text-black/40 block mb-2">
                                             {section.number}
                                         </span>
                                         <h2
-                                            className={`text-[32px] md:text-[40px] lg:text-[44px] leading-[1.05] font-normal ${facultyGlyphic.className}`}
+                                            className={`text-[44px] max-md:text-[40px] max-sm:text-[32px] leading-[1.05] font-normal ${facultyGlyphic.className}`}
                                         >
                                             {section.title}
                                         </h2>
+                                        {/* Mobile Description */}
+                                        <p className="hidden max-sm:block mt-4 text-[13px] leading-[1.7] text-black/60 max-w-[280px]">
+                                            {section.description}
+                                        </p>
                                     </div>
 
                                     {/* Center - Space for Canvas (482px) */}
-                                    <div className="w-125 shrink-0 hidden lg:block" />
+                                    <div className="w-125 shrink-0 max-lg:hidden" />
 
                                     {/* Right Column - Description */}
-                                    <div className="w-60 md:w-70 shrink-0 hidden md:block mt-auto">
-                                        <p className="text-[13px] md:text-[14px] leading-[1.7] text-black/60 text-right">
+                                    <div className="w-70 shrink-0 mt-auto max-md:w-60 max-sm:hidden">
+                                        <p className="text-[14px] max-md:text-[13px] leading-[1.7] text-black/60 text-right">
                                             {section.description}
                                         </p>
                                     </div>

@@ -215,8 +215,8 @@ export default function Pixelation() {
           </Canvas>
         </div>
 
-        <section className="w-full h-screen mobile:h-[90vh] tablet:h-[90vh] relative z-10 flex flex-col justify-center px-[5vw] gap-[12vw] pointer-events-none mobile:gap-[7vw] tablet:gap-[7vw]">
-        <h1 className="text-white font-medium text-[8vw] mt-[4vw] leading-[1.2] flex flex-col mobile:text-[15vw] tablet:text-[12vw] ">
+        <section className="w-full h-screen max-sm:h-[90vh] max-md:h-[90vh] relative z-10 flex flex-col justify-center px-[5vw] gap-[12vw] pointer-events-none max-sm:gap-[7vw] max-md:gap-[7vw]">
+<h1 className="text-white font-medium text-[8vw] mt-[4vw] leading-[1.2] flex flex-col max-sm:text-[15vw] max-md:text-[12vw] ">
   <span className="text-left">
     Building <span className="font-light">Interfaces.</span>
   </span>
@@ -225,8 +225,11 @@ export default function Pixelation() {
     Shipping <span className="font-medium">Experiences.</span>
   </span>
 </h1>
+<p className="hidden max-sm:block text-[3vw] font-medium tracking-wide text-white/70">
+  Pro tip: this one’s built for a mouse - try it on desktop for the cleanest pixel trail.
+</p>
 
-<p className="text-white text-[1.5vw] w-[30%] text-justify mobile:text-[5vw] mobile:w-[90%] tablet:text-[3vw] tablet:w-[60%]">
+<p className="text-white text-[1.5vw] w-[30%] text-justify max-sm:text-[5vw] max-sm:w-[90%] max-md:text-[3vw] max-md:w-[60%]">
   Hyperiux is a modern UI animation library crafted for developers who want
   stunning interactions, smooth transitions, and production-ready components .
 </p>

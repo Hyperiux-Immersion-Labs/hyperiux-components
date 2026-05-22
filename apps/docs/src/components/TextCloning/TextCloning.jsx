@@ -96,16 +96,29 @@ export default function TextCloning() {
  target.y = e.clientY;
  };
 
+ const onTouch = (e) => {
+ const touch = e.touches?.[0];
+ if (!touch) return;
+ target.x = touch.clientX;
+ target.y = touch.clientY;
+ };
+
  resize();
  render();
 
  window.addEventListener("resize", resize);
- window.addEventListener("mousemove", onMove);
+ window.addEventListener("pointermove", onMove);
+ window.addEventListener("pointerdown", onMove);
+ window.addEventListener("touchstart", onTouch, { passive: true });
+ window.addEventListener("touchmove", onTouch, { passive: true });
 
  return () => {
  cancelAnimationFrame(raf);
  window.removeEventListener("resize", resize);
- window.removeEventListener("mousemove", onMove);
+ window.removeEventListener("pointermove", onMove);
+ window.removeEventListener("pointerdown", onMove);
+ window.removeEventListener("touchstart", onTouch);
+ window.removeEventListener("touchmove", onTouch);
  };
  }, [text]);
 
@@ -132,6 +145,10 @@ export default function TextCloning() {
  fontSize: 16,
  }}
  />
+
+ <p className="pointer-events-none fixed left-1/2 bottom-[78px] z-[2] -translate-x-1/2 rounded-sm border border-white/15 bg-black/40 px-4 py-2 text-[3.5vw] font-medium tracking-wide text-white/75 backdrop-blur hidden max-sm:block  mx-auto text-center">
+ Tap anywhere to move the clones.
+ </p>
 
  <canvas
  ref={canvasRef}

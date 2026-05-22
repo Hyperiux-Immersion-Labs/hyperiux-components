@@ -299,6 +299,30 @@ const softPulse = Math.sin(time * 1.4 + dot.phase + dot.x * 0.015) ** 2;
  />
  <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-white/4 via-transparent to-black/40" />
  <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_140px_rgba(0,0,0,0.95)]" />
+ <div
+      className="
+        hidden
+        max-sm:flex
+        fixed
+        bottom-20
+        left-1/2
+        -translate-x-1/2
+        z-50
+        px-4
+        py-2
+        rounded-full
+        bg-white/10
+        backdrop-blur-md
+        text-white
+        text-center
+        text-sm
+        leading-tight
+        pointer-events-none
+      "
+    >
+      Works best on desktop  <br />
+      Here, tap & drag to explore
+    </div>
  </section>
  );
 }

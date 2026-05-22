@@ -7,6 +7,6 @@
   "dependencies": ["gsap"],
   "registryDependencies": [],
   "previewUrl": "/scroll-based-effects/square-translate",
-  "coverImage": "/assets/listing/square-translate.png",
+  "coverImage": "/assets/list/square-translate.png",
   "videoUrl": "square-translate"
 }

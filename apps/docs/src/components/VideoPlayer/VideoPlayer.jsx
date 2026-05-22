@@ -319,6 +319,8 @@ const VideoPlayer = ({
       className={`video-player ${rounded ? "video-player--rounded" : ""} ${className}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onClick={revealControls}
+      onTouchStart={revealControls}
     >
       <div className="video-player__wrap">
         <video
@@ -348,10 +350,14 @@ const VideoPlayer = ({
             className={`video-player__close ${
               showControls ? "is-visible" : "is-hidden"
             }`}
-            onClick={handleClose}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClose();
+            }}
             aria-label="Close video"
+            style={{ touchAction: "manipulation" }}
           >
-            <X size={20} />
+            <X size={20} style={{ pointerEvents: "none" }} />
           </button>
         )}
 

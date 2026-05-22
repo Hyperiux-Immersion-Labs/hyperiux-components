@@ -25,20 +25,15 @@ const menuItems = [
 
 export default function DemoPage() {
   return (
-    <div className="h-screen bg-black text-white overflow-hidden relative">
+    <div className="h-screen max-sm:h-full bg-black max-sm:pb-10 text-white overflow-hidden relative">
       
-      {/* Background Glow */}
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-160 h-160 rounded-full bg-white/5 blur-3xl pointer-events-none" />
-
-      {/* Noise Overlay */}
-      <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)] bg-size-[22px_22px]" />
-
+    
       {/* Navbar */}
       <header className="relative z-50 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 md:px-10 h-19 flex items-center justify-between">
           
           {/* Logo */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 max-sm:hidden">
             <div className="w-9 h-9 rounded-xl bg-white text-black flex items-center justify-center font-semibold text-sm">
               H
             </div>
@@ -57,7 +52,7 @@ export default function DemoPage() {
           <DirectionalMegaMenu
             items={menuItems}
             closeDelay={80}
-            contentWrapperClassName="p-8 backdrop-blur-2xl bg-white/[0.03] border border-white/10 rounded-3xl"
+            contentWrapperClassName="p-8 backdrop-blur-2xl bg-white/[0.03] border border-white/10 rounded-3xl max-sm:h-[90vh]"
             animation={{
               duration: 0.35,
               ease: "power2.inOut",

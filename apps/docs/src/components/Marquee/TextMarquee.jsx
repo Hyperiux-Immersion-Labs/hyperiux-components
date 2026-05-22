@@ -1,183 +1,221 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from"react";
-import gsap from"gsap";
-
-
+import { useLayoutEffect, useRef, useState, useEffect } from "react";
+import gsap from "gsap";
 
 export default function TextMarquee({ items = [] }) {
- if (!items.length) return null;
- const trackRef = useRef(null);
- const contentRef = useRef(null);
- const containerRef = useRef(null);
- const [copyCount, setCopyCount] = useState(2);
- const metricsRef = useRef({
- currentY: 0,
- distance: 0,
- currentVelocity: 0.6,
- targetVelocity: 0.6,
- lastScrollDirection: 1,
- });
- const scrollTimeoutRef = useRef(null);
+  if (!items.length) return null;
 
- useLayoutEffect(() => {
- const track = trackRef.current;
- const content = contentRef.current;
- const container = containerRef.current;
+  const trackRef = useRef(null);
+  const contentRef = useRef(null);
+  const containerRef = useRef(null);
 
- if (!track || !content || !container) {
- return undefined;
- }
+  const [copyCount, setCopyCount] = useState(2);
+  const [isMobile, setIsMobile] = useState(false);
 
- const ctx = gsap.context(() => {
- const baseSpeed = 0.6;
- const maxBoost = 12;
- let lastScrollY = window.scrollY;
+  const metricsRef = useRef({
+    currentY: 0,
+    distance: 0,
+    currentVelocity: 0.6,
+    targetVelocity: 0.6,
+    lastScrollDirection: 1,
+  });
 
- const startAnimation = () => {
- const distance = content.offsetHeight;
- const containerHeight = container.offsetHeight;
+  const scrollTimeoutRef = useRef(null);
 
- if (!distance || !containerHeight) {
- return;
- }
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
 
- const nextCopyCount = Math.max(2, Math.ceil(containerHeight / distance) + 2);
- setCopyCount((currentCount) =>
- currentCount === nextCopyCount ? currentCount : nextCopyCount
- );
+    check();
+    window.addEventListener("resize", check);
 
- metricsRef.current.distance = distance;
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
- if (metricsRef.current.currentY <= -distance) {
- metricsRef.current.currentY += distance;
- } else if (metricsRef.current.currentY > 0) {
- metricsRef.current.currentY -= distance;
- }
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    const content = contentRef.current;
+    const container = containerRef.current;
 
- gsap.set(track, { y: metricsRef.current.currentY });
- };
+    if (!track || !content || !container) {
+      return undefined;
+    }
 
- const tick = (_, deltaTime) => {
- const { distance } = metricsRef.current;
+    const ctx = gsap.context(() => {
+      const baseSpeed = 0.6;
+      const maxBoost = 12;
+      let lastScrollY = window.scrollY;
 
- if (!distance) {
- return;
- }
+      const startAnimation = () => {
+        const distance = content.offsetHeight;
+        const containerHeight = container.offsetHeight;
 
- const frameFactor = deltaTime / (1000 / 60);
- metricsRef.current.currentVelocity = gsap.utils.interpolate(
- metricsRef.current.currentVelocity,
- metricsRef.current.targetVelocity,
- 0.14
- );
- metricsRef.current.currentY +=
- metricsRef.current.currentVelocity * frameFactor;
+        if (!distance || !containerHeight) return;
 
- if (metricsRef.current.currentY <= -distance) {
- metricsRef.current.currentY += distance;
- } else if (metricsRef.current.currentY >= 0) {
- metricsRef.current.currentY -= distance;
- }
+        const nextCopyCount = Math.max(
+          2,
+          Math.ceil(containerHeight / distance) + 2
+        );
 
- gsap.set(track, { y: metricsRef.current.currentY });
- };
+        setCopyCount((currentCount) =>
+          currentCount === nextCopyCount ? currentCount : nextCopyCount
+        );
 
- const applyScrollMotion = (delta) => {
- if (!delta) {
- return;
- }
+        metricsRef.current.distance = distance;
 
- const direction = delta > 0 ? -1 : 1;
- const boost = Math.min(maxBoost, baseSpeed + Math.pow(Math.abs(delta), 1.2) * 0.08);
+        if (metricsRef.current.currentY <= -distance) {
+          metricsRef.current.currentY += distance;
+        } else if (metricsRef.current.currentY > 0) {
+          metricsRef.current.currentY -= distance;
+        }
 
- metricsRef.current.lastScrollDirection = direction;
- metricsRef.current.targetVelocity = direction * boost;
+        gsap.set(track, { y: metricsRef.current.currentY });
+      };
 
- window.clearTimeout(scrollTimeoutRef.current);
- scrollTimeoutRef.current = window.setTimeout(() => {
- metricsRef.current.targetVelocity =
- metricsRef.current.lastScrollDirection * baseSpeed;
- }, 120);
- };
+      const tick = (_, deltaTime) => {
+        const { distance } = metricsRef.current;
 
- const handleWheel = (event) => {
- applyScrollMotion(event.deltaY);
- };
+        if (!distance) return;
 
- const handleScroll = () => {
- const nextScrollY = window.scrollY;
- const delta = nextScrollY - lastScrollY;
- lastScrollY = nextScrollY;
- applyScrollMotion(delta);
- };
+        const frameFactor = deltaTime / (1000 / 60);
 
- startAnimation();
- gsap.ticker.add(tick);
+        metricsRef.current.currentVelocity = gsap.utils.interpolate(
+          metricsRef.current.currentVelocity,
+          metricsRef.current.targetVelocity,
+          0.14
+        );
 
- const resizeObserver = new ResizeObserver(startAnimation);
- resizeObserver.observe(content);
- resizeObserver.observe(container);
- window.addEventListener("resize", startAnimation);
- window.addEventListener("wheel", handleWheel, { passive: true });
- window.addEventListener("scroll", handleScroll, { passive: true });
+        metricsRef.current.currentY +=
+          metricsRef.current.currentVelocity * frameFactor;
 
- return () => {
- resizeObserver.disconnect();
- window.removeEventListener("resize", startAnimation);
- window.removeEventListener("wheel", handleWheel);
- window.removeEventListener("scroll", handleScroll);
- window.clearTimeout(scrollTimeoutRef.current);
- gsap.ticker.remove(tick);
- };
- });
+        if (metricsRef.current.currentY <= -distance) {
+          metricsRef.current.currentY += distance;
+        } else if (metricsRef.current.currentY >= 0) {
+          metricsRef.current.currentY -= distance;
+        }
 
- return () => ctx.revert();
- }, []);
+        gsap.set(track, { y: metricsRef.current.currentY });
+      };
 
- return (
- <div className="flex h-screen">
+      const applyScrollMotion = (delta) => {
+        if (!delta) return;
 
- <div className="w-[45%] flex max-sm:w-[30%] items-center justify-end pr-2">
- <p className="max-sm:text-xl text-4xl font-extralight leading-none whitespace-nowrap">
- Hyperiux
- </p>
- </div>
+        const direction = delta > 0 ? -1 : 1;
 
- {/* Right half — scrolling marquee with hard-edge vertical mask */}
- <div
- ref={containerRef}
- className="relative w-[55%] max-sm:w-[70%] h-full overflow-hidden"
- style={{
- maskImage:
-"linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 48%, rgba(0,0,0,1) 48%, rgba(0,0,0,1) 53%, rgba(0,0,0,0.3) 53%, rgba(0,0,0,0.3) 100%)",
- WebkitMaskImage:
-"linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 48%, rgba(0,0,0,1) 48%, rgba(0,0,0,1) 53%, rgba(0,0,0,0.2) 53%, rgba(0,0,0,0.2) 100%)",
- }}
- >
- <div
- ref={trackRef}
- className="absolute left-0 top-0 flex flex-col max-sm:text-xl text-4xl font-extralight leading-none"
- >
- {Array.from({ length: copyCount }, (_, copyIndex) => (
- <div
- key={copyIndex}
- ref={copyIndex === 0 ? contentRef : null}
- className="flex flex-col"
- aria-hidden={copyIndex === 1}
- >
- {items.map((text, i) => (
- <div
- key={`${copyIndex}-${i}`}
- className="py-1 whitespace-nowrap pl-2"
- >
- {text}
- </div>
- ))}
- </div>
- ))}
- </div>
- </div>
- </div>
- );
+        const boost = Math.min(
+          maxBoost,
+          baseSpeed + Math.pow(Math.abs(delta), 1.2) * 0.08
+        );
+
+        metricsRef.current.lastScrollDirection = direction;
+        metricsRef.current.targetVelocity = direction * boost;
+
+        window.clearTimeout(scrollTimeoutRef.current);
+
+        scrollTimeoutRef.current = window.setTimeout(() => {
+          metricsRef.current.targetVelocity =
+            metricsRef.current.lastScrollDirection * baseSpeed;
+        }, 120);
+      };
+
+      const handleWheel = (event) => {
+        applyScrollMotion(event.deltaY);
+      };
+
+      const handleScroll = () => {
+        const nextScrollY = window.scrollY;
+        const delta = nextScrollY - lastScrollY;
+
+        lastScrollY = nextScrollY;
+
+        applyScrollMotion(delta);
+      };
+
+      startAnimation();
+
+      gsap.ticker.add(tick);
+
+      const resizeObserver = new ResizeObserver(startAnimation);
+
+      resizeObserver.observe(content);
+      resizeObserver.observe(container);
+
+      window.addEventListener("resize", startAnimation);
+      window.addEventListener("wheel", handleWheel, {
+        passive: true,
+      });
+
+      window.addEventListener("scroll", handleScroll, {
+        passive: true,
+      });
+
+      return () => {
+        resizeObserver.disconnect();
+
+        window.removeEventListener("resize", startAnimation);
+        window.removeEventListener("wheel", handleWheel);
+        window.removeEventListener("scroll", handleScroll);
+
+        window.clearTimeout(scrollTimeoutRef.current);
+
+        gsap.ticker.remove(tick);
+      };
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  const revealMask = isMobile
+    ? "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 49%, rgba(0,0,0,1) 49%, rgba(0,0,0,1) 52%, rgba(0,0,0,0.2) 52%, rgba(0,0,0,0.2) 100%)"
+    : "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 48%, rgba(0,0,0,1) 48%, rgba(0,0,0,1) 53%, rgba(0,0,0,0.3) 53%, rgba(0,0,0,0.3) 100%)";
+
+  return (
+    <div className="flex h-screen">
+      <div className="w-[45%] flex max-sm:w-[30%] items-center justify-end pr-2">
+        <p className="max-sm:text-xl text-4xl font-extralight leading-none whitespace-nowrap">
+          Hyperiux
+        </p>
+      </div>
+
+      <div
+        ref={containerRef}
+        className="relative w-[55%] max-sm:w-[70%] h-full overflow-hidden "
+        style={{
+          maskImage: revealMask,
+          WebkitMaskImage: revealMask,
+        }}
+      >
+        <div
+          ref={trackRef}
+          className="absolute left-0 top-0 flex flex-col max-sm:text-xl text-4xl font-extralight leading-none"
+        >
+          {Array.from({ length: copyCount }, (_, copyIndex) => (
+            <div
+              key={copyIndex}
+              ref={copyIndex === 0 ? contentRef : null}
+              className="flex flex-col"
+              aria-hidden={copyIndex === 1}
+            >
+              {items.map((text, i) => (
+                <div
+  key={`${copyIndex}-${i}`}
+  className="
+    py-1
+    pl-2
+    whitespace-nowrap
+    max-sm:whitespace-normal
+    max-sm:wrap-break-word
+    max-sm:pr-3
+    max-sm:max-w-full
+  "
+>
+                  {text}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }

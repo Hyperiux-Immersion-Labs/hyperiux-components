@@ -74,7 +74,8 @@ export default function CenterLinesLoading(
         layoutRef.current = { y, coneScale };
     }, []);
 
-    const heroWords = title.split("").filter(Boolean);
+    const heroWords = title.split("").filter((c) => c !== " ");
+    const words = title.split(" ");
 
     const run = useCallback(() => {
         tlRef.current?.kill();
@@ -236,39 +237,49 @@ export default function CenterLinesLoading(
         };
     }, [lineCount, recomputeLayout, run]);
 
+    let charIdx = 0;
     return (
-        <div ref={containerRef} className="fixed inset-0 h-screen w-screen overflow-hidden bg-white">
+        <div ref={containerRef} className="fixed inset-0 h-screen w-screen overflow-hidden bg-black">
             <div
                 ref={blackPanelRef}
                 className="absolute inset-0 z-20 bg-black will-change-transform"
             />
             <div
                 ref={revealPanelRef}
-                className="absolute inset-0 z-30 bg-white will-change-transform"
+                className="absolute inset-0 z-30 bg-white scale-y-0 will-change-transform"
             />
             <div className="absolute inset-0 z-50 flex items-center justify-center">
                 <div className="px-6 text-center">
                     <h1 className="select-none font-mono text-[38px] font-semibold leading-[1.05] tracking-[-0.03em] text-black md:text-[52px]">
-                        {heroWords.map((w, i) => (
-                            <span
-                                key={`${w}-${i}`}
-                                ref={(el) => (heroWordRefs.current[i] = el)}
-                                className="inline-block"
-                            >
-                                {w}
-                                {i === heroWords.length - 1 ? "" : "\u00A0"}
+                        {words.map((word, wordIdx) => (
+                            <span key={`${word}-${wordIdx}`}>
+                                <span className="inline-block whitespace-nowrap">
+                                    {word.split("").map((char, charIdxInWord) => {
+                                        const currentIdx = charIdx++;
+                                        return (
+                                            <span
+                                                key={`${char}-${charIdxInWord}`}
+                                                ref={(el) => (heroWordRefs.current[currentIdx] = el)}
+                                                className="inline-block opacity-0"
+                                            >
+                                                {char}
+                                            </span>
+                                        );
+                                    })}
+                                </span>
+                                {wordIdx === words.length - 1 ? "" : " "}
                             </span>
                         ))}
                     </h1>
                     <p
                         ref={heroSubtitleRef}
-                        className="mt-4 select-none font-mono text-[13px] tracking-[0.18em] text-black/70"
+                        className="mt-4 select-none font-mono text-[13px] tracking-[0.18em] text-black/70 opacity-0"
                     >
                         {subtitle}
                     </p>
                 </div>
             </div>
-            <div ref={linesWrapRef} className="pointer-events-none absolute inset-0 z-40">
+            <div ref={linesWrapRef} className="pointer-events-none absolute inset-0 z-40 opacity-0">
                 {Array.from({ length: Math.max(3, Math.floor(lineCount)) }, (_, i) => (
                     <div
                         key={i}

@@ -7,6 +7,6 @@
   "dependencies": ["gsap", "next-transition-router"],
   "registryDependencies": [],
   "previewUrl": "/page-transitions/chess-grids",
-  "coverImage": "/assets/listing/chess-grid-transition.png",
+  "coverImage": "/assets/list/chess-grid-transition.png",
   "videoUrl": "chess-grid-transition"
 }

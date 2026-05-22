@@ -148,10 +148,10 @@ export default function FlipTransition({
         style={{ zIndex: 10000 }}
       >
         <div ref={boxesRef} className="flex gap-2">
-          <span className="block w-4 h-7 bg-black" />
-          <span className="block w-4 h-7 bg-black" />
-          <span className="block w-4 h-7 bg-black" />
-          <span className="block w-4 h-7 bg-black" />
+          <span className="block w-4 h-7 bg-black scale-y-0" />
+          <span className="block w-4 h-7 bg-black scale-y-0" />
+          <span className="block w-4 h-7 bg-black scale-y-0" />
+          <span className="block w-4 h-7 bg-black scale-y-0" />
         </div>
       </div>
 

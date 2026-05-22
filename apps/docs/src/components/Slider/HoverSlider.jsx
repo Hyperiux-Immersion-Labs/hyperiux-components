@@ -89,7 +89,7 @@ const lerp = (a, b, t) => a + (b - a) * t;
 export default function HoverSlider({ items = [] }) {
  const mountRef = useRef(null);
  const glRef = useRef(null);
- const stateRef = useRef({ activeIndex: 0, hovering: false });
+ const stateRef = useRef({ activeIndex: 0, hovering: false, hasClicked: false });
 
  const [highlightedIndex, setHighlightedIndex] = useState(null);
 
@@ -99,22 +99,30 @@ export default function HoverSlider({ items = [] }) {
  if (!mount) return;
 
  let W = mount.offsetWidth;
- let H = mount.offsetHeight;
+ let H = W < 768 ? window.innerHeight : mount.offsetHeight;
 
  const CARD_ASPECT = 1.7;
  const GAP = 14;
  const VISIBLE = 7;
  const HALF = 3;
 
- const getCardH = () => Math.round(H * 0.46);
- const getCardW = () => Math.round(getCardH() * CARD_ASPECT);
+ const getCardH = () => Math.round(H * (W < 768 ? 0.34 : 0.46));
+ const getCardW = () => {
+ const cardW = getCardH() * CARD_ASPECT;
+ return Math.round(W < 768 ? Math.min(cardW, W * 0.88) : cardW);
+ };
 
  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
  renderer.setClearColor(0x000000, 0);
  Object.assign(renderer.domElement.style, {
- position:"absolute", inset:"0",
- width:"100%", height:"100%",
+ position: W < 768 ?"fixed" :"absolute",
+ top:"0",
+ left:"0",
+ right:"0",
+ bottom: W < 768 ?"auto" :"0",
+ width:"100%",
+ height: W < 768 ?"100vh" :"100%",
  zIndex:"15", pointerEvents:"none",
  });
  mount.appendChild(renderer.domElement);
@@ -239,7 +247,12 @@ export default function HoverSlider({ items = [] }) {
 
  const onResize = () => {
  W = mount.offsetWidth;
- H = mount.offsetHeight;
+ H = W < 768 ? window.innerHeight : mount.offsetHeight;
+ Object.assign(renderer.domElement.style, {
+ position: W < 768 ?"fixed" :"absolute",
+ bottom: W < 768 ?"auto" :"0",
+ height: W < 768 ?"100vh" :"100%",
+ });
  renderer.setSize(W, H, false);
  updateCamera();
  CW = getCardW();
@@ -344,6 +357,10 @@ const opacity = Math.max(0, baseOpacity - dist * 0.22) * anim.alpha;
  }, [items]);
 
  const onEnter = useCallback((index) => {
+ if (!stateRef.current.hasClicked) {
+ setHighlightedIndex(index);
+ return;
+ }
  const wasHovering = stateRef.current.hovering;
  stateRef.current.hovering = true;
  stateRef.current.activeIndex = index;
@@ -356,38 +373,54 @@ const opacity = Math.max(0, baseOpacity - dist * 0.22) * anim.alpha;
  }
  }, []);
 
- const onLeave = useCallback(() => {
+ const onLeave = useCallback((event) => {
+ if (event.pointerType ==="touch") return;
+ if (stateRef.current.hasClicked) return;
  stateRef.current.hovering = false;
  setHighlightedIndex(null);
  glRef.current?.hide();
+ }, []);
+
+ const activateRow = useCallback((index) => {
+ const wasHovering = stateRef.current.hovering;
+ stateRef.current.hasClicked = true;
+ stateRef.current.hovering = true;
+ stateRef.current.activeIndex = index;
+ setHighlightedIndex(index);
+ glRef.current?.setActive(index);
+ if (!wasHovering) {
+ glRef.current?.show(index);
+ } else {
+ glRef.current?.onRowChange(index);
+ }
  }, []);
 
  return (
  <section
  ref={mountRef}
  onPointerLeave={onLeave}
- className="relative isolate min-h-screen overflow-hidden bg-[#f0ede6] px-8 py-9 text-[#1e1c18] md:px-10"
+ className="relative isolate min-h-screen overflow-visible max-sm:px-0 bg-[#f0ede6] px-4 text-[#1e1c18] md:overflow-hidden md:px-10  py-9"
  style={{ cursor:"crosshair" }}
  >
  <header
- className="relative z-20 flex items-start justify-between text-[11px]"
+ className="relative z-20 flex items-start max-sm:px-2 justify-between text-[11px]"
  style={{ color:"rgba(30,28,24,0.6)" }}
  >
  <div>1470px × 797px</div>
- <nav className="absolute left-1/2 top-0 flex -translate-x-1/2 gap-3">
+ <nav className="absolute left-1/2 top-0 flex -translate-x-1/2 gap- max-sm:gap-5">
  <span>Featured Works,</span>
  <span>Archive</span>
  <span>About</span>
  </nav>
- <div className="flex items-center gap-2">
+ <div className="flex items-center gap-2 max-sm:hidden">
  <span className="inline-block h-2 w-2 bg-[#e63000]" />
  <span>Available June 2026</span>
  </div>
  </header>
 
- <div className="relative z-20 mt-16 max-w-205 md:mt-[9vh]">
+ <div className="relative max-sm:px-2 z-20 mt-12 w-full overflow-x-auto pb-8 md:mt-[9vh] md:max-w-205 md:overflow-x-visible md:pb-0">
  <div
- className="grid gap-5 pb-4 text-[10px] uppercase tracking-widest"
+ className="grid min-w-155 gap-5 pb-4 text-[10px] uppercase tracking-widest md:min-w-0"
  style={{
  gridTemplateColumns:"72px minmax(140px,1fr) minmax(180px,1.1fr) 64px",
  color:"rgba(30,28,24,0.6)",
@@ -406,6 +439,9 @@ const opacity = Math.max(0, baseOpacity - dist * 0.22) * anim.alpha;
  <div
  key={item.id}
  onPointerEnter={() => onEnter(index)}
+ onPointerDown={() => activateRow(index)}
+ onClick={() => activateRow(index)}
+ className="min-w-155 md:min-w-0"
  style={{
  display:"grid",
  gridTemplateColumns:"72px minmax(140px,1fr) minmax(180px,1.1fr) 64px",
@@ -427,7 +463,7 @@ const opacity = Math.max(0, baseOpacity - dist * 0.22) * anim.alpha;
  </div>
 
  <p
- className="pointer-events-none absolute right-[10vw] top-[22vh] z-20 max-w-[320px] text-center text-[12px] leading-relaxed"
+ className="pointer-events-none max-sm:hidden relative z-20 mt-6 max-w-[320px] text-left text-[12px] leading-relaxed md:absolute md:right-[10vw] md:top-[22vh] md:mt-0 md:text-center"
  style={{ color:"rgba(30,28,24,0.6)" }}
  >
 A curated collection of futuristic UI experiments, motion systems, and interactive components - crafted to push modern web experiences beyond the ordinary.

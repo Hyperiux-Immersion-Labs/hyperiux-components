@@ -551,22 +551,38 @@ export default function ClippathSlider({ slides = [], cursorBg = "#d9f99d", curs
         style={{ zIndex: 50 }}
       >
         {/* NAME (left center) */}
-        <h2 className="absolute left-[5%] top-[50%] max-md:text-[3vw] w-[20vw] text-right -translate-y-1/2 text-[1.7vw] font-medium about-slider-text">
+        <h2 className="absolute left-[5%] max-sm:left-[1%] top-[50%] max-md:text-[3vw] w-[20vw] max-sm:w-[27vw] text-right -translate-y-1/2 text-[1.7vw] max-sm:text-[4vw] font-medium about-slider-text ">
           {slides[currentSlide].name}
         </h2>
 
         {/* SMALL DESCRIPTION (top right) */}
-        <p className="absolute right-[3%] top-[4%] max-md:text-[3vw] max-md:w-[80%] w-[22%] text-[1.1vw] leading-[1.4] opacity-90 about-slider-text">
-          {slides[currentSlide].description}
+        <div className="absolute right-[3%] top-[8%] max-sm:top-[13%] max-sm:right-[8%] max-sm:text-[3.2vw] max-md:text-[3vw] max-md:w-[80%] w-[22%] text-[1.1vw] leading-[1.4] opacity-90 about-slider-text">
+
+  <h3 className="mb-4 uppercase tracking-[0.25em] text-white/50 text-[0.8vw] max-md:text-[2.8vw]">
+    Capabilities
+  </h3>
+
+  <div className="flex flex-col gap-2">
+    {slides[currentSlide].tags?.map((tag, i) => (
+      <div key={i} className="flex items-center gap-3">
+        <span className="h-1 w-1 rounded-full bg-current shrink-0" />
+
+        <p className="text-[1.2vw] max-md:text-[4.5vw] font-light about-slider-text leading-[1.2]">
+          {tag}
         </p>
+      </div>
+    ))}
+  </div>
+
+</div>
 
         {/* TAGS (right middle stacked) */}
-        <div className="absolute right-[8%] top-[55%] -translate-y-1/2 flex flex-col items-start leading-[1.1]">
-          {slides[currentSlide].tags?.map((tag, i) => (
-            <p key={i} className="text-[3vw] max-md:text-[8vw] font-light about-slider-text">
-              {tag}
+        <div className="absolute right-[5%] top-[55%] max-sm:top-[50%] text-center w-[30vw] max-sm:w-[50vw] -translate-y-1/2 flex flex-col items-start leading-[1.1]">
+         
+            <p className="text-[1.5vw] max-md:text-[4vw] font-light about-slider-text">
+               {slides[currentSlide].description}
             </p>
-          ))}
+       
         </div>
 
       </div>
@@ -574,10 +590,10 @@ export default function ClippathSlider({ slides = [], cursorBg = "#d9f99d", curs
       {/* CURSOR FOLLOWER */}
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 pointer-events-none z-100"
+        className="fixed max-sm:hidden  top-0 left-0 pointer-events-none z-100"
       >
         <div
-          className="w-15 h-15 rounded-full flex items-center justify-center relative"
+          className="w-15 h-15 max-sm:hidden  rounded-full flex items-center justify-center relative"
           style={{ backgroundColor: cursorBg }}
         >
           <div className="relative w-7.5 h-7.5">

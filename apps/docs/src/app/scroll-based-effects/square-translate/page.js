@@ -20,7 +20,7 @@ export default function Page() {
     return (
         <>
             <LenisSmoothScroll />
-            <div className="h-fit w-screen bg-[#eeeeee] px-[4vw] max-md:px-4 py-[10vw] max-md:py-[30vw] max-md:pb-[40vh]">
+            <div className="h-fit w-screen bg-[#eeeeee] px-[4vw] max-md:px-4 max-sm:px-6 py-[10vw] max-md:py-[30vw] max-md:pb-[40vh]">
                 <div className="h-fit py-[2vw] max-md:py-6 w-[80%] max-md:w-full mx-auto mb-[5vw] max-md:mb-8 flex items-center justify-center text-center font-mono text-[1.5vw] max-md:text-base px-[4vw] max-md:px-4 rounded-xl bg-black">
                     <p>
                         A scroll-driven list with a rotating square indicator that follows your scroll position.
@@ -49,7 +49,7 @@ export default function Page() {
                             textClassName="text-[1.1vw] max-md:text-xl"
                             textColor="text-black"
                             squareClassName="w-[.6vw] h-[.6vw] max-md:w-3 max-md:h-3 bg-[#FB450F]"
-                            containerClassName="w-[50vw] max-md:w-full"
+                            containerClassName="w-[50vw]  max-md:w-full"
                             translateValue={55}
                             borderColor="border-black/10"
                             totalTranslateImpact={3}
@@ -57,7 +57,7 @@ export default function Page() {
                     </div>
                 </div>
                 <div className="h-[20vh] max-md:h-24 bg-[#eeeeee] mb-[5vw] max-md:mb-8 relative flex items-center justify-center w-full">
-                    <div className="h-[10vw] max-md:h-20 w-[80%] max-md:w-full flex items-center justify-center text-center font-mono text-[1.5vw] max-md:text-base px-[4vw] max-md:px-4 rounded-xl bg-black translate-y-[10vw] max-md:translate-y-8">
+                    <div className="h-[10vw] max-md:h-20 w-[80%] max-md:w-full flex items-center justify-center text-center font-mono text-[1.5vw] max-md:text-base px-[4vw] max-md:px-4  rounded-xl bg-black translate-y-[10vw] max-md:translate-y-8">
                         <p>
                             Hope you like it!
                         </p>

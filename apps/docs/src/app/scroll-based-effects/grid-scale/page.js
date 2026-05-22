@@ -18,7 +18,24 @@ const floatingWords = [
   { text: 'WEBGL', color: 'bg-sky-200', start: { top: '70%', left: '16%', xPercent: -50, yPercent: -50 } },
   { text: 'CREATE', color: 'bg-sky-200', start: { top: '85%', left: '44%', xPercent: -50, yPercent: -50 } },
   { text: 'BUILD', color: 'bg-pink-200', start: { top: '74%', left: '85%', xPercent: -50, yPercent: -50 } },
-  { text: 'TRANSITIONS', color: 'bg-orange-200', start: { top: '88%', left: '12%', xPercent: -50, yPercent: -50 } },
+ {
+  text: 'TRANSITIONS',
+  color: 'bg-orange-200',
+
+  start: {
+    top: '88%',
+    left: '12%',
+    xPercent: -50,
+    yPercent: -50,
+  },
+
+  mobile: {
+    top: '82%',
+    left: '25%',
+    xPercent: -50,
+    yPercent: -50,
+  },
+},
   { text: 'SHADERS', color: 'bg-sky-300', start: { top: '88%', left: '32%', xPercent: -50, yPercent: -50 } },
   { text: 'FUTURISTIC', color: 'bg-purple-300', start: { top: '90%', left: '54%', xPercent: -50, yPercent: -50 } },
   { text: 'EXPERIENCES', color: 'bg-orange-300', start: { top: '88%', left: '76%', xPercent: -50, yPercent: -50 } },
@@ -28,7 +45,18 @@ const floatingWords = [
 export default function Page() {
   const centeredTextRef = useRef(null);
   const ideaTextRef = useRef(null);
+
   useEffect(() => {
+    const isMobile = window.innerWidth < 640
+
+    const clipFrom = isMobile
+      ? 'inset(25% 18% 25% 18% round 0%)'
+      : 'inset(20% 35% 20% 35% round 0%)'
+
+    // Set the initial clip-path via GSAP before the timeline runs
+    gsap.set('.clip-path', { clipPath: clipFrom })
+ 
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -47,24 +75,70 @@ export default function Page() {
 
       tl.fromTo(
         '.clip-path',
-        { clipPath: 'inset(20% 35% 20% 35% round 0%)' },
+        { clipPath: clipFrom },
         {
           clipPath: 'inset(0% 0% 0% 0% round 0%)',
           ease: 'power2.out',
         },
         0
       )
-      gsap.set('.tl-box', { xPercent: -100, yPercent: -100, transformOrigin: 'bottom right' })
-      gsap.set('.tr-box', { xPercent: 100, yPercent: -100, transformOrigin: 'bottom left' })
-      gsap.set('.bl-box', { xPercent: -100, yPercent: 100, transformOrigin: 'top right' })
-      gsap.set('.br-box', { xPercent: 100, yPercent: 100, transformOrigin: 'top left' })
 
-      tl.fromTo('.tl-box', { top: '20%', left: '35%' }, { top: '0%', left: '0%', ease: 'power2.out' }, 0)
-      tl.fromTo('.tr-box', { top: '20%', right: '35%' }, { top: '0%', right: '0%', ease: 'power2.out' }, 0)
-      tl.fromTo('.bl-box', { bottom: '20%', left: '35%' }, { bottom: '0%', left: '0%', ease: 'power2.out' }, 0)
-      tl.fromTo('.br-box', { bottom: '20%', right: '35%' }, { bottom: '0%', right: '0%', ease: 'power2.out' }, 0)
+    const blockTranslate = isMobile ? 50 : 100
+const blockSide = isMobile ? '18%' : '35%'
+const blockTop = isMobile ? '25%' : '20%'
 
-      // Animate grid lines to translate with clip-path and scale to 0
+gsap.set('.tl-box', {
+  xPercent: -blockTranslate,
+  yPercent: -blockTranslate,
+  transformOrigin: 'bottom right',
+})
+
+gsap.set('.tr-box', {
+  xPercent: blockTranslate,
+  yPercent: -blockTranslate,
+  transformOrigin: 'bottom left',
+})
+
+gsap.set('.bl-box', {
+  xPercent: -blockTranslate,
+  yPercent: blockTranslate,
+  transformOrigin: 'top right',
+})
+
+gsap.set('.br-box', {
+  xPercent: blockTranslate,
+  yPercent: blockTranslate,
+  transformOrigin: 'top left',
+})
+
+tl.fromTo(
+  '.tl-box',
+  { top: blockTop, left: blockSide },
+  { top: '0%', left: '0%', ease: 'power2.out' },
+  0
+)
+
+tl.fromTo(
+  '.tr-box',
+  { top: blockTop, right: blockSide },
+  { top: '0%', right: '0%', ease: 'power2.out' },
+  0
+)
+
+tl.fromTo(
+  '.bl-box',
+  { bottom: blockTop, left: blockSide },
+  { bottom: '0%', left: '0%', ease: 'power2.out' },
+  0
+)
+
+tl.fromTo(
+  '.br-box',
+  { bottom: blockTop, right: blockSide },
+  { bottom: '0%', right: '0%', ease: 'power2.out' },
+  0
+)
+
       tl.fromTo('.grid-line-t', { top: '20%', scaleX: 1 }, { top: '0%', scaleX: 0, ease: 'power2.out' }, 0)
       tl.fromTo('.grid-line-b', { top: '80%', scaleX: 1 }, { top: '100%', scaleX: 0, ease: 'power2.out' }, 0)
       tl.fromTo('.grid-line-l', { left: '35%', scaleY: 1 }, { left: '0%', scaleY: 0, ease: 'power2.out' }, 0)
@@ -75,6 +149,8 @@ export default function Page() {
   }, [])
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 640
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -86,10 +162,14 @@ export default function Page() {
         },
       });
 
-
       floatingWords.forEach((word, i) => {
-        gsap.set(`.floating-word-${i}`, word.start);
-      });
+  gsap.set(
+    `.floating-word-${i}`,
+    isMobile && word.mobile
+      ? word.mobile
+      : word.start
+  );
+});
 
       tl.fromTo(centeredTextRef.current, { opacity: 0 }, {
         opacity: 1,
@@ -100,7 +180,6 @@ export default function Page() {
         {
           top: '50%',
           left: '50%',
-
           xPercent: -50,
           yPercent: -50,
           opacity: 0,
@@ -108,13 +187,11 @@ export default function Page() {
           stagger: {
             amount: 0.7,
             each: 0.1,
-            // random order of staggering
             grid: "auto",
             from: "random"
           }
         },
         "<"
-
       );
     });
 
@@ -129,12 +206,8 @@ export default function Page() {
         <div className='h-screen w-full sticky top-0 overflow-hidden'>
           <div
             className="clip-path flex items-center justify-center z-200 absolute top-0 left-0 w-full h-screen bg-white"
-            style={{
-              clipPath: 'inset(20% 35% 20% 35% round 0%)',
-            }}
           >
-            <p ref={centeredTextRef} className='text-[#242424] opacity-0 w-[60vw] text-center leading-[1.1] text-[3.5vw]'>
-
+            <p ref={centeredTextRef} className='text-[#242424] opacity-0 w-[60vw] text-center leading-[1.1] text-[3.5vw] max-sm:text-[4.5vw]'>
               Building futuristic interfaces
               <br />
               with motion, interaction, and depth.
@@ -143,7 +216,6 @@ export default function Page() {
           </div>
 
           {/* Corner Boxes */}
-
           <div className='grid-line-t w-full h-0.5 origin-center bg-white/10 absolute top-[20%] z-10 left-0' />
           <div className='grid-line-b w-full h-0.5 origin-center bg-white/10 absolute top-[80%] z-10 left-0' />
           <div className='grid-line-l w-0.5 origin-center h-full bg-white/10 absolute top-[0%] z-10 left-[35%]' />
@@ -152,7 +224,6 @@ export default function Page() {
           <div className="tr-box absolute w-8 h-8 bg-[#FF70A6]" />
           <div className="bl-box absolute w-8 h-8 bg-[#C8B6FF]" />
           <div className="br-box absolute w-8 h-8 bg-[#FF9770]" />
-
 
           {/* Floating Words */}
           {floatingWords.map((word, i) => (

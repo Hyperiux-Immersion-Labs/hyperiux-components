@@ -180,6 +180,14 @@ export default function ButterfliesPage() {
  <ButterflyTrail />
  </Canvas>
  <h1 className='font-serif text-4xl text-center absolute text-zinc-600 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2'>ʚଓ Unseen Butterflies ʚଓ</h1>
+ <div className="absolute max-sm:block hidden bottom-12 left-1/2 -translate-x-1/2 text-center">
+  <p className="font-serif text-zinc-600 text-[6vw] leading-none">
+    Tap to reveal the effect 
+  </p>
+  <p className="text-zinc-500 leading-none text-[3.5vw] mt-2">
+    For the best experience, open on desktop
+  </p>
+</div>
  </div>
  )
 }

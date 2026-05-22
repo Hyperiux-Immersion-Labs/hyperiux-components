@@ -1,3 +1,4 @@
+import LenisSmoothScroll from "@/components/SmoothScroll/LenisScroll";
 import StackedHoverCards from"@/components/StackHoverCards/StackedHoverCards";
 import React from"react";
 // import StackedHoverCards from"./StackedHoverCards";
@@ -56,7 +57,10 @@ const cards = [
 
 const TestimonialsSection = () => {
  return (
- <section className="w-full h-fit bg-[#fff9ec] py-[10%] overflow-hidden flex flex-col gap-[7vw] justify-center items-center">
+    <>
+    <LenisSmoothScroll />
+   
+ <section className="w-full h-fit bg-[#fff9ec] py-[10%] max-sm:py-[20%] overflow-hidden flex flex-col gap-[7vw] justify-center items-center">
  <h1 className="text-[#1a1a1a] text-[5.5vw]">
  Stack Hovered Cards
  </h1>
@@ -70,6 +74,7 @@ const TestimonialsSection = () => {
  hoverLift={30}
  />
  </section>
+  </>
  );
 };
 

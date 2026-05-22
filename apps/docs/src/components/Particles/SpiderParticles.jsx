@@ -53,30 +53,33 @@ export default function SpiderParticles({
  let mouseJustEntered = false; // <-- NEW: snap flag
 
  const onMove = (e) => {
- const rect = mount.getBoundingClientRect();
- mouse.set(
- e.clientX - rect.left - width / 2,
- -(e.clientY - rect.top - height / 2)
- );
- setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  if (window.innerWidth < 768) return;
+  const rect = mount.getBoundingClientRect();
+  mouse.set(
+  e.clientX - rect.left - width / 2,
+  -(e.clientY - rect.top - height / 2)
+  );
+  setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
  };
 
  const onEnter = (e) => {
- // Capture exact entry position immediately so smoothMouse can snap
- const rect = mount.getBoundingClientRect();
- mouse.set(
- e.clientX - rect.left - width / 2,
- -(e.clientY - rect.top - height / 2)
- );
- mouseJustEntered = true; // signal animate() to snap on next frame
- mousePresent = true;
- setActive(true);
+  if (window.innerWidth < 768) return;
+  // Capture exact entry position immediately so smoothMouse can snap
+  const rect = mount.getBoundingClientRect();
+  mouse.set(
+  e.clientX - rect.left - width / 2,
+  -(e.clientY - rect.top - height / 2)
+  );
+  mouseJustEntered = true; // signal animate() to snap on next frame
+  mousePresent = true;
+  setActive(true);
  };
 
  const onLeave = () => {
- mousePresent = false;
- mouseJustEntered = false;
- setActive(false);
+  if (window.innerWidth < 768) return;
+  mousePresent = false;
+  mouseJustEntered = false;
+  setActive(false);
  };
 
  mount.addEventListener("mousemove", onMove);
@@ -84,21 +87,23 @@ export default function SpiderParticles({
  mount.addEventListener("mouseleave", onLeave);
 
  const onTouch = (e) => {
- const t = e.touches[0];
- const rect = mount.getBoundingClientRect();
- mouse.set(
- t.clientX - rect.left - width / 2,
- -(t.clientY - rect.top - height / 2)
- );
- if (!mousePresent) mouseJustEntered = true;
- mousePresent = true;
- setActive(true);
+  if (window.innerWidth < 768) return;
+  const t = e.touches[0];
+  const rect = mount.getBoundingClientRect();
+  mouse.set(
+  t.clientX - rect.left - width / 2,
+  -(t.clientY - rect.top - height / 2)
+  );
+  if (!mousePresent) mouseJustEntered = true;
+  mousePresent = true;
+  setActive(true);
  };
  mount.addEventListener("touchmove", onTouch, { passive: true });
  mount.addEventListener("touchend", () => {
- mousePresent = false;
- mouseJustEntered = false;
- setActive(false);
+  if (window.innerWidth < 768) return;
+  mousePresent = false;
+  mouseJustEntered = false;
+  setActive(false);
  });
 
  let cols, rows, actualCount, spacingX, spacingY;
@@ -267,27 +272,27 @@ export default function SpiderParticles({
  const FADE_SPEED = 0.04;
 
  const animate = () => {
- animId = requestAnimationFrame(animate);
+  animId = requestAnimationFrame(animate);
 
- // Fade alpha in/out
- if (mousePresent) {
- mouseEntryAlpha = Math.min(1, mouseEntryAlpha + FADE_SPEED);
- } else {
- mouseEntryAlpha = Math.max(0, mouseEntryAlpha - FADE_SPEED);
- }
+  // Fade alpha in/out
+  if (mousePresent) {
+  mouseEntryAlpha = Math.min(1, mouseEntryAlpha + FADE_SPEED);
+  } else {
+  mouseEntryAlpha = Math.max(0, mouseEntryAlpha - FADE_SPEED);
+  }
 
- // Snap smoothMouse to exact entry position on first frame, lerp after
- if (mousePresent && mouse.x > -9000) {
- if (mouseJustEntered) {
- smoothMouse.copy(mouse); // instant snap to entry point — no lerp drift
- mouseJustEntered = false;
- } else {
- smoothMouse.x += (mouse.x - smoothMouse.x) * LERP_SPEED;
- smoothMouse.y += (mouse.y - smoothMouse.y) * LERP_SPEED;
- }
- } else if (!mousePresent && mouseEntryAlpha <= 0) {
- smoothMouse.set(-9999, -9999);
- }
+  // Snap smoothMouse to exact entry position on first frame, lerp after
+  if (mousePresent && mouse.x > -9000) {
+  if (mouseJustEntered) {
+  smoothMouse.copy(mouse); // instant snap to entry point — no lerp drift
+  mouseJustEntered = false;
+  } else {
+  smoothMouse.x += (mouse.x - smoothMouse.x) * LERP_SPEED;
+  smoothMouse.y += (mouse.y - smoothMouse.y) * LERP_SPEED;
+  }
+  } else if (!mousePresent && mouseEntryAlpha <= 0) {
+  smoothMouse.set(-9999, -9999);
+  }
 
  particleMat.uniforms.uMouse.value.copy(smoothMouse);
  particleMat.uniforms.uAlpha.value = mouseEntryAlpha;
@@ -358,71 +363,83 @@ export default function SpiderParticles({
  ];
 
  return (
- <div
- ref={mountRef}
- className="relative w-full h-screen bg-black cursor-none overflow-hidden"
- >
- <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between p-10">
+  <div
+  ref={mountRef}
+  className="relative w-full h-screen bg-black overflow-hidden cursor-none max-sm:cursor-default"
+  >
+  <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between p-10">
 
- {/* Top row */}
- <div className="flex items-start justify-between">
- <div>
- <div className="flex items-center gap-2 mb-1.5">
- <span
- className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
- active ?"bg-emerald-400 shadow-[0_0_8px_#34d399]" :"bg-white/20"
- }`}
- />
- <span
- className={`text-[11px] tracking-widest uppercase transition-colors duration-500 ${
- active ?"text-white/50" :"text-white/20"
- }`}
- >
- {active ?"Tracking" :"Idle"}
- </span>
- </div>
- <h1 className="text-4xl font-light text-white/90 tracking-tight leading-none">
- Spider Web
- </h1>
- <p className="mt-1.5 text-[13px] text-white/30 tracking-wide">
- Interactive particle field
- </p>
- </div>
+  {/* Top row */}
+  <div className="flex items-start justify-between">
+  <div>
+  <div className="flex items-center gap-2 mb-1.5 max-sm:hidden">
+  <span
+  className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
+  active ?"bg-emerald-400 shadow-[0_0_8px_#34d399]" :"bg-white/20"
+  }`}
+  />
+  <span
+  className={`text-[11px] tracking-widest uppercase transition-colors duration-500 ${
+  active ?"text-white/50" :"text-white/20"
+  }`}
+  >
+  {active ?"Tracking" :"Idle"}
+  </span>
+  </div>
+  <h1 className="text-4xl font-light text-white/90 tracking-tight leading-none">
+  Spider Web
+  </h1>
+  <p className="mt-1.5 text-[13px] text-white/30 tracking-wide">
+  Interactive particle field
+  </p>
+  </div>
 
- <div className="flex gap-6">
- {stats.map(({ label, value }) => (
- <div key={label} className="text-right">
- <div className="text-[11px] uppercase tracking-widest text-white/25 mb-0.5">
- {label}
- </div>
- <div className="text-lg font-light text-white/60 tabular-nums">
- {value}
- </div>
- </div>
- ))}
- </div>
- </div>
+  <div className="flex gap-6 max-sm:hidden">
+  {stats.map(({ label, value }) => (
+  <div key={label} className="text-right">
+  <div className="text-[11px] uppercase tracking-widest text-white/25 mb-0.5">
+  {label}
+  </div>
+  <div className="text-lg font-light text-white/60 tabular-nums">
+  {value}
+  </div>
+  </div>
+  ))}
+  </div>
+  </div>
 
- {/* Bottom row */}
- <div className="flex items-end justify-between">
- <div className={`transition-opacity duration-700 ${active ?"opacity-0" :"opacity-40"}`}>
- <p className="text-[12px] text-white/60 tracking-widest uppercase">
- Move your cursor to explore
- </p>
- <div className="mt-1.5 w-8 h-px bg-white/20" />
- </div>
+  {/* Mobile Info Overlay Warning */}
+  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none select-none z-20 hidden max-sm:block w-full px-14">
+ <div className="text-center">
+      <p className="text-white text-3xl font-light tracking-tight">
+        Open on desktop 
+      </p>
+      <p className="mt-3 text-base text-white/50 tracking-wide">
+        This effect is designed to be experienced with a cursor
+      </p>
+    </div>
+  </div>
 
- <div className={`text-right transition-opacity duration-500 ${active ?"opacity-100" :"opacity-0"}`}>
- <div className="text-[11px] uppercase tracking-widest text-white/25 mb-1">
- Position
- </div>
- <div className="font-mono text-[13px] text-white/50 tracking-wider">
- {Math.round(pos.x)}&nbsp;·&nbsp;{Math.round(pos.y)}
- </div>
- </div>
- </div>
+  {/* Bottom row */}
+  <div className="flex items-end justify-between max-sm:hidden">
+  <div className={`transition-opacity duration-700 ${active ?"opacity-0" :"opacity-40"}`}>
+  <p className="text-[12px] text-white/60 tracking-widest uppercase">
+  Move your cursor to explore
+  </p>
+  <div className="mt-1.5 w-8 h-px bg-white/20" />
+  </div>
 
- </div>
- </div>
+  <div className={`text-right transition-opacity duration-500 ${active ?"opacity-100" :"opacity-0"}`}>
+  <div className="text-[11px] uppercase tracking-widest text-white/25 mb-1">
+  Position
+  </div>
+  <div className="font-mono text-[13px] text-white/50 tracking-wider">
+  {Math.round(pos.x)}&nbsp;·&nbsp;{Math.round(pos.y)}
+  </div>
+  </div>
+  </div>
+
+  </div>
+  </div>
  );
 }

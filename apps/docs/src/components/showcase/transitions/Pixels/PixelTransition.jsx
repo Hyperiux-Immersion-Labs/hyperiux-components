@@ -16,9 +16,18 @@ function easeInOut(t) {
 
 function drawGrid(canvas, progress, isEnter, cols = COLS, rows = ROWS, fromTopLeft = false) {
  if (!canvas) return
+
  const ctx = canvas.getContext('2d')
  const w = canvas.clientWidth
  const h = canvas.clientHeight
+
+ // only mobile adjustments
+ const isMobile = window.innerWidth < 640
+ if (isMobile) {
+  cols = 10
+  rows = 50
+ }
+
  const cellW = w / cols
  const cellH = h / rows
  const totalDiag = cols + rows
@@ -27,28 +36,38 @@ function drawGrid(canvas, progress, isEnter, cols = COLS, rows = ROWS, fromTopLe
  ctx.fillStyle = COLOR
 
  for (let c = 0; c < cols; c++) {
- for (let r = 0; r < rows; r++) {
- const rFlipped = rows - 1 - r
- const diag = fromTopLeft ? c + r : c + rFlipped
- const cellDelay = (diag / totalDiag) * 0.45
- const fast = (c + r) % 2 === 0
- const speed = fast ? 0.28 : 0.36
+  for (let r = 0; r < rows; r++) {
+   const rFlipped = rows - 1 - r
+   const diag = fromTopLeft ? c + r : c + rFlipped
 
- let local = Math.max(0, Math.min(1, (progress - cellDelay) / speed))
- local = easeInOut(local)
+   const cellDelay = (diag / totalDiag) * 0.45
+   const fast = (c + r) % 2 === 0
+   const speed = fast ? 0.28 : 0.36
 
- const fillAmount = isEnter ? 1 - local : local
- if (fillAmount <= 0.001) continue
+   let local = Math.max(0, Math.min(1, (progress - cellDelay) / speed))
+   local = easeInOut(local)
 
- const x1 = Math.floor(c * cellW)
- const x2 = Math.floor((c + 1) * cellW) + 1
- const y1 = Math.floor(r * cellH)
- const y2 = Math.floor((r + 1) * cellH) + 1
- const cellDrawH = y2 - y1
- const fillH = Math.ceil(cellDrawH * fillAmount)
+   const fillAmount = isEnter ? 1 - local : local
+   if (fillAmount <= 0.001) continue
 
- ctx.fillRect(x1, y2 - fillH, x2 - x1, fillH)
- }
+   const x1 = Math.floor(c * cellW)
+
+   // wider pixels only on mobile
+   const x2 = Math.floor((c + 1) * cellW) + (isMobile ? 6 : 1)
+
+   const y1 = Math.floor(r * cellH)
+   const y2 = Math.floor((r + 1) * cellH) + 1
+
+   const cellDrawH = y2 - y1
+   const fillH = Math.ceil(cellDrawH * fillAmount)
+
+   ctx.fillRect(
+    x1,
+    y2 - fillH,
+    x2 - x1,
+    fillH
+   )
+  }
  }
 }
 

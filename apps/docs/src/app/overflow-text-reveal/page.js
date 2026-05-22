@@ -6,9 +6,7 @@ import { ReactLenis } from'lenis/react'
 const page = () => {
  return (
  <ReactLenis root>
-
-
- <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-[#0a0a0a]">
+ <section className="relative min-h-screen flex flex-col justify-end max-sm:justify-center overflow-hidden bg-[#0a0a0a]">
  <Image
     src='/assets/nature/nature15.png'
  alt="Nature"
@@ -18,12 +16,12 @@ const page = () => {
  />
  <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" />
 
- <div className="relative z-10 px-2 max-w-6xl mx-auto w-full">
+ <div className="relative z-10 px-2 max-sm:pt-[4vh] max-w-6xl mx-auto w-full">
  <p className="text-xs tracking-[0.35rem] text-white/40 uppercase py-2 max-sm:text-[11px]">
  direction — bottom (default)
  </p>
  <OverFlowAnim direction="bottom" scrub={true}>
- <h1 className="text-8xl font-black text-white leading-[0.9] tracking-tighter uppercase max-sm:text-5xl">
+ <h1 className="text-8xl font-black  text-white leading-[0.9] tracking-tighter uppercase max-sm:text-5xl">
  Characters<br />Rise From<br />Below
  </h1>
  </OverFlowAnim>
@@ -108,7 +106,7 @@ const page = () => {
  </p>
  </OverFlowAnim>
 
- <div className="grid grid-cols-2 w-[30%] gap-y-3 py-4">
+ <div className="grid grid-cols-2 w-[30%] max-sm:w-full gap-y-3 py-4">
  {["Horizontal","Cinematic","Editorial","Wipe-In"].map((tag, i) => (
  <OverFlowAnim key={i} direction="left" scrub={true} delay={i * 0.04}>
  <div className="flex items-start justify-between gap-2">
@@ -213,8 +211,7 @@ const page = () => {
  </div>
  </section>
 
- {/* ─── FOOTER ──────────────────────────────────────────────────────── */}
- <section className="relative min-h-[85vh] flex items-end bg-[#0a0a0a] overflow-hidden">
+ <section className="relative min-h-[85vh] flex items-end max-sm:items-center bg-[#0a0a0a] overflow-hidden">
  <Image
  src="/assets/nature/nature01.png"
  alt="Nature"
