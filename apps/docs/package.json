@@ -29,13 +29,13 @@
     "lucide-react": "^0.577.0",
     "maath": "^0.10.8",
     "motion": "^12.38.0",
-    "next": "16.2.0",
+    "next": "^16.2.6",
     "next-cloudinary": "^6.17.5",
     "next-transition-router": "^0.2.11",
     "postcss": "^8.5.10",
     "postprocessing": "^6.39.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "three": "^0.183.2"
   },
   "devDependencies": {
