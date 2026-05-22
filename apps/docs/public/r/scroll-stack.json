@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/stacked-card",
   "coverImage": "/assets/list/scroll-stack.png",
-  "videoUrl": "scroll-stack",
+  "videoUrl": "scroll-stack.mp4",
   "files": [
     {
       "path": "scroll-stack.jsx",

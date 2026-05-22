@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/scroll-based-effects/grid-scale",
   "coverImage": "/assets/list/grid-scale.png",
-  "videoUrl": "grid-scale",
+  "videoUrl": "grid-scale.mp4",
   "files": [
     {
       "path": "grid-scale.jsx",

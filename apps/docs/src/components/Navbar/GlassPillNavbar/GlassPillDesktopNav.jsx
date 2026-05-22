@@ -11,7 +11,7 @@ import gsap from "gsap";
 import { ChevronDown, ChevronUp, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
-export default function GlassPillDesktopNav() {
+export default function ElevateNavbarDesktop() {
   const navWrapRef = useRef(null);
   const navLinksRef = useRef([]);
   const ctaRef = useRef(null);

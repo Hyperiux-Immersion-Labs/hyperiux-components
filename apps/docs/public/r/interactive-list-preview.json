@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/interactive-list-preview",
   "coverImage": "/assets/list/interactive-list-preview.png",
-  "videoUrl": "interactive-list-preview",
+  "videoUrl": "interactive-list-preview.mp4",
   "files": [
     {
       "path": "interactive-list-preview.jsx",

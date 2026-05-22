@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/scroll-shuffled-cards",
   "coverImage": "/assets/list/scroll-shuffled-cards.png",
-  "videoUrl": "scroll-shuffled-cards",
+  "videoUrl": "scroll-shuffled-cards.mp4",
   "files": [
     {
       "path": "scroll-shuffled-cards.jsx",

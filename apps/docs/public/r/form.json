@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/form",
   "coverImage": "/assets/list/form.png",
-  "videoUrl": "form",
+  "videoUrl": "form.mp4",
   "files": [
     {
       "path": "form.jsx",

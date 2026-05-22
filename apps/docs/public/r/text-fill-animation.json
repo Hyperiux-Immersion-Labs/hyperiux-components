@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/text-fill-animation",
   "coverImage": "/assets/list/text-fill-animation.png",
-  "videoUrl": "text-fill-animation",
+  "videoUrl": "text-fill-animation.mp4",
   "files": [
     {
       "path": "text-fill-animation.jsx",

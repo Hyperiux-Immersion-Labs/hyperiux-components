@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/draggable-marquee",
   "coverImage": "/assets/list/draggable-marquee.png",
-  "videoUrl": "draggable-marquee",
+  "videoUrl": "draggable-marquee.mp4",
   "files": [
     {
       "path": "draggable-marquee.jsx",

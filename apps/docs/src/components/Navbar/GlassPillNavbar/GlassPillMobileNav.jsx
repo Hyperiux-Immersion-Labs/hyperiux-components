@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react'
 import Image from 'next/image'
 
-export default function GlassPillMobileNav() {
+export default function ElevateNavbarMobile() {
     const menuItems = useMemo(() => ([
         { name: "Solutions", href: "#" },
         {

@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/navigation/immersive-fullscreen-nav",
   "coverImage": "/assets/list/immersive-full-screen-navigation.png",
-  "videoUrl": "immersive-full-screen-navigation",
+  "videoUrl": "immersive-full-screen-navigation.mp4",
   "files": [
     {
       "path": "immersive-full-screen-navigation.jsx",

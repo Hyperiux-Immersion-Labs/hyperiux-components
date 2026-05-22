@@ -16,7 +16,7 @@
   "registryDependencies": [],
   "previewUrl": "/mouse-pixelation-effects",
   "coverImage": "/assets/list/mouse-pixelation.png",
-  "videoUrl": "mouse-pixelation",
+  "videoUrl": "mouse-pixelation.mp4",
   "files": [
     {
       "path": "mouse-pixelation.jsx",

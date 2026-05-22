@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/card-drift",
   "coverImage": "/assets/list/card-drift.png",
-  "videoUrl": "card-drift",
+  "videoUrl": "card-drift.mp4",
   "files": [
     {
       "path": "card-drift.jsx",

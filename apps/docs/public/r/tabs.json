@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/tabs",
   "coverImage": "/assets/list/tabs.png",
-  "videoUrl": "tabs",
+  "videoUrl": "tabs.mp4",
   "files": [
     {
       "path": "tabs.jsx",

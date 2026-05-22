@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/webgl/draggable-canvas",
   "coverImage": "/assets/list/draggable-canvas.png",
-  "videoUrl": "draggable-canvas",
+  "videoUrl": "draggable-canvas.mp4",
   "files": [
     {
       "path": "draggable-canvas.jsx",

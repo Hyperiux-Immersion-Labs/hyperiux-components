@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/overflow-text-reveal",
   "coverImage": "/assets/list/overflow-text-reveal.png",
-  "videoUrl": "overflow-text-reveal",
+  "videoUrl": "overflow-text-reveal.mp4",
   "files": [
     {
       "path": "overflow-text-reveal.jsx",

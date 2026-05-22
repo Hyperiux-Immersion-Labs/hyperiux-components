@@ -16,7 +16,7 @@
   "registryDependencies": [],
   "previewUrl": "/3d-portfolio-slider",
   "coverImage": "/assets/list/3d-portfolio-slider.png",
-  "videoUrl": "3d-portfolio-slider",
+  "videoUrl": "3d-portfolio-slider.mp4",
   "files": [
     {
       "path": "3d-portfolio-slider.jsx",

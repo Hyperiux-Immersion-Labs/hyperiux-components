@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/horizontal-scroll-section",
   "coverImage": "/assets/list/horizon-scroll.png",
-  "videoUrl": "horizon-scroll",
+  "videoUrl": "horizon-scroll.mp4",
   "files": [
     {
       "path": "horizon-scroll.jsx",

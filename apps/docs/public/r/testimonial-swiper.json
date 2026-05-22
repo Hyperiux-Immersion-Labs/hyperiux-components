@@ -15,7 +15,7 @@
   "registryDependencies": [],
   "previewUrl": "/testimonial",
   "coverImage": "/assets/list/testimonial-swiper.png",
-  "videoUrl": "testimonial-swiper",
+  "videoUrl": "testimonial-swiper.mp4",
   "files": [
     {
       "path": "testimonial-swiper.jsx",

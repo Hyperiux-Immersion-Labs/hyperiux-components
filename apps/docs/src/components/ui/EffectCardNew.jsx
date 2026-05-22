@@ -8,13 +8,12 @@ import { motion, useInView } from "motion/react";
 export function EffectCard({ effect, priority = false }) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [videoSrc, setVideoSrc] = useState(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   const videoRef = useRef(null);
   const cardRef = useRef(null);
 
-  // Fires once when 10% of the card enters the viewport
   const isInView = useInView(cardRef, {
     once: true,
     margin: "0px 0px -40px 0px",
@@ -22,7 +21,7 @@ export function EffectCard({ effect, priority = false }) {
   });
 
   const videoPreviewUrl = effect.videoUrl
-    ? `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}/${effect.videoUrl}?tr=w-1280,h-720`
+    ? `${process.env.NEXT_PUBLIC_DEV_URL}/${effect.videoUrl}`
     : null;
 
   useEffect(() => {
@@ -32,29 +31,13 @@ export function EffectCard({ effect, priority = false }) {
     setIsWishlisted(wishlist.includes(effect.name));
   }, [effect.name]);
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    if (videoPreviewUrl && !videoSrc) {
-      setVideoSrc(videoPreviewUrl);
-    }
-  };
-
   useEffect(() => {
-    if (!videoRef.current) return;
-    if (isHovered && videoReady) {
-      videoRef.current.play().catch(() => {});
-    } else if (!isHovered) {
+    if (!isHovered && videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
+      setVideoReady(false);
     }
-  }, [isHovered, videoReady]);
-
-  const handleCanPlay = () => {
-    setVideoReady(true);
-    if (isHovered) {
-      videoRef.current?.play().catch(() => {});
-    }
-  };
+  }, [isHovered]);
 
   const toggleWishlist = (e) => {
     e.preventDefault();
@@ -72,6 +55,9 @@ export function EffectCard({ effect, priority = false }) {
     setIsWishlisted(!isWishlisted);
   };
 
+  const shouldLoadVideo = videoPreviewUrl && !videoError && isHovered;
+  const showVideo = shouldLoadVideo && videoReady;
+
   return (
     <motion.div
       ref={cardRef}
@@ -79,7 +65,7 @@ export function EffectCard({ effect, priority = false }) {
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       className="group relative bg-[#555555]/33 p-5 pb-[0.01vw] rounded-[1.5vw] max-sm:rounded-[5vw] border-border/50 overflow-hidden hover:shadow-2xl border hover:border-primary/50 backdrop-blur-md"
-      onMouseEnter={handleMouseEnter}
+      onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Clickable Preview Area */}
@@ -93,21 +79,23 @@ export function EffectCard({ effect, priority = false }) {
             sizes="(max-width: 768px) 100vw, 50vw"
             priority={priority}
             className={`object-cover transition-all duration-500 ${
-              isHovered && videoSrc && videoReady ? "opacity-0" : "opacity-100"
+              showVideo ? "opacity-0" : "opacity-100"
             }`}
           />
 
-          {/* Video Preview */}
-          {videoPreviewUrl && (
+          {shouldLoadVideo && (
             <video
               ref={videoRef}
-              src={videoSrc || undefined}
+              src={videoPreviewUrl}
+              autoPlay
               muted
               loop
               playsInline
-              onCanPlay={handleCanPlay}
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${
-                isHovered && videoSrc && videoReady ? "opacity-100" : "opacity-0"
+              preload="metadata"
+              onLoadedData={() => setVideoReady(true)}
+              onError={() => setVideoError(true)}
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                showVideo ? "opacity-100" : "opacity-0"
               }`}
             />
           )}
@@ -165,7 +153,7 @@ export function EffectCard({ effect, priority = false }) {
       </div>
 
       {/* Info */}
-      <div className="flex items-center justify-between py-4 max-sm:py-6 ">
+      <div className="flex items-center justify-between py-4 max-sm:py-6">
         <Link href={`/effects/${effect.name}`} className="block">
           <h3 className="font-sans font-semibold max-sm:text-xl text-base text-foreground group-hover:text-primary transition-colors">
             {effect.title}
@@ -176,7 +164,7 @@ export function EffectCard({ effect, priority = false }) {
           {(effect.categories?.length ? effect.categories : [effect.category]).map((cat) => (
             <span
               key={cat}
-              className="px-2.5 py-0.5 max-sm:py-1 max-sm:px-3 max-sm:text-lg bg-white border border-border/50 backdrop-blur-sm text-sm font-medium font-sans text-[#3C3C3C] capitalize "
+              className="px-2.5 py-0.5 max-sm:py-1 max-sm:px-3 max-sm:text-lg bg-white border border-border/50 backdrop-blur-sm text-sm font-medium font-sans text-[#3C3C3C] capitalize"
               style={{ borderRadius: "56px" }}
             >
               {cat}

@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/buttons/animated-toggle",
   "coverImage": "/assets/list/animated-toggle.png",
-  "videoUrl": "animated-toggle",
+  "videoUrl": "animated-toggle.mp4",
   "files": [
     {
       "path": "animated-toggle.jsx",

@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/text-hover",
   "coverImage": "/assets/list/text-hover-expand.png",
-  "videoUrl": "text-hover-expand",
+  "videoUrl": "text-hover-expand.mp4",
   "files": [
     {
       "path": "text-hover-expand.jsx",

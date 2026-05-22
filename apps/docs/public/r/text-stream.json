@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/text-stream",
   "coverImage": "/assets/list/text-stream.png",
-  "videoUrl": "text-stream",
+  "videoUrl": "text-stream.mp4",
   "files": [
     {
       "path": "text-stream.jsx",

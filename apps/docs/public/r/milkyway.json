@@ -19,7 +19,7 @@
   "registryDependencies": [],
   "previewUrl": "/milkyway",
   "coverImage": "/assets/list/milkyway.png",
-  "videoUrl": "milkyway",
+  "videoUrl": "milkyway.mp4",
   "files": [
     {
       "path": "milkyway.jsx",

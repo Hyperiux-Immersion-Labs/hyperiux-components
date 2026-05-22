@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/gooey-counter",
   "coverImage": "/assets/list/gooey-counter.png",
-  "videoUrl": "gooey-counter",
+  "videoUrl": "gooey-counter.mp4",
   "files": [
     {
       "path": "gooey-counter.jsx",

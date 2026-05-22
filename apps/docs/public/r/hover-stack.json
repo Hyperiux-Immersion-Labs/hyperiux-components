@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/stack-hovered-cards",
   "coverImage": "/assets/list/hover-stack.png",
-  "videoUrl": "hover-stack",
+  "videoUrl": "hover-stack.mp4",
   "files": [
     {
       "path": "hover-stack.jsx",

@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/svg-path",
   "coverImage": "/assets/list/svg-path-marquee.png",
-  "videoUrl": "svg-path-marquee",
+  "videoUrl": "svg-path-marquee.mp4",
   "files": [
     {
       "path": "svg-path-marquee.jsx",

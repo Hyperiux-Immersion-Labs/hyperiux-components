@@ -15,7 +15,7 @@
   ],
   "previewUrl": "/animated-faq",
   "coverImage": "/assets/list/animated-faq.png",
-  "videoUrl": "animated-faq",
+  "videoUrl": "animated-faq.mp4",
   "files": [
     {
       "path": "animated-faq.jsx",

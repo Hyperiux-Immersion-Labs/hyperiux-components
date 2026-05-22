@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/webgl/fractal-glass",
   "coverImage": "/assets/list/fractal-glass.png",
-  "videoUrl": "fractal-glass",
+  "videoUrl": "fractal-glass.mp4",
   "files": [
     {
       "path": "fractal-glass.jsx",

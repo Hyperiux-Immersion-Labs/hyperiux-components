@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/scroll-based-effects/square-translate",
   "coverImage": "/assets/list/square-translate.png",
-  "videoUrl": "square-translate",
+  "videoUrl": "square-translate.mp4",
   "files": [
     {
       "path": "square-translate.jsx",

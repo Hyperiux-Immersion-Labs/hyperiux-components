@@ -18,7 +18,7 @@
   "registryDependencies": [],
   "previewUrl": "/hero-banner-animated",
   "coverImage": "/assets/list/hero-banner-animated.png",
-  "videoUrl": "hero-banner-animated",
+  "videoUrl": "hero-banner-animated.mp4",
   "files": [
     {
       "path": "hero-banner-animated.jsx",

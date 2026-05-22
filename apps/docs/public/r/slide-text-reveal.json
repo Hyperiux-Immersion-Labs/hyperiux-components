@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/slide-text-reveal",
   "coverImage": "/assets/list/slide-text-reveal.png",
-  "videoUrl": "slide-text-reveal",
+  "videoUrl": "slide-text-reveal.mp4",
   "files": [
     {
       "path": "slide-text-reveal.jsx",

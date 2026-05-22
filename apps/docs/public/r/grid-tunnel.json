@@ -15,7 +15,7 @@
   "registryDependencies": [],
   "previewUrl": "/grid-tunnel",
   "coverImage": "/assets/list/grid-tunnel.png",
-  "videoUrl": "grid-tunnel",
+  "videoUrl": "grid-tunnel.mp4",
   "files": [
     {
       "path": "grid-tunnel.jsx",

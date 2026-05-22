@@ -13,7 +13,7 @@
       ],
       "previewUrl": "/draggable-marquee",
       "coverImage": "/assets/list/draggable-marquee.png",
-      "videoUrl": "draggable-marquee",
+      "videoUrl": "draggable-marquee.mp4",
       "addedAt": 1776937386240.6501
     },
     {
@@ -29,7 +29,7 @@
       ],
       "previewUrl": "/scroll-based-effects/grid-scale",
       "coverImage": "/assets/list/grid-scale.png",
-      "videoUrl": "grid-scale",
+      "videoUrl": "grid-scale.mp4",
       "addedAt": 1777877418531.936
     },
     {
@@ -45,7 +45,7 @@
       ],
       "previewUrl": "/cylindrical-scroll",
       "coverImage": "/assets/list/helix-slider.png",
-      "videoUrl": "helix-slider",
+      "videoUrl": "helix-slider.mp4",
       "addedAt": 1776937386240.8901
     },
     {
@@ -61,7 +61,7 @@
       ],
       "previewUrl": "/horizontal-scroll-section",
       "coverImage": "/assets/list/horizon-scroll.png",
-      "videoUrl": "horizon-scroll",
+      "videoUrl": "horizon-scroll.mp4",
       "addedAt": 1776937386241.0713
     },
     {
@@ -77,7 +77,7 @@
       ],
       "previewUrl": "/surf-index",
       "coverImage": "/assets/list/infinite-perspective-slider.png",
-      "videoUrl": "infinite-perspective-slider",
+      "videoUrl": "infinite-perspective-slider.mp4",
       "addedAt": 1776937386241.2588
     },
     {
@@ -93,7 +93,7 @@
       ],
       "previewUrl": "/circular-split-roll",
       "coverImage": "/assets/list/orbit-slider.png",
-      "videoUrl": "orbit-slider",
+      "videoUrl": "orbit-slider.mp4",
       "addedAt": 1776937386241.5
     },
     {
@@ -107,7 +107,7 @@
       "dependencies": [],
       "previewUrl": "/parallax-footer",
       "coverImage": "/assets/list/parallax-footer.png",
-      "videoUrl": "parallax-footer",
+      "videoUrl": "parallax-footer.mp4",
       "addedAt": 1776937386241.6577
     },
     {
@@ -123,7 +123,7 @@
       ],
       "previewUrl": "/frame-slider",
       "coverImage": "/assets/list/parallax-gallery.png",
-      "videoUrl": "parallax-gallery",
+      "videoUrl": "frame-slider.mp4",
       "addedAt": 1776937386241.8418
     },
     {
@@ -139,7 +139,7 @@
       ],
       "previewUrl": "/parallax-image-animation",
       "coverImage": "/assets/list/parallax-image.png",
-      "videoUrl": "parallax-image",
+      "videoUrl": "parallax-image.mp4",
       "addedAt": 1776937386241.9958
     },
     {
@@ -156,7 +156,7 @@
       ],
       "previewUrl": "/parallax-slider",
       "coverImage": "/assets/list/parallax-slider.png",
-      "videoUrl": "parallax-slider",
+      "videoUrl": "parallax-slider.mp4",
       "addedAt": 1776937386242.151
     },
     {
@@ -176,7 +176,7 @@
       ],
       "previewUrl": "/webgl/progressive-bloom-valley",
       "coverImage": "/assets/list/progressive-bloom-valley.png",
-      "videoUrl": "progressive-bloom-valley",
+      "videoUrl": "progressive-bloom-valley.mp4",
       "addedAt": 1777541715965.7407
     },
     {
@@ -193,7 +193,7 @@
       ],
       "previewUrl": "/circular-slider",
       "coverImage": "/assets/list/rotating-carousel.png",
-      "videoUrl": "rotating-carousel",
+      "videoUrl": "rotating-carousel.mp4",
       "addedAt": 1776937386242.931
     },
     {
@@ -210,7 +210,7 @@
       ],
       "previewUrl": "/scroll-based-effects/rotation-slider",
       "coverImage": "/assets/list/rotation-slider.png",
-      "videoUrl": "rotation-slider",
+      "videoUrl": "rotation-slider.mp4",
       "addedAt": 1777877418532.2446
     },
     {
@@ -228,7 +228,7 @@
       ],
       "previewUrl": "/scroll-based-effects/scroll-distortion",
       "coverImage": "/assets/list/scroll-distortion.png",
-      "videoUrl": "scroll-distortion",
+      "videoUrl": "scroll-distortion.mp4",
       "addedAt": 1776937386243.0935
     },
     {
@@ -244,7 +244,7 @@
       ],
       "previewUrl": "/scroll-shuffled-cards",
       "coverImage": "/assets/list/scroll-shuffled-cards.png",
-      "videoUrl": "scroll-shuffled-cards",
+      "videoUrl": "scroll-shuffled-cards.mp4",
       "addedAt": 1776937386243.2417
     },
     {
@@ -260,7 +260,7 @@
       ],
       "previewUrl": "/stacked-card",
       "coverImage": "/assets/list/scroll-stack.png",
-      "videoUrl": "scroll-stack",
+      "videoUrl": "scroll-stack.mp4",
       "addedAt": 1776937386243.4756
     },
     {
@@ -277,7 +277,7 @@
       ],
       "previewUrl": "/inertia-scroll-effect",
       "coverImage": "/assets/list/inertia-scroll-effect.png",
-      "videoUrl": "inertia-scroll-effect",
+      "videoUrl": "inertia-scroll-effect.mp4",
       "addedAt": 1777877418532.769
     },
     {
@@ -294,7 +294,7 @@
       ],
       "previewUrl": "/dgrees-pixel-scroll",
       "coverImage": "/assets/list/split-canvas.png",
-      "videoUrl": "split-canvas",
+      "videoUrl": "split-canvas.mp4",
       "addedAt": 1776937386243.6394
     },
     {
@@ -310,7 +310,7 @@
       ],
       "previewUrl": "/scroll-based-effects/square-translate",
       "coverImage": "/assets/list/square-translate.png",
-      "videoUrl": "square-translate",
+      "videoUrl": "square-translate.mp4",
       "addedAt": 1776937386243.7983
     },
     {
@@ -327,7 +327,7 @@
       ],
       "previewUrl": "/stacking-cards",
       "coverImage": "/assets/list/stacking-cards.png",
-      "videoUrl": "stacking-cards",
+      "videoUrl": "stacking-cards.mp4",
       "addedAt": 1776937386243.9614
     },
     {
@@ -343,7 +343,7 @@
       ],
       "previewUrl": "/sticky-content-wrapper",
       "coverImage": "/assets/list/sticky-content-wrapper.png",
-      "videoUrl": "sticky-content-wrapper",
+      "videoUrl": "sticky-content-wrapper.mp4",
       "addedAt": 1776937386244.1335
     },
     {
@@ -359,7 +359,7 @@
       ],
       "previewUrl": "/svg-path",
       "coverImage": "/assets/list/svg-path-marquee.png",
-      "videoUrl": "svg-path-marquee",
+      "videoUrl": "svg-path-marquee.mp4",
       "addedAt": 1777541715966.0222
     },
     {
@@ -375,7 +375,7 @@
       ],
       "previewUrl": "/svg-pixel-reveal",
       "coverImage": "/assets/list/svg-pixel-reveal.png",
-      "videoUrl": "svg-pixel-reveal",
+      "videoUrl": "svg-pixel-reveal.mp4",
       "addedAt": 1777541715966.2297
     },
     {
@@ -391,7 +391,7 @@
       ],
       "previewUrl": "/text-convergence",
       "coverImage": "/assets/list/text-convergence.png",
-      "videoUrl": "text-convergence",
+      "videoUrl": "text-convergence.mp4",
       "addedAt": 1777541715966.3743
     },
     {
@@ -409,7 +409,7 @@
       ],
       "previewUrl": "/cursors/butterflies",
       "coverImage": "/assets/list/butterfly-trail-cursor.png",
-      "videoUrl": "butterfly-trail-cursor",
+      "videoUrl": "butterfly-trail-cursor.mp4",
       "addedAt": 1776937386237.8916
     },
     {
@@ -423,7 +423,7 @@
       "dependencies": [],
       "previewUrl": "/character-trail",
       "coverImage": "/assets/list/character-trail.png",
-      "videoUrl": "character-trail",
+      "videoUrl": "character-trail.mp4",
       "addedAt": 1778822903800.0466
     },
     {
@@ -441,7 +441,7 @@
       ],
       "previewUrl": "/cursors/coffee",
       "coverImage": "/assets/list/coffee-bean-cursor.png",
-      "videoUrl": "coffee-bean-cursor",
+      "videoUrl": "coffee-bean-cursor.mp4",
       "addedAt": 1776937386238.0608
     },
     {
@@ -457,7 +457,7 @@
       ],
       "previewUrl": "/aero",
       "coverImage": "/assets/list/colorful-cursor-aura.png",
-      "videoUrl": "colorful-cursor-aura",
+      "videoUrl": "colorful-cursor-aura.mp4",
       "addedAt": 1776937386238.2236
     },
     {
@@ -471,7 +471,7 @@
       "dependencies": [],
       "previewUrl": "/cursors/pixel-bloom",
       "coverImage": "/assets/list/pixel-bloom.png",
-      "videoUrl": "pixel-bloom",
+      "videoUrl": "pixel-bloom.mp4",
       "addedAt": 1776937386238.3813
     },
     {
@@ -489,7 +489,7 @@
       ],
       "previewUrl": "/cursors/fish-eye",
       "coverImage": "/assets/list/fish-eye.png",
-      "videoUrl": "fish-eye",
+      "videoUrl": "fish-eye.mp4",
       "addedAt": 1777541715962.9568
     },
     {
@@ -505,7 +505,7 @@
       ],
       "previewUrl": "/inertia-img",
       "coverImage": "/assets/list/inertia-img.png",
-      "videoUrl": "inertia-img",
+      "videoUrl": "inertia-img.mp4",
       "addedAt": 1777541715963.1536
     },
     {
@@ -521,7 +521,7 @@
       ],
       "previewUrl": "/interactive-arrows",
       "coverImage": "/assets/list/interactive-arrows.png",
-      "videoUrl": "interactive-arrows",
+      "videoUrl": "interactive-arrows.mp4",
       "addedAt": 1778822903801.0388
     },
     {
@@ -537,7 +537,7 @@
       ],
       "previewUrl": "/liquid-glass-cursor",
       "coverImage": "/assets/list/liquid-glass-cursor.png",
-      "videoUrl": "liquid-glass-cursor",
+      "videoUrl": "liquid-glass-cursor.mp4",
       "addedAt": 1777877418530.652
     },
     {
@@ -551,7 +551,7 @@
       "dependencies": [],
       "previewUrl": "/magnetic-image-trail",
       "coverImage": "/assets/list/magnetic-image-trail.png",
-      "videoUrl": "magnetic-image-trail",
+      "videoUrl": "magnetic-image-trail.mp4",
       "addedAt": 1778822903801.4631
     },
     {
@@ -567,7 +567,7 @@
       ],
       "previewUrl": "/cursors/noiseripple",
       "coverImage": "/assets/list/noise-ripple-cursor.png",
-      "videoUrl": "noise-ripple-cursor",
+      "videoUrl": "noise-ripple-cursor.mp4",
       "addedAt": 1776937386238.8503
     },
     {
@@ -583,7 +583,7 @@
       ],
       "previewUrl": "/mouse-hover-image",
       "coverImage": "/assets/list/phantom-image-trail.png",
-      "videoUrl": "phantom-image-trail",
+      "videoUrl": "phantom-image-trail.mp4",
       "addedAt": 1776937386239.015
     },
     {
@@ -597,7 +597,7 @@
       "dependencies": [],
       "previewUrl": "/pixelated-image-effect",
       "coverImage": "/assets/list/pixelated-image-effect.png",
-      "videoUrl": "pixelated-image-effect",
+      "videoUrl": "pixelated-image-effect.mp4",
       "addedAt": 1777541715963.3599
     },
     {
@@ -613,7 +613,7 @@
       ],
       "previewUrl": "/cursors/rope",
       "coverImage": "/assets/list/rope-cursor.png",
-      "videoUrl": "rope-cursor",
+      "videoUrl": "rope-cursor.mp4",
       "addedAt": 1776937386239.2598
     },
     {
@@ -627,7 +627,7 @@
       "dependencies": [],
       "previewUrl": "/binary-effect",
       "coverImage": "/assets/list/dither-canvas.png",
-      "videoUrl": "dither-canvas",
+      "videoUrl": "dither-canvas.mp4",
       "addedAt": 1776937386234.4556
     },
     {
@@ -641,7 +641,7 @@
       "dependencies": [],
       "previewUrl": "/dotted-grid",
       "coverImage": "/assets/list/dotted-grid.png",
-      "videoUrl": "dotted-grid",
+      "videoUrl": "dotted-grid.mp4",
       "addedAt": 1778822903798.4846
     },
     {
@@ -655,7 +655,7 @@
       "dependencies": [],
       "previewUrl": "/spider-particles",
       "coverImage": "/assets/list/spider-particles.png",
-      "videoUrl": "spider-particles",
+      "videoUrl": "spider-particles.mp4",
       "addedAt": 1777541715962.084
     },
     {
@@ -672,7 +672,7 @@
       ],
       "previewUrl": "/page-transitions/block",
       "coverImage": "/assets/list/block-transition.png",
-      "videoUrl": "block-transition",
+      "videoUrl": "block-transition.mp4",
       "addedAt": 1778822903804.004
     },
     {
@@ -689,7 +689,7 @@
       ],
       "previewUrl": "/page-transitions/chess-grids",
       "coverImage": "/assets/list/chess-grid-transition.png",
-      "videoUrl": "chess-grid-transition",
+      "videoUrl": "chess-grid-transition.mp4",
       "addedAt": 1776937386247.3496
     },
     {
@@ -706,7 +706,7 @@
       ],
       "previewUrl": "/page-transitions/flip",
       "coverImage": "/assets/list/page-flip-transition.png",
-      "videoUrl": "page-flip-transition",
+      "videoUrl": "page-flip-transition.mp4",
       "addedAt": 1776937386247.5562
     },
     {
@@ -723,7 +723,7 @@
       ],
       "previewUrl": "/page-transitions/pie-rotation",
       "coverImage": "/assets/list/pie-rotation-transition.png",
-      "videoUrl": "pie-rotation-transition",
+      "videoUrl": "pie-rotation.mp4",
       "addedAt": 1777541715967.434
     },
     {
@@ -740,7 +740,7 @@
       ],
       "previewUrl": "/page-transitions/pixels",
       "coverImage": "/assets/list/pixel-transition.png",
-      "videoUrl": "pixel-transition",
+      "videoUrl": "pixel-transition.mp4",
       "addedAt": 1778822903804.4028
     },
     {
@@ -757,7 +757,7 @@
       ],
       "previewUrl": "/page-transitions/brush-strokes",
       "coverImage": "/assets/list/svg-draw-page-transition.png",
-      "videoUrl": "svg-draw-page-transition",
+      "videoUrl": "svg-draw-page-transition.mp4",
       "addedAt": 1776937386247.657
     },
     {
@@ -773,7 +773,7 @@
       ],
       "previewUrl": "/blur-text-reveal",
       "coverImage": "/assets/list/blur-text.png",
-      "videoUrl": "blur-text",
+      "videoUrl": "blur-text-reveal.mp4",
       "addedAt": 1776937386244.89
     },
     {
@@ -789,7 +789,7 @@
       ],
       "previewUrl": "/circle-reveal",
       "coverImage": "/assets/list/circle-text-reveal.png",
-      "videoUrl": "circle-text-reveal",
+      "videoUrl": "circle-text-reveal.mp4",
       "addedAt": 1776937386245.0579
     },
     {
@@ -805,7 +805,7 @@
       ],
       "previewUrl": "/glitchy-text",
       "coverImage": "/assets/list/glitchy-text.png",
-      "videoUrl": "glitchy-text",
+      "videoUrl": "glitchy-text.mp4",
       "addedAt": 1778822903802.031
     },
     {
@@ -821,7 +821,7 @@
       ],
       "previewUrl": "/mask-text-reveal",
       "coverImage": "/assets/list/mask-text-reveal.png",
-      "videoUrl": "mask-text-reveal",
+      "videoUrl": "mask-text-reveal.mp4",
       "addedAt": 1776937386245.2302
     },
     {
@@ -837,7 +837,7 @@
       ],
       "previewUrl": "/overflow-stagger-text",
       "coverImage": "/assets/list/overflow-stagger-text.png",
-      "videoUrl": "overflow-stagger-text",
+      "videoUrl": "overflow-stagger-text.mp4",
       "addedAt": 1776937386245.4065
     },
     {
@@ -853,7 +853,7 @@
       ],
       "previewUrl": "/overflow-text-reveal",
       "coverImage": "/assets/list/overflow-text-reveal.png",
-      "videoUrl": "overflow-text-reveal",
+      "videoUrl": "overflow-text-reveal.mp4",
       "addedAt": 1776937386245.5762
     },
     {
@@ -869,7 +869,7 @@
       ],
       "previewUrl": "/perspective-text-reveal",
       "coverImage": "/assets/list/perspective-text-reveal.png",
-      "videoUrl": "perspective-text-reveal",
+      "videoUrl": "perspective-text-reveal.mp4",
       "addedAt": 1776937386245.7556
     },
     {
@@ -885,7 +885,7 @@
       ],
       "previewUrl": "/rectangular-text-reveal",
       "coverImage": "/assets/list/rectangular-text-reveal.png",
-      "videoUrl": "rectangular-text-reveal",
+      "videoUrl": "rectangular-text-reveal.mp4",
       "addedAt": 1776937386245.9448
     },
     {
@@ -901,7 +901,7 @@
       ],
       "previewUrl": "/scramble-text",
       "coverImage": "/assets/list/scramble-text.png",
-      "videoUrl": "scramble-text",
+      "videoUrl": "scramble-text.mp4",
       "addedAt": 1776937386246.047
     },
     {
@@ -917,7 +917,7 @@
       ],
       "previewUrl": "/slide-text-reveal",
       "coverImage": "/assets/list/slide-text-reveal.png",
-      "videoUrl": "slide-text-reveal",
+      "videoUrl": "slide-text-reveal.mp4",
       "addedAt": 1776937386246.2395
     },
     {
@@ -931,7 +931,7 @@
       "dependencies": [],
       "previewUrl": "/spotlight-text",
       "coverImage": "/assets/list/spotlight-text.png",
-      "videoUrl": "spotlight-text",
+      "videoUrl": "spotlight-text.mp4",
       "addedAt": 1777541715966.5222
     },
     {
@@ -945,7 +945,7 @@
       "dependencies": [],
       "previewUrl": "/text-cloning",
       "coverImage": "/assets/list/text-cloning.png",
-      "videoUrl": "text-cloning",
+      "videoUrl": "text-cloning.mp4",
       "addedAt": 1778822903802.3489
     },
     {
@@ -961,7 +961,7 @@
       ],
       "previewUrl": "/text-fill-animation",
       "coverImage": "/assets/list/text-fill-animation.png",
-      "videoUrl": "text-fill-animation",
+      "videoUrl": "text-fill-animation.mp4",
       "addedAt": 1776937386246.632
     },
     {
@@ -977,7 +977,7 @@
       ],
       "previewUrl": "/text-hover",
       "coverImage": "/assets/list/text-hover-expand.png",
-      "videoUrl": "text-hover-expand",
+      "videoUrl": "text-hover-expand.mp4",
       "addedAt": 1776937386246.8228
     },
     {
@@ -993,7 +993,7 @@
       ],
       "previewUrl": "/text-stream",
       "coverImage": "/assets/list/text-stream.png",
-      "videoUrl": "text-stream",
+      "videoUrl": "text-stream.mp4",
       "addedAt": 1777541715966.6736
     },
     {
@@ -1007,7 +1007,7 @@
       "dependencies": [],
       "previewUrl": "/buttons/animated-toggle",
       "coverImage": "/assets/list/animated-toggle.png",
-      "videoUrl": "animated-toggle",
+      "videoUrl": "animated-toggle.mp4",
       "addedAt": 1777541715962.4275
     },
     {
@@ -1021,7 +1021,7 @@
       "dependencies": [],
       "previewUrl": "/buttons/arrow-fill-button",
       "coverImage": "/assets/list/arrow-fill-button.png",
-      "videoUrl": "arrow-fill-button",
+      "videoUrl": "arrow-fill-button.mp4",
       "addedAt": 1776937386234.853
     },
     {
@@ -1037,7 +1037,7 @@
       ],
       "previewUrl": "/buttons/char-stagger-button",
       "coverImage": "/assets/list/char-stagger-button.png",
-      "videoUrl": "char-stagger-button",
+      "videoUrl": "char-stagger-button.mp4",
       "addedAt": 1776937386235.0989
     },
     {
@@ -1051,7 +1051,7 @@
       "dependencies": [],
       "previewUrl": "/buttons/char-stagger-primary-button",
       "coverImage": "/assets/list/char-stagger-primary-button.png",
-      "videoUrl": "char-stagger-primary-button",
+      "videoUrl": "char-stagger-primary-button.mp4",
       "addedAt": 1776937386235.302
     },
     {
@@ -1065,7 +1065,7 @@
       "dependencies": [],
       "previewUrl": "/buttons/dot-fill-button",
       "coverImage": "/assets/list/dot-fill-button.png",
-      "videoUrl": "dot-fill-button",
+      "videoUrl": "dot-fill-button.mp4",
       "addedAt": 1776937386235.484
     },
     {
@@ -1079,7 +1079,7 @@
       "dependencies": [],
       "previewUrl": "/buttons/link-button",
       "coverImage": "/assets/list/link-button.png",
-      "videoUrl": "link-button",
+      "videoUrl": "link-button.mp4",
       "addedAt": 1776937386235.6453
     },
     {
@@ -1093,7 +1093,7 @@
       "dependencies": [],
       "previewUrl": "/buttons/scramble-link-button",
       "coverImage": "/assets/list/scramble-link-button.png",
-      "videoUrl": "scramble-link-button",
+      "videoUrl": "scramble-link-button.mp4",
       "addedAt": 1776937386235.7437
     },
     {
@@ -1109,7 +1109,7 @@
       ],
       "previewUrl": "/carousels/clippath-slider",
       "coverImage": "/assets/list/clippath-slider.png",
-      "videoUrl": "clippath-slider",
+      "videoUrl": "clippath-slider.mp4",
       "addedAt": 1777877418527.706
     },
     {
@@ -1125,7 +1125,7 @@
       ],
       "previewUrl": "/webgl/zoom-slider",
       "coverImage": "/assets/list/zoom-slider.png",
-      "videoUrl": "zoom-slider",
+      "videoUrl": "zoom-slider.mp4",
       "addedAt": 1778822903798.7476
     },
     {
@@ -1141,7 +1141,7 @@
       ],
       "previewUrl": "/animated-faq",
       "coverImage": "/assets/list/animated-faq.png",
-      "videoUrl": "animated-faq",
+      "videoUrl": "animated-faq.mp4",
       "addedAt": 1776937386236.0447
     },
     {
@@ -1157,7 +1157,7 @@
       ],
       "previewUrl": "/video-player",
       "coverImage": "/assets/list/custom-video-player.png",
-      "videoUrl": "custom-video-player",
+      "videoUrl": "custom-video-player.mp4",
       "addedAt": 1776937386236.3
     },
     {
@@ -1173,7 +1173,7 @@
       ],
       "previewUrl": "/depth-card-stack",
       "coverImage": "/assets/list/depth-card-stack.png",
-      "videoUrl": "depth-card-stack",
+      "videoUrl": "depth-card-stack.mp4",
       "addedAt": 1777541715962.6367
     },
     {
@@ -1189,7 +1189,7 @@
       ],
       "previewUrl": "/file-encryption",
       "coverImage": "/assets/list/file-encryption.png",
-      "videoUrl": "file-encryption",
+      "videoUrl": "file-encryption.mp4",
       "addedAt": 1777877418528.1873
     },
     {
@@ -1203,7 +1203,7 @@
       "dependencies": [],
       "previewUrl": "/form",
       "coverImage": "/assets/list/form.png",
-      "videoUrl": "form",
+      "videoUrl": "form.mp4",
       "addedAt": 1776937386236.6875
     },
     {
@@ -1217,7 +1217,7 @@
       "dependencies": [],
       "previewUrl": "/gooey-counter",
       "coverImage": "/assets/list/gooey-counter.png",
-      "videoUrl": "gooey-counter",
+      "videoUrl": "gooey-counter.mp4",
       "addedAt": 1777877418529.0657
     },
     {
@@ -1234,7 +1234,7 @@
       ],
       "previewUrl": "/interactive-hover-slider",
       "coverImage": "/assets/list/interactive-hover-slider.png",
-      "videoUrl": "interactive-hover-slider",
+      "videoUrl": "interactive-hover-slider.mp4",
       "addedAt": 1777877418529.6467
     },
     {
@@ -1248,7 +1248,7 @@
       "dependencies": [],
       "previewUrl": "/stack-hovered-cards",
       "coverImage": "/assets/list/hover-stack.png",
-      "videoUrl": "hover-stack",
+      "videoUrl": "hover-stack.mp4",
       "addedAt": 1776937386236.9097
     },
     {
@@ -1264,7 +1264,7 @@
       ],
       "previewUrl": "/interactive-list-preview",
       "coverImage": "/assets/list/interactive-list-preview.png",
-      "videoUrl": "interactive-list-preview",
+      "videoUrl": "interactive-list-preview.mp4",
       "addedAt": 1777541715962.802
     },
     {
@@ -1280,7 +1280,7 @@
       ],
       "previewUrl": "/modal",
       "coverImage": "/assets/list/modal.png",
-      "videoUrl": "modal",
+      "videoUrl": "modal.mp4",
       "addedAt": 1776937386237.3052
     },
     {
@@ -1296,7 +1296,7 @@
       ],
       "previewUrl": "/tabs",
       "coverImage": "/assets/list/tabs.png",
-      "videoUrl": "tabs",
+      "videoUrl": "tabs.mp4",
       "addedAt": 1776937386237.3901
     },
     {
@@ -1314,7 +1314,7 @@
       ],
       "previewUrl": "/testimonial",
       "coverImage": "/assets/list/testimonial-swiper.png",
-      "videoUrl": "testimonial-swiper",
+      "videoUrl": "testimonial-swiper.mp4",
       "addedAt": 1776937386237.6147
     },
     {
@@ -1330,7 +1330,7 @@
       ],
       "previewUrl": "/navigation/directional-menu",
       "coverImage": "/assets/list/directional-menu.png",
-      "videoUrl": "directional-menu",
+      "videoUrl": "directional-menu.mp4",
       "addedAt": 1777541715964.7678
     },
     {
@@ -1346,11 +1346,11 @@
       ],
       "previewUrl": "/navigation/immersive-fullscreen-nav",
       "coverImage": "/assets/list/immersive-full-screen-navigation.png",
-      "videoUrl": "immersive-full-screen-navigation",
+      "videoUrl": "immersive-full-screen-navigation.mp4",
       "addedAt": 1777541715964.875
     },
     {
-      "name": "glass-pill-header",
+      "name": "elevate-navbar",
       "title": "Glass Pill Header",
       "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
       "category": "navigation",
@@ -1360,9 +1360,9 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/navigation/glass-pill-header",
-      "coverImage": "/assets/list/glass-pill-header.png",
-      "videoUrl": "glass-pill-header",
+      "previewUrl": "/navigation/elevate-navbar",
+      "coverImage": "/assets/list/elevate-navbar.png",
+      "videoUrl": "elevate-navbar.mp4",
       "addedAt": 1777541715965.061
     },
     {
@@ -1379,7 +1379,7 @@
       ],
       "previewUrl": "/expanding-navbar",
       "coverImage": "/assets/list/expanding-navbar.png",
-      "videoUrl": "expanding-navbar",
+      "videoUrl": "expanding-navbar.mp4",
       "addedAt": 1777877418531.3184
     },
     {
@@ -1395,7 +1395,7 @@
       ],
       "previewUrl": "/loaders/stack-loader",
       "coverImage": "/assets/list/stack-loader.png",
-      "videoUrl": "stack-loader",
+      "videoUrl": "stack-loader.mp4",
       "addedAt": 1777541715963.5903
     },
     {
@@ -1411,7 +1411,7 @@
       ],
       "previewUrl": "/loaders/lines-loading",
       "coverImage": "/assets/list/lines-loader.png",
-      "videoUrl": "lines-loader",
+      "videoUrl": "lines-loader.mp4",
       "addedAt": 1777541715964.377
     },
     {
@@ -1430,7 +1430,7 @@
       ],
       "previewUrl": "/loaders/numeric-tunnel",
       "coverImage": "/assets/list/numeric-tunnel.png",
-      "videoUrl": "numeric-tunnel",
+      "videoUrl": "numeric-tunnel.mp4",
       "addedAt": 1777541715964.6282
     },
     {
@@ -1451,7 +1451,7 @@
       ],
       "previewUrl": "/hero-banner-animated",
       "coverImage": "/assets/list/hero-banner-animated.png",
-      "videoUrl": "hero-banner-animated",
+      "videoUrl": "hero-banner-animated.mp4",
       "addedAt": 1777877418534.695
     },
     {
@@ -1468,7 +1468,7 @@
       ],
       "previewUrl": "/curved-plane",
       "coverImage": "/assets/list/curved-plane.png",
-      "videoUrl": "curved-plane",
+      "videoUrl": "curved-plane.mp4",
       "addedAt": 1778822903804.9653
     },
     {
@@ -1485,7 +1485,7 @@
       ],
       "previewUrl": "/curved-plane/v2",
       "coverImage": "/assets/list/curved-plane-v2.png",
-      "videoUrl": "curved-plane-v2",
+      "videoUrl": "curved-plane-v2.mp4",
       "addedAt": 1778822903804.726
     },
     {
@@ -1501,7 +1501,7 @@
       ],
       "previewUrl": "/webgl/draggable-canvas",
       "coverImage": "/assets/list/draggable-canvas.png",
-      "videoUrl": "draggable-canvas",
+      "videoUrl": "draggable-canvas.mp4",
       "addedAt": 1778822903805.375
     },
     {
@@ -1517,7 +1517,7 @@
       ],
       "previewUrl": "/webgl/fractal-glass",
       "coverImage": "/assets/list/fractal-glass.png",
-      "videoUrl": "fractal-glass",
+      "videoUrl": "fractal-glass.mp4",
       "addedAt": 1777877418535.5237
     },
     {
@@ -1533,7 +1533,7 @@
       ],
       "previewUrl": "/webgl/grid-lift",
       "coverImage": "/assets/list/grid-lift.png",
-      "videoUrl": "grid-lift",
+      "videoUrl": "grid-lift.mp4",
       "addedAt": 1777877418536.2043
     },
     {
@@ -1551,7 +1551,7 @@
       ],
       "previewUrl": "/grid-tunnel",
       "coverImage": "/assets/list/grid-tunnel.png",
-      "videoUrl": "grid-tunnel",
+      "videoUrl": "grid-tunnel.mp4",
       "addedAt": 1778822903805.9995
     },
     {
@@ -1565,7 +1565,7 @@
       "dependencies": [],
       "previewUrl": "/webgl/interactive-blur-reveal",
       "coverImage": "/assets/list/interactive-blur-reveal.png",
-      "videoUrl": "interactive-blur-reveal",
+      "videoUrl": "interactive-blur-reveal.mp4",
       "addedAt": 1778822903806.4944
     },
     {
@@ -1587,7 +1587,7 @@
       ],
       "previewUrl": "/milkyway",
       "coverImage": "/assets/list/milkyway.png",
-      "videoUrl": "milkyway",
+      "videoUrl": "milkyway.mp4",
       "addedAt": 1777877418537.1843
     },
     {
@@ -1606,7 +1606,7 @@
       ],
       "previewUrl": "/mouse-pixelation-effects",
       "coverImage": "/assets/list/mouse-pixelation.png",
-      "videoUrl": "mouse-pixelation",
+      "videoUrl": "mouse-pixelation.mp4",
       "addedAt": 1778822903807.1772
     },
     {
@@ -1624,7 +1624,7 @@
       ],
       "previewUrl": "/strip-slider",
       "coverImage": "/assets/list/strip-slider.png",
-      "videoUrl": "strip-slider",
+      "videoUrl": "strip-slider.mp4",
       "addedAt": 1777541715967.6514
     },
     {
@@ -1643,7 +1643,7 @@
       ],
       "previewUrl": "/3d-portfolio-slider",
       "coverImage": "/assets/list/3d-portfolio-slider.png",
-      "videoUrl": "3d-portfolio-slider",
+      "videoUrl": "3d-portfolio-slider.mp4",
       "addedAt": 1777541715967.9314
     },
     {
@@ -1659,7 +1659,7 @@
       ],
       "previewUrl": "/card-drift",
       "coverImage": "/assets/list/card-drift.png",
-      "videoUrl": "card-drift",
+      "videoUrl": "card-drift.mp4",
       "addedAt": 1777541715965.2654
     }
   ]

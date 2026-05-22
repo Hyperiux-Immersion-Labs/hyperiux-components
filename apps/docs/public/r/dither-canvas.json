@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/binary-effect",
   "coverImage": "/assets/list/dither-canvas.png",
-  "videoUrl": "dither-canvas",
+  "videoUrl": "dither-canvas.mp4",
   "files": [
     {
       "path": "dither-canvas.jsx",

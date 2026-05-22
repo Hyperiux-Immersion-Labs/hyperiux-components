@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/text-cloning",
   "coverImage": "/assets/list/text-cloning.png",
-  "videoUrl": "text-cloning",
+  "videoUrl": "text-cloning.mp4",
   "files": [
     {
       "path": "text-cloning.jsx",

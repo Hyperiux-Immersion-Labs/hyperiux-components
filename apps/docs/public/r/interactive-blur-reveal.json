@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/webgl/interactive-blur-reveal",
   "coverImage": "/assets/list/interactive-blur-reveal.png",
-  "videoUrl": "interactive-blur-reveal",
+  "videoUrl": "interactive-blur-reveal.mp4",
   "files": [
     {
       "path": "interactive-blur-reveal.jsx",

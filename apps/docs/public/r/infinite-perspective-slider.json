@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/surf-index",
   "coverImage": "/assets/list/infinite-perspective-slider.png",
-  "videoUrl": "infinite-perspective-slider",
+  "videoUrl": "infinite-perspective-slider.mp4",
   "files": [
     {
       "path": "infinite-perspective-slider.jsx",

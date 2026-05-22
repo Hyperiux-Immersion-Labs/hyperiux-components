@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/circular-split-roll",
   "coverImage": "/assets/list/orbit-slider.png",
-  "videoUrl": "orbit-slider",
+  "videoUrl": "orbit-slider.mp4",
   "files": [
     {
       "path": "orbit-slider.jsx",

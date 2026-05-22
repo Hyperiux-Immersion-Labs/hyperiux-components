@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/spider-particles",
   "coverImage": "/assets/list/spider-particles.png",
-  "videoUrl": "spider-particles",
+  "videoUrl": "spider-particles.mp4",
   "files": [
     {
       "path": "spider-particles.jsx",

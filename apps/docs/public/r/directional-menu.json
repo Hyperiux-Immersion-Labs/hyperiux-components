@@ -15,7 +15,7 @@
   ],
   "previewUrl": "/navigation/directional-menu",
   "coverImage": "/assets/list/directional-menu.png",
-  "videoUrl": "directional-menu",
+  "videoUrl": "directional-menu.mp4",
   "files": [
     {
       "path": "directional-menu.jsx",

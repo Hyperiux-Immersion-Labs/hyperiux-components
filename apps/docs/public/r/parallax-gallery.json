@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/frame-slider",
   "coverImage": "/assets/list/parallax-gallery.png",
-  "videoUrl": "parallax-gallery",
+  "videoUrl": "frame-slider.mp4",
   "files": [
     {
       "path": "parallax-gallery.jsx",

@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "previewUrl": "/scroll-based-effects/rotation-slider",
   "coverImage": "/assets/list/rotation-slider.png",
-  "videoUrl": "rotation-slider",
+  "videoUrl": "rotation-slider.mp4",
   "files": [
     {
       "path": "rotation-slider.jsx",

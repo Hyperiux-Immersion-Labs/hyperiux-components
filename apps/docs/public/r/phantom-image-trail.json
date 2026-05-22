@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/mouse-hover-image",
   "coverImage": "/assets/list/phantom-image-trail.png",
-  "videoUrl": "phantom-image-trail",
+  "videoUrl": "phantom-image-trail.mp4",
   "files": [
     {
       "path": "phantom-image-trail.jsx",

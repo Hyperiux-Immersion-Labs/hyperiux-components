@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/buttons/dot-fill-button",
   "coverImage": "/assets/list/dot-fill-button.png",
-  "videoUrl": "dot-fill-button",
+  "videoUrl": "dot-fill-button.mp4",
   "files": [
     {
       "path": "dot-fill-button.jsx",

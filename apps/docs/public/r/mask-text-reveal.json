@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/mask-text-reveal",
   "coverImage": "/assets/list/mask-text-reveal.png",
-  "videoUrl": "mask-text-reveal",
+  "videoUrl": "mask-text-reveal.mp4",
   "files": [
     {
       "path": "mask-text-reveal.jsx",

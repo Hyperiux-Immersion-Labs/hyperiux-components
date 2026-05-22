@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "previewUrl": "/parallax-slider",
   "coverImage": "/assets/list/parallax-slider.png",
-  "videoUrl": "parallax-slider",
+  "videoUrl": "parallax-slider.mp4",
   "files": [
     {
       "path": "parallax-slider.jsx",

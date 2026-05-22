@@ -15,7 +15,7 @@
   "registryDependencies": [],
   "previewUrl": "/strip-slider",
   "coverImage": "/assets/list/strip-slider.png",
-  "videoUrl": "strip-slider",
+  "videoUrl": "strip-slider.mp4",
   "files": [
     {
       "path": "strip-slider.jsx",

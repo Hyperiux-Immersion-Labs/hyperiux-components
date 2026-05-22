@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/loaders/stack-loader",
   "coverImage": "/assets/list/stack-loader.png",
-  "videoUrl": "stack-loader",
+  "videoUrl": "stack-loader.mp4",
   "files": [
     {
       "path": "stack-loader.jsx",

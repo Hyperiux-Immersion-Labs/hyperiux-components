@@ -17,7 +17,7 @@
   "registryDependencies": [],
   "previewUrl": "/webgl/progressive-bloom-valley",
   "coverImage": "/assets/list/progressive-bloom-valley.png",
-  "videoUrl": "progressive-bloom-valley",
+  "videoUrl": "progressive-bloom-valley.mp4",
   "files": [
     {
       "path": "progressive-bloom-valley.jsx",

@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/scramble-text",
   "coverImage": "/assets/list/scramble-text.png",
-  "videoUrl": "scramble-text",
+  "videoUrl": "scramble-text.mp4",
   "files": [
     {
       "path": "scramble-text.jsx",

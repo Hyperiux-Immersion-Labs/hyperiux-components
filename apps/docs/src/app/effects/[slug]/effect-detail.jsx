@@ -23,8 +23,8 @@ export function EffectDetailContent({
   const videoRef = useRef(null);
 
   const videoPreviewUrl = effect.videoUrl
-    ? `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}/${effect.videoUrl}`
-    : null;
+  ? `${process.env.NEXT_PUBLIC_DEV_URL}/${effect.videoUrl}`
+  : null;
 
   useEffect(() => {
     const wishlist = JSON.parse(localStorage.getItem("hyperiux-wishlist") || "[]");
@@ -197,6 +197,7 @@ export default function MyComponent() {
                     loop
                     muted
                     playsInline
+                    preload="metadata"
                     onCanPlay={() => setVideoReady(true)}
                     onError={() => setVideoError(true)}
                     className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${

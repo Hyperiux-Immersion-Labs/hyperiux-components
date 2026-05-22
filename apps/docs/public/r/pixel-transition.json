@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "previewUrl": "/page-transitions/pixels",
   "coverImage": "/assets/list/pixel-transition.png",
-  "videoUrl": "pixel-transition",
+  "videoUrl": "pixel-transition.mp4",
   "files": [
     {
       "path": "pixel-transition.jsx",

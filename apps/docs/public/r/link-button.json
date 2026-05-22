@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/buttons/link-button",
   "coverImage": "/assets/list/link-button.png",
-  "videoUrl": "link-button",
+  "videoUrl": "link-button.mp4",
   "files": [
     {
       "path": "link-button.jsx",

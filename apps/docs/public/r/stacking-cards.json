@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "previewUrl": "/stacking-cards",
   "coverImage": "/assets/list/stacking-cards.png",
-  "videoUrl": "stacking-cards",
+  "videoUrl": "stacking-cards.mp4",
   "files": [
     {
       "path": "stacking-cards.jsx",
