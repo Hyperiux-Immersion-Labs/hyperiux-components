@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useInView } from "motion/react";
+import { useAnimate, useInView } from "motion/react";
 
 export function EffectCard({ effect, priority = false }) {
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -12,13 +12,27 @@ export function EffectCard({ effect, priority = false }) {
   const [videoError, setVideoError] = useState(false);
 
   const videoRef = useRef(null);
-  const cardRef = useRef(null);
 
-  const isInView = useInView(cardRef, {
+  const [scope, animate] = useAnimate();
+
+  const isInView = useInView(scope, {
     once: true,
     margin: "0px 0px -40px 0px",
     amount: 0.1,
   });
+
+  // Set hidden state synchronously on first render via inline style,
+  // then imperatively animate both opacity+y together in one call
+  // the moment isInView flips — no React re-render sequencing involved.
+  useEffect(() => {
+    if (isInView) {
+      animate(
+        scope.current,
+        { opacity: 1, y: 0 },
+        { duration: 0.55, ease: [0.22, 1, 0.36, 1] }
+      );
+    }
+  }, [isInView]);
 
   const videoPreviewUrl = effect.videoUrl
     ? `${process.env.NEXT_PUBLIC_DEV_URL}/${effect.videoUrl}`
@@ -59,12 +73,10 @@ export function EffectCard({ effect, priority = false }) {
   const showVideo = shouldLoadVideo && videoReady;
 
   return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 32 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative bg-[#555555]/33 p-5 pb-[0.01vw] rounded-[1.5vw] max-sm:rounded-[5vw] border-border/50 overflow-hidden hover:shadow-2xl border hover:border-primary/50 backdrop-blur-md"
+    <div
+      ref={scope}
+      style={{ opacity: 0, transform: "translateY(15px)", willChange: "opacity, transform" }}
+      className="group relative bg-[#0000033] p-5 pb-[0.01vw] rounded-[1.5vw] max-sm:rounded-[5vw] border-border/50 overflow-hidden hover:shadow-2xl border hover:border-primary/50 backdrop-blur-[6px]  duration-500 ease-in-out"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -113,7 +125,7 @@ export function EffectCard({ effect, priority = false }) {
               "_blank"
             );
           }}
-          className="p-2.5 bg-black/20 border border-border/50 backdrop-blur-sm text-foreground rounded-full hover:bg-primary hover:text-white transition-colors cursor-pointer"
+          className="p-2.5 bg-black/20 border border-border/50 duration-300 ease-in-out backdrop-blur-sm text-foreground rounded-full hover:bg-primary hover:text-white transition-colors cursor-pointer"
           aria-label="Preview"
         >
           <svg
@@ -139,7 +151,7 @@ export function EffectCard({ effect, priority = false }) {
 
         <button
           onClick={toggleWishlist}
-          className={`p-2.5 backdrop-blur-sm rounded-full transition-colors cursor-pointer ${
+          className={`p-2.5 backdrop-blur-sm rounded-full duration-300 ease-in-out transition-colors cursor-pointer ${
             isWishlisted
               ? "bg-primary text-white"
               : "bg-black/20 border border-border/50 text-foreground hover:bg-primary hover:text-white"
@@ -164,14 +176,14 @@ export function EffectCard({ effect, priority = false }) {
           {(effect.categories?.length ? effect.categories : [effect.category]).map((cat) => (
             <span
               key={cat}
-              className="px-2.5 py-0.5 max-sm:py-1 max-sm:px-3 max-sm:text-lg bg-white border border-border/50 backdrop-blur-sm text-sm font-medium font-sans text-[#3C3C3C] capitalize"
-              style={{ borderRadius: "56px" }}
+              className="px-2.5 py-0.5 max-sm:py-1 max-sm:px-3 max-sm:text-lg border border-border/80 backdrop-blur-sm text-sm font-medium font-sans text-white/60 capitalize rounded-lg"
+              
             >
               {cat}
             </span>
           ))}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

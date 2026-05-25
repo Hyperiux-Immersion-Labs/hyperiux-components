@@ -72,7 +72,7 @@ export default function MyComponent() {
         <Link
           href={effect.previewUrl || `/effects/${slug}/preview`}
           target="_blank"
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 backdrop-blur-md text-foreground bg-primary hover:bg-primary/80 hover:text-white rounded-md hover:border-transparent transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 backdrop-blur-md text-foreground bg-primary duration-300 ease-in-out hover:bg-primary/80 hover:text-white rounded-md hover:border-transparent transition-colors"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -83,7 +83,7 @@ export default function MyComponent() {
 
         <button
           onClick={toggleWishlist}
-          className={`p-2.5 backdrop-blur-sm rounded-full transition-colors cursor-pointer ${
+          className={`p-2.5 backdrop-blur-sm rounded-full transition-colors duration-300 ease-in-out cursor-pointer ${
             isWishlisted
               ? "bg-primary text-white border border-transparent"
               : "bg-black/20 border border-border/60 text-foreground hover:bg-primary hover:text-white"
@@ -132,14 +132,14 @@ export default function MyComponent() {
         <div className="pt-3 border-t border-border/60">
           <div className="flex flex-wrap gap-2">
             {(effect.categories?.length ? effect.categories : [effect.category]).map((cat) => (
-              <span key={cat} className="px-2.5 py-1 bg-white border border-border/60 rounded-full text-xs text-[#3C3C3C] capitalize">
+              <span key={cat} className="px-2.5 py-1  border border-border/60 rounded-full text-xs text-white/80 capitalize">
                 {cat}
               </span>
             ))}
             {effect.dependencies?.map((dep) => (
               <span
                 key={dep}
-                className="px-2.5 py-1 bg-white border border-border/60 rounded-full text-xs text-[#3C3C3C]"
+                className="px-2.5 py-1 capitalize  border border-border/60 rounded-full text-xs text-white/80"
               >
                 {dep}
               </span>
@@ -177,17 +177,17 @@ export default function MyComponent() {
               </div>
 
               {/* Preview */}
-              <div className="h-[65vh] max-sm:h-[25vh] overflow-hidden relative bg-black/20">
-                <Image
-                  src={effect.coverImage || "/assets/img/image01.webp"}
-                  alt={effect.title || slug}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 66vw"
-                  priority
-                  className={`object-cover transition-all duration-500 ${
-                    showVideo ? "opacity-0" : "opacity-100"
-                  }`}
-                />
+              <div className="aspect-video w-full overflow-hidden relative bg-black/20">
+                {!showVideo && (
+                  <Image
+                    src={effect.coverImage || "/assets/img/image01.webp"}
+                    alt={effect.title || slug}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 66vw"
+                    priority
+                    className="object-contain transition-all duration-500"
+                  />
+                )}
 
                 {videoPreviewUrl && !videoError && (
                   <video
@@ -200,7 +200,7 @@ export default function MyComponent() {
                     preload="metadata"
                     onCanPlay={() => setVideoReady(true)}
                     onError={() => setVideoError(true)}
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                    className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ${
                       showVideo ? "opacity-100" : "opacity-0"
                     }`}
                   />
@@ -223,7 +223,7 @@ export default function MyComponent() {
 
                 <div className="space-y-3">
                   <h3 className="font-medium text-muted text-2xl tracking-tighter">Usage</h3>
-                  <CodeBlock code={usageCode} language="jsx" />
+                  <CodeBlock code={usageCode} filename='page.js' language="jsx" />
                 </div>
 
                 <div className="space-y-3">
@@ -343,3 +343,5 @@ const socialIcons = [
   { name: "twitter", icon: "/assets/social-icons/twitter.svg", link: "#" },
   { name: "mail", icon: "/assets/social-icons/instagram.svg", link: "#" },
 ];
+
+

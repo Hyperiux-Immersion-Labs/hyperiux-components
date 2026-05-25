@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useEffectEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { VaultLayout } from "@/components/layout/VaultLayout";
 import { VaultHeader } from "@/components/layout/VaultHeader";
@@ -11,8 +11,31 @@ import Image from "next/image";
 
 export function VaultContent({ effects, effectCounts }) {
   const searchParams = useSearchParams();
-  const categoryFilter = searchParams.get("category") || "all";
+  const urlCategoryFilter = searchParams.get("category") || "all";
   const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState(urlCategoryFilter);
+
+  useEffect(() => {
+    setCategoryFilter(urlCategoryFilter);
+  }, [urlCategoryFilter]);
+
+  const updateCategoryFilter = useEffectEvent((nextCategory) => {
+    const resolvedCategory = nextCategory || "all";
+    setCategoryFilter(resolvedCategory);
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (resolvedCategory === "all") {
+      params.delete("category");
+    } else {
+      params.set("category", resolvedCategory);
+    }
+
+    const nextQuery = params.toString();
+    const nextUrl = nextQuery ? `/effects?${nextQuery}` : "/effects";
+
+    window.history.pushState(null, "", nextUrl);
+  });
   const quickCategories = useMemo(() => {
     const entries = Object.entries(effectCounts || {}).filter(
       ([k]) => k && k !== "all",
@@ -84,7 +107,7 @@ export function VaultContent({ effects, effectCounts }) {
 
         <div className=" px-10 max-sm:px-6 pb-10">
           <div className="flex items-center max-sm:justify-center gap-6 flex-wrap">
-            <div className="w-[50%] max-sm:w-[90%] max-sm:mx-auto">
+            <div className="w-[45%] max-sm:w-[90%] max-sm:mx-auto">
               <div className="relative">
                 <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white z-10">
                   <svg
@@ -106,7 +129,7 @@ export function VaultContent({ effects, effectCounts }) {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search effects..."
-                  className="w-full max-w-[50vw] max-sm:max-w-[80vw] max-sm:w-[80vw] pl-14 pr-10 py-2.5 rounded-full bg-[#555555]/33 backdrop-blur-md border border-border/50 text-foreground placeholder:text-muted focus:outline-none  focus:border-transparent transition-all font-sans"
+                  className="w-full max-w-[50vw] max-sm:max-w-[80vw] max-sm:w-[80vw] pl-14 pr-10 py-2.5 rounded-full bg-[#0000033] backdrop-blur-[6px] border border-border/50 text-foreground placeholder:text-muted focus:outline-none   transition-all font-sans"
                 />
                 {searchQuery && (
                   <button
@@ -134,13 +157,14 @@ export function VaultContent({ effects, effectCounts }) {
               {quickCategories.map((cat) => {
                 const isSelected = categoryFilter === cat;
                 return (
-                  <Link
+                  <button
                     key={cat}
-                    href={isSelected ? "/effects" : `/effects?category=${cat}`}
-                    className={`px-7 py-2.5 max-sm:px-6 text-md rounded-full backdrop-blur-md border transition-all duration-500 ease-in-out hover:border-primary hover:text-primary font-sans flex items-center max-sm:gap-4 gap-2 ${
+                    type="button"
+                    onClick={() => updateCategoryFilter(isSelected ? "all" : cat)}
+                    className={`px-7 py-2.5 max-sm:px-6 text-md rounded-full backdrop-blur-[6px] border transition-all duration-500 ease-in-out hover:text-primary hover:bg-white font-sans flex items-center max-sm:gap-4 gap-2 cursor-pointer ${
                       isSelected
-                        ? "bg-white text-black border-transparent"
-                        : "bg-[#555555]/33 border-border/50 text-foreground "
+                        ? "bg-white text-primary border-transparent"
+                        : "bg-[#0000033] border-border/50 text-foreground"
                     }`}
                   >
                     <span>
@@ -148,9 +172,15 @@ export function VaultContent({ effects, effectCounts }) {
                         ? "WebGL"
                         : cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </span>
-                    {isSelected && (
+                    <span
+                      className="overflow-hidden transition-all duration-500 ease-in-out flex items-center"
+                      style={{
+                        maxWidth: isSelected ? "24px" : "0px",
+                        opacity: isSelected ? 1 : 0,
+                      }}
+                    >
                       <svg
-                        className="w-4 h-4"
+                        className="w-4 h-4 shrink-0"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -162,8 +192,8 @@ export function VaultContent({ effects, effectCounts }) {
                           d="M6 18L18 6M6 6l12 12"
                         />
                       </svg>
-                    )}
-                  </Link>
+                    </span>
+                  </button>
                 );
               })}
             </div>
@@ -171,20 +201,29 @@ export function VaultContent({ effects, effectCounts }) {
         </div>
 
         <div className=" px-10 max-sm:px-6 pb-12">
-          {(categoryFilter !== "all" || searchQuery) && (
-            <div className="flex items-center gap-3 mb-8">
+          <div
+            className={`flex flex-wrap items-center gap-3 transition-opacity duration-200 ${
+              categoryFilter !== "all" || searchQuery
+                ? "mb-8 min-h-10 opacity-100"
+                : "mb-0 min-h-0 opacity-0 pointer-events-none"
+            }`}
+          >
+            {(categoryFilter !== "all" || searchQuery) && (
               <span className="text-sm text-muted font-sans">
                 Showing {filteredEffects.length} of {totalEffects} effects
               </span>
-              {categoryFilter !== "all" && (
+            )}
+            {categoryFilter !== "all" && (
+              <>
                 <span
                   className="flex items-center gap-2 px-4 py-1.5 bg-[#555555]/33 backdrop-blur-md border border-border/50 text-foreground text-sm capitalize font-medium"
                   style={{ borderRadius: "56px" }}
                 >
                   <span>{categoryFilter}</span>
-                  <Link
-                    href="/effects"
-                    className="hover:text-white transition-colors"
+                  <button
+                    type="button"
+                    onClick={() => updateCategoryFilter("all")}
+                    className="hover:text-white cursor-pointer transition-colors"
                   >
                     <svg
                       className="w-3.5 h-3.5"
@@ -199,10 +238,12 @@ export function VaultContent({ effects, effectCounts }) {
                         d="M6 18L18 6M6 6l12 12"
                       />
                     </svg>
-                  </Link>
+                  </button>
                 </span>
-              )}
-              {searchQuery && (
+              </>
+            )}
+            {searchQuery && (
+              <>
                 <span
                   className="flex items-center gap-2 px-4 py-1.5 bg-[#555555]/33 backdrop-blur-md border border-border/50 text-foreground text-sm font-medium"
                   style={{ borderRadius: "56px" }}
@@ -227,9 +268,9 @@ export function VaultContent({ effects, effectCounts }) {
                     </svg>
                   </button>
                 </span>
-              )}
-            </div>
-          )}
+              </>
+            )}
+          </div>
 
           {filteredEffects.length === 0 ? (
             <div className="text-center py-20">
@@ -247,7 +288,6 @@ export function VaultContent({ effects, effectCounts }) {
           ) : (
             <>
               <EffectsGrid
-                key={`${categoryFilter}-${searchQuery}`}
                 filteredEffects={filteredEffects}
               />
 
@@ -451,7 +491,7 @@ function EffectsGrid({ filteredEffects }) {
 
   return (
     <>
-      <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 grid-cols-3 gap-5 max-sm:gap-8">
+      <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 grid-cols-3 gap-5 max-sm:gap-8 gap-y-12.5">
         {filteredEffects.map((effect, i) => (
           <div
             key={effect.name}
