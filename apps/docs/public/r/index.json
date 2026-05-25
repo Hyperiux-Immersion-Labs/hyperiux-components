@@ -292,7 +292,7 @@
         "gsap",
         "three"
       ],
-      "previewUrl": "/dgrees-pixel-scroll",
+      "previewUrl": "/split-canvas",
       "coverImage": "/assets/list/split-canvas.png",
       "videoUrl": "split-canvas.mp4",
       "addedAt": 1776937386243.6394
@@ -788,7 +788,7 @@
         "framer-motion"
       ],
       "previewUrl": "/circle-reveal",
-      "coverImage": "/assets/list/circle-text-reveal.png",
+      "coverImage": "/assets/list/text-reveal.png",
       "videoUrl": "circle-text-reveal.mp4",
       "addedAt": 1776937386245.0579
     },

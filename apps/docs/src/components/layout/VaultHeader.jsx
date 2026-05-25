@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { GlobalSearch } from "./SearchBar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const categoryNames = {
   text: "Text Animations",
@@ -33,45 +33,10 @@ export function VaultHeader({
 
   const [openTrigger, setOpenTrigger] = useState(0);
 
-  // Header hide/show logic
-  const [isHidden, setIsHidden] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [isHoveringHeader, setIsHoveringHeader] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (isHoveringHeader) {
-        setIsHidden(false);
-        setLastScrollY(currentScrollY);
-        return;
-      }
-
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setIsHidden(true);
-      } else {
-        setIsHidden(false);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [lastScrollY, isHoveringHeader]);
-
   return (
     <>
       <header
-        onMouseEnter={() => setIsHoveringHeader(true)}
-        onMouseLeave={() => setIsHoveringHeader(false)}
-        className={`fixed top-0 left-0 right-0 z-50 px-10 h-18 py-4 bg-black/10 backdrop-blur-md transition-transform duration-500 ${
-          isHidden ? "-translate-y-full" : "translate-y-0"
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 px-10 h-18 py-4 bg-black/10 backdrop-blur-md"
       >
         <div className="flex items-center h-full justify-between">
           <Link href="/" className="flex items-center gap-3">

@@ -6,5 +6,5 @@
   "category": "scroll",
   "dependencies": ["gsap", "three"],
   "registryDependencies": [],
-  "previewUrl": "/dgrees-pixel-scroll"
+  "previewUrl": "/split-canvas"
 }

@@ -217,7 +217,7 @@ export default function BinaryEffect() {
 
  // video
  const video = document.createElement("video");
- video.src ="/assets/videos/enigma-video.mp4";
+ video.src ="/assets/videos/enigma-slow-mo.mp4";
  video.loop = true; video.muted = true; video.autoplay = true; video.playsInline = true;
  video.play().catch(() => {});
 

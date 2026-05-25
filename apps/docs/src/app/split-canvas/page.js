@@ -11,7 +11,7 @@ const facultyGlyphic = Faculty_Glyphic({
     weight: '400',
 });
 
-export default function DgreesPixelScrollPage() {
+export default function SplitCanvas() {
     const wrapperRef = useRef(null);
 
     return (
@@ -22,11 +22,11 @@ export default function DgreesPixelScrollPage() {
                     <div className="flex items-center gap-3">
                         <span className="w-1.5 h-1.5 bg-black rounded-full" />
                         <h1 className="text-[72px] max-md:text-[64px] font-normal tracking-[-0.02em]">
-                            Approach
+                            Philosophy
                         </h1>
                     </div>
                     <p className="text-base max-md:text-sm text-black/50 mt-2">
-                        {'{ Five principles in the age of AI }'}
+                       {'{ Five principles for modern interfaces }'}
                     </p>
                 </section>
 

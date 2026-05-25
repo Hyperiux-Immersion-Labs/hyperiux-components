@@ -161,9 +161,9 @@ export function VaultContent({ effects, effectCounts }) {
                     key={cat}
                     type="button"
                     onClick={() => updateCategoryFilter(isSelected ? "all" : cat)}
-                    className={`px-7 py-2.5 max-sm:px-6 text-md rounded-full backdrop-blur-[6px] border transition-all duration-500 ease-in-out hover:text-primary hover:bg-white font-sans flex items-center max-sm:gap-4 gap-2 cursor-pointer ${
+                    className={`px-7 py-2.5 max-sm:px-6 text-md rounded-full backdrop-blur-[6px] border transition-all duration-500 ease-in-out hover:text-primary hover:bg-white font-sans group flex items-center max-sm:gap-4 gap-2 cursor-pointer ${
                       isSelected
-                        ? "bg-white text-primary border-transparent"
+                        ? "bg-white font-semibold text-primary border-transparent"
                         : "bg-[#0000033] border-border/50 text-foreground"
                     }`}
                   >
@@ -173,7 +173,7 @@ export function VaultContent({ effects, effectCounts }) {
                         : cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </span>
                     <span
-                      className="overflow-hidden transition-all duration-500 ease-in-out flex items-center"
+                      className="overflow-hidden group-hover:rotate-90 transition-all duration-0 group-hover:duration-300 ease-in-out flex items-center"
                       style={{
                         maxWidth: isSelected ? "24px" : "0px",
                         opacity: isSelected ? 1 : 0,

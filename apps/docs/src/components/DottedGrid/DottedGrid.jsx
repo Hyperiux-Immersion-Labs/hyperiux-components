@@ -4,6 +4,10 @@ import { useEffect, useRef } from"react";
 
 export default function DottedGrid() {
  const canvasRef = useRef(null);
+ const patternRef = useRef({
+ currentShapeIndex: 0,
+ transitionStartTime: null,
+ });
  const mouseRef = useRef({
  x: 0, y: 0,
  targetX: 0, targetY: 0,
@@ -75,6 +79,11 @@ const grayDisperseTime = 0.9; // trail lingers ~2s
  };
 
  const handlePointerLeave = () => { mouseRef.current.active = false; };
+
+ const handleClick = () => {
+ patternRef.current.currentShapeIndex = (patternRef.current.currentShapeIndex + 1) % totalShapes;
+ patternRef.current.transitionStartTime = performance.now() * 0.001;
+ };
 
  const getStarStrength = (x, y, time) => {
  const cx = width / 2, cy = height / 2;
@@ -151,8 +160,25 @@ const grayDisperseTime = 0.9; // trail lingers ~2s
  };
 
  const getShapeData = (x, y, time) => {
- const cyclePosition = time % totalCycleTime;
- const shapeIndex = Math.floor(time / totalCycleTime) % totalShapes;
+ const { currentShapeIndex, transitionStartTime } = patternRef.current;
+ if (transitionStartTime === null)
+ return {
+ shapeStrength: getRawShapeStrength(currentShapeIndex, x, y, time),
+ randomStrength: 0,
+ grayDisperseStrength: 0,
+ };
+
+ const cyclePosition = time - transitionStartTime;
+ if (cyclePosition >= totalCycleTime) {
+ patternRef.current.transitionStartTime = null;
+ return {
+ shapeStrength: getRawShapeStrength(currentShapeIndex, x, y, time),
+ randomStrength: 0,
+ grayDisperseStrength: 0,
+ };
+ }
+
+ const shapeIndex = currentShapeIndex;
  const shapeStrength = getRawShapeStrength(shapeIndex, x, y, time);
 
  if (cyclePosition < randomTime)
@@ -281,12 +307,14 @@ const softPulse = Math.sin(time * 1.4 + dot.phase + dot.x * 0.015) ** 2;
  window.addEventListener("resize", resize);
  canvas.addEventListener("pointermove", handlePointerMove);
  canvas.addEventListener("pointerleave", handlePointerLeave);
+ canvas.addEventListener("click", handleClick);
  animationId = requestAnimationFrame(animate);
 
  return () => {
  window.removeEventListener("resize", resize);
  canvas.removeEventListener("pointermove", handlePointerMove);
  canvas.removeEventListener("pointerleave", handlePointerLeave);
+ canvas.removeEventListener("click", handleClick);
  cancelAnimationFrame(animationId);
  };
  }, []);
