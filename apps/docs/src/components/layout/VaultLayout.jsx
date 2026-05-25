@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useLenis } from "lenis/react";
+import Image from "next/image";
 import { Sidebar } from "./Sidebar";
 
 
@@ -11,7 +12,7 @@ function SidebarFallback({ totalEffects }) {
       className="fixed left-0 top-20 bottom-0 z-40 bg-transparent text-foreground"
       style={{ width: "16rem", ["--sidebar-width"]: "16rem", ["--sidebar-peek"]: "4.25rem" }}
     >
-      <div className="relative flex h-full w-(--sidebar-width) flex-col rounded-lg overflow-visible translate-x-[calc(-1*(var(--sidebar-width)-var(--sidebar-peek)))]">
+      <div className="relative flex h-full w-(--sidebar-width) flex-col rounded-lg overflow-visible -translate-x-[(var(--sidebar-width)-var(--sidebar-peek))]">
         <button
           type="button"
           aria-label="Open sidebar"
@@ -37,7 +38,7 @@ export function VaultLayout({
   effectCounts = {},
   effects = [],
   totalEffects: propTotalEffects,
-  bgImageSrc = "/assets/hero-bg.png",
+  bgImageSrc = "/assets/heroo-bg.png",
   activeCategory,
 }) {
   const totalEffects = propTotalEffects !== undefined ? propTotalEffects : effects.length;
@@ -66,6 +67,17 @@ export function VaultLayout({
 
   return (
     <div className="min-h-screen text-foreground relative">
+      <div className="pointer-events-none fixed inset-0 z-0 h-screen w-screen">
+        <Image
+          src={bgImageSrc}
+          alt="vault background"
+          fill
+          className="object-cover"
+          sizes="100vw"
+          priority
+        />
+      </div>
+
       <Suspense fallback={<SidebarFallback totalEffects={totalEffects} />}>
         <Sidebar
           effectCounts={effectCounts}

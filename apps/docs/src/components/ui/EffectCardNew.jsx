@@ -3,36 +3,63 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import gsap from "gsap";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { useAnimate, useInView } from "motion/react";
+
+gsap.registerPlugin(DrawSVGPlugin);
 
 export function EffectCard({ effect, priority = false }) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [borderSize, setBorderSize] = useState({ width: 0, height: 0 });
 
   const videoRef = useRef(null);
-
+  const borderRectRef = useRef(null);
   const [scope, animate] = useAnimate();
 
   const isInView = useInView(scope, {
     once: true,
-    margin: "0px 0px -40px 0px",
+    margin: "0px",
     amount: 0.1,
   });
 
-  // Set hidden state synchronously on first render via inline style,
-  // then imperatively animate both opacity+y together in one call
-  // the moment isInView flips — no React re-render sequencing involved.
   useEffect(() => {
     if (isInView) {
-      animate(
-        scope.current,
-        { opacity: 1, y: 0 },
-        { duration: 0.55, ease: [0.22, 1, 0.36, 1] }
-      );
+      animate(scope.current, { opacity: 1 }, { duration: 0.55 });
     }
   }, [isInView]);
+
+  useEffect(() => {
+    if (!scope.current) return;
+    const measure = () => {
+      const { offsetWidth: w, offsetHeight: h } = scope.current;
+      setBorderSize({
+        width: Math.max(w - 2, 0),
+        height: Math.max(h - 2, 0),
+      });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(scope.current);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!borderRectRef.current) return;
+
+    gsap.killTweensOf(borderRectRef.current);
+
+    gsap.to(borderRectRef.current, {
+      drawSVG: isHovered ? "0% 100%" : "0% 0%",
+      opacity: isHovered ? 1 : 0,
+      duration: isHovered ? 1.5 : 0.45,
+      ease: isHovered ? "power2.out" : "power2.inOut",
+      overwrite: "auto",
+    });
+  }, [isHovered]);
 
   const videoPreviewUrl = effect.videoUrl
     ? `${process.env.NEXT_PUBLIC_DEV_URL}/${effect.videoUrl}`
@@ -56,15 +83,12 @@ export function EffectCard({ effect, priority = false }) {
   const toggleWishlist = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
     const wishlist = JSON.parse(
       localStorage.getItem("hyperiux-wishlist") || "[]"
     );
-
     const newWishlist = isWishlisted
       ? wishlist.filter((name) => name !== effect.name)
       : [...wishlist, effect.name];
-
     localStorage.setItem("hyperiux-wishlist", JSON.stringify(newWishlist));
     setIsWishlisted(!isWishlisted);
   };
@@ -75,15 +99,44 @@ export function EffectCard({ effect, priority = false }) {
   return (
     <div
       ref={scope}
-      style={{ opacity: 0, transform: "translateY(15px)", willChange: "opacity, transform" }}
-      className="group relative bg-[#0000033] p-5 pb-[0.01vw] rounded-[1.5vw] max-sm:rounded-[5vw] border-border/50 overflow-hidden hover:shadow-2xl border hover:border-primary/50 backdrop-blur-[6px]  duration-500 ease-in-out"
+      style={{
+        opacity: isInView ? 1 : 0,
+        transition: "opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1)",
+        willChange: "opacity",
+        position: "relative",
+      }}
+      className={`group bg-[#0000033] p-5 pb-[0.01vw] border rounded-[1.5vw] w-full max-sm:rounded-[5vw] hover:shadow-2xl backdrop-blur-[6px] duration-500 ease-in-out ${
+        isHovered ? "border-transparent" : "border-border/50"
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* Border draw SVG */}
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-0.5 -left-0.5 w-full h-full z-10 overflow-visible"
+        style={{ borderRadius: "inherit" }}
+      >
+        <rect
+          ref={borderRectRef}
+          x="1"
+          y="1"
+          width={borderSize.width}
+          height={borderSize.height}
+          rx={22}
+          fill="none"
+          stroke="#ff5f00"
+          strokeWidth="1"
+          style={{
+            fill: "none",
+            opacity: 0,
+          }}
+        />
+      </svg>
+
       {/* Clickable Preview Area */}
       <Link href={`/effects/${effect.name}`} className="block">
         <div className="aspect-video bg-black/20 rounded-[1vw] max-sm:rounded-[4vw] overflow-hidden relative">
-          {/* Static Image */}
           <Image
             src={effect.coverImage || "/assets/img/image01.webp"}
             alt={effect.title || effect.name}
@@ -94,7 +147,6 @@ export function EffectCard({ effect, priority = false }) {
               showVideo ? "opacity-0" : "opacity-100"
             }`}
           />
-
           {shouldLoadVideo && (
             <video
               ref={videoRef}
@@ -128,24 +180,9 @@ export function EffectCard({ effect, priority = false }) {
           className="p-2.5 bg-black/20 border border-border/50 duration-300 ease-in-out backdrop-blur-sm text-foreground rounded-full hover:bg-primary hover:text-white transition-colors cursor-pointer"
           aria-label="Preview"
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-            />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-            />
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
           </svg>
         </button>
 
@@ -171,13 +208,11 @@ export function EffectCard({ effect, priority = false }) {
             {effect.title}
           </h3>
         </Link>
-
         <div className="flex items-center gap-2 flex-wrap">
           {(effect.categories?.length ? effect.categories : [effect.category]).map((cat) => (
             <span
               key={cat}
               className="px-2.5 py-0.5 max-sm:py-1 max-sm:px-3 max-sm:text-lg border border-border/80 backdrop-blur-sm text-sm font-medium font-sans text-white/60 capitalize rounded-lg"
-              
             >
               {cat}
             </span>

@@ -1,11 +1,13 @@
 
 import ChessGridTransition from'@/components/showcase/transitions/ChessGrids/ChessGridTransition'
+import PixelRandom from '@/components/showcase/transitions/PixelRandom/PixelRandomTransition'
 import React from'react'
 
 export default function layout({ children }) {
  return (
- <ChessGridTransition >
+ <PixelRandom color='#ff5f00' >
+     {/* <PixelRandom color='#ffffff' > */}
  {children}
- </ChessGridTransition>
+ </PixelRandom>
  )
 }

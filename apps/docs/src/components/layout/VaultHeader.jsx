@@ -99,7 +99,7 @@ export function VaultHeader({
             {showSearch && (
              <button
   onClick={() => setOpenTrigger((n) => n + 1)}
-  className="group flex items-center gap-2 w-80 max-sm:w-12 max-sm:h-12 max-sm:justify-center max-sm:rounded-full pl-4 max-sm:pl-3 pr-3 py-3 border border-border/60 rounded-xl bg-[#555555]/33 text-white  hover:border-white/80 duration-300 ease-in-out transition-all backdrop-blur-xs cursor-pointer"
+  className="group flex bg-[#0000033] backdrop-blur-[6px] items-center gap-2 w-80 max-sm:w-12 max-sm:h-12 max-sm:justify-center max-sm:rounded-full pl-4 max-sm:pl-3 pr-3 py-3 border border-border/60 rounded-xl  text-white  hover:border-white/80 duration-300 ease-in-out transition-all  cursor-pointer"
 >
   <svg
     className="w-5 h-5 shrink-0 text-current"

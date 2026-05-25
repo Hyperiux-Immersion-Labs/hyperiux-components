@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useAnimationControls, useMotionValue, useMotionValueEvent, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
@@ -29,10 +30,92 @@ export function Sidebar({
 }) {
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const prefersReducedMotion = useReducedMotion();
     const currentCategory = activeCategory || searchParams.get("category") || "all";
     const [uncontrolledExpanded, setUncontrolledExpanded] = useState(false);
+    const primaryLineControls = useAnimationControls();
+    const secondaryLineControls = useAnimationControls();
+    const primaryScaleY = useMotionValue(0);
+    const secondaryScaleY = useMotionValue(0);
+    const primaryDirection = useRef("up");
+    const secondaryDirection = useRef("up");
     const isExpanded =
         typeof controlledExpanded === "boolean" ? controlledExpanded : uncontrolledExpanded;
+
+    useMotionValueEvent(primaryScaleY, "change", (value) => {
+        if (value <= 0.01) primaryDirection.current = "up";
+        else if (value >= 0.99) primaryDirection.current = "down";
+    });
+
+    useMotionValueEvent(secondaryScaleY, "change", (value) => {
+        if (value <= 0.01) secondaryDirection.current = "up";
+        else if (value >= 0.99) secondaryDirection.current = "down";
+    });
+
+    useEffect(() => {
+        const cycleDuration = 1.9;
+        const animateLine = async (controls, scaleY, directionRef, delay = 0) => {
+            if (prefersReducedMotion) {
+                await controls.start({ scaleY: 1, transition: { duration: 0 } });
+                return;
+            }
+
+            if (!isExpanded) {
+                controls.start({
+                    scaleY: [0, 1, 0],
+                    transition: {
+                        duration: cycleDuration,
+                        delay,
+                        times: [0, 0.5, 1],
+                        repeat: Infinity,
+                        repeatDelay: 0.2,
+                        ease: "easeInOut",
+                    },
+                });
+                return;
+            }
+
+            const currentValue = scaleY.get();
+            const segmentDuration = cycleDuration / 2;
+
+            if (directionRef.current === "down") {
+                await controls.start({
+                    scaleY: 0,
+                    transition: {
+                        duration: currentValue * segmentDuration,
+                        ease: "easeInOut",
+                    },
+                });
+                await controls.start({
+                    scaleY: 1,
+                    transition: {
+                        duration: segmentDuration,
+                        ease: "easeInOut",
+                    },
+                });
+                return;
+            }
+
+            await controls.start({
+                scaleY: 1,
+                transition: {
+                    duration: (1 - currentValue) * segmentDuration,
+                    ease: "easeInOut",
+                },
+            });
+        };
+
+        animateLine(primaryLineControls, primaryScaleY, primaryDirection);
+        animateLine(secondaryLineControls, secondaryScaleY, secondaryDirection, 0.22);
+    }, [
+        isExpanded,
+        prefersReducedMotion,
+        primaryLineControls,
+        primaryScaleY,
+        secondaryLineControls,
+        secondaryScaleY,
+    ]);
+
     const toggle = () => {
         if (onToggle) return onToggle();
         setUncontrolledExpanded((v) => !v);
@@ -62,16 +145,32 @@ export function Sidebar({
                     type="button"
                     aria-label={isExpanded ? "Close sidebar" : "Open sidebar"}
                     onClick={toggle}
-                    className={`absolute max-sm:left-[calc(100%+1rem)] top-20 -translate-y-1/2 z-50 w-7 cursor-pointer transition-opacity duration-300 ease-out left-65 ${
-                        isExpanded ? "opacity-0 pointer-events-none" : "opacity-100"
-                    }`}
+                    className="absolute max-sm:left-[calc(100%+1rem)] top-20 -translate-y-1/2 z-50 w-7 cursor-pointer transition-opacity duration-300 ease-out left-65 opacity-100"
                 >
-                    <svg width="36" height="83" viewBox="0 0 36 83" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-auto w-full">
+                    <svg width="36" height="83" viewBox="0 0 36 83" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-auto w-full ">
                         <g clipPath="url(#clip0_2618_2592)">
-                            <path d="M-48.6052 -10.4997C-41.1799 -4.42394 -6.77069 0.0540218 15.9343 2.40913C25.7864 3.43106 30.7125 3.94203 33.5662 7.10697C36.4198 10.2719 36.4198 15.1354 36.4198 24.8622V57.6428C36.4198 67.3716 36.4198 72.2359 33.5652 75.4011C30.7107 78.5663 25.784 79.0761 15.9306 80.0956C-6.81862 82.4495 -41.3094 86.9293 -48.6052 93.009C-59.696 102.251 -59.9001 -19.7418 -48.6052 -10.4997Z" fill="#A9A9A9" fillOpacity="0.3" />
+                            <path d="M-48.6052 -10.4997C-41.1799 -4.42394 -6.77069 0.0540218 15.9343 2.40913C25.7864 3.43106 30.7125 3.94203 33.5662 7.10697C36.4198 10.2719 36.4198 15.1354 36.4198 24.8622V57.6428C36.4198 67.3716 36.4198 72.2359 33.5652 75.4011C30.7107 78.5663 25.784 79.0761 15.9306 80.0956C-6.81862 82.4495 -41.3094 86.9293 -48.6052 93.009C-59.696 102.251 -59.9001 -19.7418 -48.6052 -10.4997Z" fill="#ff5f00" fillOpacity="0.8" />
                             <g clipPath="url(#clip1_2618_2592)">
-                                <path d="M22.5454 52.9912L22.5454 28.9367" stroke="white" strokeWidth="2.67272" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M14.5273 52.9912L14.5273 28.9367" stroke="white" strokeWidth="2.67272" strokeLinecap="round" strokeLinejoin="round" />
+                                <motion.path
+                                    d="M22.5454 52.9912L22.5454 28.9367"
+                                    stroke="white"
+                                    strokeWidth="2.67272"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    style={{ originY: 0.5, scaleY: primaryScaleY }}
+                                    initial={{ scaleY: 0 }}
+                                    animate={primaryLineControls}
+                                />
+                                <motion.path
+                                    d="M14.5273 52.9912L14.5273 28.9367"
+                                    stroke="white"
+                                    strokeWidth="2.67272"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    style={{ originY: 0.5, scaleY: secondaryScaleY }}
+                                    initial={{ scaleY: 0 }}
+                                    animate={secondaryLineControls}
+                                />
                             </g>
                         </g>
                         <defs>
