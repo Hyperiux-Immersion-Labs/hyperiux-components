@@ -49,8 +49,8 @@
       "addedAt": 1776937386240.8901
     },
     {
-      "name": "horizon-scroll",
-      "title": "Horizon Scroll",
+      "name": "horizontal-feature-reveal",
+      "title": "Horizontal Feature Reveal",
       "description": "Horizontal storytelling section that converts vertical scroll into a panoramic gallery track",
       "category": "scroll",
       "categories": [
@@ -59,7 +59,7 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/horizontal-scroll-section",
+      "previewUrl": "/horizontal-feature-reveal",
       "coverImage": "/assets/list/horizon-scroll.png",
       "videoUrl": "horizon-scroll.mp4",
       "addedAt": 1776937386241.0713
@@ -455,7 +455,7 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/aero",
+      "previewUrl": "/colorful-cursor-aura",
       "coverImage": "/assets/list/colorful-cursor-aura.png",
       "videoUrl": "colorful-cursor-aura.mp4",
       "addedAt": 1776937386238.2236

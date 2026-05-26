@@ -1,10 +1,10 @@
 {
-  "name": "horizon-scroll",
+  "name": "Horizontal Feature Reveal",
   "type": "registry:component",
-  "title": "Horizon Scroll",
+  "title": "Horizontal Feature Reveal",
   "description": "Horizontal storytelling section that converts vertical scroll into a panoramic gallery track",
   "category": "scroll",
   "dependencies": ["gsap"],
   "registryDependencies": [],
-  "previewUrl": "/horizontal-scroll-section"
+  "previewUrl": "/horizontal-feature-reveal"
 }

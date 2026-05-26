@@ -6,5 +6,5 @@
   "category": "scroll",
   "dependencies": ["gsap"],
   "registryDependencies": [],
-  "previewUrl": "/surf-index"
+  "previewUrl": "/infinite-perspective-slider"
 }
