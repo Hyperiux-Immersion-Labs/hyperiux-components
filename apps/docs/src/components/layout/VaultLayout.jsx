@@ -67,16 +67,18 @@ export function VaultLayout({
 
   return (
     <div className="min-h-screen text-foreground relative">
-      <div className="pointer-events-none fixed inset-0 z-0 h-screen w-screen">
-        <Image
-          src={bgImageSrc}
-          alt="vault background"
-          fill
-          className="object-cover"
-          sizes="100vw"
-          priority
-        />
-      </div>
+      {bgImageSrc ? (
+        <div className="pointer-events-none fixed inset-0 z-0 h-screen w-screen">
+          <Image
+            src={bgImageSrc}
+            alt="vault background"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+        </div>
+      ) : null}
 
       <Suspense fallback={<SidebarFallback totalEffects={totalEffects} />}>
         <Sidebar

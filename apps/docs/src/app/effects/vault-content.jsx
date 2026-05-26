@@ -41,7 +41,7 @@ export function VaultContent({ effects, effectCounts }) {
       ([k]) => k && k !== "all",
     );
     entries.sort((a, b) => (b[1] || 0) - (a[1] || 0));
-    return entries.slice(0, 5).map(([id]) => id);
+    return entries.map(([id]) => id);
   }, [effectCounts]);
 
   // Filter effects based on search and category
@@ -107,7 +107,7 @@ export function VaultContent({ effects, effectCounts }) {
 
         <div className=" px-10 max-sm:px-6 pb-10">
           <div className="flex items-center max-sm:justify-center gap-6 flex-wrap">
-            <div className="w-[45%] max-sm:w-[90%] max-sm:mx-auto">
+            {/* <div className="w-[45%] max-sm:w-[90%] max-sm:mx-auto">
               <div className="relative">
                 <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white z-10">
                   <svg
@@ -152,7 +152,7 @@ export function VaultContent({ effects, effectCounts }) {
                   </button>
                 )}
               </div>
-            </div>
+            </div> */}
             <div className="flex items-center max-sm:justify-center gap-2.5 flex-wrap">
               {quickCategories.map((cat) => {
                 const isSelected = categoryFilter === cat;

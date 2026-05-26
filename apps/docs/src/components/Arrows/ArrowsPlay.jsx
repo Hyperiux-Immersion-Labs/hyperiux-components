@@ -20,12 +20,20 @@ const ArrowsPlay = () => {
       this.dx = 0;
       this.dy = 0;
       this.angle = 0;
+      this.rotationEase = 0.12;
     }
 
     update(mouseX, mouseY) {
       this.dx = mouseX - this.pos.x;
       this.dy = mouseY - this.pos.y;
-      this.angle = Math.atan2(this.dy, this.dx);
+      const targetAngle = Math.atan2(this.dy, this.dx);
+
+      // Ease rotation across the shortest arc so large direction changes do not snap.
+      let delta = targetAngle - this.angle;
+      while (delta > Math.PI) delta -= Math.PI * 2;
+      while (delta < -Math.PI) delta += Math.PI * 2;
+
+      this.angle += delta * this.rotationEase;
     }
 
     draw(ctx) {
@@ -135,6 +143,10 @@ const ArrowsPlay = () => {
     const canvas = canvasRef.current;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    mouseRef.current = {
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+    };
 
     arrowsRef.current = initializeArrows(canvas);
     window.addEventListener('resize', handleResize);
@@ -160,18 +172,17 @@ const ArrowsPlay = () => {
       />
       <div 
         ref={divRef}
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 z-10 group"
+        className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
         style={{
           cursor:"pointer",
           height:"25vw",
-          width:"35vw",
-          display:"flex",
-          alignItems:"center",
-          justifyContent:"center",
+          width:"32vw",
           backgroundColor: "transparent", 
         }}
       >
-        <h1 className='text-[18vw] text-white font-medium  transition-all ease duration-500'>Play</h1>
+        <h1 className='translate-y-[-8vw] translate-x-[-4vw] text-center text-[15vw] leading-none text-white transition-all duration-500 ease'>
+          Play
+        </h1>
       </div>
     </div>
   );
