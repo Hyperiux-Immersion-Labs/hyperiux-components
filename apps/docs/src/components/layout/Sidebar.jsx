@@ -4,21 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useAnimationControls, useMotionValue, useMotionValueEvent, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-
-const categories = [
-    { id: "all", name: "All Effects" },
-    { id: "text", name: "Text Animations" },
-    { id: "backgrounds", name: "Backgrounds" },
-    { id: "buttons", name: "Buttons" },
-    { id: "scroll", name: "Scroll Animations" },
-    { id: "components", name: "Components" },
-    { id: "navigation", name: "Navigation" },
-    { id: "cursor", name: "Cursor Effects" },
-    { id: "transitions", name: "Page Transitions" },
-    { id: "loaders", name: "Website Loaders" },
-    { id: "webgl", name: "WebGL" },
-    { id: "others", name: "Others" },
-];
+import { effectCategories, getEffectCategoryHref } from "@/lib/categories";
 
 export function Sidebar({
     effectCounts = {},
@@ -232,14 +218,14 @@ export function Sidebar({
                                         Categories
                                     </p>
                                     <div className="bg-[#555555]/33 backdrop-blur-md rounded-md p-4 px-2 space-y-3">
-                                        {categories.slice(1).map((category) => {
+                                        {effectCategories.slice(1).map((category) => {
                                             const count = effectCounts[category.id] || 0;
                                             const isActive = currentCategory === category.id;
 
                                             return (
                                                 <Link
                                                     key={category.id}
-                                                    href={`/effects?category=${category.id}`}
+                                                    href={getEffectCategoryHref(category.id)}
                                                     className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
                                                         isActive
                                                             ? " text-foreground"

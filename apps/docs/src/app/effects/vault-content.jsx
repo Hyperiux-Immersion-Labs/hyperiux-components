@@ -1,47 +1,53 @@
 "use client";
 
-import { useState, useMemo, useEffect, useEffectEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import gsap from "gsap";
 import { VaultLayout } from "@/components/layout/VaultLayout";
 import { VaultHeader } from "@/components/layout/VaultHeader";
 import { EffectCard } from "@/components/ui/EffectCardNew";
 import CharStaggerLinkBtn from "@/components/Buttons/LinkButtons/CharStaggerLinkBtn/CharStaggerLinkBtn";
+import {
+  effectCategories,
+  getEffectCategory,
+  getEffectCategoryHref,
+} from "@/lib/categories";
 import Link from "next/link";
 import Image from "next/image";
 
-export function VaultContent({ effects, effectCounts }) {
+export function VaultContent({ effects, effectCounts, initialCategory = "all" }) {
   const searchParams = useSearchParams();
-  const urlCategoryFilter = searchParams.get("category") || "all";
+  const urlCategoryFilter = searchParams.get("category") || initialCategory;
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState(urlCategoryFilter);
 
-  useEffect(() => {
-    setCategoryFilter(urlCategoryFilter);
-  }, [urlCategoryFilter]);
-
-  const updateCategoryFilter = useEffectEvent((nextCategory) => {
+  const updateCategoryFilter = useCallback((nextCategory) => {
     const resolvedCategory = nextCategory || "all";
     setCategoryFilter(resolvedCategory);
 
     const params = new URLSearchParams(searchParams.toString());
 
-    if (resolvedCategory === "all") {
-      params.delete("category");
-    } else {
-      params.set("category", resolvedCategory);
-    }
+    params.delete("category");
 
     const nextQuery = params.toString();
-    const nextUrl = nextQuery ? `/effects?${nextQuery}` : "/effects";
+    const categoryHref = getEffectCategoryHref(resolvedCategory);
+    const nextUrl = nextQuery ? `${categoryHref}?${nextQuery}` : categoryHref;
 
     window.history.pushState(null, "", nextUrl);
-  });
+  }, [searchParams]);
   const quickCategories = useMemo(() => {
-    const entries = Object.entries(effectCounts || {}).filter(
-      ([k]) => k && k !== "all",
+    const knownCategories = effectCategories
+      .filter((category) => category.id !== "all" && effectCounts?.[category.id])
+      .map((category) => category.id);
+    const extraCategories = Object.keys(effectCounts || {}).filter(
+      (id) =>
+        id &&
+        id !== "all" &&
+        !knownCategories.includes(id) &&
+        effectCounts[id],
     );
-    entries.sort((a, b) => (b[1] || 0) - (a[1] || 0));
-    return entries.slice(0, 5).map(([id]) => id);
+
+    return [...knownCategories, ...extraCategories];
   }, [effectCounts]);
 
   // Filter effects based on search and category
@@ -73,10 +79,24 @@ export function VaultContent({ effects, effectCounts }) {
     });
   }, [effects, categoryFilter, searchQuery]);
 
-  const totalEffects = effects.length;
+  const totalEffects = useMemo(() => {
+    if (categoryFilter === "all") return effects.length;
+
+    return effects.filter((effect) => {
+      const cats = effect.categories?.length
+        ? effect.categories
+        : [effect.category];
+      return cats.includes(categoryFilter);
+    }).length;
+  }, [effects, categoryFilter]);
+  const activeCategoryName = getEffectCategory(categoryFilter)?.name || categoryFilter;
 
   return (
-    <VaultLayout effectCounts={effectCounts} effects={effects}>
+    <VaultLayout
+      effectCounts={effectCounts}
+      effects={effects}
+      activeCategory={categoryFilter}
+    >
       <div className="min-h-screen text-foreground relative">
         <VaultHeader
           searchQuery={searchQuery}
@@ -87,12 +107,20 @@ export function VaultContent({ effects, effectCounts }) {
 
         <div className="">
           <div className=" mx-auto px-8 max-sm:px-7 pt-28 pb-12  text-center">
-            <p className=" mb-4 text-lg font-sans">Hello</p>
+            {/* <p className=" mb-4 text-lg font-sans">Hello</p> */}
             <h1
               className="font-display max-sm:text-4xl text-7xl font-normal text-foreground mb-4"
               style={{ lineHeight: "1.0" }}
             >
-              Welcome to <br /> the vault
+              {categoryFilter === "all" ? (
+                <>
+                  Welcome to <br /> the vault
+                </>
+              ) : (
+                <>
+                  {activeCategoryName} <br /> effects
+                </>
+              )}
             </h1>
 
            <div className="flex items-center justify-center gap-4 text-lg font-sans max-sm:flex-wrap max-sm:gap-2 max-sm:text-base">
@@ -107,52 +135,7 @@ export function VaultContent({ effects, effectCounts }) {
 
         <div className=" px-10 max-sm:px-6 pb-10">
           <div className="flex items-center max-sm:justify-center gap-6 flex-wrap">
-            <div className="w-[45%] max-sm:w-[90%] max-sm:mx-auto">
-              <div className="relative">
-                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white z-10">
-                  <svg
-                    className="w-5 h-5 "
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search effects..."
-                  className="w-full max-w-[50vw] max-sm:max-w-[80vw] max-sm:w-[80vw] pl-14 pr-10 py-2.5 rounded-full bg-[#0000033] backdrop-blur-[6px] border border-border/50 text-foreground placeholder:text-muted focus:outline-none   transition-all font-sans"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-5 top-1/2 -translate-y-1/2 text-muted hover:text-white transition-colors"
-                  >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                )}
-              </div>
-            </div>
+           
             <div className="flex items-center max-sm:justify-center gap-2.5 flex-wrap">
               {quickCategories.map((cat) => {
                 const isSelected = categoryFilter === cat;
@@ -163,7 +146,7 @@ export function VaultContent({ effects, effectCounts }) {
                     onClick={() => updateCategoryFilter(isSelected ? "all" : cat)}
                     className={`px-7 py-2.5 max-sm:px-6 text-md rounded-full backdrop-blur-[6px] border transition-all duration-500 ease-in-out hover:text-primary hover:bg-white font-sans group flex items-center max-sm:gap-4 gap-2 cursor-pointer ${
                       isSelected
-                        ? "bg-white font-semibold text-primary border-transparent"
+                        ? "bg-white text-primary border-transparent"
                         : "bg-[#0000033] border-border/50 text-foreground"
                     }`}
                   >
@@ -488,14 +471,48 @@ export function VaultContent({ effects, effectCounts }) {
 
 function EffectsGrid({ filteredEffects }) {
   const [showAllMobileCards, setShowAllMobileCards] = useState(false);
+  const gridRef = useRef(null);
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".effect-card-shell",
+        {
+          autoAlpha: 0,
+          y: 34,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.65,
+          ease: "power3.out",
+          stagger: {
+            each: 0.06,
+            from: "start",
+          },
+          clearProps: "transform,opacity,visibility",
+        },
+      );
+    }, grid);
+
+    return () => ctx.revert();
+  }, [filteredEffects]);
 
   return (
     <>
-      <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 grid-cols-3 gap-5 max-sm:gap-8 gap-y-12.5">
+      <div
+        ref={gridRef}
+        className="grid max-sm:grid-cols-1 max-md:grid-cols-2 grid-cols-3 gap-5 max-sm:gap-8 gap-y-12.5"
+      >
         {filteredEffects.map((effect, i) => (
           <div
             key={effect.name}
-            className={!showAllMobileCards && i >= 10 ? "max-sm:hidden" : ""}
+            className={`effect-card-shell ${
+              !showAllMobileCards && i >= 10 ? "max-sm:hidden" : ""
+            }`}
           >
             <EffectCard effect={effect} priority={i < 4} />
           </div>

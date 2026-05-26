@@ -1,17 +1,42 @@
+import { Suspense } from"react";
 import { notFound } from"next/navigation";
-import { getEffectBySlug, getAllEffectSlugs, getEffectCode, getEffectsByCategory } from"@/lib/registry";
+import { getEffectBySlug, getAllEffectSlugs, getEffectCode, getEffectsByCategory, getRegistryIndex } from"@/lib/registry";
 import { getEffectConfig } from"@/lib/effect-configs";
+import { getEffectCategoryBySlug } from"@/lib/categories";
 import { EffectDetailContent } from"./effect-detail";
+import { VaultContent } from"../vault-content";
 
+function VaultFallback() {
+ return (
+ <div className="h-screen w-screen bg-black">
+ </div>
+ );
+}
 
 export async function generateStaticParams() {
- const slugs = getAllEffectSlugs();
- return slugs.map((slug) => ({ slug }));
+ const slugs = new Set(getAllEffectSlugs());
+ const categorySlugs = Object.keys(getEffectsByCategory());
+
+ for (const categorySlug of categorySlugs) {
+ const category = getEffectCategoryBySlug(categorySlug);
+ slugs.add(categorySlug);
+ slugs.add(category?.slug || categorySlug);
+ }
+
+ return [...slugs].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {
  const { slug } = await params;
  const effect = getEffectBySlug(slug);
+ const category = getEffectCategoryBySlug(slug);
+
+ if (category) {
+ return {
+ title: `${category.name} | Hyperiux UI`,
+ description: `Browse ${category.name.toLowerCase()} in the Hyperiux UI vault`,
+ };
+ }
 
  if (!effect) {
  return { title:"Effect Not Found" };
@@ -26,6 +51,33 @@ export async function generateMetadata({ params }) {
 export default async function EffectPage({ params }) {
  const { slug } = await params;
  const effect = getEffectBySlug(slug);
+ const category = getEffectCategoryBySlug(slug);
+ const categoriesMap = getEffectsByCategory();
+
+ // Get effect counts for sidebar
+ const effectCounts = {};
+ for (const [categoryId, effects] of Object.entries(categoriesMap)) {
+ effectCounts[categoryId] = effects.length;
+ }
+
+ if (category) {
+ const categoryEffects = categoriesMap[category.id];
+ const registry = getRegistryIndex();
+
+ if (!categoryEffects) {
+ notFound();
+ }
+
+ return (
+ <Suspense fallback={<VaultFallback />}>
+ <VaultContent
+ effects={[...registry.items].sort((a, b) => (b.addedAt ?? 0) - (a.addedAt ?? 0))}
+ effectCounts={effectCounts}
+ initialCategory={category.id}
+ />
+ </Suspense>
+ );
+ }
 
  if (!effect) {
  notFound();
@@ -35,7 +87,6 @@ export default async function EffectPage({ params }) {
  const code = getEffectCode(slug);
 
  // Get related effects (any shared category, excluding current)
- const categoriesMap = getEffectsByCategory();
  const effectCats = effect.categories?.length ? effect.categories : [effect.category];
  const seen = new Set();
  const relatedEffects = effectCats
@@ -47,11 +98,6 @@ export default async function EffectPage({ params }) {
  })
  .slice(0, 3);
 
- // Get effect counts for sidebar
- const effectCounts = {};
- for (const [category, effects] of Object.entries(categoriesMap)) {
- effectCounts[category] = effects.length;
- }
  const totalEffects = getAllEffectSlugs().length;
 
  return (
