@@ -71,7 +71,7 @@ function seededUnit(index, salt) {
 
 const STARS = Array.from({ length: 120 }, (_, i) => ({
  id: i,
- size: seededUnit(i, 1) < 0.3 ? 2 : 1,
+ size: seededUnit(i, 1) < 0.3 ? 3 : 2,
  top: `${seededUnit(i, 2) * 100}%`,
  left: `${seededUnit(i, 3) * 100}%`,
  opacity: seededUnit(i, 4) * 0.6 + 0.1,
@@ -110,42 +110,34 @@ export default function Page() {
  >
  <StarField />
 
- {/* Radial purple ambient */}
+ {/* Radial orange ambient */}
  <div
  className="absolute pointer-events-none"
  style={{
  inset: 0,
  background:
-"radial-gradient(ellipse 60% 50% at 50% 60%, rgba(109,40,217,0.18) 0%, transparent 70%)",
+"radial-gradient(ellipse 60% 50% at 50% 60%, rgba(255,95,0,0.2) 0%, transparent 70%)",
  }}
  />
 
  {/* Header */}
  <div className="relative z-10 flex flex-col items-center gap-3 mb-16 text-center px-4">
- <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/20 bg-purple-500/5">
- <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
- <span className="font-mono text-[10px] text-purple-400/70 tracking-widest uppercase">
+ <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/60 bg-black/20">
+ <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background:"#ff5f00" }} />
+ <span className="font-mono text-[10px] tracking-widest uppercase text-primary opacity-80" >
  256-bit AES Encryption Active
  </span>
  </div>
  <h1
- className="font-mono font-black text-5xl md:text-6xl tracking-tight"
- style={{
- color:"#f0e8ff",
- textShadow:"0 0 60px rgba(168,85,247,0.4)",
- }}
+ className="font-mono text-[#ff5f00]! font-black text-5xl md:text-6xl tracking-tight"
+
  >
- CARD{""}
- <span
- className="text-transparent bg-clip-text"
- style={{
- backgroundImage:"linear-gradient(90deg, #a855f7, #818cf8, #c084fc)",
- }}
- >
+ CARD{" "}
+ 
  VAULT
- </span>
+
  </h1>
- <p className="font-mono text-purple-300/40 text-sm max-w-sm leading-relaxed">
+ <p className="font-mono text-sm max-w-sm text-[#ff5f00] opacity-60 leading-[1.2]">
  Every card is encrypted in real-time as it passes through the beam.
  Zero plaintext. Zero exposure.
  </p>
