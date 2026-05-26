@@ -45,9 +45,12 @@ export default function TextHover({
   // GSAP scroll-triggered entrance animation
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(contentRef.current, {
+      gsap.fromTo(contentRef.current, {
         opacity: 0,
         y: 80,
+      }, {
+        opacity: 1,
+        y: 0,
         duration: 1.2,
         ease: "power4.inOut",
         scrollTrigger: {
@@ -184,7 +187,11 @@ export default function TextHover({
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 rounded-full bg-indigo-900/10 blur-[120px]" />
       </div>
 
-      <div ref={contentRef} className="relative container mx-auto px-6 md:px-4">
+      <div
+        ref={contentRef}
+        className="relative container mx-auto px-6 md:px-4"
+        style={{ opacity: 0, transform: "translateY(80px)" }}
+      >
         {/* Mobile View */}
         <div className="block md:hidden">
           <ul className="flex flex-col gap-10">

@@ -12,13 +12,15 @@ export default function SpotlightText({
 
  const target = useRef({ x: 0, y: 0 });
  const current = useRef({ x: 0, y: 0 });
+ const targetOpacity = useRef(0);
+ const currentOpacity = useRef(0);
  const isInside = useRef(false);
 
  const [isMobile, setIsMobile] = useState(false);
 
  const lerp = (start, end, factor) => start + (end - start) * factor;
 
- // ✅ Mobile detection (same pattern as your other component)
+
  useEffect(() => {
  const checkMobile = () => {
  const isTouch = window.matchMedia("(pointer: coarse)").matches;
@@ -38,7 +40,7 @@ export default function SpotlightText({
  const el = containerRef.current;
  let raf;
 
- const handleMove = (e) => {
+ const updateTarget = (e) => {
  const rect = el.getBoundingClientRect();
 
  const x = e.clientX - rect.left;
@@ -46,44 +48,46 @@ export default function SpotlightText({
 
  target.current.x = x;
  target.current.y = y;
+ };
 
- if (!isInside.current) {
- current.current.x = x;
- current.current.y = y;
+ const handleEnter = (e) => {
+ updateTarget(e);
+ current.current.x = target.current.x;
+ current.current.y = target.current.y;
  isInside.current = true;
+ targetOpacity.current = 1;
+ };
 
- el.style.setProperty("--x", `${x}px`);
- el.style.setProperty("--y", `${y}px`);
- }
-
- el.style.setProperty("--opacity", 1);
+ const handleMove = (e) => {
+ updateTarget(e);
  };
 
  const handleLeave = () => {
  isInside.current = false;
-
- target.current.x = -300;
- target.current.y = -300;
- el.style.setProperty("--opacity", 0);
+ targetOpacity.current = 0;
  };
 
  const animate = () => {
  current.current.x = lerp(current.current.x, target.current.x, 0.08);
  current.current.y = lerp(current.current.y, target.current.y, 0.08);
+ currentOpacity.current = lerp(currentOpacity.current, targetOpacity.current, 0.12);
 
  el.style.setProperty("--x", `${current.current.x}px`);
  el.style.setProperty("--y", `${current.current.y}px`);
+ el.style.setProperty("--opacity", `${currentOpacity.current}`);
 
  raf = requestAnimationFrame(animate);
  };
 
  animate();
 
+ el.addEventListener("mouseenter", handleEnter);
  el.addEventListener("mousemove", handleMove);
  el.addEventListener("mouseleave", handleLeave);
 
  return () => {
  cancelAnimationFrame(raf);
+ el.removeEventListener("mouseenter", handleEnter);
  el.removeEventListener("mousemove", handleMove);
  el.removeEventListener("mouseleave", handleLeave);
  };
@@ -119,7 +123,7 @@ export default function SpotlightText({
  {/* Spotlight (disabled on mobile) */}
  {!isMobile && (
  <p
- className="pointer-events-none absolute inset-0 text-white leading-tight whitespace-pre-wrap blur-[0.6px]"
+ className="pointer-events-none absolute inset-0 text-white leading-tight whitespace-pre-wrap"
  style={{
  WebkitMaskImage: `
  radial-gradient(
