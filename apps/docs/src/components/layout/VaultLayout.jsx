@@ -90,7 +90,7 @@ export function VaultLayout({
         {isSidebarOpen && (
           <button
             aria-label="Close sidebar overlay"
-            className="fixed inset-0 z-30 cursor-default bg-black/45 md:bg-transparent"
+            className="fixed inset-0 z-30 cursor-default bg-black/45 md:hidden"
             onClick={() => setIsSidebarOpen(false)}
           />
         )}

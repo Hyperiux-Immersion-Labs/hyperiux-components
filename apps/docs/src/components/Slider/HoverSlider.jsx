@@ -89,6 +89,7 @@ const lerp = (a, b, t) => a + (b - a) * t;
 export default function HoverSlider({ items = [] }) {
  const mountRef = useRef(null);
  const glRef = useRef(null);
+ const isDesktopRef = useRef(false);
  const stateRef = useRef({ activeIndex: 0, hovering: false, hasClicked: false });
 
  const [highlightedIndex, setHighlightedIndex] = useState(null);
@@ -200,6 +201,10 @@ export default function HoverSlider({ items = [] }) {
  const anim = { alpha: 0 };
  const ACTIVE_CURVE = 400;
  const SOFT_CURVE = 80;
+ let floatIdx = 0;
+ let prevFloat = 0;
+ const vel = new THREE.Vector2(0, 0);
+ let raf = 0;
 
  const getCurveForTravel = (targetIdx) => {
  const travel = Math.abs(targetIdx - floatIdx);
@@ -246,8 +251,10 @@ export default function HoverSlider({ items = [] }) {
  };
 
  const onResize = () => {
+ const wasDesktop = isDesktopRef.current;
  W = mount.offsetWidth;
  H = W < 768 ? window.innerHeight : mount.offsetHeight;
+ isDesktopRef.current = W >= 768;
  Object.assign(renderer.domElement.style, {
  position: W < 768 ?"fixed" :"absolute",
  bottom: W < 768 ?"auto" :"0",
@@ -262,13 +269,24 @@ export default function HoverSlider({ items = [] }) {
  m.material.uniforms.uPlaneSize.value.set(CW, CH);
  m.material.uniforms.uViewport.value.set(W / 2, H / 2);
  });
+
+ if (!wasDesktop && isDesktopRef.current) {
+ stateRef.current.hasClicked = true;
+ stateRef.current.hovering = true;
+ stateRef.current.activeIndex = 0;
+ setHighlightedIndex(0);
+ show(0);
+ }
  };
  window.addEventListener("resize", onResize);
+ onResize();
 
- let floatIdx = 0;
- let prevFloat = 0;
- const vel = new THREE.Vector2(0, 0);
- let raf = 0;
+ if (isDesktopRef.current) {
+ stateRef.current.hasClicked = true;
+ stateRef.current.hovering = true;
+ setHighlightedIndex(0);
+ show(0);
+ }
 
  const tick = () => {
  raf = requestAnimationFrame(tick);
@@ -357,6 +375,20 @@ const opacity = Math.max(0, baseOpacity - dist * 0.22) * anim.alpha;
  }, [items]);
 
  const onEnter = useCallback((index) => {
+ if (isDesktopRef.current) {
+ const wasHovering = stateRef.current.hovering;
+ stateRef.current.hasClicked = true;
+ stateRef.current.hovering = true;
+ stateRef.current.activeIndex = index;
+ setHighlightedIndex(index);
+ glRef.current?.setActive(index);
+ if (!wasHovering) {
+ glRef.current?.show(index);
+ } else {
+ glRef.current?.onRowChange(index);
+ }
+ return;
+ }
  if (!stateRef.current.hasClicked) {
  setHighlightedIndex(index);
  return;
@@ -382,6 +414,7 @@ const opacity = Math.max(0, baseOpacity - dist * 0.22) * anim.alpha;
  }, []);
 
  const activateRow = useCallback((index) => {
+ if (isDesktopRef.current) return;
  const wasHovering = stateRef.current.hovering;
  stateRef.current.hasClicked = true;
  stateRef.current.hovering = true;

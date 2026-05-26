@@ -149,15 +149,7 @@ export default function ChessGridTransition({ children, enableContentShift = fal
         </div>
       </div>
 
-      <div ref={bgRef} className='w-screen h-screen fixed inset-0'>
-        <Image
-          src={'/assets/heroo-bg.png'}
-          alt='image'
-          width={1920}
-          height={1080}
-          className='w-full h-full object-cover'
-        />
-      </div>
+    
     </TransitionRouter>
   )
 }

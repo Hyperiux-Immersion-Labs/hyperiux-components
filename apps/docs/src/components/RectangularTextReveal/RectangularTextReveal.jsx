@@ -82,6 +82,8 @@ export default function TextBlockReveal({
  const overlayRects = [];
  const lines = split.lines;
 
+ gsap.set(elementRef.current, { opacity: 1 });
+
  lines.forEach((line) => {
  const wrapper = document.createElement("div");
  wrapper.style.position ="relative";
@@ -277,7 +279,7 @@ export default function TextBlockReveal({
  ]);
 
  return (
- <Tag ref={elementRef} className={className}>
+ <Tag ref={elementRef} className={className} style={{ opacity: 0 }}>
  {children}
  </Tag>
  );
