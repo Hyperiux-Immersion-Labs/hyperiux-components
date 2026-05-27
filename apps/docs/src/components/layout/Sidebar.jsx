@@ -7,17 +7,19 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { effectCategories, getEffectCategoryHref } from "@/lib/categories";
 
 export function Sidebar({
-    effectCounts = {},
-    totalEffects = 0,
+    effectCounts,
+    totalEffects,
     isExpanded: controlledExpanded,
     onToggle,
     onClose,
     activeCategory,
+    topLinks = [],
 }) {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const prefersReducedMotion = useReducedMotion();
     const currentCategory = activeCategory || searchParams.get("category") || "all";
+    const [activeHash, setActiveHash] = useState("");
     const [uncontrolledExpanded, setUncontrolledExpanded] = useState(false);
     const primaryLineControls = useAnimationControls();
     const secondaryLineControls = useAnimationControls();
@@ -102,6 +104,13 @@ export function Sidebar({
         secondaryScaleY,
     ]);
 
+    useEffect(() => {
+        const onHash = () => setActiveHash(window.location.hash || "");
+        onHash();
+        window.addEventListener("hashchange", onHash);
+        return () => window.removeEventListener("hashchange", onHash);
+    }, []);
+
     const toggle = () => {
         if (onToggle) return onToggle();
         setUncontrolledExpanded((v) => !v);
@@ -110,6 +119,8 @@ export function Sidebar({
         if (onClose) return onClose();
         setUncontrolledExpanded(false);
     };
+
+    const hasCounts = !!effectCounts && Object.keys(effectCounts).length > 0;
 
     return (
         <aside
@@ -205,12 +216,53 @@ export function Sidebar({
                                         />
                                         <div className="flex items-center gap-3 flex-1 min-w-0 transition-opacity duration-300">
                                             <span className="font-medium">The Vault</span>
-                                            <span className="ml-auto text-sm text-muted shrink-0">
-                                                {totalEffects}
-                                            </span>
+                                            {typeof totalEffects === "number" && totalEffects > 0 && (
+                                                <span className="ml-auto text-sm text-muted shrink-0">
+                                                    {totalEffects}
+                                                </span>
+                                            )}
                                         </div>
                                     </Link>
                                 </div>
+
+                                {/* Top links (Docs) */}
+                                {topLinks.length > 0 && (
+                                    <div className="space-y-1 mb-2">
+                                        <p className="px-3 text-sm font-medium text-muted uppercase tracking-wider my-4 transition-opacity duration-300">
+                                            Docs
+                                        </p>
+                                        <div className="bg-[#555555]/33 backdrop-blur-md rounded-md p-4 px-2 space-y-3">
+                                            {topLinks.map((l) => {
+                                                const hasHash = l.href.includes("#");
+                                                const basePath = hasHash ? l.href.split("#")[0] : l.href;
+                                                const hash = hasHash ? `#${l.href.split("#")[1]}` : "";
+                                                const isActive = hasHash
+                                                    ? pathname === basePath && !!hash && activeHash === hash
+                                                    : pathname === basePath;
+
+                                                return (
+                                                    <Link
+                                                        key={l.href}
+                                                        href={l.href}
+                                                        className={`flex items-center justify-between gap-2 px-3 py-2 rounded-md transition-all duration-300 ${
+                                                            isActive
+                                                                ? "bg-primary/20 text-foreground"
+                                                                : "text-muted hover:bg-black/30"
+                                                        }`}
+                                                        onClick={close}
+                                                    >
+                                                        <span className="text-sm font-medium">{l.label}</span>
+                                                        <span
+                                                            className={`h-2 w-2 rounded-full bg-primary ${
+                                                                isActive ? "opacity-100" : "opacity-0"
+                                                            }`}
+                                                        />
+                                                    </Link>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
 
                                 {/* Categories */}
                                 <div className="space-y-1">
@@ -241,9 +293,11 @@ export function Sidebar({
                                                     />
                                                     <div className="flex items-center flex-1 min-w-0 gap-3 transition-opacity duration-300">
                                                         <span className="text-sm truncate">{category.name}</span>
-                                                        <span className="ml-auto text-xs text-muted shrink-0">
-                                                            {count}
-                                                        </span>
+                                                        {typeof count === "number" && (
+                                                            <span className="ml-auto text-xs text-muted shrink-0">
+                                                                {count}
+                                                            </span>
+                                                        )}
                                                     </div>
                                                 </Link>
                                             );

@@ -29,16 +29,17 @@ export function EffectCard({ effect, priority = false }) {
 
   useEffect(() => {
     if (isInView) {
+      if (!scope.current) return;
       animate(scope.current, { opacity: 1 }, { duration: 0.55 });
     }
-  }, [isInView]);
+  }, [animate, isInView, scope]);
 
   useEffect(() => {
-    const node = scope.current;
-    if (!node) return;
+    const element = scope.current;
+    if (!element) return;
 
     const measure = () => {
-      const { offsetWidth: w, offsetHeight: h } = node;
+      const { offsetWidth: w, offsetHeight: h } = element;
       setBorderSize({
         width: Math.max(w - 2, 0),
         height: Math.max(h - 2, 0),
@@ -47,9 +48,9 @@ export function EffectCard({ effect, priority = false }) {
 
     measure();
     const ro = new ResizeObserver(measure);
-    ro.observe(node);
+    ro.observe(element);
     return () => ro.disconnect();
-  }, []);
+  }, [scope]);
 
   useEffect(() => {
     if (!borderRectRef.current) return;
@@ -70,10 +71,10 @@ export function EffectCard({ effect, priority = false }) {
     : null;
 
   useEffect(() => {
-    const wishlist = JSON.parse(
-      localStorage.getItem("hyperiux-wishlist") || "[]"
-    );
-    setIsWishlisted(wishlist.includes(effect.name));
+    const wishlist = JSON.parse(localStorage.getItem("hyperiux-wishlist") || "[]");
+    const next = wishlist.includes(effect.name);
+    const raf = requestAnimationFrame(() => setIsWishlisted(next));
+    return () => cancelAnimationFrame(raf);
   }, [effect.name]);
 
   useEffect(() => {

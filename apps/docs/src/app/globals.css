@@ -133,7 +133,7 @@ h4 {
 
 /* Custom scrollbar for webkit browsers */
 *::-webkit-scrollbar {
-  width: 6px;
+  width: 3px;
   height: 6px;
 }
 
@@ -142,22 +142,12 @@ h4 {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    0deg,
-    #ff5f00 0%,
-    #ff7b2c 40%,
-    #1a1a1a 100%
-  );
+  background-color: #ff5f00;
   border-radius: 999px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    0deg,
-    #ff9253 0%,
-    #ff6a00 40%,
-    #000000 100%
-  );
+  background-color: #ff5f00;
 }
 
 /* Selection color */
