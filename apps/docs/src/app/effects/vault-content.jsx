@@ -12,8 +12,8 @@ import {
   getEffectCategory,
   getEffectCategoryHref,
 } from "@/lib/categories";
-import Link from "next/link";
-import Image from "next/image";
+
+import Footer from "@/components/Footer";
 
 export function VaultContent({ effects, effectCounts, initialCategory = "all" }) {
   const searchParams = useSearchParams();
@@ -123,19 +123,19 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
               )}
             </h1>
 
-           <div className="flex items-center justify-center gap-4 text-lg font-sans max-sm:flex-wrap max-sm:gap-2 max-sm:text-base">
-  <span>{totalEffects} effects</span>
-  <span>•</span>
-  <span>Free & open source</span>
-  <span>•</span>
-  <span>Copy & paste</span>
-</div>
+            <div className="flex items-center justify-center gap-4 text-lg font-sans max-sm:flex-wrap max-sm:gap-2 max-sm:text-base">
+              <span>{totalEffects} effects</span>
+              <span>•</span>
+              <span>Free & open source</span>
+              <span>•</span>
+              <span>Copy & paste</span>
+            </div>
           </div>
         </div>
 
         <div className=" px-10 max-sm:px-6 pb-10">
           <div className="flex items-center max-sm:justify-center gap-6 flex-wrap">
-           
+
             <div className="flex items-center max-sm:justify-center gap-2.5 flex-wrap">
               {quickCategories.map((cat) => {
                 const isSelected = categoryFilter === cat;
@@ -144,11 +144,10 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
                     key={cat}
                     type="button"
                     onClick={() => updateCategoryFilter(isSelected ? "all" : cat)}
-                    className={`px-7 py-2.5 max-sm:px-6 text-md rounded-full backdrop-blur-[6px] border transition-all duration-500 ease-in-out hover:text-primary hover:bg-white font-sans group flex items-center max-sm:gap-4 gap-2 cursor-pointer ${
-                      isSelected
-                        ? "bg-white text-primary border-transparent"
+                    className={`px-7 py-2.5 max-sm:px-6 text-md text-center relative rounded-full backdrop-blur-[6px] border transition-all duration-300 ease-in-out hover:text-primary hover:bg-white font-sans group flex items-center max-sm:gap-4 cursor-pointer ${isSelected
+                        ? "bg-white text-primary border-transparent pr-10"
                         : "bg-[#0000033] border-border/50 text-foreground"
-                    }`}
+                      }`}
                   >
                     <span>
                       {cat === "webgl"
@@ -156,9 +155,9 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
                         : cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </span>
                     <span
-                      className="overflow-hidden group-hover:rotate-90 transition-all duration-0 group-hover:duration-300 ease-in-out flex items-center"
+                      className={`overflow-hidden flex items-center duration-300 absolute right-[1vw] top-1/2 -translate-y-1/2 ${isSelected ? "delay-200" : ""}`}
                       style={{
-                        maxWidth: isSelected ? "24px" : "0px",
+
                         opacity: isSelected ? 1 : 0,
                       }}
                     >
@@ -185,11 +184,10 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
 
         <div className=" px-10 max-sm:px-6 pb-12">
           <div
-            className={`flex flex-wrap items-center gap-3 transition-opacity duration-200 ${
-              categoryFilter !== "all" || searchQuery
+            className={`flex flex-wrap items-center gap-3 transition-opacity duration-200 ${categoryFilter !== "all" || searchQuery
                 ? "mb-8 min-h-10 opacity-100"
                 : "mb-0 min-h-0 opacity-0 pointer-events-none"
-            }`}
+              }`}
           >
             {(categoryFilter !== "all" || searchQuery) && (
               <span className="text-sm text-muted font-sans">
@@ -274,195 +272,13 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
                 filteredEffects={filteredEffects}
               />
 
-              <div className="mt-20 max-sm:mt-15">
-           {/* <footer className="relative overflow-hidden rounded-3xl border border-border/60 bg-[#555555]/33 px-6 pt-10 pb-5 backdrop-blur-md md:px-12">
 
-  <div className="relative z-10">
-
-    <div className="flex flex-col justify-between gap-10 md:flex-row md:items-start">
-      
-      
-      <div className="flex flex-col items-start text-left">
-     
-        <div className="mb-3 flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl text-xl font-bold text-black">
-            <Image
-              src="/hyperiux.svg"
-              alt="Hyperiux"
-              width={30}
-              height={30}
-            />
-          </div>
-
-          <h2 className="text-3xl font-semibold tracking-tight text-white">
-            Hyperiux UI
-          </h2>
-        </div>
-
-       
-        <p className="max-w-[20vw] text-lg leading-[1.4]">
-          Crafting futuristic UI experiences for modern teams.
-        </p>
-      </div>
-
-   
-      <div className="flex items-start gap-45">
-
-         <div className="flex flex-col items-start gap-4">
-          {[
-            "Overview",
-            "Components",
-            "Templates",
-            "Pricing",
-            "Documentation",
-            "Blog",
-            "Contact",
-          ].map((item, i) => (
-            <Link
-              key={i}
-              href="#"
-              className="text-base text-zinc-300 transition hover:text-primary"
-            >
-              {item}
-            </Link>
-          ))}
-        </div>
-      
-        <div className="flex flex-col items-start gap-4">
-  {socialIcons.map((item, i) => (
-    <Link
-      key={i}
-      href={item.link}
-      className="text-base text-zinc-300 transition hover:text-primary"
-    >
-      {item.name}
-    </Link>
-  ))}
-</div>
-
-      
-       
-      </div>
-    </div>
-
-    
-    <div className="mt-5 flex w-full flex-col items-center justify-between gap-4 border-t border-white/5 pt-6 text-sm text-zinc-500 md:flex-row">
-      <p>© 2026 Hyperiux UI. All rights reserved.</p>
-
-      <div className="flex items-center gap-5">
-        <span className="cursor-pointer transition hover:text-white">
-          Terms of Use
-        </span>
-
-        <span>|</span>
-
-        <span className="cursor-pointer transition hover:text-white">
-          Privacy Policy
-        </span>
-
-        <span>|</span>
-
-        <span className="cursor-pointer transition hover:text-white">
-          Cookies
-        </span>
-      </div>
-    </div>
-  </div>
-</footer> */}
- <footer className="relative overflow-hidden rounded-3xl border border-border/60 bg-[#555555]/33 backdrop-blur-md max-sm:px-6 pt-10 pb-5 px-12">
-                  {/* Content */}
-                  <div className="relative z-10 flex flex-col items-center text-center max-sm:gap-2">
-                    {/* Logo */}
-                    <div className="mb-3 flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl  text-xl font-bold text-black">
-                        <Image
-                          src="/hyperiux.svg"
-                          alt="Hyperiux"
-                          width={30}
-                          height={30}
-                        />
-                      </div>
-
-                      <h2 className="text-3xl font-semibold tracking-tight text-white">
-                        Hyperiux UI
-                      </h2>
-                    </div>
-
-                    {/* Subtitle */}
-                    <p className="max-w-[20vw] max-sm:max-w-[80vw] text-lg leading-[1.4] ">
-                      Crafting futuristic UI experiences for modern teams.
-                    </p>
-
-                    {/* Socials */}
-                    <div className="mt-6 flex items-center gap-5">
-                      {socialIcons.map((item, i) => (
-                        <Link
-                          key={i}
-                          href={item.link}
-                          className="flex h-12 w-12 p-3.5! items-center justify-center rounded-full border border-primary  transition hover:scale-105"
-                        >
-                          <Image
-                            src={item.icon}
-                            alt={item.name}
-                            width={26}
-                            height={26}
-                            className="h-full w-full object-contain"
-                          />
-                        </Link>
-                      ))}
-                    </div>
-
-                    {/* Nav */}
-                   <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-sm text-zinc-300 md:gap-8">
-  {[
-    "Overview",
-    "Components",
-    "Templates",
-    "Pricing",
-    "Documentation",
-    "Blog",
-    "Contact",
-  ].map((item, i) => (
-    <div key={i} className="flex items-center gap-4">
-      <Link
-        href="#"
-        className="cursor-pointer text-base max-sm:text-lg transition hover:text-primary"
-      >
-        {item}
-      </Link>
-
-      {i !== 6 && <span className="text-primary max-sm:text-xl">•</span>}
-    </div>
-  ))}
-</div>
-
-                    {/* Bottom */}
-                    <div className="mt-5 max-sm:pb-2 flex w-full flex-col items-center justify-between gap-4 border-t border-white/5 pt-6 text-sm text-zinc-500 md:flex-row max-sm:text-base max-sm:gap-4">
-                      <p>© 2026 Hyperiux UI. All rights reserved.</p>
-
-                      <div className="flex items-center max-sm:text-sm gap-5">
-                        <span className="cursor-pointer transition hover:text-white">
-                          Terms of Use
-                        </span>
-
-                        <span>|</span>
-
-                        <span className="cursor-pointer transition hover:text-white">
-                          Privacy Policy
-                        </span>
-
-                        <span>|</span>
-
-                        <span className="cursor-pointer transition hover:text-white">
-                          Cookies
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </footer>
-              </div>
             </>
           )}
+        </div>
+        <div className="px-10 py-8">
+          <Footer/>
+
         </div>
       </div>
     </VaultLayout>
@@ -481,11 +297,11 @@ function EffectsGrid({ filteredEffects }) {
       gsap.fromTo(
         ".effect-card-shell",
         {
-          autoAlpha: 0,
+          opacity: 0,
           y: 34,
         },
         {
-          autoAlpha: 1,
+          opacity: 1,
           y: 0,
           duration: 0.65,
           ease: "power3.out",
@@ -510,9 +326,8 @@ function EffectsGrid({ filteredEffects }) {
         {filteredEffects.map((effect, i) => (
           <div
             key={effect.name}
-            className={`effect-card-shell ${
-              !showAllMobileCards && i >= 10 ? "max-sm:hidden" : ""
-            }`}
+            className={`effect-card-shell ${!showAllMobileCards && i >= 10 ? "max-sm:hidden" : ""
+              }`}
           >
             <EffectCard effect={effect} priority={i < 4} />
           </div>
@@ -537,25 +352,3 @@ function EffectsGrid({ filteredEffects }) {
   );
 }
 
-const socialIcons = [
-  {
-    name: "facebook",
-    icon: "/assets/social-icons/facebook.svg",
-    link: "#",
-  },
-  {
-    name: "instagram",
-    icon: "/assets/social-icons/linkedIn.svg",
-    link: "#",
-  },
-  {
-    name: "twitter",
-    icon: "/assets/social-icons/twitter.svg",
-    link: "#",
-  },
-  {
-    name: "mail",
-    icon: "/assets/social-icons/instagram.svg",
-    link: "#",
-  },
-];

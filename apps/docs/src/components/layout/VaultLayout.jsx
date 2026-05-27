@@ -4,7 +4,15 @@ import { Suspense, useEffect, useState } from "react";
 import { useLenis } from "lenis/react";
 import Image from "next/image";
 import { Sidebar } from "./Sidebar";
+import Footer from "../Footer";
 
+const DOCS_TOP_LINKS = [
+  { href: "/docs", label: "Introduction" },
+  { href: "/docs/installation", label: "Installation" },
+  { href: "/docs/cli", label: "CLI" },
+  { href: "/docs/dependencies", label: "Dependencies" },
+  { href: "/docs/licnese", label: "License" },
+];
 
 function SidebarFallback({ totalEffects }) {
   return (
@@ -44,6 +52,7 @@ export function VaultLayout({
   const totalEffects = propTotalEffects !== undefined ? propTotalEffects : effects.length;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const lenis = useLenis();
+  const resolvedBgImageSrc = bgImageSrc || "/assets/heroo-bg.png";
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -88,6 +97,7 @@ export function VaultLayout({
           onToggle={() => setIsSidebarOpen((v) => !v)}
           onClose={() => setIsSidebarOpen(false)}
           activeCategory={activeCategory}
+          topLinks={DOCS_TOP_LINKS}
         />
         {isSidebarOpen && (
           <button
