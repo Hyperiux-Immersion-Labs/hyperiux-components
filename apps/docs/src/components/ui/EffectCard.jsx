@@ -1,9 +1,10 @@
 import Link from"next/link";
+import { getEffectHref } from"@/lib/categories";
 
 export function EffectCard({ effect, children }) {
  return (
  <Link
- href={`/effects/${effect.name}`}
+ href={getEffectHref(effect)}
  className="group block rounded-xl border border-neutral-800 bg-neutral-900/50 overflow-hidden hover:border-neutral-700 transition-colors"
  >
  <div className="aspect-video relative overflow-hidden bg-neutral-950 flex items-center justify-center p-8">

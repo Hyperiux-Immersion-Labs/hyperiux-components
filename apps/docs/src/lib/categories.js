@@ -30,3 +30,24 @@ export function getEffectCategoryHref(id) {
   const category = getEffectCategory(id);
   return `/effects/${category?.slug || id}`;
 }
+
+export function getEffectPrimaryCategory(effect) {
+  const categories = effect?.categories?.length
+    ? effect.categories
+    : [effect?.category || "others"];
+
+  return categories[0] || "others";
+}
+
+export function getEffectHref(effect) {
+  if (!effect?.name) return "/effects";
+
+  const categoryId = getEffectPrimaryCategory(effect);
+  const category = getEffectCategory(categoryId);
+
+  return `/effects/${category?.slug || categoryId}/${effect.name}`;
+}
+
+export function getEffectPreviewHref(effect) {
+  return `${getEffectHref(effect)}/preview`;
+}

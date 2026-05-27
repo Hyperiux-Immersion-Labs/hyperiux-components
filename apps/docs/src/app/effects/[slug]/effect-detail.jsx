@@ -7,6 +7,7 @@ import { VaultLayout } from "@/components/layout/VaultLayout";
 import { VaultHeader } from "@/components/layout/VaultHeader";
 import { EffectCard } from "@/components/ui/EffectCardNew";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { getEffectPreviewHref } from "@/lib/categories";
 
 export function EffectDetailContent({
   slug,
@@ -63,6 +64,7 @@ export default function MyComponent() {
   const installCode = `npx hyperiux add ${slug}`;
 
   const showVideo = videoPreviewUrl && !videoError && videoReady;
+  const previewHref = effect.previewUrl || getEffectPreviewHref(effect);
 
   // Extracted sidebar JSX — rendered in two places (mobile inline + desktop column)
   const sidebarContent = (
@@ -70,7 +72,7 @@ export default function MyComponent() {
       {/* Action buttons */}
       <div className="flex items-center gap-3">
         <Link
-          href={effect.previewUrl || `/effects/${slug}/preview`}
+          href={previewHref}
           target="_blank"
           className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 backdrop-blur-md text-foreground bg-primary duration-300 ease-in-out hover:bg-primary/80 hover:text-white rounded-md hover:border-transparent transition-colors"
         >
@@ -343,5 +345,4 @@ const socialIcons = [
   { name: "twitter", icon: "/assets/social-icons/twitter.svg", link: "#" },
   { name: "mail", icon: "/assets/social-icons/instagram.svg", link: "#" },
 ];
-
 
