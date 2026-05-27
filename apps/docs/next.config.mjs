@@ -1,7 +1,14 @@
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 import { withSentryConfig } from "@sentry/nextjs";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Point turbopack.root to the workspace root so packages (like `next`) resolve correctly
+  turbopack: { root: path.resolve(__dirname, '..', '..') },
   async redirects() {
     return [
       {
