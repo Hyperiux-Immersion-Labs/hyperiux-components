@@ -2,6 +2,7 @@ import React from "react";
 import ScrambleText from "@/components/TextAnims/ScrambleText";
 import ParallaxAnim from "@/components/ParallaxAnim/ParallaxAnim";
 import LenisSmoothScroll from "@/components/SmoothScroll/LenisScroll";
+import Image from "next/image";
 
 const notes = [
   "Characters resolve from noise",
@@ -22,44 +23,50 @@ const Page = () => {
               </p>
               <ScrambleText
                 text="Signal appears when the noise decides to leave."
-                textSize="text-[6vw] max-sm:text-[3.25rem]"
+                textSize="text-[6vw] max-sm:text-[3.25rem] max-md:text-[5vw]"
                 textColor="text-[#121212]"
                 align="left"
-                className="font-black uppercase leading-[0.88] max-sm:leading-[0.92]"
+                className="font-black uppercase leading-[0.88] max-md:leading-[1.2] max-sm:leading-[0.92]"
               />
-              <p className="mt-8 max-w-xl text-lg leading-8 text-black/60 max-sm:text-base max-sm:leading-7">
+              <p className="mt-8 max-w-xl text-lg leading-8 text-black/60 max-sm:text-base max-sm:leading-[1.4] max-md:leadng-[1.2]">
                 A minimal scroll reveal for headlines that should feel like they are decoding themselves in real time.
               </p>
             </div>
 
             <div className="relative">
-              <ParallaxAnim
+              <div className="h-155 w-full bg-black max-sm:h-90">
+
+             
+              <Image
                 src="/assets/img/distortion.jpg"
                 alt="Abstract distortion texture"
                 width={800}
                 height={800}
-                translateY="-14%"
-                wrapperClassName="h-[620px] w-full bg-black max-sm:h-[360px]"
-                imageClassName="h-[122%] opacity-90"
+               
+                className="h-full w-full object-cover"
               />
               <div className="absolute bottom-5 left-5 right-5 bg-[#fbf8f1] px-5 py-4 text-sm font-bold uppercase tracking-[0.18em] text-black max-sm:text-[0.68rem] max-sm:tracking-[0.12em]">
                 Decode / Resolve / Reveal
               </div>
+               </div>
             </div>
           </div>
         </section>
 
         <section className="px-8 py-24 max-sm:px-4 max-sm:py-16">
-          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-            <ParallaxAnim
+          <div className="mx-auto grid max-w-7xl gap-10  max-sm:gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+            <div className="h-130 max-md:h-95 w-full max-sm:h-75">
+
+           
+            <Image
               src="/assets/gradient/image11.png"
               alt="Gradient texture"
               width={2070}
               height={1380}
-              translateY="-12%"
-              wrapperClassName="h-[520px] w-full max-sm:h-[300px]"
-              imageClassName="h-[120%]"
+              className="h-full w-full object-cover"
+        
             />
+             </div>
 
             <div className="flex flex-col justify-center">
               <ScrambleText
@@ -68,6 +75,7 @@ const Page = () => {
                 textColor="text-[#121212]"
                 align="left"
                 className="font-black uppercase leading-[0.94]"
+                start="top 90%"
               />
 
               <div className="mt-10 grid gap-4">

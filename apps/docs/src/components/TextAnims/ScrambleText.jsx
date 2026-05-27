@@ -11,6 +11,7 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin, ScrollTrigger);
 const ScrambleText = ({  text,  speed = 0.6,  charType ='lowercase',  textSize ='text-base',
  textColor ='text-white',
  align ='left',
+ start ='top 40%',
  className }) => {
  const elRef = useRef(null);
  const splitRef = useRef(null);
@@ -80,9 +81,16 @@ const ScrambleText = ({  text,  speed = 0.6,  charType ='lowercase',  textSize =
  onComplete: () => {
   gsap.set(el, { minHeight:'auto' });
  }
+
  });
 
  tlRef.current = tl;
+
+ tl.fromTo(
+ el,
+ { opacity: 0 },
+ { opacity: 1, duration: 0.4, ease:'power1.out' }
+ );
 
  tl.to(chars, {
  duration: 0.7,
@@ -119,9 +127,8 @@ const ScrambleText = ({  text,  speed = 0.6,  charType ='lowercase',  textSize =
 
  ScrollTrigger.create({
  trigger: el,
- start:'top 40%',
+ start,
  once: true,
- markers: false,
  onEnter: () => tl.play(),
  });
  }, elRef);
@@ -138,13 +145,25 @@ const ScrambleText = ({  text,  speed = 0.6,  charType ='lowercase',  textSize =
  tlRef.current?.kill();
  splitRef.current?.revert();
  };
- }, [text, speed, charType]);
+ }, [text, speed, charType, start]);
 
  return (
- <div>
+ <div className="relative w-full">
+ <p
+ aria-hidden="true"
+ className={`${textSize} ${textColor} ${alignClass} invisible w-full tracking-tight ${
+ className ??''
+ }`}
+ style={{
+ wordBreak:'keep-all',
+ overflowWrap:'normal',
+ }}
+ >
+ {text}
+ </p>
  <p
  ref={elRef}
- className={`${textSize} ${textColor} ${alignClass} w-full tracking-tight ${
+ className={`${textSize} ${textColor} ${alignClass} absolute inset-0 w-full tracking-tight opacity-0 ${
  className ??''
  }`}
  style={{
