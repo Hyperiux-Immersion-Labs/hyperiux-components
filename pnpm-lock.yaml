@@ -33,7 +33,7 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0(@react-three/fiber@9.6.1(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(three@0.183.2))(react@19.2.6)(three@0.183.2)
       '@sentry/nextjs':
-        specifier: ^10.51.0
+        specifier: ^10.53.1
         version: 10.53.1(@opentelemetry/core@2.7.1(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.7.1(@opentelemetry/api@1.9.1))(next@16.2.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6)(webpack@4.44.1)
       '@vercel/analytics':
         specifier: ^2.0.1
@@ -45,7 +45,7 @@ importers:
         specifier: ^2.9.0
         version: 2.10.0
       framer-motion:
-        specifier: ^12.38.0
+        specifier: ^12.40.0
         version: 12.40.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       gsap:
         specifier: ^3.15.0
@@ -59,6 +59,9 @@ importers:
       leva:
         specifier: ^0.10.1
         version: 0.10.1(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      lucide:
+        specifier: ^1.16.0
+        version: 1.16.0
       lucide-react:
         specifier: ^0.577.0
         version: 0.577.0(react@19.2.6)
@@ -66,7 +69,7 @@ importers:
         specifier: ^0.10.8
         version: 0.10.8(@types/three@0.184.1)(three@0.183.2)
       motion:
-        specifier: ^12.38.0
+        specifier: ^12.40.0
         version: 12.40.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       next:
         specifier: ^16.2.6
@@ -94,7 +97,7 @@ importers:
         version: 0.183.2
     devDependencies:
       '@tailwindcss/postcss':
-        specifier: ^4.2.4
+        specifier: ^4.3.0
         version: 4.3.0
       eslint:
         specifier: ^9
@@ -3302,6 +3305,9 @@ packages:
     resolution: {integrity: sha512-4LjoFv2eEPwYDPg/CUdBJQSDfPyzXCRrVW1X7jrx/trgxnxkHFjnVZINbzvzxjN70dxychOfg+FTYwBiS3pQ5A==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  lucide@1.16.0:
+    resolution: {integrity: sha512-20QvduCJTB7e7K9WVvoLBuKPsYZ8d6ptwe9PIdTFiZmjVTPdFWQreBNyNCM9QQtGnqHR0PLiEQdxyhYsL1LdoA==}
 
   maath@0.10.8:
     resolution: {integrity: sha512-tRvbDF0Pgqz+9XUa4jjfgAQ8/aPKmQdWXilFu2tMy4GWj4NOsx99HlULO4IeREfbO3a0sA145DZYyvXPkybm0g==}
@@ -8016,6 +8022,8 @@ snapshots:
   lucide-react@0.577.0(react@19.2.6):
     dependencies:
       react: 19.2.6
+
+  lucide@1.16.0: {}
 
   maath@0.10.8(@types/three@0.184.1)(three@0.183.2):
     dependencies:

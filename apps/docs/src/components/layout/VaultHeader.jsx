@@ -59,35 +59,34 @@ export function VaultHeader({
 
           {/* Right side - Search */}
           <div className="flex items-center gap-3">
-          
-            {/* Search Bar — opens GlobalSearch modal on click */}
+
             {showSearch && (
-             <button
-  onClick={() => setOpenTrigger((n) => n + 1)}
-  className="group flex bg-[#0000033] backdrop-blur-[6px] items-center gap-2 w-80 max-sm:w-12 max-sm:h-12 max-sm:justify-center max-sm:rounded-full pl-4 max-sm:pl-3 pr-3 py-3 border border-border/60 rounded-xl  text-white  hover:border-white/80 duration-300 ease-in-out transition-all  cursor-pointer"
->
-  <svg
-    className="w-5 h-5 shrink-0 text-current"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-    />
-  </svg>
+              <button
+                onClick={() => setOpenTrigger((n) => n + 1)}
+                className="group flex bg-[#0000033] backdrop-blur-[6px] items-center gap-2 w-80 max-sm:w-12 max-sm:h-12 max-sm:justify-center max-sm:rounded-full pl-4 max-sm:pl-3 pr-3 py-3 border border-border/60 rounded-xl  text-white  hover:border-white/80 duration-300 ease-in-out transition-all  cursor-pointer"
+              >
+                <svg
+                  className="w-5 h-5 shrink-0 text-current"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
 
-  <span className="flex-1 text-left max-sm:hidden text-[1.1vw] text-current opacity-60">
-    Search effects...
-  </span>
+                <span className="flex-1 text-left max-sm:hidden text-[1.1vw] text-current opacity-60">
+                  Search effects...
+                </span>
 
-  <kbd className="px-1 py-0.5 rounded text-xs text-current opacity-50">
-    (⌘K / Ctrl+K)
-  </kbd>
-</button>
+                <kbd className="px-1 py-0.5 rounded text-xs text-current opacity-50">
+                  (⌘K / Ctrl+K)
+                </kbd>
+              </button>
             )}
           </div>
         </div>

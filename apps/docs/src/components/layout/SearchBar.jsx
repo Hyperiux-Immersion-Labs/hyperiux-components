@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useLenis } from "lenis/react";
+import { getEffectHref } from "@/lib/categories";
 
 export function SearchBar({
   value = "",
@@ -91,7 +92,7 @@ export function GlobalSearch({ effects = [], externalOpen = false }) {
   });
 
   const handleSelect = (effect) => {
-    router.push(`/effects/${effect.name}`);
+    router.push(getEffectHref(effect));
     setIsOpen(false);
     setQuery("");
   };

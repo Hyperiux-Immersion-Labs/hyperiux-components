@@ -6,6 +6,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { useAnimate, useInView } from "motion/react";
+import { getEffectHref, getEffectPreviewHref } from "@/lib/categories";
 
 gsap.registerPlugin(DrawSVGPlugin);
 
@@ -98,6 +99,8 @@ export function EffectCard({ effect, priority = false }) {
 
   const shouldLoadVideo = videoPreviewUrl && !videoError && isHovered;
   const showVideo = shouldLoadVideo && videoReady;
+  const effectHref = getEffectHref(effect);
+  const previewHref = effect.previewUrl || getEffectPreviewHref(effect);
 
   return (
     <div
@@ -138,7 +141,7 @@ export function EffectCard({ effect, priority = false }) {
       </svg>
 
       {/* Clickable Preview Area */}
-      <Link href={`/effects/${effect.name}`} className="block">
+      <Link href={effectHref} className="block">
         <div className="aspect-video bg-black/20 rounded-[1vw] max-sm:rounded-[4vw] overflow-hidden relative">
           <Image
             src={effect.coverImage || "/assets/img/image01.webp"}
@@ -175,10 +178,7 @@ export function EffectCard({ effect, priority = false }) {
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            window.open(
-              effect.previewUrl || `/effects/${effect.name}/preview`,
-              "_blank"
-            );
+            window.open(previewHref, "_blank");
           }}
           className="p-2.5 bg-black/20 border border-border/50 duration-300 ease-in-out backdrop-blur-sm text-foreground rounded-full hover:bg-primary hover:text-white transition-colors cursor-pointer"
           aria-label="Preview"
@@ -206,7 +206,7 @@ export function EffectCard({ effect, priority = false }) {
 
       {/* Info */}
       <div className="flex items-center justify-between py-4 max-sm:py-6">
-        <Link href={`/effects/${effect.name}`} className="block">
+        <Link href={effectHref} className="block">
           <h3 className="font-sans font-semibold max-sm:text-xl text-base text-foreground group-hover:text-primary transition-colors">
             {effect.title}
           </h3>

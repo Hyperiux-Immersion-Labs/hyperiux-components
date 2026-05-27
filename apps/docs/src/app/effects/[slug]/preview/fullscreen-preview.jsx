@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from"react";
 import Link from"next/link";
 import { PropsPanel } from"@/components/ui/PropsPanel";
+import { getEffectHref } from"@/lib/categories";
 
 // Import all effects
 import BlurText from"@/components/effects/BlurText";
@@ -66,6 +67,7 @@ export function FullscreenPreview({ slug, effect, config }) {
  const DemoComponent = demoComponents[slug];
  const isScrollEffect = SCROLL_EFFECTS.includes(slug);
  const isFullscreen = false;
+ const effectHref = getEffectHref(effect);
 
  return (
  <div className="fixed inset-0 bg-dark-surface flex">
@@ -74,7 +76,7 @@ export function FullscreenPreview({ slug, effect, config }) {
  {/* Header */}
  <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-5 bg-gradient-to-b from-dark-surface/90 to-transparent backdrop-blur-sm">
  <Link
- href={`/effects/${slug}`}
+ href={effectHref}
  className="flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-primary-hover text-white text-sm transition-colors backdrop-blur-sm font-sans font-medium"
  style={{ borderRadius:'56px' }}
  >
