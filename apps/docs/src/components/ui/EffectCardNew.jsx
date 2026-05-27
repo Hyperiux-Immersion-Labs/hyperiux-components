@@ -108,32 +108,25 @@ export function EffectCard({ effect, priority = false }) {
         willChange: "opacity",
         position: "relative",
       }}
-      className={`group bg-[#0000033] p-5 pb-[0.01vw] border rounded-[1.5vw] w-full max-sm:rounded-[5vw] hover:shadow-2xl backdrop-blur-[6px] duration-500 ease-in-out ${
-        isHovered ? "border-transparent" : "border-border/50"
-      }`}
+      className="group bg-[#0000033] p-5 pb-[0.01vw] border border-border/50 rounded-[1.5vw] w-full max-sm:rounded-[5vw] hover:shadow-2xl backdrop-blur-[6px] duration-500 ease-in-out"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Border draw SVG */}
       <svg
         aria-hidden="true"
-        className="pointer-events-none absolute -top-0.5 -left-0.5 w-full h-full z-10 overflow-visible"
-        style={{ borderRadius: "inherit" }}
+        className="pointer-events-none absolute -top-[1px] -left-[1px] w-[calc(100%+2px)] h-[calc(100%+2px)] z-10 overflow-visible"
       >
         <rect
           ref={borderRectRef}
-          x="1"
-          y="1"
-          width={borderSize.width}
-          height={borderSize.height}
+          x="0.5"
+          y="0.5"
+          width={borderSize.width + 1}
+          height={borderSize.height + 1}
           rx={22}
           fill="none"
           stroke="#ff5f00"
-          strokeWidth="1"
-          style={{
-            fill: "none",
-            opacity: 0,
-          }}
+          strokeWidth="1.5"
+          style={{ opacity: 0 }}
         />
       </svg>
 
