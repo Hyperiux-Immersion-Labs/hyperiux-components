@@ -53,7 +53,7 @@ export default function SpiderParticles({
  let mouseJustEntered = false; // <-- NEW: snap flag
 
  const onMove = (e) => {
-  if (window.innerWidth < 768) return;
+  if (window.innerWidth < 1025) return;
   const rect = mount.getBoundingClientRect();
   mouse.set(
   e.clientX - rect.left - width / 2,
@@ -63,7 +63,7 @@ export default function SpiderParticles({
  };
 
  const onEnter = (e) => {
-  if (window.innerWidth < 768) return;
+  if (window.innerWidth < 1025) return;
   // Capture exact entry position immediately so smoothMouse can snap
   const rect = mount.getBoundingClientRect();
   mouse.set(
@@ -76,7 +76,7 @@ export default function SpiderParticles({
  };
 
  const onLeave = () => {
-  if (window.innerWidth < 768) return;
+  if (window.innerWidth < 1025) return;
   mousePresent = false;
   mouseJustEntered = false;
   setActive(false);
@@ -87,7 +87,7 @@ export default function SpiderParticles({
  mount.addEventListener("mouseleave", onLeave);
 
  const onTouch = (e) => {
-  if (window.innerWidth < 768) return;
+  if (window.innerWidth < 1025) return;
   const t = e.touches[0];
   const rect = mount.getBoundingClientRect();
   mouse.set(
@@ -100,7 +100,7 @@ export default function SpiderParticles({
  };
  mount.addEventListener("touchmove", onTouch, { passive: true });
  mount.addEventListener("touchend", () => {
-  if (window.innerWidth < 768) return;
+  if (window.innerWidth < 1025) return;
   mousePresent = false;
   mouseJustEntered = false;
   setActive(false);
@@ -365,14 +365,14 @@ export default function SpiderParticles({
  return (
   <div
   ref={mountRef}
-  className="relative w-full h-screen bg-black overflow-hidden cursor-none max-sm:cursor-default"
+  className="relative w-full h-screen bg-black overflow-hidden cursor-none max-md:cursor-default"
   >
   <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between p-10">
 
   {/* Top row */}
   <div className="flex items-start justify-between">
   <div>
-  <div className="flex items-center gap-2 mb-1.5 max-sm:hidden">
+  <div className="flex items-center gap-2 mb-1.5 max-md:hidden">
   <span
   className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
   active ?"bg-emerald-400 shadow-[0_0_8px_#34d399]" :"bg-white/20"
@@ -386,18 +386,18 @@ export default function SpiderParticles({
   {active ?"Tracking" :"Idle"}
   </span>
   </div>
-  <h1 className="text-4xl font-light text-white/90 tracking-tight leading-none">
+  <h1 className="max-sm:text-4xl max-md:text-5xl font-light text-white/90 tracking-tight leading-none">
   Spider Web
   </h1>
-  <p className="mt-1.5 text-[13px] text-white/30 tracking-wide">
+  <p className="mt-1.5 max-sm:text-sm max-md:text-xl text-white/30 tracking-wide">
   Interactive particle field
   </p>
   </div>
 
-  <div className="flex gap-6 max-sm:hidden">
+  <div className="flex gap-6 max-md:hidden">
   {stats.map(({ label, value }) => (
   <div key={label} className="text-right">
-  <div className="text-[11px] uppercase tracking-widest text-white/25 mb-0.5">
+  <div className="text-sm uppercase tracking-widest text-white/25 mb-0.5">
   {label}
   </div>
   <div className="text-lg font-light text-white/60 tabular-nums">
@@ -409,19 +409,19 @@ export default function SpiderParticles({
   </div>
 
   {/* Mobile Info Overlay Warning */}
-  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none select-none z-20 hidden max-sm:block w-full px-14">
+  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none select-none z-20 hidden max-md:block w-full px-14">
  <div className="text-center">
-      <p className="text-white text-3xl font-light tracking-tight">
+      <p className="text-white max-sm:text-3xl max-md:text-4xl font-light tracking-tight">
         Open on desktop 
       </p>
-      <p className="mt-3 text-base text-white/50 tracking-wide">
+      <p className="max-sm:mt-3 max-md:mt-6 max-sm:text-base max-md:text-2xl max-md:w-[70%] max-sm:w-full mx-auto text-white/50 tracking-wide">
         This effect is designed to be experienced with a cursor
       </p>
     </div>
   </div>
 
   {/* Bottom row */}
-  <div className="flex items-end justify-between max-sm:hidden">
+  <div className="flex items-end justify-between max-md:hidden">
   <div className={`transition-opacity duration-700 ${active ?"opacity-0" :"opacity-40"}`}>
   <p className="text-[12px] text-white/60 tracking-widest uppercase">
   Move your cursor to explore

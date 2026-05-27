@@ -13,6 +13,8 @@ export default function OverFlowStagAnim({
  delay = 0,
  className ="",
  scrub = true,
+ start ="top 90%",
+ end ="bottom 60%",
 }) {
  const containerRef = useRef(null);
  const splitRefs = useRef([]);
@@ -66,8 +68,8 @@ export default function OverFlowStagAnim({
  ...animationProps,
  scrollTrigger: {
  trigger: containerRef.current,
- start:"top 90%",
- end:"bottom 60%",
+ start,
+ end,
  scrub,
  },
  });
@@ -83,7 +85,7 @@ export default function OverFlowStagAnim({
  if (ctx) ctx.revert();
  splitRefs.current.forEach((split) => split?.revert());
  };
- }, [animateOnScroll, delay, scrub]);
+ }, [animateOnScroll, delay, end, scrub, start]);
 
  return (
  <div ref={containerRef} data-copy-wrapper="true" className={className}>

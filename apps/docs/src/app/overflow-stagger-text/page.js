@@ -26,20 +26,20 @@ const Page = () => {
   return (
     <ReactLenis root>
       <main className="overflow-hidden bg-[#f4efe6] text-[#151515]">
-        <section className="min-h-screen px-8 py-8 max-sm:px-4 max-sm:py-4">
+        <section className="min-h-screen px-8 py-8 max-sm:px-4 max-md:py-18 max-sm:py-4">
           <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl grid-rows-[auto_1fr_auto] border border-[#151515]/15 bg-[#fbf8f1] max-sm:min-h-[calc(100vh-2rem)]">
-            <div className="flex items-center justify-between border-b border-[#151515]/15 px-6 py-5 text-xs font-semibold uppercase tracking-[0.24em] text-[#151515]/60 max-sm:flex-col max-sm:items-start max-sm:gap-2 max-sm:px-4 max-sm:tracking-[0.16em]">
+            <div className="flex items-center justify-between border-b border-[#151515]/15 px-6 py-5 text-xs max-sm:text-sm max-md:text-base font-semibold uppercase tracking-[0.24em] text-[#151515]/60 max-sm:flex-col max-sm:items-start max-sm:gap-2 max-sm:px-4 max-sm:tracking-[0.16em]">
               <span>Overflow Stagger Text</span>
               <span>Character reveal system</span>
             </div>
 
             <div className="grid items-center gap-10 px-6 py-14 lg:grid-cols-[1.08fr_0.92fr] max-sm:px-4 max-sm:py-10">
               <div>
-                <p className="mb-6 w-fit rounded-full bg-[#151515] px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#fbf8f1] max-sm:text-[0.64rem]">
+                <p className="mb-6 w-fit rounded-full bg-[#151515] px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#fbf8f1] max-sm:text-xs">
                   Staggered overflow
                 </p>
 
-                <OverFlowStagAnim scrub={true}>
+                <OverFlowStagAnim scrub={true} start="top 24%" end="bottom bottom">
                   <h1 className="max-w-5xl text-[clamp(4rem,10vw,10rem)] font-black uppercase leading-[0.82] tracking-normal text-[#151515] max-sm:text-[3.8rem] max-sm:leading-[0.86]">
                     Text that steps into frame.
                   </h1>
@@ -47,7 +47,8 @@ const Page = () => {
               </div>
 
               <div className="grid gap-6">
-                <div className="relative aspect-[4/5] overflow-hidden bg-[#dbeafe] max-sm:aspect-[16/11]">
+                <div className="relative aspect-4/5  overflow-hidden bg-[#dbeafe] max-md:aspect-16/11">
+                
                   <Image
                     src="/assets/gradient/image14.png"
                     alt=""
@@ -107,7 +108,7 @@ const Page = () => {
 
         <section className="bg-[#151515] px-8 py-24 text-[#fbf8f1] max-sm:px-4 max-sm:py-16">
           <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-            <div className="relative min-h-[520px] overflow-hidden max-sm:min-h-[320px]">
+            <div className="relative min-h-130 overflow-hidden max-sm:min-h-80">
               <Image
                 src="/assets/img/distortion.jpg"
                 alt=""
@@ -119,7 +120,7 @@ const Page = () => {
             </div>
 
             <div className="flex flex-col justify-between gap-12">
-              <OverFlowStagAnim scrub={true}>
+              <OverFlowStagAnim scrub={true} start="top 80%" end='bottom 80%'>
                 <h2 className="text-6xl font-black uppercase leading-[0.9] max-sm:text-[3.1rem]">
                   Simple setup, expressive entrance.
                 </h2>
@@ -129,7 +130,7 @@ const Page = () => {
                 {notes.map((note, index) => (
                   <p
                     key={note}
-                    className="border-t border-white/20 pt-5 text-lg leading-8 text-white/70 max-sm:text-base max-sm:leading-7"
+                    className="border-t border-white/20 pt-5 text-lg leading-8 text-white/70 max-sm:text-base max-md:text-xl max-sm:leading-7"
                   >
                     <span className="mr-4 font-black text-[#f8d84a]">0{index + 1}</span>
                     {note}

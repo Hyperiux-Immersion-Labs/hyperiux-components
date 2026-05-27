@@ -330,20 +330,22 @@ const softPulse = Math.sin(time * 1.4 + dot.phase + dot.x * 0.015) ** 2;
  <div
       className="
         hidden
-        max-sm:flex
+        max-md:flex
         fixed
         bottom-20
         left-1/2
         -translate-x-1/2
         z-50
-        px-4
-        py-2
+        max-sm:px-4
+        max-md:px-10
+        max-md:py-4 
+        max-sm:py-2
         rounded-full
         bg-white/10
         backdrop-blur-md
         text-white
         text-center
-        text-sm
+        max-sm:text-base max-md:text-2xl
         leading-tight
         pointer-events-none
       "

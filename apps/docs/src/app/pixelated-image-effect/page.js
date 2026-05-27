@@ -37,12 +37,12 @@ export default function Page() {
  return (
  <div className="relative flex h-dvh w-dvw flex-col gap-15 items-center justify-center">
 
- <h2 className="text-5xl text-center max-sm:hidden">
+ <h2 className="text-5xl text-center max-md:hidden">
  Move your cursor.
  <br />See the pixels react
  </h2>
 
- <h2 className="hidden max-sm:block text-center text-2xl">
+ <h2 className="hidden max-md:block text-center text-2xl">
     Tap the image to reveal the blur. 
     <br />
     Desktop gives you the full interactive magic
@@ -59,7 +59,7 @@ export default function Page() {
  {/* Image */}
  <div
  ref={imageRef}
- className="relative h-[55vh] w-full max-w-xs overflow-hidden md:max-w-md lg:max-w-lg touch-none"
+ className="relative h-[55vh] w-full max-sm:max-w-[90%] overflow-hidden max-md:max-w-[90%] max-w-lg touch-none"
  style={{ filter:"url(#pixelate-filter)" }}
  onPointerDown={handlePointerDown}
  onPointerMove={handlePointerMove}

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef, useCallback, useState } from 'react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
@@ -13,13 +14,16 @@ const VELOCITY_LERP = 0.09;
 const CARD_WIDTH = 320;
 const CARD_GAP = 24;
 const MOBILE_BREAKPOINT = 640;
+const TABLET_BREAKPOINT = 1025;
 const MOBILE_CARD_WIDTH = 240;
 const MOBILE_CARD_GAP = 16;
+const TABLET_CARD_WIDTH = 380;
+const TABLET_CARD_GAP = 20;
 
 const ROTATION_SENSITIVITY = 0.025;
 const ROTATION_DAMP = 0.1;
 
-const ROTATION_LERP = 0.12; // single lerp now
+const ROTATION_LERP = 0.12;
 
 const getItemData = (item) => (typeof item === 'string' ? { src: item } : item);
 
@@ -34,10 +38,11 @@ const InfiniteScrollSlider = ({ images = [] }) => {
     const [viewportWidth, setViewportWidth] = useState(CARD_WIDTH * 4);
 
     const isMobileViewport = viewportWidth < MOBILE_BREAKPOINT;
-    const cardWidth = isMobileViewport ? MOBILE_CARD_WIDTH : CARD_WIDTH;
-    const cardGap = isMobileViewport ? MOBILE_CARD_GAP : CARD_GAP;
+    const isTabletViewport = viewportWidth >= MOBILE_BREAKPOINT && viewportWidth < TABLET_BREAKPOINT;
+    const cardWidth = isMobileViewport ? MOBILE_CARD_WIDTH : isTabletViewport ? TABLET_CARD_WIDTH : CARD_WIDTH;
+    const cardGap = isMobileViewport ? MOBILE_CARD_GAP : isTabletViewport ? TABLET_CARD_GAP : CARD_GAP;
     const cardStep = cardWidth + cardGap;
-    const cardHeight = isMobileViewport ? 'calc(40vh + 72px)' : 'calc(50vh + 96px)';
+    const cardHeight = isMobileViewport ? 'calc(40vh + 72px)' : isTabletViewport ? 'calc(45vh + 84px)' : 'calc(50vh + 96px)';
 
     const stateRef = useRef({
         current: 0,
@@ -133,10 +138,8 @@ const InfiniteScrollSlider = ({ images = [] }) => {
             const absVel = Math.abs(state.rotationVelocity);
             const sign = Math.sign(state.rotationVelocity);
 
-            // ✅ clean linear rotation (no min, no strength curve)
             const targetRotation = sign * absVel * ROTATION_SENSITIVITY;
 
-            // ✅ single lerp only
             state.currentRotation = lerp(
                 state.currentRotation,
                 targetRotation,
@@ -363,7 +366,7 @@ const InfiniteScrollSlider = ({ images = [] }) => {
 
     return (
         <div className="h-screen w-screen overflow-hidden">
-            <div className="relative h-full flex items-center overflow-hidden pointer-events-none perspective-[2200px] max-md:items-center max-sm:pt-24">
+            <div className="relative h-full flex items-center overflow-hidden pointer-events-none perspective-[2200px] max-md:items-center max-sm:pt-24 max-md:pt-16">
                 <div
                     ref={stripRef}
                     className="relative w-full transform-3d"
@@ -390,7 +393,7 @@ const InfiniteScrollSlider = ({ images = [] }) => {
                                     ref={(el) => {
                                         numberRefs.current[i] = el;
                                     }}
-                                    className="mb-2 text-2xl leading-none tracking-tight text-black max-sm:mb-1 max-sm:text-lg"
+                                    className="mb-2 text-2xl opacity-0 leading-none tracking-tight text-black max-md:text-xl max-sm:mb-1 max-sm:text-lg"
                                 >
                                     {number}
                                 </div>
@@ -398,12 +401,15 @@ const InfiniteScrollSlider = ({ images = [] }) => {
                                     ref={(el) => {
                                         imageRefs.current[i] = el;
                                     }}
-                                    className="h-[50vh] w-full overflow-hidden bg-white max-sm:h-[40vh]"
+                                    className="relative h-[50vh] w-full overflow-hidden bg-white max-md:h-[45vh] max-sm:h-[40vh]"
                                 >
-                                    <img
+                                    <Image
                                         src={src}
                                         alt={`slide-${i}`}
-                                        className="w-full h-full object-cover"
+                                        fill
+                                        sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, 320px"
+                                        unoptimized
+                                        className="object-cover"
                                         draggable={false}
                                     />
                                 </div>
@@ -412,7 +418,7 @@ const InfiniteScrollSlider = ({ images = [] }) => {
                                         ref={(el) => {
                                             titleRefs.current[i] = el;
                                         }}
-                                        className="text-xl uppercase leading-none tracking-[0.04em] text-black max-sm:text-base"
+                                        className="text-xl opacity-0 uppercase leading-none tracking-[0.04em] text-black max-md:text-lg max-sm:text-base"
                                     >
                                         {title}
                                     </div>
@@ -420,7 +426,7 @@ const InfiniteScrollSlider = ({ images = [] }) => {
                                         ref={(el) => {
                                             descriptionRefs.current[i] = el;
                                         }}
-                                        className="text-sm leading-relaxed text-black/70 max-sm:text-xs"
+                                        className="text-sm opacity-0 leading-relaxed text-black/70 max-md:text-xs max-sm:text-xs"
                                     >
                                         {desc || description || ''}
                                     </div>
