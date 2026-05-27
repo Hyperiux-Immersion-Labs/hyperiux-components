@@ -133,10 +133,32 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
           </div>
         </div>
 
-        <div className=" px-10 max-sm:px-6 pb-10">
-          <div className="flex items-center max-sm:justify-center gap-6 flex-wrap">
-           
-            <div className="flex items-center max-sm:justify-center gap-2.5 flex-wrap">
+        {/* Filter pills — desktop wraps, mobile single-line scroll */}
+        <div className="pb-10 px-10 max-sm:px-0">
+          <div className="relative max-sm:w-full">
+            {/* Right fade hint on mobile */}
+            <div
+              className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 z-10 hidden max-sm:block"
+              style={{
+                background:
+                  "linear-gradient(to left, var(--background, #000) 0%, transparent 100%)",
+              }}
+            />
+            <div
+              className={[
+                "flex items-center gap-2.5",
+                // desktop: wrapping
+                "flex-wrap",
+                // mobile: horizontal scroll, no wrap, padded edges
+                "max-sm:flex-nowrap max-sm:overflow-x-auto max-sm:px-6",
+                // always-visible orange scrollbar
+                "[scrollbar-width:thin] [scrollbar-color:#CC4C04_transparent]",
+                "[&::-webkit-scrollbar]:h-[4px]",
+                "[&::-webkit-scrollbar-track]:bg-white/10 [&::-webkit-scrollbar-track]:rounded-full",
+                "[&::-webkit-scrollbar-thumb]:bg-[#CC4C04] [&::-webkit-scrollbar-thumb]:rounded-full",
+                "max-sm:pb-3",
+              ].join(" ")}
+            >
               {quickCategories.map((cat) => {
                 const isSelected = categoryFilter === cat;
                 return (
@@ -144,38 +166,38 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
                     key={cat}
                     type="button"
                     onClick={() => updateCategoryFilter(isSelected ? "all" : cat)}
-                    className={`px-7 py-2.5 max-sm:px-6 text-md rounded-full backdrop-blur-[6px] border transition-all duration-500 ease-in-out hover:text-primary hover:bg-white font-sans group flex items-center max-sm:gap-4 gap-2 cursor-pointer ${
+                    className={[
+                      "shrink-0 px-7 py-2.5 max-sm:px-6 text-md rounded-full border font-sans",
+                      "flex items-center gap-2 cursor-pointer",
+                      "transition-all duration-300 ease-in-out",
+                      "group backdrop-blur-[6px]",
                       isSelected
-                        ? "bg-white text-primary border-transparent"
-                        : "bg-[#0000033] border-border/50 text-foreground"
-                    }`}
+                        ? "bg-white text-primary border-transparent shadow-[0_0_12px_rgba(255,255,255,0.15)]"
+                        : "bg-white/5 border-white/10 text-foreground hover:bg-white/10 hover:border-white/20",
+                    ].join(" ")}
                   >
-                    <span>
+                    <span className="leading-none">
                       {cat === "webgl"
                         ? "WebGL"
                         : cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </span>
-                    <span
-                      className="overflow-hidden group-hover:rotate-90 transition-all duration-0 group-hover:duration-300 ease-in-out flex items-center"
-                      style={{
-                        maxWidth: isSelected ? "24px" : "0px",
-                        opacity: isSelected ? 1 : 0,
-                      }}
-                    >
-                      <svg
-                        className="w-4 h-4 shrink-0"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </span>
+                    {isSelected && (
+                      <span className="group-hover:rotate-90 transition-transform duration-300 ease-in-out flex items-center leading-none">
+                        <svg
+                          className="w-3.5 h-3.5 shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2.5}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </span>
+                    )}
                   </button>
                 );
               })}
