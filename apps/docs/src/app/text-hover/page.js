@@ -59,9 +59,12 @@ const page = () => {
  bgColor="#0a0a0a"
  textColor="#ffffff"
  />
+ 
  </div>
  </>
  )
 }
 
 export default page
+
+
