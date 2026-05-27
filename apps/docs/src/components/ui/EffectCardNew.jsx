@@ -29,24 +29,27 @@ export function EffectCard({ effect, priority = false }) {
 
   useEffect(() => {
     if (isInView) {
+      if (!scope.current) return;
       animate(scope.current, { opacity: 1 }, { duration: 0.55 });
     }
-  }, [isInView]);
+  }, [animate, isInView, scope]);
 
   useEffect(() => {
-    if (!scope.current) return;
     const measure = () => {
-      const { offsetWidth: w, offsetHeight: h } = scope.current;
+      const el = scope.current;
+      if (!el) return;
+      const { offsetWidth: w, offsetHeight: h } = el;
       setBorderSize({
         width: Math.max(w - 2, 0),
         height: Math.max(h - 2, 0),
       });
     };
+    if (!scope.current) return;
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(scope.current);
     return () => ro.disconnect();
-  }, []);
+  }, [scope]);
 
   useEffect(() => {
     if (!borderRectRef.current) return;
@@ -67,10 +70,10 @@ export function EffectCard({ effect, priority = false }) {
     : null;
 
   useEffect(() => {
-    const wishlist = JSON.parse(
-      localStorage.getItem("hyperiux-wishlist") || "[]"
-    );
-    setIsWishlisted(wishlist.includes(effect.name));
+    const wishlist = JSON.parse(localStorage.getItem("hyperiux-wishlist") || "[]");
+    const next = wishlist.includes(effect.name);
+    const raf = requestAnimationFrame(() => setIsWishlisted(next));
+    return () => cancelAnimationFrame(raf);
   }, [effect.name]);
 
   useEffect(() => {

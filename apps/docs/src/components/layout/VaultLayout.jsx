@@ -5,6 +5,13 @@ import { useLenis } from "lenis/react";
 import Image from "next/image";
 import { Sidebar } from "./Sidebar";
 
+const DOCS_TOP_LINKS = [
+  { href: "/docs", label: "Introduction" },
+  { href: "/docs/installation", label: "Installation" },
+  { href: "/docs/cli", label: "CLI" },
+  { href: "/docs/dependencies", label: "Dependencies" },
+  { href: "/docs/licnese", label: "License" },
+];
 
 function SidebarFallback({ totalEffects }) {
   return (
@@ -44,6 +51,7 @@ export function VaultLayout({
   const totalEffects = propTotalEffects !== undefined ? propTotalEffects : effects.length;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const lenis = useLenis();
+  const resolvedBgImageSrc = bgImageSrc || "/assets/heroo-bg.png";
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -68,14 +76,16 @@ export function VaultLayout({
   return (
     <div className="min-h-screen text-foreground relative">
       <div className="pointer-events-none fixed inset-0 z-0 h-screen w-screen">
-        <Image
-          src={bgImageSrc}
-          alt="vault background"
-          fill
-          className="object-cover"
-          sizes="100vw"
-          priority
-        />
+        {resolvedBgImageSrc ? (
+          <Image
+            src={resolvedBgImageSrc}
+            alt="vault background"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+        ) : null}
       </div>
 
       <Suspense fallback={<SidebarFallback totalEffects={totalEffects} />}>
@@ -86,6 +96,7 @@ export function VaultLayout({
           onToggle={() => setIsSidebarOpen((v) => !v)}
           onClose={() => setIsSidebarOpen(false)}
           activeCategory={activeCategory}
+          topLinks={DOCS_TOP_LINKS}
         />
         {isSidebarOpen && (
           <button
