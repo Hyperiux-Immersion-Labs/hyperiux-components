@@ -33,17 +33,20 @@ export function EffectCard({ effect, priority = false }) {
   }, [isInView]);
 
   useEffect(() => {
-    if (!scope.current) return;
+    const node = scope.current;
+    if (!node) return;
+
     const measure = () => {
-      const { offsetWidth: w, offsetHeight: h } = scope.current;
+      const { offsetWidth: w, offsetHeight: h } = node;
       setBorderSize({
         width: Math.max(w - 2, 0),
         height: Math.max(h - 2, 0),
       });
     };
+
     measure();
     const ro = new ResizeObserver(measure);
-    ro.observe(scope.current);
+    ro.observe(node);
     return () => ro.disconnect();
   }, []);
 

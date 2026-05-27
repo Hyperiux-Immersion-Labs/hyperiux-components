@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import FiddelAsciiCursor from '@/components/cursors/FiddelAsciiCursor'
+import FiddelAsciiCursor from '@/components/cursors/PixelBloom'
 
 gsap.registerPlugin(ScrollTrigger);
 

@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import FiddelAsciiCursor from '@/components/cursors/FiddelAsciiCursor'
+import PixelBloom from '@/components/cursors/PixelBloom'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -48,33 +48,33 @@ export default function Page() {
                  it’s way more fun on desktop
                 </span>
             </p>
-            <FiddelAsciiCursor className='w-[85vh] h-[50vh] absolute! top-50! left-1/2 -translate-x-1/2 z-10 aspect-video max-md:hidden' />
+            <PixelBloom className='w-[85vh] h-[50vh] absolute! top-50! left-1/2 -translate-x-1/2 z-10 aspect-video max-md:hidden' />
             <div className="h-[20vh] w-full"></div>
             <div className="relative w-full flex flex-col  gap-[10vh] items-center">
                 {/* On mobile, center each image horizontally with mx-auto and remove ml/mr */}
                 <div className="curved-scroll-box size-[30vw] max-md:size-[70vw] rounded-[2vw] overflow-clip mr-[25vw] max-md:mx-auto transform-gpu backface-hidden">
-                    <FiddelAsciiCursor className='w-full h-full' type='video' src='/assets/videos/enigma-video.mp4' />
+                    <PixelBloom className='w-full h-full' type='video' src='/assets/videos/enigma-video.mp4' />
                 </div>
                 <div className="curved-scroll-box size-[30vw] max-md:size-[70vw] overflow-hidden ml-[25vw] max-md:mx-auto  rounded-[2vw] transform-gpu backface-hidden">
-                    <FiddelAsciiCursor className='w-full h-full' type='image' src='/assets/gradient/image2.png' />
+                    <PixelBloom className='w-full h-full' type='image' src='/assets/gradient/image2.png' />
                 </div>
                 <div className="curved-scroll-box size-[30vw] max-md:size-[70vw] overflow-hidden mr-[25vw] max-md:mx-auto  rounded-[2vw] transform-gpu backface-hidden">
-                    <FiddelAsciiCursor className='w-full h-full' type='image' src='/assets/gradient/image3.png' />
+                    <PixelBloom className='w-full h-full' type='image' src='/assets/gradient/image3.png' />
                 </div>
                 <div className="curved-scroll-box size-[30vw] max-md:size-[70vw] overflow-hidden ml-[25vw]  max-md:mx-auto rounded-[2vw] transform-gpu backface-hidden">
-                    <FiddelAsciiCursor className='w-full h-full' />
+                    <PixelBloom className='w-full h-full' />
                 </div>
                 <div className="curved-scroll-box size-[30vw] max-md:size-[70vw] overflow-hidden mr-[25vw]  max-md:mx-auto rounded-[2vw] transform-gpu backface-hidden">
-                    <FiddelAsciiCursor className='w-full h-full' type='image' src='/assets/gradient/image1.png' />
+                    <PixelBloom className='w-full h-full' type='image' src='/assets/gradient/image1.png' />
                 </div>
                 <div className="curved-scroll-box size-[30vw] max-md:size-[70vw] overflow-hidden ml-[25vw]  max-md:mx-auto rounded-[2vw] transform-gpu backface-hidden">
-                        <FiddelAsciiCursor className='w-full h-full' type='image' src='/assets/gradient/image5.png' />
+                        <PixelBloom className='w-full h-full' type='image' src='/assets/gradient/image5.png' />
                 </div>
                 <div className="curved-scroll-box size-[30vw] max-md:size-[70vw] overflow-hidden mr-[25vw]  max-md:mx-auto rounded-[2vw] transform-gpu backface-hidden">
-                    <FiddelAsciiCursor className='w-full h-full' type='image' src='/assets/gradient/image7.png' />
+                    <PixelBloom className='w-full h-full' type='image' src='/assets/gradient/image7.png' />
                 </div>
                 <div className="curved-scroll-box size-[30vw] max-md:size-[70vw] overflow-hidden ml-[25vw]  max-md:mx-auto  rounded-[2vw] transform-gpu backface-hidden">
-                    <FiddelAsciiCursor className='w-full h-full' />
+                    <PixelBloom className='w-full h-full' />
                 </div>
             </div>
             <div className="h-[20vh] w-full"></div>

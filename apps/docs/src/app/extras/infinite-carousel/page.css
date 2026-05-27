@@ -1,0 +1,172 @@
+.infinite-cards-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #f4f0ea;
+  padding: 2rem 0 4rem;
+  overflow: hidden;
+}
+
+.infinite-cards-page__head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.infinite-cards-page__title {
+  margin: 0;
+  color: #111;
+  text-align: center;
+  font-size: clamp(2.5rem, 6vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.infinite-cards-page__carousel {
+  width: 100%;
+}
+
+.infinite-cards-carousel {
+  width: 100%;
+}
+
+.infinite-cards__item {
+  width: 32rem;
+  padding: 0 0.75rem;
+}
+
+.infinite-cards__card {
+  width: 100%;
+  min-height: 35rem;
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  height: 100%;
+  /* padding: 1.5rem; */
+}
+
+.card-content__tag {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card-content__title {
+  margin: 0;
+  font-size: clamp(2rem, 2.6vw, 3rem);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+.card-content__description {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  max-width: 92%;
+}
+
+.card-content__points {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.card-content__point {
+  margin: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid currentColor;
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 1024px) {
+  .infinite-cards__item {
+    width: 28rem;
+    min-width: 28rem;
+    max-width: 28rem;
+  }
+
+  .infinite-cards__card {
+    min-height: 32rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .infinite-cards-page {
+    padding: 1.5rem 0 3rem;
+  }
+
+  .infinite-cards-page__head {
+    margin-bottom: 1.5rem;
+  }
+
+  .infinite-cards__item {
+    width: min(100%, 22rem);
+    min-width: min(100%, 22rem);
+    max-width: min(100%, 22rem);
+    padding: 0;
+  }
+
+  .infinite-cards__card {
+    min-height: 28rem;
+    border-radius: 1.5rem;
+  }
+
+  .card-content__title {
+    font-size: 1.75rem;
+  }
+
+  .card-content__description,
+  .card-content__point {
+    font-size: 0.92rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 540px) {
+  .infinite-cards-page__title {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .infinite-cards-page__head {
+    margin-bottom: 1rem;
+  }
+
+  .infinite-cards__item {
+    width: calc(100vw - 1.5rem);
+    min-width: calc(100vw - 1.5rem);
+    max-width: calc(100vw - 1.5rem);
+  }
+
+  .infinite-cards__card {
+    min-height: 25rem;
+    border-radius: 1.25rem;
+  }
+
+  .card-content__tag {
+    font-size: 0.68rem;
+  }
+
+  .card-content__title {
+    font-size: 1.45rem;
+  }
+
+  .card-content__description,
+  .card-content__point {
+    font-size: 0.88rem;
+  }
+}
