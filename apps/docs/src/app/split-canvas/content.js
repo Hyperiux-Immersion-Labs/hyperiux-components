@@ -3,7 +3,7 @@ export const sections = [
     number: '01',
     title: 'Design that feels alive',
     description:
-      'Every component in Hyperiux UI is built to react, transition, and guide attention naturally—making interfaces feel intentional instead of static.',
+      'Every component in Hyperiux Vault is built to react, transition, and guide attention naturally—making interfaces feel intentional instead of static.',
   },
 
   {

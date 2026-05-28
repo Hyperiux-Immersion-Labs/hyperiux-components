@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
  }
 
  return {
- title: `${effect.title} Preview | Hyperiux UI`,
+ title: `${effect.title} Preview | Hyperiux Vault`,
  description: `Live preview of ${effect.title}`,
  };
 }

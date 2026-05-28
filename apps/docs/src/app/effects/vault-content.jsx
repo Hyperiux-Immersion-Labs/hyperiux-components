@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import gsap from "gsap";
 import { VaultLayout } from "@/components/layout/VaultLayout";
 import { VaultHeader } from "@/components/layout/VaultHeader";
@@ -10,20 +10,30 @@ import CharStaggerLinkBtn from "@/components/Buttons/LinkButtons/CharStaggerLink
 import {
   effectCategories,
   getEffectCategory,
+  getEffectCategoryBySlug,
   getEffectCategoryHref,
 } from "@/lib/categories";
 import Link from "next/link";
 import Image from "next/image";
 
 export function VaultContent({ effects, effectCounts, initialCategory = "all" }) {
+  const pathname = usePathname();
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const urlCategoryFilter = searchParams.get("category") || initialCategory;
   const [searchQuery, setSearchQuery] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState(urlCategoryFilter);
+
+  const categoryFilter = useMemo(() => {
+    const queryCategory = searchParams.get("category");
+    if (queryCategory) return queryCategory;
+
+    const [, rootSegment, categorySlug] = pathname.split("/");
+    if (rootSegment !== "effects" || !categorySlug) return "all";
+
+    return getEffectCategoryBySlug(categorySlug)?.id || initialCategory;
+  }, [initialCategory, pathname, searchParams]);
 
   const updateCategoryFilter = useCallback((nextCategory) => {
     const resolvedCategory = nextCategory || "all";
-    setCategoryFilter(resolvedCategory);
 
     const params = new URLSearchParams(searchParams.toString());
 
@@ -33,8 +43,8 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
     const categoryHref = getEffectCategoryHref(resolvedCategory);
     const nextUrl = nextQuery ? `${categoryHref}?${nextQuery}` : categoryHref;
 
-    window.history.pushState(null, "", nextUrl);
-  }, [searchParams]);
+    router.push(nextUrl);
+  }, [router, searchParams]);
   const quickCategories = useMemo(() => {
     const knownCategories = effectCategories
       .filter((category) => category.id !== "all" && effectCounts?.[category.id])
@@ -166,38 +176,48 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
                     key={cat}
                     type="button"
                     onClick={() => updateCategoryFilter(isSelected ? "all" : cat)}
-                    className={[
-                      "shrink-0 px-7 py-2.5 max-sm:px-6 text-md rounded-full border font-sans",
-                      "flex items-center gap-2 cursor-pointer",
-                      "transition-all duration-300 ease-in-out",
-                      "group backdrop-blur-[6px]",
-                      isSelected
-                        ? "bg-white text-primary border-transparent shadow-[0_0_12px_rgba(255,255,255,0.15)]"
-                        : "bg-white/5 border-white/10 text-foreground hover:bg-white/10 hover:border-white/20",
-                    ].join(" ")}
+                    className={`
+    px-7 py-2.5 max-sm:px-6 text-md text-center relative rounded-full
+    backdrop-blur-[6px] border font-sans group flex items-center cursor-pointer
+    transition-all duration-300 ease-in-out
+    hover:text-primary hover:bg-white
+    ${isSelected
+                        ? "bg-white text-primary border-transparent pr-12"
+                        : "bg-[#00000033] border-border/50 text-foreground pr-7"
+                      }
+  `}
                   >
                     <span className="leading-none">
                       {cat === "webgl"
                         ? "WebGL"
                         : cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </span>
-                    {isSelected && (
-                      <span className="group-hover:rotate-90 transition-transform duration-300 ease-in-out flex items-center leading-none">
-                        <svg
-                          className="w-3.5 h-3.5 shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2.5}
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </span>
-                    )}
+
+                    <span
+                      className={`
+      absolute right-5 top-1/2 -translate-y-1/2
+      flex items-center overflow-hidden
+      transition-all duration-300 ease-in-out
+      ${isSelected
+                          ? "opacity-100 scale-100 delay-150"
+                          : "opacity-0 scale-75 delay-0"
+                        }
+    `}
+                    >
+                      <svg
+                        className="w-4 h-4 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </span>
                   </button>
                 );
               })}
@@ -207,11 +227,10 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
 
         <div className=" px-10 max-sm:px-6 pb-12">
           <div
-            className={`flex flex-wrap items-center gap-3 transition-opacity duration-200 ${
-              categoryFilter !== "all" || searchQuery
+            className={`flex flex-wrap items-center gap-3 transition-opacity duration-200 ${categoryFilter !== "all" || searchQuery
                 ? "mb-8 min-h-10 opacity-100"
                 : "mb-0 min-h-0 opacity-0 pointer-events-none"
-            }`}
+              }`}
           >
             {(categoryFilter !== "all" || searchQuery) && (
               <span className="text-sm text-muted font-sans">
@@ -486,6 +505,10 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
             </>
           )}
         </div>
+        <div className="px-10 py-8">
+          <Footer/>
+
+        </div>
       </div>
     </VaultLayout>
   );
@@ -559,25 +582,3 @@ function EffectsGrid({ filteredEffects }) {
   );
 }
 
-const socialIcons = [
-  {
-    name: "facebook",
-    icon: "/assets/social-icons/facebook.svg",
-    link: "#",
-  },
-  {
-    name: "instagram",
-    icon: "/assets/social-icons/linkedIn.svg",
-    link: "#",
-  },
-  {
-    name: "twitter",
-    icon: "/assets/social-icons/twitter.svg",
-    link: "#",
-  },
-  {
-    name: "mail",
-    icon: "/assets/social-icons/instagram.svg",
-    link: "#",
-  },
-];

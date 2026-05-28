@@ -29,8 +29,8 @@ export async function generateMetadata({ params }) {
 
  if (category) {
  return {
- title: `${category.name} | Hyperiux UI`,
- description: `Browse ${category.name.toLowerCase()} in the Hyperiux UI vault`,
+ title: `${category.name} | Hyperiux Vault`,
+ description: `Browse ${category.name.toLowerCase()} in the Hyperiux Vault`,
  };
  }
 
@@ -57,6 +57,7 @@ export default async function EffectsCategoryPage({ params }) {
  return (
  <Suspense fallback={<VaultFallback />}>
  <VaultContent
+ key={category.id}
  effects={[...registry.items].sort((a, b) => (b.addedAt ?? 0) - (a.addedAt ?? 0))}
  effectCounts={effectCounts}
  initialCategory={category.id}

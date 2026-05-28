@@ -1,5 +1,5 @@
 import { Space_Grotesk, Inter, Geist_Mono } from "next/font/google";
-import "highlight.js/styles/atom-one-dark.css";
+import "highlight.js/styles/night-owl.css";
 import "./globals.css";
 // import { Analytics } from '@vercel/analytics/next';
 
@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
- title:"Hyperiux UI - Beautiful Effects for Your Website",
+ title:"Hyperiux Vault - Beautiful Effects for Your Website",
  description:
 "A collection of animated effects and UI components. Copy-paste or use our CLI to add stunning animations to your Next.js project.",
  robots: {

@@ -142,7 +142,7 @@ export default function DocsBody({ children }) {
     <>
       <div className="mx-auto w-full pt-16 bg-black">
         <div className="grid grid-cols-1 gap-20 xl:grid-cols-[minmax(0,1fr)_320px]">
-          <div ref={contentRef} className="px-5">
+          <div ref={contentRef} className="px-8">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={pathname}

@@ -1,7 +1,7 @@
 {
   "name": "hyperiux",
   "version": "0.1.0",
-  "description": "CLI for adding Hyperiux UI effects to your project",
+  "description": "CLI for adding Hyperiux Vault effects to your project",
   "type": "module",
   "bin": {
     "hyperiux": "./src/index.js"
