@@ -2,9 +2,20 @@
 
 import { useRef, useState } from "react";
 
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+const MIN_PIXEL_SIZE = 1;
+const MAX_PIXEL_SIZE = 64;
+const PIXEL_SCALE_FACTOR = 30;
+
+// ─── Sub-Components ───────────────────────────────────────────────────────────
+
 function PixelateSvgFilter({ id = "pixelate-filter", size = 16, crossLayers = false }) {
   return (
-    <svg aria-hidden="true" style={{ pointerEvents: "none", position: "absolute", height: 0, width: 0, overflow: "hidden" }}>
+    <svg
+      aria-hidden="true"
+      className="pointer-events-none absolute h-0 w-0 overflow-hidden"
+    >
       <defs>
         <filter id={id} x="0" y="0" width="1" height="1">
           <feConvolveMatrix kernelMatrix="1 1 1 1 1 1 1 1 1" result="AVG" />
@@ -45,6 +56,8 @@ function PixelateSvgFilter({ id = "pixelate-filter", size = 16, crossLayers = fa
   );
 }
 
+// ─── Main Component ───────────────────────────────────────────────────────────
+
 export function PixelatedImageEffect({
   src = "/assets/img/image02.webp",
   alt = "Pixelated image",
@@ -54,24 +67,37 @@ export function PixelatedImageEffect({
   headline = "Move your cursor.",
   subline = "See the pixels react",
 }) {
-  const imageRef = useRef(null);
+  const imageRef   = useRef(null);
   const isTouching = useRef(false);
   const [pixelSize, setPixelSize] = useState(initialPixelSize);
 
   const updatePixel = (event) => {
     if (!imageRef.current) return;
     const rect = imageRef.current.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    setPixelSize(Math.min(Math.max(x / 30, 1), 64));
+    const x    = event.clientX - rect.left;
+    setPixelSize(Math.min(Math.max(x / PIXEL_SCALE_FACTOR, MIN_PIXEL_SIZE), MAX_PIXEL_SIZE));
   };
 
-  const handlePointerDown = (e) => { isTouching.current = true; updatePixel(e); };
-  const handlePointerMove = (e) => { if (e.pointerType === "touch" && !isTouching.current) return; updatePixel(e); };
-  const handlePointerUp   = () => { isTouching.current = false; };
+  const handlePointerDown = (e) => {
+    isTouching.current = true;
+    updatePixel(e);
+  };
+
+  const handlePointerMove = (e) => {
+    if (e.pointerType === "touch" && !isTouching.current) return;
+    updatePixel(e);
+  };
+
+  const handlePointerUp = () => {
+    isTouching.current = false;
+  };
 
   return (
-    <div style={{ position: "relative", display: "flex", height: "100dvh", width: "100dvw", flexDirection: "column", gap: "3.75rem", alignItems: "center", justifyContent: "center" }}>
-      <h2 style={{ fontSize: "clamp(1.75rem, 5vw, 3rem)", textAlign: "center", lineHeight: 1.2, margin: 0 }}>
+    <div className="relative flex h-dvh w-dvw flex-col gap-[3.75rem] items-center justify-center">
+      <h2
+        className="text-center leading-[1.2] m-0"
+        style={{ fontSize: "clamp(1.75rem, 5vw, 3rem)" }}
+      >
         {headline}
         <br />
         {subline}
@@ -81,18 +107,20 @@ export function PixelatedImageEffect({
 
       <div
         ref={imageRef}
-        style={{
-          position: "relative", height: "55vh", width: "100%",
-          maxWidth: "min(90vw, 32rem)", overflow: "hidden",
-          touchAction: "none", filter: `url(#${filterId})`,
-        }}
+        className="relative h-[55vh] w-full max-w-[min(90vw,32rem)] overflow-hidden touch-none"
+        style={{ filter: `url(#${filterId})` }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
       >
-        <img src={src} alt={alt} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-full object-cover block"
+        />
       </div>
     </div>
   );
 }
+
