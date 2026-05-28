@@ -1,5 +1,5 @@
 import { Space_Grotesk, Inter, Geist_Mono } from "next/font/google";
-import "highlight.js/styles/atom-one-dark.css";
+import "highlight.js/styles/night-owl.css";
 import "./globals.css";
 // import { Analytics } from '@vercel/analytics/next';
 

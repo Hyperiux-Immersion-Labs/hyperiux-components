@@ -1,5 +1,5 @@
 
-import ChessGridTransition from'@/components/showcase/transitions/ChessGrids/ChessGridTransition'
+// import ChessGridTransition from'@/components/showcase/transitions/ChessGrids/ChessGridTransition'
 import PixelRandom from '@/components/showcase/transitions/PixelRandom/PixelRandomTransition'
 import React from'react'
 
