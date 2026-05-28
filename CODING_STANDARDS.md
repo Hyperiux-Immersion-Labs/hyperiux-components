@@ -271,18 +271,20 @@ Prefer inline `className` strings in JSX. Do not extract Tailwind class lists in
 
 Only when the element is **not** inside a flex/grid parent, or when you need asymmetric spacing that `gap` can't express.
 
-### Use `vw`, not `px`
+### Convert arbitrary `px` values to `vw`
 
-Do not use `px` units in component styling. Use `vw` for sizing, spacing, radii, offsets, and arbitrary Tailwind values across desktop, tablet, and mobile.
+If a text size or any other style value is written with an arbitrary `px` value, convert that arbitrary value to `vw` instead.
+
+Do not change Tailwind's default utility sizes like `text-sm`, `text-2xl`, `px-6`, or `rounded-xl`. This rule applies only to arbitrary `px` values such as `text-[32px]`, `px-[24px]`, or `rounded-[18px]`.
 
 **Bad:**
 ```jsx
-className="px-[24px] rounded-[18px] gap-[12px]"
+className="text-[32px] px-[24px] rounded-[18px] gap-[12px]"
 ```
 
 **Good:**
 ```jsx
-className="px-[1.7vw] rounded-[1.3vw] gap-[0.8vw]"
+className="text-[2.2vw] px-[1.7vw] rounded-[1.3vw] gap-[0.8vw]"
 ```
 
 ### Limit arbitrary values to 1 decimal place
@@ -342,6 +344,27 @@ Use `<span>` for inline text nodes inside flex containers, not `<div>`:
 ```
 
 JSX handles Unicode directly. Use real characters.
+
+### Next.js navigation and images
+
+In Next.js app code, use `Link` from `next/link` instead of raw `<a>` tags, and use `Image` from `next/image` instead of raw `<img>` tags.
+
+**Bad:**
+```jsx
+<a href="/components">Components</a>
+<img src="/hero.png" alt="Hero" />
+```
+
+**Good:**
+```jsx
+import Image from 'next/image'
+import Link from 'next/link'
+
+<Link href="/components">Components</Link>
+<Image src="/hero.png" alt="Hero" width={1200} height={800} />
+```
+
+> Pass standard anchor props like `className`, `target`, and `rel` directly to `Link`. For `Image`, always provide meaningful `alt` text and the required sizing props unless using `fill` or a static import.
 
 ---
 

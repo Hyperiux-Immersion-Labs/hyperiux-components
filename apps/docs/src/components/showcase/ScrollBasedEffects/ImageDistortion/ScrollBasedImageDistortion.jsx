@@ -1,214 +1,258 @@
 'use client'
 
-import { useEffect, useRef } from'react'
-import * as THREE from'three'
-import gsap from'gsap'
-import { ScrollTrigger } from'gsap/ScrollTrigger'
-import { ImageDistortionVertex, ImageDistortionFragment } from'./imageDistortion'
-import { ReactLenis } from'lenis/react'
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ReactLenis } from 'lenis/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import * as THREE from 'three'
+
+import {
+  ImageDistortionFragment,
+  ImageDistortionVertex,
+} from './imageDistortion'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const defaultSections = [
- { text:'SHADOW', src:'/assets/img/image01.webp' },
- { text:'FLOWER', src:'/assets/img/image02.webp' },
- { text:'RUN!!', src:'/assets/img/image03.webp' },
+const DEFAULT_SECTIONS = [
+  { text: 'SHADOW', src: '/assets/img/image01.webp' },
+  { text: 'FLOWER', src: '/assets/img/image02.webp' },
+  { text: 'RUN!!', src: '/assets/img/image03.webp' },
 ]
 
-const defaultShaderConfig = {
- strength: 0.8,
- rgbShift: 0.05,
- scale: 0.15,
- transitionDuration: 1.5,
- transitionEase:'power3.inOut',
+const DEFAULT_SHADER_CONFIG = {
+  strength: 0.8,
+  rgbShift: 0.05,
+  scale: 0.15,
+  transitionDuration: 1.5,
+  transitionEase: 'power3.inOut',
 }
 
-export default function ScrollDistortion({
- sections = defaultSections,
- shaderConfig = {},
- displacementSrc ='/assets/img/distortion.jpg',
+const MAX_PIXEL_RATIO = 2
+const LENIS_OPTIONS = { autoRaf: true, duration: 2 }
+
+export default function ScrollBasedImageDistortion({
+  sections = DEFAULT_SECTIONS,
+  shaderConfig = {},
+  displacementSrc = '/assets/img/distortion.jpg',
 }) {
- const containerRef = useRef(null)
- const wrapperRef = useRef(null)
+  const containerRef = useRef(null)
+  const wrapperRef = useRef(null)
+  const imageRefs = useRef([])
 
- const imageRefs = useRef([])
- const texturesRef = useRef([])
+  useEffect(() => {
+    const containerElement = containerRef.current
+    const wrapperElement = wrapperRef.current
 
- const hasInit = useRef(false)
+    if (!containerElement || !wrapperElement || sections.length === 0) {
+      return undefined
+    }
 
- const config = { ...defaultShaderConfig, ...shaderConfig }
+    const config = { ...DEFAULT_SHADER_CONFIG, ...shaderConfig }
 
- useEffect(() => {
- if (!containerRef.current || !wrapperRef.current) return
- if (hasInit.current) return
- hasInit.current = true
+    // Renderer and scene
+    const { clientWidth, clientHeight } = containerElement
+    const scene = new THREE.Scene()
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
+    const camera = new THREE.OrthographicCamera(
+      -clientWidth / 2,
+      clientWidth / 2,
+      clientHeight / 2,
+      -clientHeight / 2,
+      -1,
+      1
+    )
+    const geometry = new THREE.PlaneGeometry(clientWidth, clientHeight)
 
- let renderer, scene, camera, mesh
- let currentIndex = 0
- let targetIndex = 0
- let isTransitioning = false
+    let animationFrameId = 0
+    let currentIndex = 0
+    let targetIndex = 0
+    let isTransitioning = false
 
- const init = () => {
- const { clientWidth: w, clientHeight: h } = containerRef.current
+    const textures = imageRefs.current
+      .slice(0, sections.length)
+      .filter(Boolean)
+      .map(createTextureFromImage)
 
- // ✅ IMAGE → TEXTURE (core improvement)
- texturesRef.current = imageRefs.current.map((img) => {
- const texture = new THREE.Texture(img)
- texture.needsUpdate = true
- texture.wrapS = THREE.RepeatWrapping
- texture.wrapT = THREE.RepeatWrapping
- texture.minFilter = THREE.LinearFilter
- return texture
- })
+    const displacementImage = imageRefs.current[sections.length]
 
- const displacement = new THREE.Texture(
- imageRefs.current[sections.length] // last img = displacement
- )
- displacement.needsUpdate = true
+    if (textures.length === 0 || !displacementImage) {
+      geometry.dispose()
+      renderer.dispose()
+      return undefined
+    }
 
- renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
- renderer.setSize(w, h)
- renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    const displacementTexture = createTextureFromImage(displacementImage)
 
- containerRef.current.innerHTML =''
- containerRef.current.appendChild(renderer.domElement)
+    renderer.setSize(clientWidth, clientHeight)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO))
 
- scene = new THREE.Scene()
+    containerElement.replaceChildren(renderer.domElement)
 
- camera = new THREE.OrthographicCamera(-w / 2, w / 2, h / 2, -h / 2, -1, 1)
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        u_texture0: { value: textures[0] },
+        u_texture1: { value: textures[0] },
+        u_displacement: { value: displacementTexture },
+        u_progress: { value: 0 },
+        u_resolution: { value: new THREE.Vector2(clientWidth, clientHeight) },
+        u_textureResolution0: { value: new THREE.Vector2(1, 1) },
+        u_textureResolution1: { value: new THREE.Vector2(1, 1) },
+        u_strength: { value: config.strength },
+        u_rgbShift: { value: config.rgbShift },
+        u_scale: { value: config.scale },
+      },
+      vertexShader: ImageDistortionVertex,
+      fragmentShader: ImageDistortionFragment,
+      transparent: true,
+    })
 
- const geometry = new THREE.PlaneGeometry(w, h)
+    const setTextureResolution = (uniformIndex, texture) => {
+      if (!texture?.image) {
+        return
+      }
 
- const material = new THREE.ShaderMaterial({
- uniforms: {
- u_texture0: { value: texturesRef.current[0] },
- u_texture1: { value: texturesRef.current[0] },
- u_displacement: { value: displacement },
- u_progress: { value: 0 },
- u_resolution: { value: new THREE.Vector2(w, h) },
- u_textureResolution0: { value: new THREE.Vector2(1, 1) },
- u_textureResolution1: { value: new THREE.Vector2(1, 1) },
- u_strength: { value: config.strength },
- u_rgbShift: { value: config.rgbShift },
- u_scale: { value: config.scale },
- },
- vertexShader: ImageDistortionVertex,
- fragmentShader: ImageDistortionFragment,
- transparent: true,
- })
+      material.uniforms[`u_textureResolution${uniformIndex}`].value.set(
+        texture.image.width,
+        texture.image.height
+      )
+    }
 
- // ✅ set texture resolutions (same as your logic)
- const setRes = (index, texture) => {
- if (texture?.image) {
- material.uniforms[`u_textureResolution${index}`].value.set(
- texture.image.width,
- texture.image.height
- )
- }
- }
+    setTextureResolution(0, textures[0])
+    setTextureResolution(1, textures[0])
 
- setRes(0, texturesRef.current[0])
- setRes(1, texturesRef.current[0])
+    const mesh = new THREE.Mesh(geometry, material)
+    scene.add(mesh)
 
- mesh = new THREE.Mesh(geometry, material)
- scene.add(mesh)
+    // Transition state
+    const transitionTo = (nextIndex) => {
+      if (nextIndex < 0 || nextIndex >= textures.length) {
+        return
+      }
 
- // ✅ same transition logic
- const transitionTo = (index) => {
- if (
- index < 0 ||
- index >= texturesRef.current.length ||
- index === currentIndex ||
- isTransitioning
- ) {
- targetIndex = index
- return
- }
+      if (nextIndex === currentIndex || isTransitioning) {
+        targetIndex = nextIndex
+        return
+      }
 
- targetIndex = index
- isTransitioning = true
+      targetIndex = nextIndex
+      isTransitioning = true
 
- material.uniforms.u_texture1.value = texturesRef.current[index]
- setRes(1, texturesRef.current[index])
+      material.uniforms.u_texture1.value = textures[nextIndex]
+      setTextureResolution(1, textures[nextIndex])
 
- gsap.to(material.uniforms.u_progress, {
- value: 1,
- duration: config.transitionDuration,
- ease: config.transitionEase,
- onComplete: () => {
- material.uniforms.u_texture0.value = texturesRef.current[index]
- setRes(0, texturesRef.current[index])
- material.uniforms.u_progress.value = 0
- currentIndex = index
- isTransitioning = false
+      gsap.to(material.uniforms.u_progress, {
+        value: 1,
+        duration: config.transitionDuration,
+        ease: config.transitionEase,
+        onComplete: () => {
+          material.uniforms.u_texture0.value = textures[nextIndex]
+          setTextureResolution(0, textures[nextIndex])
+          material.uniforms.u_progress.value = 0
+          currentIndex = nextIndex
+          isTransitioning = false
 
- if (targetIndex !== currentIndex) {
- transitionTo(targetIndex)
- }
- },
- })
- }
+          if (targetIndex !== currentIndex) {
+            transitionTo(targetIndex)
+          }
+        },
+      })
+    }
 
- ScrollTrigger.create({
- trigger: wrapperRef.current,
- start:'top top',
- end: `+=${(sections.length - 1) * 100}%`,
- scrub: true,
- onUpdate: (self) => {
- const index = Math.round(self.progress * (sections.length - 1))
- transitionTo(index)
- },
- })
+    // Scroll progress
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: wrapperElement,
+      start: 'top top',
+      end: `+=${(sections.length - 1) * 100}%`,
+      scrub: true,
+      onUpdate: (scrollState) => {
+        const nextIndex = Math.round(scrollState.progress * (sections.length - 1))
+        transitionTo(nextIndex)
+      },
+    })
 
- const render = () => {
- renderer.render(scene, camera)
- requestAnimationFrame(render)
- }
+    // Animation loop
+    const renderScene = () => {
+      renderer.render(scene, camera)
+      animationFrameId = window.requestAnimationFrame(renderScene)
+    }
 
- render()
- }
+    renderScene()
 
- init()
- }, [sections, config])
+    // Cleanup
+    return () => {
+      window.cancelAnimationFrame(animationFrameId)
+      scrollTrigger.kill()
+      gsap.killTweensOf(material.uniforms.u_progress)
 
- return (
- <ReactLenis root options={{ autoRaf: true, duration: 2 }}>
- <div ref={wrapperRef} className="relative" style={{ height: `${sections.length * 100}vh` }}>
+      scene.remove(mesh)
+      geometry.dispose()
+      material.dispose()
+      displacementTexture.dispose()
+      textures.forEach((texture) => texture.dispose())
+      renderer.dispose()
+      containerElement.replaceChildren()
+    }
+  }, [displacementSrc, sections, shaderConfig])
 
- {/* ✅ Images (source of truth) */}
- <div className="hidden">
- {sections.map((s, i) => (
- <img
- key={i}
- ref={(el) => (imageRefs.current[i] = el)}
- src={s.src}
- alt=""
- />
- ))}
+  return (
+    <ReactLenis root options={LENIS_OPTIONS}>
+      <div
+        ref={wrapperRef}
+        className="relative"
+        style={{ height: `${sections.length * 100}vh` }}
+      >
+        <div className="hidden">
+          {/* Three.js textures need raw HTMLImageElement sources here. */}
+          {sections.map((section, index) => (
+            <div key={section.src}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                ref={(element) => {
+                  imageRefs.current[index] = element
+                }}
+                src={section.src}
+                alt=""
+              />
+            </div>
+          ))}
 
- {/* displacement image */}
- <img
- ref={(el) => (imageRefs.current[sections.length] = el)}
- src={displacementSrc}
- alt=""
- />
- </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            ref={(element) => {
+              imageRefs.current[sections.length] = element
+            }}
+            src={displacementSrc}
+            alt=""
+          />
+        </div>
 
- {/* WebGL */}
- <div
- ref={containerRef}
- className="sticky top-0 h-screen w-full bg-black"
- />
+        <div
+          ref={containerRef}
+          className="sticky top-0 h-screen w-full bg-black"
+        />
 
- {/* Overlay text */}
- <div className="absolute inset-0 z-10 pointer-events-none">
- {sections.map((s, i) => (
- <div key={i} className="h-screen flex items-center justify-center">
- <h1 className="text-[10vw] text-white">{s.text}</h1>
- </div>
- ))}
- </div>
- </div>
- </ReactLenis>
- )
+        <div className="pointer-events-none absolute inset-0 z-10">
+          {sections.map((section) => (
+            <div
+              key={section.src}
+              className="flex h-screen items-center justify-center"
+            >
+              <h1 className="text-[10vw] text-white">{section.text}</h1>
+            </div>
+          ))}
+        </div>
+      </div>
+    </ReactLenis>
+  )
+}
+
+function createTextureFromImage(imageElement) {
+  const texture = new THREE.Texture(imageElement)
+
+  texture.needsUpdate = true
+  texture.wrapS = THREE.RepeatWrapping
+  texture.wrapT = THREE.RepeatWrapping
+  texture.minFilter = THREE.LinearFilter
+
+  return texture
 }

@@ -39,10 +39,10 @@ export default function DemoPage() {
             </div>
 
             <div className="flex flex-col leading-none">
-              <span className="text-white font-medium text-lg tracking-tight">
+              <span className="text-white font-medium max-md:text-xl text-lg tracking-tight">
                 hyperiux
               </span>
-              <span className="text-white/40 text-xs">
+              <span className="text-white/40 text-xs max-md:hidden">
                 next generation experiences
               </span>
             </div>
@@ -52,7 +52,8 @@ export default function DemoPage() {
           <DirectionalMegaMenu
             items={menuItems}
             closeDelay={80}
-            contentWrapperClassName="p-8 backdrop-blur-2xl bg-white/[0.03] border border-white/10 rounded-3xl max-sm:h-[90vh]"
+            navClassName="mx-auto w-full max-w-7xl justify-center px-6 md:px-10 max-md:translate-x-10 max-sm:translate-x-0"
+            contentWrapperClassName="p-8 backdrop-blur-2xl bg-white/[0.03] border border-white/10 rounded-3xl max-sm:h-[92vh] max-md:h-[75vh]"
             animation={{
               duration: 0.35,
               ease: "power2.inOut",
