@@ -15,6 +15,7 @@ export function ButtonDemoShell({
  <h1 className="text-5xl font-medium max-sm:text-4xl">{title}</h1>
  </div>
 
+
  <div className="flex min-h-64 w-full items-center justify-center rounded-4xl border border-white/10 bg-black/20 px-8 py-12 backdrop-blur-sm max-sm:px-4">
  {children}
  </div>

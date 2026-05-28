@@ -42,7 +42,7 @@ const nextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+const sentryConfig = withSentryConfig(nextConfig, {
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
 
@@ -57,3 +57,7 @@ export default withSentryConfig(nextConfig, {
     disable: !process.env.NEXT_PUBLIC_SENTRY_DSN,
   },
 });
+
+// Keep local development as close to plain Next.js as possible.
+// This avoids extra config wrapping and broader-than-needed dev watching.
+export default process.env.NODE_ENV === "development" ? nextConfig : sentryConfig;
