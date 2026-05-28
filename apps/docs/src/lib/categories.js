@@ -3,6 +3,7 @@ export const effectCategories = [
   { id: "text", name: "Text Animations", slug: "text-effects" },
   { id: "backgrounds", name: "Backgrounds", slug: "backgrounds" },
   { id: "buttons", name: "Buttons", slug: "buttons" },
+  { id: "carousels", name: "Carousels", slug: "carousels" },
   { id: "scroll", name: "Scroll Animations", slug: "scroll-effects" },
   { id: "components", name: "Components", slug: "components" },
   { id: "navigation", name: "Navigation", slug: "navigation" },

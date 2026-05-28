@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import gsap from "gsap";
 import { VaultLayout } from "@/components/layout/VaultLayout";
 import { VaultHeader } from "@/components/layout/VaultHeader";
@@ -10,20 +10,30 @@ import CharStaggerLinkBtn from "@/components/Buttons/LinkButtons/CharStaggerLink
 import {
   effectCategories,
   getEffectCategory,
+  getEffectCategoryBySlug,
   getEffectCategoryHref,
 } from "@/lib/categories";
 
 import Footer from "@/components/Footer";
 
 export function VaultContent({ effects, effectCounts, initialCategory = "all" }) {
+  const pathname = usePathname();
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const urlCategoryFilter = searchParams.get("category") || initialCategory;
   const [searchQuery, setSearchQuery] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState(urlCategoryFilter);
+
+  const categoryFilter = useMemo(() => {
+    const queryCategory = searchParams.get("category");
+    if (queryCategory) return queryCategory;
+
+    const [, rootSegment, categorySlug] = pathname.split("/");
+    if (rootSegment !== "effects" || !categorySlug) return "all";
+
+    return getEffectCategoryBySlug(categorySlug)?.id || initialCategory;
+  }, [initialCategory, pathname, searchParams]);
 
   const updateCategoryFilter = useCallback((nextCategory) => {
     const resolvedCategory = nextCategory || "all";
-    setCategoryFilter(resolvedCategory);
 
     const params = new URLSearchParams(searchParams.toString());
 
@@ -33,8 +43,8 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
     const categoryHref = getEffectCategoryHref(resolvedCategory);
     const nextUrl = nextQuery ? `${categoryHref}?${nextQuery}` : categoryHref;
 
-    window.history.pushState(null, "", nextUrl);
-  }, [searchParams]);
+    router.push(nextUrl);
+  }, [router, searchParams]);
   const quickCategories = useMemo(() => {
     const knownCategories = effectCategories
       .filter((category) => category.id !== "all" && effectCounts?.[category.id])
@@ -144,22 +154,33 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
                     key={cat}
                     type="button"
                     onClick={() => updateCategoryFilter(isSelected ? "all" : cat)}
-                    className={`px-7 py-2.5 max-sm:px-6 text-md text-center relative rounded-full backdrop-blur-[6px] border transition-all duration-300 ease-in-out hover:text-primary hover:bg-white font-sans group flex items-center max-sm:gap-4 cursor-pointer ${isSelected
-                        ? "bg-white text-primary border-transparent pr-10"
-                        : "bg-[#0000033] border-border/50 text-foreground"
-                      }`}
+                    className={`
+    px-7 py-2.5 max-sm:px-6 text-md text-center relative rounded-full
+    backdrop-blur-[6px] border font-sans group flex items-center cursor-pointer
+    transition-all duration-300 ease-in-out
+    hover:text-primary hover:bg-white
+    ${isSelected
+                        ? "bg-white text-primary border-transparent pr-12"
+                        : "bg-[#00000033] border-border/50 text-foreground pr-7"
+                      }
+  `}
                   >
                     <span>
                       {cat === "webgl"
                         ? "WebGL"
                         : cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </span>
-                    <span
-                      className={`overflow-hidden flex items-center duration-300 absolute right-[1vw] top-1/2 -translate-y-1/2 ${isSelected ? "delay-200" : ""}`}
-                      style={{
 
-                        opacity: isSelected ? 1 : 0,
-                      }}
+                    <span
+                      className={`
+      absolute right-5 top-1/2 -translate-y-1/2
+      flex items-center overflow-hidden
+      transition-all duration-300 ease-in-out
+      ${isSelected
+                          ? "opacity-100 scale-100 delay-150"
+                          : "opacity-0 scale-75 delay-0"
+                        }
+    `}
                     >
                       <svg
                         className="w-4 h-4 shrink-0"
@@ -185,8 +206,8 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
         <div className=" px-10 max-sm:px-6 pb-12">
           <div
             className={`flex flex-wrap items-center gap-3 transition-opacity duration-200 ${categoryFilter !== "all" || searchQuery
-                ? "mb-8 min-h-10 opacity-100"
-                : "mb-0 min-h-0 opacity-0 pointer-events-none"
+              ? "mb-8 min-h-10 opacity-100"
+              : "mb-0 min-h-0 opacity-0 pointer-events-none"
               }`}
           >
             {(categoryFilter !== "all" || searchQuery) && (
@@ -277,7 +298,7 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
           )}
         </div>
         <div className="px-10 py-8">
-          <Footer/>
+          <Footer />
 
         </div>
       </div>
@@ -351,4 +372,3 @@ function EffectsGrid({ filteredEffects }) {
     </>
   );
 }
-
