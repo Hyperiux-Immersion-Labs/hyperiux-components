@@ -1,308 +1,348 @@
 'use client';
 
-import { useEffect, useRef, useCallback, useState } from'react';
-import gsap from'gsap';
-import { SplitText } from'gsap/SplitText';
-import Image from'next/image';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { SplitText } from 'gsap/SplitText';
+import Image from 'next/image';
 
 gsap.registerPlugin(SplitText);
 
 const SCROLL_PER_PX = 1.0;
 const LERP_FACTOR = 0.08;
 const MOBILE_BREAKPOINT = 640;
+const TABLET_BREAKPOINT = 1025;
+const SLIDER_BOTTOM_OFFSET = 0;
 
 const lerp = (a, b, n) => a + (b - a) * n;
 
 export default function ZoomSlider({ images = [] }) {
- const stripRef = useRef(null);
- const cardRefs = useRef([]);
- const imageWrapRefs = useRef([]);
- const textRefs = useRef([]);
+  // State & refs
+  const stripRef = useRef(null);
+  const cardRefs = useRef([]);
+  const imageWrapRefs = useRef([]);
+  const textRefs = useRef([]);
 
- const [viewportWidth, setViewportWidth] = useState(1440);
- const [viewportHeight, setViewportHeight] = useState(900);
- const isMobile = viewportWidth < MOBILE_BREAKPOINT;
+  const [viewportWidth, setViewportWidth] = useState(1440);
+  const [viewportHeight, setViewportHeight] = useState(900);
 
- const CARD_W_MIN = isMobile ? 75 : 190;
- const CARD_W_MAX = isMobile ? 260 : 680;
+  // Derived values
+  const isMobile = viewportWidth < MOBILE_BREAKPOINT;
+  const isTablet =
+    viewportWidth >= MOBILE_BREAKPOINT && viewportWidth < TABLET_BREAKPOINT;
 
- const CARD_H_MAX = isMobile
- ? Math.round(viewportHeight * 0.60)
- : Math.round(viewportHeight * 0.82);
+  const cardWidthMin = isMobile ? 75 : 190;
+  const cardWidthMax = isMobile ? 260 : isTablet ? 500 : 680;
+  const cardHeightMax = isMobile
+    ? Math.round(viewportHeight * 0.6)
+    : Math.round(viewportHeight * 0.82);
+  const cardHeightMin = isMobile ? 80 : 50;
+  const cardStep = cardWidthMax;
 
- const CARD_H_MIN = isMobile ? 80 : 50;
- const cardStep = CARD_W_MAX;
+  const stateRef = useRef({
+    current: 0,
+    target: 0,
+    raf: null,
+    isDragging: false,
+    lastX: 0,
+  });
 
- const stateRef = useRef({
- current: 0,
- target: 0,
- raf: null,
- isDragging: false,
- lastX: 0,
- });
+  // Effects
+  useEffect(() => {
+    const onResize = () => {
+      setViewportWidth(window.innerWidth);
+      setViewportHeight(window.innerHeight);
+    };
 
- useEffect(() => {
- const update = () => {
- setViewportWidth(window.innerWidth);
- setViewportHeight(window.innerHeight);
- };
- update();
- window.addEventListener('resize', update);
- return () => window.removeEventListener('resize', update);
- }, []);
+    onResize();
+    window.addEventListener('resize', onResize);
 
- const positionCards = useCallback(
- (offset) => {
- if (!stripRef.current) return;
- const cards = Array.from(stripRef.current.children);
- const count = images.length;
- if (!count) return;
- const loopWidth = count * cardStep;
- const vw = window.innerWidth;
- const vh = window.innerHeight;
- const BOTTOM = vh - 16;
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
- const E = 2 * vw;
- const mapVtoX = (v) => {
- if (v <= 0) return 0;
- if (v >= E) return v - E / 2;
- return (v * v) / (2 * E);
- };
+  const positionCards = useCallback(
+    (offset) => {
+      if (!stripRef.current) return;
 
- const norm = ((offset % loopWidth) + loopWidth) % loopWidth;
- const startIdx = Math.floor(norm / cardStep);
- const frac = (norm % cardStep) / cardStep;
+      const cards = Array.from(stripRef.current.children);
+      const count = images.length;
+      if (!count) return;
 
- for (let j = 0; j < count; j++) {
- const i = (startIdx + j) % count;
+      const loopWidth = count * cardStep;
+      const viewportWidthValue = window.innerWidth;
+      const viewportHeightValue = window.innerHeight;
+      const bottom = viewportHeightValue - SLIDER_BOTTOM_OFFSET;
+      const easingDistance = 2 * viewportWidthValue;
 
- const v = (j - frac) * cardStep;
+      const mapVtoX = (value) => {
+        if (value <= 0) return 0;
+        if (value >= easingDistance) return value - easingDistance / 2;
+        return (value * value) / (2 * easingDistance);
+      };
 
- const currentX = mapVtoX(v);
- const nextX = mapVtoX(v + cardStep);
+      const normalizedOffset =
+        ((offset % loopWidth) + loopWidth) % loopWidth;
+      const startIndex = Math.floor(normalizedOffset / cardStep);
+      const fractionalOffset = (normalizedOffset % cardStep) / cardStep;
 
- const visualW = nextX - currentX;
+      for (let index = 0; index < count; index += 1) {
+        const cardIndex = (startIndex + index) % count;
+        const visualOffset = (index - fractionalOffset) * cardStep;
+        const currentX = mapVtoX(visualOffset);
+        const nextX = mapVtoX(visualOffset + cardStep);
+        const visualWidth = nextX - currentX;
+        const scale = visualWidth / cardWidthMax;
+        const cardHeight =
+          cardHeightMin + scale * (cardHeightMax - cardHeightMin);
+        const y = bottom - cardHeight;
 
- const scale = visualW / CARD_W_MAX;
+        cards[cardIndex].style.transform = `translate(${currentX}px, ${y}px)`;
 
- const h = CARD_H_MIN + scale * (CARD_H_MAX - CARD_H_MIN);
- const y = BOTTOM - h;
+        const imageWrap = imageWrapRefs.current[cardIndex];
+        if (!imageWrap) continue;
 
- cards[i].style.transform = `translate(${currentX}px, ${y}px)`;
+        imageWrap.style.width = `${visualWidth}px`;
+        imageWrap.style.height = `${cardHeight}px`;
+      }
+    },
+    [cardHeightMax, cardHeightMin, cardStep, cardWidthMax, images.length]
+  );
 
- const imgWrap = imageWrapRefs.current[i];
- if (imgWrap) {
- imgWrap.style.width = `${visualW}px`;
- imgWrap.style.height = `${h}px`;
- }
- }
- },
- [cardStep, CARD_W_MAX, CARD_H_MAX, CARD_H_MIN, images.length]
- );
+  useEffect(() => {
+    if (!images.length) return;
 
- useEffect(() => {
- if (!images.length) return;
- const state = stateRef.current;
- const loopWidth = images.length * cardStep;
+    const state = stateRef.current;
+    const loopWidth = images.length * cardStep;
 
- const tick = () => {
- state.current = lerp(state.current, state.target, LERP_FACTOR);
- if (Math.abs(state.current - state.target) < 0.01) {
- const shift = Math.round(state.current / loopWidth) * loopWidth;
- state.current -= shift;
- state.target -= shift;
- }
- positionCards(state.current);
- state.raf = requestAnimationFrame(tick);
- };
+    const tick = () => {
+      state.current = lerp(state.current, state.target, LERP_FACTOR);
 
- const onWheel = (e) => { state.target -= e.deltaY * SCROLL_PER_PX; };
+      if (Math.abs(state.current - state.target) < 0.01) {
+        const shift = Math.round(state.current / loopWidth) * loopWidth;
+        state.current -= shift;
+        state.target -= shift;
+      }
 
- const onMouseDown = (e) => { state.isDragging = true; state.lastX = e.clientX; };
- const onMouseMove = (e) => {
- if (!state.isDragging) return;
- state.target += -(e.clientX - state.lastX);
- state.lastX = e.clientX;
- };
- const onMouseUp = () => { state.isDragging = false; };
+      positionCards(state.current);
+      state.raf = requestAnimationFrame(tick);
+    };
 
- const onTouchStart = (e) => { state.isDragging = true; state.lastX = e.touches[0].clientX; };
- const onTouchMove = (e) => {
- if (!state.isDragging) return;
- state.target += -(e.touches[0].clientX - state.lastX);
- state.lastX = e.touches[0].clientX;
- };
- const onTouchEnd = () => { state.isDragging = false; };
+    const onWheel = (event) => {
+      state.target -= event.deltaY * SCROLL_PER_PX;
+    };
 
- window.addEventListener('wheel', onWheel, { passive: true });
- window.addEventListener('mousedown', onMouseDown);
- window.addEventListener('mousemove', onMouseMove);
- window.addEventListener('mouseup', onMouseUp);
- window.addEventListener('touchstart', onTouchStart, { passive: true });
- window.addEventListener('touchmove', onTouchMove, { passive: true });
- window.addEventListener('touchend', onTouchEnd);
+    const onMouseDown = (event) => {
+      state.isDragging = true;
+      state.lastX = event.clientX;
+    };
 
- state.raf = requestAnimationFrame(tick);
+    const onMouseMove = (event) => {
+      if (!state.isDragging) return;
 
- return () => {
- cancelAnimationFrame(state.raf);
- window.removeEventListener('wheel', onWheel);
- window.removeEventListener('mousedown', onMouseDown);
- window.removeEventListener('mousemove', onMouseMove);
- window.removeEventListener('mouseup', onMouseUp);
- window.removeEventListener('touchstart', onTouchStart);
- window.removeEventListener('touchmove', onTouchMove);
- window.removeEventListener('touchend', onTouchEnd);
- };
- }, [cardStep, images, positionCards]);
+      state.target += -(event.clientX - state.lastX);
+      state.lastX = event.clientX;
+    };
 
- useEffect(() => {
- if (!images.length) return;
- const cleanups = [];
+    const onMouseUp = () => {
+      state.isDragging = false;
+    };
 
- cardRefs.current.forEach((card, i) => {
- const textEl = textRefs.current[i];
- const imgWrap = imageWrapRefs.current[i];
- if (!card || !textEl || !imgWrap) return;
+    const onTouchStart = (event) => {
+      state.isDragging = true;
+      state.lastX = event.touches[0].clientX;
+    };
 
- const number = textEl.querySelector('[data-number]');
- const title = textEl.querySelector('[data-title]');
- const desc = textEl.querySelector('[data-desc]');
- if (!number || !title || !desc) return;
+    const onTouchMove = (event) => {
+      if (!state.isDragging) return;
 
- const split = SplitText.create([number, title, desc], {
- type:'lines',
- mask:'lines',
- });
+      state.target += -(event.touches[0].clientX - state.lastX);
+      state.lastX = event.touches[0].clientX;
+    };
 
- gsap.set(split.lines, { yPercent: 100 });
- gsap.set(textEl, { autoAlpha: 0 });
+    const onTouchEnd = () => {
+      state.isDragging = false;
+    };
 
- const imgEl = imgWrap.querySelector('img');
+    window.addEventListener('wheel', onWheel, { passive: true });
+    window.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    window.addEventListener('touchend', onTouchEnd);
 
- const enter = () => {
- gsap.timeline()
- .set(textEl, { autoAlpha: 1 })
- .to(split.lines, {
- yPercent: 0,
- duration: 0.55,
- stagger: 0.05,
- ease:'power3.out',
- });
+    state.raf = requestAnimationFrame(tick);
 
- if (imgEl) {
- gsap.to(imgEl, {
- scale: 1.05,
- duration: 0.6,
- ease:'power2.out',
- });
- }
- };
+    return () => {
+      cancelAnimationFrame(state.raf);
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [cardStep, images, positionCards]);
 
- const leave = () => {
- gsap.to(split.lines, {
- yPercent: 100,
- duration: 0.28,
- stagger: 0.03,
- ease:'power2.in',
- onComplete: () => gsap.set(textEl, { autoAlpha: 0 }),
- });
+  useEffect(() => {
+    if (!images.length) return;
 
- if (imgEl) {
- gsap.to(imgEl, {
- scale: 1,
- duration: 0.6,
- ease:'power2.out',
- });
- }
- };
+    const cleanups = [];
 
- imgWrap.addEventListener('mouseenter', enter);
- imgWrap.addEventListener('mouseleave', leave);
+    cardRefs.current.forEach((card, index) => {
+      const textElement = textRefs.current[index];
+      const imageWrap = imageWrapRefs.current[index];
+      if (!card || !textElement || !imageWrap) return;
 
- cleanups.push(() => {
- imgWrap.removeEventListener('mouseenter', enter);
- imgWrap.removeEventListener('mouseleave', leave);
- split.revert();
- });
- });
+      const numberElement = textElement.querySelector('[data-number]');
+      const titleElement = textElement.querySelector('[data-title]');
+      const descElement = textElement.querySelector('[data-desc]');
+      if (!numberElement || !titleElement || !descElement) return;
 
- return () => cleanups.forEach((fn) => fn());
- }, [images]);
+      const split = SplitText.create(
+        [numberElement, titleElement, descElement],
+        {
+          type: 'lines',
+          mask: 'lines',
+        }
+      );
 
- return (
- <div
- className="relative w-screen overflow-hidden bg-black"
- style={{ height:'100svh' }}
- >
- <div ref={stripRef} className="absolute inset-0">
- {images.map((item, i) => (
- <div
- key={i}
- ref={(el) => (cardRefs.current[i] = el)}
- className="absolute top-0 left-0"
- style={{ willChange:'transform' }}
- >
- {/* Text label above card */}
- <div
- ref={(el) => (textRefs.current[i] = el)}
- className="absolute w-full z-10"
- style={{
- bottom:'calc(100% + 10px)',
- left: 0,
- padding:'0 0 4px',
- visibility:'hidden',
- }}
- >
- <p
- data-number
- className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/50 mb-5px leading-none overflow-hidden"
- >
- {item.number}
- </p>
- <p
- data-title
- className="text-[13px] font-extrabold tracking-[0.08em] uppercase text-white mb-5px leading-[1.15] overflow-hidden"
- >
- {item.title}
- </p>
- <p
- data-desc
- className="text-[10px] font-normal text-white/60 tracking-[0.04em] leading-normal overflow-hidden"
- >
- {item.desc}
- </p>
- </div>
+      gsap.set(split.lines, { yPercent: 100 });
+      gsap.set(textElement, { autoAlpha: 0 });
 
- {/* Card image wrapper */}
- <div
- ref={(el) => (imageWrapRefs.current[i] = el)}
- className="relative overflow-hidden cursor-pointer"
- style={{
- width: CARD_W_MIN,
- height: CARD_H_MAX,
- willChange:'width, height',
- }}
- >
- <Image
- src={item.src}
- alt={item.title}
- fill
- draggable={false}
- priority={i < 3}
- className="object-cover pointer-events-none select-none"
- style={{
- transform:'none',
- objectPosition:'center bottom',
- transition:'none',
- willChange:'auto',
- }}
- sizes="(max-width: 640px) 260px, 680px"
- />
- </div>
- </div>
- ))}
- </div>
- </div>
- );
+      const imageElement = imageWrap.querySelector('img');
+      if (imageElement) {
+        gsap.set(imageElement, { opacity: 1 });
+      }
+
+      const onEnter = () => {
+        gsap
+          .timeline()
+          .set(textElement, { autoAlpha: 1 })
+          .to(split.lines, {
+            yPercent: 0,
+            duration: 0.55,
+            stagger: 0.05,
+            ease: 'power3.out',
+          });
+
+        if (!imageElement) return;
+
+        gsap.to(imageElement, {
+          scale: 1.05,
+          duration: 0.6,
+          ease: 'power2.out',
+        });
+      };
+
+      const onLeave = () => {
+        gsap.to(split.lines, {
+          yPercent: 100,
+          duration: 0.28,
+          stagger: 0.03,
+          ease: 'power2.in',
+          onComplete: () => gsap.set(textElement, { autoAlpha: 0 }),
+        });
+
+        if (!imageElement) return;
+
+        gsap.to(imageElement, {
+          scale: 1,
+          duration: 0.6,
+          ease: 'power2.out',
+        });
+      };
+
+      imageWrap.addEventListener('mouseenter', onEnter);
+      imageWrap.addEventListener('mouseleave', onLeave);
+
+      cleanups.push(() => {
+        imageWrap.removeEventListener('mouseenter', onEnter);
+        imageWrap.removeEventListener('mouseleave', onLeave);
+        split.revert();
+      });
+    });
+
+    return () => cleanups.forEach((cleanup) => cleanup());
+  }, [images]);
+
+  return (
+    <div
+      className="relative w-screen overflow-hidden bg-black"
+      style={{ height: '100svh' }}
+    >
+      <div ref={stripRef} className="absolute inset-0">
+        {images.map((item, index) => (
+          <div
+            key={index}
+            ref={(element) => {
+              cardRefs.current[index] = element;
+            }}
+            className="absolute left-0 top-0"
+            style={{ willChange: 'transform' }}
+          >
+            <div
+              ref={(element) => {
+                textRefs.current[index] = element;
+              }}
+              className="absolute z-10 flex w-full flex-col gap-1.25"
+              style={{
+                bottom: 'calc(100% + 10px)',
+                left: 0,
+                padding: '0 0 4px',
+                visibility: 'hidden',
+              }}
+            >
+              <p
+                data-number
+                className="overflow-hidden text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-white/50"
+              >
+                {item.number}
+              </p>
+              <p
+                data-title
+                className="overflow-hidden text-[13px] font-extrabold uppercase leading-[1.15] tracking-[0.08em] text-white"
+              >
+                {item.title}
+              </p>
+              <p
+                data-desc
+                className="overflow-hidden text-[10px] font-normal leading-normal tracking-[0.04em] text-white/60"
+              >
+                {item.desc}
+              </p>
+            </div>
+
+            <div
+              ref={(element) => {
+                imageWrapRefs.current[index] = element;
+              }}
+              className="relative cursor-pointer overflow-hidden"
+              style={{
+                width: cardWidthMin,
+                height: cardHeightMax,
+                willChange: 'width, height',
+              }}
+            >
+              <Image
+                src={item.src}
+                alt={item.title}
+                fill
+                draggable={false}
+                priority={index < 3}
+                className="pointer-events-none select-none object-cover opacity-0"
+                style={{
+                  transform: 'none',
+                  objectPosition: 'center bottom',
+                  transition: 'none',
+                  willChange: 'auto',
+                }}
+                sizes="(max-width: 640px) 260px, (max-width: 1024px) 500px, 680px"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }

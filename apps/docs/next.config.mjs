@@ -1,5 +1,3 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
 import { withSentryConfig } from "@sentry/nextjs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -10,21 +8,6 @@ const REPO_ROOT = path.join(__dirname, "..", "..");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // In a monorepo, Next.js/Turbopack auto-detects the "root" using the workspace
-  // lockfile (repo root). That can dramatically expand filesystem watching and
-  // memory usage during `next dev`.
-  //
-  // With pnpm, workspace dependencies are symlinked into this app from
-  // `<repo>/node_modules/.pnpm/...`, so `turbopack.root` must include both:
-  // - this app folder, and
-  // - the real path where `next` resolves to.
-  turbopack: {
-    root: REPO_ROOT,
-  },
-  experimental: {
-    // Reduce initial RSS by not preloading every route/module at server start.
-    preloadEntriesOnStart: false,
-  },
   async redirects() {
     return [
       {
@@ -44,7 +27,7 @@ const nextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+const sentryConfig = withSentryConfig(nextConfig, {
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
 
@@ -59,3 +42,7 @@ export default withSentryConfig(nextConfig, {
     disable: !process.env.NEXT_PUBLIC_SENTRY_DSN,
   },
 });
+
+// Keep local development as close to plain Next.js as possible.
+// This avoids extra config wrapping and broader-than-needed dev watching.
+export default process.env.NODE_ENV === "development" ? nextConfig : sentryConfig;
