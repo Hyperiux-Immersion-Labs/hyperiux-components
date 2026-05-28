@@ -12,6 +12,7 @@ import { CuboidCollider, BallCollider, Physics, RigidBody } from '@react-three/r
 import { EffectComposer, N8AO, Bloom } from '@react-three/postprocessing'
 import { easing } from 'maath'
 import { Text } from '@react-three/drei'
+import Link from 'next/link'
 
 const accents = ['#4060ff', '#20ffa0', '#ff4060', '#ffcc00','#ff5f00']
 const MODEL_SCALE = 0.08
@@ -32,8 +33,38 @@ const shuffle = (accent = 0) => [
 
 export default function MagnetLogo() {
   return (
-    <div className="fixed inset-0 h-screen w-screen overflow-hidden bg-black">
-      <Scene />
+    <div className="fixed inset-0 h-screen w-screen bg-white flex flex-col overflow-hidden">
+      {/* Header */}
+      <header className="flex items-start justify-between px-12 pt-10 w-screen max-sm:px-6 max-md:px-10">
+        <h1 className="text-3xl font-bold text-black">HYPERIUX</h1>
+        <div className=" mx-12 max-md:hidden">
+          <p className="text-3xl text-black ">
+            We build 3D visual experiences<br/>
+and interactive web worlds that<br/>
+help bold brands stand apart
+          </p>
+        </div>
+        <div className="flex gap-4">
+          <Link href="https://hyperiux.com" className="px-6 py-2 bg-black text-white rounded-full text-sm font-medium hover:opacity-90">
+           Visit Hyperiux
+          </Link>
+          
+        </div>
+      </header>
+
+<div className=" mx-12 max-md:block hidden mt-10 max-sm:mx-6 max-md:mx-10 max-md:w-[60%] max-sm:w-[80%]">
+          <p className="text-3xl text-black ">
+            We build 3D visual experiences
+and interactive web worlds that
+help bold brands stand apart
+          </p>
+        </div>
+      {/* Canvas Container */}
+      <div className="flex-1 flex items-center justify-center px-12 max-sm:px-6 max-md:px-10">
+        <div className="h-[90%] w-full overflow-hidden rounded-2xl bg-black">
+          <Scene />
+        </div>
+      </div>
     </div>
   )
 }
@@ -231,12 +262,18 @@ function Pointer({ vec = new THREE.Vector3() }) {
   const ref = useRef()
 
   useFrame(({ mouse, viewport }) => {
+    const x = (mouse.x * viewport.width) / 2
+    const y = (mouse.y * viewport.height) / 2
+    
+    // Constrain pointer to canvas bounds
+    const maxX = viewport.width / 2
+    const maxY = viewport.height / 2
+    
+    const constrainedX = Math.max(-maxX, Math.min(maxX, x))
+    const constrainedY = Math.max(-maxY, Math.min(maxY, y))
+    
     ref.current?.setNextKinematicTranslation(
-      vec.set(
-        (mouse.x * viewport.width) / 2,
-        (mouse.y * viewport.height) / 2,
-        0
-      )
+      vec.set(constrainedX, constrainedY, 0)
     )
   })
 

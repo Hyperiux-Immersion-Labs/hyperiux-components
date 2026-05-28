@@ -9,41 +9,82 @@ import Link from"next/link";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-const leftCards = [
- { src:"/img/1.png", title:"Montra", href:"#" },
- { src:"/img/2.png", title:"Yellow", href:"#" },
- { src:"/img/3.png", title:"Patronum", href:"#" },
- { src:"/img/4.png", title:"Monielink", href:"#" },
- { src:"/img/5.png", title:"DSW", href:"#" },
- { src:"/img/6.png", title:"AKA Partners", href:"#" },
- { src:"/img/1.png", title:"Hyperiux", href:"#" },
- { src:"/img/2.png", title:"Enigma", href:"#" },
+const IMAGE_POOL = [
+ "/assets/gradient/image1.png",
+ "/assets/gradient/image2.png",
+ "/assets/gradient/image3.png",
+ "/assets/gradient/image4.png",
+ "/assets/gradient/image5.png",
+ "/assets/gradient/image6.png",
+ "/assets/gradient/image7.png",
+ "/assets/gradient/image8.png",
+ "/assets/gradient/image9.png",
+ "/assets/gradient/image10.png",
+ "/assets/gradient/image11.png",
+ "/assets/gradient/image12.png",
+ "/assets/gradient/image13.png",
+ "/assets/gradient/image14.png",
+ "/assets/gradient/image15.png",
+ "/assets/dark/image01.png",
+ "/assets/dark/image02.png",
+ "/assets/dark/image03.png",
+ "/assets/dark/image04.png",
+ "/assets/dark/image05.png",
+ "/assets/dark/image06.png",
+ "/assets/dark/image07.png",
+ "/assets/dark/image08.png",
+ "/assets/dark/image09.png",
+ "/assets/dark/image10.png",
+ "/assets/dark/image11.png",
+ "/assets/dark/image12.png",
+ "/assets/dark/image13.png",
+ "/assets/dark/image14.png",
+ "/assets/dark/image15.png",
+ "/assets/dark/image16.png",
+ "/assets/dark/image17.png",
+ "/assets/dark/image18.png",
+ "/assets/dark/image19.png",
+ "/assets/dark/image20.png",
+ "/assets/dark/image21.png",
 ];
 
-const midCards = [
- { src:"/img/1.png", title:"Montra", href:"#" },
- { src:"/img/2.png", title:"Patronum", href:"#" },
- { src:"/img/3.png", title:"Yellow", href:"#" },
- { src:"/img/4.png", title:"DSW", href:"#" },
- { src:"/img/5.png", title:"Monielink", href:"#" },
- { src:"/img/6.png", title:"Hyperiux", href:"#" },
+const PROJECT_NAMES = [
+ "Nebula Drift",
+ "Velvet Orbit",
+ "Prism Bloom",
+ "Midnight Aurora",
+ "Chromatic Tide",
+ "Ion Garden",
+ "Lunar Gradient",
+ "Violet Haze",
+ "Echo Spectrum",
+ "Noir Fluence",
+ "Solar Jelly",
+ "Plasma Atelier",
+ "Hyperwave Studio",
+ "Glassline",
+ "Starlit Systems",
+ "Pulse & Grain",
+ "Arclight",
+ "Soft Collision",
 ];
 
-const rightCards = [
- { src:"/img/1.png", title:"Montra", href:"#" },
- { src:"/img/2.png", title:"Yellow", href:"#" },
- { src:"/img/3.png", title:"Patronum", href:"#" },
- { src:"/img/4.png", title:"Monielink", href:"#" },
- { src:"/img/5.png", title:"DSW", href:"#" },
- { src:"/img/6.png", title:"AKA Partners", href:"#" },
- { src:"/img/1.png", title:"Hyperiux", href:"#" },
- { src:"/img/2.png", title:"Enigma", href:"#" },
-];
+function buildCards(count, startIndex = 0) {
+ return Array.from({ length: count }, (_, i) => {
+ const idx = (startIndex + i) % IMAGE_POOL.length;
+ const name = PROJECT_NAMES[(startIndex + i) % PROJECT_NAMES.length];
+ return { src: IMAGE_POOL[idx], title: name, href: "#" };
+ });
+}
 
-const sectionBreakText = `We don't just create designs, we create experiences. Our portfolio
-is a testament to our dedication to excellence and our passion for
-design. We are proud of the work we have done and we look forward to
-creating more masterpieces in the future.`;
+const allCards = buildCards(22, 0);
+const leftCards = allCards.slice(0, 8);
+const midCards = allCards.slice(8, 14);
+const rightCards = allCards.slice(14, 22);
+
+const sectionBreakText = `Design is a feeling before it’s a layout. This concept explores
+motion-first composition, gradient-led art direction, and small details
+that make a brand experience unforgettable.`;
 
 const PortfolioConcept = () => {
  const headingRef = useRef(null);
@@ -301,13 +342,13 @@ const PortfolioConcept = () => {
  ref={headingRef}
  className="text-[4vw] font-medium w-fit leading-[1]"
  >
- Our Masterpieces
+ Gradient Portfolio Concept
  </h2>
 
  <p ref={paragraphRef} className="text-[1.5vw] w-[40%] font-medium">
- We have worked on a wide range of projects, from small startups to
- large enterprises. Our portfolio showcases our ability to create
- beautiful and functional designs that meet the needs of our clients.
+ A scroll-led showcase where every project tile is a living gradient.
+ Hover to reveal names, then let the strips glide past each other for a
+ gallery that feels more like motion design than a grid.
  </p>
  </div>
  </div>
