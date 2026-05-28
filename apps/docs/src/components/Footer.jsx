@@ -10,7 +10,7 @@ const Footer = () => {
               <div className="flex h-12 w-12 items-center justify-center rounded-xl text-xl font-bold text-black">
                 <Image src="/hyperiux.svg" alt="Hyperiux" width={30} height={30} />
               </div>
-              <h2 className="text-3xl font-semibold tracking-tight text-white">Hyperiux UI</h2>
+              <h2 className="text-3xl font-semibold tracking-tight text-white">Hyperiux Vault</h2>
             </div>
 
             <p className="max-w-[20vw] max-sm:max-w-[80vw] text-lg leading-[1.4]">
@@ -41,7 +41,7 @@ const Footer = () => {
             </div>
 
             <div className="mt-5 max-sm:pb-2 flex w-full flex-col items-center justify-between gap-4 border-t border-white/5 pt-6 text-sm text-zinc-500 md:flex-row max-sm:text-base max-sm:gap-4">
-              <p>© 2026 Hyperiux UI. All rights reserved.</p>
+              <p>© 2026 Hyperiux Vault. All rights reserved.</p>
               <div className="flex items-center max-sm:text-sm gap-5">
                 <span className="cursor-pointer transition hover:text-white">Terms of Use</span>
                 <span>|</span>

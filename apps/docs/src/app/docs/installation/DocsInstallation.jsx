@@ -14,7 +14,7 @@ export default function DocsInstallation() {
       <Para>Dummy content. List Node.js / package manager requirements here.</Para>
 
       <Heading2 id="setup">Setup</Heading2>
-      <Para>Dummy content. Explain how to install Hyperiux UI and initialize a project.</Para>
+      <Para>Dummy content. Explain how to install Hyperiux Vault and initialize a project.</Para>
     </DocsContent>
   );
 }

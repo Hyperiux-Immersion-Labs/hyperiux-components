@@ -1,4 +1,4 @@
-# Hyperiux UI
+# Hyperiux Vault
 
 **A free, open-source collection of high-quality animation effects and interactive components for Next.js — built by [Hyperiux](https://hyperiux.com).**
 
@@ -8,17 +8,17 @@ Pick the effects you want. Copy the code into your project. Own it completely.
 npx hyperiux add blur-text
 ```
 
-**[ui.hyperiux.com](https://hyperiux-ui.vercel.app)** · **[hyperiux.com](https://hyperiux.com)** · **[GitHub](https://github.com/hyperiux/hyperiux-ui)**
+**[ui.hyperiux.com](https://components.hyperiux.com/)** · **[hyperiux.com](https://hyperiux.com)** · **[GitHub](https://github.com/hyperiux/hyperiux-ui)**
 
 ---
 
 ## What is Hyperiux?
 
-[Hyperiux](https://hyperiux.com) is a digital design and development agency that builds ambitious digital experiences — from brand identities to fully custom web products. Hyperiux UI is the public face of how we build: a growing library of the effects, animations, and interactive components we use in production, shared openly for the wider development community.
+[Hyperiux](https://hyperiux.com) is a digital design and development agency that builds ambitious digital experiences — from brand identities to fully custom web products. Hyperiux Vault is the public face of how we build: a growing library of the effects, animations, and interactive components we use in production, shared openly for the wider development community.
 
-## What is Hyperiux UI?
+## What is Hyperiux Vault?
 
-Hyperiux UI is **not an npm component library**. It's closer in spirit to [shadcn/ui](https://ui.shadcn.com) — a registry of source code that you install directly into your project via CLI. No version lock-in, no opaque black boxes. Every effect lives in your codebase and is yours to read, modify, and extend.
+Hyperiux Vault is **not an npm component library**. It's closer in spirit to [shadcn/ui](https://ui.shadcn.com) — a registry of source code that you install directly into your project via CLI. No version lock-in, no opaque black boxes. Every effect lives in your codebase and is yours to read, modify, and extend.
 
 The library spans 103+ effects across 12 categories — from GSAP scroll sequences and cursor interactions to raw WebGL shaders and Three.js scenes.
 
@@ -29,26 +29,26 @@ The library spans 103+ effects across 12 categories — from GSAP scroll sequenc
 ### Scroll
 Scroll-driven animations built on GSAP ScrollTrigger — parallax galleries, pinned sequences, horizontal storytelling, stacking cards, and more.
 
-`draggable-marquee` · `helix-slider` · `horizon-scroll` · `orbit-slider` · `parallax-gallery` · `parallax-slider` · `rotating-carousel` · `rotation-slider` · `scroll-distortion` · `scroll-stack` · `stacking-cards` · `sticky-content-wrapper` · `svg-path-marquee` · `text-convergence` · [+more](https://hyperiux-ui.vercel.app/effects)
+`draggable-marquee` · `helix-slider` · `horizon-scroll` · `orbit-slider` · `parallax-gallery` · `parallax-slider` · `rotating-carousel` · `rotation-slider` · `scroll-distortion` · `scroll-stack` · `stacking-cards` · `sticky-content-wrapper` · `svg-path-marquee` · `text-convergence` · [+more](https://components.hyperiux.com//effects)
 
 ### WebGL
 Three.js and R3F scenes with custom GLSL shaders — image carousels that curve on drag, pixel trail grids, frosted glass refraction, GPU particle galaxies, and full immersive 3D heroes.
 
-`curved-plane` · `curved-plane-v2` · `draggable-canvas` · `fractal-glass` · `grid-tunnel` · `interactive-blur-reveal` · `milkyway` · `mouse-pixelation` · `progressive-bloom-valley` · `strip-slider` · `webgl-portfolio-slider` · `hero-banner-animated` · [+more](https://hyperiux-ui.vercel.app/effects)
+`curved-plane` · `curved-plane-v2` · `draggable-canvas` · `fractal-glass` · `grid-tunnel` · `interactive-blur-reveal` · `milkyway` · `mouse-pixelation` · `progressive-bloom-valley` · `strip-slider` · `webgl-portfolio-slider` · `hero-banner-animated` · [+more](https://components.hyperiux.com//effects)
 
 ### Cursor
 Canvas 2D and Three.js cursor effects — butterfly swarms, rope followers, liquid glass morphing, image trails, ASCII art, and character grids that wake on hover.
 
-`butterfly-trail-cursor` · `character-trail` · `coffee-bean-cursor` · `colorful-cursor-aura` · `fish-eye` · `interactive-arrows` · `liquid-glass-cursor` · `magnetic-image-trail` · `noise-ripple-cursor` · `phantom-image-trail` · `rope-cursor` · [+more](https://hyperiux-ui.vercel.app/effects)
+`butterfly-trail-cursor` · `character-trail` · `coffee-bean-cursor` · `colorful-cursor-aura` · `fish-eye` · `interactive-arrows` · `liquid-glass-cursor` · `magnetic-image-trail` · `noise-ripple-cursor` · `phantom-image-trail` · `rope-cursor` · [+more](https://components.hyperiux.com//effects)
 
 ### Text
 Letter-level and line-level reveal animations — blur in, scramble, stagger, perspective flip, mask wipe, spotlight, and GSAP SplitText sequences.
 
-`blur-text` · `circle-text-reveal` · `glitchy-text` · `mask-text-reveal` · `overflow-stagger-text` · `perspective-text-reveal` · `scramble-text` · `slide-text-reveal` · `spotlight-text` · `text-cloning` · `text-fill-animation` · [+more](https://hyperiux-ui.vercel.app/effects)
+`blur-text` · `circle-text-reveal` · `glitchy-text` · `mask-text-reveal` · `overflow-stagger-text` · `perspective-text-reveal` · `scramble-text` · `slide-text-reveal` · `spotlight-text` · `text-cloning` · `text-fill-animation` · [+more](https://components.hyperiux.com//effects)
 
 ### Backgrounds · Transitions · Buttons · Components · Navigation · Loaders
 
-[Browse all effects →](https://hyperiux-ui.vercel.app/effects)
+[Browse all effects →](https://components.hyperiux.com//effects)
 
 ---
 
@@ -128,7 +128,7 @@ Prints every available effect grouped by category with its npm dependencies.
 
 ```json
 {
-  "$schema": "https://hyperiux-ui.vercel.app/schema.json",
+  "$schema": "https://components.hyperiux.com//schema.json",
   "tailwind": {
     "config": "tailwind.config.js",
     "css": "src/app/globals.css"
@@ -168,7 +168,7 @@ Built by the team at [Hyperiux](https://hyperiux.com) — a digital design and d
 | | |
 |---|---|
 | 🌐 Agency | [hyperiux.com](https://hyperiux.com) |
-| 🎨 UI Library | [ui.hyperiux.com](https://hyperiux-ui.vercel.app) |
+| 🎨 UI Library | [ui.hyperiux.com](https://components.hyperiux.com/) |
 | 💻 GitHub | [github.com/hyperiux/hyperiux-ui](https://github.com/hyperiux/hyperiux-ui) |
 | 𝕏 X / Twitter | [@hyperiux](https://x.com/hyperiux) |
 | 📸 Instagram | [@hyperiux](https://instagram.com/hyperiux) |

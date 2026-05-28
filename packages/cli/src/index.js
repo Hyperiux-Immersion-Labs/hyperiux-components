@@ -13,7 +13,7 @@ const program = new Command();
 
 program
   .name("hyperiux")
-  .description("CLI for adding Hyperiux UI effects to your project")
+  .description("CLI for adding Hyperiux Vault effects to your project")
   .version(version);
 
 program

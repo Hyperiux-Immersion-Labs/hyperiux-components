@@ -5,7 +5,7 @@ export default function page() {
  <CenterLinesLoading
  lineCount={41}
  title="Build better interfaces"
- subtitle="Hyperiux UI"
+ subtitle="Hyperiux Vault"
  />
  )
 }

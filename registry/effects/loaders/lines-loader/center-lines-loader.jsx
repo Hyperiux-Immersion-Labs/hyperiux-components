@@ -30,7 +30,7 @@ function prefersReducedMotion() {
 export function CenterLinesLoader({
   lineCount = 33,
   title = "Build better interfaces",
-  subtitle = "Hyperiux UI",
+  subtitle = "Hyperiux Vault",
   onComplete,
 } = {}) {
   const containerRef = useRef(null);

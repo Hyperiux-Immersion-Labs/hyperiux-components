@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
- title:"Hyperiux UI - Beautiful Effects for Your Website",
+ title:"Hyperiux Vault - Beautiful Effects for Your Website",
  description:
 "A collection of animated effects and UI components. Copy-paste or use our CLI to add stunning animations to your Next.js project.",
  robots: {

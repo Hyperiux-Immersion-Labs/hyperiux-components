@@ -361,7 +361,7 @@ function Header() {
     <header className="pointer-events-auto absolute left-0 top-0 z-20 flex w-full items-center justify-between px-8 py-7 md:px-14">
       <div className="flex items-center gap-2 text-xl font-bold text-black">
         {/* <span className="text-2xl leading-none">✦</span> */}
-        <span>Hyperiux UI</span>
+        <span>Hyperiux Vault</span>
       </div>
 
       <nav className="hidden items-center gap-10 text-base font-semibold text-slate-600 md:flex">
