@@ -320,12 +320,8 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
           )}
         </div>
         <div className="px-10 py-8">
-          <Footer/>
-         <div className="px-10 py-8">
           <Footer />
-
         </div>
-        
       </div>
     </VaultLayout>
   );
@@ -398,4 +394,3 @@ function EffectsGrid({ filteredEffects }) {
     </>
   );
 }
-
