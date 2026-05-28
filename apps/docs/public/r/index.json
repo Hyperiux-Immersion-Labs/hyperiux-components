@@ -1107,7 +1107,7 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/carousels/clippath-slider",
+      "previewUrl": "/clippath-slider",
       "coverImage": "/assets/list/clippath-slider.png",
       "videoUrl": "clippath-slider.mp4",
       "addedAt": 1777877418527.706
