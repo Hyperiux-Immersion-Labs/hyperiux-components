@@ -6,5 +6,5 @@
   "category": "carousels",
   "dependencies": ["gsap"],
   "registryDependencies": [],
-  "previewUrl": "/carousels/clippath-slider"
+  "previewUrl": "/clippath-slider"
 }
