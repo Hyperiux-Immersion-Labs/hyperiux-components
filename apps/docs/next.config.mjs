@@ -1,14 +1,7 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 import { withSentryConfig } from "@sentry/nextjs";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Point turbopack.root to the workspace root so packages (like `next`) resolve correctly
-  turbopack: { root: path.resolve(__dirname, '..', '..') },
   async redirects() {
     return [
       {
@@ -28,7 +21,7 @@ const nextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+const sentryConfig = withSentryConfig(nextConfig, {
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
 
@@ -43,3 +36,7 @@ export default withSentryConfig(nextConfig, {
     disable: !process.env.NEXT_PUBLIC_SENTRY_DSN,
   },
 });
+
+// Keep local development as close to plain Next.js as possible.
+// This avoids extra config wrapping and broader-than-needed dev watching.
+export default process.env.NODE_ENV === "development" ? nextConfig : sentryConfig;
