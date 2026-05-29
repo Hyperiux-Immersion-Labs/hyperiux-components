@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/blur-text-reveal",
   "coverImage": "/assets/list/blur-text.png",
-  "videoUrl": "blur-text.mp4",
+  "videoUrl": "blur-text-reveal.mp4",
   "files": [
     {
       "path": "blur-text.jsx",

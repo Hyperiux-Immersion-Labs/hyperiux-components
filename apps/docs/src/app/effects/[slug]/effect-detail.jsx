@@ -1,9 +1,16 @@
 "use client";
 
-import {  useRef, useState, Suspense } from "react";
+import {
+  useRef,
+  useState,
+  useEffect,
+  Suspense,
+  forwardRef,
+} from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { VaultLayout } from "@/components/layout/VaultLayout";
 import { VaultHeader } from "@/components/layout/VaultHeader";
 import { EffectCard } from "@/components/ui/EffectCardNew";
@@ -30,6 +37,7 @@ export function EffectDetailContent({
   const [videoError, setVideoError] = useState(false);
 
   const videoRef = useRef(null);
+  const contentRef = useRef(null);
   const videoPreviewUrl = effect.videoUrl
     ? `${process.env.NEXT_PUBLIC_DEV_URL || ""}${effect.videoUrl.startsWith("/") ? "" : "/"
     }${effect.videoUrl}`
@@ -222,8 +230,8 @@ export default function MyComponent() {
                     onCanPlay={() => setVideoReady(true)}
                     onError={() => setVideoError(true)}
                     className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ${showVideo
-                        ? "opacity-100"
-                        : "opacity-0"
+                      ? "opacity-100"
+                      : "opacity-0"
                       }`}
                   />
                 )}
@@ -234,6 +242,7 @@ export default function MyComponent() {
               </div>
 
               <EffectDynamicContent
+                ref={contentRef}
                 content={content}
                 installCode={installCode}
                 usageCode={usageCode}
@@ -247,8 +256,13 @@ export default function MyComponent() {
             <div className="lg:col-span-1 self-stretch max-sm:hidden fadeup">
               <div className="sticky top-28 h-fit">
                 {sidebarContent}
+                <TableOfContents
+                  containerRef={contentRef}
+                  watchKey={slug}
+                />
               </div>
             </div>
+
           </div>
 
           {relatedEffects?.length > 0 && (
@@ -276,22 +290,28 @@ export default function MyComponent() {
     </VaultLayout>
   );
 }
-function EffectDynamicContent({
-  content,
-  installCode,
-  usageCode,
-  componentCode,
-  config,
-  slug,
-  categorySlug,
-}) {
+const EffectDynamicContent = forwardRef(function EffectDynamicContent(
+  {
+    content,
+    installCode,
+    usageCode,
+    componentCode,
+    config,
+    slug,
+    categorySlug,
+  },
+  ref
+) {
   if (!content) return null;
 
   return (
-    <div className="space-y-14">
+    <div ref={ref} className="space-y-14">
       {content.heroCopy?.length > 0 && (
         <section className="space-y-5">
-          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter fadeup">
+          <h2
+            id="overview"
+            className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter fadeup"
+          >
             Overview
           </h2>
 
@@ -333,10 +353,16 @@ function EffectDynamicContent({
               <div key={step.title || index} className="space-y-6">
                 <div className="py-5 space-y-3">
                   <div className="flex items-start gap-4 max-sm:gap-3">
-                   
+
 
                     <div className="space-y-2">
-                      <h3 className="text-2xl max-sm:text-xl tracking-tighter text-foreground fadeup">
+                      <h3
+                        id={step.title
+                          ?.toLowerCase()
+                          .replaceAll(" ", "-")
+                          .replace(/[^\w-]/g, "")}
+                        className="text-2xl max-sm:text-xl tracking-tighter text-foreground fadeup scroll-mt-32"
+                      >
                         {step.title}
                       </h3>
 
@@ -357,9 +383,8 @@ function EffectDynamicContent({
                   <div className="space-y-6 fadeup">
                     {step.blocks.map((block, blockIndex) => (
                       <TutorialBlock
-                        key={`${step.title || index}-${
-                          block.title || blockIndex
-                        }`}
+                        key={`${step.title || index}-${block.title || blockIndex
+                          }`}
                         block={block}
                         installCode={installCode}
                         usageCode={usageCode}
@@ -478,7 +503,7 @@ function EffectDynamicContent({
         </section>
       )}
 
-     
+
 
       {content.faq?.length > 0 && (
         <section className="space-y-5">
@@ -537,7 +562,7 @@ function EffectDynamicContent({
       )}
     </div>
   );
-}
+});
 
 function TutorialBlock({
   block,
@@ -573,7 +598,7 @@ function TutorialBlock({
           </h3>
         )}
 
-        <div className="max-h-[30vw] overflow-y-auto rounded-xl border border-border/60 fadeup">
+        <div className="max-h-[30vw] overflow-y-auto rounded-lg border border-border/60 fadeup">
           <CodeBlock
             code={resolvedCode}
             language={block.language || "jsx"}
@@ -645,4 +670,237 @@ function TutorialBlock({
   }
 
   return null;
+}
+
+function TableOfContents({ containerRef, watchKey }) {
+  const [items, setItems] = useState([]);
+  const [activeId, setActiveId] = useState("");
+
+  const activeLockRef = useRef({
+    id: "",
+    targetTop: 0,
+    timeoutId: null,
+  });
+
+  const onTocClick = (e, id) => {
+    e.preventDefault();
+
+    const el = document.getElementById(id);
+
+    if (!el) return;
+
+    const topOffset = window.innerHeight * 0.2;
+
+    const targetTop =
+      el.getBoundingClientRect().top +
+      window.scrollY -
+      topOffset;
+
+    if (activeLockRef.current.timeoutId) {
+      window.clearTimeout(
+        activeLockRef.current.timeoutId
+      );
+    }
+
+    activeLockRef.current = {
+      id,
+      targetTop,
+      timeoutId: null,
+    };
+
+    setActiveId(id);
+
+    window.scrollTo({
+      top: targetTop,
+      behavior: "smooth",
+    });
+
+    window.history.pushState(null, "", `#${id}`);
+
+    const releaseWhenSettled = (
+      startedAt = performance.now()
+    ) => {
+      const isSettled =
+        Math.abs(window.scrollY - targetTop) < 2;
+
+      const timedOut =
+        performance.now() - startedAt > 1800;
+
+      if (isSettled || timedOut) {
+        activeLockRef.current = {
+          id: "",
+          targetTop: 0,
+          timeoutId: null,
+        };
+
+        return;
+      }
+
+      activeLockRef.current.timeoutId =
+        window.setTimeout(
+          () => releaseWhenSettled(startedAt),
+          80
+        );
+    };
+
+    activeLockRef.current.timeoutId =
+      window.setTimeout(
+        () => releaseWhenSettled(),
+        120
+      );
+  };
+
+  useEffect(() => {
+    const root = containerRef?.current;
+
+    if (!root) return;
+
+   const headings = Array.from(
+  root.querySelectorAll("h2")
+).map((el, index) => {
+  if (!el.id) {
+    el.id =
+      el.textContent
+        ?.toLowerCase()
+        .replaceAll(" ", "-")
+        .replace(/[^\w-]/g, "") ||
+      `section-${index}`;
+  }
+
+  return {
+    id: el.id,
+    text: el.textContent || "",
+    level: el.tagName.toLowerCase(),
+  };
+});
+
+    setItems(headings);
+  }, [containerRef, watchKey]);
+
+  useEffect(() => {
+    const root = containerRef?.current;
+
+    if (!root) return;
+
+   const headings = Array.from(
+  root.querySelectorAll("h2")
+);
+
+headings.forEach((el, index) => {
+  if (!el.id) {
+    el.id =
+      el.textContent
+        ?.toLowerCase()
+        .replaceAll(" ", "-")
+        .replace(/[^\w-]/g, "") ||
+      `section-${index}`;
+  }
+});
+    if (headings.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (activeLockRef.current.id) return;
+
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) =>
+            a.boundingClientRect.top >
+              b.boundingClientRect.top
+              ? 1
+              : -1
+          )[0];
+
+        const id = visible?.target?.id;
+
+        if (id) {
+          setActiveId(id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -70% 0px",
+        threshold: [0, 1],
+      }
+    );
+
+    headings.forEach((h) =>
+      observer.observe(h)
+    );
+
+    return () => observer.disconnect();
+  }, [containerRef, items.length]);
+
+  useEffect(() => {
+    return () => {
+      if (activeLockRef.current.timeoutId) {
+        window.clearTimeout(
+          activeLockRef.current.timeoutId
+        );
+      }
+    };
+  }, []);
+
+  if (items.length === 0) return null;
+
+  return (
+    <div className="rounded-lg border border-border/30 bg-black/20 backdrop-blur-md p-5 mt-6">
+      <p className="text-sm font-medium text-muted uppercase tracking-wider mb-3">
+        On this page
+      </p>
+
+      <ul className="space-y-3 mt-8">
+  {items.map((it) => (
+    <li
+      key={it.id}
+      className="text-[0.95vw] max-sm:text-sm cursor-pointer"
+    >
+      <a
+        href={`#${it.id}`}
+        className={[
+          "flex items-center gap-3 origin-left transition-all duration-300 ease-out will-change-transform",
+          activeId === it.id
+            ? "text-foreground scale-[1.06]"
+            : "text-foreground/65 hover:text-foreground hover:scale-[1.04]",
+        ].join(" ")}
+        onClick={(e) => onTocClick(e, it.id)}
+      >
+        <span className="relative h-2 w-2 shrink-0">
+          {activeId === it.id ? (
+            <motion.span
+              layoutId="toc-dot"
+              className="absolute inset-0 rounded-full bg-primary"
+              animate={{
+                scale: [1, 1.25, 1],
+                opacity: [0.85, 1, 0.85],
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 700,
+                damping: 45,
+                opacity: {
+                  duration: 1.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+                scale: {
+                  duration: 1.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+              }}
+            />
+          ) : (
+            <span className="absolute inset-0 rounded-full bg-white/0" />
+          )}
+        </span>
+
+        <span className="transition-all duration-300">
+          {it.text}
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>
+    </div>
+  );
 }

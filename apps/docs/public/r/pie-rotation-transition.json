@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "previewUrl": "/page-transitions/pie-rotation",
   "coverImage": "/assets/list/pie-rotation-transition.png",
-  "videoUrl": "pie-rotation-transition.mp4",
+  "videoUrl": "pie-rotation.mp4",
   "files": [
     {
       "path": "pie-rotation-transition.jsx",
