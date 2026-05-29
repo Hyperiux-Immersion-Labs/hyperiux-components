@@ -1,95 +1,127 @@
 "use client";
 
-import React, { useEffect, useRef } from"react";
-import gsap from"gsap";
-import { SplitText } from"gsap/SplitText";
-import { ScrollTrigger } from"gsap/ScrollTrigger";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+const SPLIT_TYPES = "lines,chars";
+const SPLIT_MASK = "chars";
+const CHARS_CLASS = "char++";
+const INITIAL_Y_PERCENT = 100;
+const INITIAL_ROTATION = 8;
+const ANIMATION_DURATION = 0.5;
+const STAGGER_DELAY = 0.03;
+const ANIMATION_EASE = "power3.out";
+const COPY_WRAPPER_ATTRIBUTE = "data-copy-wrapper";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
 export default function OverFlowStagAnim({
- children,
- animateOnScroll = true,
- delay = 0,
- className ="",
- scrub = true,
- start ="top 90%",
- end ="bottom 60%",
+  children,
+  animateOnScroll = true,
+  delay = 0,
+  className = "",
+  scrub = true,
+  start = "top 90%",
+  end = "bottom 60%",
 }) {
- const containerRef = useRef(null);
- const splitRefs = useRef([]);
- const charsRef = useRef([]);
+  // State and refs
+  const containerRef = useRef(null);
+  const splitRefs = useRef([]);
+  const charactersRef = useRef([]);
 
- useEffect(() => {
- if (!containerRef.current) return;
+  // Effects
+  useEffect(() => {
+    if (!containerRef.current) {
+      return;
+    }
 
- splitRefs.current = [];
- charsRef.current = [];
+    splitRefs.current = [];
+    charactersRef.current = [];
 
- const elements = containerRef.current.hasAttribute("data-copy-wrapper")
- ? Array.from(containerRef.current.children)
- : [containerRef.current];
+    const animationTarget = containerRef.current;
+    const shouldSplitChildren = animationTarget.hasAttribute(
+      COPY_WRAPPER_ATTRIBUTE
+    );
+    const elementsToSplit = shouldSplitChildren
+      ? Array.from(animationTarget.children)
+      : [animationTarget];
 
- let ctx;
+    let context;
 
- const init = async () => {
- await document.fonts.ready;
+    const initializeAnimation = async () => {
+      await document.fonts.ready;
 
- ctx = gsap.context(() => {
- elements.forEach((element) => {
- const split = SplitText.create(element, {
- type:"lines,chars",
- mask:"chars",
- charsClass:"char++",
- reduceWhiteSpace: false,
- });
+      context = gsap.context(() => {
+        elementsToSplit.forEach((element) => {
+          const split = SplitText.create(element, {
+            type: SPLIT_TYPES,
+            mask: SPLIT_MASK,
+            charsClass: CHARS_CLASS,
+            reduceWhiteSpace: false,
+          });
 
- splitRefs.current.push(split);
- charsRef.current.push(...split.chars);
- });
+          splitRefs.current.push(split);
+          charactersRef.current.push(...split.chars);
+        });
 
- gsap.set(charsRef.current, {
- yPercent: 100,
- rotate: 8,
- willChange:"transform",
- });
+        gsap.set(charactersRef.current, {
+          yPercent: INITIAL_Y_PERCENT,
+          rotate: INITIAL_ROTATION,
+          willChange: "transform",
+        });
 
- const animationProps = {
- yPercent: 0,
- rotate: 0,
- duration: 0.5,
- stagger: 0.03,
- ease:"power3.out",
- delay,
- };
+        gsap.set(animationTarget, {
+          opacity: 1,
+        });
 
- if (animateOnScroll) {
- gsap.to(charsRef.current, {
- ...animationProps,
- scrollTrigger: {
- trigger: containerRef.current,
- start,
- end,
- scrub,
- },
- });
- } else {
- gsap.to(charsRef.current, animationProps);
- }
- }, containerRef);
- };
+        const animationProperties = {
+          yPercent: 0,
+          rotate: 0,
+          duration: ANIMATION_DURATION,
+          stagger: STAGGER_DELAY,
+          ease: ANIMATION_EASE,
+          delay,
+        };
 
- init();
+        if (animateOnScroll) {
+          gsap.to(charactersRef.current, {
+            ...animationProperties,
+            scrollTrigger: {
+              trigger: animationTarget,
+              start,
+              end,
+              scrub,
+            },
+          });
 
- return () => {
- if (ctx) ctx.revert();
- splitRefs.current.forEach((split) => split?.revert());
- };
- }, [animateOnScroll, delay, end, scrub, start]);
+          return;
+        }
 
- return (
- <div ref={containerRef} data-copy-wrapper="true" className={className}>
- {children}
- </div>
- );
+        gsap.to(charactersRef.current, animationProperties);
+      }, animationTarget);
+    };
+
+    initializeAnimation();
+
+    return () => {
+      if (context) {
+        context.revert();
+      }
+
+      splitRefs.current.forEach((split) => split?.revert());
+    };
+  }, [animateOnScroll, delay, end, scrub, start]);
+
+  // Return
+  return (
+    <div
+      ref={containerRef}
+      data-copy-wrapper="true"
+      className={`opacity-0 ${className}`.trim()}
+    >
+      {children}
+    </div>
+  );
 }

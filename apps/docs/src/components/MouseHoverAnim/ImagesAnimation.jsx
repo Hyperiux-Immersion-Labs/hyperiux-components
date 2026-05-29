@@ -1,10 +1,19 @@
 "use client";
+
 import React, { useEffect, useRef } from "react";
 import { gsap, Expo } from "gsap";
+
 import "./base.css";
 import { useMouse } from "../hooks/useMouse";
 
-const ImagesAnimation = ({
+const BASE_IMAGE_COUNT = 20;
+const MOBILE_POINTER_QUERY = "(pointer: coarse)";
+const OFFSCREEN_POSITION = -9999;
+const IDLE_DISTANCE_THRESHOLD = 2;
+const TRIGGER_DISTANCE_THRESHOLD = 100;
+const INITIAL_Z_INDEX = 1;
+
+export default function ImagesAnimation({
   enableRotation = true,
   idleSpawn = true,
   idleDelay = 300,
@@ -15,111 +24,122 @@ const ImagesAnimation = ({
   imageMultiplier = 3,
   idlePopOutMultiplier = 1.8,
   idleFadeMultiplier = 1.5,
-}) => {
-  const baseImageCount = 20;
-  const totalImages = baseImageCount * imageMultiplier;
-
-  const contentRef = useRef(null);
+}) {
+  // State and refs
   const imagesRef = useRef([]);
-  const rafRef = useRef(null);
+  const animationFrameRef = useRef(null);
   const idleTimerRef = useRef(null);
-
-  const isMobile = useRef(
-    typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
+  const isMobileRef = useRef(
+    typeof window !== "undefined" &&
+      window.matchMedia(MOBILE_POINTER_QUERY).matches
   );
+  const lastTriggerPositionRef = useRef({ x: 0, y: 0 });
+  const lastIdleSpawnPositionRef = useRef({
+    x: OFFSCREEN_POSITION,
+    y: OFFSCREEN_POSITION,
+  });
+  const zIndexRef = useRef(INITIAL_Z_INDEX);
+  const imageIndexRef = useRef(0);
 
   const { mouse, smoothMouse } = useMouse({
     smooth: true,
     lerpFactor: 0.1,
   });
 
-  const lastTriggerPos = useRef({ x: 0, y: 0 });
-  const lastIdleSpawnPos = useRef({ x: -9999, y: -9999 });
-  const zIndexVal = useRef(1);
-  const imgPosition = useRef(0);
-  const threshold = 100;
+  // Derived values
+  const totalImages = BASE_IMAGE_COUNT * imageMultiplier;
 
   const getMouseDistance = () => {
-    const a = mouse.current;
-    const b = lastTriggerPos.current;
-    return Math.hypot(a.x - b.x, a.y - b.y);
+    const currentMouse = mouse.current;
+    const lastTriggerPosition = lastTriggerPositionRef.current;
+
+    return Math.hypot(
+      currentMouse.x - lastTriggerPosition.x,
+      currentMouse.y - lastTriggerPosition.y
+    );
   };
 
   const getIdleDistance = () => {
-    const a = mouse.current;
-    const b = lastIdleSpawnPos.current;
-    return Math.hypot(a.x - b.x, a.y - b.y);
+    const currentMouse = mouse.current;
+    const lastIdleSpawnPosition = lastIdleSpawnPositionRef.current;
+
+    return Math.hypot(
+      currentMouse.x - lastIdleSpawnPosition.x,
+      currentMouse.y - lastIdleSpawnPosition.y
+    );
   };
 
-  const getCenteredPosition = (width, height, useSmooth = false) => {
-    const source = useSmooth ? smoothMouse.current : mouse.current;
+  const getCenteredPosition = (width, height, useSmoothMouse = false) => {
+    const mouseSource = useSmoothMouse ? smoothMouse.current : mouse.current;
 
     return {
-      x: source.x - width / 2 + cursorOffsetX,
-      y: source.y - height / 2 + cursorOffsetY,
+      x: mouseSource.x - width / 2 + cursorOffsetX,
+      y: mouseSource.y - height / 2 + cursorOffsetY,
     };
   };
 
   const showNextImage = ({
-    useSmoothStart = true,
     lockToCursor = false,
     isIdle = false,
-    overridePos = null,
+    overridePosition = null,
   } = {}) => {
-    const img = imagesRef.current[imgPosition.current];
-    if (!img) return;
+    const image = imagesRef.current[imageIndexRef.current];
 
-    const width = img.offsetWidth;
-    const height = img.offsetHeight;
+    if (!image) {
+      return;
+    }
 
-    gsap.killTweensOf(img);
+    const width = image.offsetWidth;
+    const height = image.offsetHeight;
+
+    gsap.killTweensOf(image);
 
     const startRotation = enableRotation ? gsap.utils.random(-35, 35) : 0;
     const exitRotation = enableRotation ? gsap.utils.random(-15, 15) : 0;
 
-    let startPos, endPos;
+    let startPosition;
+    let endPosition;
 
-    if (overridePos) {
-      startPos = {
-        x: overridePos.x - width / 2 + cursorOffsetX,
-        y: overridePos.y - height / 2 + cursorOffsetY,
+    if (overridePosition) {
+      startPosition = {
+        x: overridePosition.x - width / 2 + cursorOffsetX,
+        y: overridePosition.y - height / 2 + cursorOffsetY,
       };
-      endPos = startPos;
+      endPosition = startPosition;
     } else {
-      startPos = lockToCursor
-        ? getCenteredPosition(width, height, false)
+      startPosition = lockToCursor
+        ? getCenteredPosition(width, height)
         : getCenteredPosition(width, height, true);
-      endPos = getCenteredPosition(width, height, false);
+      endPosition = getCenteredPosition(width, height);
     }
 
     const finalPopOutDuration = isIdle
       ? popOutDuration * idlePopOutMultiplier
       : popOutDuration;
-
     const finalFadeOutDuration = isIdle
       ? fadeOutDuration * idleFadeMultiplier
       : fadeOutDuration;
 
     gsap
       .timeline()
-      .set(img, {
+      .set(image, {
         opacity: 1,
         scale: 0.2,
         rotateZ: startRotation,
-        zIndex: zIndexVal.current,
-        x: startPos.x,
-        y: startPos.y,
+        zIndex: zIndexRef.current,
+        x: startPosition.x,
+        y: startPosition.y,
       })
-      .to(img, {
+      .to(image, {
         ease: isIdle ? "power1.out" : Expo.easeOut,
         rotateZ: 0,
         opacity: 1,
         scale: 1,
         duration: finalPopOutDuration,
-        x: endPos.x,
-        y: endPos.y,
+        x: endPosition.x,
+        y: endPosition.y,
       })
-      .to(img, {
+      .to(image, {
         ease: "power4.inOut",
         opacity: 0,
         rotateZ: exitRotation,
@@ -128,104 +148,105 @@ const ImagesAnimation = ({
         scale: 0,
       });
 
-    zIndexVal.current++;
-    imgPosition.current = (imgPosition.current + 1) % imagesRef.current.length;
+    zIndexRef.current += 1;
+    imageIndexRef.current =
+      (imageIndexRef.current + 1) % imagesRef.current.length;
   };
 
   const scheduleIdleSpawn = () => {
-    if (!idleSpawn) return;
+    if (!idleSpawn) {
+      return;
+    }
 
-    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+    if (idleTimerRef.current) {
+      clearTimeout(idleTimerRef.current);
+    }
 
     idleTimerRef.current = setTimeout(() => {
-      const idleDistance = getIdleDistance();
-
-      if (idleDistance < 2) {
+      if (getIdleDistance() < IDLE_DISTANCE_THRESHOLD) {
         showNextImage({
-          useSmoothStart: false,
           lockToCursor: true,
           isIdle: true,
         });
       }
 
-      lastIdleSpawnPos.current = { ...mouse.current };
+      lastIdleSpawnPositionRef.current = { ...mouse.current };
       scheduleIdleSpawn();
     }, idleDelay);
   };
 
-  const render = () => {
-    if (isMobile.current) {
-      rafRef.current = requestAnimationFrame(render);
+  const runAnimationLoop = () => {
+    if (isMobileRef.current) {
+      animationFrameRef.current = requestAnimationFrame(runAnimationLoop);
       return;
     }
 
-    const distance = getMouseDistance();
+    if (getMouseDistance() > TRIGGER_DISTANCE_THRESHOLD) {
+      showNextImage();
 
-    if (distance > threshold) {
-      showNextImage({
-        useSmoothStart: true,
-        lockToCursor: false,
-        isIdle: false,
-      });
-
-      lastTriggerPos.current = { ...mouse.current };
-      lastIdleSpawnPos.current = { ...mouse.current };
+      lastTriggerPositionRef.current = { ...mouse.current };
+      lastIdleSpawnPositionRef.current = { ...mouse.current };
 
       if (idleSpawn) {
         scheduleIdleSpawn();
       }
     }
 
-    const allInactive = imagesRef.current.every(
-      (img) => img && !gsap.isTweening(img) && img.style.opacity === "0"
+    const allImagesInactive = imagesRef.current.every(
+      (image) => image && !gsap.isTweening(image) && image.style.opacity === "0"
     );
 
-    if (allInactive) {
-      zIndexVal.current = 1;
+    if (allImagesInactive) {
+      zIndexRef.current = INITIAL_Z_INDEX;
     }
 
-    rafRef.current = requestAnimationFrame(render);
+    animationFrameRef.current = requestAnimationFrame(runAnimationLoop);
   };
 
-  const handleTap = (e) => {
-    if (!isMobile.current) return;
+  const onTap = (event) => {
+    if (!isMobileRef.current) {
+      return;
+    }
 
-    const touch = e.changedTouches?.[0] || e;
-    const tapPos = {
+    const touch = event.changedTouches?.[0] || event;
+    const tapPosition = {
       x: touch.clientX,
       y: touch.clientY,
     };
 
     showNextImage({
-      useSmoothStart: false,
-      lockToCursor: false,
-      isIdle: false,
-      overridePos: tapPos,
+      overridePosition: tapPosition,
     });
   };
 
+  // Effects
   useEffect(() => {
-    isMobile.current =
+    isMobileRef.current =
       typeof window !== "undefined" &&
-      window.matchMedia("(pointer: coarse)").matches;
+      window.matchMedia(MOBILE_POINTER_QUERY).matches;
 
-    rafRef.current = requestAnimationFrame(render);
+    animationFrameRef.current = requestAnimationFrame(runAnimationLoop);
 
-    if (idleSpawn && !isMobile.current) {
+    if (idleSpawn && !isMobileRef.current) {
       scheduleIdleSpawn();
     }
 
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
-    };
-  }, [idleSpawn, idleDelay]);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
 
+      if (idleTimerRef.current) {
+        clearTimeout(idleTimerRef.current);
+      }
+    };
+  }, [idleDelay, idleSpawn]);
+
+  // Return
   return (
     <div
       className="content"
-      ref={contentRef}
-      onClick={handleTap}
+      onClick={onTap}
       style={{
         position: "relative",
         width: "100%",
@@ -233,23 +254,23 @@ const ImagesAnimation = ({
         overflow: "hidden",
       }}
     >
-      {Array.from({ length: totalImages }).map((_, i) => {
-        const baseImageIndex = (i % baseImageCount) + 1;
+      {Array.from({ length: totalImages }).map((_, index) => {
+        const baseImageIndex = (index % BASE_IMAGE_COUNT) + 1;
 
         return (
           <img
-            key={i}
+            key={index}
             className="content__img"
             src={`/img/${baseImageIndex}.png`}
             alt={`Trail ${baseImageIndex}`}
-            ref={(el) => {
-              if (el) imagesRef.current[i] = el;
+            ref={(element) => {
+              if (element) {
+                imagesRef.current[index] = element;
+              }
             }}
           />
         );
       })}
     </div>
   );
-};
-
-export default ImagesAnimation;
+}

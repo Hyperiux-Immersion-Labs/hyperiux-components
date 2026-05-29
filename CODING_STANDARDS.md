@@ -53,7 +53,7 @@ Use simple one-line section comments inside long functions:
 // Cleanup
 ```
 
-Keep section headers consistent and plain.
+Keep section headers consistent and plain. Do not draw lines or use decorative divider characters in comments. Use words only.
 
 ---
 
@@ -267,6 +267,31 @@ Always add the `/* glsl */` comment before the template literal — editors and 
 
 Prefer inline `className` strings in JSX. Do not extract Tailwind class lists into separate constants unless there is a strong reason beyond readability.
 
+Keep Tailwind utility classes on the element they style. Do not move a single element's class list into a top-level constant just to shorten JSX.
+
+Gradients are an allowed exception. Long gradient strings may live in module-level constants when that improves readability.
+
+### Responsive prefixes
+
+Use `max-sm:` for mobile-specific overrides and `max-md:` for tablet-specific overrides.
+
+Prefer those breakpoint prefixes consistently instead of mixing multiple mobile/tablet targeting patterns within the same component.
+
+### Avoid one-off constants
+
+Do not create a top-level constant for a value used only once or twice unless it meaningfully improves clarity.
+
+Good candidates for constants:
+- Reused values
+- Sentinel values
+- Thresholds that affect behavior
+- Long gradients or similarly verbose static strings
+
+Bad candidates for constants:
+- A single `start` string used in one GSAP config
+- A one-off `clamp(...)` font size used in one element
+- A single Tailwind class fragment used by one element
+
 ### When to use `mb-*`/`mt-*`
 
 Only when the element is **not** inside a flex/grid parent, or when you need asymmetric spacing that `gap` can't express.
@@ -440,10 +465,10 @@ let mouseJustEntered = false; // <-- NEW: snap flag
 
 ### Section headers in long functions
 
-Use the divider style for sections longer than ~10 lines:
+Use short word-only section comments for sections longer than ~10 lines:
 
 ```js
-// ─── Grid Layout ──
+// Grid layout
 ```
 
 ---
@@ -506,17 +531,17 @@ export default function ...
   ── Return (JSX)
 ```
 
-**Section dividers** inside long functions (like a `useEffect` with Three.js):
+**Section comments** inside long functions (like a `useEffect` with Three.js):
 
 ```js
-// ─── Renderer & Scene ──────────────────────────────────────────────────────
-// ─── Mouse State ───────────────────────────────────────────────────────────
-// ─── Grid Layout ───────────────────────────────────────────────────────────
-// ─── Animation Loop ────────────────────────────────────────────────────────
-// ─── Cleanup ───────────────────────────────────────────────────────────────
+// Renderer and scene
+// Mouse state
+// Grid layout
+// Animation loop
+// Cleanup
 ```
 
-Use `─` (U+2500) to draw the line. Keep section headers consistent.
+Keep section headers consistent, plain, and word-only. Do not draw lines or use decorative divider characters in comments.
 
 ---
 
@@ -848,10 +873,33 @@ let mouseJustEntered = false; // <-- NEW: snap flag
 
 ### Section headers in long functions
 
-Use the divider style for sections longer than ~10 lines:
+Use short word-only section comments for sections longer than ~10 lines:
 
 ```js
-// ─── Grid Layout ───────────────────────────────────────────────────────────
+// Grid layout
+```
+
+### Keep Tailwind classes on the element
+
+For component markup, keep `className` strings directly on the JSX element they style.
+Do not extract Tailwind utility strings into top-level constants just to shorten JSX unless there is a strong, practical reason.
+
+Gradients are okay to define at the top when the string is long enough to hurt readability inline.
+
+### Avoid one-off constants
+
+Do not extract a value into a top-level constant if it is only used once or twice and the inline value is still clear.
+
+Prefer constants for reused values, sentinel values, thresholds, and long static strings like gradients.
+
+```jsx
+// Bad
+const CARD_CLASS_NAME = "rounded-2xl border border-white/10 bg-black/20 p-6";
+
+<div className={CARD_CLASS_NAME} />
+
+// Good
+<div className="rounded-2xl border border-white/10 bg-black/20 p-6" />
 ```
 
 ---

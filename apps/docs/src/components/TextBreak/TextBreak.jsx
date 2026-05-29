@@ -1,8 +1,38 @@
-'use client'
-import { useEffect, useRef, useMemo } from "react";
+'use client';
+
+import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
+
+const BASE_HEIGHT_VH = 600;
+const MIN_HEIGHT_VH = 300;
+const MAX_HEIGHT_VH = 2000;
+const BASE_WORD_COUNT = 20;
+const INTRO_FADE_DISTANCE = 120;
+const CHARACTER_SPLIT_TYPE = "chars,words";
+const CHARACTER_Y_PERCENT_MIN = -200;
+const CHARACTER_Y_PERCENT_MAX = 200;
+const CHARACTER_ROTATION_MIN = -20;
+const CHARACTER_ROTATION_MAX = 20;
+const CHARACTER_EASE = "elastic.out(1,0.8)";
+const GLOW_BACKGROUND =
+  "radial-gradient(ellipse 70% 55% at 50% 52%, rgba(255,255,255,0.06) 0%, transparent 70%)";
+const BOTTOM_RULE_BACKGROUND =
+  "linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent)";
+
+const getDynamicHeight = (text) => {
+  const trimmedText = text.trim();
+  const words = trimmedText ? trimmedText.split(/\s+/).length : 0;
+  const scale = words / BASE_WORD_COUNT;
+  const calculatedHeight = BASE_HEIGHT_VH * scale;
+  const clampedHeight = Math.max(
+    MIN_HEIGHT_VH,
+    Math.min(calculatedHeight, MAX_HEIGHT_VH)
+  );
+
+  return `${clampedHeight}vh`;
+};
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -11,45 +41,53 @@ export default function TextBreak({
   bgColor = "bg-black",
   textColor = "text-white",
 }) {
+  // State and refs
   const sectionRef = useRef(null);
-  const wrapperRef = useRef(null);
   const textRef = useRef(null);
   const introRef = useRef(null);
 
-  // Height based on word count + baseline 600vh
-  const dynamicHeight = useMemo(() => {
-    const words = text.trim().split(/\s+/).length;
-    const baseHeight = 600;
-    const baseWords = 20;
-    const scale = words / baseWords;
-    const calculated = baseHeight * scale;
-    const clamped = Math.max(300, Math.min(calculated, 2000));
-    return `${clamped}vh`;
-  }, [text]);
+  // Derived values
+  const dynamicHeight = useMemo(() => getDynamicHeight(text), [text]);
 
-  // Fade out intro on scroll — tied to scroll progress within the section
+  // Effects
   useEffect(() => {
-    const intro = introRef.current;
-    if (!intro) return;
+    const introElement = introRef.current;
+
+    if (!introElement) {
+      return;
+    }
 
     const onScroll = () => {
       const scrollY = window.scrollY;
       const sectionTop = sectionRef.current?.offsetTop ?? 0;
-      const progress = Math.min((scrollY - sectionTop) / 120, 1);
-      intro.style.opacity = String(1 - progress);
+      const fadeProgress = Math.min(
+        (scrollY - sectionTop) / INTRO_FADE_DISTANCE,
+        1
+      );
+
+      introElement.style.opacity = String(1 - fadeProgress);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const textEl = textRef.current;
+    const context = gsap.context(() => {
+      const textElement = textRef.current;
 
-      const split = SplitText.create(textEl, { type: "chars,words" });
+      if (!textElement) {
+        return;
+      }
 
-      const scrollTween = gsap.to(textEl, {
+      const split = SplitText.create(textElement, {
+        type: CHARACTER_SPLIT_TYPE,
+      });
+
+      const scrollTween = gsap.to(textElement, {
         xPercent: -100,
         ease: "linear",
         scrollTrigger: {
@@ -63,13 +101,19 @@ export default function TextBreak({
         },
       });
 
-      split.chars.forEach((char) => {
-        gsap.from(char, {
-          yPercent: gsap.utils.random(-200, 200),
-          rotation: gsap.utils.random(-20, 20),
-          ease: "elastic.out(1,0.8)",
+      split.chars.forEach((character) => {
+        gsap.from(character, {
+          yPercent: gsap.utils.random(
+            CHARACTER_Y_PERCENT_MIN,
+            CHARACTER_Y_PERCENT_MAX
+          ),
+          rotation: gsap.utils.random(
+            CHARACTER_ROTATION_MIN,
+            CHARACTER_ROTATION_MAX
+          ),
+          ease: CHARACTER_EASE,
           scrollTrigger: {
-            trigger: char,
+            trigger: character,
             containerAnimation: scrollTween,
             start: "left 100%",
             end: "left 30%",
@@ -79,25 +123,25 @@ export default function TextBreak({
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      context.revert();
+    };
   }, [text]);
 
+  // Return
   return (
     <div
       ref={sectionRef}
       className={`relative ${bgColor}`}
       style={{ height: dynamicHeight }}
     >
-      {/* ── Sticky viewport container — rendered first so it's in the viewport from scroll 0 ── */}
       <div
-        ref={wrapperRef}
-        className="sticky top-0 h-screen flex items-center"
+        className="sticky top-0 flex h-screen items-center"
         style={{ overflow: "clip" }}
       >
-        {/* Horizontally scrolling text */}
         <h3
           ref={textRef}
-          className={`flex whitespace-nowrap gap-[4vw] font-sans! tracking-tighter pl-[100vw] font-bold leading-[1.1] ${textColor}`}
+          className={`flex whitespace-nowrap gap-[4vw] pl-[100vw] font-bold leading-[1.1] tracking-tighter font-sans! ${textColor}`}
           style={{
             fontSize: "clamp(2rem, 10vw, 12rem)",
             width: "max-content",
@@ -106,23 +150,19 @@ export default function TextBreak({
           {text}
         </h3>
 
-        {/* ── Intro overlay — absolute inside the sticky container so it sits on top ── */}
         <div
           ref={introRef}
-          className="absolute inset-0 z-20 pointer-events-none"
+          className="pointer-events-none absolute inset-0 z-20"
         >
-          {/* Radial glow blob */}
           <div
             style={{
               position: "absolute",
               inset: 0,
-              background:
-                "radial-gradient(ellipse 70% 55% at 50% 52%, rgba(255,255,255,0.06) 0%, transparent 70%)",
+              background: GLOW_BACKGROUND,
               pointerEvents: "none",
             }}
           />
 
-          {/* Top-left label */}
           <span
             style={{
               position: "absolute",
@@ -138,7 +178,6 @@ export default function TextBreak({
             scroll experience
           </span>
 
-          {/* Top-right label */}
           <span
             style={{
               position: "absolute",
@@ -154,7 +193,6 @@ export default function TextBreak({
             v1.0
           </span>
 
-          {/* Centre content */}
           <div
             style={{
               position: "absolute",
@@ -166,17 +204,22 @@ export default function TextBreak({
               gap: "2.4rem",
             }}
           >
-            {/* Decorative grid lines */}
             <svg
               width="320"
               height="1"
               style={{ opacity: 0.12 }}
               xmlns="http://www.w3.org/2000/svg"
             >
-              <line x1="0" y1="0" x2="320" y2="0" stroke="white" strokeWidth="1" />
+              <line
+                x1="0"
+                y1="0"
+                x2="320"
+                y2="0"
+                stroke="white"
+                strokeWidth="1"
+              />
             </svg>
 
-            {/* Eyebrow */}
             <p
               style={{
                 fontFamily: "'Courier New', monospace",
@@ -190,7 +233,6 @@ export default function TextBreak({
               — kinetic typography —
             </p>
 
-            {/* Main headline */}
             <h2
               style={{
                 margin: 0,
@@ -206,12 +248,16 @@ export default function TextBreak({
             >
               Words
               <br />
-              <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.45)" }}>
+              <em
+                style={{
+                  fontStyle: "italic",
+                  color: "rgba(255,255,255,0.45)",
+                }}
+              >
                 in motion.
               </em>
             </h2>
 
-            {/* Sub copy */}
             <p
               style={{
                 margin: 0,
@@ -229,8 +275,14 @@ export default function TextBreak({
               Drag the page downward to begin.
             </p>
 
-            {/* Animated scroll caret */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.3rem" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "0.3rem",
+              }}
+            >
               <span
                 style={{
                   fontFamily: "'Courier New', monospace",
@@ -242,8 +294,14 @@ export default function TextBreak({
               >
                 scroll
               </span>
-              {/* Animated chevrons */}
-              <svg width="20" height="28" viewBox="0 0 20 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+              <svg
+                width="20"
+                height="28"
+                viewBox="0 0 20 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <style>{`
                   .chev1 { animation: fadeDown 1.4s ease-in-out infinite; }
                   .chev2 { animation: fadeDown 1.4s ease-in-out 0.22s infinite; }
@@ -254,14 +312,37 @@ export default function TextBreak({
                     100% { opacity: 0.08; transform: translateY(-3px); }
                   }
                 `}</style>
-                <polyline className="chev1" points="2,2 10,9 18,2" stroke="white" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline className="chev2" points="2,10 10,17 18,10" stroke="white" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline className="chev3" points="2,18 10,25 18,18" stroke="white" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                <polyline
+                  className="chev1"
+                  points="2,2 10,9 18,2"
+                  stroke="white"
+                  strokeWidth="1.4"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <polyline
+                  className="chev2"
+                  points="2,10 10,17 18,10"
+                  stroke="white"
+                  strokeWidth="1.4"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <polyline
+                  className="chev3"
+                  points="2,18 10,25 18,18"
+                  stroke="white"
+                  strokeWidth="1.4"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </div>
           </div>
 
-          {/* Bottom-left corner mark */}
           <span
             style={{
               position: "absolute",
@@ -277,7 +358,6 @@ export default function TextBreak({
             gsap · splittext
           </span>
 
-          {/* Bottom thin rule */}
           <div
             style={{
               position: "absolute",
@@ -285,8 +365,7 @@ export default function TextBreak({
               left: "10%",
               right: "10%",
               height: "1px",
-              background:
-                "linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent)",
+              background: BOTTOM_RULE_BACKGROUND,
             }}
           />
         </div>

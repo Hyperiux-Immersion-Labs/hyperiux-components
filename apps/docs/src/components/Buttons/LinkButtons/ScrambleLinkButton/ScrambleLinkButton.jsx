@@ -1,127 +1,154 @@
 "use client";
 
-import React, { useEffect, useRef } from"react";
-import Link from"next/link";
-import { ArrowRight } from"lucide-react";
-import"./ScrambleLinkButton.css";
+import React, { useEffect, useRef } from "react";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
-const GLYPHS =
-"abcdefghijklmnopqrstuvwxyz0123456789";
+import "./ScrambleLinkButton.css";
 
-const ScrambleLinkButton = ({
- text ="",
- href ="#",
- className ="",
- textClassName ="",
- linkProps = {},
- children,
- hoverColor ="#ff6b00",
- showLine = false,
- lineClassName ="",
- showArrow = false,
- icon: Icon = ArrowRight,
- iconClassName ="",
- scrambleDuration = 700,
- stepMs = 30,
- revealStagger = 1.4,
- onClick,
- ...props
-}) => {
- const scrambleRef = useRef(null);
- const timeoutRef = useRef(null);
+const DEFAULT_TEXT = "";
+const DEFAULT_HREF = "#";
+const DEFAULT_HOVER_COLOR = "#ff6b00";
+const DEFAULT_SCRAMBLE_DURATION = 700;
+const DEFAULT_STEP_MS = 30;
+const DEFAULT_REVEAL_STAGGER = 1.4;
+const GLYPHS = "abcdefghijklmnopqrstuvwxyz0123456789";
 
- const finalText = typeof children ==="string" ? children : text;
+function getScrambledText({
+  finalText,
+  iteration,
+  maxIterations,
+  revealStagger,
+}) {
+  let output = "";
 
- useEffect(() => {
- if (scrambleRef.current) {
- scrambleRef.current.textContent = finalText;
- }
+  for (let index = 0; index < finalText.length; index += 1) {
+    const char = finalText[index];
 
- return () => {
- if (timeoutRef.current) clearTimeout(timeoutRef.current);
- };
- }, [finalText]);
+    if (char === " ") {
+      output += char;
+      continue;
+    }
 
- const scrambleToText = () => {
- const el = scrambleRef.current;
- if (!el) return;
+    const revealThreshold =
+      (((index + 1) / finalText.length) * maxIterations) / revealStagger;
 
- if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (iteration >= revealThreshold) {
+      output += char;
+      continue;
+    }
 
- let iteration = 0;
- const maxIterations = Math.max(1, Math.floor(scrambleDuration / stepMs));
+    output += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+  }
 
- const run = () => {
- let output ="";
+  return output;
+}
 
- for (let i = 0; i < finalText.length; i++) {
- const char = finalText[i];
+export default function ScrambleLinkButton({
+  text = DEFAULT_TEXT,
+  href = DEFAULT_HREF,
+  className = "",
+  textClassName = "",
+  linkProps = {},
+  children,
+  hoverColor = DEFAULT_HOVER_COLOR,
+  showLine = false,
+  lineClassName = "",
+  showArrow = false,
+  icon: Icon = ArrowRight,
+  iconClassName = "",
+  scrambleDuration = DEFAULT_SCRAMBLE_DURATION,
+  stepMs = DEFAULT_STEP_MS,
+  revealStagger = DEFAULT_REVEAL_STAGGER,
+  onClick,
+  ...props
+}) {
+  const scrambleRef = useRef(null);
+  const timeoutRef = useRef(null);
 
- if (char ==="") {
- output +="";
- continue;
- }
+  // Derived values
+  const finalText = typeof children === "string" ? children : text;
+  const innerClassName = `scramble-link-btn__inner ${
+    showLine ? `scramble-link-line ${lineClassName}` : ""
+  }`;
 
- const revealThreshold =
- (((i + 1) / finalText.length) * maxIterations) / revealStagger;
+  useEffect(() => {
+    // Text sync
+    if (scrambleRef.current) {
+      scrambleRef.current.textContent = finalText;
+    }
 
- if (iteration >= revealThreshold) {
- output += char;
- } else {
- output += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
- }
- }
+    // Cleanup
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [finalText]);
 
- el.textContent = output;
+  const onMouseEnter = () => {
+    const element = scrambleRef.current;
 
- if (iteration < maxIterations) {
- iteration += 1;
- timeoutRef.current = setTimeout(run, stepMs);
- } else {
- el.textContent = finalText;
- }
- };
+    if (!element || !finalText.length) {
+      return;
+    }
 
- run();
- };
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
 
- return (
- <Link
- href={href}
- {...linkProps}
- {...props}
- onClick={onClick}
- onMouseEnter={scrambleToText}
- className={`scramble-link-btn inline-flex items-center gap-2 ${className}`}
- style={{"--scramble-hover-color": hoverColor }}
- >
- <span
- className={`scramble-link-btn__inner ${
- showLine ? `scramble-link-line ${lineClassName}` :""
- }`}
- >
- {/* Invisible layout text keeps width stable */}
- <span className={`scramble-link-btn__ghost ${textClassName}`}>
- {finalText}
- </span>
+    let iteration = 0;
+    const maxIterations = Math.max(1, Math.floor(scrambleDuration / stepMs));
 
- {/* Visible scrambled overlay */}
- <span
- ref={scrambleRef}
- className={`scramble-link-btn__text ${textClassName}`}
- aria-label={finalText}
- >
- {finalText}
- </span>
- </span>
+    const runScramble = () => {
+      element.textContent = getScrambledText({
+        finalText,
+        iteration,
+        maxIterations,
+        revealStagger,
+      });
 
- {showArrow && Icon && (
- <span className={`scramble-link-btn__icon ${iconClassName}`}>
- <Icon className="scramble-link-btn__svg" />
- </span>
- )}
- </Link>
- );
-};
+      if (iteration >= maxIterations) {
+        element.textContent = finalText;
+        return;
+      }
 
-export default ScrambleLinkButton;
+      iteration += 1;
+      timeoutRef.current = setTimeout(runScramble, stepMs);
+    };
+
+    runScramble();
+  };
+
+  return (
+    <Link
+      href={href}
+      {...linkProps}
+      {...props}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      className={`scramble-link-btn inline-flex items-center gap-2 ${className}`}
+      style={{ "--scramble-hover-color": hoverColor }}
+    >
+      <span className={innerClassName}>
+        <span className={`scramble-link-btn__ghost ${textClassName}`}>
+          {finalText}
+        </span>
+
+        <span
+          ref={scrambleRef}
+          className={`scramble-link-btn__text ${textClassName}`}
+          aria-label={finalText}
+        >
+          {finalText}
+        </span>
+      </span>
+
+      {showArrow && Icon && (
+        <span className={`scramble-link-btn__icon ${iconClassName}`}>
+          <Icon className="scramble-link-btn__svg" />
+        </span>
+      )}
+    </Link>
+  );
+}
