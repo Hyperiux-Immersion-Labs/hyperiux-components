@@ -12,8 +12,8 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/video-player",
-  "coverImage": "/assets/list/custom-video-player.png",
-  "videoUrl": "custom-video-player.mp4",
+  "coverImage": "/assets/list/video-player.png",
+  "videoUrl": "video-player.mp4",
   "files": [
     {
       "path": "custom-video-player.jsx",

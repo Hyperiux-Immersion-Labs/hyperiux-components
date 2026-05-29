@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "previewUrl": "/donut-particles",
   "coverImage": "/assets/img/image04.png",
-  "videoUrl": null,
+  "videoUrl": "donut-particles.mp4",
   "files": [
     {
       "path": "donut-particles.jsx",

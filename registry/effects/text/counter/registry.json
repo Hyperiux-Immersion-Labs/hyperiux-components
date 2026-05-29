@@ -7,7 +7,7 @@
   "dependencies": ["gsap"],
   "registryDependencies": [],
   "coverImage": "/assets/img/image12.png",
-  "videoUrl": null,
+  "videoUrl": "/counter.mp4",
   "previewUrl": "/counter"
 }
 

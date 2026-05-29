@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/cursor-move",
   "coverImage": "/assets/img/image05.png",
-  "videoUrl": null,
+  "videoUrl": "cursor-move.mp4",
   "files": [
     {
       "path": "cursor-move.jsx",

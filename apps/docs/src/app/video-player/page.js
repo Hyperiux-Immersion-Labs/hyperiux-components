@@ -10,7 +10,7 @@ export default function Page() {
  {/* LEFT VIDEO */}
  <div className="video-section__video">
  <VideoPlayer
- videoSrc="/assets/videoplayer/video-player.mp4"
+ videoSrc="showreel.mp4"
  poster="/assets/videoplayer/poster.png"
  autoPlay
  startMuted

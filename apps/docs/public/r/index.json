@@ -310,7 +310,7 @@
       ],
       "previewUrl": "/square-translate",
       "coverImage": "/assets/list/square-translate.png",
-      "videoUrl": "square-translate",
+      "videoUrl": "square-translate.mp4",
       "addedAt": 1779961997324.0454
     },
     {
@@ -471,7 +471,7 @@
       "dependencies": [],
       "previewUrl": "/cursor-move",
       "coverImage": "/assets/img/image05.png",
-      "videoUrl": null,
+      "videoUrl": "cursor-move.mp4",
       "addedAt": 1780033385471.9756
     },
     {
@@ -503,7 +503,7 @@
       "dependencies": [],
       "previewUrl": "/full-screen-crosshair",
       "coverImage": "/assets/img/image06.png",
-      "videoUrl": null,
+      "videoUrl": "full-screen-crosshair.mp4",
       "addedAt": 1780033385521.4321
     },
     {
@@ -833,7 +833,7 @@
       ],
       "previewUrl": "/counter",
       "coverImage": "/assets/img/image01.webp",
-      "videoUrl": null,
+      "videoUrl": "/counter.mp4",
       "addedAt": 1780034080094.5066
     },
     {
@@ -1254,7 +1254,7 @@
       ],
       "previewUrl": "/book-flip",
       "coverImage": "/assets/img/image07.png",
-      "videoUrl": null,
+      "videoUrl": "book-flip.mp4",
       "addedAt": 1780033740008.63
     },
     {
@@ -1277,7 +1277,7 @@
       ],
       "previewUrl": "/colliding-models",
       "coverImage": "/assets/img/image01.webp",
-      "videoUrl": null,
+      "videoUrl": "colliding-models.mp4",
       "addedAt": 1780033740097.651
     },
     {
@@ -1292,8 +1292,8 @@
         "lucide-react"
       ],
       "previewUrl": "/video-player",
-      "coverImage": "/assets/list/custom-video-player.png",
-      "videoUrl": "custom-video-player.mp4",
+      "coverImage": "/assets/list/video-player.png",
+      "videoUrl": "video-player.mp4",
       "addedAt": 1779961997312.743
     },
     {
@@ -1387,7 +1387,7 @@
       ],
       "previewUrl": "/hyperiux-glitter-concept",
       "coverImage": "/assets/img/image01.webp",
-      "videoUrl": null,
+      "videoUrl": "/hyperiux-glitter-concept.mp4",
       "addedAt": 1780033740184.2185
     },
     {
@@ -1468,7 +1468,7 @@
       ],
       "previewUrl": "/portfolio-concept",
       "coverImage": "/assets/img/image11.png",
-      "videoUrl": null,
+      "videoUrl": "portfolio-concept.mp4",
       "addedAt": 1780033740357.1067
     },
     {
@@ -1688,7 +1688,7 @@
       ],
       "previewUrl": "/donut-particles",
       "coverImage": "/assets/img/image04.png",
-      "videoUrl": null,
+      "videoUrl": "donut-particles.mp4",
       "addedAt": 1780033112376.8445
     },
     {

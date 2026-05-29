@@ -15,7 +15,7 @@
   "registryDependencies": [],
   "previewUrl": "/portfolio-concept",
   "coverImage": "/assets/img/image11.png",
-  "videoUrl": null,
+  "videoUrl": "portfolio-concept.mp4",
   "files": [
     {
       "path": "portfolio-concept.jsx",

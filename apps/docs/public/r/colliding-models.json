@@ -20,7 +20,7 @@
   "registryDependencies": [],
   "previewUrl": "/colliding-models",
   "coverImage": "/assets/img/image01.webp",
-  "videoUrl": null,
+  "videoUrl": "colliding-models.mp4",
   "files": [
     {
       "path": "colliding-models.jsx",

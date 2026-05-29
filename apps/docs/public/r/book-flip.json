@@ -15,7 +15,7 @@
   "registryDependencies": [],
   "previewUrl": "/book-flip",
   "coverImage": "/assets/img/image07.png",
-  "videoUrl": null,
+  "videoUrl": "book-flip.mp4",
   "files": [
     {
       "path": "book-flip.jsx",

@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/infinite-grid-gallery",
   "coverImage": "/assets/img/image01.webp",
-  "videoUrl": null,
+  "videoUrl": "infinite-grid-gallery.mp4",
   "files": [
     {
       "path": "infinite-grid-gallery.jsx",

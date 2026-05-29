@@ -7,6 +7,6 @@
   "dependencies": ["three", "@react-three/fiber"],
   "registryDependencies": [],
   "coverImage": "/assets/img/image04.png",
-  "videoUrl": null,
+  "videoUrl": "donut-particles.mp4",
   "previewUrl": "/donut-particles"
 }

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Volume2, VolumeX, Play, Pause, X } from "lucide-react";
-import "./VideoPlayer.css";
 
 const formatTime = (time) => {
   if (!Number.isFinite(time)) return "0:00";
@@ -27,7 +26,7 @@ const VideoPlayer = ({
   startMuted = true,
   isActive = true,
   className = "",
-  rounded = true,
+  rounded = false,
   onRequestClose,
   showCloseButton = true,
   resetOnClose = true,
@@ -314,18 +313,26 @@ const VideoPlayer = ({
     setShowControls(false);
   };
 
+  const visibilityClasses = showControls
+    ? "opacity-100 pointer-events-auto"
+    : "pointer-events-none opacity-0";
+
   return (
     <div
-      className={`video-player ${rounded ? "video-player--rounded" : ""} ${className}`}
+      className={`h-full w-full ${className}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={revealControls}
       onTouchStart={revealControls}
     >
-      <div className="video-player__wrap">
+      <div
+        className={`relative h-full w-full overflow-hidden bg-black ${
+          rounded ? "md:rounded-[2vw]" : ""
+        }`}
+      >
         <video
           ref={videoRef}
-          className="video-player__video"
+          className="block h-full w-full bg-black object-cover"
           src={videoSrc}
           poster={poster}
           playsInline
@@ -335,9 +342,7 @@ const VideoPlayer = ({
 
         <button
           type="button"
-          className={`video-player__center-control ${
-            showControls ? "is-visible" : "is-hidden"
-          }`}
+          className={`absolute left-1/2 top-1/2 z-3 flex min-h-15 min-w-15 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-black/40 text-white backdrop-blur-sm transition-[opacity,transform] duration-300 ease-in-out h-[16vw] w-[16vw] min-[541px]:h-[8vw] min-[541px]:w-[8vw] xl:h-[5.5vw] xl:w-[5.5vw] 2xl:h-[4.5vw] 2xl:w-[4.5vw] ${visibilityClasses}`}
           onClick={handleTogglePlay}
           aria-label={isPlaying ? "Pause video" : "Play video"}
         >
@@ -347,9 +352,7 @@ const VideoPlayer = ({
         {showCloseButton && typeof onRequestClose === "function" && (
           <button
             type="button"
-            className={`video-player__close ${
-              showControls ? "is-visible" : "is-hidden"
-            }`}
+            className={`absolute right-4 top-4 z-5 flex min-h-10.5 min-w-10.5 cursor-pointer items-center justify-center rounded-full border-none bg-black/45 text-white backdrop-blur-sm transition-[opacity,transform,background-color] duration-300 ease-in-out hover:scale-[1.04] hover:bg-black/65 h-[11vw] w-[11vw] min-[541px]:right-[2.4vw] min-[541px]:top-[2.4vw] min-[541px]:h-[5.5vw] min-[541px]:w-[5.5vw] xl:right-[1.8vw] xl:top-[1.8vw] xl:h-[3.8vw] xl:w-[3.8vw] 2xl:right-[1.5vw] 2xl:top-[1.5vw] 2xl:h-[3vw] 2xl:w-[3vw] ${visibilityClasses}`}
             onClick={(e) => {
               e.stopPropagation();
               handleClose();
@@ -362,47 +365,45 @@ const VideoPlayer = ({
         )}
 
         <div
-          className={`video-player__controls ${
-            showControls ? "is-visible" : "is-hidden"
-          }`}
+          className={`absolute bottom-[3vw] left-[3vw] right-[3vw] z-4 grid grid-cols-[auto_auto_1fr_auto_auto] items-center gap-[2vw] rounded-full bg-black/50 px-[3vw] py-[2.6vw] backdrop-blur-[10px] transition-[opacity,transform] duration-300 ease-in-out min-[541px]:bottom-[2vw] min-[541px]:left-[2vw] min-[541px]:right-[2vw] min-[541px]:gap-[1.6vw] min-[541px]:px-[1.8vw] min-[541px]:py-[1.6vw] xl:bottom-[1.5vw] xl:left-[1.5vw] xl:right-[1.5vw] xl:gap-[1.1vw] xl:px-[1.2vw] xl:py-[1vw] 2xl:bottom-[1.2vw] 2xl:left-[1.2vw] 2xl:right-[1.2vw] 2xl:gap-[0.9vw] 2xl:px-[1vw] 2xl:py-[0.9vw] ${visibilityClasses}`}
         >
           <button
             type="button"
-            className="video-player__icon-btn"
+            className="flex h-[9vw] w-[9vw] min-h-9.5 min-w-9.5 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent text-white min-[541px]:h-[4.5vw] min-[541px]:w-[4.5vw] xl:h-[3vw] xl:w-[3vw] 2xl:h-[2.5vw] 2xl:w-[2.5vw]"
             onClick={handleTogglePlay}
             aria-label={isPlaying ? "Pause video" : "Play video"}
           >
             {isPlaying ? <Pause size={18} /> : <Play size={18} />}
           </button>
 
-          <div className="video-player__time">
+          <div className="whitespace-nowrap text-[3vw] leading-none text-white min-[541px]:text-[1.8vw] xl:text-[1.1vw] 2xl:text-[0.95vw]">
             <span>{formatTime(currentTime)}</span>
           </div>
 
           <div
             ref={progressBarRef}
-            className="video-player__progress"
+            className="relative flex h-[4vw] w-full cursor-pointer items-center min-h-4.5 min-[541px]:h-[2vw] xl:h-[1.4vw] 2xl:h-[1.2vw]"
             onClick={handleProgressClick}
             onPointerDown={handlePointerDown}
           >
-            <div className="video-player__progress-track" />
+            <div className="pointer-events-none absolute inset-x-0 h-[1vw] rounded-full bg-white/20 min-h-1 min-[541px]:h-[0.45vw] xl:h-[0.32vw] 2xl:h-[0.25vw]" />
             <div
-              className="video-player__progress-fill"
+              className="pointer-events-none absolute left-0 h-[1vw] rounded-full bg-white min-h-1 min-[541px]:h-[0.45vw] xl:h-[0.32vw] 2xl:h-[0.25vw]"
               style={{ width: `${progress}%` }}
             />
             <div
-              className="video-player__progress-thumb"
+              className="pointer-events-none absolute top-1/2 h-[3vw] w-[3vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white min-h-3.5 min-w-3.5 min-[541px]:h-[1.6vw] min-[541px]:w-[1.6vw] xl:h-[1vw] xl:w-[1vw] 2xl:h-[0.9vw] 2xl:w-[0.9vw]"
               style={{ left: `${progress}%` }}
             />
           </div>
 
-          <div className="video-player__time">
+          <div className="whitespace-nowrap text-[3vw] leading-none text-white min-[541px]:text-[1.8vw] xl:text-[1.1vw] 2xl:text-[0.95vw]">
             <span>{formatTime(duration)}</span>
           </div>
 
           <button
             type="button"
-            className="video-player__icon-btn"
+            className="flex h-[9vw] w-[9vw] min-h-9.5 min-w-9.5 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent text-white min-[541px]:h-[4.5vw] min-[541px]:w-[4.5vw] xl:h-[3vw] xl:w-[3vw] 2xl:h-[2.5vw] 2xl:w-[2.5vw]"
             onClick={handleToggleMute}
             aria-label={isMuted ? "Unmute video" : "Mute video"}
           >

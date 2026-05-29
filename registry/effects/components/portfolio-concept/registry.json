@@ -7,7 +7,7 @@
   "dependencies": ["gsap", "next", "lenis"],
   "registryDependencies": [],
   "coverImage": "/assets/img/image11.png",
-  "videoUrl": null,
+  "videoUrl": "portfolio-concept.mp4",
   "previewUrl": "/portfolio-concept"
 }
 
