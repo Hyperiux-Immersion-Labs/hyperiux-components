@@ -1,4 +1,10 @@
 import { withSentryConfig } from "@sentry/nextjs";
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const REPO_ROOT = path.join(__dirname, "..", "..");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -21,7 +27,7 @@ const nextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+const sentryConfig = withSentryConfig(nextConfig, {
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
 
@@ -36,3 +42,7 @@ export default withSentryConfig(nextConfig, {
     disable: !process.env.NEXT_PUBLIC_SENTRY_DSN,
   },
 });
+
+// Keep local development as close to plain Next.js as possible.
+// This avoids extra config wrapping and broader-than-needed dev watching.
+export default process.env.NODE_ENV === "development" ? nextConfig : sentryConfig;

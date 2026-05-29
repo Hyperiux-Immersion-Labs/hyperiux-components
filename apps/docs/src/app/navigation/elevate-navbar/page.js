@@ -1,8 +1,8 @@
 // import GlassPillDesktopNav from '@/components/Navbar/GlassPillNavbar/GlassPillDesktopNav'
 import React from 'react'
 // import GlassPillMobileNav from '@/components/Navbar/GlassPillNavbar/GlassPillMobileNav'
-import ElevateNavbarDesktop from '@/components/Navbar/GlassPillNavbar/GlassPillDesktopNav'
-import ElevateNavbarMobile from '@/components/Navbar/GlassPillNavbar/GlassPillMobileNav'
+import ElevateNavbarDesktop from '@/components/Navbar/GlassPillNavbar/ElevateDesktopNav'
+import ElevateNavbarMobile from '@/components/Navbar/GlassPillNavbar/ElevateMobileNav'
 
 export default function page() {
     return (

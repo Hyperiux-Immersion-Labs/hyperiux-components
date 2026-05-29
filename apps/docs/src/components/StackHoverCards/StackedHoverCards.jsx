@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useMemo, useState } from"react";
-import"./StackedHoverCards.css";
 
 const PRESET_ROTATIONS = [-8, 4, -3, 5, -4, 6, 3, -6, 2, -5];
 
@@ -84,38 +83,40 @@ const StackedHoverCards = ({
  : cardWidth;
 
  return (
- <div className={`shc ${className}`}>
+ <div className={`relative w-full px-[7vw] ${className}`}>
  {/* desktop */}
  <div
- className="shc__desktop"
+ className="relative mx-auto max-md:hidden"
  style={{
 "--stack-width": `${totalWidth}px`,
 "--stack-height": `${cardHeight + hoverLift + 24}px`,
+ width: "var(--stack-width)",
+ height: "var(--stack-height)",
  }}
  >
  {preparedCards.map((card, index) => (
  <div
  key={card.id ?? index}
- className={`shc__card ${card.accent ||""}`}
+ className={`absolute top-0 left-0 flex h-(--card-height) w-(--card-width) cursor-pointer select-none flex-col justify-between overflow-hidden rounded-[1.667vw] border border-black/10 p-[1.667vw] origin-[center_center] will-change-transform ${card.accent ||""}`}
  style={getCardStyle(card, index)}
  onMouseEnter={() => setActiveIndex(index)}
  onMouseLeave={() => setActiveIndex(null)}
  >
- <div className="shc__glow" />
+ <div />
 
- <div className="shc__body">
- <p className="shc__quote">“{card.quote}”</p>
+ <div className="relative z-2 flex flex-1 items-center">
+ <p className="m-0 max-w-[92%] text-[1.9rem] leading-[0.95] tracking-tighter">“{card.quote}”</p>
  </div>
 
- <div className="shc__footer">
- <div className="shc__divider" />
- <div className="shc__footer-row">
- <div className="shc__explore-wrap">
- <div className="shc__explore-icon">↗</div>
- <span className="shc__explore-text">Explore</span>
+ <div className="relative z-2 flex flex-col gap-[1.111vw]">
+ <div className="h-[0.069vw] w-full bg-black/20" />
+ <div className="flex items-center justify-between gap-[1.111vw]">
+ <div className="flex items-center gap-[0.556vw]">
+ <div className="flex size-[2.5vw] items-center justify-center rounded-full border border-black/10 bg-black text-[0.9rem] text-white shadow-[0_0.417vw_0.972vw_rgba(0,0,0,0.12)]">↗</div>
+ <span className="text-[0.833vw] font-semibold uppercase tracking-[0.14em]">Explore</span>
  </div>
 
- <div className="shc__index">0{index + 1}</div>
+ <span className="text-[0.764vw] uppercase tracking-[0.16em] opacity-70">0{index + 1}</span>
  </div>
  </div>
  </div>
@@ -123,30 +124,30 @@ const StackedHoverCards = ({
  </div>
 
  {/* tablet + mobile */}
- <div className="shc__mobile">
+ <div className="hidden flex-col gap-[1.563vw] max-md:flex max-md:gap-[2.083vw] max-sm:gap-[8.8vw]">
  {cards.map((card, index) => (
  <div
  key={card.id ?? index}
- className={`shc__card shc__card--static ${card.accent ||""}`}
+ className={`relative flex min-h-[20.313vw] w-full cursor-default select-none flex-col justify-between overflow-hidden rounded-[2.148vw] border border-black/10 p-[2.148vw] max-md:h-auto max-md:min-h-[25.391vw] max-md:rounded-[2.148vw] max-md:p-[2.148vw] max-md:transform-[none!important] max-md:[transition:none!important] max-sm:min-h-[58.667vw] max-sm:rounded-[4.8vw] max-sm:p-[4.8vw] ${card.accent ||""}`}
  style={{
  background: card.bg,
  }}
  >
- <div className="shc__glow" />
+ <div />
 
- <div className="shc__body">
- <p className="shc__quote">“{card.quote}”</p>
+ <div className="relative z-2 flex flex-1 items-center">
+ <p className="m-0 max-w-full text-[1.55rem] leading-none tracking-tighter max-sm:text-[1.2rem] max-sm:leading-[1.05] max-sm:tracking-[-0.04em]">“{card.quote}”</p>
  </div>
 
- <div className="shc__footer">
- <div className="shc__divider" />
- <div className="shc__footer-row">
- <div className="shc__explore-wrap">
- <div className="shc__explore-icon">↗</div>
- <span className="shc__explore-text">Explore</span>
+ <div className="relative z-2 flex flex-col gap-[1.563vw] max-md:gap-[2.083vw] max-sm:gap-[3.2vw]">
+ <div className="h-[0.098vw] w-full bg-black/20 max-sm:h-[0.267vw]" />
+ <div className="flex items-center justify-between gap-[1.563vw] max-md:gap-[2.083vw] max-sm:gap-[3.2vw]">
+ <div className="flex items-center gap-[0.781vw] max-md:gap-[1.042vw] max-sm:gap-[2.1vw]">
+ <div className="flex size-[3.5vw] items-center justify-center rounded-full border border-black/10 bg-black text-[0.9rem] text-white shadow-[0_0.586vw_1.367vw_rgba(0,0,0,0.12)] max-md:size-[4.1vw] max-sm:size-[8.5vw] max-sm:text-[0.82rem]">↗</div>
+ <span className="text-[1.172vw] font-semibold uppercase tracking-[0.14em] max-md:text-[1.367vw] max-sm:text-[2.667vw]">Explore</span>
  </div>
 
- <div className="shc__index">0{index + 1}</div>
+ <span className="text-[1vw] uppercase tracking-[0.16em] opacity-70 max-md:text-[1.2vw] max-sm:text-[2.6vw]">0{index + 1}</span>
  </div>
  </div>
  </div>

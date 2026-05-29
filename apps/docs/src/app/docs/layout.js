@@ -19,7 +19,9 @@ export default function Layout({ children }) {
   return (
     <VaultLayout effectCounts={effectCounts} totalEffects={totalEffects} >
       <div className=" h-fit bg-black text-foreground px-15 max-sm:px-6 pb-8">
-      <VaultHeader showSearch totalEffects={totalEffects} effects={registry?.items || []} />
+      <React.Suspense fallback={<div className="h-12" />}>
+        <VaultHeader showSearch totalEffects={totalEffects} effects={registry?.items || []} />
+      </React.Suspense>
       <DocsBody>{children}</DocsBody>
       <div className="mt-[5vw]">
       <Footer/>

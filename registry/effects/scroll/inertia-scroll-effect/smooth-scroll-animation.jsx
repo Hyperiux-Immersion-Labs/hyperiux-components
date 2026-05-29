@@ -201,7 +201,7 @@ export function InertiaScrollEffect({ images = {} }) {
       {/* ── Section 1 ──────────────────────────────── */}
       <div ref={section1Ref} className='h-screen flex flex-col gap-19 overflow-hidden'>
         <h2 className='text-[5vw] text-center w-[90%] mx-auto pt-4'>
-          Build insanely smooth interfaces with Hyperiux UI
+          Build insanely smooth interfaces with Hyperiux Vault
         </h2>
         <div className='h-[35vw] w-[30vw] mx-auto relative overflow-hidden'>
           <div ref={imageRef1} className='absolute inset-0'>
@@ -222,7 +222,7 @@ export function InertiaScrollEffect({ images = {} }) {
             ref={section3TextRef}
             className='text-[5vw] text-center w-[90%] mx-auto pt-4 absolute top-0 left-0 right-0 z-40 pointer-events-none text-neutral-900'
           >
-            Build insanely smooth interfaces with Hyperiux UI
+            Build insanely smooth interfaces with Hyperiux Vault
           </h2>
 
           {/* Overlay */}

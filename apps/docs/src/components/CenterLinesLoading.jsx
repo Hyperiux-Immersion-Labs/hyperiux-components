@@ -32,7 +32,7 @@ export default function CenterLinesLoading(
     {
         lineCount = DEFAULT_LINE_COUNT,
         title = "Build better interfaces",
-        subtitle = "Hyperiux UI",
+        subtitle = "Hyperiux Vault",
         onComplete,
     } = {}
 ) {

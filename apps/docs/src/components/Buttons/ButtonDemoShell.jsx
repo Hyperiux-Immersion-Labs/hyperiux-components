@@ -8,12 +8,13 @@ export function ButtonDemoShell({
  return (
  <section className="relative z-999 h-screen overflow-hidden px-6 py-20 text-white">
  <div className="relative z-1 mx-auto flex min-h-[calc(100vh-10rem)] w-full max-w-6xl flex-col items-center justify-center gap-16">
- <div className="space-y-4 text-center">
- <p className="text-xs uppercase tracking-[0.4em] text-white/60">
+ <div className="space-y-4 max-sm:space-y-8 max-md:space-y-10 text-center">
+ <p className="text-xs max-sm:text-sm max-md:text-base uppercase tracking-[0.4em] text-white/60">
  Hyperiux Button Demo
  </p>
  <h1 className="text-5xl font-medium max-sm:text-4xl">{title}</h1>
  </div>
+
 
  <div className="flex min-h-64 w-full items-center justify-center rounded-4xl border border-white/10 bg-black/20 px-8 py-12 backdrop-blur-sm max-sm:px-4">
  {children}

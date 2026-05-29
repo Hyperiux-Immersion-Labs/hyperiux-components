@@ -44,7 +44,7 @@ function DemoContent({
 
   const navItems = useMemo(
     () => [
-      { left: <span className="font-bold tracking-tighter max-sm:text-2xl">HYPERIUX UI</span> },
+      { left: <span className="font-bold tracking-tighter max-sm:text-2xl">Hyperiux Vault</span> },
       { left: "INDEX (22)" },
       { left: "(CONTACT)" },
       { left: "(SERVICES)" },

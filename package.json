@@ -7,7 +7,7 @@
     "pnpm": ">=9"
   },
   "scripts": {
-    "dev": "turbo dev",
+    "dev": "pnpm --filter @hyperiux/docs dev",
     "build": "turbo build",
     "lint": "turbo lint",
     "build:registry": "turbo build:registry"

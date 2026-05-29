@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 
 const COLS = 22;
 const ROWS = 13;
+const ROWS_TABLET = 30;
 const ROWS_MOBILE = 32;
 const CELL_MAX = 48;
 const TRANSITION_MS = 480;
@@ -13,6 +14,14 @@ const RANGE_MAX = 10;
 const BG = "#d1d1d1";
 const GRID_STROKE = "rgba(255,255,255,0.55)";
 const INK = "#111";
+const MOBILE_MAX_WIDTH = 768;
+const TABLET_MAX_WIDTH = 1024;
+const DIGIT_HEIGHT = 9;
+const DIGIT_WIDTH = 6;
+const DIGIT_GAP = 1;
+const MOBILE_DIGIT_HEIGHT = 13;
+const MOBILE_DIGIT_WIDTH = 8;
+const MOBILE_DIGIT_GAP = 1;
 
 const DIGIT_MAPS = {
  0: ["011100","110011","110011","110011","110011","110011","110011","110011","011100"],
@@ -42,28 +51,65 @@ const STROKE = Object.fromEntries(
  Object.entries(DIGIT_MAPS).map(([k, v]) => [k, strokeize(v)])
 );
 
-function getNumberCells(n, rows) {
+function getDigitMetrics(width) {
+ if (width <= MOBILE_MAX_WIDTH) {
+  return {
+   digitHeight: MOBILE_DIGIT_HEIGHT,
+   digitWidth: MOBILE_DIGIT_WIDTH,
+   digitGap: MOBILE_DIGIT_GAP,
+  };
+ }
+
+ return {
+  digitHeight: DIGIT_HEIGHT,
+  digitWidth: DIGIT_WIDTH,
+  digitGap: DIGIT_GAP,
+ };
+}
+
+function getScaledCellIndexes(index, sourceSize, targetSize) {
+ const start = Math.floor((index * targetSize) / sourceSize);
+ const end = Math.floor(((index + 1) * targetSize) / sourceSize);
+ const scaledIndexes = [];
+
+ for (let scaledIndex = start; scaledIndex < Math.max(start + 1, end); scaledIndex++) {
+  scaledIndexes.push(scaledIndex);
+ }
+
+ return scaledIndexes;
+}
+
+function getNumberCells(n, rows, width) {
  const digits = [...String(n)].map(Number);
- const DW = 6, GAP = 1;
- const totalW = digits.length * DW + (digits.length - 1) * GAP;
+ const { digitHeight, digitWidth, digitGap } = getDigitMetrics(width);
+ const totalW = digits.length * digitWidth + (digits.length - 1) * digitGap;
  const startCol = Math.floor((COLS - totalW) / 2);
- const rowOff = Math.max(0, Math.floor((rows - 9) / 2));
+ const rowOff = Math.max(0, Math.floor((rows - digitHeight) / 2));
  const cells = [];
  digits.forEach((d, i) => {
-  const baseCol = startCol + i * (DW + GAP);
+  const baseCol = startCol + i * (digitWidth + digitGap);
   STROKE[d].forEach((row, r) =>
    [...row].forEach((ch, c) => {
-    if (ch === "1") cells.push([r + rowOff, c + baseCol]);
+    if (ch !== "1") return;
+
+    const scaledRows = getScaledCellIndexes(r, DIGIT_HEIGHT, digitHeight);
+    const scaledCols = getScaledCellIndexes(c, DIGIT_WIDTH, digitWidth);
+
+    scaledRows.forEach(scaledRow => {
+     scaledCols.forEach(scaledCol => {
+      cells.push([scaledRow + rowOff, scaledCol + baseCol]);
+     });
+    });
    })
   );
  });
  return cells;
 }
 
-function computeMaxBlocks(rows) {
+function computeMaxBlocks(rows, width) {
  let max = 0;
  for (let n = RANGE_MIN; n <= RANGE_MAX; n++) {
-  max = Math.max(max, getNumberCells(n, rows).length);
+  max = Math.max(max, getNumberCells(n, rows, width).length);
  }
  return max;
 }
@@ -86,6 +132,12 @@ function randomLayout(n, rows) {
  for (let r = 0; r < rows; r++)
   for (let c = 0; c < COLS; c++) all.push([r, c]);
  return shuffle(all).slice(0, n);
+}
+
+function getRowsForWidth(width) {
+ if (width <= MOBILE_MAX_WIDTH) return ROWS_MOBILE;
+ if (width <= TABLET_MAX_WIDTH) return ROWS_TABLET;
+ return ROWS;
 }
 
 function assignTargets(blocks, targets) {
@@ -125,25 +177,28 @@ export default function GooeyCounter() {
  const stateRef = useRef(null);
 
  useEffect(() => {
+  // Canvas setup
   const canvas = canvasRef.current;
   const ctx = canvas.getContext("2d");
   let offscreen = new OffscreenCanvas(1, 1);
   let offCtx = offscreen.getContext("2d");
 
+  // Simulation state
   const sim = {
    blocks: [], phase: "idle", nextNumber: RANGE_MIN + 1,
    timer: null, raf: null, layout: null, transition: null,
-   activeRows: ROWS, maxBlocks: computeMaxBlocks(ROWS),
+   activeRows: ROWS, viewportWidth: window.innerWidth, maxBlocks: computeMaxBlocks(ROWS, window.innerWidth),
   };
   stateRef.current = sim;
 
+  // Animation helpers
   function beginTransition(dur, onDone) {
    for (const b of sim.blocks) { b.sr = b.cr; b.sc = b.cc; }
    sim.transition = { start: performance.now(), duration: dur, onDone };
   }
 
   function goToNumber(n, onDone) {
-   const targets = getNumberCells(n, sim.activeRows);
+   const targets = getNumberCells(n, sim.activeRows, sim.viewportWidth);
    while (sim.blocks.length < sim.maxBlocks) {
     const p = targets[Math.floor(Math.random() * targets.length)];
     sim.blocks.push({ cr: p[0], cc: p[1], tr: p[0], tc: p[1], sr: p[0], sc: p[1], idle: true });
@@ -175,23 +230,24 @@ export default function GooeyCounter() {
    clearTimeout(sim.timer);
    sim.blocks = []; sim.nextNumber = RANGE_MIN + 1; sim.transition = null;
    const rpos = randomLayout(sim.maxBlocks, sim.activeRows);
-   const firstTargets = getNumberCells(RANGE_MIN, sim.activeRows);
+   const firstTargets = getNumberCells(RANGE_MIN, sim.activeRows, sim.viewportWidth);
    sim.blocks = rpos.map(p => ({ cr: p[0], cc: p[1], tr: p[0], tc: p[1], sr: p[0], sc: p[1], idle: false }));
    assignTargets(sim.blocks, firstTargets);
    beginTransition(TRANSITION_MS, loop);
   }
   stateRef.current.start = start;
 
+  // Layout
   function resize() {
    const dpr = window.devicePixelRatio || 1;
    const vw = window.innerWidth, vh = window.innerHeight;
+   const newRows = getRowsForWidth(vw);
+   const widthChanged = vw !== sim.viewportWidth;
+   sim.viewportWidth = vw;
 
-   const isMobile = vw <= 768;
-   const newRows = isMobile ? ROWS_MOBILE : ROWS;
-
-   if (newRows !== sim.activeRows) {
+   if (newRows !== sim.activeRows || widthChanged) {
     sim.activeRows = newRows;
-    sim.maxBlocks = computeMaxBlocks(newRows);
+    sim.maxBlocks = computeMaxBlocks(newRows, vw);
    }
 
    canvas.width = Math.floor(vw * dpr);
@@ -214,6 +270,7 @@ export default function GooeyCounter() {
    sim.layout = { vw, vh, cell, gridW, gridH, originX, originY };
   }
 
+  // Render loop
   function frame() {
    const L = sim.layout;
    if (!L) { sim.raf = requestAnimationFrame(frame); return; }
@@ -280,6 +337,7 @@ export default function GooeyCounter() {
    sim.raf = requestAnimationFrame(frame);
   }
 
+  // Boot and cleanup
   resize();
   window.addEventListener("resize", resize, { passive: true });
   start();

@@ -45,7 +45,7 @@ export const effectConfigs = {
  size:"text-3xl md:text-5xl",
  align:"center",
  },
- demoText:"Hyperiux UI is where design meets precision — a component library built for developers who care about performance, aesthetics, and experience.",
+ demoText:"Hyperiux Vault is where design meets precision — a component library built for developers who care about performance, aesthetics, and experience.",
  note:"Works on desktop only; on mobile the text is shown fully visible without the spotlight effect.",
  },
 

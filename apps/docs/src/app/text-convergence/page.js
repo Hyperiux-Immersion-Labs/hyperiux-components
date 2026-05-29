@@ -7,7 +7,7 @@ const page = () => {
  <>
  <LenisSmoothScroll />
  <TextBreak
- text="Build faster. Animate better. Ship smarter. Hyperiux UI gives you the tools to create high-performance interfaces that look premium and feel effortless."
+ text="Build faster. Animate better. Ship smarter. Hyperiux Vault gives you the tools to create high-performance interfaces that look premium and feel effortless."
  bgColor="bg-[#111111]"
  textColor="text-[#ffffff]"
  />

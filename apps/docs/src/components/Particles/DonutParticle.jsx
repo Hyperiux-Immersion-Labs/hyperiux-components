@@ -17,7 +17,11 @@ function random01(seed) {
  return value - Math.floor(value);
 }
 
-function DonutParticles() {
+function DonutParticles({
+ position = [0, 0, 0],
+ scale = 2.5,
+ rotation = [degToRad(-100), degToRad(45), 0],
+}) {
  const pointsRef = useRef(null);
  const simulationRef = useRef(null);
  const { size, camera, gl } = useThree();
@@ -522,9 +526,10 @@ function DonutParticles() {
  return (
  <points
  ref={pointsRef}
- scale={2.5}
+ position={position}
+ scale={scale}
  frustumCulled={false}
- rotation={[degToRad(-80), degToRad(45), 0]}
+ rotation={rotation}
  >
  <bufferGeometry>
  <bufferAttribute
@@ -560,12 +565,21 @@ function DonutParticles() {
  );
 }
 
-export default function DonutParticle() {
+export default function DonutParticle({
+ className = "",
+ canvasClassName = "",
+ donutPosition = [0, 0, 0],
+ donutScale = 3.5,
+ donutRotation = [degToRad(-60), degToRad(45), 0],
+ cameraPosition = [2.0, 4, 6],
+ cameraFov = 50,
+ dpr = [1, 2],
+}) {
 
-  return (
- <div className="h-screen w-full bg-black">
- <Canvas camera={{ position: [4.0, 1, 6], fov: 50 }} dpr={[1, 2]}>
- <DonutParticles />
+ return (
+ <div className={`h-screen w-full bg-black ${className}`}>
+ <Canvas className={canvasClassName} camera={{ position: cameraPosition, fov: cameraFov }} dpr={dpr}>
+ <DonutParticles position={donutPosition} scale={donutScale} rotation={donutRotation} />
  </Canvas>
  </div>
  );

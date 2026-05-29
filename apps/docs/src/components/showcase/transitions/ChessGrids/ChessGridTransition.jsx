@@ -12,21 +12,27 @@ export default function ChessGridTransition({ children, enableContentShift = fal
 
   const [mounted, setMounted] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
 
   const cols = 8
   const desktopRows = 4
-  const mobileRows = 5
+  const mobileRows = 9
+  const tabletRows = 10
   const overlap = 2
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 639px)')
-    setIsMobile(mq.matches)
-    const handler = (e) => setIsMobile(e.matches)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
+    const updateViewport = () => {
+      const width = window.innerWidth
+      setIsMobile(width <= 639)
+      setIsTablet(width > 639 && width <= 1025)
+    }
+
+    updateViewport()
+    window.addEventListener('resize', updateViewport)
+    return () => window.removeEventListener('resize', updateViewport)
   }, [])
 
-  const rows = isMobile ? mobileRows : desktopRows
+  const rows = isMobile ? mobileRows : isTablet ? tabletRows : desktopRows
 
   const getRowCells = (cells, rowIndex) => {
     const rowCells = []

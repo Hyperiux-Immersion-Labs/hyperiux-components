@@ -22,6 +22,8 @@ export default function TextFillAnimation({
   containerClassName = '',
   mobileTextSize = '8vw',
   mobileTextWidth = '95%',
+  tabletTextSize = '6.5vw',
+  tabletTextWidth = '88%',
 }) {
   const sectionRef = useRef(null)
   const textRef = useRef(null)
@@ -57,7 +59,17 @@ export default function TextFillAnimation({
         font-size: ${textSize};
       }
 
-      @media(max-width:640px){
+      @media (min-width: 768px) and (max-width: 1024px){
+        #${id} .tfa-text-wrapper{
+          width: ${tabletTextWidth};
+        }
+
+        #${id} .tfa-heading{
+          font-size: ${tabletTextSize};
+        }
+      }
+
+      @media (max-width: 767px){
         #${id} .tfa-text-wrapper{
           width: ${mobileTextWidth};
         }
@@ -66,6 +78,7 @@ export default function TextFillAnimation({
           font-size: ${mobileTextSize};
         }
       }
+
     `
 
     document.head.appendChild(style)
@@ -122,6 +135,8 @@ export default function TextFillAnimation({
     textWidth,
     mobileTextSize,
     mobileTextWidth,
+    tabletTextSize,
+    tabletTextWidth,
   ])
 
   return (
@@ -138,21 +153,21 @@ export default function TextFillAnimation({
 
         {/* top left */}
         <div className="absolute left-[5vw] top-[5vh]">
-          <p className="text-[11px] uppercase tracking-[0.35em] text-black/35">
+          <p className="text-xs max-md:text-sm max-sm:text-xs uppercase tracking-[0.35em] text-black/35">
             Design Philosophy
           </p>
         </div>
 
         {/* top right */}
         <div className="absolute right-[5vw] top-[5vh] text-right">
-          <p className="text-[11px] uppercase tracking-[0.35em] text-black/35">
+          <p className="text-xs max-md:text-sm max-sm:text-xs uppercase tracking-[0.35em] text-black/35">
             Scroll ↓
           </p>
         </div>
 
         {/* bottom left */}
         <div className="absolute bottom-[6vh] left-[5vw] max-w-55">
-          <p className="text-sm leading-relaxed text-black/35">
+          <p className="text-sm max-sm:text-sm max-md:text-lg leading-relaxed text-black/35">
             Less friction.
             <br />
             More building.
@@ -162,9 +177,9 @@ export default function TextFillAnimation({
         {/* bottom right */}
         <div className="absolute bottom-[6vh] right-[5vw] text-right">
           <div className="space-y-1">
-            <p className="text-sm text-black/35">Systems</p>
-            <p className="text-sm text-black/35">Motion</p>
-            <p className="text-sm text-black/35">Clarity</p>
+            <p className="text-sm max-sm:text-sm max-md:text-lg text-black/35">Systems</p>
+            <p className="text-sm max-sm:text-sm max-md:text-lg text-black/35">Motion</p>
+            <p className="text-sm max-sm:text-sm max-md:text-lg text-black/35">Clarity</p>
           </div>
         </div>
 

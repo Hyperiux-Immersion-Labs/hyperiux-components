@@ -133,20 +133,42 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
               )}
             </h1>
 
-            <div className="flex items-center justify-center gap-4 text-lg font-sans max-sm:flex-wrap max-sm:gap-2 max-sm:text-base">
-              <span>{totalEffects} effects</span>
-              <span>•</span>
-              <span>Free & open source</span>
-              <span>•</span>
-              <span>Copy & paste</span>
-            </div>
+           <div className="flex items-center justify-center gap-4 text-lg font-sans max-sm:flex-wrap max-sm:gap-2 max-sm:text-base">
+  <span>{totalEffects} effects</span>
+  <span>•</span>
+  <span>Free & open source</span>
+  <span>•</span>
+  <span>Copy & paste</span>
+</div>
           </div>
         </div>
 
-        <div className=" px-10 max-sm:px-6 pb-10">
-          <div className="flex items-center max-sm:justify-center gap-6 flex-wrap">
-
-            <div className="flex items-center max-sm:justify-center gap-2.5 flex-wrap">
+        {/* Filter pills — desktop wraps, mobile single-line scroll */}
+        <div className="pb-10 px-10 max-sm:px-0">
+          <div className="relative max-sm:w-full">
+            {/* Right fade hint on mobile */}
+            <div
+              className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 z-10 hidden max-sm:block"
+              style={{
+                background:
+                  "linear-gradient(to left, var(--background, #000) 0%, transparent 100%)",
+              }}
+            />
+            <div
+              className={[
+                "flex items-center gap-2.5",
+                // desktop: wrapping
+                "flex-wrap",
+                // mobile: horizontal scroll, no wrap, padded edges
+                "max-sm:flex-nowrap max-sm:overflow-x-auto max-sm:px-6",
+                // always-visible orange scrollbar
+                "[scrollbar-width:thin] [scrollbar-color:#CC4C04_transparent]",
+                "[&::-webkit-scrollbar]:h-[4px]",
+                "[&::-webkit-scrollbar-track]:bg-white/10 [&::-webkit-scrollbar-track]:rounded-full",
+                "[&::-webkit-scrollbar-thumb]:bg-[#CC4C04] [&::-webkit-scrollbar-thumb]:rounded-full",
+                "max-sm:pb-3",
+              ].join(" ")}
+            >
               {quickCategories.map((cat) => {
                 const isSelected = categoryFilter === cat;
                 return (
@@ -165,7 +187,7 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
                       }
   `}
                   >
-                    <span>
+                    <span className="leading-none">
                       {cat === "webgl"
                         ? "WebGL"
                         : cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -206,8 +228,8 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
         <div className=" px-10 max-sm:px-6 pb-12">
           <div
             className={`flex flex-wrap items-center gap-3 transition-opacity duration-200 ${categoryFilter !== "all" || searchQuery
-              ? "mb-8 min-h-10 opacity-100"
-              : "mb-0 min-h-0 opacity-0 pointer-events-none"
+                ? "mb-8 min-h-10 opacity-100"
+                : "mb-0 min-h-0 opacity-0 pointer-events-none"
               }`}
           >
             {(categoryFilter !== "all" || searchQuery) && (
@@ -293,13 +315,12 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
                 filteredEffects={filteredEffects}
               />
 
-
+              
             </>
           )}
         </div>
         <div className="px-10 py-8">
           <Footer />
-
         </div>
       </div>
     </VaultLayout>
@@ -318,11 +339,11 @@ function EffectsGrid({ filteredEffects }) {
       gsap.fromTo(
         ".effect-card-shell",
         {
-          opacity: 0,
+          autoAlpha: 0,
           y: 34,
         },
         {
-          opacity: 1,
+          autoAlpha: 1,
           y: 0,
           duration: 0.65,
           ease: "power3.out",
@@ -347,8 +368,9 @@ function EffectsGrid({ filteredEffects }) {
         {filteredEffects.map((effect, i) => (
           <div
             key={effect.name}
-            className={`effect-card-shell ${!showAllMobileCards && i >= 10 ? "max-sm:hidden" : ""
-              }`}
+            className={`effect-card-shell ${
+              !showAllMobileCards && i >= 10 ? "max-sm:hidden" : ""
+            }`}
           >
             <EffectCard effect={effect} priority={i < 4} />
           </div>

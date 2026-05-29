@@ -49,7 +49,7 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: content?.seo?.title || `${effect.title} | Hyperiux UI`,
+    title: content?.seo?.title || `${effect.title} | Hyperiux Vault`,
     description: content?.seo?.description || effect.description,
     keywords: [
       content?.seo?.primaryKeyword,

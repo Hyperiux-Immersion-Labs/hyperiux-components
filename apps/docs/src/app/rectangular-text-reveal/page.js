@@ -46,7 +46,7 @@ export default function Page() {
  <ReactLenis root>
  <div className="min-h-screen w-screen bg-white text-black">
  <section className="flex min-h-screen items-center justify-center px-[6vw]">
- <div className="flex w-full max-w-360 flex-col gap-[2vw]">
+ <div className="flex w-full max-w-360 flex-col gap-[2vw] max-sm:gap-[10vw] max-md:gap-[6vw]">
  <p className="text-[1rem] uppercase tracking-[0.35em] text-black/50">
  Rectangular Text Reveal
  </p>
@@ -86,12 +86,12 @@ export default function Page() {
  </div>
  </section>
 
- <section className="px-[6vw] pb-[10vw]">
+ <section className="px-[6vw] max-md:px-[7vw] pb-[10vw]">
  <div className="mx-auto flex w-full max-w-360 flex-col gap-[5vw]">
  {showcaseSections.map((section, index) => (
  <div
  key={section.direction}
- className="grid gap-[2vw] border-t border-black/10 py-[4vw] md:grid-cols-[0.9fr_1.1fr]"
+ className="grid gap-[2vw] max-sm:gap-[10vw] max-sm:py-[15vw] max-md:py-[10vw] max-md:gap-[6vw] border-t border-black/10 py-[4vw] md:grid-cols-[0.9fr_1.1fr]"
  >
  <div className="flex flex-col gap-10">
  <p className="text-sm uppercase tracking-[0.28em] text-black/45">

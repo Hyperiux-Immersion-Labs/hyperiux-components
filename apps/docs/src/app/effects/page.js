@@ -3,7 +3,7 @@ import { getEffectsByCategory, getRegistryIndex } from"@/lib/registry";
 import { VaultContent } from"./vault-content";
 
 export const metadata = {
- title:"The Vault | Hyperiux UI",
+ title:"The Vault | Hyperiux Vault",
  description:"Browse all available effects and animations",
 };
 

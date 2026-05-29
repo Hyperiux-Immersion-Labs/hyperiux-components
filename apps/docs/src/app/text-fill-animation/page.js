@@ -19,6 +19,8 @@ const page = () => {
  containerClassName=""
  mobileTextSize="8vw"
  mobileTextWidth="92%"
+ tabletTextSize='6vw'
+ tabletTextWidth='88%'
  />
  </ReactLenis>
  </>
