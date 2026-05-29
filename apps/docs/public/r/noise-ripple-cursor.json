@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/cursors/noiseripple",
   "coverImage": "/assets/list/noise-ripple-cursor.png",
-  "videoUrl": "noise-ripple-cursor.mp4",
+  "videoUrl": "noise-ripple-cursor",
   "files": [
     {
       "path": "noise-ripple-cursor.jsx",

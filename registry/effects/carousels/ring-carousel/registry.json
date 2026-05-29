@@ -1,0 +1,11 @@
+{
+  "name": "ring-carousel",
+  "type": "registry:component",
+  "title": "Ring Carousel",
+  "description": "3D ring gallery carousel with drag momentum, snap-to-slide, autoplay, and optional navigation + dots.",
+  "category": "carousels",
+  "dependencies": ["gsap", "lucide-react"],
+  "registryDependencies": [],
+  "coverImage": "/assets/img/image02.webp",
+  "previewUrl": "/ring-carousel"
+}

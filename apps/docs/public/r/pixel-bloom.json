@@ -1,7 +1,7 @@
 {
   "name": "pixel-bloom",
   "type": "registry:component",
-  "title": "Pixel Bloom Cursor",
+  "title": "Fiddle Ascii Cursor",
   "description": "Cursor-reactive media grid that swaps nearby cells into a textured ASCII collage",
   "category": "cursor",
   "categories": [
@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/cursors/pixel-bloom",
   "coverImage": "/assets/list/pixel-bloom.png",
-  "videoUrl": "pixel-bloom.mp4",
+  "videoUrl": "pixel-bloom",
   "files": [
     {
       "path": "pixel-bloom.jsx",

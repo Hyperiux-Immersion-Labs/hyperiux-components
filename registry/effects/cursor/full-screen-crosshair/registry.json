@@ -1,0 +1,13 @@
+{
+  "name": "full-screen-crosshair",
+  "type": "registry:component",
+  "title": "Full Screen Crosshair",
+  "description": "Fullscreen crosshair cursor overlay with configurable line size, gap, thickness, smoothing, and blend mode.",
+  "category": "cursor",
+  "dependencies": [],
+  "registryDependencies": [],
+  "coverImage": "/assets/img/image06.png",
+  "videoUrl": null,
+  "previewUrl": "/full-screen-crosshair"
+}
+

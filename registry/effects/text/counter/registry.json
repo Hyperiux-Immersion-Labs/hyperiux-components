@@ -1,0 +1,13 @@
+{
+  "name": "counter",
+  "type": "registry:component",
+  "title": "Counter",
+  "description": "Scroll-triggered number counters with digit rolling animations (multiple variants).",
+  "category": "text",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "coverImage": "/assets/img/image12.png",
+  "videoUrl": null,
+  "previewUrl": "/counter"
+}
+

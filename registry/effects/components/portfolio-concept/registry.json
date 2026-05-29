@@ -1,0 +1,13 @@
+{
+  "name": "portfolio-concept",
+  "type": "registry:component",
+  "title": "Portfolio Concept",
+  "description": "Motion-led portfolio landing concept with GSAP ScrollTrigger + SplitText and image strips.",
+  "category": "components",
+  "dependencies": ["gsap", "next", "lenis"],
+  "registryDependencies": [],
+  "coverImage": "/assets/img/image11.png",
+  "videoUrl": null,
+  "previewUrl": "/portfolio-concept"
+}
+

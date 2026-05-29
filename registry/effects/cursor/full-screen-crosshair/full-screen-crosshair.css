@@ -1,0 +1,100 @@
+.crosshair-cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  mix-blend-mode: var(--crosshair-blend-mode, normal);
+}
+
+.crosshair-page,
+.crosshair-page * {
+  cursor: none !important;
+}
+.crosshair-cursor__inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  will-change: transform;
+}
+
+.crosshair-cursor__line {
+  position: absolute;
+  display: block;
+  background: var(--crosshair-color, #ffffff);
+  transform-origin: center;
+}
+
+.crosshair-cursor__line--top {
+  width: var(--crosshair-thickness, 1px);
+  height: var(--crosshair-line-size, 100px);
+  left: 50%;
+  top: calc(
+    -1 * (var(--crosshair-gap, 20px) + var(--crosshair-line-size, 100px))
+  );
+  transform: translateX(-50%);
+}
+
+.crosshair-cursor__line--right {
+  width: var(--crosshair-line-size, 100px);
+  height: var(--crosshair-thickness, 1px);
+  top: 50%;
+  left: var(--crosshair-gap, 20px);
+  transform: translateY(-50%);
+}
+
+.crosshair-cursor__line--bottom {
+  width: var(--crosshair-thickness, 1px);
+  height: var(--crosshair-line-size, 100px);
+  left: 50%;
+  top: var(--crosshair-gap, 20px);
+  transform: translateX(-50%);
+}
+
+.crosshair-cursor__line--left {
+  width: var(--crosshair-line-size, 100px);
+  height: var(--crosshair-thickness, 1px);
+  top: 50%;
+  right: var(--crosshair-gap, 20px);
+  transform: translateY(-50%);
+}
+
+.crosshair-cursor__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: var(--crosshair-center-size, 24px);
+  min-height: var(--crosshair-center-size, 24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--crosshair-color, #ffffff);
+  font-size: var(--crosshair-center-size, 24px);
+  line-height: 1;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+  .crosshair-cursor__center {
+    font-size: calc(var(--crosshair-center-size, 24px) * 0.9);
+  }
+}
+
+@media (max-width: 540px) {
+  /* .crosshair-cursor__line--top,
+  .crosshair-cursor__line--bottom {
+    height: calc(var(--crosshair-line-size, 100px) * 0.55);
+  }
+
+  .crosshair-cursor__line--right,
+  .crosshair-cursor__line--left {
+    width: calc(var(--crosshair-line-size, 100px) * 0.55);
+  }
+
+  .crosshair-cursor__center {
+    font-size: calc(var(--crosshair-center-size, 24px) * 0.8);
+  } */
+}

@@ -5,6 +5,7 @@ import {
   getEffectCategoryBySlug,
   getEffectPrimaryCategory,
 } from "@/lib/categories";
+
 import {
   getAllEffectSlugs,
   getEffectBySlug,
@@ -12,6 +13,7 @@ import {
   getEffectsByCategory,
   getRegistryIndex,
 } from "@/lib/registry";
+
 import { getEffectContent } from "@/lib/effect-content";
 import { EffectDetailContent } from "../effect-detail";
 
@@ -21,6 +23,15 @@ function effectBelongsToCategory(effect, categoryId) {
     : [effect.category || "others"];
 
   return categories.includes(categoryId);
+}
+
+function normalize(value = "") {
+  return value
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/&/g, "and")
+    .replace(/\s+/g, "-");
 }
 
 export async function generateStaticParams() {
@@ -45,7 +56,9 @@ export async function generateMetadata({ params }) {
   const content = getEffectContent(slug, effectSlug);
 
   if (!effect || !category || !effectBelongsToCategory(effect, category.id)) {
-    return { title: "Effect Not Found" };
+    return {
+      title: "Effect Not Found",
+    };
   }
 
   return {
@@ -68,34 +81,52 @@ export default async function EffectPage({ params }) {
     notFound();
   }
 
+  const registry = getRegistryIndex();
+
   const categoriesMap = getEffectsByCategory();
 
   const effectCounts = {};
+
   for (const [categoryId, effects] of Object.entries(categoriesMap)) {
     effectCounts[categoryId] = effects.length;
   }
 
   const config = getEffectConfig(effectSlug);
+
   const code = getEffectCode(effectSlug);
+
   const content = getEffectContent(slug, effectSlug);
 
-  const effectCats = effect.categories?.length
-    ? effect.categories
-    : [effect.category];
+  /*
+    ----------------------------------------
+    RELATED EFFECTS FROM DATA
+    ----------------------------------------
+  */
 
-  const seen = new Set();
+  const relatedEffectNames = content?.relatedEffectNames || [];
 
-  const relatedEffects = effectCats
-    .flatMap((cat) => categoriesMap[cat] || [])
-    .filter((relatedEffect) => {
-      if (relatedEffect.name === effectSlug || seen.has(relatedEffect.name)) {
-        return false;
-      }
+  const relatedEffects = relatedEffectNames
+    .map((relatedName) => {
+      const normalizedRelatedName = normalize(relatedName);
 
-      seen.add(relatedEffect.name);
-      return true;
+      return registry.items.find((item) => {
+        const normalizedTitle = normalize(item.title);
+
+        const normalizedName = normalize(item.name);
+
+        const normalizedSlug = normalize(item.slug);
+
+        return (
+          normalizedTitle === normalizedRelatedName ||
+          normalizedName === normalizedRelatedName ||
+          normalizedSlug === normalizedRelatedName
+        );
+      });
     })
+    .filter(Boolean)
+    .filter((item) => item.name !== effectSlug)
     .slice(0, 3);
+
 
   return (
     <EffectDetailContent
