@@ -4,8 +4,11 @@
   "title": "Infinite Carousel",
   "description": "Infinitely looping horizontal carousel with GSAP Draggable + inertia, plus mobile-friendly wrap/swiper fallbacks.",
   "category": "carousels",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
   "coverImage": "/assets/img/image01.webp",
-  "previewUrl": "/infinite-carousel"
+  "previewUrl": "/infinite-carousel",
+  "tier": "pro"
 }

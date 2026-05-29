@@ -6,6 +6,9 @@ import prompts from "prompts";
 import { readConfig, configExists } from "../utils/config.js";
 import { fetchRegistry, getRegistryItemFiles } from "../utils/registry.js";
 import { installDependencies, getMissingDependencies } from "../utils/package-manager.js";
+import { getAuthToken } from "./login.js";
+
+const APP_URL = process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
 
 export async function add(effectName, options) {
   const cwd = process.cwd();
@@ -27,13 +30,52 @@ export async function add(effectName, options) {
 
   const spinner = ora("Fetching effect from registry...").start();
 
+  // Read auth token upfront — passed to fetchRegistry so pro effects can be fetched
+  const authToken = getAuthToken();
+
   let registryItem;
   try {
-    registryItem = await fetchRegistry(effectName);
+    registryItem = await fetchRegistry(effectName, { token: authToken });
     spinner.succeed(`Found ${chalk.cyan(registryItem.title || effectName)}`);
   } catch (error) {
     spinner.fail(error.message);
     process.exit(1);
+  }
+
+  // Gate pro effects behind a valid CLI token
+  if (registryItem.tier === "pro") {
+    const token = getAuthToken();
+
+    if (!token) {
+      console.log();
+      console.log(chalk.red(`"${effectName}" is a Pro effect.`));
+      console.log(chalk.yellow("Run `npx hyperiux login` to connect your Pro account."));
+      console.log(chalk.dim(`Subscribe at ${APP_URL}`));
+      console.log();
+      process.exit(1);
+    }
+
+    const validateSpinner = ora("Verifying Pro access…").start();
+    try {
+      const res = await fetch(`${APP_URL}/api/cli/validate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      const data = await res.json();
+
+      if (!data.valid) {
+        validateSpinner.fail(chalk.red(`Access denied: ${data.reason}`));
+        console.log(chalk.yellow("Run `npx hyperiux login` to re-authenticate."));
+        console.log();
+        process.exit(1);
+      }
+
+      validateSpinner.succeed("Pro access verified.");
+    } catch (err) {
+      validateSpinner.fail(chalk.red(`Could not verify Pro access: ${err.message}`));
+      process.exit(1);
+    }
   }
 
   // Get files to install

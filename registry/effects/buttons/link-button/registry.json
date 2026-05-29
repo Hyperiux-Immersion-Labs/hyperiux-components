@@ -6,5 +6,6 @@
   "category": "buttons",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/buttons/link-button"
+  "previewUrl": "/buttons/link-button",
+  "tier": "pro"
 }

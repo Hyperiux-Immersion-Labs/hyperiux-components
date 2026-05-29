@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { getEffectConfig } from "@/lib/effect-configs";
 import {
   getEffectCategory,
@@ -15,6 +16,7 @@ import {
 } from "@/lib/registry";
 
 import { getEffectContent } from "@/lib/effect-content";
+import { getUserPlan, canAccessEffect } from "@/lib/subscription";
 import { EffectDetailContent } from "../effect-detail";
 
 function effectBelongsToCategory(effect, categoryId) {
@@ -81,6 +83,11 @@ export default async function EffectPage({ params }) {
     notFound();
   }
 
+  // Determine access: check Clerk session and subscription plan
+  const { userId } = await auth();
+  const userPlan = await getUserPlan(userId);
+  const isLocked = !canAccessEffect(effect.tier ?? "pro", userPlan);
+
   const registry = getRegistryIndex();
 
   const categoriesMap = getEffectsByCategory();
@@ -139,6 +146,8 @@ export default async function EffectPage({ params }) {
       relatedEffects={relatedEffects}
       effectCounts={effectCounts}
       totalEffects={getAllEffectSlugs().length}
+      isLocked={isLocked}
+      userPlan={userPlan}
     />
   );
 }

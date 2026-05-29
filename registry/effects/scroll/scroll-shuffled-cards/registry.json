@@ -4,7 +4,10 @@
   "title": "Scroll Shuffled Cards",
   "description": "Pinned scroll section that drifts a shuffled stack of editorial cards across the viewport",
   "category": "scroll",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/scroll-shuffled-cards"
+  "previewUrl": "/scroll-shuffled-cards",
+  "tier": "pro"
 }

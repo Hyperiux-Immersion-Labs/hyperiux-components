@@ -4,9 +4,13 @@
   "title": "Chess Grid Transition",
   "description": "Staggered fullscreen grid wipe that sweeps blocks across the viewport during route changes",
   "category": "transitions",
-  "dependencies": ["gsap", "next-transition-router"],
+  "dependencies": [
+    "gsap",
+    "next-transition-router"
+  ],
   "registryDependencies": [],
   "previewUrl": "/page-transitions/chess-grids",
   "coverImage": "/assets/list/chess-grid-transition.png",
-  "videoUrl": "chess-grid-transition"
+  "videoUrl": "chess-grid-transition",
+  "tier": "pro"
 }

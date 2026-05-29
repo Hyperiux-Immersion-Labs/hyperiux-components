@@ -4,7 +4,11 @@
   "title": "Rotation Slider",
   "description": "Scroll-pinned horizontal slider with 3D card rotation, vertical drift, and SplitText caption reveals.",
   "category": "scroll",
-  "dependencies": ["gsap", "next"],
+  "dependencies": [
+    "gsap",
+    "next"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/rotation-slider"
+  "previewUrl": "/rotation-slider",
+  "tier": "pro"
 }

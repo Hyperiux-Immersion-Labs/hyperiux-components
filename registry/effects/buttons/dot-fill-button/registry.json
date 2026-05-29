@@ -6,5 +6,6 @@
   "category": "buttons",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/buttons/dot-fill-button"
+  "previewUrl": "/buttons/dot-fill-button",
+  "tier": "pro"
 }

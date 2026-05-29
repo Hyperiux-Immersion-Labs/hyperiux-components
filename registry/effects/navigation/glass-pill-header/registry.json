@@ -4,7 +4,10 @@
   "title": "Elevate Navbar",
   "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
   "category": "navigation",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/navigation/elevate-navbar"
+  "previewUrl": "/navigation/elevate-navbar",
+  "tier": "pro"
 }

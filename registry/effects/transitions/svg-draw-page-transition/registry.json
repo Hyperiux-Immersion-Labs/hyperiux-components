@@ -4,9 +4,13 @@
   "title": "Svg Draw Page Transition",
   "description": "Brush-stroke navigation transition that draws a large SVG path across the viewport",
   "category": "transitions",
-  "dependencies": ["gsap", "next-transition-router"],
+  "dependencies": [
+    "gsap",
+    "next-transition-router"
+  ],
   "registryDependencies": [],
   "previewUrl": "/page-transitions/brush-strokes",
   "coverImage": "/assets/list/svg-draw-page-transition.png",
-  "videoUrl": "svg-draw-page-transition"
+  "videoUrl": "svg-draw-page-transition",
+  "tier": "pro"
 }

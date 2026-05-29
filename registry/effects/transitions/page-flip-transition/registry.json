@@ -4,9 +4,13 @@
   "title": "Page Flip Transition",
   "description": "Angular full-screen route wipe with a folding panel and staggered indicator bars",
   "category": "transitions",
-  "dependencies": ["gsap", "next-transition-router"],
+  "dependencies": [
+    "gsap",
+    "next-transition-router"
+  ],
   "registryDependencies": [],
   "previewUrl": "/page-transitions/flip",
   "coverImage": "/assets/list/page-flip-transition.png",
-  "videoUrl": "page-flip-transition"
+  "videoUrl": "page-flip-transition",
+  "tier": "pro"
 }

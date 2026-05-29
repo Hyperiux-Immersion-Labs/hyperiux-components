@@ -4,7 +4,10 @@
   "title": "Parallax Gallery",
   "description": "Pinned frame gallery with snapping slides and mirrored thumbnail rails",
   "category": "scroll",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/frame-slider"
+  "previewUrl": "/frame-slider",
+  "tier": "free"
 }

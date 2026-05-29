@@ -4,9 +4,12 @@
   "title": "Square Translate",
   "description": "Scroll-driven list where a rotating square marker tracks progress and nudges nearby rows",
   "category": "scroll",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
   "previewUrl": "/square-translate",
   "coverImage": "/assets/list/square-translate.png",
-  "videoUrl": "square-translate"
+  "videoUrl": "square-translate",
+  "tier": "pro"
 }

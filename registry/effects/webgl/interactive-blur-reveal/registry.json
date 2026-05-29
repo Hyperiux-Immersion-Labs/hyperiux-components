@@ -6,5 +6,6 @@
   "category": "webgl",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/webgl/interactive-blur-reveal"
+  "previewUrl": "/webgl/interactive-blur-reveal",
+  "tier": "pro"
 }

@@ -4,7 +4,10 @@
   "title": "Draggable Marquee",
   "description": "Infinite horizontal marquee with drag interaction and momentum physics",
   "category": "scroll",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/draggable-marquee"
+  "previewUrl": "/draggable-marquee",
+  "tier": "pro"
 }

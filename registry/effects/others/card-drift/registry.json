@@ -4,7 +4,10 @@
   "title": "Card Drift",
   "description": "Draggable card grid with physics-based throw, velocity tracking, auto-layout, and GSAP Draggable",
   "category": "others",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/card-drift"
+  "previewUrl": "/card-drift",
+  "tier": "pro"
 }

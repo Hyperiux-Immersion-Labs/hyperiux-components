@@ -4,10 +4,12 @@
   "title": "Counter",
   "description": "Scroll-triggered number counters with digit rolling animations (multiple variants).",
   "category": "text",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
   "coverImage": "/assets/img/image12.png",
   "videoUrl": null,
-  "previewUrl": "/counter"
+  "previewUrl": "/counter",
+  "tier": "pro"
 }
-

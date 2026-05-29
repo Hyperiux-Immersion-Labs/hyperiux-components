@@ -6,5 +6,6 @@
   "category": "scroll",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/parallax-footer"
+  "previewUrl": "/parallax-footer",
+  "tier": "pro"
 }

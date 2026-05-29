@@ -8,6 +8,7 @@ import { VaultLayout } from "@/components/layout/VaultLayout";
 import { VaultHeader } from "@/components/layout/VaultHeader";
 import { EffectCard } from "@/components/ui/EffectCardNew";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { UpgradeCard } from "@/components/ui/UpgradeCard";
 import { getEffectPreviewHref } from "@/lib/categories";
 import Footer from "@/components/Footer";
 import HeadAnim from "@/components/Animations/HeadAnim";
@@ -24,6 +25,8 @@ export function EffectDetailContent({
   relatedEffects = [],
   effectCounts,
   totalEffects,
+  isLocked = false,
+  userPlan = "free",
 }) {
   fadeUp();
   const [videoReady, setVideoReady] = useState(false);
@@ -93,9 +96,17 @@ export default function MyComponent() {
       </div>
 
       <div className="bg-secondary-surface/60 backdrop-blur-md rounded-md border border-border/60 p-5 space-y-4">
-        <h3 className="font-medium text-foreground">
-          Resource details
-        </h3>
+        <div className="flex items-center justify-between">
+          <h3 className="font-medium text-foreground">Resource details</h3>
+          {effect.tier === "pro" && (
+            <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/20 text-white/70 text-xs font-medium">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              Pro
+            </span>
+          )}
+        </div>
 
         <div className="space-y-3 text-sm">
           <div className="flex justify-between gap-6">
@@ -233,15 +244,32 @@ export default function MyComponent() {
                 {sidebarContent}
               </div>
 
-              <EffectDynamicContent
-                content={content}
-                installCode={installCode}
-                usageCode={usageCode}
-                componentCode={code}
-                config={config}
-                slug={slug}
-                categorySlug={categorySlug}
-              />
+              {isLocked ? (
+                <div className="relative rounded-xl border border-white/10 bg-white/5 overflow-hidden min-h-80 flex items-center justify-center">
+                  {/* Blurred ghost of install/code sections behind the gate */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 pointer-events-none select-none blur-sm opacity-30 p-8 space-y-6"
+                  >
+                    <div className="h-10 bg-white/20 rounded-md w-1/3" />
+                    <div className="h-32 bg-white/10 rounded-xl" />
+                    <div className="h-10 bg-white/20 rounded-md w-1/4" />
+                    <div className="h-48 bg-white/10 rounded-xl" />
+                  </div>
+
+                  <UpgradeCard effectTitle={effect.title} />
+                </div>
+              ) : (
+                <EffectDynamicContent
+                  content={content}
+                  installCode={installCode}
+                  usageCode={usageCode}
+                  componentCode={code}
+                  config={config}
+                  slug={slug}
+                  categorySlug={categorySlug}
+                />
+              )}
             </div>
 
             <div className="lg:col-span-1 self-stretch max-sm:hidden fadeup">

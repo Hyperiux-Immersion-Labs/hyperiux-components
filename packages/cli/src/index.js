@@ -5,6 +5,7 @@ import { createRequire } from "module";
 import { init } from "./commands/init.js";
 import { add } from "./commands/add.js";
 import { list } from "./commands/list.js";
+import { login, logout, whoami } from "./commands/login.js";
 
 const require = createRequire(import.meta.url);
 const { version } = require("../package.json");
@@ -35,5 +36,20 @@ program
   .command("list")
   .description("List all available effects")
   .action(list);
+
+program
+  .command("login")
+  .description("Log in to Hyperiux Pro to access premium effects")
+  .action(login);
+
+program
+  .command("logout")
+  .description("Remove saved Hyperiux Pro credentials")
+  .action(logout);
+
+program
+  .command("whoami")
+  .description("Show current login status")
+  .action(whoami);
 
 program.parse();

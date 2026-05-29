@@ -4,7 +4,10 @@
   "title": "Fractal Glass",
   "description": "WebGL glass-strip refraction effect with fractal distortion, edge blending, and pointer-reactive parallax.",
   "category": "webgl",
-  "dependencies": ["three"],
+  "dependencies": [
+    "three"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/webgl/fractal-glass"
+  "previewUrl": "/webgl/fractal-glass",
+  "tier": "pro"
 }

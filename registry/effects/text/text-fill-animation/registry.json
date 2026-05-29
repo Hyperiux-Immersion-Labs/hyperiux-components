@@ -4,7 +4,10 @@
   "title": "Text Fill Animation",
   "description": "Scroll-synced text color fill animation with customizable color sweep effect",
   "category": "text",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/text-fill-animation"
+  "previewUrl": "/text-fill-animation",
+  "tier": "pro"
 }

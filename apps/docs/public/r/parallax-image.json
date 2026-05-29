@@ -7,6 +7,7 @@
   "categories": [
     "scroll"
   ],
+  "tier": "pro",
   "dependencies": [
     "gsap"
   ],
@@ -18,8 +19,7 @@
     {
       "path": "parallax-image.jsx",
       "type": "registry:component",
-      "target": "components/hyperiux/parallax-image.jsx",
-      "content": "\"use client\";\n\nimport gsap from \"gsap\";\nimport Image from \"next/image\";\nimport React, { useEffect, useRef } from \"react\";\nimport ScrollTrigger from \"gsap/dist/ScrollTrigger\";\n\ngsap.registerPlugin(ScrollTrigger);\n\nexport function ParallaxImage({\n  src,\n  alt = \"parallax-img\",\n  wrapperClassName = \"\",\n  imageClassName = \"\",\n  width = 700,\n  height = 1000,\n  translateY = \"30%\",\n  start = \"top bottom\",\n  end = \"bottom top\",\n  scrub = true,\n  enableScale = false,\n  scaleFrom = 1.6,\n  scaleTo = 1.2,\n}) {\n  const wrapperRef = useRef(null);\n  const imageRef = useRef(null);\n\n  useEffect(() => {\n    if (!wrapperRef.current || !imageRef.current) return;\n\n    const ctx = gsap.context(() => {\n      gsap.set(imageRef.current, {\n        scale: enableScale ? scaleFrom : undefined,\n      });\n\n      gsap.to(imageRef.current, {\n        translateY,\n        scale: enableScale ? scaleTo : undefined,\n        ease: \"none\",\n        scrollTrigger: {\n          trigger: wrapperRef.current,\n          start,\n          end,\n          scrub,\n        },\n      });\n    }, wrapperRef);\n\n    return () => ctx.revert();\n  }, [translateY, start, end, scrub, enableScale, scaleFrom, scaleTo]);\n\n  return (\n    <div ref={wrapperRef} className={`overflow-hidden ${wrapperClassName}`}>\n      <Image\n        ref={imageRef}\n        width={width}\n        height={height}\n        src={src}\n        alt={alt}\n        className={`w-full h-full object-cover ${imageClassName}`}\n      />\n    </div>\n  );\n}\n"
+      "target": "components/hyperiux/parallax-image.jsx"
     }
   ]
 }

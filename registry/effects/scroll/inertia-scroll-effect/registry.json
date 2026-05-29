@@ -2,9 +2,13 @@
   "name": "inertia-scroll-effect",
   "type": "registry:component",
   "title": "Inertia Scroll Effect",
-  "description": "Three-phase scroll-driven sequence: parallax hero, image flies in with text, 5×5 grid materialises and shrinks hero to a cell, then grid scrolls off while the last image expands into a centred overlay. Powered by GSAP ScrollTrigger with Lenis infinite scroll.",
+  "description": "Three-phase scroll-driven sequence: parallax hero, image flies in with text, 5\u00d75 grid materialises and shrinks hero to a cell, then grid scrolls off while the last image expands into a centred overlay. Powered by GSAP ScrollTrigger with Lenis infinite scroll.",
   "category": "scroll",
-  "dependencies": ["gsap", "lenis"],
+  "dependencies": [
+    "gsap",
+    "lenis"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/inertia-scroll-effect"
+  "previewUrl": "/inertia-scroll-effect",
+  "tier": "pro"
 }

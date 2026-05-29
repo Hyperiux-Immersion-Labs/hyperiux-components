@@ -4,7 +4,16 @@
   "title": "Milky Way",
   "description": "GPU-accelerated GPGPU particle galaxy with spiral arms, curl-noise nebula smoke, twinkling sparkle stars, background starfield, and post-processing vignette + edge blur.",
   "category": "webgl",
-  "dependencies": ["@react-three/fiber", "@react-three/drei", "@react-three/postprocessing", "postprocessing", "three", "lucide-react", "gsap"],
+  "dependencies": [
+    "@react-three/fiber",
+    "@react-three/drei",
+    "@react-three/postprocessing",
+    "postprocessing",
+    "three",
+    "lucide-react",
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/milkyway"
+  "previewUrl": "/milkyway",
+  "tier": "pro"
 }

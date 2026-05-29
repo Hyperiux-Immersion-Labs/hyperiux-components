@@ -6,13 +6,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const REGISTRY_URL = process.env.HYPERIUX_REGISTRY_URL || "https://components.hyperiux.com/r";
+const APP_URL = process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
 const LOCAL_REGISTRY_PATH = "public/r";
 
 // Path to local registry in the monorepo (for development)
 const DEV_REGISTRY_PATH = path.join(__dirname, "../../../../apps/docs/public/r");
 
 export async function fetchRegistry(name, options = {}) {
-  const { local = false, cwd = process.cwd() } = options;
+  const { local = false, cwd = process.cwd(), token = null } = options;
 
   if (local) {
     return fetchLocalRegistry(name, cwd);
@@ -20,16 +21,22 @@ export async function fetchRegistry(name, options = {}) {
 
   // Check if we're in development mode (registry files exist locally)
   if (fs.existsSync(path.join(DEV_REGISTRY_PATH, `${name}.json`))) {
-    return fetchDevRegistry(name);
+    return fetchDevRegistry(name, token);
   }
 
-  return fetchRemoteRegistry(name);
+  return fetchRemoteRegistry(name, token);
 }
 
-async function fetchDevRegistry(name) {
+async function fetchDevRegistry(name, token) {
   const registryPath = path.join(DEV_REGISTRY_PATH, `${name}.json`);
-  const content = fs.readFileSync(registryPath, "utf-8");
-  return JSON.parse(content);
+  const meta = JSON.parse(fs.readFileSync(registryPath, "utf-8"));
+
+  // In dev, pro effects still have content stripped from public/r — serve from source via protected API
+  if (meta.tier === "pro" && token) {
+    return fetchProtectedEffect(name, token);
+  }
+
+  return meta;
 }
 
 async function fetchLocalRegistry(name, cwd) {
@@ -43,7 +50,7 @@ async function fetchLocalRegistry(name, cwd) {
   return JSON.parse(content);
 }
 
-async function fetchRemoteRegistry(name) {
+async function fetchRemoteRegistry(name, token) {
   const url = `${REGISTRY_URL}/${name}.json`;
 
   try {
@@ -56,13 +63,35 @@ async function fetchRemoteRegistry(name) {
       throw new Error(`Failed to fetch effect: ${response.statusText}`);
     }
 
-    return response.json();
+    const meta = await response.json();
+
+    // If this is a pro effect, fetch the full file contents from the protected endpoint
+    if (meta.tier === "pro" && token) {
+      return fetchProtectedEffect(name, token);
+    }
+
+    return meta;
   } catch (error) {
     if (error.message.includes("not found")) {
       throw error;
     }
     throw new Error(`Failed to fetch registry: ${error.message}`);
   }
+}
+
+async function fetchProtectedEffect(name, token) {
+  const url = `${APP_URL}/api/effects/${name}`;
+
+  const response = await fetch(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data.error || `Failed to fetch pro effect: ${response.statusText}`);
+  }
+
+  return response.json();
 }
 
 export async function fetchRegistryIndex(options = {}) {

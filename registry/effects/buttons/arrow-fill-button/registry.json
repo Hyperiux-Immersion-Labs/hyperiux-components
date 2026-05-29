@@ -6,5 +6,6 @@
   "category": "buttons",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/buttons/arrow-fill-button"
+  "previewUrl": "/buttons/arrow-fill-button",
+  "tier": "pro"
 }

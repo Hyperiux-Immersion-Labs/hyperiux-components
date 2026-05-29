@@ -6,5 +6,6 @@
   "category": "cursor",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/magnetic-image-trail"
+  "previewUrl": "/magnetic-image-trail",
+  "tier": "free"
 }

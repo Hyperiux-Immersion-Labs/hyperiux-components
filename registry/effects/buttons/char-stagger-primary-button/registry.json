@@ -6,5 +6,6 @@
   "category": "buttons",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/buttons/char-stagger-primary-button"
+  "previewUrl": "/buttons/char-stagger-primary-button",
+  "tier": "pro"
 }

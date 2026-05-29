@@ -4,7 +4,10 @@
   "title": "Slide Text Reveal",
   "description": "Characters slide in from the right with staggered fade animation on scroll",
   "category": "text",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/slide-text-reveal"
+  "previewUrl": "/slide-text-reveal",
+  "tier": "pro"
 }

@@ -4,9 +4,14 @@
   "title": "Coffee Bean Cursor",
   "description": "Mouse-reactive 3D coffee bean flow with velocity-based lighting and fluid drift",
   "category": "cursor",
-  "dependencies": ["@react-three/drei", "@react-three/fiber", "three"],
+  "dependencies": [
+    "@react-three/drei",
+    "@react-three/fiber",
+    "three"
+  ],
   "registryDependencies": [],
   "previewUrl": "/cursors/coffee",
   "coverImage": "/assets/list/coffee-bean-cursor.png",
-  "videoUrl": "coffee-bean-cursor"
+  "videoUrl": "coffee-bean-cursor",
+  "tier": "pro"
 }

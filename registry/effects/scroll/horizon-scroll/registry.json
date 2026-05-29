@@ -4,7 +4,10 @@
   "title": "Horizontal Feature Reveal",
   "description": "Horizontal storytelling section that converts vertical scroll into a panoramic gallery track",
   "category": "scroll",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/horizontal-feature-reveal"
+  "previewUrl": "/horizontal-feature-reveal",
+  "tier": "pro"
 }

@@ -4,7 +4,10 @@
   "title": "stack-loader Loader",
   "description": "Stack-to-spread image intro loader with GSAP SplitText word animations and staggered image choreography",
   "category": "loaders",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/loaders/stack-loader"
+  "previewUrl": "/loaders/stack-loader",
+  "tier": "pro"
 }

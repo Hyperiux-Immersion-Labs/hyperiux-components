@@ -4,7 +4,10 @@
   "title": "File Encryption",
   "description": "Auto-scrolling draggable card marquee with a WebGL laser beam that splits each card between its plain and ASCII/encrypted face, plus Canvas 2D particle scatter.",
   "category": "components",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/file-encryption"
+  "previewUrl": "/file-encryption",
+  "tier": "pro"
 }

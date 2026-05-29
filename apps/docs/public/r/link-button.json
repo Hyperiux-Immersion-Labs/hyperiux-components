@@ -7,6 +7,7 @@
   "categories": [
     "buttons"
   ],
+  "tier": "pro",
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/buttons/link-button",
@@ -16,8 +17,7 @@
     {
       "path": "link-button.jsx",
       "type": "registry:component",
-      "target": "components/hyperiux/link-button.jsx",
-      "content": "\"use client\";\n\nimport { useEffect, useRef } from \"react\";\n\nconst injectStyles = () => {\n  if (typeof document === \"undefined\") return;\n  if (document.getElementById(\"link-btn-styles\")) return;\n\n  const style = document.createElement(\"style\");\n  style.id = \"link-btn-styles\";\n  style.textContent = `\n    .link-btn {\n      display: inline-flex;\n      align-items: center;\n      gap: 0.5rem;\n      text-decoration: none;\n      color: inherit;\n      cursor: pointer;\n      background: transparent;\n      border: none;\n      padding: 0;\n    }\n\n    .link-btn__text {\n      position: relative;\n      width: fit-content;\n    }\n\n    .link-btn__text::after {\n      content: \"\";\n      position: absolute;\n      left: 0;\n      bottom: -2%;\n      width: 100%;\n      height: 1.5px;\n      background-color: currentColor;\n      transform: scaleX(0);\n      transform-origin: right;\n      transition: transform 0.5s cubic-bezier(0.62, 0.05, 0.01, 0.99);\n    }\n\n    .link-btn:hover .link-btn__text::after {\n      transform: scaleX(1);\n      transform-origin: left;\n    }\n\n    .link-btn__icon {\n      transition: transform 0.3s ease;\n    }\n\n    .link-btn:hover .link-btn__icon {\n      transform: rotate(-45deg);\n    }\n  `;\n  document.head.appendChild(style);\n};\n\nexport function LinkButton({\n  children,\n  className = \"\",\n  showArrow = true,\n  arrowClassName = \"\",\n  as: Component = \"a\",\n  ...props\n}) {\n  const hasInjected = useRef(false);\n\n  useEffect(() => {\n    if (!hasInjected.current) {\n      injectStyles();\n      hasInjected.current = true;\n    }\n  }, []);\n\n  return (\n    <Component {...props} className={`link-btn ${className}`}>\n      <span className=\"link-btn__text\">{children}</span>\n\n      {showArrow && (\n        <svg\n          className={`link-btn__icon ${arrowClassName}`}\n          width=\"16\"\n          height=\"16\"\n          viewBox=\"0 0 24 24\"\n          fill=\"none\"\n          stroke=\"currentColor\"\n          strokeWidth=\"2\"\n          strokeLinecap=\"round\"\n          strokeLinejoin=\"round\"\n        >\n          <path d=\"M5 12h14M12 5l7 7-7 7\" />\n        </svg>\n      )}\n    </Component>\n  );\n}\n\nexport default LinkButton;\n"
+      "target": "components/hyperiux/link-button.jsx"
     }
   ]
 }

@@ -7,6 +7,7 @@
   "categories": [
     "buttons"
   ],
+  "tier": "pro",
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/buttons/animated-toggle",
@@ -16,8 +17,7 @@
     {
       "path": "animated-toggle.jsx",
       "type": "registry:component",
-      "target": "components/hyperiux/animated-toggle.jsx",
-      "content": "\"use client\"\n\nexport function ChevronBird({\n  isActive = false,\n  size = 14,\n  strokeWidth = 10,\n  className = \"\",\n}) {\n  return (\n    <svg\n      className={className}\n      viewBox=\"0 0 100 100\"\n      width={size}\n      height={size}\n      fill=\"none\"\n      aria-hidden=\"true\"\n      style={{\n        transform: isActive ? 'translateY(-25%)' : 'translateY(0%)',\n        transition: 'transform 0.32s ease-in-out',\n      }}\n    >\n      <g>\n        <path\n          d=\"M10 50H50\"\n          stroke=\"currentColor\"\n          strokeWidth={strokeWidth}\n          strokeLinecap=\"square\"\n          style={{\n            transformBox: 'view-box',\n            transformOrigin: '50px 50px',\n            transform: isActive ? 'rotate(-42deg)' : 'rotate(42deg)',\n            transition: 'transform 0.32s ease-in-out',\n          }}\n        />\n        <path\n          d=\"M90 50H50\"\n          stroke=\"currentColor\"\n          strokeWidth={strokeWidth}\n          strokeLinecap=\"square\"\n          style={{\n            transformBox: 'view-box',\n            transformOrigin: '50px 50px',\n            transform: isActive ? 'rotate(42deg)' : 'rotate(-42deg)',\n            transition: 'transform 0.32s ease-in-out',\n          }}\n        />\n      </g>\n    </svg>\n  );\n}\n\nexport function Cross({\n  isActive = false,\n  size = 24,\n  className = \"\",\n}) {\n  return (\n    <div\n      className={`flex items-center relative justify-center ${className}`}\n      style={{ width: size, height: size }}\n    >\n      <span\n        className='absolute block w-full h-0.5 bg-current transition-transform duration-300 ease-in-out'\n        style={{ transform: isActive ? 'rotate(45deg)' : 'rotate(0deg)' }}\n      />\n      <span\n        className='absolute block w-full h-0.5 bg-current transition-transform duration-300 ease-in-out'\n        style={{ transform: isActive ? 'rotate(-45deg)' : 'rotate(90deg)' }}\n      />\n    </div>\n  );\n}\n\nexport function Plus({\n  isActive = false,\n  size = 24,\n  className = \"\",\n}) {\n  return (\n    <div\n      className={`flex items-center relative justify-center ${className}`}\n      style={{\n        width: size,\n        height: size,\n        transform: isActive ? 'rotate(180deg)' : 'rotate(0deg)',\n        transition: 'transform 0.3s ease-in-out',\n      }}\n    >\n      <span className='absolute block w-full h-0.5 bg-current transition-transform duration-300 ease-in-out' />\n      <span\n        className='absolute block w-full h-0.5 bg-current transition-transform duration-300 ease-in-out'\n        style={{ transform: isActive ? 'rotate(180deg)' : 'rotate(90deg)' }}\n      />\n    </div>\n  );\n}\n"
+      "target": "components/hyperiux/animated-toggle.jsx"
     }
   ]
 }

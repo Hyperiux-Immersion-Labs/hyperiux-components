@@ -4,7 +4,10 @@
   "title": "Orbit Slider",
   "description": "Split circular slider with orbiting titles on one side and image cards on the other",
   "category": "scroll",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/circular-split-roll"
+  "previewUrl": "/circular-split-roll",
+  "tier": "pro"
 }

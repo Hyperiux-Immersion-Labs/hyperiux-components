@@ -1,4 +1,5 @@
 import { Space_Grotesk, Inter, Geist_Mono } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "highlight.js/styles/night-owl.css";
 import "./globals.css";
 import { Analytics } from '@vercel/analytics/next';
@@ -34,18 +35,19 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${geistMono.variable} antialiased`}
-    >
-      <body
-        className="min-h-screen bg-background text-foreground font-sans"
-        style={{ background: "#000000", color: "#ffffff" }}
+    <ClerkProvider>
+      <html
+        lang="en"
+        className={`${spaceGrotesk.variable} ${inter.variable} ${geistMono.variable} antialiased`}
       >
-     
-        {children}
-        <Analytics /> 
-      </body>
-    </html>
+        <body
+          className="min-h-screen bg-background text-foreground font-sans"
+          style={{ background: "#000000", color: "#ffffff" }}
+        >
+          {children}
+          <Analytics />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

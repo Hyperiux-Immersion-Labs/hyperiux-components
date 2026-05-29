@@ -6,5 +6,6 @@
   "category": "text",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/spotlight-text"
+  "previewUrl": "/spotlight-text",
+  "tier": "pro"
 }

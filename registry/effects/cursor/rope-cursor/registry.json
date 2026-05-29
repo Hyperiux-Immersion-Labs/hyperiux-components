@@ -4,9 +4,12 @@
   "title": "Rope Cursor",
   "description": "Soft trailing rope that lags behind the pointer with a smooth SVG path",
   "category": "cursor",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
   "previewUrl": "/cursors/rope",
   "coverImage": "/assets/list/rope-cursor.png",
-  "videoUrl": "rope-cursor"
+  "videoUrl": "rope-cursor",
+  "tier": "pro"
 }

@@ -6,5 +6,6 @@
   "category": "backgrounds",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/dotted-grid"
+  "previewUrl": "/dotted-grid",
+  "tier": "free"
 }
