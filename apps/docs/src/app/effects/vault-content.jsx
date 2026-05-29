@@ -13,7 +13,8 @@ import {
   getEffectCategoryBySlug,
   getEffectCategoryHref,
 } from "@/lib/categories";
-
+import Link from "next/link";
+import Image from "next/image";
 import Footer from "@/components/Footer";
 
 export function VaultContent({ effects, effectCounts, initialCategory = "all" }) {

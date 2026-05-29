@@ -24,8 +24,8 @@ export function CodeBlock({ code, language = "jsx", filename }) {
     };
 
     return (
-        <div className="relative rounded-md border border-border/60 bg-black/60 backdrop-blur-md overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-2 border-b border-border/60 bg-black/20">
+        <div className="relative rounded-md border border-border/60 bg-black/60 backdrop-blur-md ">
+            <div className="flex items-center justify-between px-4 py-2 border-b border-border/60 bg-black sticky top-0 z-10">
                 <span className="text-sm text-muted">{filename || ""}</span>
                 <button
                     onClick={handleCopy}
