@@ -156,7 +156,7 @@ export default function DocsBody({ children }) {
             </AnimatePresence>
           </div>
           <aside className="hidden xl:block pr-6">
-            <div className="sticky top-32 space-y-6">
+            <div className="sticky top-32 space-y-6 fadeup">
               <TableOfContents containerRef={contentRef} watchKey={pathname} />
             </div>
           </aside>

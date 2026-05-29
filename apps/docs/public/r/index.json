@@ -14,7 +14,7 @@
       "previewUrl": "/draggable-marquee",
       "coverImage": "/assets/list/draggable-marquee.png",
       "videoUrl": "draggable-marquee.mp4",
-      "addedAt": 1776937386240.6501
+      "addedAt": 1779961997320.1726
     },
     {
       "name": "grid-scale",
@@ -30,7 +30,7 @@
       "previewUrl": "/grid-scale",
       "coverImage": "/assets/list/grid-scale.png",
       "videoUrl": "grid-scale.mp4",
-      "addedAt": 1777877418531.936
+      "addedAt": 1779961997320.333
     },
     {
       "name": "helix-slider",
@@ -46,10 +46,10 @@
       "previewUrl": "/cylindrical-scroll",
       "coverImage": "/assets/list/helix-slider.png",
       "videoUrl": "helix-slider.mp4",
-      "addedAt": 1776937386240.8901
+      "addedAt": 1779961997320.5608
     },
     {
-      "name": "horizontal-feature-reveal",
+      "name": "Horizontal Feature Reveal",
       "title": "Horizontal Feature Reveal",
       "description": "Horizontal storytelling section that converts vertical scroll into a panoramic gallery track",
       "category": "scroll",
@@ -60,9 +60,26 @@
         "gsap"
       ],
       "previewUrl": "/horizontal-feature-reveal",
-      "coverImage": "/assets/list/horizon-scroll.png",
-      "videoUrl": "horizon-scroll.mp4",
-      "addedAt": 1776937386241.0713
+      "coverImage": "/assets/img/image01.webp",
+      "videoUrl": "Horizontal Feature Reveal.mp4",
+      "addedAt": 1779961997320.7412
+    },
+    {
+      "name": "inertia-scroll-effect",
+      "title": "Inertia Scroll Effect",
+      "description": "Three-phase scroll-driven sequence: parallax hero, image flies in with text, 5×5 grid materialises and shrinks hero to a cell, then grid scrolls off while the last image expands into a centred overlay. Powered by GSAP ScrollTrigger with Lenis infinite scroll.",
+      "category": "scroll",
+      "categories": [
+        "scroll"
+      ],
+      "dependencies": [
+        "gsap",
+        "lenis"
+      ],
+      "previewUrl": "/inertia-scroll-effect",
+      "coverImage": "/assets/list/inertia-scroll-effect.png",
+      "videoUrl": "inertia-scroll-effect.mp4",
+      "addedAt": 1779961997320.8347
     },
     {
       "name": "infinite-perspective-slider",
@@ -75,10 +92,10 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/surf-index",
+      "previewUrl": "/infinite-perspective-slider",
       "coverImage": "/assets/list/infinite-perspective-slider.png",
       "videoUrl": "infinite-perspective-slider.mp4",
-      "addedAt": 1776937386241.2588
+      "addedAt": 1779961997321.1003
     },
     {
       "name": "orbit-slider",
@@ -94,7 +111,7 @@
       "previewUrl": "/circular-split-roll",
       "coverImage": "/assets/list/orbit-slider.png",
       "videoUrl": "orbit-slider.mp4",
-      "addedAt": 1776937386241.5
+      "addedAt": 1779961997321.3215
     },
     {
       "name": "parallax-footer",
@@ -108,7 +125,7 @@
       "previewUrl": "/parallax-footer",
       "coverImage": "/assets/list/parallax-footer.png",
       "videoUrl": "parallax-footer.mp4",
-      "addedAt": 1776937386241.6577
+      "addedAt": 1779961997321.4854
     },
     {
       "name": "parallax-gallery",
@@ -123,8 +140,8 @@
       ],
       "previewUrl": "/frame-slider",
       "coverImage": "/assets/list/parallax-gallery.png",
-      "videoUrl": "frame-slider.mp4",
-      "addedAt": 1776937386241.8418
+      "videoUrl": "parallax-gallery.mp4",
+      "addedAt": 1779961997321.6775
     },
     {
       "name": "parallax-image",
@@ -140,7 +157,7 @@
       "previewUrl": "/parallax-image-animation",
       "coverImage": "/assets/list/parallax-image.png",
       "videoUrl": "parallax-image.mp4",
-      "addedAt": 1776937386241.9958
+      "addedAt": 1779961997321.8325
     },
     {
       "name": "parallax-slider",
@@ -157,7 +174,7 @@
       "previewUrl": "/parallax-slider",
       "coverImage": "/assets/list/parallax-slider.png",
       "videoUrl": "parallax-slider.mp4",
-      "addedAt": 1776937386242.151
+      "addedAt": 1779961997322.0178
     },
     {
       "name": "progressive-bloom-valley",
@@ -177,7 +194,7 @@
       "previewUrl": "/webgl/progressive-bloom-valley",
       "coverImage": "/assets/list/progressive-bloom-valley.png",
       "videoUrl": "progressive-bloom-valley.mp4",
-      "addedAt": 1777541715965.7407
+      "addedAt": 1779961997322.5254
     },
     {
       "name": "rotating-carousel",
@@ -194,7 +211,7 @@
       "previewUrl": "/circular-slider",
       "coverImage": "/assets/list/rotating-carousel.png",
       "videoUrl": "rotating-carousel.mp4",
-      "addedAt": 1776937386242.931
+      "addedAt": 1779961997322.8267
     },
     {
       "name": "rotation-slider",
@@ -211,7 +228,7 @@
       "previewUrl": "/rotation-slider",
       "coverImage": "/assets/list/rotation-slider.png",
       "videoUrl": "rotation-slider.mp4",
-      "addedAt": 1777877418532.2446
+      "addedAt": 1779961997323.0122
     },
     {
       "name": "scroll-distortion",
@@ -228,8 +245,8 @@
       ],
       "previewUrl": "/scroll-distortion",
       "coverImage": "/assets/list/scroll-distortion.png",
-      "videoUrl": "scroll-distortion.mp4",
-      "addedAt": 1776937386243.0935
+      "videoUrl": "scroll-distortion",
+      "addedAt": 1779961997323.2498
     },
     {
       "name": "scroll-shuffled-cards",
@@ -245,7 +262,7 @@
       "previewUrl": "/scroll-shuffled-cards",
       "coverImage": "/assets/list/scroll-shuffled-cards.png",
       "videoUrl": "scroll-shuffled-cards.mp4",
-      "addedAt": 1776937386243.2417
+      "addedAt": 1779961997323.4395
     },
     {
       "name": "scroll-stack",
@@ -261,24 +278,7 @@
       "previewUrl": "/stacked-card",
       "coverImage": "/assets/list/scroll-stack.png",
       "videoUrl": "scroll-stack.mp4",
-      "addedAt": 1776937386243.4756
-    },
-    {
-      "name": "inertia-scroll-effect",
-      "title": "Inertia Scroll Effect",
-      "description": "Three-phase scroll-driven sequence: parallax hero, image flies in with text, 5×5 grid materialises and shrinks hero to a cell, then grid scrolls off while the last image expands into a centred overlay. Powered by GSAP ScrollTrigger with Lenis infinite scroll.",
-      "category": "scroll",
-      "categories": [
-        "scroll"
-      ],
-      "dependencies": [
-        "gsap",
-        "lenis"
-      ],
-      "previewUrl": "/inertia-scroll-effect",
-      "coverImage": "/assets/list/inertia-scroll-effect.png",
-      "videoUrl": "inertia-scroll-effect.mp4",
-      "addedAt": 1777877418532.769
+      "addedAt": 1779961997323.6838
     },
     {
       "name": "split-canvas",
@@ -295,7 +295,7 @@
       "previewUrl": "/split-canvas",
       "coverImage": "/assets/list/split-canvas.png",
       "videoUrl": "split-canvas.mp4",
-      "addedAt": 1776937386243.6394
+      "addedAt": 1779961997323.8457
     },
     {
       "name": "square-translate",
@@ -310,8 +310,8 @@
       ],
       "previewUrl": "/square-translate",
       "coverImage": "/assets/list/square-translate.png",
-      "videoUrl": "square-translate.mp4",
-      "addedAt": 1776937386243.7983
+      "videoUrl": "square-translate",
+      "addedAt": 1779961997324.0454
     },
     {
       "name": "stacking-cards",
@@ -328,7 +328,7 @@
       "previewUrl": "/stacking-cards",
       "coverImage": "/assets/list/stacking-cards.png",
       "videoUrl": "stacking-cards.mp4",
-      "addedAt": 1776937386243.9614
+      "addedAt": 1779961997324.2053
     },
     {
       "name": "sticky-content-wrapper",
@@ -344,7 +344,7 @@
       "previewUrl": "/sticky-content-wrapper",
       "coverImage": "/assets/list/sticky-content-wrapper.png",
       "videoUrl": "sticky-content-wrapper.mp4",
-      "addedAt": 1776937386244.1335
+      "addedAt": 1779961997324.3765
     },
     {
       "name": "svg-path-marquee",
@@ -360,7 +360,7 @@
       "previewUrl": "/svg-path",
       "coverImage": "/assets/list/svg-path-marquee.png",
       "videoUrl": "svg-path-marquee.mp4",
-      "addedAt": 1777541715966.0222
+      "addedAt": 1779961997324.5615
     },
     {
       "name": "svg-pixel-reveal",
@@ -376,7 +376,7 @@
       "previewUrl": "/svg-pixel-reveal",
       "coverImage": "/assets/list/svg-pixel-reveal.png",
       "videoUrl": "svg-pixel-reveal.mp4",
-      "addedAt": 1777541715966.2297
+      "addedAt": 1779961997324.7544
     },
     {
       "name": "text-convergence",
@@ -392,7 +392,7 @@
       "previewUrl": "/text-convergence",
       "coverImage": "/assets/list/text-convergence.png",
       "videoUrl": "text-convergence.mp4",
-      "addedAt": 1777541715966.3743
+      "addedAt": 1779961997324.9119
     },
     {
       "name": "butterfly-trail-cursor",
@@ -409,8 +409,8 @@
       ],
       "previewUrl": "/cursors/butterflies",
       "coverImage": "/assets/list/butterfly-trail-cursor.png",
-      "videoUrl": "butterfly-trail-cursor.mp4",
-      "addedAt": 1776937386237.8916
+      "videoUrl": "butterfly-trail-cursor",
+      "addedAt": 1779961997315.426
     },
     {
       "name": "character-trail",
@@ -424,7 +424,7 @@
       "previewUrl": "/character-trail",
       "coverImage": "/assets/list/character-trail.png",
       "videoUrl": "character-trail.mp4",
-      "addedAt": 1778822903800.0466
+      "addedAt": 1779961997315.6306
     },
     {
       "name": "coffee-bean-cursor",
@@ -441,8 +441,8 @@
       ],
       "previewUrl": "/cursors/coffee",
       "coverImage": "/assets/list/coffee-bean-cursor.png",
-      "videoUrl": "coffee-bean-cursor.mp4",
-      "addedAt": 1776937386238.0608
+      "videoUrl": "coffee-bean-cursor",
+      "addedAt": 1779961997315.8584
     },
     {
       "name": "colorful-cursor-aura",
@@ -458,21 +458,21 @@
       "previewUrl": "/colorful-cursor-aura",
       "coverImage": "/assets/list/colorful-cursor-aura.png",
       "videoUrl": "colorful-cursor-aura.mp4",
-      "addedAt": 1776937386238.2236
+      "addedAt": 1779961997316.082
     },
     {
-      "name": "pixel-bloom",
-      "title": "Pixel Bloom Cursor",
-      "description": "Cursor-reactive media grid that swaps nearby cells into a textured ASCII collage",
+      "name": "cursor-move",
+      "title": "Cursor Move",
+      "description": "Fullscreen cursor-follow crosshair + cursor dot with variable font axis mapping and coordinate readout.",
       "category": "cursor",
       "categories": [
         "cursor"
       ],
       "dependencies": [],
-      "previewUrl": "/cursors/pixel-bloom",
-      "coverImage": "/assets/list/pixel-bloom.png",
-      "videoUrl": "pixel-bloom.mp4",
-      "addedAt": 1776937386238.3813
+      "previewUrl": "/cursor-move",
+      "coverImage": "/assets/img/image05.png",
+      "videoUrl": null,
+      "addedAt": 1780033385471.9756
     },
     {
       "name": "fish-eye",
@@ -490,7 +490,21 @@
       "previewUrl": "/cursors/fish-eye",
       "coverImage": "/assets/list/fish-eye.png",
       "videoUrl": "fish-eye.mp4",
-      "addedAt": 1777541715962.9568
+      "addedAt": 1779961997316.2725
+    },
+    {
+      "name": "full-screen-crosshair",
+      "title": "Full Screen Crosshair",
+      "description": "Fullscreen crosshair cursor overlay with configurable line size, gap, thickness, smoothing, and blend mode.",
+      "category": "cursor",
+      "categories": [
+        "cursor"
+      ],
+      "dependencies": [],
+      "previewUrl": "/full-screen-crosshair",
+      "coverImage": "/assets/img/image06.png",
+      "videoUrl": null,
+      "addedAt": 1780033385521.4321
     },
     {
       "name": "inertia-img",
@@ -506,7 +520,7 @@
       "previewUrl": "/inertia-img",
       "coverImage": "/assets/list/inertia-img.png",
       "videoUrl": "inertia-img.mp4",
-      "addedAt": 1777541715963.1536
+      "addedAt": 1779961997316.4634
     },
     {
       "name": "interactive-arrows",
@@ -522,7 +536,7 @@
       "previewUrl": "/interactive-arrows",
       "coverImage": "/assets/list/interactive-arrows.png",
       "videoUrl": "interactive-arrows.mp4",
-      "addedAt": 1778822903801.0388
+      "addedAt": 1779961997317.1106
     },
     {
       "name": "liquid-glass-cursor",
@@ -538,7 +552,7 @@
       "previewUrl": "/liquid-glass-cursor",
       "coverImage": "/assets/list/liquid-glass-cursor.png",
       "videoUrl": "liquid-glass-cursor.mp4",
-      "addedAt": 1777877418530.652
+      "addedAt": 1779961997317.3604
     },
     {
       "name": "magnetic-image-trail",
@@ -552,7 +566,7 @@
       "previewUrl": "/magnetic-image-trail",
       "coverImage": "/assets/list/magnetic-image-trail.png",
       "videoUrl": "magnetic-image-trail.mp4",
-      "addedAt": 1778822903801.4631
+      "addedAt": 1779961997317.5767
     },
     {
       "name": "noise-ripple-cursor",
@@ -567,8 +581,8 @@
       ],
       "previewUrl": "/cursors/noiseripple",
       "coverImage": "/assets/list/noise-ripple-cursor.png",
-      "videoUrl": "noise-ripple-cursor.mp4",
-      "addedAt": 1776937386238.8503
+      "videoUrl": "noise-ripple-cursor",
+      "addedAt": 1779961997317.78
     },
     {
       "name": "phantom-image-trail",
@@ -584,7 +598,7 @@
       "previewUrl": "/mouse-hover-image",
       "coverImage": "/assets/list/phantom-image-trail.png",
       "videoUrl": "phantom-image-trail.mp4",
-      "addedAt": 1776937386239.015
+      "addedAt": 1779961997317.963
     },
     {
       "name": "pixelated-image-effect",
@@ -598,7 +612,21 @@
       "previewUrl": "/pixelated-image-effect",
       "coverImage": "/assets/list/pixelated-image-effect.png",
       "videoUrl": "pixelated-image-effect.mp4",
-      "addedAt": 1777541715963.3599
+      "addedAt": 1779961997318.1152
+    },
+    {
+      "name": "pixel-bloom",
+      "title": "Fiddle Ascii Cursor",
+      "description": "Cursor-reactive media grid that swaps nearby cells into a textured ASCII collage",
+      "category": "cursor",
+      "categories": [
+        "cursor"
+      ],
+      "dependencies": [],
+      "previewUrl": "/cursors/pixel-bloom",
+      "coverImage": "/assets/list/pixel-bloom.png",
+      "videoUrl": "pixel-bloom",
+      "addedAt": 1779961997315.208
     },
     {
       "name": "rope-cursor",
@@ -613,8 +641,8 @@
       ],
       "previewUrl": "/cursors/rope",
       "coverImage": "/assets/list/rope-cursor.png",
-      "videoUrl": "rope-cursor.mp4",
-      "addedAt": 1776937386239.2598
+      "videoUrl": "rope-cursor",
+      "addedAt": 1779961997318.2004
     },
     {
       "name": "dither-canvas",
@@ -628,7 +656,7 @@
       "previewUrl": "/binary-effect",
       "coverImage": "/assets/list/dither-canvas.png",
       "videoUrl": "dither-canvas.mp4",
-      "addedAt": 1776937386234.4556
+      "addedAt": 1779961997309.9126
     },
     {
       "name": "dotted-grid",
@@ -642,7 +670,7 @@
       "previewUrl": "/dotted-grid",
       "coverImage": "/assets/list/dotted-grid.png",
       "videoUrl": "dotted-grid.mp4",
-      "addedAt": 1778822903798.4846
+      "addedAt": 1779961997310.3762
     },
     {
       "name": "spider-particles",
@@ -656,7 +684,7 @@
       "previewUrl": "/spider-particles",
       "coverImage": "/assets/list/spider-particles.png",
       "videoUrl": "spider-particles.mp4",
-      "addedAt": 1777541715962.084
+      "addedAt": 1779961997310.4731
     },
     {
       "name": "block-transition",
@@ -673,7 +701,7 @@
       "previewUrl": "/page-transitions/block",
       "coverImage": "/assets/list/block-transition.png",
       "videoUrl": "block-transition.mp4",
-      "addedAt": 1778822903804.004
+      "addedAt": 1779961997327.6543
     },
     {
       "name": "chess-grid-transition",
@@ -689,8 +717,8 @@
       ],
       "previewUrl": "/page-transitions/chess-grids",
       "coverImage": "/assets/list/chess-grid-transition.png",
-      "videoUrl": "chess-grid-transition.mp4",
-      "addedAt": 1776937386247.3496
+      "videoUrl": "chess-grid-transition",
+      "addedAt": 1779961997327.8213
     },
     {
       "name": "page-flip-transition",
@@ -706,8 +734,8 @@
       ],
       "previewUrl": "/page-transitions/flip",
       "coverImage": "/assets/list/page-flip-transition.png",
-      "videoUrl": "page-flip-transition.mp4",
-      "addedAt": 1776937386247.5562
+      "videoUrl": "page-flip-transition",
+      "addedAt": 1779961997327.9954
     },
     {
       "name": "pie-rotation-transition",
@@ -723,8 +751,8 @@
       ],
       "previewUrl": "/page-transitions/pie-rotation",
       "coverImage": "/assets/list/pie-rotation-transition.png",
-      "videoUrl": "pie-rotation.mp4",
-      "addedAt": 1777541715967.434
+      "videoUrl": "pie-rotation-transition.mp4",
+      "addedAt": 1779961997328.1777
     },
     {
       "name": "pixel-transition",
@@ -741,7 +769,7 @@
       "previewUrl": "/page-transitions/pixels",
       "coverImage": "/assets/list/pixel-transition.png",
       "videoUrl": "pixel-transition.mp4",
-      "addedAt": 1778822903804.4028
+      "addedAt": 1779961997328.3953
     },
     {
       "name": "svg-draw-page-transition",
@@ -757,8 +785,8 @@
       ],
       "previewUrl": "/page-transitions/brush-strokes",
       "coverImage": "/assets/list/svg-draw-page-transition.png",
-      "videoUrl": "svg-draw-page-transition.mp4",
-      "addedAt": 1776937386247.657
+      "videoUrl": "svg-draw-page-transition",
+      "addedAt": 1779961997328.5215
     },
     {
       "name": "blur-text",
@@ -773,8 +801,8 @@
       ],
       "previewUrl": "/blur-text-reveal",
       "coverImage": "/assets/list/blur-text.png",
-      "videoUrl": "blur-text-reveal.mp4",
-      "addedAt": 1776937386244.89
+      "videoUrl": "blur-text.mp4",
+      "addedAt": 1779961997325.1548
     },
     {
       "name": "circle-text-reveal",
@@ -788,9 +816,25 @@
         "framer-motion"
       ],
       "previewUrl": "/circle-reveal",
-      "coverImage": "/assets/list/text-reveal.png",
+      "coverImage": "/assets/img/image01.webp",
       "videoUrl": "circle-text-reveal.mp4",
-      "addedAt": 1776937386245.0579
+      "addedAt": 1779961997325.297
+    },
+    {
+      "name": "counter",
+      "title": "Counter",
+      "description": "Scroll-triggered number counters with digit rolling animations (multiple variants).",
+      "category": "text",
+      "categories": [
+        "text"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "previewUrl": "/counter",
+      "coverImage": "/assets/img/image01.webp",
+      "videoUrl": null,
+      "addedAt": 1780034080094.5066
     },
     {
       "name": "glitchy-text",
@@ -806,7 +850,7 @@
       "previewUrl": "/glitchy-text",
       "coverImage": "/assets/list/glitchy-text.png",
       "videoUrl": "glitchy-text.mp4",
-      "addedAt": 1778822903802.031
+      "addedAt": 1779961997325.453
     },
     {
       "name": "mask-text-reveal",
@@ -822,7 +866,7 @@
       "previewUrl": "/mask-text-reveal",
       "coverImage": "/assets/list/mask-text-reveal.png",
       "videoUrl": "mask-text-reveal.mp4",
-      "addedAt": 1776937386245.2302
+      "addedAt": 1779961997325.6313
     },
     {
       "name": "overflow-stagger-text",
@@ -838,7 +882,7 @@
       "previewUrl": "/overflow-stagger-text",
       "coverImage": "/assets/list/overflow-stagger-text.png",
       "videoUrl": "overflow-stagger-text.mp4",
-      "addedAt": 1776937386245.4065
+      "addedAt": 1779961997325.804
     },
     {
       "name": "overflow-text-reveal",
@@ -854,7 +898,7 @@
       "previewUrl": "/overflow-text-reveal",
       "coverImage": "/assets/list/overflow-text-reveal.png",
       "videoUrl": "overflow-text-reveal.mp4",
-      "addedAt": 1776937386245.5762
+      "addedAt": 1779961997325.96
     },
     {
       "name": "perspective-text-reveal",
@@ -870,7 +914,7 @@
       "previewUrl": "/perspective-text-reveal",
       "coverImage": "/assets/list/perspective-text-reveal.png",
       "videoUrl": "perspective-text-reveal.mp4",
-      "addedAt": 1776937386245.7556
+      "addedAt": 1779961997326.106
     },
     {
       "name": "rectangular-text-reveal",
@@ -886,7 +930,7 @@
       "previewUrl": "/rectangular-text-reveal",
       "coverImage": "/assets/list/rectangular-text-reveal.png",
       "videoUrl": "rectangular-text-reveal.mp4",
-      "addedAt": 1776937386245.9448
+      "addedAt": 1779961997326.2607
     },
     {
       "name": "scramble-text",
@@ -902,7 +946,7 @@
       "previewUrl": "/scramble-text",
       "coverImage": "/assets/list/scramble-text.png",
       "videoUrl": "scramble-text.mp4",
-      "addedAt": 1776937386246.047
+      "addedAt": 1779961997326.3457
     },
     {
       "name": "slide-text-reveal",
@@ -918,7 +962,7 @@
       "previewUrl": "/slide-text-reveal",
       "coverImage": "/assets/list/slide-text-reveal.png",
       "videoUrl": "slide-text-reveal.mp4",
-      "addedAt": 1776937386246.2395
+      "addedAt": 1779961997326.523
     },
     {
       "name": "spotlight-text",
@@ -932,7 +976,7 @@
       "previewUrl": "/spotlight-text",
       "coverImage": "/assets/list/spotlight-text.png",
       "videoUrl": "spotlight-text.mp4",
-      "addedAt": 1777541715966.5222
+      "addedAt": 1779961997326.6848
     },
     {
       "name": "text-cloning",
@@ -946,7 +990,7 @@
       "previewUrl": "/text-cloning",
       "coverImage": "/assets/list/text-cloning.png",
       "videoUrl": "text-cloning.mp4",
-      "addedAt": 1778822903802.3489
+      "addedAt": 1779961997326.886
     },
     {
       "name": "text-fill-animation",
@@ -962,7 +1006,7 @@
       "previewUrl": "/text-fill-animation",
       "coverImage": "/assets/list/text-fill-animation.png",
       "videoUrl": "text-fill-animation.mp4",
-      "addedAt": 1776937386246.632
+      "addedAt": 1779961997327.0432
     },
     {
       "name": "text-hover-expand",
@@ -978,7 +1022,7 @@
       "previewUrl": "/text-hover",
       "coverImage": "/assets/list/text-hover-expand.png",
       "videoUrl": "text-hover-expand.mp4",
-      "addedAt": 1776937386246.8228
+      "addedAt": 1779961997327.184
     },
     {
       "name": "text-stream",
@@ -994,7 +1038,7 @@
       "previewUrl": "/text-stream",
       "coverImage": "/assets/list/text-stream.png",
       "videoUrl": "text-stream.mp4",
-      "addedAt": 1777541715966.6736
+      "addedAt": 1779961997327.3645
     },
     {
       "name": "animated-toggle",
@@ -1008,7 +1052,7 @@
       "previewUrl": "/buttons/animated-toggle",
       "coverImage": "/assets/list/animated-toggle.png",
       "videoUrl": "animated-toggle.mp4",
-      "addedAt": 1777541715962.4275
+      "addedAt": 1779961997310.7432
     },
     {
       "name": "arrow-fill-button",
@@ -1022,7 +1066,7 @@
       "previewUrl": "/buttons/arrow-fill-button",
       "coverImage": "/assets/list/arrow-fill-button.png",
       "videoUrl": "arrow-fill-button.mp4",
-      "addedAt": 1776937386234.853
+      "addedAt": 1779961997310.9019
     },
     {
       "name": "char-stagger-button",
@@ -1038,7 +1082,7 @@
       "previewUrl": "/buttons/char-stagger-button",
       "coverImage": "/assets/list/char-stagger-button.png",
       "videoUrl": "char-stagger-button.mp4",
-      "addedAt": 1776937386235.0989
+      "addedAt": 1779961997311.101
     },
     {
       "name": "char-stagger-primary-button",
@@ -1052,7 +1096,7 @@
       "previewUrl": "/buttons/char-stagger-primary-button",
       "coverImage": "/assets/list/char-stagger-primary-button.png",
       "videoUrl": "char-stagger-primary-button.mp4",
-      "addedAt": 1776937386235.302
+      "addedAt": 1779961997311.259
     },
     {
       "name": "dot-fill-button",
@@ -1066,7 +1110,7 @@
       "previewUrl": "/buttons/dot-fill-button",
       "coverImage": "/assets/list/dot-fill-button.png",
       "videoUrl": "dot-fill-button.mp4",
-      "addedAt": 1776937386235.484
+      "addedAt": 1779961997311.431
     },
     {
       "name": "link-button",
@@ -1080,7 +1124,7 @@
       "previewUrl": "/buttons/link-button",
       "coverImage": "/assets/list/link-button.png",
       "videoUrl": "link-button.mp4",
-      "addedAt": 1776937386235.6453
+      "addedAt": 1779961997311.591
     },
     {
       "name": "scramble-link-button",
@@ -1094,7 +1138,7 @@
       "previewUrl": "/buttons/scramble-link-button",
       "coverImage": "/assets/list/scramble-link-button.png",
       "videoUrl": "scramble-link-button.mp4",
-      "addedAt": 1776937386235.7437
+      "addedAt": 1779961997311.6982
     },
     {
       "name": "clippath-slider",
@@ -1110,7 +1154,58 @@
       "previewUrl": "/clippath-slider",
       "coverImage": "/assets/list/clippath-slider.png",
       "videoUrl": "clippath-slider.mp4",
-      "addedAt": 1777877418527.706
+      "addedAt": 1780031820628.5576
+    },
+    {
+      "name": "infinite-carousel",
+      "title": "Infinite Carousel",
+      "description": "Infinitely looping horizontal carousel with GSAP Draggable + inertia, plus mobile-friendly wrap/swiper fallbacks.",
+      "category": "carousels",
+      "categories": [
+        "carousels"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "previewUrl": "/infinite-carousel",
+      "coverImage": "/assets/img/image01.webp",
+      "videoUrl": "infinite-carousel.mp4",
+      "addedAt": 1780032389948.5715
+    },
+    {
+      "name": "ring-carousel",
+      "title": "Ring Carousel",
+      "description": "3D ring gallery carousel with drag momentum, snap-to-slide, autoplay, and optional navigation + dots.",
+      "category": "carousels",
+      "categories": [
+        "carousels"
+      ],
+      "dependencies": [
+        "gsap",
+        "lucide-react"
+      ],
+      "previewUrl": "/ring-carousel",
+      "coverImage": "/assets/img/image02.webp",
+      "videoUrl": "ring-carousel.mp4",
+      "addedAt": 1780032389998.6636
+    },
+    {
+      "name": "webgl-slider",
+      "title": "WebGL Slider",
+      "description": "Scroll-driven WebGL image slider with fold distortion, hover interaction, and Lenis + GSAP snap behavior.",
+      "category": "carousels",
+      "categories": [
+        "carousels"
+      ],
+      "dependencies": [
+        "three",
+        "gsap",
+        "lenis"
+      ],
+      "previewUrl": "/webgl-slider",
+      "coverImage": "/assets/img/image03.webp",
+      "videoUrl": "webgl-slider.mp4",
+      "addedAt": 1780032390048.9692
     },
     {
       "name": "zoom-slider",
@@ -1126,7 +1221,7 @@
       "previewUrl": "/webgl/zoom-slider",
       "coverImage": "/assets/list/zoom-slider.png",
       "videoUrl": "zoom-slider.mp4",
-      "addedAt": 1778822903798.7476
+      "addedAt": 1779961997312.1157
     },
     {
       "name": "animated-faq",
@@ -1142,7 +1237,48 @@
       "previewUrl": "/animated-faq",
       "coverImage": "/assets/list/animated-faq.png",
       "videoUrl": "animated-faq.mp4",
-      "addedAt": 1776937386236.0447
+      "addedAt": 1779961997312.4458
+    },
+    {
+      "name": "book-flip",
+      "title": "Book Flip",
+      "description": "3D interactive book viewer with realistic page flips, built with React Three Fiber and Drei.",
+      "category": "components",
+      "categories": [
+        "components"
+      ],
+      "dependencies": [
+        "three",
+        "@react-three/fiber",
+        "@react-three/drei"
+      ],
+      "previewUrl": "/book-flip",
+      "coverImage": "/assets/img/image07.png",
+      "videoUrl": null,
+      "addedAt": 1780033740008.63
+    },
+    {
+      "name": "colliding-models",
+      "title": "Colliding Models",
+      "description": "Physics-driven colliding 3D connectors with transmission material and postprocessing, built with R3F + Rapier.",
+      "category": "components",
+      "categories": [
+        "components"
+      ],
+      "dependencies": [
+        "three",
+        "@react-three/fiber",
+        "@react-three/drei",
+        "@react-three/rapier",
+        "@react-three/postprocessing",
+        "postprocessing",
+        "maath",
+        "next"
+      ],
+      "previewUrl": "/colliding-models",
+      "coverImage": "/assets/img/image01.webp",
+      "videoUrl": null,
+      "addedAt": 1780033740097.651
     },
     {
       "name": "custom-video-player",
@@ -1158,7 +1294,7 @@
       "previewUrl": "/video-player",
       "coverImage": "/assets/list/custom-video-player.png",
       "videoUrl": "custom-video-player.mp4",
-      "addedAt": 1776937386236.3
+      "addedAt": 1779961997312.743
     },
     {
       "name": "depth-card-stack",
@@ -1174,7 +1310,7 @@
       "previewUrl": "/depth-card-stack",
       "coverImage": "/assets/list/depth-card-stack.png",
       "videoUrl": "depth-card-stack.mp4",
-      "addedAt": 1777541715962.6367
+      "addedAt": 1779961997312.9377
     },
     {
       "name": "file-encryption",
@@ -1190,7 +1326,7 @@
       "previewUrl": "/file-encryption",
       "coverImage": "/assets/list/file-encryption.png",
       "videoUrl": "file-encryption.mp4",
-      "addedAt": 1777877418528.1873
+      "addedAt": 1779961997313.1304
     },
     {
       "name": "form",
@@ -1204,7 +1340,7 @@
       "previewUrl": "/form",
       "coverImage": "/assets/list/form.png",
       "videoUrl": "form.mp4",
-      "addedAt": 1776937386236.6875
+      "addedAt": 1779961997313.2942
     },
     {
       "name": "gooey-counter",
@@ -1218,24 +1354,7 @@
       "previewUrl": "/gooey-counter",
       "coverImage": "/assets/list/gooey-counter.png",
       "videoUrl": "gooey-counter.mp4",
-      "addedAt": 1777877418529.0657
-    },
-    {
-      "name": "interactive-hover-slider",
-      "title": "Interactive Hover Slider",
-      "description": "WebGL-powered list where hovering a row reveals a vertically-scrolling image stack with circular-arc curvature, velocity-based elastic snap, and GSAP-driven fade/curve transitions.",
-      "category": "components",
-      "categories": [
-        "components"
-      ],
-      "dependencies": [
-        "three",
-        "gsap"
-      ],
-      "previewUrl": "/interactive-hover-slider",
-      "coverImage": "/assets/list/interactive-hover-slider.png",
-      "videoUrl": "interactive-hover-slider.mp4",
-      "addedAt": 1777877418529.6467
+      "addedAt": 1779961997313.5002
     },
     {
       "name": "hover-stack",
@@ -1249,7 +1368,58 @@
       "previewUrl": "/stack-hovered-cards",
       "coverImage": "/assets/list/hover-stack.png",
       "videoUrl": "hover-stack.mp4",
-      "addedAt": 1776937386236.9097
+      "addedAt": 1779961997313.72
+    },
+    {
+      "name": "hyperiux-glitter-concept",
+      "title": "Hyperiux Glitter Concept",
+      "description": "Glittery particle logo concept with morphing model particles, cursor trail particles, and bloom postprocessing.",
+      "category": "components",
+      "categories": [
+        "components"
+      ],
+      "dependencies": [
+        "three",
+        "@react-three/fiber",
+        "@react-three/drei",
+        "@react-three/postprocessing",
+        "postprocessing"
+      ],
+      "previewUrl": "/hyperiux-glitter-concept",
+      "coverImage": "/assets/img/image01.webp",
+      "videoUrl": null,
+      "addedAt": 1780033740184.2185
+    },
+    {
+      "name": "infinite-grid-gallery",
+      "title": "Infinite Grid Gallery",
+      "description": "Infinite scrollable grid gallery with expandable overlay, thumbnails rail, and smooth open/close transitions.",
+      "category": "components",
+      "categories": [
+        "components"
+      ],
+      "dependencies": [],
+      "previewUrl": "/infinite-grid-gallery",
+      "coverImage": "/assets/img/image01.webp",
+      "videoUrl": null,
+      "addedAt": 1780033740271.181
+    },
+    {
+      "name": "interactive-hover-slider",
+      "title": "Hover Slider",
+      "description": "WebGL-powered list where hovering a row reveals a vertically-scrolling image stack with circular-arc curvature, velocity-based elastic snap, and GSAP-driven fade/curve transitions.",
+      "category": "components",
+      "categories": [
+        "components"
+      ],
+      "dependencies": [
+        "three",
+        "gsap"
+      ],
+      "previewUrl": "/interactive-hover-slider",
+      "coverImage": "/assets/list/interactive-hover-slider.png",
+      "videoUrl": "interactive-hover-slider.mp4",
+      "addedAt": 1779961997313.9673
     },
     {
       "name": "interactive-list-preview",
@@ -1265,7 +1435,7 @@
       "previewUrl": "/interactive-list-preview",
       "coverImage": "/assets/list/interactive-list-preview.png",
       "videoUrl": "interactive-list-preview.mp4",
-      "addedAt": 1777541715962.802
+      "addedAt": 1779961997314.1648
     },
     {
       "name": "modal",
@@ -1281,7 +1451,25 @@
       "previewUrl": "/modal",
       "coverImage": "/assets/list/modal.png",
       "videoUrl": "modal.mp4",
-      "addedAt": 1776937386237.3052
+      "addedAt": 1779961997314.4126
+    },
+    {
+      "name": "portfolio-concept",
+      "title": "Portfolio Concept",
+      "description": "Motion-led portfolio landing concept with GSAP ScrollTrigger + SplitText and image strips.",
+      "category": "components",
+      "categories": [
+        "components"
+      ],
+      "dependencies": [
+        "gsap",
+        "next",
+        "lenis"
+      ],
+      "previewUrl": "/portfolio-concept",
+      "coverImage": "/assets/img/image11.png",
+      "videoUrl": null,
+      "addedAt": 1780033740357.1067
     },
     {
       "name": "tabs",
@@ -1297,7 +1485,7 @@
       "previewUrl": "/tabs",
       "coverImage": "/assets/list/tabs.png",
       "videoUrl": "tabs.mp4",
-      "addedAt": 1776937386237.3901
+      "addedAt": 1779961997314.5203
     },
     {
       "name": "testimonial-swiper",
@@ -1315,7 +1503,7 @@
       "previewUrl": "/testimonial",
       "coverImage": "/assets/list/testimonial-swiper.png",
       "videoUrl": "testimonial-swiper.mp4",
-      "addedAt": 1776937386237.6147
+      "addedAt": 1779961997314.803
     },
     {
       "name": "directional-menu",
@@ -1331,39 +1519,7 @@
       "previewUrl": "/navigation/directional-menu",
       "coverImage": "/assets/list/directional-menu.png",
       "videoUrl": "directional-menu.mp4",
-      "addedAt": 1777541715964.7678
-    },
-    {
-      "name": "immersive-full-screen-navigation",
-      "title": "Immersive Full screen Navigation",
-      "description": "Clip-path powered full-screen navigation overlay with animated hamburger transitions",
-      "category": "navigation",
-      "categories": [
-        "navigation"
-      ],
-      "dependencies": [
-        "gsap"
-      ],
-      "previewUrl": "/navigation/immersive-fullscreen-nav",
-      "coverImage": "/assets/list/immersive-full-screen-navigation.png",
-      "videoUrl": "immersive-full-screen-navigation.mp4",
-      "addedAt": 1777541715964.875
-    },
-    {
-      "name": "elevate-navbar",
-      "title": "Elevate Navbar",
-      "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
-      "category": "navigation",
-      "categories": [
-        "navigation"
-      ],
-      "dependencies": [
-        "gsap"
-      ],
-      "previewUrl": "/navigation/elevate-navbar",
-      "coverImage": "/assets/list/elevate-navbar.png",
-      "videoUrl": "elevate-navbar.mp4",
-      "addedAt": 1777541715965.061
+      "addedAt": 1779961997319.1636
     },
     {
       "name": "expanding-navbar",
@@ -1380,23 +1536,39 @@
       "previewUrl": "/expanding-navbar",
       "coverImage": "/assets/list/expanding-navbar.png",
       "videoUrl": "expanding-navbar.mp4",
-      "addedAt": 1777877418531.3184
+      "addedAt": 1779961997319.3877
     },
     {
-      "name": "stack-loader",
-      "title": "Stack Loader",
-      "description": "Stack-to-spread image intro loader with GSAP SplitText word animations and staggered image choreography",
-      "category": "loaders",
+      "name": "immersive-full-screen-navigation",
+      "title": "Immersive Full screen Navigation",
+      "description": "Clip-path powered full-screen navigation overlay with animated hamburger transitions",
+      "category": "navigation",
       "categories": [
-        "loaders"
+        "navigation"
       ],
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/loaders/stack-loader",
-      "coverImage": "/assets/list/stack-loader.png",
-      "videoUrl": "stack-loader.mp4",
-      "addedAt": 1777541715963.5903
+      "previewUrl": "/navigation/immersive-fullscreen-nav",
+      "coverImage": "/assets/list/immersive-full-screen-navigation.png",
+      "videoUrl": "immersive-full-screen-navigation.mp4",
+      "addedAt": 1779961997319.57
+    },
+    {
+      "name": "elevate-navbar",
+      "title": "Elevate Navbar",
+      "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
+      "category": "navigation",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "previewUrl": "/navigation/elevate-navbar",
+      "coverImage": "/assets/list/elevate-navbar.png",
+      "videoUrl": "elevate-navbar.mp4",
+      "addedAt": 1779961997319.779
     },
     {
       "name": "lines-loader",
@@ -1412,7 +1584,7 @@
       "previewUrl": "/loaders/lines-loading",
       "coverImage": "/assets/list/lines-loader.png",
       "videoUrl": "lines-loader.mp4",
-      "addedAt": 1777541715964.377
+      "addedAt": 1779961997318.6143
     },
     {
       "name": "numeric-tunnel",
@@ -1431,7 +1603,159 @@
       "previewUrl": "/loaders/numeric-tunnel",
       "coverImage": "/assets/list/numeric-tunnel.png",
       "videoUrl": "numeric-tunnel.mp4",
-      "addedAt": 1777541715964.6282
+      "addedAt": 1779961997318.7908
+    },
+    {
+      "name": "stack-loader",
+      "title": "stack-loader Loader",
+      "description": "Stack-to-spread image intro loader with GSAP SplitText word animations and staggered image choreography",
+      "category": "loaders",
+      "categories": [
+        "loaders"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "previewUrl": "/loaders/stack-loader",
+      "coverImage": "/assets/list/stack-loader.png",
+      "videoUrl": "stack-loader.mp4",
+      "addedAt": 1779961997318.8887
+    },
+    {
+      "name": "webgl-portfolio-slider",
+      "title": "3D Portfolio Slider",
+      "description": "Infinite scroll slider with a Three.js WebGL fullscreen plane, cosine zoom distortion, a circular thumbnail ring, and GSAP text transitions",
+      "category": "webgl",
+      "categories": [
+        "webgl",
+        "scroll"
+      ],
+      "dependencies": [
+        "three",
+        "gsap",
+        "lenis"
+      ],
+      "previewUrl": "/webgl-portfolio-slider",
+      "coverImage": "/assets/img/image01.webp",
+      "videoUrl": "webgl-portfolio-slider.mp4",
+      "addedAt": 1779961997328.7705
+    },
+    {
+      "name": "curved-plane",
+      "title": "Curved Plane",
+      "description": "Three.js WebGL horizontal image carousel with a custom GLSL shader that curves the plane edges on drag and scroll. Images fade toward the edges and deform proportionally to interaction velocity. Supports drag, touch, scroll, and inertia momentum.",
+      "category": "webgl",
+      "categories": [
+        "webgl"
+      ],
+      "dependencies": [
+        "three",
+        "gsap"
+      ],
+      "previewUrl": "/curved-plane",
+      "coverImage": "/assets/list/curved-plane.png",
+      "videoUrl": "curved-plane.mp4",
+      "addedAt": 1779961997329.341
+    },
+    {
+      "name": "curved-plane-v2",
+      "title": "Curved Plane V2",
+      "description": "Three.js WebGL vertical image gallery with three columns. The center column scrolls in the opposite direction to the outer two, creating a parallax effect. A custom GLSL shader curves each card vertically on drag and scroll. Collapses to two columns on tablet.",
+      "category": "webgl",
+      "categories": [
+        "webgl"
+      ],
+      "dependencies": [
+        "three",
+        "gsap"
+      ],
+      "previewUrl": "/curved-plane/v2",
+      "coverImage": "/assets/list/curved-plane-v2.png",
+      "videoUrl": "curved-plane-v2.mp4",
+      "addedAt": 1779961997329.1177
+    },
+    {
+      "name": "donut-particles",
+      "title": "Donut Particles",
+      "description": "Interactive 3D donut particle field built with React Three Fiber. Includes cursor-driven flow, inertial motion, and a fullscreen canvas wrapper.",
+      "category": "webgl",
+      "categories": [
+        "webgl"
+      ],
+      "dependencies": [
+        "three",
+        "@react-three/fiber"
+      ],
+      "previewUrl": "/donut-particles",
+      "coverImage": "/assets/img/image04.png",
+      "videoUrl": null,
+      "addedAt": 1780033112376.8445
+    },
+    {
+      "name": "draggable-canvas",
+      "title": "Draggable Canvas",
+      "description": "Six independently draggable Canvas 2D windows that each reveal a different cropped region of a shared video, creating a parallax masking illusion. GSAP Draggable with InertiaPlugin gives each window smooth throw physics. Includes a minimal coordinate-display cursor.",
+      "category": "webgl",
+      "categories": [
+        "webgl"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "previewUrl": "/webgl/draggable-canvas",
+      "coverImage": "/assets/list/draggable-canvas.png",
+      "videoUrl": "draggable-canvas.mp4",
+      "addedAt": 1779961997329.6978
+    },
+    {
+      "name": "fractal-glass",
+      "title": "Fractal Glass",
+      "description": "WebGL glass-strip refraction effect with fractal distortion, edge blending, and pointer-reactive parallax.",
+      "category": "webgl",
+      "categories": [
+        "webgl"
+      ],
+      "dependencies": [
+        "three"
+      ],
+      "previewUrl": "/webgl/fractal-glass",
+      "coverImage": "/assets/list/fractal-glass.png",
+      "videoUrl": "fractal-glass.mp4",
+      "addedAt": 1779961997329.937
+    },
+    {
+      "name": "grid-lift",
+      "title": "Grid Lift",
+      "description": "Interactive lifted grid mask with SVG/text modes, pointer-driven depth, and live Leva controls.",
+      "category": "webgl",
+      "categories": [
+        "webgl"
+      ],
+      "dependencies": [
+        "leva"
+      ],
+      "previewUrl": "/webgl/grid-lift",
+      "coverImage": "/assets/list/grid-lift.png",
+      "videoUrl": "grid-lift.mp4",
+      "addedAt": 1779961997330.2446
+    },
+    {
+      "name": "grid-tunnel",
+      "title": "Grid Tunnel",
+      "description": "Infinite 3D image tunnel built with React Three Fiber, procedural wireframe chunks, and inertial wheel-driven camera motion.",
+      "category": "webgl",
+      "categories": [
+        "webgl"
+      ],
+      "dependencies": [
+        "@react-three/fiber",
+        "@react-three/drei",
+        "three"
+      ],
+      "previewUrl": "/grid-tunnel",
+      "coverImage": "/assets/list/grid-tunnel.png",
+      "videoUrl": "grid-tunnel.mp4",
+      "addedAt": 1779961997330.4421
     },
     {
       "name": "hero-banner-animated",
@@ -1452,107 +1776,7 @@
       "previewUrl": "/hero-banner-animated",
       "coverImage": "/assets/list/hero-banner-animated.png",
       "videoUrl": "hero-banner-animated.mp4",
-      "addedAt": 1777877418534.695
-    },
-    {
-      "name": "curved-plane",
-      "title": "Curved Plane",
-      "description": "Three.js WebGL horizontal image carousel with a custom GLSL shader that curves the plane edges on drag and scroll. Images fade toward the edges and deform proportionally to interaction velocity. Supports drag, touch, scroll, and inertia momentum.",
-      "category": "webgl",
-      "categories": [
-        "webgl"
-      ],
-      "dependencies": [
-        "three",
-        "gsap"
-      ],
-      "previewUrl": "/curved-plane",
-      "coverImage": "/assets/list/curved-plane.png",
-      "videoUrl": "curved-plane.mp4",
-      "addedAt": 1778822903804.9653
-    },
-    {
-      "name": "curved-plane-v2",
-      "title": "Curved Plane V2",
-      "description": "Three.js WebGL vertical image gallery with three columns. The center column scrolls in the opposite direction to the outer two, creating a parallax effect. A custom GLSL shader curves each card vertically on drag and scroll. Collapses to two columns on tablet.",
-      "category": "webgl",
-      "categories": [
-        "webgl"
-      ],
-      "dependencies": [
-        "three",
-        "gsap"
-      ],
-      "previewUrl": "/curved-plane/v2",
-      "coverImage": "/assets/list/curved-plane-v2.png",
-      "videoUrl": "curved-plane-v2.mp4",
-      "addedAt": 1778822903804.726
-    },
-    {
-      "name": "draggable-canvas",
-      "title": "Draggable Canvas",
-      "description": "Six independently draggable Canvas 2D windows that each reveal a different cropped region of a shared video, creating a parallax masking illusion. GSAP Draggable with InertiaPlugin gives each window smooth throw physics. Includes a minimal coordinate-display cursor.",
-      "category": "webgl",
-      "categories": [
-        "webgl"
-      ],
-      "dependencies": [
-        "gsap"
-      ],
-      "previewUrl": "/webgl/draggable-canvas",
-      "coverImage": "/assets/list/draggable-canvas.png",
-      "videoUrl": "draggable-canvas.mp4",
-      "addedAt": 1778822903805.375
-    },
-    {
-      "name": "fractal-glass",
-      "title": "Fractal Glass",
-      "description": "WebGL glass-strip refraction effect with fractal distortion, edge blending, and pointer-reactive parallax.",
-      "category": "webgl",
-      "categories": [
-        "webgl"
-      ],
-      "dependencies": [
-        "three"
-      ],
-      "previewUrl": "/webgl/fractal-glass",
-      "coverImage": "/assets/list/fractal-glass.png",
-      "videoUrl": "fractal-glass.mp4",
-      "addedAt": 1777877418535.5237
-    },
-    {
-      "name": "grid-lift",
-      "title": "Grid Lift",
-      "description": "Interactive lifted grid mask with SVG/text modes, pointer-driven depth, and live Leva controls.",
-      "category": "webgl",
-      "categories": [
-        "webgl"
-      ],
-      "dependencies": [
-        "leva"
-      ],
-      "previewUrl": "/webgl/grid-lift",
-      "coverImage": "/assets/list/grid-lift.png",
-      "videoUrl": "grid-lift.mp4",
-      "addedAt": 1777877418536.2043
-    },
-    {
-      "name": "grid-tunnel",
-      "title": "Grid Tunnel",
-      "description": "Infinite 3D image tunnel built with React Three Fiber, procedural wireframe chunks, and inertial wheel-driven camera motion.",
-      "category": "webgl",
-      "categories": [
-        "webgl"
-      ],
-      "dependencies": [
-        "@react-three/fiber",
-        "@react-three/drei",
-        "three"
-      ],
-      "previewUrl": "/grid-tunnel",
-      "coverImage": "/assets/list/grid-tunnel.png",
-      "videoUrl": "grid-tunnel.mp4",
-      "addedAt": 1778822903805.9995
+      "addedAt": 1779961997331.0164
     },
     {
       "name": "interactive-blur-reveal",
@@ -1566,7 +1790,7 @@
       "previewUrl": "/webgl/interactive-blur-reveal",
       "coverImage": "/assets/list/interactive-blur-reveal.png",
       "videoUrl": "interactive-blur-reveal.mp4",
-      "addedAt": 1778822903806.4944
+      "addedAt": 1779961997331.3223
     },
     {
       "name": "milkyway",
@@ -1588,7 +1812,7 @@
       "previewUrl": "/milkyway",
       "coverImage": "/assets/list/milkyway.png",
       "videoUrl": "milkyway.mp4",
-      "addedAt": 1777877418537.1843
+      "addedAt": 1779961997331.6418
     },
     {
       "name": "mouse-pixelation",
@@ -1607,7 +1831,7 @@
       "previewUrl": "/mouse-pixelation-effects",
       "coverImage": "/assets/list/mouse-pixelation.png",
       "videoUrl": "mouse-pixelation.mp4",
-      "addedAt": 1778822903807.1772
+      "addedAt": 1779961997331.9575
     },
     {
       "name": "strip-slider",
@@ -1625,26 +1849,7 @@
       "previewUrl": "/strip-slider",
       "coverImage": "/assets/list/strip-slider.png",
       "videoUrl": "strip-slider.mp4",
-      "addedAt": 1777541715967.6514
-    },
-    {
-      "name": "3d-portfolio-slider",
-      "title": "3D Portfolio Slider",
-      "description": "Infinite scroll slider with a Three.js WebGL fullscreen plane, cosine zoom distortion, a circular thumbnail ring, and GSAP text transitions",
-      "category": "webgl",
-      "categories": [
-        "webgl",
-        "scroll"
-      ],
-      "dependencies": [
-        "three",
-        "gsap",
-        "lenis"
-      ],
-      "previewUrl": "/3d-portfolio-slider",
-      "coverImage": "/assets/list/3d-portfolio-slider.png",
-      "videoUrl": "3d-portfolio-slider.mp4",
-      "addedAt": 1777541715967.9314
+      "addedAt": 1779961997332.1587
     },
     {
       "name": "card-drift",
@@ -1660,7 +1865,7 @@
       "previewUrl": "/card-drift",
       "coverImage": "/assets/list/card-drift.png",
       "videoUrl": "card-drift.mp4",
-      "addedAt": 1777541715965.2654
+      "addedAt": 1779961997319.9739
     }
   ]
 }

@@ -13,7 +13,7 @@ export default function DocsImage({
   return (
     <div
       className={[
-        "relative w-full overflow-hidden border border-border/30 bg-black/20",
+        "relative w-full overflow-hidden border border-border/30 bg-black/20 fadeup",
         rounded,
         className,
       ]

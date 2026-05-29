@@ -1,0 +1,13 @@
+{
+  "name": "cursor-move",
+  "type": "registry:component",
+  "title": "Cursor Move",
+  "description": "Fullscreen cursor-follow crosshair + cursor dot with variable font axis mapping and coordinate readout.",
+  "category": "cursor",
+  "dependencies": [],
+  "registryDependencies": [],
+  "coverImage": "/assets/img/image05.png",
+  "videoUrl": null,
+  "previewUrl": "/cursor-move"
+}
+

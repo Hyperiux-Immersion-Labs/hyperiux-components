@@ -7,6 +7,25 @@ const __dirname = path.dirname(__filename);
 
 const REGISTRY_PATH = path.join(__dirname, "../../../registry/effects");
 const OUTPUT_PATH = path.join(__dirname, "../public/r");
+const PUBLIC_PATH = path.join(__dirname, "../public");
+
+function resolveCoverImage(effectName, explicitCoverImage) {
+  const normalize = (p) => (typeof p === "string" ? p.trim() : "");
+  const existsInPublic = (publicUrlPath) => {
+    const p = normalize(publicUrlPath);
+    if (!p.startsWith("/")) return false;
+    return fs.existsSync(path.join(PUBLIC_PATH, p.slice(1)));
+  };
+
+  const explicit = normalize(explicitCoverImage);
+  if (explicit && existsInPublic(explicit)) return explicit;
+
+  const defaultList = `/assets/list/${effectName}.png`;
+  if (existsInPublic(defaultList)) return defaultList;
+
+  // Guaranteed local fallback so cards never render empty.
+  return "/assets/img/image01.webp";
+}
 
 // Controls the order categories appear in the listing.
 // Categories not listed here will appear at the end alphabetically.
@@ -88,11 +107,16 @@ async function buildRegistry() {
         const filePath = path.join(effectPath, fileName);
         const content = fs.readFileSync(filePath, "utf-8");
         const isCss = fileName.endsWith(".css");
+        const isModuleCss = fileName.endsWith(".module.css");
 
         return {
           path: fileName,
           type: isCss ? "registry:style" : "registry:component",
-          target: isCss ? `styles/${fileName}` : `components/hyperiux/${fileName}`,
+          target: isCss
+            ? isModuleCss
+              ? `components/hyperiux/${fileName}`
+              : `styles/${fileName}`
+            : `components/hyperiux/${fileName}`,
           content,
         };
       });
@@ -118,6 +142,13 @@ async function buildRegistry() {
         : [primaryCategory];
 
       // Build the full registry item
+      const defaultVideoUrl = `${registryJson.name}.mp4`;
+      const resolvedVideoUrl =
+        registryJson.videoUrl === null ? null : registryJson.videoUrl || defaultVideoUrl;
+      const resolvedCoverImage = resolveCoverImage(
+        registryJson.name,
+        registryJson.coverImage
+      );
       const registryItem = {
         name: registryJson.name,
         type: registryJson.type || "registry:component",
@@ -128,9 +159,8 @@ async function buildRegistry() {
         dependencies: registryJson.dependencies || [],
         registryDependencies: registryJson.registryDependencies || [],
         previewUrl: registryJson.previewUrl || null,
-        coverImage:
-          registryJson.coverImage || `/assets/list/${registryJson.name}.png`,
-        videoUrl: registryJson.videoUrl || registryJson.name,
+        coverImage: resolvedCoverImage,
+        videoUrl: resolvedVideoUrl,
         files: fileContents,
       };
 
@@ -149,9 +179,8 @@ async function buildRegistry() {
         categories: categories_list,
         dependencies: registryJson.dependencies || [],
         previewUrl: registryJson.previewUrl || null,
-        coverImage:
-          registryJson.coverImage || `/assets/list/${registryJson.name}.png`,
-        videoUrl: registryJson.videoUrl || registryJson.name,
+        coverImage: resolvedCoverImage,
+        videoUrl: resolvedVideoUrl,
         addedAt,
       });
     }

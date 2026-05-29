@@ -15,7 +15,7 @@
   "registryDependencies": [],
   "previewUrl": "/scroll-based-effects/scroll-distortion",
   "coverImage": "/assets/list/scroll-distortion.png",
-  "videoUrl": "scroll-distortion.mp4",
+  "videoUrl": "scroll-distortion",
   "files": [
     {
       "path": "scroll-distortion.jsx",

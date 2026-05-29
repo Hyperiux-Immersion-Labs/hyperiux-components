@@ -1,0 +1,43 @@
+{
+  "name": "counter",
+  "type": "registry:component",
+  "title": "Counter",
+  "description": "Scroll-triggered number counters with digit rolling animations (multiple variants).",
+  "category": "text",
+  "categories": [
+    "text"
+  ],
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/counter",
+  "coverImage": "/assets/img/image01.webp",
+  "videoUrl": null,
+  "files": [
+    {
+      "path": "counter.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/counter.jsx",
+      "content": "\"use client\";\n\nimport CounterOne from \"./CounterOne\";\nimport CounterTwo from \"./CounterTwo\";\nimport CounterThree from \"./CounterThree\";\n\nexport { CounterOne, CounterTwo, CounterThree };\n\nexport function Counter(props) {\n  const { variant = \"two\", ...rest } = props || {};\n\n  if (variant === \"one\") return <CounterOne {...rest} />;\n  if (variant === \"three\") return <CounterThree {...rest} />;\n  return <CounterTwo {...rest} />;\n}\n\nexport default Counter;\n\n"
+    },
+    {
+      "path": "CounterOne.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/CounterOne.jsx",
+      "content": "'use client';\nimport { useEffect, useRef, memo } from\"react\";\nimport gsap from\"gsap\";\nimport { ScrollTrigger } from\"gsap/dist/ScrollTrigger\";\n\ngsap.registerPlugin(ScrollTrigger);\n\nconst DIGITS = [...Array(10).keys()]; // [0..9]\n\nconst SCROLL_TRIGGER_CONFIG = {\n trigger:\"#stats\",\n start:\"top 80%\",\n};\n\nconst FONT_WEIGHTS = {\n normal:\"font-normal\",\n medium:\"font-medium\",\n semibold:\"font-semibold\",\n bold:\"font-bold\",\n};\n\nconst DigitScroller = memo(({ digit, duration = 2, color }) => {\n const containerRef = useRef(null);\n\n useEffect(() => {\n const ctx = gsap.context(() => {\n gsap.to(containerRef.current, {\n y: `-${parseInt(digit, 10) * 10}%`,\n duration,\n ease:\"power1.out\",\n scrollTrigger: SCROLL_TRIGGER_CONFIG,\n });\n });\n return () => ctx.revert();\n }, [digit, duration]);\n\n return (\n <div\n style={{ color }}\n className=\"overflow-hidden h-[1em] leading-none inline-block relative w-[0.64em]\"\n >\n <div ref={containerRef} className=\"flex flex-col\">\n {DIGITS.map((d) => (\n <span key={d} className=\"flex h-[1em] items-center justify-center leading-none\">\n {d}\n </span>\n ))}\n </div>\n </div>\n );\n});\n\nDigitScroller.displayName =\"DigitScroller\";\n\nconst renderDigits = (value, color) =>\n value.split(\"\").map((char, i) =>\n /\\d/.test(char) ? (\n <DigitScroller key={i} digit={char} color={color} />\n ) : (\n <span key={i} style={{ color }}>{char}</span>\n )\n );\n\nconst StatItem = memo(({ stat, textColor, textSize, fontWeight }) => {\n const { prefix, value, suffix, superSuffix } = stat;\n\n return (\n <div className=\"flex gap-[2vw] h-fit w-fit max-md:gap-0 max-sm:flex-col\">\n <div className=\"flex flex-col items-center justify-start h-fit gap-[1vw] w-fit max-sm:flex-row max-sm:justify-between max-sm:pl-[4vw] max-sm:gap-[4vw]\">\n <h3\n dir=\"ltr\"\n className={`${FONT_WEIGHTS[fontWeight] ||\"font-normal\"} leading-[1.2] flex items-center max-md:text-[7vw] max-sm:text-[12vw] ${textSize}`}\n >\n {prefix && <span style={{ color: textColor }}>{prefix}</span>}\n {renderDigits(value, textColor)}\n {suffix && <span style={{ color: textColor }}>{suffix}</span>}\n {superSuffix && <sup style={{ color: textColor }}>{superSuffix}</sup>}\n </h3>\n </div>\n </div>\n );\n});\n\nStatItem.displayName =\"StatItem\";\n\n/**\n * @param {Object[]} stats\n * @param {string} textColor\n * @param {string} textSize  * @param {string} fontWeight  */\nexport default function CounterOne({\n stats = [],\n textColor =\"black\",\n textSize =\"text-[5vw]\",\n fontWeight =\"normal\",\n}) {\n const items = stats.slice(0, 3);\n\n return (\n <section id=\"stats\" className=\"h-fit w-fit\">\n <div className=\"p-[1vw]\">\n <div className=\"flex text-center gap-[2vw] w-fit h-fit max-md:flex-wrap max-md:gap-x-0 max-md:gap-y-12 max-sm:flex-col max-sm:text-left\">\n {items.map((stat, index) => (\n <StatItem\n key={index}\n stat={stat}\n textColor={textColor}\n textSize={textSize}\n fontWeight={fontWeight}\n />\n ))}\n </div>\n </div>\n </section>\n );\n}"
+    },
+    {
+      "path": "CounterThree.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/CounterThree.jsx",
+      "content": "'use client';\n\nimport React, { useEffect, useRef, memo } from'react';\nimport gsap from'gsap';\nimport { ScrollTrigger } from'gsap/dist/ScrollTrigger';\n\ngsap.registerPlugin(ScrollTrigger);\n\n\nconst DigitScroller = memo(({ digit, duration = 1.5, trigger, textColor }) => {\n const containerRef = useRef(null);\n\n useEffect(() => {\n if (!containerRef.current) return;\n\n const ctx = gsap.context(() => {\n const digitIndex = parseInt(digit, 10);\n\n gsap.to(containerRef.current, {\n y: `-${digitIndex * 10}%`,\n duration,\n ease:'power2.out',\n scrollTrigger: {\n trigger: trigger || containerRef.current,\n start:'top 85%',\n },\n });\n }, containerRef);\n\n return () => ctx.revert();\n }, [digit, duration, trigger]);\n\n return (\n <div className=\"overflow-hidden inline-block relative h-[1em] w-[0.6em]\">\n <div ref={containerRef} className=\"flex flex-col\">\n {Array.from({ length: 10 }, (_, i) => (\n <span\n key={i}\n className=\"leading-none\"\n style={{ color: textColor }}\n >\n {i}\n </span>\n ))}\n </div>\n </div>\n );\n});\n\nDigitScroller.displayName ='DigitScroller';\n\n\n\nconst CounterThree = ({\n value ='0',\n duration = 1.5,\n fontWeight = 600,\n textColor ='#FF5100',\n textSize ='text-[5vw]',\n trigger,\n suffix ='',\n}) => {\n const renderDigits = (val) => {\n return val.split('').map((char, i) => {\n if (/\\d/.test(char)) {\n return (\n <DigitScroller\n key={i}\n digit={char}\n duration={duration}\n trigger={trigger}\n textColor={textColor}\n />\n );\n }\n\n // non-digit chars\n return (\n <span key={i} style={{ color: textColor }}>\n {char}\n </span>\n );\n });\n };\n\n return (\n <div\n className={`flex items-end ${textSize}`}\n style={{\n fontWeight,\n color: textColor,\n  }}\n >\n {renderDigits(value)}\n\n {suffix && (\n <span style={{ color: textColor }} className=\"ml-1\">\n {suffix}\n </span>\n )}\n </div>\n );\n};\n\nexport default CounterThree;"
+    },
+    {
+      "path": "CounterTwo.jsx",
+      "type": "registry:component",
+      "target": "components/hyperiux/CounterTwo.jsx",
+      "content": "'use client';\n\nimport { memo, useEffect, useRef } from'react';\nimport gsap from'gsap';\nimport { ScrollTrigger } from'gsap/dist/ScrollTrigger';\n\ngsap.registerPlugin(ScrollTrigger);\n\nconst DIGITS = [...Array(10).keys()].concat(0);\n\nconst FONT_WEIGHTS = {\n normal:'font-normal',\n medium:'font-medium',\n semibold:'font-semibold',\n bold:'font-bold',\n};\n\nconst DigitScroller = memo(({ digit, index, triggerRef }) => {\n const digitRef = useRef(null);\n\n useEffect(() => {\n if (!digitRef.current || !triggerRef.current) return;\n\n const digitIndex = parseInt(digit, 10);\n const ctx = gsap.context(() => {\n gsap.to(digitRef.current, {\n yPercent: -(digitIndex * 100),\n duration: 1.5,\n ease:'power2.inOut',\n delay: index * 0.1,\n scrollTrigger: {\n trigger: triggerRef.current,\n start:'top 85%',\n },\n });\n }, triggerRef);\n\n return () => ctx.revert();\n }, [digit, index, triggerRef]);\n\n return (\n <div className=\"relative inline-flex h-[1em] w-[0.64em] overflow-hidden align-baseline leading-none\">\n <div ref={digitRef} className=\"flex flex-col will-change-transform\">\n {DIGITS.map((num, digitIndex) => (\n <span\n key={`${num}-${digitIndex}`}\n className=\"flex h-[1em] items-center justify-center leading-none\"\n >\n {num}\n </span>\n ))}\n </div>\n </div>\n );\n});\n\nDigitScroller.displayName ='DigitScroller';\n\nconst CounterTwo = ({\n value ='0',\n textSize ='text-[8vw] max-sm:text-[16vw] tablet:text-[10vw]',\n color ='#111111',\n fontWeight ='normal', }) => {\n const containerRef = useRef(null);\n const cleanValue = value.replace('+','');\n\n return (\n <div ref={containerRef} className=\"flex items-end gap-2 w-fit\">\n <div\n className={`flex items-end font-display leading-none ${textSize} ${FONT_WEIGHTS[fontWeight] ||'font-normal'}`}\n style={{ color }}\n >\n {cleanValue.split('').map((digit, index) => (\n <DigitScroller\n key={`${digit}-${index}`}\n digit={digit}\n index={index}\n triggerRef={containerRef}\n />\n ))}\n\n {value.includes('+') && (\n <span className=\"inline-flex h-[1em] items-center justify-center leading-none\">\n +\n </span>\n )}\n </div>\n </div>\n );\n};\n\nexport default CounterTwo;"
+    }
+  ]
+}

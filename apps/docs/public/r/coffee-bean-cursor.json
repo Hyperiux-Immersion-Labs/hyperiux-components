@@ -15,7 +15,7 @@
   "registryDependencies": [],
   "previewUrl": "/cursors/coffee",
   "coverImage": "/assets/list/coffee-bean-cursor.png",
-  "videoUrl": "coffee-bean-cursor.mp4",
+  "videoUrl": "coffee-bean-cursor",
   "files": [
     {
       "path": "coffee-bean-cursor.jsx",

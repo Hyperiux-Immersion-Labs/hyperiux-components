@@ -1,0 +1,22 @@
+{
+  "name": "colliding-models",
+  "type": "registry:component",
+  "title": "Colliding Models",
+  "description": "Physics-driven colliding 3D connectors with transmission material and postprocessing, built with R3F + Rapier.",
+  "category": "components",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "@react-three/rapier",
+    "@react-three/postprocessing",
+    "postprocessing",
+    "maath",
+    "next"
+  ],
+  "registryDependencies": [],
+  "coverImage": "/assets/img/image08.png",
+  "videoUrl": null,
+  "previewUrl": "/colliding-models"
+}
+

@@ -16,8 +16,11 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/components/Footer";
+import HeadAnim from "@/components/Animations/HeadAnim";
+import { fadeUp } from "@/components/Animations/gsapAnimations";
 
 export function VaultContent({ effects, effectCounts, initialCategory = "all" }) {
+  fadeUp();
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -119,28 +122,30 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
         <div className="">
           <div className=" mx-auto px-8 max-sm:px-7 pt-28 pb-12  text-center">
             {/* <p className=" mb-4 text-lg font-sans">Hello</p> */}
-            <h1
-              className="font-display max-sm:text-4xl text-7xl font-normal text-foreground mb-4"
-              style={{ lineHeight: "1.0" }}
-            >
-              {categoryFilter === "all" ? (
-                <>
-                  Welcome to <br /> the vault
-                </>
-              ) : (
-                <>
-                  {activeCategoryName} <br /> effects
-                </>
-              )}
-            </h1>
+            <HeadAnim>
+              <h1
+                className="font-display max-sm:text-4xl text-7xl font-normal text-foreground mb-4"
+                style={{ lineHeight: "1.0" }}
+              >
+                {categoryFilter === "all" ? (
+                  <>
+                    Welcome to <br /> the vault
+                  </>
+                ) : (
+                  <>
+                    {activeCategoryName} <br /> effects
+                  </>
+                )}
+              </h1>
+            </HeadAnim>
 
-           <div className="flex items-center justify-center gap-4 text-lg font-sans max-sm:flex-wrap max-sm:gap-2 max-sm:text-base">
-  <span>{totalEffects} effects</span>
-  <span>•</span>
-  <span>Free & open source</span>
-  <span>•</span>
-  <span>Copy & paste</span>
-</div>
+            <div className="flex items-center justify-center gap-4 text-lg font-sans max-sm:flex-wrap max-sm:gap-2 max-sm:text-base fadeup">
+              <span>{totalEffects} effects</span>
+              <span>•</span>
+              <span>Free & open source</span>
+              <span>•</span>
+              <span>Copy & paste</span>
+            </div>
           </div>
         </div>
 
@@ -157,7 +162,7 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
             />
             <div
               className={[
-                "flex items-center gap-2.5",
+                "flex items-center gap-2.5 fadeup",
                 // desktop: wrapping
                 "flex-wrap",
                 // mobile: horizontal scroll, no wrap, padded edges
@@ -167,7 +172,7 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
                 "[&::-webkit-scrollbar]:h-[4px]",
                 "[&::-webkit-scrollbar-track]:bg-white/10 [&::-webkit-scrollbar-track]:rounded-full",
                 "[&::-webkit-scrollbar-thumb]:bg-[#CC4C04] [&::-webkit-scrollbar-thumb]:rounded-full",
-                "max-sm:pb-3",
+                "max-sm:pb-3 ",
               ].join(" ")}
             >
               {quickCategories.map((cat) => {
@@ -181,7 +186,7 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
     px-7 py-2.5 max-sm:px-6 text-md text-center relative rounded-full
     backdrop-blur-[6px] border font-sans group flex items-center cursor-pointer
     transition-all duration-300 ease-in-out
-    hover:text-primary hover:bg-white
+    hover:text-primary hover:bg-white 
     ${isSelected
                         ? "bg-white text-primary border-transparent pr-12"
                         : "bg-[#00000033] border-border/50 text-foreground pr-7"
@@ -226,11 +231,11 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
           </div>
         </div>
 
-        <div className=" px-10 max-sm:px-6 pb-12">
+        <div className=" px-10 max-sm:px-6 pb-12 fadeup">
           <div
             className={`flex flex-wrap items-center gap-3 transition-opacity duration-200 ${categoryFilter !== "all" || searchQuery
-                ? "mb-8 min-h-10 opacity-100"
-                : "mb-0 min-h-0 opacity-0 pointer-events-none"
+              ? "mb-8 min-h-10 opacity-100"
+              : "mb-0 min-h-0 opacity-0 pointer-events-none"
               }`}
           >
             {(categoryFilter !== "all" || searchQuery) && (
@@ -316,7 +321,7 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
                 filteredEffects={filteredEffects}
               />
 
-              
+
             </>
           )}
         </div>
@@ -369,9 +374,8 @@ function EffectsGrid({ filteredEffects }) {
         {filteredEffects.map((effect, i) => (
           <div
             key={effect.name}
-            className={`effect-card-shell ${
-              !showAllMobileCards && i >= 10 ? "max-sm:hidden" : ""
-            }`}
+            className={`effect-card-shell ${!showAllMobileCards && i >= 10 ? "max-sm:hidden" : ""
+              }`}
           >
             <EffectCard effect={effect} priority={i < 4} />
           </div>

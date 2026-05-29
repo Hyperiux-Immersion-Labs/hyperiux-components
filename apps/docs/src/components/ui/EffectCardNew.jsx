@@ -67,7 +67,9 @@ export function EffectCard({ effect, priority = false }) {
   }, [isHovered]);
 
   const videoPreviewUrl = effect.videoUrl
-    ? `${process.env.NEXT_PUBLIC_DEV_URL}/${effect.videoUrl}`
+    ? `${process.env.NEXT_PUBLIC_DEV_URL || ""}${
+        effect.videoUrl.startsWith("/") ? "" : "/"
+      }${effect.videoUrl}`
     : null;
 
   useEffect(() => {

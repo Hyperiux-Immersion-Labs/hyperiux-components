@@ -1,0 +1,19 @@
+{
+  "name": "hyperiux-glitter-concept",
+  "type": "registry:component",
+  "title": "Hyperiux Glitter Concept",
+  "description": "Glittery particle logo concept with morphing model particles, cursor trail particles, and bloom postprocessing.",
+  "category": "components",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "@react-three/postprocessing",
+    "postprocessing"
+  ],
+  "registryDependencies": [],
+  "coverImage": "/assets/img/image09.png",
+  "videoUrl": null,
+  "previewUrl": "/hyperiux-glitter-concept"
+}
+

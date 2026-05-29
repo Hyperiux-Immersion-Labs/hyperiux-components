@@ -1,0 +1,212 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+}
+
+.ring-gallery {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+  background: #000;
+  user-select: none;
+}
+
+.ring-gallery *,
+.ring-gallery *::before,
+.ring-gallery *::after {
+  box-sizing: border-box;
+}
+
+.ring-gallery__container {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 100vw;
+  height: 30vw;
+  transform: translate(-50%, -50%);
+  perspective: 2000px;
+  transform-style: preserve-3d;
+}
+
+.ring-gallery__ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.ring-gallery__item {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 20px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.ring-gallery__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ring-gallery__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 80%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+  z-index: 2;
+}
+
+.ring-gallery__dragger {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  z-index: 3;
+}
+
+.ring-gallery__dragger:active {
+  cursor: grabbing;
+}
+
+.ring-gallery__nav {
+  position: absolute;
+  left: 50%;
+  bottom: 0%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 20;
+}
+
+.ring-gallery__btn {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 3.5vw;
+  height: 3.5vw;
+  min-width: 48px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.ring-gallery__btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.ring-gallery__pagination {
+  position: absolute;
+  left: 50%;
+  bottom: 15%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  z-index: 20;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.ring-gallery__pagination-slot {
+  width: fit-content;
+  /* min-width: 48px; */
+  height: 18px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 999px;
+}
+
+.ring-gallery__pagination-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.42);
+  transition:
+    width 0.5s ease-in-out,
+    background-color 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ring-gallery__pagination-slot.is-active .ring-gallery__pagination-indicator {
+  width: 42px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.ring-gallery__pagination-slot:hover .ring-gallery__pagination-indicator {
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  .ring-gallery__btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .ring-gallery__pagination {
+    bottom: 18%;
+    padding: 12px 16px;
+    gap: 2vw;
+  }
+
+  
+
+  .ring-gallery__pagination-indicator {
+    width: 9px;
+    height: 9px;
+  }
+
+  .ring-gallery__pagination-slot.is-active .ring-gallery__pagination-indicator {
+    width: 36px;
+  }
+}
+
+@media (max-width: 540px) {
+  .ring-gallery__btn {
+    width: 15vw;
+    height: 15vw;
+  
+  }
+
+  .ring-gallery__pagination {
+    bottom: 14%;
+    padding: 10px 14px;
+  }
+
+ 
+
+  .ring-gallery__pagination-indicator {
+    width: 8px;
+    height: 8px;
+  }
+
+  .ring-gallery__pagination-slot.is-active .ring-gallery__pagination-indicator {
+    width: 28px;
+  }
+}

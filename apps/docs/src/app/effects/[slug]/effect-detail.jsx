@@ -10,6 +10,9 @@ import { EffectCard } from "@/components/ui/EffectCardNew";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { getEffectPreviewHref } from "@/lib/categories";
 import Footer from "@/components/Footer";
+import HeadAnim from "@/components/Animations/HeadAnim";
+import Copy from "@/components/Animations/Copy";
+import { fadeUp } from "@/components/Animations/gsapAnimations";
 
 export function EffectDetailContent({
   slug,
@@ -22,6 +25,7 @@ export function EffectDetailContent({
   effectCounts,
   totalEffects,
 }) {
+  fadeUp();
   const [videoReady, setVideoReady] = useState(false);
   const [videoError, setVideoError] = useState(false);
 
@@ -172,22 +176,26 @@ export default function MyComponent() {
             <div className="lg:col-span-2 space-y-8">
               <div>
                 {categorySlug && (
+                  <Copy>
                   <p className="text-sm uppercase tracking-[0.18em] text-primary mb-4 max-sm:text-center">
                     {categorySlug.replaceAll("-", " ")}
                   </p>
+                  </Copy>
                 )}
-
+               <HeadAnim>
                 <h1 className="text-5xl max-sm:text-center text-foreground mb-4">
                   {content?.h1 || effect.title}
                 </h1>
-
+                </HeadAnim>
+               <Copy delay={0.5}>
                 <p className="text-[#d2d2d2] w-[80%] max-sm:w-full max-sm:text-center">
                   {content?.shortDescription ||
                     effect.description}
                 </p>
+                </Copy>
               </div>
 
-              <div className="aspect-video w-full overflow-hidden relative bg-black/20">
+              <div className="aspect-video w-full overflow-hidden relative bg-black/20 fadeup">
                 {!showVideo && (
                   <Image
                     src={
@@ -236,7 +244,7 @@ export default function MyComponent() {
               />
             </div>
 
-            <div className="lg:col-span-1 self-stretch max-sm:hidden">
+            <div className="lg:col-span-1 self-stretch max-sm:hidden fadeup">
               <div className="sticky top-28 h-fit">
                 {sidebarContent}
               </div>
@@ -245,11 +253,13 @@ export default function MyComponent() {
 
           {relatedEffects?.length > 0 && (
             <div className="my-16 space-y-6">
+              <HeadAnim>
               <h2 className="text-4xl font-semibold text-foreground tracking-tighter">
                 Related Effects
               </h2>
+              </HeadAnim>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fadeup">
                 {relatedEffects.map((relatedEffect) => (
                   <EffectCard
                     key={relatedEffect.name}
@@ -281,13 +291,13 @@ function EffectDynamicContent({
     <div className="space-y-14">
       {content.heroCopy?.length > 0 && (
         <section className="space-y-5">
-          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter">
+          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter fadeup">
             Overview
           </h2>
 
           <div className="space-y-5 text-[#d2d2d2] text-base leading-7">
             {content.heroCopy.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
+              <p key={index} className="fadeup">{paragraph}</p>
             ))}
           </div>
         </section>
@@ -295,7 +305,7 @@ function EffectDynamicContent({
 
       {content.bestUsedFor?.length > 0 && (
         <section className="space-y-5">
-          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter">
+          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter fadeup">
             Best Used For
           </h2>
 
@@ -303,7 +313,7 @@ function EffectDynamicContent({
             {content.bestUsedFor.map((item) => (
               <div
                 key={item}
-                className="border border-border/60 bg-secondary-surface/50 rounded-md px-4 py-3 text-[#d2d2d2]"
+                className="border border-border/60 bg-secondary-surface/50 rounded-md px-4 py-3 text-[#d2d2d2] fadeup"
               >
                 {item}
               </div>
@@ -314,7 +324,7 @@ function EffectDynamicContent({
 
       {content.tutorial?.length > 0 && (
         <section className="space-y-6">
-          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter">
+          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter fadeup">
             Step-by-Step Tutorial
           </h2>
 
@@ -326,11 +336,11 @@ function EffectDynamicContent({
                    
 
                     <div className="space-y-2">
-                      <h3 className="text-2xl max-sm:text-xl tracking-tighter text-foreground">
+                      <h3 className="text-2xl max-sm:text-xl tracking-tighter text-foreground fadeup">
                         {step.title}
                       </h3>
 
-                      <p className="text-[#d2d2d2] leading-7">{step.body}</p>
+                      <p className="text-[#d2d2d2] leading-7 fadeup">{step.body}</p>
                     </div>
                   </div>
 
@@ -344,7 +354,7 @@ function EffectDynamicContent({
                 </div>
 
                 {step.blocks?.length > 0 && (
-                  <div className="space-y-6">
+                  <div className="space-y-6 fadeup">
                     {step.blocks.map((block, blockIndex) => (
                       <TutorialBlock
                         key={`${step.title || index}-${
@@ -368,12 +378,12 @@ function EffectDynamicContent({
 
       {content.customizationOptions?.length > 0 && (
         <section className="space-y-5">
-          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter">
+          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter fadeup">
             Customization Options
           </h2>
 
-          <div className="bg-secondary-surface/60 backdrop-blur-md rounded-xl border border-border/60 overflow-x-auto">
-            <table className="w-full text-sm max-sm:min-w-[640px]">
+          <div className="bg-secondary-surface/60 backdrop-blur-md rounded-xl border border-border/60 overflow-x-auto fadeup">
+            <table className="w-full text-sm max-sm:min-w-[640px] ">
               <thead className="bg-black/20 border-b border-border/60">
                 <tr>
                   <th className="text-left px-4 py-3 font-medium text-muted">
@@ -406,18 +416,18 @@ function EffectDynamicContent({
 
       {content.notes && (
         <section className="space-y-5">
-          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter">
+          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter fadeup">
             Implementation Notes
           </h2>
 
           <div className="grid grid-cols-1 gap-8 mt-10">
             {content.notes.performance && (
               <div className="space-y-2">
-                <h3 className="text-2xl max-sm:text-xl tracking-tighter text-foreground">
+                <h3 className="text-2xl max-sm:text-xl tracking-tighter text-foreground fadeup">
                   Performance Notes
                 </h3>
 
-                <p className="text-[#d2d2d2] leading-7">
+                <p className="text-[#d2d2d2] leading-7 fadeup">
                   {content.notes.performance}
                 </p>
               </div>
@@ -425,11 +435,11 @@ function EffectDynamicContent({
 
             {content.notes.accessibility && (
               <div className="space-y-2">
-                <h3 className="text-2xl max-sm:text-xl tracking-tighter text-foreground">
+                <h3 className="text-2xl max-sm:text-xl tracking-tighter text-foreground fadeup">
                   Accessibility Notes
                 </h3>
 
-                <p className="text-[#d2d2d2] leading-7">
+                <p className="text-[#d2d2d2] leading-7 fadeup">
                   {content.notes.accessibility}
                 </p>
               </div>
@@ -437,11 +447,11 @@ function EffectDynamicContent({
 
             {content.notes.mobile && (
               <div className="space-y-2">
-                <h3 className="text-2xl max-sm:text-xl tracking-tighter text-foreground">
+                <h3 className="text-2xl max-sm:text-xl tracking-tighter text-foreground fadeup">
                   Mobile Support Notes
                 </h3>
 
-                <p className="text-[#d2d2d2] leading-7">
+                <p className="text-[#d2d2d2] leading-7 fadeup">
                   {content.notes.mobile}
                 </p>
               </div>
@@ -452,11 +462,11 @@ function EffectDynamicContent({
 
       {content.commonMistakes?.length > 0 && (
         <section className="space-y-5">
-          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter">
+          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter fadeup">
             Common Mistakes
           </h2>
 
-          <div className="space-y-3">
+          <div className="space-y-3 fadeup">
             {content.commonMistakes.map((mistake) => (
               <div key={mistake} className="flex gap-3 rounded-md">
                 <span className="text-primary mt-1">●</span>
@@ -472,18 +482,18 @@ function EffectDynamicContent({
 
       {content.faq?.length > 0 && (
         <section className="space-y-5">
-          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter">
+          <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter fadeup">
             FAQ
           </h2>
 
           <div className="space-y-8 mt-10">
             {content.faq.map((item) => (
               <div key={item.question} className="space-y-2">
-                <h3 className="text-xl tracking-tighter text-foreground">
+                <h3 className="text-xl tracking-tighter text-foreground fadeup">
                   {item.question}
                 </h3>
 
-                <p className="text-[#d2d2d2] leading-7">{item.answer}</p>
+                <p className="text-[#d2d2d2] leading-7 fadeup">{item.answer}</p>
               </div>
             ))}
           </div>
@@ -491,13 +501,13 @@ function EffectDynamicContent({
       )}
 
       {content.finalCta && (
-        <section className="border border-primary/40 bg-primary/10 rounded-xl p-6 space-y-5">
+        <section className="border border-primary/40 bg-primary/10 rounded-xl p-6 space-y-5 fadeup">
           <div className="space-y-2">
-            <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter">
+            <h2 className="text-4xl max-sm:text-3xl font-semibold text-foreground tracking-tighter ">
               Build With This Effect
             </h2>
 
-            <p className="text-[#d2d2d2] leading-7">
+            <p className="text-[#d2d2d2] leading-7 ">
               {content.finalCta.body}
             </p>
           </div>
@@ -563,7 +573,7 @@ function TutorialBlock({
           </h3>
         )}
 
-        <div className="max-h-[30vw] overflow-y-auto rounded-xl border border-border/60">
+        <div className="max-h-[30vw] overflow-y-auto rounded-xl border border-border/60 fadeup">
           <CodeBlock
             code={resolvedCode}
             language={block.language || "jsx"}
