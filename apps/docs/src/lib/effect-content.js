@@ -229,7 +229,7 @@ export default function Page() {
         {
           title: "Step 6: Review performance and accessibility",
           body: "Check scroll smoothness, image sizes, keyboard access, reduced-motion behaviour, and whether the content remains understandable when animation is disabled. The final implementation should preserve a logical reading order and avoid hiding essential information inside animation-only states.",
-           blocks: [
+          blocks: [
             {
               type: "code",
               title: "Component Code",
@@ -2564,6 +2564,615 @@ export default function ScrollDistortion({
         primary: "Install Scroll Distortion",
         secondary: "View Scroll Effects",
         commercial: "Request a Custom Scroll-Based Visual Distortion",
+      },
+    },
+  },
+  "backgrounds": {
+    "spider-particles": {
+      seo: {
+        primaryKeyword: "React spider particles background",
+        secondaryKeywords: [
+          "spider web particles React",
+          "interactive particle background",
+          "Three.js spider particles",
+          "cursor particle effect",
+          "React particle web",
+          "Next.js particle background",
+          "animated web background",
+        ],
+        title:
+          "Spider Particles Background for React & Next.js | Hyperiux Vault",
+        description:
+          "Add an interactive spider particles background to your React or Next.js website. Build immersive cursor-based particle webs with Three.js, customize glow, density, and connections, and create futuristic landing pages and experimental interfaces.",
+      },
+
+      h1: "Spider Particles Background for React and Next.js",
+
+      shortDescription:
+        "An interactive spider web particle background for futuristic landing pages, creative developer portfolios, AI interfaces, and immersive technical websites.",
+
+      heroCopy: [
+        "Spider Particles is one of the most immersive interactive background effects because it reacts directly to cursor movement and creates a living network of particles around the user. Instead of behaving like a passive decorative background, the effect makes the interface feel responsive, intelligent, and spatial. It creates a sense of depth and interaction that works especially well for experimental products, AI tools, creative portfolios, technical showcases, gaming interfaces, and futuristic landing pages.",
+
+        "The effect works by placing particles across a grid and dynamically connecting nearby particles to the cursor with animated web lines. As the user moves across the screen, the network expands and contracts naturally, creating the feeling of an intelligent digital system responding in real time. This makes the page feel more tactile and cinematic without requiring large 3D scenes or complex visual assets.",
+
+        "Spider Particles is especially effective for hero sections because it immediately creates motion and atmosphere while still leaving room for typography and product messaging. For AI products, it can suggest neural systems, data flow, intelligence, or machine interaction. For developer tools and technical products, it reinforces an engineering-led visual identity. For creative agencies and portfolios, it creates a memorable first impression that feels interactive instead of static.",
+
+        "The strongest versions of this effect are subtle and controlled. The interaction should feel smooth and atmospheric rather than aggressive. Particle density, connection distance, glow intensity, and spotlight radius should all be tuned carefully so the visual system feels elegant instead of chaotic. The background should support the experience, not overpower the interface itself.",
+
+        "Spider Particles performs best on desktop because the effect depends heavily on cursor interaction. On mobile devices, simplified fallbacks or reduced interactivity are recommended. Since the effect uses WebGL and Three.js rendering, performance optimization is important for production use. Particle count, connection radius, and animation complexity should be adjusted depending on the design requirements and device constraints.",
+
+        "Use Spider Particles when your website needs a futuristic interactive background that feels dynamic, technical, immersive, and visually alive without relying on heavy 3D scenes or complex simulations.",
+      ],
+
+      bestUsedFor: [
+        "AI product websites",
+        "Experimental landing pages",
+        "Developer portfolios",
+        "Technical showcases",
+        "Gaming interfaces",
+        "Creative technology brands",
+        "Interactive hero sections",
+        "Futuristic dashboards",
+        "Product reveal pages",
+        "Digital art experiences",
+      ],
+
+      tutorial: [
+        {
+          title: "Step 1: Install the effect",
+          body: "Use the Hyperiux CLI to add the Spider Particles effect to your project. This injects the component directly into your codebase so you can fully customize particle behaviour, glow intensity, interaction radius, spacing, and responsiveness.",
+          blocks: [
+            {
+              type: "code",
+              title: "Installation",
+              code: "npx hyperiux add spider-particles",
+              language: "bash",
+            },
+          ],
+        },
+
+        {
+          title: "Step 2: Place the component",
+          body: "Place SpiderParticles inside a full-screen hero section or immersive page wrapper where the cursor interaction can become part of the overall experience. The effect works best when users have enough visual space to explore the interaction naturally.",
+        },
+
+        {
+          title: "Step 3: Render the effect",
+          body: "Import the SpiderParticles component and render it directly inside your page or section. The component manages particle generation, mouse interaction, WebGL rendering, and animation internally.",
+          blocks: [
+            {
+              type: "code",
+              title: "Usage",
+              filename: "page.jsx",
+              language: "jsx",
+              code: `import React from "react";
+import SpiderParticles from "@/components/Particles/SpiderParticles";
+
+const page = () => {
+  return <SpiderParticles />;
+};
+
+export default page;`,
+            },
+
+            {
+              type: "text",
+              title: "How the component works",
+              body: "SpiderParticles generates a responsive particle grid using Three.js and dynamically connects nearby particles to the cursor during movement. The component handles rendering, interaction logic, glow effects, spotlight behaviour, responsive scaling, and animation updates internally.",
+            },
+          ],
+        },
+
+        {
+          title: "Step 4: Configure particle behaviour",
+          body: "Adjust particle count, connection distance, spotlight radius, glow settings, and grid spacing to control the atmosphere of the effect. Lower density creates a cleaner interface while higher density produces a more immersive and cinematic visual system.",
+          blocks: [
+            {
+              type: "props",
+              title: "SpiderParticles Props",
+            },
+          ],
+        },
+
+        {
+          title: "Step 5: Optimize for responsiveness",
+          body: "Test the effect across desktop, tablet, and mobile layouts. Cursor-based interaction systems often need reduced density, lower connection counts, and simplified visuals on smaller devices to preserve clarity and performance.",
+        },
+
+        {
+          title: "Step 6: Review performance and accessibility",
+          body: "Check rendering performance, cursor responsiveness, GPU usage, resize handling, accessibility fallbacks, and reduced-motion behaviour before deploying the effect in production. The interaction should feel smooth without overwhelming the surrounding layout or distracting from the page content.",
+          blocks: [
+            {
+              type: "code",
+              title: "Component Code",
+              filename: "spider-particles.jsx",
+              language: "jsx",
+              code: `"use client";
+
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+const MOUSE_OFFSCREEN = -9999;
+const MOUSE_THRESHOLD = -9000;
+
+const LERP_SPEED = 0.1;
+const FADE_SPEED = 0.04;
+
+// ─── GLSL Shaders ─────────────────────────────────────────────────────────────
+
+const PARTICLE_VERT = /* glsl */ \`
+  uniform float uSize;
+  uniform vec2  uMouse;
+  uniform float uSpotlightRadius;
+
+  void main() {
+    vec4  mvPos = modelViewMatrix * vec4(position, 1.0);
+    float dist  = distance(position.xy, uMouse);
+
+    float scale = dist < uSpotlightRadius
+      ? 1.0 - (dist / uSpotlightRadius)
+      : 0.0;
+
+    gl_PointSize = uSize * scale;
+    gl_Position  = projectionMatrix * mvPos;
+  }
+\`;
+
+const CURSOR_VERT = /* glsl */ \`
+  uniform float uSize;
+
+  void main() {
+    vec4 mvPos   = modelViewMatrix * vec4(position, 1.0);
+
+    gl_PointSize = uSize;
+    gl_Position  = projectionMatrix * mvPos;
+  }
+\`;
+
+const POINT_FRAG = /* glsl */ \`
+  uniform vec3  uColor;
+  uniform vec3  uGlow;
+  uniform bool  uGlowEnabled;
+  uniform float uAlpha;
+
+  void main() {
+    vec2  uv = gl_PointCoord - 0.5;
+    float d  = length(uv);
+
+    if (d > 0.5) discard;
+
+    if (uGlowEnabled) {
+      float core  = smoothstep(0.5, 0.0, d);
+      float glow  = smoothstep(0.5, 0.1, d) * 0.6;
+
+      vec3  col   = mix(uGlow, uColor, core);
+      float alpha = (core + glow) * uAlpha;
+
+      gl_FragColor = vec4(col, alpha);
+    } else {
+      float alpha = smoothstep(0.5, 0.45, d) * uAlpha;
+
+      gl_FragColor = vec4(uColor, alpha);
+    }
+  }
+\`;
+
+export default function SpiderParticles({
+  particleCount = 180,
+  gridGap = 0,
+  particleSize = 20.0,
+  mouseConnectDist = 160,
+  spotlightRadius = 300,
+  particlesGlow = false,
+  glowColor = 0xffffff,
+  particleColor = 0xffffff,
+  webColor = 0xffffff,
+  centerColor = 0xffffff,
+}) {
+  const mountRef = useRef(null);
+
+  const [active, setActive] = useState(false);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const mount = mountRef.current;
+
+    if (!mount) return;
+
+    let width = mount.clientWidth || window.innerWidth;
+    let height = mount.clientHeight || window.innerHeight;
+
+    let animId;
+
+    const _glowColor = new THREE.Color(glowColor);
+    const _particleColor = new THREE.Color(particleColor);
+    const _webColor = new THREE.Color(webColor);
+    const _centerColor = new THREE.Color(centerColor);
+
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+    });
+
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(width, height);
+    renderer.setClearColor(0x000000, 1);
+
+    mount.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.OrthographicCamera(
+      -width / 2,
+      width / 2,
+      height / 2,
+      -height / 2,
+      -500,
+      500
+    );
+
+    camera.position.z = 1;
+
+    const mouse = new THREE.Vector2(
+      MOUSE_OFFSCREEN,
+      MOUSE_OFFSCREEN
+    );
+
+    const smoothMouse = new THREE.Vector2(
+      MOUSE_OFFSCREEN,
+      MOUSE_OFFSCREEN
+    );
+
+    let mouseEntryAlpha = 0;
+    let mousePresent = false;
+    let mouseJustEntered = false;
+
+    const isDesktop = () => window.innerWidth >= 768;
+
+    const onMove = (e) => {
+      if (!isDesktop()) return;
+
+      const rect = mount.getBoundingClientRect();
+
+      mouse.set(
+        e.clientX - rect.left - width / 2,
+        -(e.clientY - rect.top - height / 2)
+      );
+
+      setPos({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+    };
+
+    const onEnter = (e) => {
+      if (!isDesktop()) return;
+
+      const rect = mount.getBoundingClientRect();
+
+      mouse.set(
+        e.clientX - rect.left - width / 2,
+        -(e.clientY - rect.top - height / 2)
+      );
+
+      mouseJustEntered = true;
+      mousePresent = true;
+
+      setActive(true);
+    };
+
+    const onLeave = () => {
+      if (!isDesktop()) return;
+
+      mousePresent = false;
+      mouseJustEntered = false;
+
+      setActive(false);
+    };
+
+    mount.addEventListener("mousemove", onMove);
+    mount.addEventListener("mouseenter", onEnter);
+    mount.addEventListener("mouseleave", onLeave);
+
+    let cols;
+    let rows;
+    let actualCount;
+    let spacingX;
+    let spacingY;
+
+    if (gridGap > 0) {
+      cols = Math.max(1, Math.floor(width / gridGap));
+      rows = Math.max(1, Math.floor(height / gridGap));
+
+      actualCount = cols * rows;
+
+      spacingX = spacingY = gridGap;
+    } else {
+      actualCount = particleCount;
+
+      const aspect = width / height;
+
+      rows = Math.max(
+        1,
+        Math.round(Math.sqrt(actualCount / aspect))
+      );
+
+      cols = Math.ceil(actualCount / rows);
+
+      spacingX = width / cols;
+      spacingY = height / rows;
+    }
+
+    const positions = new Float32Array(actualCount * 3);
+
+    for (let i = 0; i < actualCount; i++) {
+      const c = i % cols;
+      const r = Math.floor(i / cols);
+
+      positions[i * 3] =
+        (c + 0.5) * spacingX - width / 2;
+
+      positions[i * 3 + 1] =
+        (r + 0.5) * spacingY - height / 2;
+
+      positions[i * 3 + 2] = 0;
+    }
+
+    const particleGeo = new THREE.BufferGeometry();
+
+    particleGeo.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3)
+    );
+
+    const particleMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uColor: {
+          value: _particleColor,
+        },
+        uGlow: {
+          value: _glowColor,
+        },
+        uSize: {
+          value:
+            particleSize * window.devicePixelRatio,
+        },
+        uMouse: {
+          value: new THREE.Vector2(
+            MOUSE_OFFSCREEN,
+            MOUSE_OFFSCREEN
+          ),
+        },
+        uSpotlightRadius: {
+          value: spotlightRadius,
+        },
+        uGlowEnabled: {
+          value: particlesGlow,
+        },
+        uAlpha: {
+          value: 0.0,
+        },
+      },
+
+      vertexShader: PARTICLE_VERT,
+      fragmentShader: POINT_FRAG,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const particles = new THREE.Points(
+      particleGeo,
+      particleMat
+    );
+
+    scene.add(particles);
+
+    const animate = () => {
+      animId = requestAnimationFrame(animate);
+
+      mouseEntryAlpha = mousePresent
+        ? Math.min(
+            1,
+            mouseEntryAlpha + FADE_SPEED
+          )
+        : Math.max(
+            0,
+            mouseEntryAlpha - FADE_SPEED
+          );
+
+      if (
+        mousePresent &&
+        mouse.x > MOUSE_THRESHOLD
+      ) {
+        if (mouseJustEntered) {
+          smoothMouse.copy(mouse);
+
+          mouseJustEntered = false;
+        } else {
+          smoothMouse.x +=
+            (mouse.x - smoothMouse.x) *
+            LERP_SPEED;
+
+          smoothMouse.y +=
+            (mouse.y - smoothMouse.y) *
+            LERP_SPEED;
+        }
+      }
+
+      particleMat.uniforms.uMouse.value.copy(
+        smoothMouse
+      );
+
+      particleMat.uniforms.uAlpha.value =
+        mouseEntryAlpha;
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animId);
+
+      if (mount) {
+        mount.removeEventListener(
+          "mousemove",
+          onMove
+        );
+
+        mount.removeEventListener(
+          "mouseenter",
+          onEnter
+        );
+
+        mount.removeEventListener(
+          "mouseleave",
+          onLeave
+        );
+
+        if (
+          mount.contains(renderer.domElement)
+        ) {
+          mount.removeChild(
+            renderer.domElement
+          );
+        }
+      }
+
+      renderer.dispose();
+      particleGeo.dispose();
+      particleMat.dispose();
+    };
+  }, [
+    particleCount,
+    gridGap,
+    particleSize,
+    mouseConnectDist,
+    spotlightRadius,
+    particlesGlow,
+    glowColor,
+    particleColor,
+    webColor,
+    centerColor,
+  ]);
+
+  return (
+    <div
+      ref={mountRef}
+      className="relative w-full h-screen overflow-hidden bg-black"
+    />
+  );
+}
+`,
+            },
+          ],
+        },
+      ],
+
+      customizationOptions: [
+        {
+          option: "Particle count",
+          recommendation:
+            "Lower counts feel cleaner and more premium while higher counts create a denser cinematic web.",
+        },
+        {
+          option: "Connection distance",
+          recommendation:
+            "Use restrained connection ranges to avoid excessive visual noise.",
+        },
+        {
+          option: "Spotlight radius",
+          recommendation:
+            "Increase for softer interaction spread and reduce for tighter cursor focus.",
+        },
+        {
+          option: "Glow intensity",
+          recommendation:
+            "Keep glow subtle for technical and premium interfaces instead of overpowering brightness.",
+        },
+        {
+          option: "Grid spacing",
+          recommendation:
+            "Wider spacing feels minimal while tighter spacing creates a more complex network.",
+        },
+        {
+          option: "Mobile responsiveness",
+          recommendation:
+            "Reduce particle density and interaction complexity on smaller screens for smoother performance.",
+        },
+      ],
+
+      notes: {
+        performance:
+          "Spider Particles uses WebGL and Three.js rendering, so performance optimization is important for production use. Prefer restrained particle counts, optimized animation loops, and efficient GPU transforms to maintain smooth interaction across devices.",
+
+        accessibility:
+          "The background should never overpower the main content. Maintain readable contrast, support reduced-motion preferences, and ensure that important interface elements remain visually clear during interaction.",
+
+        mobile:
+          "On mobile devices, simplify interaction complexity and reduce particle density. Cursor-based systems are naturally desktop-focused, so smaller screens benefit from cleaner visuals and less aggressive animation.",
+      },
+
+      commonMistakes: [
+        "Using too many particles and reducing performance.",
+        "Making the glow intensity excessively bright.",
+        "Using large connection distances that create visual clutter.",
+        "Placing important text directly inside dense interaction zones.",
+        "Ignoring reduced-motion accessibility preferences.",
+        "Using aggressive animation that distracts from content.",
+        "Forgetting to optimize responsiveness for smaller devices.",
+      ],
+
+      relatedEffectNames: [
+        "Dotted Grid",
+        "Spider Field",
+        "Particle Network",
+        "Grid Tunnel",
+        "Dither Canvas",
+      ],
+
+      faq: [
+        {
+          question: "What is Spider Particles best used for?",
+          answer:
+            "Spider Particles works best for immersive hero sections, AI interfaces, technical showcases, experimental landing pages, developer portfolios, gaming websites, and futuristic digital experiences.",
+        },
+
+        {
+          question: "Does Spider Particles require Three.js?",
+          answer:
+            "Yes. The effect relies on Three.js and WebGL rendering to manage particles, cursor interaction, dynamic line generation, and animation performance.",
+        },
+
+        {
+          question: "Is Spider Particles suitable for mobile devices?",
+          answer:
+            "Yes, but the interaction should usually be simplified on mobile. Reduced particle density and lighter visual complexity help preserve usability and performance.",
+        },
+
+        {
+          question: "Can I customize the interaction behaviour?",
+          answer:
+            "Yes. You can customize particle count, glow colour, spotlight radius, connection distance, grid spacing, particle sizing, and overall visual intensity.",
+        },
+
+        {
+          question: "Can Hyperiux customize Spider Particles for a website?",
+          answer:
+            "Yes. Hyperiux can customize the interaction system, particle behaviour, visual styling, responsiveness, branding, and motion direction to match a product or website experience.",
+        },
+      ],
+
+      finalCta: {
+        body: "Use Spider Particles when your website needs an immersive interactive background that feels technical, cinematic, and visually alive.",
+        primary: "Install Spider Particles",
+        secondary: "View Interactive Effects",
+        commercial: "Request a Custom Particle Experience",
       },
     },
   },

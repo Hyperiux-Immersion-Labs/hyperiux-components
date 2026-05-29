@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "previewUrl": "/page-transitions/chess-grids",
   "coverImage": "/assets/list/chess-grid-transition.png",
-  "videoUrl": "chess-grid-transition",
+  "videoUrl": "chess-grid-transition.mp4",
   "files": [
     {
       "path": "chess-grid-transition.jsx",
