@@ -25,7 +25,7 @@ const MENU_ITEMS = [
   },
   {
     name: "Extras",
-    href: "/extras",
+    href: "#",
   },
   {
     name: "Docs",
