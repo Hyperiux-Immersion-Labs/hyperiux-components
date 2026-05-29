@@ -1,8 +1,7 @@
 import { Space_Grotesk, Inter, Geist_Mono } from "next/font/google";
 import "highlight.js/styles/night-owl.css";
 import "./globals.css";
-// import { Analytics } from '@vercel/analytics/next';
-
+import { Analytics } from '@vercel/analytics/next';
 
 // Display font - for hero headlines (similar to CoinbaseDisplay)
 const spaceGrotesk = Space_Grotesk({
@@ -45,7 +44,7 @@ export default function RootLayout({ children }) {
       >
      
         {children}
-        {/* <Analytics /> */}
+        <Analytics /> 
       </body>
     </html>
   );
