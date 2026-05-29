@@ -140,7 +140,7 @@
       ],
       "previewUrl": "/frame-slider",
       "coverImage": "/assets/list/parallax-gallery.png",
-      "videoUrl": "parallax-gallery.mp4",
+      "videoUrl": "parallax-slider.mp4",
       "addedAt": 1779961997321.6775
     },
     {
@@ -1552,7 +1552,7 @@
       ],
       "previewUrl": "/navigation/immersive-fullscreen-nav",
       "coverImage": "/assets/list/immersive-full-screen-navigation.png",
-      "videoUrl": "immersive-full-screen-navigation.mp4",
+      "videoUrl": "immersive-fullscreen-nav.mp4",
       "addedAt": 1779961997319.57
     },
     {
@@ -1623,7 +1623,7 @@
       "addedAt": 1779961997318.8887
     },
     {
-      "name": "webgl-portfolio-slider",
+      "name": "3d-portfolio-slider",
       "title": "3D Portfolio Slider",
       "description": "Infinite scroll slider with a Three.js WebGL fullscreen plane, cosine zoom distortion, a circular thumbnail ring, and GSAP text transitions",
       "category": "webgl",
@@ -1636,9 +1636,9 @@
         "gsap",
         "lenis"
       ],
-      "previewUrl": "/webgl-portfolio-slider",
-      "coverImage": "/assets/img/image01.webp",
-      "videoUrl": "webgl-portfolio-slider.mp4",
+      "previewUrl": "/3d-portfolio-slider",
+      "coverImage": "/assets/list/3d-portfolio-slider.png",
+      "videoUrl": "3d-portfolio-slider.mp4",
       "addedAt": 1779961997328.7705
     },
     {
