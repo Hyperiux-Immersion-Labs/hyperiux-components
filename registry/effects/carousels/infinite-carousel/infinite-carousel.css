@@ -1,0 +1,127 @@
+.hc-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 1.5rem;
+}
+
+.hc-controls {
+  width: 95%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hc-btn {
+  width: 3.5vw;
+  height: 3.5vw;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #1a1a1a;
+  color: #1a1a1a;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.hc-btn:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.hc-wrapper {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100px;
+}
+
+.hc-item {
+  position: relative;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.hc-wrapper.is-wrapped {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  overflow: visible;
+  gap: 1rem;
+}
+
+.hc-wrapper.is-wrapped .hc-item {
+  transform: none !important;
+}
+
+.hc-wrapper.is-swiper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 0.875rem;
+  padding-inline: 0.75rem;
+}
+
+.hc-wrapper.is-swiper::-webkit-scrollbar {
+  display: none;
+}
+
+.hc-wrapper.is-swiper .hc-item {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+@media (max-width: 1025px) {
+  .hc-page {
+    gap: 1rem;
+  }
+
+  .hc-controls {
+    width: 100%;
+    justify-content: flex-end;
+    padding-inline: 0.75rem;
+  }
+
+  .hc-btn {
+    width: 10vw;
+    height: 10vw;
+  }
+
+  .hc-wrapper.is-wrapped {
+    gap: 0.875rem;
+  }
+
+  .hc-wrapper.is-swiper {
+    gap: 0.75rem;
+    padding-inline: 0.75rem;
+  }
+}
+
+@media (max-width: 541px) {
+  .hc-btn {
+    width: 15vw;
+    height: 15vw;
+  }
+
+  .hc-wrapper.is-wrapped {
+    gap: 0.75rem;
+  }
+
+  .hc-wrapper.is-swiper {
+    gap: 0.625rem;
+    padding-inline: 0.5rem;
+  }
+}

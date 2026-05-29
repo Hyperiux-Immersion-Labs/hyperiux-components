@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "previewUrl": "/page-transitions/flip",
   "coverImage": "/assets/list/page-flip-transition.png",
-  "videoUrl": "page-flip-transition.mp4",
+  "videoUrl": "page-flip-transition",
   "files": [
     {
       "path": "page-flip-transition.jsx",

@@ -518,7 +518,7 @@ const DEFAULT_MENU_ITEMS = [
 
 export function GlassPillHeader({
   menuItems = DEFAULT_MENU_ITEMS,
-  ctaLabel = "BUILT W/ ICOMAT",
+  ctaLabel = "BUILT W/ HYPERIUX",
 }) {
   return (
     <>

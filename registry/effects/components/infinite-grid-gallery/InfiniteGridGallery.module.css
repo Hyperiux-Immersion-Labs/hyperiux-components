@@ -1,0 +1,389 @@
+.root {
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  user-select: none;
+  cursor: grab;
+  background: #ffffff;
+  color: #000000;
+  font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+:global(html.dragging) .root {
+  cursor: grabbing;
+}
+
+.images {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  white-space: nowrap;
+  position: relative;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.images :global(.item) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  white-space: normal;
+}
+
+.images :global(.item-wrapper) {
+  will-change: transform;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.images :global(.item-image) {
+  overflow: hidden;
+  border-radius: 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #ffffff;
+  transition: box-shadow 350ms cubic-bezier(0.785, 0.135, 0.15, 0.86),
+    transform 350ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transform-origin: 50% 50%;
+}
+
+.images :global(.item:hover .item-image) {
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.12);
+  transform: scale(1.015);
+}
+
+.images :global(.item:hover) {
+  z-index: 2;
+}
+
+.images :global(.item-image img) {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.images :global(.caption) {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  left:0;
+  right:0;
+  bottom: 0;
+  display: block;
+  padding: 10px 10px;
+  font-size: 15px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  opacity: 0;
+  white-space: normal;
+  user-select: none;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transform: translateY(12px);
+  transition: opacity 350ms cubic-bezier(0.785, 0.135, 0.15, 0.86),
+    transform 350ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  pointer-events: none;
+}
+
+.images :global(.item:hover .caption) {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.expandBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(255, 255, 255, 1);
+  cursor: default;
+  opacity: 0;
+  transition: opacity 750ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.expandBackdrop:not(.expandClosing):not(.expandOpening) {
+  opacity: 1;
+}
+
+.expandClosing {
+  opacity: 0;
+}
+
+.expandOpening {
+  opacity: 0;
+}
+
+.expandStage {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.expandMedia {
+  position: absolute;
+  left: var(--toX);
+  top: var(--toY);
+  width: calc(var(--toW) * 1px);
+  height: calc(var(--toH) * 1px);
+  transform-origin: 0 0;
+  transform: translate(var(--dx), var(--dy)) scale(var(--sx), var(--sy));
+  transition: transform 750ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  will-change: transform;
+  border-radius: 0;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.06);
+  /* box-shadow: 0 30px 90px rgba(0, 0, 0, 0.18); */
+}
+
+.expandBackdrop:not(.expandClosing):not(.expandOpening) .expandMedia {
+  transform: translate(0px, 0px) scale(1, 1);
+}
+
+.expandBackdrop.expandClosing .expandMedia {
+  transform: translate(var(--dx), var(--dy)) scale(var(--sx), var(--sy));
+  transition-duration: 750ms;
+}
+
+.expandImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.expandImageFrom,
+.expandImageTo {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.expandSlideLeft.expandImageFrom {
+  animation: slideFromLeft 600ms ease-in-out forwards;
+}
+
+.expandSlideLeft.expandImageTo {
+  animation: slideToLeft 600ms ease-in-out forwards;
+}
+
+.expandSlideRight.expandImageFrom {
+  animation: slideFromRight 600ms ease-in-out forwards;
+}
+
+.expandSlideRight.expandImageTo {
+  animation: slideToRight 600ms ease-in-out forwards;
+}
+
+@keyframes slideFromLeft {
+  from {
+    transform: translate3d(0%, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes slideToLeft {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    transform: translate3d(0%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes slideToRight {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.expandBottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--thumbsH);
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px 14px;
+  background: rgba(255, 255, 255, 1);
+  cursor: default;
+}
+
+.expandMeta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.expandCaption {
+  max-width: min(860px, calc(100vw - 40px));
+  text-align: center;
+  margin-top: -5%;
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  color: rgba(0, 0, 0, 0.92);
+  padding: 6px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.expandNav {
+  position: fixed;
+  top: calc(var(--toY) + (var(--toH) * 1px) / 2);
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  color: #000000;
+  font-size: 30px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.12);
+  z-index: 4;
+}
+
+.expandNav:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.expandNavPrev {
+  left: max(16px, calc(var(--toX) - 72px));
+}
+
+.expandNavNext {
+  right: max(16px, calc(100vw - (var(--toX) + var(--toW) * 1px) - 72px));
+}
+
+.expandThumbsWrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  cursor: grab;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  padding-top: 12px;
+}
+
+.expandThumbsWrapDragging {
+  cursor: grabbing;
+}
+
+.expandThumbs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 4px;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  touch-action: pan-x;
+  scroll-behavior: smooth;
+}
+
+.expandThumbsWrapDragging .expandThumbs {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.expandThumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.expandThumb {
+  flex: 0 0 auto;
+  width: 90px;
+  height: 70px;
+  border-radius: 0;
+  border: 2px solid transparent;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: border-color 200ms ease, transform 200ms ease;
+}
+
+.expandThumbActive {
+  border-color: #000000;
+}
+
+.expandThumb:hover {
+  transform: translateY(-1px);
+  border-color: rgba(0, 0, 0, 0.35);
+}
+
+.expandThumbActive:hover {
+  border-color: #000000;
+}
+
+.expandThumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  filter: brightness(0.8);
+  transition: filter 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.expandThumbActive .expandThumbImg {
+  filter: brightness(1.05);
+}
+
+@media (max-width: 640px) {
+  .expandBottom {
+    padding: 0 10px 10px;
+  }
+
+  .expandNavPrev {
+    left: 12px;
+  }
+
+  .expandNavNext {
+    right: 12px;
+  }
+
+  .expandThumb {
+    width: 72px;
+    height: 48px;
+  }
+}
