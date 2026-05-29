@@ -27,7 +27,7 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/scroll-based-effects/grid-scale",
+      "previewUrl": "/grid-scale",
       "coverImage": "/assets/list/grid-scale.png",
       "videoUrl": "grid-scale.mp4",
       "addedAt": 1777877418531.936
@@ -208,7 +208,7 @@
         "gsap",
         "next"
       ],
-      "previewUrl": "/scroll-based-effects/rotation-slider",
+      "previewUrl": "/rotation-slider",
       "coverImage": "/assets/list/rotation-slider.png",
       "videoUrl": "rotation-slider.mp4",
       "addedAt": 1777877418532.2446
@@ -226,7 +226,7 @@
         "lenis",
         "three"
       ],
-      "previewUrl": "/scroll-based-effects/scroll-distortion",
+      "previewUrl": "/scroll-distortion",
       "coverImage": "/assets/list/scroll-distortion.png",
       "videoUrl": "scroll-distortion.mp4",
       "addedAt": 1776937386243.0935
@@ -308,7 +308,7 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/scroll-based-effects/square-translate",
+      "previewUrl": "/square-translate",
       "coverImage": "/assets/list/square-translate.png",
       "videoUrl": "square-translate.mp4",
       "addedAt": 1776937386243.7983

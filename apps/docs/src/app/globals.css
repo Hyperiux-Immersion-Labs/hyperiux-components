@@ -134,7 +134,7 @@ h4 {
 /* Custom scrollbar for webkit browsers */
 *::-webkit-scrollbar {
   width: 3px;
-  height: 6px;
+  height: 3px;
 }
 
 *::-webkit-scrollbar-track {

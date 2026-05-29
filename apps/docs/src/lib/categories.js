@@ -43,10 +43,13 @@ export function getEffectPrimaryCategory(effect) {
 export function getEffectHref(effect) {
   if (!effect?.name) return "/effects";
 
-  const categoryId = getEffectPrimaryCategory(effect);
+  const categoryId = effect.categories?.[0] || effect.category || "others";
+
   const category = getEffectCategory(categoryId);
 
-  return `/effects/${category?.slug || categoryId}/${effect.name}`;
+  const categorySlug = category?.slug || categoryId;
+
+  return `/effects/${categorySlug}/${effect.name}`;
 }
 
 export function getEffectPreviewHref(effect) {
