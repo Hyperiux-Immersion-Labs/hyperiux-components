@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "previewUrl": "/page-transitions/brush-strokes",
   "coverImage": "/assets/list/svg-draw-page-transition.png",
-  "videoUrl": "svg-draw-page-transition",
+  "videoUrl": "svg-draw-page-transition.mp4",
   "files": [
     {
       "path": "svg-draw-page-transition.jsx",

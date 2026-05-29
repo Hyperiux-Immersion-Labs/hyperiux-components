@@ -13,7 +13,7 @@
   "registryDependencies": [],
   "previewUrl": "/cursors/rope",
   "coverImage": "/assets/list/rope-cursor.png",
-  "videoUrl": "rope-cursor",
+  "videoUrl": "rope-cursor.mp4",
   "files": [
     {
       "path": "rope-cursor.jsx",

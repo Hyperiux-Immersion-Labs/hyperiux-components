@@ -49,7 +49,7 @@
       "addedAt": 1779961997320.5608
     },
     {
-      "name": "Horizontal Feature Reveal",
+      "name": "horizontal-feature-reveal",
       "title": "Horizontal Feature Reveal",
       "description": "Horizontal storytelling section that converts vertical scroll into a panoramic gallery track",
       "category": "scroll",
@@ -60,8 +60,8 @@
         "gsap"
       ],
       "previewUrl": "/horizontal-feature-reveal",
-      "coverImage": "/assets/img/image01.webp",
-      "videoUrl": "Horizontal Feature Reveal.mp4",
+      "coverImage": "/assets/list/horizon-scroll.png",
+      "videoUrl": "horizon-scroll.mp4",
       "addedAt": 1779961997320.7412
     },
     {
@@ -70,7 +70,7 @@
       "description": "Three-phase scroll-driven sequence: parallax hero, image flies in with text, 5×5 grid materialises and shrinks hero to a cell, then grid scrolls off while the last image expands into a centred overlay. Powered by GSAP ScrollTrigger with Lenis infinite scroll.",
       "category": "scroll",
       "categories": [
-        "scroll"
+        "scroll" 
       ],
       "dependencies": [
         "gsap",
@@ -245,7 +245,7 @@
       ],
       "previewUrl": "/scroll-distortion",
       "coverImage": "/assets/list/scroll-distortion.png",
-      "videoUrl": "scroll-distortion",
+      "videoUrl": "scroll-distortion.mp4",
       "addedAt": 1779961997323.2498
     },
     {
@@ -409,7 +409,7 @@
       ],
       "previewUrl": "/cursors/butterflies",
       "coverImage": "/assets/list/butterfly-trail-cursor.png",
-      "videoUrl": "butterfly-trail-cursor",
+      "videoUrl": "butterfly-trail-cursor.mp4",
       "addedAt": 1779961997315.426
     },
     {
@@ -441,7 +441,7 @@
       ],
       "previewUrl": "/cursors/coffee",
       "coverImage": "/assets/list/coffee-bean-cursor.png",
-      "videoUrl": "coffee-bean-cursor",
+      "videoUrl": "coffee-bean-cursor.mp4",
       "addedAt": 1779961997315.8584
     },
     {
@@ -581,7 +581,7 @@
       ],
       "previewUrl": "/cursors/noiseripple",
       "coverImage": "/assets/list/noise-ripple-cursor.png",
-      "videoUrl": "noise-ripple-cursor",
+      "videoUrl": "noise-ripple-cursor.mp4",
       "addedAt": 1779961997317.78
     },
     {
@@ -625,7 +625,7 @@
       "dependencies": [],
       "previewUrl": "/cursors/pixel-bloom",
       "coverImage": "/assets/list/pixel-bloom.png",
-      "videoUrl": "pixel-bloom",
+      "videoUrl": "pixel-bloom.mp4",
       "addedAt": 1779961997315.208
     },
     {
@@ -641,7 +641,7 @@
       ],
       "previewUrl": "/cursors/rope",
       "coverImage": "/assets/list/rope-cursor.png",
-      "videoUrl": "rope-cursor",
+      "videoUrl": "rope-cursor.mp4",
       "addedAt": 1779961997318.2004
     },
     {
@@ -717,7 +717,7 @@
       ],
       "previewUrl": "/page-transitions/chess-grids",
       "coverImage": "/assets/list/chess-grid-transition.png",
-      "videoUrl": "chess-grid-transition",
+      "videoUrl": "chess-grid-transition.mp4",
       "addedAt": 1779961997327.8213
     },
     {
@@ -734,7 +734,7 @@
       ],
       "previewUrl": "/page-transitions/flip",
       "coverImage": "/assets/list/page-flip-transition.png",
-      "videoUrl": "page-flip-transition",
+      "videoUrl": "page-flip-transition.mp4",
       "addedAt": 1779961997327.9954
     },
     {
@@ -751,7 +751,7 @@
       ],
       "previewUrl": "/page-transitions/pie-rotation",
       "coverImage": "/assets/list/pie-rotation-transition.png",
-      "videoUrl": "pie-rotation-transition.mp4",
+      "videoUrl": "pie-rotation.mp4",
       "addedAt": 1779961997328.1777
     },
     {
@@ -785,7 +785,7 @@
       ],
       "previewUrl": "/page-transitions/brush-strokes",
       "coverImage": "/assets/list/svg-draw-page-transition.png",
-      "videoUrl": "svg-draw-page-transition",
+      "videoUrl": "svg-draw-page-transition.mp4",
       "addedAt": 1779961997328.5215
     },
     {
@@ -801,7 +801,7 @@
       ],
       "previewUrl": "/blur-text-reveal",
       "coverImage": "/assets/list/blur-text.png",
-      "videoUrl": "blur-text.mp4",
+      "videoUrl": "blur-text-reveal.mp4",
       "addedAt": 1779961997325.1548
     },
     {
@@ -816,7 +816,8 @@
         "framer-motion"
       ],
       "previewUrl": "/circle-reveal",
-      "coverImage": "/assets/img/image01.webp",
+        "coverImage": "/assets/list/text-reveal.png",
+
       "videoUrl": "circle-text-reveal.mp4",
       "addedAt": 1779961997325.297
     },
