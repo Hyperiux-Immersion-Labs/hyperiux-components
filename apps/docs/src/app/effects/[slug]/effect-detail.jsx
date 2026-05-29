@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { VaultLayout } from "@/components/layout/VaultLayout";
 import { VaultHeader } from "@/components/layout/VaultHeader";
 import { EffectCard } from "@/components/ui/EffectCardNew";
@@ -838,35 +839,58 @@ headings.forEach((el, index) => {
       </p>
 
       <ul className="space-y-3 mt-8">
-        {items.map((it) => (
-          <li key={it.id}>
-            <a
-              href={`#${it.id}`}
-              className={[
-                "flex items-center gap-3 text-sm transition-all duration-300",
-                it.level === "h3"
-                  ? "pl-3"
-                  : "",
-                activeId === it.id
-                  ? "text-foreground"
-                  : "text-foreground/60 hover:text-foreground",
-              ].join(" ")}
-              onClick={(e) =>
-                onTocClick(e, it.id)
-              }
-            >
-              <span
-                className={`h-2 w-2 rounded-full shrink-0 ${activeId === it.id
-                    ? "bg-primary"
-                    : "bg-white/20"
-                  }`}
-              />
+  {items.map((it) => (
+    <li
+      key={it.id}
+      className="text-[0.95vw] max-sm:text-sm cursor-pointer"
+    >
+      <a
+        href={`#${it.id}`}
+        className={[
+          "flex items-center gap-3 origin-left transition-all duration-300 ease-out will-change-transform",
+          activeId === it.id
+            ? "text-foreground scale-[1.06]"
+            : "text-foreground/65 hover:text-foreground hover:scale-[1.04]",
+        ].join(" ")}
+        onClick={(e) => onTocClick(e, it.id)}
+      >
+        <span className="relative h-2 w-2 shrink-0">
+          {activeId === it.id ? (
+            <motion.span
+              layoutId="toc-dot"
+              className="absolute inset-0 rounded-full bg-primary"
+              animate={{
+                scale: [1, 1.25, 1],
+                opacity: [0.85, 1, 0.85],
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 700,
+                damping: 45,
+                opacity: {
+                  duration: 1.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+                scale: {
+                  duration: 1.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+              }}
+            />
+          ) : (
+            <span className="absolute inset-0 rounded-full bg-white/0" />
+          )}
+        </span>
 
-              {it.text}
-            </a>
-          </li>
-        ))}
-      </ul>
+        <span className="transition-all duration-300">
+          {it.text}
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>
     </div>
   );
 }
