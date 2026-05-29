@@ -41,7 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 .turbo
-CLAUDE.md
 IMPLEMENTATION_PLAN.md
 /example
 apps/docs/node_modules
