@@ -6,7 +6,7 @@
   "category": "scroll",
   "dependencies": ["gsap", "lenis", "three"],
   "registryDependencies": [],
-  "previewUrl": "/scroll-based-effects/scroll-distortion",
+  "previewUrl": "/scroll-distortion",
   "coverImage": "/assets/list/scroll-distortion.png",
   "videoUrl": "scroll-distortion"
 }

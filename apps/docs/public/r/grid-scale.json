@@ -11,7 +11,7 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/scroll-based-effects/grid-scale",
+  "previewUrl": "/grid-scale",
   "coverImage": "/assets/list/grid-scale.png",
   "videoUrl": "grid-scale.mp4",
   "files": [

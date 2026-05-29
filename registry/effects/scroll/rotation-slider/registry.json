@@ -6,5 +6,5 @@
   "category": "scroll",
   "dependencies": ["gsap", "next"],
   "registryDependencies": [],
-  "previewUrl": "/scroll-based-effects/rotation-slider"
+  "previewUrl": "/rotation-slider"
 }

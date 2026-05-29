@@ -6,5 +6,5 @@
   "category": "scroll",
   "dependencies": ["gsap"],
   "registryDependencies": [],
-  "previewUrl": "/scroll-based-effects/grid-scale"
+  "previewUrl": "/grid-scale"
 }
