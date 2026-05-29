@@ -304,7 +304,7 @@ Do not change Tailwind's default utility sizes like `text-sm`, `text-2xl`, `px-6
 
 **Bad:**
 ```jsx
-className="text-[32px] px-[24px] rounded-[18px] gap-[12px]"
+className="text-[32px] px-6 rounded-[18px] gap-3"
 ```
 
 **Good:**

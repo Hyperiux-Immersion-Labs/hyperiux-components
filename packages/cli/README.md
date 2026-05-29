@@ -29,26 +29,26 @@ The library spans 103+ effects across 12 categories — from GSAP scroll sequenc
 ### Scroll
 Scroll-driven animations built on GSAP ScrollTrigger — parallax galleries, pinned sequences, horizontal storytelling, stacking cards, and more.
 
-`draggable-marquee` · `helix-slider` · `horizon-scroll` · `orbit-slider` · `parallax-gallery` · `parallax-slider` · `rotating-carousel` · `rotation-slider` · `scroll-distortion` · `scroll-stack` · `stacking-cards` · `sticky-content-wrapper` · `svg-path-marquee` · `text-convergence` · [+more](https://components.hyperiux.com//effects)
+`draggable-marquee` · `helix-slider` · `horizon-scroll` · `orbit-slider` · `parallax-gallery` · `parallax-slider` · `rotating-carousel` · `rotation-slider` · `scroll-distortion` · `scroll-stack` · `stacking-cards` · `sticky-content-wrapper` · `svg-path-marquee` · `text-convergence` · [+more](https://components.hyperiux.com/effects)
 
 ### WebGL
 Three.js and R3F scenes with custom GLSL shaders — image carousels that curve on drag, pixel trail grids, frosted glass refraction, GPU particle galaxies, and full immersive 3D heroes.
 
-`curved-plane` · `curved-plane-v2` · `draggable-canvas` · `fractal-glass` · `grid-tunnel` · `interactive-blur-reveal` · `milkyway` · `mouse-pixelation` · `progressive-bloom-valley` · `strip-slider` · `webgl-portfolio-slider` · `hero-banner-animated` · [+more](https://components.hyperiux.com//effects)
+`curved-plane` · `curved-plane-v2` · `draggable-canvas` · `fractal-glass` · `grid-tunnel` · `interactive-blur-reveal` · `milkyway` · `mouse-pixelation` · `progressive-bloom-valley` · `strip-slider` · `webgl-portfolio-slider` · `hero-banner-animated` · [+more](https://components.hyperiux.com/effects)
 
 ### Cursor
 Canvas 2D and Three.js cursor effects — butterfly swarms, rope followers, liquid glass morphing, image trails, ASCII art, and character grids that wake on hover.
 
-`butterfly-trail-cursor` · `character-trail` · `coffee-bean-cursor` · `colorful-cursor-aura` · `fish-eye` · `interactive-arrows` · `liquid-glass-cursor` · `magnetic-image-trail` · `noise-ripple-cursor` · `phantom-image-trail` · `rope-cursor` · [+more](https://components.hyperiux.com//effects)
+`butterfly-trail-cursor` · `character-trail` · `coffee-bean-cursor` · `colorful-cursor-aura` · `fish-eye` · `interactive-arrows` · `liquid-glass-cursor` · `magnetic-image-trail` · `noise-ripple-cursor` · `phantom-image-trail` · `rope-cursor` · [+more](https://components.hyperiux.com/effects)
 
 ### Text
 Letter-level and line-level reveal animations — blur in, scramble, stagger, perspective flip, mask wipe, spotlight, and GSAP SplitText sequences.
 
-`blur-text` · `circle-text-reveal` · `glitchy-text` · `mask-text-reveal` · `overflow-stagger-text` · `perspective-text-reveal` · `scramble-text` · `slide-text-reveal` · `spotlight-text` · `text-cloning` · `text-fill-animation` · [+more](https://components.hyperiux.com//effects)
+`blur-text` · `circle-text-reveal` · `glitchy-text` · `mask-text-reveal` · `overflow-stagger-text` · `perspective-text-reveal` · `scramble-text` · `slide-text-reveal` · `spotlight-text` · `text-cloning` · `text-fill-animation` · [+more](https://components.hyperiux.com/effects)
 
 ### Backgrounds · Transitions · Buttons · Components · Navigation · Loaders
 
-[Browse all effects →](https://components.hyperiux.com//effects)
+[Browse all effects →](https://components.hyperiux.com/effects)
 
 ---
 
@@ -128,7 +128,7 @@ Prints every available effect grouped by category with its npm dependencies.
 
 ```json
 {
-  "$schema": "https://components.hyperiux.com//schema.json",
+  "$schema": "https://components.hyperiux.com/schema.json",
   "tailwind": {
     "config": "tailwind.config.js",
     "css": "src/app/globals.css"

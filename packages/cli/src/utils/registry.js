@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const REGISTRY_URL = process.env.HYPERIUX_REGISTRY_URL || "https://components.hyperiux.com//r";
+const REGISTRY_URL = process.env.HYPERIUX_REGISTRY_URL || "https://components.hyperiux.com/r";
 const LOCAL_REGISTRY_PATH = "public/r";
 
 // Path to local registry in the monorepo (for development)

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://components.hyperiux.com//schema.json",
+  "$id": "https://components.hyperiux.com/schema.json",
   "title": "Hyperiux Configuration",
   "description": "Configuration file for Hyperiux Vault CLI",
   "type": "object",
