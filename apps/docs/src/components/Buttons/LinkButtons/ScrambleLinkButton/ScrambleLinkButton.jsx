@@ -4,8 +4,6 @@ import React, { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-import "./ScrambleLinkButton.css";
-
 const DEFAULT_TEXT = "";
 const DEFAULT_HREF = "#";
 const DEFAULT_HOVER_COLOR = "#ff6b00";
@@ -68,8 +66,10 @@ export default function ScrambleLinkButton({
 
   // Derived values
   const finalText = typeof children === "string" ? children : text;
-  const innerClassName = `scramble-link-btn__inner ${
-    showLine ? `scramble-link-line ${lineClassName}` : ""
+  const innerClassName = `relative inline-block ${
+    showLine
+      ? `w-fit after:absolute after:left-0 after:bottom-[-4%] after:h-[1.5px] after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-[450ms] after:ease-[cubic-bezier(0.625,0.05,0,1)] after:content-[''] group-hover:after:origin-left group-hover:after:scale-x-100 ${lineClassName}`
+      : ""
   }`;
 
   useEffect(() => {
@@ -127,17 +127,19 @@ export default function ScrambleLinkButton({
       {...props}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
-      className={`scramble-link-btn inline-flex items-center gap-2 ${className}`}
+      className={`group inline-flex items-center gap-2 text-inherit no-underline transition-colors duration-350 ease-in-out hover:text-(--scramble-hover-color) ${className}`}
       style={{ "--scramble-hover-color": hoverColor }}
     >
       <span className={innerClassName}>
-        <span className={`scramble-link-btn__ghost ${textClassName}`}>
+        <span
+          className={`pointer-events-none inline-block select-none whitespace-pre invisible [font-variant-ligatures:none] ${textClassName}`}
+        >
           {finalText}
         </span>
 
         <span
           ref={scrambleRef}
-          className={`scramble-link-btn__text ${textClassName}`}
+          className={`absolute inset-0 inline-block whitespace-pre [font-variant-ligatures:none] ${textClassName}`}
           aria-label={finalText}
         >
           {finalText}
@@ -145,8 +147,8 @@ export default function ScrambleLinkButton({
       </span>
 
       {showArrow && Icon && (
-        <span className={`scramble-link-btn__icon ${iconClassName}`}>
-          <Icon className="scramble-link-btn__svg" />
+        <span className={`inline-flex items-center justify-center ${iconClassName}`}>
+          <Icon className="transition-transform duration-300 ease-in-out group-hover:-rotate-45" />
         </span>
       )}
     </Link>

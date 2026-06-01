@@ -423,7 +423,7 @@ export function ExpandingNavbarDesktop() {
                         className="flex cursor-pointer duration-300 transition-all hover:bg-[#2E2A2A] p-[1vw] rounded-md items-center justify-center"
                     >
                         <div className="w-[1.5vw] h-[1vw] relative flex items-center justify-center">
-                            <span className={`absolute block w-full h-px bg-white transition-all duration-300 ${isMenuOpen ? "rotate-45" : "-translate-y-[0.3vw]"}`}></span>
+                            <span className={`absolute block w-full h-px bg-white transition-all duration-300 ${isMenuOpen ? "rotate-45" : "translate-y-[-0.3vw]"}`}></span>
                             <span className={`absolute block w-full h-px bg-white transition-all duration-300 ${isMenuOpen ? "-rotate-45" : "translate-y-[0.3vw]"}`}></span>
                         </div>
                     </div>

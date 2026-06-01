@@ -4,9 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useLayoutEffect, useState } from "react";
 
-import "./LinkButton.css";
-
-const TABLET_BREAKPOINT = 1024;
+const TABLET_BREAKPOINT = 1025;
 const DEFAULT_MOBILE_TEXT = "Click me";
 const DEFAULT_CLICKED_COLOR = "#ff6b00";
 const DEFAULT_HREF = "#";
@@ -65,28 +63,42 @@ export default function LinkButton({
   } transition-transform duration-300 ${iconClassName}`;
 
   return (
-    <Link
-      href={href}
-      {...linkProps}
-      {...props}
-      onClick={onLinkClick}
-      className={`group block w-fit leading-[1.2] duration-300 ${className}`}
-      style={clickedStyle}
-    >
-      <div className="flex items-center justify-start gap-2">
-        <span
-          className="btn-link-line relative inline-block w-fit max-md:text-[3vw] max-sm:text-[5vw]"
-          style={{
-            visibility: hasMeasuredViewport ? "visible" : "hidden",
-          }}
-        >
-          {displayText}
-        </span>
+    <>
+      <Link
+        href={href}
+        {...linkProps}
+        {...props}
+        onClick={onLinkClick}
+        className={`group block w-fit leading-[1.2] duration-300 ${className}`}
+        style={clickedStyle}
+      >
+        <div className="flex items-center justify-start gap-2">
+          <span
+            className={`btn-link-line relative inline-block w-fit after:absolute after:left-0 after:bottom-[-2%] after:h-[1.5px] after:w-full after:bg-current after:content-[''] after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.62,0.05,0.01,0.99)] max-md:text-[3vw] max-sm:text-[5vw] ${
+              hasMeasuredViewport && isCompactViewport
+                ? isIconRotated
+                  ? "after:origin-left after:scale-x-100"
+                  : "after:origin-right after:scale-x-0"
+                : "after:origin-right after:scale-x-0 group-hover:after:origin-left group-hover:after:scale-x-100"
+            }`}
+            style={{
+              visibility: hasMeasuredViewport ? "visible" : "hidden",
+            }}
+          >
+            {displayText}
+          </span>
 
-        <span className="sr-only">About {href}</span>
+          <span className="sr-only">About {href}</span>
 
-        {Icon && <Icon className={iconClassNames} />}
-      </div>
-    </Link>
+          {Icon && <Icon className={iconClassNames} />}
+        </div>
+      </Link>
+
+      <style jsx>{`
+        li :global(.btn-link-line)::after {
+          bottom: -20%;
+        }
+      `}</style>
+    </>
   );
 }

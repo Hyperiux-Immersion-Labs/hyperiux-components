@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useRef } from "react";
 import Card from "../Card/Card";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
-import "./ScrollShuffleCards.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -113,55 +112,66 @@ const ScrollShuffledCards = ({
   return (
     <section
       ref={sectionRef}
-      className={`ssc ${className}`}
+      className={`relative w-screen ${className}`}
       style={{
         height: `${sectionHeight}vh`,
         background,
       }}
     >
-      <div className="ssc__sticky">
+      <div className="sticky top-0 flex h-screen w-screen items-center justify-center overflow-hidden">
         <div
           ref={containerRef}
-          className="ssc__cards"
+          className="relative z-1 flex h-fit w-fit items-center justify-center gap-[6vw] max-md:gap-[4vw] max-sm:gap-[3vw]"
           style={{ gap: cardsGap }}
         >
           {randomizedCards.map((card, index) => (
             <div
               key={card.id || index}
               ref={(el) => (cardRefs.current[index] = el)}
-              className={`ssc__card-wrap z-[${index}] opacity-0`}
+              className="relative h-fit w-fit shrink-0 opacity-0 will-change-transform"
+              style={{ zIndex: card.zIndex }}
             >
               <Card
                 radius={cardRadius}
                 padding={cardPadding}
-                className={`ssc__card ${card.bgOuter || ""}`}
+                className={`h-[30vw]! w-[25vw]! shrink-0 overflow-hidden max-md:h-[55vw]! max-md:w-[45vw]! max-sm:h-[78vw]! max-sm:w-[62vw]! max-[540px]:h-[90vw]! max-[540px]:w-[72vw]! ${card.bgOuter || ""}`}
                 style={{
                   width: cardWidth,
                   height: cardHeight,
                 }}
               >
                 <div
-                  className={`ssc__card-inner ${card.bgInner || ""} ${card.text || ""}`}
+                  className={`flex h-full w-full flex-col justify-between px-[1.5vw] pb-[1.2vw] pt-[2.5vw] max-md:px-[2vw] max-md:pb-[1.8vw] max-md:pt-[3vw] max-sm:px-[4vw] max-sm:pb-[3vw] max-sm:pt-[4.5vw] max-[540px]:px-[4.5vw] max-[540px]:pb-[3.5vw] max-[540px]:pt-[5vw] ${card.bgInner || ""} ${card.text || ""}`}
                 >
-                  <div className="ssc__card-top">
+                  <div className="flex flex-col gap-[1.2vw] max-md:gap-[5vw] max-sm:gap-[6vw]">
                     {card.eyebrow && (
-                      <span className="ssc__eyebrow">{card.eyebrow}</span>
+                      <span className="text-[0.85vw] font-semibold leading-none tracking-[0.2em] uppercase max-md:text-[2.5vw] max-sm:text-[4vw]! max-[540px]:text-[2.8vw]">
+                        {card.eyebrow}
+                      </span>
                     )}
 
                     {card.description && (
-                      <p className="ssc__description">{card.description}</p>
+                      <p className="w-[85%] text-[1.05vw] leading-[1.35] max-md:w-[92%] max-md:text-[2.5vw] max-sm:w-full max-sm:text-[4vw]! max-[540px]:text-[3.6vw]">
+                        {card.description}
+                      </p>
                     )}
                   </div>
 
-                  {card.title && <h2 className="ssc__title">{card.title}</h2>}
+                  {card.title && (
+                    <h2 className="text-[4.6vw] leading-[0.78] font-semibold max-md:text-[6vw] max-sm:text-[9vw] max-sm:leading-[0.86] max-[540px]:text-[10vw]">
+                      {card.title}
+                    </h2>
+                  )}
                 </div>
               </Card>
             </div>
           ))}
         </div>
 
-        <div className="ssc__heading-wrap">
-          <h1 className="ssc__heading">{heading}</h1>
+        <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
+          <h1 className="w-full px-[2vw] text-center text-[5.5vw] leading-[0.95] font-semibold text-[#1a1a1a] max-md:text-[7.5vw] max-sm:px-[4vw] max-sm:text-[10vw] max-[540px]:text-[11vw]">
+            {heading}
+          </h1>
         </div>
       </div>
     </section>

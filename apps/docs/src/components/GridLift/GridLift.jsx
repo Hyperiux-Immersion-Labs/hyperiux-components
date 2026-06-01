@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from"react";
 import { LevaPanel, useControls } from"leva";
-import styles from"./levacontrols.module.css";
 
 const lerp = (start, end, amount) => start + (end - start) * amount;
 
@@ -407,22 +406,31 @@ export default function GridLift() {
  ]);
 
  return (
- <div className={styles.scene} data-mask-source={maskSourceState}>
- <div className={styles.topLeftControls}>
- <div className={styles.levaHeader}>
- <div className={styles.levaHeaderTop}>
- <div className={styles.levaBrand}>HYPERIUX</div>
- <div className={styles.levaToggle}>
+ <>
+ <div className="fixed inset-0 h-screen w-screen overflow-hidden bg-black" data-mask-source={maskSourceState}>
+ <div className="fixed left-4 top-4 z-50 pointer-events-auto max-sm:bottom-3 max-sm:left-3 max-sm:right-3 max-sm:top-auto">
+ <div className="flex flex-col items-stretch gap-2 rounded-[12px] border border-[#232323] bg-[#0f0f0f] p-[10px] max-sm:w-full max-sm:rounded-[16px]">
+ <div className="flex items-center justify-between gap-[10px]">
+ <div className="text-[12px] font-black tracking-[0.18em] text-white">HYPERIUX</div>
+ <div className="inline-flex gap-[6px] rounded-[10px] border border-[#2a2a2a] bg-[#141414] p-1">
  <button
  type="button"
- className={`${styles.levaToggleBtn} ${maskSourceState ==="Text" ? styles.levaActive :""}`}
+ className={`h-[26px] cursor-pointer rounded-[8px] border px-[10px] text-[12px] font-semibold ${
+ maskSourceState ==="Text"
+ ? "border-[#ff5f00] bg-[#ff5f00] text-black"
+ : "border-transparent bg-transparent text-[#bdbdbd] hover:bg-[#1f1f1f] hover:text-white"
+ }`}
  onClick={() => handleSetMask("Text")}
  >
  Text
  </button>
  <button
  type="button"
- className={`${styles.levaToggleBtn} ${maskSourceState ==="SVG" ? styles.levaActive :""}`}
+ className={`h-6.5 cursor-pointer rounded-md border px-2.5 text-[12px] font-semibold ${
+ maskSourceState ==="SVG"
+ ? "border-[#ff5f00] bg-[#ff5f00] text-black"
+ : "border-transparent bg-transparent text-[#bdbdbd] hover:bg-[#1f1f1f] hover:text-white"
+ }`}
  onClick={() => handleSetMask("SVG")}
  >
  SVG
@@ -430,10 +438,10 @@ export default function GridLift() {
  </div>
  </div>
 
- <div className={styles.levaHeaderBottom}>
+ <div className="flex items-center gap-2.5 max-sm:w-full">
  {maskSourceState ==="Text" && (
  <input
- className={styles.levaTextInput}
+ className="h-7.5 w-full rounded-md border border-[#2a2a2a] bg-[#141414] px-2.5 text-[12px] font-bold tracking-[0.04em] text-white outline-none focus:border-[#ff5f00] max-sm:min-w-0 max-sm:flex-1"
  value={maskText}
  onChange={(e) => setMaskText(e.target.value)}
  placeholder="Text…"
@@ -442,7 +450,7 @@ export default function GridLift() {
  {maskSourceState ==="SVG" && (
  <button
  type="button"
- className={styles.levaUpload}
+ className="h-7.5 cursor-pointer rounded-md border border-[#2a2a2a] bg-[#141414] px-2.5 text-[12px] font-bold text-white hover:border-[#ff5f00] hover:bg-[#1f1f1f]"
  onClick={() => fileInputRef.current?.click()}
  title={svgName}
  >
@@ -450,14 +458,14 @@ export default function GridLift() {
  </button>
  )}
  </div>
- <div className={styles.mobileHint}>
+ <div className="mt-0.5 hidden text-[3.5vw] font-semibold tracking-[0.02em] text-white/70 pointer-events-none max-sm:block">
  Best on desktop: hover and drift through the grid - mobile shows a preview.
  </div>
  </div>
  </div>
  <canvas
  ref={canvasRef}
- className={styles.canvas}
+ className="fixed inset-0 block h-screen w-screen cursor-crosshair"
  style={{ background: backgroundColor }}
  />
  <input
@@ -467,7 +475,7 @@ export default function GridLift() {
  onChange={handleSVGUpload}
  style={{ display:"none" }}
  />
- <div className={styles.rightControls}>
+ <div className="grid-lift-right-controls fixed right-4 top-4 z-60 pointer-events-auto">
  <LevaPanel
  theme={levaTheme}
  collapsed={false}
@@ -477,5 +485,124 @@ export default function GridLift() {
  />
  </div>
  </div>
+ <style jsx global>{`
+ @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
+ .grid-lift-right-controls [class*="TitleBar"] {
+   display: none !important;
+ }
+
+ .grid-lift-right-controls div[class*="Panel"] {
+   border-radius: 12px !important;
+   overflow: hidden !important;
+   border: 1px solid #232323 !important;
+   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35) !important;
+   background: #0f0f0f !important;
+ }
+
+ .grid-lift-right-controls [class*="Label"],
+ .grid-lift-right-controls [class*="label"] {
+   text-transform: none !important;
+   letter-spacing: 0 !important;
+   font-size: 12px !important;
+   font-weight: 400 !important;
+   color: #ffffff !important;
+   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+ }
+
+ .grid-lift-right-controls input[type="number"] {
+   color: #ffffff !important;
+   font-size: 11px !important;
+   background: #141414 !important;
+   border: 1px solid #2a2a2a !important;
+   border-radius: 6px !important;
+   text-align: right !important;
+   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+ }
+
+ .grid-lift-right-controls [class*="Thumb"],
+ .grid-lift-right-controls [class*="thumb"] {
+   background: #ffffff !important;
+   border: none !important;
+   border-radius: 50% !important;
+   box-shadow: 0 0 0 2px rgba(255, 95, 0, 0.4) !important;
+ }
+
+ .grid-lift-right-controls input[type="text"] {
+   background: #1a1a1a !important;
+   border: 1px solid #2e2e2e !important;
+   border-radius: 6px !important;
+   color: #ffffff !important;
+   font-size: 13px !important;
+   font-weight: 700 !important;
+   letter-spacing: 0.05em !important;
+   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+ }
+
+ .grid-lift-right-controls input[type="text"]:focus {
+   border-color: #ff5f00 !important;
+   outline: none !important;
+ }
+
+ .grid-lift-right-controls button[class*="Button"] {
+   background: #1a1a1a !important;
+   border: 1px solid #2e2e2e !important;
+   border-radius: 6px !important;
+   color: #cccccc !important;
+   font-size: 12px !important;
+   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+   text-transform: none !important;
+   letter-spacing: 0 !important;
+   transition: border-color 0.15s, color 0.15s !important;
+ }
+
+ .grid-lift-right-controls button[class*="Button"]:hover {
+   border-color: #ff5f00 !important;
+   color: #ffffff !important;
+   background: #1f1f1f !important;
+ }
+
+ [data-mask-source] [class*="Swatch"],
+ [data-mask-source] [class*="swatch"] {
+   border-radius: 4px !important;
+   border: 1px solid #3a3a3a !important;
+   width: 44px !important;
+   height: 20px !important;
+ }
+
+ [data-mask-source] input[disabled],
+ [data-mask-source] input[readonly] {
+   background: transparent !important;
+   border: none !important;
+   color: #444444 !important;
+   font-size: 11px !important;
+ }
+
+ [data-mask-source] [style*="rgb(0, 122, 255)"],
+ [data-mask-source] [style*="#007aff"],
+ [data-mask-source] [style*="hsl(210"] {
+   background-color: #ff5f00 !important;
+   border-color: #ff5f00 !important;
+   color: #ff5f00 !important;
+ }
+
+ [data-mask-source] *::-webkit-scrollbar {
+   width: 3px !important;
+ }
+
+ [data-mask-source] *::-webkit-scrollbar-track {
+   background: transparent !important;
+ }
+
+ [data-mask-source] *::-webkit-scrollbar-thumb {
+   background: #2a2a2a !important;
+   border-radius: 2px !important;
+ }
+
+ [data-mask-source] *::-webkit-scrollbar-thumb:hover {
+   background: #ff5f00 !important;
+ }
+ `}</style>
+ </>
  );
 }

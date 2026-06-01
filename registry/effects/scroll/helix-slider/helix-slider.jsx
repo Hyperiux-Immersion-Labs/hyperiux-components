@@ -3,7 +3,6 @@
 import { useLayoutEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
-import "./helix-slider.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -98,23 +97,27 @@ export function HelixSlider({
   return (
     <section
       ref={sectionRef}
-      className={`cylindrical-scroll-section ${className}`}
+      className={`relative h-screen w-full overflow-hidden bg-[#020202] max-md:[--card-height:245px] max-md:[--card-width:180px] max-sm:[--card-height:190px] max-sm:[--card-width:140px] ${className}`}
       style={{
         "--card-width": `${cardWidth}px`,
         "--card-height": `${cardHeight}px`,
         "--scene-perspective": `${perspective}px`,
       }}
     >
-      <div className="cylindrical-scroll-stage">
-        <div className="cylindrical-scroll-scene">
+      <div className="relative h-screen w-full overflow-hidden perspective-(--scene-perspective,1800px) perspective-origin-[center_center]">
+        <div className="relative h-full w-full transform-3d">
           {repeatedItems.map((item, index) => (
-            <div key={`${item.id}-${index}`} ref={addToRefs} className="cylindrical-scroll-card">
-              <div className="cylindrical-scroll-card-inner">
-                <div className="cylindrical-scroll-card-face cylindrical-scroll-card-front">
-                  <img src={item.image} alt={item.title || `Card ${index + 1}`} className="cylindrical-scroll-card-image" />
+            <div
+              key={`${item.id}-${index}`}
+              ref={addToRefs}
+              className="absolute left-1/2 top-1/2 h-(--card-height,300px) w-(--card-width,220px) will-change-transform ml-[calc(var(--card-width,220px)/-2)] mt-[calc(var(--card-height,300px)/-2)] transform-3d"
+            >
+              <div className="relative h-full w-full transform-3d">
+                <div className="absolute inset-0 h-full w-full overflow-hidden bg-[#f2eee2] shadow-[0_18px_40px_rgba(0,0,0,0.22),0_4px_12px_rgba(0,0,0,0.16)] backface-hidden [-webkit-backface-visibility:hidden] transform-[rotateY(0deg)_translateZ(1px)]">
+                  <img src={item.image} alt={item.title || `Card ${index + 1}`} className="block h-full w-full object-cover" />
                 </div>
-                <div className="cylindrical-scroll-card-face cylindrical-scroll-card-back">
-                  <img src={item.image} alt={`${item.title || `Card ${index + 1}`} back`} className="cylindrical-scroll-card-image" />
+                <div className="absolute inset-0 h-full w-full overflow-hidden bg-[#111111] shadow-[0_18px_40px_rgba(0,0,0,0.22),0_4px_12px_rgba(0,0,0,0.16)] backface-hidden [-webkit-backface-visibility:hidden] transform-[rotateY(180deg)_translateZ(1px)]">
+                  <img src={item.image} alt={`${item.title || `Card ${index + 1}`} back`} className="block h-full w-full object-cover" />
                 </div>
               </div>
             </div>

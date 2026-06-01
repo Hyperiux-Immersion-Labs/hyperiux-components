@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import gsap from "gsap";
-import { Draggable } from "gsap/Draggable";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import "./ring-carousel.css";
+import Image from"next/image";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from"react";
+import gsap from"gsap";
+import { Draggable } from"gsap/Draggable";
+import { ArrowLeft, ArrowRight } from"lucide-react";
 
 gsap.registerPlugin(Draggable);
 
-export const RingCarousel = ({
+const RingGallery = ({
  items = [],
  itemWidth = 700,
  itemHeight = 300,
@@ -38,8 +38,11 @@ export const RingCarousel = ({
  const currentStepRef = useRef(0);
 
  const [activeIndex, setActiveIndex] = useState(0);
+ const [isMobile, setIsMobile] = useState(false);
 
  const totalItems = items.length;
+ const resolvedItemWidth = isMobile ? itemWidth * 0.88 : itemWidth;
+ const resolvedItemHeight = isMobile ? itemHeight * 0.88 : itemHeight;
 
  const stepAngle = useMemo(() => {
  if (!totalItems) return 0;
@@ -155,6 +158,18 @@ export const RingCarousel = ({
  }, autoPlayInterval);
  };
 
+ useEffect(() => {
+ const mediaQuery = window.matchMedia("(max-width: 639px)");
+ const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+
+ updateIsMobile();
+ mediaQuery.addEventListener("change", updateIsMobile);
+
+ return () => {
+ mediaQuery.removeEventListener("change", updateIsMobile);
+ };
+ }, []);
+
  useLayoutEffect(() => {
  if (!totalItems) return;
 
@@ -216,8 +231,8 @@ export const RingCarousel = ({
  rotateY: (i) => i * -panelAngle,
  transformOrigin: `50% 50% ${radius}px`,
  z: -radius,
- width: itemWidth,
- height: itemHeight,
+ width: resolvedItemWidth,
+ height: resolvedItemHeight,
  left:"50%",
  top:"50%",
  xPercent: -50,
@@ -270,8 +285,8 @@ export const RingCarousel = ({
  };
  }, [
  totalItems,
- itemWidth,
- itemHeight,
+ resolvedItemWidth,
+ resolvedItemHeight,
  radius,
  panelAngle,
  dragSensitivity,
@@ -298,7 +313,7 @@ export const RingCarousel = ({
 
  return (
  <div
- className={`ring-gallery ${className}`}
+ className={` relative h-[70vh] w-full select-none overflow-hidden bg-black ${className}`}
  ref={containerRef}
  onMouseEnter={() => {
  isHoveredRef.current = true;
@@ -309,25 +324,38 @@ export const RingCarousel = ({
  if (pauseOnHover && autoPlay) startAutoplay();
  }}
  >
- <div className="ring-gallery__container">
- <div className="ring-gallery__ring" ref={ringRef}>
+ <div className=" absolute left-1/2 top-[40%] h-[30vw] w-screen -translate-x-1/2 -translate-y-1/2 perspective-[2000px] transform-3d">
+ <div className=" relative h-full w-full transform-3d" ref={ringRef}>
  {items.map((item, i) => {
  const isImage = typeof item ==="string";
+ const imageSrc = isImage ? item : item?.src;
+ const imageAlt = isImage ? `ring-item-${i}` : item?.alt || `ring-item-${i}`;
 
  return (
  <div
  key={i}
- className={`ring-gallery__item ${activeIndex === i ?"is-active" :""}`}
+ className={` absolute overflow-hidden rounded-[20px] transform-3d will-change-transform ${
+ activeIndex === i ?"is-active" :""
+ }`}
  ref={(el) => (itemRefs.current[i] = el)}
  >
  {renderItem ? (
  renderItem(item, i)
  ) : isImage ? (
- <img
- src={item}
- alt={`ring-item-${i}`}
- className="ring-gallery__image"
- draggable={false}
+ <Image
+ src={imageSrc}
+ alt={imageAlt}
+ fill
+ sizes="(max-width: 639px) 62vw, 700px"
+ className="pointer-events-none block h-full w-full select-none object-cover"
+ />
+ ) : imageSrc ? (
+ <Image
+ src={imageSrc}
+ alt={imageAlt}
+ fill
+ sizes="(max-width: 639px) 62vw, 700px"
+ className="pointer-events-none block h-full w-full select-none object-cover"
  />
  ) : (
  item
@@ -337,16 +365,16 @@ export const RingCarousel = ({
  })}
  </div>
 
- <div className="ring-gallery__dragger" ref={draggerRef} />
+ <div className=" absolute inset-0 z-3 cursor-grab active:cursor-grabbing" ref={draggerRef} />
  </div>
 
- <div className="ring-gallery__vignette" />
+ <div className=" pointer-events-none absolute inset-0 z-2 bg-[linear-gradient(to_right,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0)_20%,rgba(0,0,0,0)_80%,rgba(0,0,0,0.95)_100%)] max-md:hidden" />
 
  {showNavigation && totalItems > 1 && (
- <div className="ring-gallery__nav">
+ <div className=" absolute bottom-0 left-1/2 z-20 flex -translate-x-1/2 gap-3">
  <button
  type="button"
- className="ring-gallery__btn"
+ className="flex h-[3.5vw] min-h-12 w-[3.5vw] min-w-12 items-center justify-center rounded-full border border-white/20 bg-white/8 text-white backdrop-blur-[10px] transition-all duration-300 ease-in-out hover:bg-white/16 max-md:h-14 max-md:w-14 max-sm:h-[15vw] max-sm:w-[15vw]"
  onClick={goToPrev}
  aria-label="Previous slide"
  >
@@ -355,7 +383,7 @@ export const RingCarousel = ({
 
  <button
  type="button"
- className="ring-gallery__btn"
+ className="flex h-[3.5vw] min-h-12 w-[3.5vw] min-w-12 items-center justify-center rounded-full border border-white/20 bg-white/8 text-white backdrop-blur-[10px] transition-all duration-300 ease-in-out hover:bg-white/16 max-md:h-14 max-md:w-14 max-sm:h-[15vw] max-sm:w-[15vw]"
  onClick={() => goToNext(false)}
  aria-label="Next slide"
  >
@@ -365,18 +393,24 @@ export const RingCarousel = ({
  )}
 
  {showDots && totalItems > 1 && (
- <div className="ring-gallery__pagination" aria-label="Slider pagination">
+ <div className="absolute bottom-[15%] left-1/2 z-20 flex -translate-x-1/2 items-center gap-[1vw] rounded-full bg-white/6 px-4.5 py-3.5 backdrop-blur-[10px] max-md:bottom-[18%] max-md:gap-[2vw] max-md:px-4 max-md:py-3 max-sm:bottom-[14%] max-sm:px-3.5 max-sm:py-2.5" aria-label="Slider pagination">
  {items.map((_, index) => (
  <button
  key={index}
  type="button"
- className={`ring-gallery__pagination-slot ${
+ className={`flex h-4.5 w-fit cursor-pointer items-center justify-center rounded-full bg-transparent p-0 ${
  activeIndex === index ?"is-active" :""
  }`}
  onClick={() => goToSlide(index)}
  aria-label={`Go to slide ${index + 1}`}
  >
- <span className="ring-gallery__pagination-indicator" />
+ <span
+ className={`h-2.5 w-2.5 rounded-full bg-white/42 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] max-md:h-2.25 max-md:w-2.25 max-sm:h-2 max-sm:w-2 ${
+ activeIndex === index
+ ? "w-10.5 bg-white/92 max-md:w-9 max-sm:w-7"
+ : ""
+ }`}
+ />
  </button>
  ))}
  </div>
@@ -385,4 +419,4 @@ export const RingCarousel = ({
  );
 };
 
-export default RingCarousel;
+export default RingGallery;

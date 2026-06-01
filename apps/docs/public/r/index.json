@@ -14,7 +14,7 @@
       "previewUrl": "/draggable-marquee",
       "coverImage": "/assets/list/draggable-marquee.png",
       "videoUrl": "draggable-marquee.mp4",
-      "addedAt": 1779961997320.1726
+      "addedAt": 1779431290523.5776
     },
     {
       "name": "grid-scale",
@@ -30,7 +30,7 @@
       "previewUrl": "/grid-scale",
       "coverImage": "/assets/list/grid-scale.png",
       "videoUrl": "grid-scale.mp4",
-      "addedAt": 1779961997320.333
+      "addedAt": 1780047742213.221
     },
     {
       "name": "helix-slider",
@@ -46,7 +46,7 @@
       "previewUrl": "/cylindrical-scroll",
       "coverImage": "/assets/list/helix-slider.png",
       "videoUrl": "helix-slider.mp4",
-      "addedAt": 1779961997320.5608
+      "addedAt": 1779786600703.709
     },
     {
       "name": "horizontal-feature-reveal",
@@ -60,9 +60,9 @@
         "gsap"
       ],
       "previewUrl": "/horizontal-feature-reveal",
-      "coverImage": "/assets/list/horizon-scroll.png",
-      "videoUrl": "horizon-scroll.mp4",
-      "addedAt": 1779961997320.7412
+      "coverImage": "/assets/img/image01.webp",
+      "videoUrl": "horizontal-feature-reveal.mp4",
+      "addedAt": 1780062520264.8674
     },
     {
       "name": "inertia-scroll-effect",
@@ -70,7 +70,7 @@
       "description": "Three-phase scroll-driven sequence: parallax hero, image flies in with text, 5×5 grid materialises and shrinks hero to a cell, then grid scrolls off while the last image expands into a centred overlay. Powered by GSAP ScrollTrigger with Lenis infinite scroll.",
       "category": "scroll",
       "categories": [
-        "scroll" 
+        "scroll"
       ],
       "dependencies": [
         "gsap",
@@ -79,7 +79,7 @@
       "previewUrl": "/inertia-scroll-effect",
       "coverImage": "/assets/list/inertia-scroll-effect.png",
       "videoUrl": "inertia-scroll-effect.mp4",
-      "addedAt": 1779961997320.8347
+      "addedAt": 1779431290524.2744
     },
     {
       "name": "infinite-perspective-slider",
@@ -93,9 +93,9 @@
         "gsap"
       ],
       "previewUrl": "/infinite-perspective-slider",
-      "coverImage": "/assets/list/infinite-perspective-slider2.png",
+      "coverImage": "/assets/img/image01.webp",
       "videoUrl": "infinite-perspective-slider.mp4",
-      "addedAt": 1779961997321.1003
+      "addedAt": 1779787659797.352
     },
     {
       "name": "orbit-slider",
@@ -111,7 +111,7 @@
       "previewUrl": "/circular-split-roll",
       "coverImage": "/assets/list/orbit-slider.png",
       "videoUrl": "orbit-slider.mp4",
-      "addedAt": 1779961997321.3215
+      "addedAt": 1779786600704.0933
     },
     {
       "name": "parallax-footer",
@@ -125,7 +125,7 @@
       "previewUrl": "/parallax-footer",
       "coverImage": "/assets/list/parallax-footer.png",
       "videoUrl": "parallax-footer.mp4",
-      "addedAt": 1779961997321.4854
+      "addedAt": 1779431290525.029
     },
     {
       "name": "parallax-gallery",
@@ -140,8 +140,8 @@
       ],
       "previewUrl": "/frame-slider",
       "coverImage": "/assets/list/parallax-gallery.png",
-      "videoUrl": "parallax-slider.mp4",
-      "addedAt": 1779961997321.6775
+      "videoUrl": "parallax-gallery.mp4",
+      "addedAt": 1779786600704.2053
     },
     {
       "name": "parallax-image",
@@ -157,7 +157,7 @@
       "previewUrl": "/parallax-image-animation",
       "coverImage": "/assets/list/parallax-image.png",
       "videoUrl": "parallax-image.mp4",
-      "addedAt": 1779961997321.8325
+      "addedAt": 1779786600704.3074
     },
     {
       "name": "parallax-slider",
@@ -174,7 +174,7 @@
       "previewUrl": "/parallax-slider",
       "coverImage": "/assets/list/parallax-slider.png",
       "videoUrl": "parallax-slider.mp4",
-      "addedAt": 1779961997322.0178
+      "addedAt": 1779431290525.5427
     },
     {
       "name": "progressive-bloom-valley",
@@ -194,7 +194,7 @@
       "previewUrl": "/webgl/progressive-bloom-valley",
       "coverImage": "/assets/list/progressive-bloom-valley.png",
       "videoUrl": "progressive-bloom-valley.mp4",
-      "addedAt": 1779961997322.5254
+      "addedAt": 1779431290526.0022
     },
     {
       "name": "rotating-carousel",
@@ -211,7 +211,7 @@
       "previewUrl": "/circular-slider",
       "coverImage": "/assets/list/rotating-carousel.png",
       "videoUrl": "rotating-carousel.mp4",
-      "addedAt": 1779961997322.8267
+      "addedAt": 1779786600704.591
     },
     {
       "name": "rotation-slider",
@@ -228,7 +228,7 @@
       "previewUrl": "/rotation-slider",
       "coverImage": "/assets/list/rotation-slider.png",
       "videoUrl": "rotation-slider.mp4",
-      "addedAt": 1779961997323.0122
+      "addedAt": 1780047742213.4011
     },
     {
       "name": "scroll-distortion",
@@ -245,8 +245,8 @@
       ],
       "previewUrl": "/scroll-distortion",
       "coverImage": "/assets/list/scroll-distortion.png",
-      "videoUrl": "scroll-distortion.mp4",
-      "addedAt": 1779961997323.2498
+      "videoUrl": "scroll-distortion",
+      "addedAt": 1780047742213.568
     },
     {
       "name": "scroll-shuffled-cards",
@@ -262,7 +262,7 @@
       "previewUrl": "/scroll-shuffled-cards",
       "coverImage": "/assets/list/scroll-shuffled-cards.png",
       "videoUrl": "scroll-shuffled-cards.mp4",
-      "addedAt": 1779961997323.4395
+      "addedAt": 1779431290527.0027
     },
     {
       "name": "scroll-stack",
@@ -278,7 +278,7 @@
       "previewUrl": "/stacked-card",
       "coverImage": "/assets/list/scroll-stack.png",
       "videoUrl": "scroll-stack.mp4",
-      "addedAt": 1779961997323.6838
+      "addedAt": 1779786600704.7075
     },
     {
       "name": "split-canvas",
@@ -295,7 +295,7 @@
       "previewUrl": "/split-canvas",
       "coverImage": "/assets/list/split-canvas.png",
       "videoUrl": "split-canvas.mp4",
-      "addedAt": 1779961997323.8457
+      "addedAt": 1779713486252.6055
     },
     {
       "name": "square-translate",
@@ -311,7 +311,7 @@
       "previewUrl": "/square-translate",
       "coverImage": "/assets/list/square-translate.png",
       "videoUrl": "square-translate.mp4",
-      "addedAt": 1779961997324.0454
+      "addedAt": 1780062531146.1992
     },
     {
       "name": "stacking-cards",
@@ -328,7 +328,7 @@
       "previewUrl": "/stacking-cards",
       "coverImage": "/assets/list/stacking-cards.png",
       "videoUrl": "stacking-cards.mp4",
-      "addedAt": 1779961997324.2053
+      "addedAt": 1779431290527.8071
     },
     {
       "name": "sticky-content-wrapper",
@@ -344,7 +344,7 @@
       "previewUrl": "/sticky-content-wrapper",
       "coverImage": "/assets/list/sticky-content-wrapper.png",
       "videoUrl": "sticky-content-wrapper.mp4",
-      "addedAt": 1779961997324.3765
+      "addedAt": 1779431290528.0012
     },
     {
       "name": "svg-path-marquee",
@@ -360,7 +360,7 @@
       "previewUrl": "/svg-path",
       "coverImage": "/assets/list/svg-path-marquee.png",
       "videoUrl": "svg-path-marquee.mp4",
-      "addedAt": 1779961997324.5615
+      "addedAt": 1779786600704.9666
     },
     {
       "name": "svg-pixel-reveal",
@@ -376,7 +376,7 @@
       "previewUrl": "/svg-pixel-reveal",
       "coverImage": "/assets/list/svg-pixel-reveal.png",
       "videoUrl": "svg-pixel-reveal.mp4",
-      "addedAt": 1779961997324.7544
+      "addedAt": 1779431290528.3984
     },
     {
       "name": "text-convergence",
@@ -392,7 +392,7 @@
       "previewUrl": "/text-convergence",
       "coverImage": "/assets/list/text-convergence.png",
       "videoUrl": "text-convergence.mp4",
-      "addedAt": 1779961997324.9119
+      "addedAt": 1779431290528.5608
     },
     {
       "name": "butterfly-trail-cursor",
@@ -410,7 +410,7 @@
       "previewUrl": "/cursors/butterflies",
       "coverImage": "/assets/list/butterfly-trail-cursor.png",
       "videoUrl": "butterfly-trail-cursor.mp4",
-      "addedAt": 1779961997315.426
+      "addedAt": 1780062520263.2883
     },
     {
       "name": "character-trail",
@@ -424,7 +424,7 @@
       "previewUrl": "/character-trail",
       "coverImage": "/assets/list/character-trail.png",
       "videoUrl": "character-trail.mp4",
-      "addedAt": 1779961997315.6306
+      "addedAt": 1779431290518.0452
     },
     {
       "name": "coffee-bean-cursor",
@@ -442,7 +442,7 @@
       "previewUrl": "/cursors/coffee",
       "coverImage": "/assets/list/coffee-bean-cursor.png",
       "videoUrl": "coffee-bean-cursor.mp4",
-      "addedAt": 1779961997315.8584
+      "addedAt": 1780062520263.4407
     },
     {
       "name": "colorful-cursor-aura",
@@ -458,7 +458,7 @@
       "previewUrl": "/colorful-cursor-aura",
       "coverImage": "/assets/list/colorful-cursor-aura.png",
       "videoUrl": "colorful-cursor-aura.mp4",
-      "addedAt": 1779961997316.082
+      "addedAt": 1779786761789.877
     },
     {
       "name": "cursor-move",
@@ -472,7 +472,7 @@
       "previewUrl": "/cursor-move",
       "coverImage": "/assets/list/cursor-move.png",
       "videoUrl": "cursor-move.mp4",
-      "addedAt": 1780033385471.9756
+      "addedAt": 1780292718738.999
     },
     {
       "name": "fish-eye",
@@ -490,7 +490,7 @@
       "previewUrl": "/cursors/fish-eye",
       "coverImage": "/assets/list/fish-eye.png",
       "videoUrl": "fish-eye.mp4",
-      "addedAt": 1779961997316.2725
+      "addedAt": 1779431290518.601
     },
     {
       "name": "full-screen-crosshair",
@@ -504,7 +504,7 @@
       "previewUrl": "/full-screen-crosshair",
       "coverImage": "/assets/list/full-screen-crosshair.png",
       "videoUrl": "full-screen-crosshair.mp4",
-      "addedAt": 1780033385521.4321
+      "addedAt": 1780292718739.1558
     },
     {
       "name": "inertia-img",
@@ -520,7 +520,7 @@
       "previewUrl": "/inertia-img",
       "coverImage": "/assets/list/inertia-img.png",
       "videoUrl": "inertia-img.mp4",
-      "addedAt": 1779961997316.4634
+      "addedAt": 1779431290518.7622
     },
     {
       "name": "interactive-arrows",
@@ -536,7 +536,7 @@
       "previewUrl": "/interactive-arrows",
       "coverImage": "/assets/list/interactive-arrows.png",
       "videoUrl": "interactive-arrows.mp4",
-      "addedAt": 1779961997317.1106
+      "addedAt": 1779431290519.582
     },
     {
       "name": "liquid-glass-cursor",
@@ -552,7 +552,7 @@
       "previewUrl": "/liquid-glass-cursor",
       "coverImage": "/assets/list/liquid-glass-cursor.png",
       "videoUrl": "liquid-glass-cursor.mp4",
-      "addedAt": 1779961997317.3604
+      "addedAt": 1779431290519.9902
     },
     {
       "name": "magnetic-image-trail",
@@ -566,7 +566,7 @@
       "previewUrl": "/magnetic-image-trail",
       "coverImage": "/assets/list/magnetic-image-trail.png",
       "videoUrl": "magnetic-image-trail.mp4",
-      "addedAt": 1779961997317.5767
+      "addedAt": 1779431290520.24
     },
     {
       "name": "noise-ripple-cursor",
@@ -581,8 +581,8 @@
       ],
       "previewUrl": "/cursors/noiseripple",
       "coverImage": "/assets/list/noise-ripple-cursor.png",
-      "videoUrl": "noise-ripple-cursor.mp4",
-      "addedAt": 1779961997317.78
+      "videoUrl": "noise-ripple-cursor",
+      "addedAt": 1779786600702.4802
     },
     {
       "name": "phantom-image-trail",
@@ -598,7 +598,7 @@
       "previewUrl": "/mouse-hover-image",
       "coverImage": "/assets/list/phantom-image-trail.png",
       "videoUrl": "phantom-image-trail.mp4",
-      "addedAt": 1779961997317.963
+      "addedAt": 1779786600702.8157
     },
     {
       "name": "pixelated-image-effect",
@@ -612,7 +612,7 @@
       "previewUrl": "/pixelated-image-effect",
       "coverImage": "/assets/list/pixelated-image-effect.png",
       "videoUrl": "pixelated-image-effect.mp4",
-      "addedAt": 1779961997318.1152
+      "addedAt": 1779431290520.9148
     },
     {
       "name": "pixel-bloom",
@@ -625,8 +625,8 @@
       "dependencies": [],
       "previewUrl": "/cursors/pixel-bloom",
       "coverImage": "/assets/list/pixel-bloom.png",
-      "videoUrl": "pixel-bloom.mp4",
-      "addedAt": 1779961997315.208
+      "videoUrl": "pixel-bloom",
+      "addedAt": 1779431290517.6653
     },
     {
       "name": "rope-cursor",
@@ -641,8 +641,8 @@
       ],
       "previewUrl": "/cursors/rope",
       "coverImage": "/assets/list/rope-cursor.png",
-      "videoUrl": "rope-cursor.mp4",
-      "addedAt": 1779961997318.2004
+      "videoUrl": "rope-cursor",
+      "addedAt": 1779786600702.9834
     },
     {
       "name": "dither-canvas",
@@ -656,7 +656,7 @@
       "previewUrl": "/binary-effect",
       "coverImage": "/assets/list/dither-canvas.png",
       "videoUrl": "dither-canvas.mp4",
-      "addedAt": 1779961997309.9126
+      "addedAt": 1779786600699.3955
     },
     {
       "name": "dotted-grid",
@@ -670,7 +670,7 @@
       "previewUrl": "/dotted-grid",
       "coverImage": "/assets/list/dotted-grid.png",
       "videoUrl": "dotted-grid.mp4",
-      "addedAt": 1779961997310.3762
+      "addedAt": 1779431290512.8079
     },
     {
       "name": "spider-particles",
@@ -684,7 +684,7 @@
       "previewUrl": "/spider-particles",
       "coverImage": "/assets/list/spider-particles.png",
       "videoUrl": "spider-particles.mp4",
-      "addedAt": 1779961997310.4731
+      "addedAt": 1779431290512.9087
     },
     {
       "name": "block-transition",
@@ -701,7 +701,7 @@
       "previewUrl": "/page-transitions/block",
       "coverImage": "/assets/list/block-transition.png",
       "videoUrl": "block-transition.mp4",
-      "addedAt": 1779961997327.6543
+      "addedAt": 1779786600705.6729
     },
     {
       "name": "chess-grid-transition",
@@ -718,7 +718,7 @@
       "previewUrl": "/page-transitions/chess-grids",
       "coverImage": "/assets/list/chess-grid-transition.png",
       "videoUrl": "chess-grid-transition.mp4",
-      "addedAt": 1779961997327.8213
+      "addedAt": 1780062520265.305
     },
     {
       "name": "page-flip-transition",
@@ -735,7 +735,7 @@
       "previewUrl": "/page-transitions/flip",
       "coverImage": "/assets/list/page-flip-transition.png",
       "videoUrl": "page-flip-transition.mp4",
-      "addedAt": 1779961997327.9954
+      "addedAt": 1780062520265.5156
     },
     {
       "name": "pie-rotation-transition",
@@ -751,8 +751,8 @@
       ],
       "previewUrl": "/page-transitions/pie-rotation",
       "coverImage": "/assets/list/pie-rotation-transition.png",
-      "videoUrl": "pie-rotation.mp4",
-      "addedAt": 1779961997328.1777
+      "videoUrl": "pie-rotation-transition.mp4",
+      "addedAt": 1779786600706.0186
     },
     {
       "name": "pixel-transition",
@@ -769,7 +769,7 @@
       "previewUrl": "/page-transitions/pixels",
       "coverImage": "/assets/list/pixel-transition.png",
       "videoUrl": "pixel-transition.mp4",
-      "addedAt": 1779961997328.3953
+      "addedAt": 1779786600706.1218
     },
     {
       "name": "svg-draw-page-transition",
@@ -786,7 +786,7 @@
       "previewUrl": "/page-transitions/brush-strokes",
       "coverImage": "/assets/list/svg-draw-page-transition.png",
       "videoUrl": "svg-draw-page-transition.mp4",
-      "addedAt": 1779961997328.5215
+      "addedAt": 1780062520265.6328
     },
     {
       "name": "blur-text",
@@ -801,8 +801,8 @@
       ],
       "previewUrl": "/blur-text-reveal",
       "coverImage": "/assets/list/blur-text.png",
-      "videoUrl": "blur-text-reveal.mp4",
-      "addedAt": 1779961997325.1548
+      "videoUrl": "blur-text.mp4",
+      "addedAt": 1779786600705.0886
     },
     {
       "name": "circle-text-reveal",
@@ -816,10 +816,9 @@
         "framer-motion"
       ],
       "previewUrl": "/circle-reveal",
-        "coverImage": "/assets/list/text-reveal.png",
-
+      "coverImage": "/assets/img/image01.webp",
       "videoUrl": "circle-text-reveal.mp4",
-      "addedAt": 1779961997325.297
+      "addedAt": 1779786600705.1848
     },
     {
       "name": "counter",
@@ -835,7 +834,7 @@
       "previewUrl": "/counter",
       "coverImage": "/assets/list/counter.png",
       "videoUrl": "/counter.mp4",
-      "addedAt": 1780034080094.5066
+      "addedAt": 1780062531146.3494
     },
     {
       "name": "glitchy-text",
@@ -851,7 +850,7 @@
       "previewUrl": "/glitchy-text",
       "coverImage": "/assets/list/glitchy-text.png",
       "videoUrl": "glitchy-text.mp4",
-      "addedAt": 1779961997325.453
+      "addedAt": 1779431290529.135
     },
     {
       "name": "mask-text-reveal",
@@ -867,7 +866,7 @@
       "previewUrl": "/mask-text-reveal",
       "coverImage": "/assets/list/mask-text-reveal.png",
       "videoUrl": "mask-text-reveal.mp4",
-      "addedAt": 1779961997325.6313
+      "addedAt": 1779431290529.289
     },
     {
       "name": "overflow-stagger-text",
@@ -883,7 +882,7 @@
       "previewUrl": "/overflow-stagger-text",
       "coverImage": "/assets/list/overflow-stagger-text.png",
       "videoUrl": "overflow-stagger-text.mp4",
-      "addedAt": 1779961997325.804
+      "addedAt": 1779431290529.4214
     },
     {
       "name": "overflow-text-reveal",
@@ -899,7 +898,7 @@
       "previewUrl": "/overflow-text-reveal",
       "coverImage": "/assets/list/overflow-text-reveal.png",
       "videoUrl": "overflow-text-reveal.mp4",
-      "addedAt": 1779961997325.96
+      "addedAt": 1779431290529.5774
     },
     {
       "name": "perspective-text-reveal",
@@ -915,7 +914,7 @@
       "previewUrl": "/perspective-text-reveal",
       "coverImage": "/assets/list/perspective-text-reveal.png",
       "videoUrl": "perspective-text-reveal.mp4",
-      "addedAt": 1779961997326.106
+      "addedAt": 1779431290529.7224
     },
     {
       "name": "rectangular-text-reveal",
@@ -931,7 +930,7 @@
       "previewUrl": "/rectangular-text-reveal",
       "coverImage": "/assets/list/rectangular-text-reveal.png",
       "videoUrl": "rectangular-text-reveal.mp4",
-      "addedAt": 1779961997326.2607
+      "addedAt": 1779431290529.939
     },
     {
       "name": "scramble-text",
@@ -947,7 +946,7 @@
       "previewUrl": "/scramble-text",
       "coverImage": "/assets/list/scramble-text.png",
       "videoUrl": "scramble-text.mp4",
-      "addedAt": 1779961997326.3457
+      "addedAt": 1779431290530.019
     },
     {
       "name": "slide-text-reveal",
@@ -963,7 +962,7 @@
       "previewUrl": "/slide-text-reveal",
       "coverImage": "/assets/list/slide-text-reveal.png",
       "videoUrl": "slide-text-reveal.mp4",
-      "addedAt": 1779961997326.523
+      "addedAt": 1779431290530.169
     },
     {
       "name": "spotlight-text",
@@ -977,7 +976,7 @@
       "previewUrl": "/spotlight-text",
       "coverImage": "/assets/list/spotlight-text.png",
       "videoUrl": "spotlight-text.mp4",
-      "addedAt": 1779961997326.6848
+      "addedAt": 1779431290530.32
     },
     {
       "name": "text-cloning",
@@ -991,7 +990,7 @@
       "previewUrl": "/text-cloning",
       "coverImage": "/assets/list/text-cloning.png",
       "videoUrl": "text-cloning.mp4",
-      "addedAt": 1779961997326.886
+      "addedAt": 1779431290530.4795
     },
     {
       "name": "text-fill-animation",
@@ -1007,7 +1006,7 @@
       "previewUrl": "/text-fill-animation",
       "coverImage": "/assets/list/text-fill-animation.png",
       "videoUrl": "text-fill-animation.mp4",
-      "addedAt": 1779961997327.0432
+      "addedAt": 1779431290530.648
     },
     {
       "name": "text-hover-expand",
@@ -1023,7 +1022,7 @@
       "previewUrl": "/text-hover",
       "coverImage": "/assets/list/text-hover-expand.png",
       "videoUrl": "text-hover-expand.mp4",
-      "addedAt": 1779961997327.184
+      "addedAt": 1779786600705.4387
     },
     {
       "name": "text-stream",
@@ -1039,7 +1038,7 @@
       "previewUrl": "/text-stream",
       "coverImage": "/assets/list/text-stream.png",
       "videoUrl": "text-stream.mp4",
-      "addedAt": 1779961997327.3645
+      "addedAt": 1779431290531.047
     },
     {
       "name": "animated-toggle",
@@ -1053,7 +1052,7 @@
       "previewUrl": "/buttons/animated-toggle",
       "coverImage": "/assets/list/animated-toggle.png",
       "videoUrl": "animated-toggle.mp4",
-      "addedAt": 1779961997310.7432
+      "addedAt": 1779431290513.1965
     },
     {
       "name": "arrow-fill-button",
@@ -1067,7 +1066,7 @@
       "previewUrl": "/buttons/arrow-fill-button",
       "coverImage": "/assets/list/arrow-fill-button.png",
       "videoUrl": "arrow-fill-button.mp4",
-      "addedAt": 1779961997310.9019
+      "addedAt": 1779431290513.3896
     },
     {
       "name": "char-stagger-button",
@@ -1083,7 +1082,7 @@
       "previewUrl": "/buttons/char-stagger-button",
       "coverImage": "/assets/list/char-stagger-button.png",
       "videoUrl": "char-stagger-button.mp4",
-      "addedAt": 1779961997311.101
+      "addedAt": 1779431290513.587
     },
     {
       "name": "char-stagger-primary-button",
@@ -1097,7 +1096,7 @@
       "previewUrl": "/buttons/char-stagger-primary-button",
       "coverImage": "/assets/list/char-stagger-primary-button.png",
       "videoUrl": "char-stagger-primary-button.mp4",
-      "addedAt": 1779961997311.259
+      "addedAt": 1779431290513.7544
     },
     {
       "name": "dot-fill-button",
@@ -1111,7 +1110,7 @@
       "previewUrl": "/buttons/dot-fill-button",
       "coverImage": "/assets/list/dot-fill-button.png",
       "videoUrl": "dot-fill-button.mp4",
-      "addedAt": 1779961997311.431
+      "addedAt": 1779431290513.9255
     },
     {
       "name": "link-button",
@@ -1125,7 +1124,7 @@
       "previewUrl": "/buttons/link-button",
       "coverImage": "/assets/list/link-button.png",
       "videoUrl": "link-button.mp4",
-      "addedAt": 1779961997311.591
+      "addedAt": 1779431290514.118
     },
     {
       "name": "scramble-link-button",
@@ -1139,7 +1138,7 @@
       "previewUrl": "/buttons/scramble-link-button",
       "coverImage": "/assets/list/scramble-link-button.png",
       "videoUrl": "scramble-link-button.mp4",
-      "addedAt": 1779961997311.6982
+      "addedAt": 1779431290514.2192
     },
     {
       "name": "clippath-slider",
@@ -1155,7 +1154,7 @@
       "previewUrl": "/clippath-slider",
       "coverImage": "/assets/list/clippath-slider.png",
       "videoUrl": "clippath-slider.mp4",
-      "addedAt": 1780031820628.5576
+      "addedAt": 1779974729586.569
     },
     {
       "name": "infinite-carousel",
@@ -1171,7 +1170,7 @@
       "previewUrl": "/infinite-carousel",
       "coverImage": "/assets/list/infinite-carousel.png",
       "videoUrl": "infinite-carousel.mp4",
-      "addedAt": 1780032389948.5715
+      "addedAt": 1780292718738.1763
     },
     {
       "name": "ring-carousel",
@@ -1188,7 +1187,7 @@
       "previewUrl": "/ring-carousel",
       "coverImage": "/assets/list/ring-carousel.png",
       "videoUrl": "ring-carousel.mp4",
-      "addedAt": 1780032389998.6636
+      "addedAt": 1780292718738.3435
     },
     {
       "name": "webgl-slider",
@@ -1206,7 +1205,7 @@
       "previewUrl": "/webgl-slider",
       "coverImage": "/assets/list/webgl-slider.png",
       "videoUrl": "webgl-slider.mp4",
-      "addedAt": 1780032390048.9692
+      "addedAt": 1780292718738.532
     },
     {
       "name": "zoom-slider",
@@ -1222,7 +1221,7 @@
       "previewUrl": "/webgl/zoom-slider",
       "coverImage": "/assets/list/zoom-slider.png",
       "videoUrl": "zoom-slider.mp4",
-      "addedAt": 1779961997312.1157
+      "addedAt": 1779431290514.6113
     },
     {
       "name": "animated-faq",
@@ -1238,7 +1237,7 @@
       "previewUrl": "/animated-faq",
       "coverImage": "/assets/list/animated-faq.png",
       "videoUrl": "animated-faq.mp4",
-      "addedAt": 1779961997312.4458
+      "addedAt": 1779431290514.95
     },
     {
       "name": "book-flip",
@@ -1253,10 +1252,10 @@
         "@react-three/fiber",
         "@react-three/drei"
       ],
-      "previewUrl": "/book-flip",
-      "coverImage":"/assets/list/book-flip.png",
+      "previewUrl": "/book-flip.mp4",
+      "coverImage": "/assets/list/book-flip.png",
       "videoUrl": "book-flip.mp4",
-      "addedAt": 1780033740008.63
+      "addedAt": 1780292718738.6863
     },
     {
       "name": "colliding-models",
@@ -1279,7 +1278,7 @@
       "previewUrl": "/colliding-models",
       "coverImage": "/assets/list/colliding-models.png",
       "videoUrl": "colliding-models.mp4",
-      "addedAt": 1780033740097.651
+      "addedAt": 1780292718738.838
     },
     {
       "name": "custom-video-player",
@@ -1293,9 +1292,9 @@
         "lucide-react"
       ],
       "previewUrl": "/video-player",
-      "coverImage": "/assets/list/video-player.png",
-      "videoUrl": "video-player.mp4",
-      "addedAt": 1779961997312.743
+      "coverImage": "/assets/img/image01.webp",
+      "videoUrl": "custom-video-player.mp4",
+      "addedAt": 1779786600699.8164
     },
     {
       "name": "depth-card-stack",
@@ -1311,7 +1310,7 @@
       "previewUrl": "/depth-card-stack",
       "coverImage": "/assets/list/depth-card-stack.png",
       "videoUrl": "depth-card-stack.mp4",
-      "addedAt": 1779961997312.9377
+      "addedAt": 1779431290515.4502
     },
     {
       "name": "file-encryption",
@@ -1327,7 +1326,7 @@
       "previewUrl": "/file-encryption",
       "coverImage": "/assets/list/file-encryption.png",
       "videoUrl": "file-encryption.mp4",
-      "addedAt": 1779961997313.1304
+      "addedAt": 1779431290515.7
     },
     {
       "name": "form",
@@ -1341,7 +1340,7 @@
       "previewUrl": "/form",
       "coverImage": "/assets/list/form.png",
       "videoUrl": "form.mp4",
-      "addedAt": 1779961997313.2942
+      "addedAt": 1779431290515.88
     },
     {
       "name": "gooey-counter",
@@ -1355,7 +1354,7 @@
       "previewUrl": "/gooey-counter",
       "coverImage": "/assets/list/gooey-counter.png",
       "videoUrl": "gooey-counter.mp4",
-      "addedAt": 1779961997313.5002
+      "addedAt": 1779431290516.109
     },
     {
       "name": "hover-stack",
@@ -1369,7 +1368,7 @@
       "previewUrl": "/stack-hovered-cards",
       "coverImage": "/assets/list/hover-stack.png",
       "videoUrl": "hover-stack.mp4",
-      "addedAt": 1779961997313.72
+      "addedAt": 1779786600700.2349
     },
     {
       "name": "hyperiux-glitter-concept",
@@ -1389,7 +1388,7 @@
       "previewUrl": "/hyperiux-glitter-concept",
       "coverImage": "/assets/list/hyperiux-glitter-concept.png",
       "videoUrl": "/hyperiux-glitter-concept.mp4",
-      "addedAt": 1780033740184.2185
+      "addedAt": 1780062531144.4338
     },
     {
       "name": "infinite-grid-gallery",
@@ -1402,8 +1401,8 @@
       "dependencies": [],
       "previewUrl": "/infinite-grid-gallery",
       "coverImage": "/assets/list/infinite-grid-gallery.png",
-      "videoUrl":  "infinite-grid-gallery.mp4",
-      "addedAt": 1780033740271.181
+      "videoUrl": "infinite-grid-gallery.mp4",
+      "addedAt": 1780062531144.651
     },
     {
       "name": "interactive-hover-slider",
@@ -1420,7 +1419,7 @@
       "previewUrl": "/interactive-hover-slider",
       "coverImage": "/assets/list/interactive-hover-slider.png",
       "videoUrl": "interactive-hover-slider.mp4",
-      "addedAt": 1779961997313.9673
+      "addedAt": 1779431290516.5527
     },
     {
       "name": "interactive-list-preview",
@@ -1436,7 +1435,7 @@
       "previewUrl": "/interactive-list-preview",
       "coverImage": "/assets/list/interactive-list-preview.png",
       "videoUrl": "interactive-list-preview.mp4",
-      "addedAt": 1779961997314.1648
+      "addedAt": 1779431290516.7576
     },
     {
       "name": "modal",
@@ -1452,7 +1451,7 @@
       "previewUrl": "/modal",
       "coverImage": "/assets/list/modal.png",
       "videoUrl": "modal.mp4",
-      "addedAt": 1779961997314.4126
+      "addedAt": 1779431290516.9385
     },
     {
       "name": "portfolio-concept",
@@ -1470,7 +1469,7 @@
       "previewUrl": "/portfolio-concept",
       "coverImage": "/assets/list/portfolio-concept.png",
       "videoUrl": "portfolio-concept.mp4",
-      "addedAt": 1780033740357.1067
+      "addedAt": 1780062531144.8894
     },
     {
       "name": "tabs",
@@ -1486,7 +1485,7 @@
       "previewUrl": "/tabs",
       "coverImage": "/assets/list/tabs.png",
       "videoUrl": "tabs.mp4",
-      "addedAt": 1779961997314.5203
+      "addedAt": 1779431290517.0156
     },
     {
       "name": "testimonial-swiper",
@@ -1504,7 +1503,7 @@
       "previewUrl": "/testimonial",
       "coverImage": "/assets/list/testimonial-swiper.png",
       "videoUrl": "testimonial-swiper.mp4",
-      "addedAt": 1779961997314.803
+      "addedAt": 1779786600700.3567
     },
     {
       "name": "directional-menu",
@@ -1520,7 +1519,7 @@
       "previewUrl": "/navigation/directional-menu",
       "coverImage": "/assets/list/directional-menu.png",
       "videoUrl": "directional-menu.mp4",
-      "addedAt": 1779961997319.1636
+      "addedAt": 1779431290522.2007
     },
     {
       "name": "expanding-navbar",
@@ -1537,7 +1536,7 @@
       "previewUrl": "/expanding-navbar",
       "coverImage": "/assets/list/expanding-navbar.png",
       "videoUrl": "expanding-navbar.mp4",
-      "addedAt": 1779961997319.3877
+      "addedAt": 1779431290522.7493
     },
     {
       "name": "immersive-full-screen-navigation",
@@ -1552,8 +1551,8 @@
       ],
       "previewUrl": "/navigation/immersive-fullscreen-nav",
       "coverImage": "/assets/list/immersive-full-screen-navigation.png",
-      "videoUrl": "immersive-fullscreen-nav.mp4",
-      "addedAt": 1779961997319.57
+      "videoUrl": "immersive-full-screen-navigation.mp4",
+      "addedAt": 1779786600703.4233
     },
     {
       "name": "elevate-navbar",
@@ -1569,7 +1568,7 @@
       "previewUrl": "/navigation/elevate-navbar",
       "coverImage": "/assets/list/elevate-navbar.png",
       "videoUrl": "elevate-navbar.mp4",
-      "addedAt": 1779961997319.779
+      "addedAt": 1779692404903.4817
     },
     {
       "name": "lines-loader",
@@ -1585,7 +1584,7 @@
       "previewUrl": "/loaders/lines-loading",
       "coverImage": "/assets/list/lines-loader.png",
       "videoUrl": "lines-loader.mp4",
-      "addedAt": 1779961997318.6143
+      "addedAt": 1779786600703.2788
     },
     {
       "name": "numeric-tunnel",
@@ -1604,7 +1603,7 @@
       "previewUrl": "/loaders/numeric-tunnel",
       "coverImage": "/assets/list/numeric-tunnel.png",
       "videoUrl": "numeric-tunnel.mp4",
-      "addedAt": 1779961997318.7908
+      "addedAt": 1779431290521.7388
     },
     {
       "name": "stack-loader",
@@ -1620,10 +1619,10 @@
       "previewUrl": "/loaders/stack-loader",
       "coverImage": "/assets/list/stack-loader.png",
       "videoUrl": "stack-loader.mp4",
-      "addedAt": 1779961997318.8887
+      "addedAt": 1779431290521.8462
     },
     {
-      "name": "3d-portfolio-slider",
+      "name": "webgl-portfolio-slider",
       "title": "3D Portfolio Slider",
       "description": "Infinite scroll slider with a Three.js WebGL fullscreen plane, cosine zoom distortion, a circular thumbnail ring, and GSAP text transitions",
       "category": "webgl",
@@ -1636,10 +1635,10 @@
         "gsap",
         "lenis"
       ],
-      "previewUrl": "/3d-portfolio-slider",
-      "coverImage": "/assets/list/3d-portfolio-slider.png",
-      "videoUrl": "3d-portfolio-slider.mp4",
-      "addedAt": 1779961997328.7705
+      "previewUrl": "/webgl-portfolio-slider",
+      "coverImage": "/assets/img/image01.webp",
+      "videoUrl": "webgl-portfolio-slider.mp4",
+      "addedAt": 1779431290532.2856
     },
     {
       "name": "curved-plane",
@@ -1656,7 +1655,7 @@
       "previewUrl": "/curved-plane",
       "coverImage": "/assets/list/curved-plane.png",
       "videoUrl": "curved-plane.mp4",
-      "addedAt": 1779961997329.341
+      "addedAt": 1779431290532.747
     },
     {
       "name": "curved-plane-v2",
@@ -1673,7 +1672,7 @@
       "previewUrl": "/curved-plane/v2",
       "coverImage": "/assets/list/curved-plane-v2.png",
       "videoUrl": "curved-plane-v2.mp4",
-      "addedAt": 1779961997329.1177
+      "addedAt": 1779786600706.4866
     },
     {
       "name": "donut-particles",
@@ -1690,7 +1689,7 @@
       "previewUrl": "/donut-particles",
       "coverImage": "/assets/list/donut-particles.png",
       "videoUrl": "donut-particles.mp4",
-      "addedAt": 1780033112376.8445
+      "addedAt": 1780292718739.3096
     },
     {
       "name": "draggable-canvas",
@@ -1706,7 +1705,7 @@
       "previewUrl": "/webgl/draggable-canvas",
       "coverImage": "/assets/list/draggable-canvas.png",
       "videoUrl": "draggable-canvas.mp4",
-      "addedAt": 1779961997329.6978
+      "addedAt": 1779431290533.0298
     },
     {
       "name": "fractal-glass",
@@ -1722,7 +1721,7 @@
       "previewUrl": "/webgl/fractal-glass",
       "coverImage": "/assets/list/fractal-glass.png",
       "videoUrl": "fractal-glass.mp4",
-      "addedAt": 1779961997329.937
+      "addedAt": 1779431290533.274
     },
     {
       "name": "grid-lift",
@@ -1738,7 +1737,7 @@
       "previewUrl": "/webgl/grid-lift",
       "coverImage": "/assets/list/grid-lift.png",
       "videoUrl": "grid-lift.mp4",
-      "addedAt": 1779961997330.2446
+      "addedAt": 1779431290533.5918
     },
     {
       "name": "grid-tunnel",
@@ -1756,7 +1755,7 @@
       "previewUrl": "/grid-tunnel",
       "coverImage": "/assets/list/grid-tunnel.png",
       "videoUrl": "grid-tunnel.mp4",
-      "addedAt": 1779961997330.4421
+      "addedAt": 1779431290533.7988
     },
     {
       "name": "hero-banner-animated",
@@ -1777,7 +1776,7 @@
       "previewUrl": "/hero-banner-animated",
       "coverImage": "/assets/list/hero-banner-animated.png",
       "videoUrl": "hero-banner-animated.mp4",
-      "addedAt": 1779961997331.0164
+      "addedAt": 1779431290534.1414
     },
     {
       "name": "interactive-blur-reveal",
@@ -1791,7 +1790,7 @@
       "previewUrl": "/webgl/interactive-blur-reveal",
       "coverImage": "/assets/list/interactive-blur-reveal.png",
       "videoUrl": "interactive-blur-reveal.mp4",
-      "addedAt": 1779961997331.3223
+      "addedAt": 1779431290534.558
     },
     {
       "name": "milkyway",
@@ -1813,7 +1812,7 @@
       "previewUrl": "/milkyway",
       "coverImage": "/assets/list/milkyway.png",
       "videoUrl": "milkyway.mp4",
-      "addedAt": 1779961997331.6418
+      "addedAt": 1779431290535.2532
     },
     {
       "name": "mouse-pixelation",
@@ -1832,7 +1831,7 @@
       "previewUrl": "/mouse-pixelation-effects",
       "coverImage": "/assets/list/mouse-pixelation.png",
       "videoUrl": "mouse-pixelation.mp4",
-      "addedAt": 1779961997331.9575
+      "addedAt": 1779786600706.7988
     },
     {
       "name": "strip-slider",
@@ -1850,7 +1849,7 @@
       "previewUrl": "/strip-slider",
       "coverImage": "/assets/list/strip-slider.png",
       "videoUrl": "strip-slider.mp4",
-      "addedAt": 1779961997332.1587
+      "addedAt": 1779431290535.979
     },
     {
       "name": "card-drift",
@@ -1866,7 +1865,7 @@
       "previewUrl": "/card-drift",
       "coverImage": "/assets/list/card-drift.png",
       "videoUrl": "card-drift.mp4",
-      "addedAt": 1779961997319.9739
+      "addedAt": 1779431290523.3735
     }
   ]
 }

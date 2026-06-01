@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from"react";
 import gsap from"gsap";
 import { Draggable } from"gsap/Draggable";
 import { InertiaPlugin } from"gsap/InertiaPlugin";
-import"./InfiniteCarousel.css";
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
 
@@ -200,7 +199,7 @@ export default function HorizontalCarousel({
  wrapperClassName ="",
  itemClassName ="",
 
- mobileBreakpoint = 768,
+ mobileBreakpoint = 1024,
  mobileMode ="swiper",
 }) {
  const wrapperRef = useRef(null);
@@ -389,14 +388,14 @@ export default function HorizontalCarousel({
  };
 
  return (
- <div className={`hc-page ${pageClassName}`} style={pageStyle}>
+ <div className={`flex w-full flex-col pb-4 items-stretch justify-start gap-4 max-md:gap-4 max-sm:gap-3 ${pageClassName}`} style={pageStyle}>
  {showNav && !isWrapMode && (
  <div
- className={`hc-controls ${controlsClassName}`}
+ className={`flex w-[95%] items-center justify-end gap-4 max-md:w-full max-md:justify-center max-md:px-3 max-sm:gap-3 max-sm:px-2 ${controlsClassName}`}
  style={controlsStyle}
  >
  <button
- className={`hc-btn ${prevBtnClassName}`}
+ className={`flex size-14 min-h-11 min-w-11 cursor-pointer items-center justify-center border border-neutral-900 bg-transparent text-neutral-900 transition-colors duration-200 ease-in-out hover:bg-neutral-900 hover:text-white max-md:size-14 max-sm:size-14 ${prevBtnClassName}`}
  style={prevBtnStyle}
  onClick={handlePrev}
  type="button"
@@ -405,7 +404,7 @@ export default function HorizontalCarousel({
  </button>
 
  <button
- className={`hc-btn ${nextBtnClassName}`}
+ className={`flex size-14 min-h-11 min-w-11 cursor-pointer items-center justify-center border border-neutral-900 bg-transparent text-neutral-900 transition-colors duration-200 ease-in-out hover:bg-neutral-900 hover:text-white max-md:size-14 max-sm:size-14 ${nextBtnClassName}`}
  style={nextBtnStyle}
  onClick={handleNext}
  type="button"
@@ -417,9 +416,15 @@ export default function HorizontalCarousel({
 
  <div
  ref={wrapperRef}
- className={`hc-wrapper ${wrapperClassName} ${
- isWrapMode ?"is-wrapped" :""
- } ${isSwiperMode ?"is-swiper" :""}`}
+ className={`relative flex min-h-25 max-md:pt-14 w-full flex-nowrap items-stretch overflow-hidden ${
+ isWrapMode
+ ? "flex-wrap justify-center gap-4 overflow-visible max-md:gap-3.5 max-sm:gap-3"
+ : ""
+ } ${
+ isSwiperMode
+ ? "gap-3.5 overflow-x-auto overflow-y-hidden px-3 [scroll-snap-type:x_mandatory] [-webkit-overflow-scrolling:touch] scrollbar-none [&::-webkit-scrollbar]:hidden max-md:gap-3 max-md:px-3 max-sm:gap-2.5 max-sm:px-2"
+ : ""
+ } ${wrapperClassName}`}
  style={wrapperStyle}
  >
  {(isSwiperMode ? mobileLoopItems : childArray).map((child, i) => {
@@ -435,7 +440,7 @@ export default function HorizontalCarousel({
  itemRefs.current[i] = el;
  }
  }}
- className={`hc-item ${itemClassName}`}
+ className={`relative shrink-0 select-none ${isWrapMode ? "transform-[none!important]" : ""} ${isSwiperMode ? "snap-center snap-always" : ""} ${itemClassName}`}
  style={itemStyle}
  aria-hidden={isSwiperMode && (i < childArray.length || i >= childArray.length * 2)}
  >

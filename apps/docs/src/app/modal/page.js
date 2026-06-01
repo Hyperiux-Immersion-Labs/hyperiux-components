@@ -92,7 +92,7 @@ export default function Page() {
             "
           >
             <img
-              src="/assets/videoplayer/poster.png"
+              src="/assets/cover-showreel.png"
               alt="Video thumbnail"
               className="block h-full w-full object-cover"
             />
@@ -159,8 +159,8 @@ export default function Page() {
         showCloseButton={false}
       >
         <VideoPlayer
-          videoSrc="/assets/videoplayer/video-player.mp4"
-          poster="/assets/videoplayer/poster.png"
+          videoSrc="showreel.mp4"
+          poster="/assets/cover-showreel.png"
           onRequestClose={() => setIsOpen(false)}
           showCloseButton
           autoPlay

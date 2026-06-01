@@ -6,7 +6,6 @@ import { gsap, Expo } from "gsap";
 import "./base.css";
 import { useMouse } from "../hooks/useMouse";
 
-const BASE_IMAGE_COUNT = 20;
 const MOBILE_POINTER_QUERY = "(pointer: coarse)";
 const OFFSCREEN_POSITION = -9999;
 const IDLE_DISTANCE_THRESHOLD = 2;
@@ -14,6 +13,7 @@ const TRIGGER_DISTANCE_THRESHOLD = 100;
 const INITIAL_Z_INDEX = 1;
 
 export default function ImagesAnimation({
+  images = [],
   enableRotation = true,
   idleSpawn = true,
   idleDelay = 300,
@@ -47,7 +47,8 @@ export default function ImagesAnimation({
   });
 
   // Derived values
-  const totalImages = BASE_IMAGE_COUNT * imageMultiplier;
+  const hasImages = images.length > 0;
+  const totalImages = hasImages ? images.length * imageMultiplier : 0;
 
   const getMouseDistance = () => {
     const currentMouse = mouse.current;
@@ -255,14 +256,20 @@ export default function ImagesAnimation({
       }}
     >
       {Array.from({ length: totalImages }).map((_, index) => {
-        const baseImageIndex = (index % BASE_IMAGE_COUNT) + 1;
+        const baseImageIndex = index % images.length;
+        const image = images[baseImageIndex];
+        const imageSrc = typeof image === "string" ? image : image?.src;
+        const imageAlt =
+          typeof image === "string"
+            ? `Trail ${baseImageIndex + 1}`
+            : image?.alt || `Trail ${baseImageIndex + 1}`;
 
         return (
           <img
             key={index}
             className="content__img"
-            src={`/img/${baseImageIndex}.png`}
-            alt={`Trail ${baseImageIndex}`}
+            src={imageSrc}
+            alt={imageAlt}
             ref={(element) => {
               if (element) {
                 imagesRef.current[index] = element;

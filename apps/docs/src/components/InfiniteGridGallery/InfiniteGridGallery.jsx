@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from"react";
 import InfiniteGrid from"./InfiniteGrid";
-import styles from"./InfiniteGridGallery.module.css";
 
 export default function InfiniteGridGallery() {
  const imagesRef = useRef(null);
@@ -420,20 +419,22 @@ export default function InfiniteGridGallery() {
  };
 
  return (
- <section className={styles.root}>
- <div ref={imagesRef} className={styles.images} />
+ <>
+ <section className="infinite-grid-gallery-root h-screen w-full cursor-grab overflow-hidden bg-white font-mono text-black select-none">
+ <div ref={imagesRef} className="infinite-grid-gallery-images relative inline-block h-full w-full overflow-hidden whitespace-nowrap bg-white" />
 
  {active && expanded && display ? (
  <div
- className={`${styles.expandBackdrop} ${
- isOpening ? styles.expandOpening :""
- } ${isClosing ? styles.expandClosing :""}`}
+ className={`fixed inset-0 z-60 cursor-default bg-white transition-opacity duration-750 ease-[cubic-bezier(0.785,0.135,0.15,0.86)] ${
+ isOpening ? "opacity-0" :""
+ } ${isClosing ? "opacity-0" :""
+ } ${!isOpening && !isClosing ? "opacity-100" :""}`}
  role="dialog"
  aria-modal="true"
  onMouseDown={() => closeExpanded()}
  >
  <div
- className={styles.expandStage}
+ className="fixed inset-0 flex flex-col items-center justify-start"
  style={{
 "--toX": `${expanded.target.left}px`,
 "--toY": `${expanded.target.top}px`,
@@ -447,19 +448,27 @@ export default function InfiniteGridGallery() {
  }}
  >
  <div
- className={styles.expandMedia}
+ className={`absolute left-(--toX) top-(--toY) h-[calc(var(--toH)*1px)] w-[calc(var(--toW)*1px)] origin-top-left overflow-hidden bg-[rgba(0,0,0,0.06)] will-change-transform ${
+ !isOpening && !isClosing
+ ? "translate-x-0 translate-y-0 scale-x-100 scale-y-100"
+ : ""
+ } ${isClosing ? "infinite-grid-gallery-closing-media" : "infinite-grid-gallery-opening-media"}`}
  aria-hidden="true"
  onMouseDown={(e) => e.stopPropagation()}
+ style={{
+ transform: isOpening || isClosing
+ ? "translate(var(--dx), var(--dy)) scale(var(--sx), var(--sy))"
+ : undefined,
+ transition: "transform 750ms cubic-bezier(0.785, 0.135, 0.15, 0.86)",
+ }}
  >
  {slide ? (
  <>
  <img
- className={`${styles.expandImage} ${
- styles.expandImageFrom
- } ${
+ className={`absolute inset-0 block h-full w-full object-cover backface-hidden ${
  slide.dir > 0
- ? styles.expandSlideLeft
- : styles.expandSlideRight
+ ? "infinite-grid-gallery-slide-left-from"
+ : "infinite-grid-gallery-slide-right-from"
  }`}
  src={sources[slide.from].src}
  alt={sources[slide.from].caption}
@@ -469,10 +478,10 @@ export default function InfiniteGridGallery() {
  />
 
  <img
- className={`${styles.expandImage} ${styles.expandImageTo} ${
+ className={`absolute inset-0 block h-full w-full object-cover backface-hidden ${
  slide.dir > 0
- ? styles.expandSlideLeft
- : styles.expandSlideRight
+ ? "infinite-grid-gallery-slide-left-to"
+ : "infinite-grid-gallery-slide-right-to"
  }`}
  src={sources[slide.to].src}
  alt={sources[slide.to].caption}
@@ -483,7 +492,7 @@ export default function InfiniteGridGallery() {
  </>
  ) : (
  <img
- className={styles.expandImage}
+ className="block h-full w-full object-cover"
  src={display.src}
  alt={display.caption}
  loading="eager"
@@ -495,7 +504,7 @@ export default function InfiniteGridGallery() {
 
  <button
  type="button"
- className={`${styles.expandNav} ${styles.expandNavPrev}`}
+ className="fixed left-[max(16px,calc(var(--toX)-72px))] top-[calc(var(--toY)+(var(--toH)*1px)/2)] z-4 grid h-13.5 w-13.5 -translate-y-1/2 place-items-center rounded-full border border-black/12 bg-white/90 text-[30px] leading-none text-black shadow-[0_18px_60px_rgba(0,0,0,0.12)] transition-opacity disabled:cursor-not-allowed disabled:opacity-35 max-sm:left-3"
  onMouseDown={(e) => e.stopPropagation()}
  onClick={() =>
  navigateTo((expanded.index - 1 + sources.length) % sources.length)
@@ -508,7 +517,7 @@ export default function InfiniteGridGallery() {
 
  <button
  type="button"
- className={`${styles.expandNav} ${styles.expandNavNext}`}
+ className="fixed right-[max(16px,calc(100vw-(var(--toX)+var(--toW)*1px)-72px))] top-[calc(var(--toY)+(var(--toH)*1px)/2)] z-4 grid h-13.5 w-13.5 -translate-y-1/2 place-items-center rounded-full border border-black/12 bg-white/90 text-[30px] leading-none text-black shadow-[0_18px_60px_rgba(0,0,0,0.12)] transition-opacity disabled:cursor-not-allowed disabled:opacity-35 max-sm:right-3"
  onMouseDown={(e) => e.stopPropagation()}
  onClick={() => navigateTo((expanded.index + 1) % sources.length)}
  aria-label="Next"
@@ -518,16 +527,18 @@ export default function InfiniteGridGallery() {
  </button>
 
  <div
- className={styles.expandBottom}
+ className="fixed inset-x-0 bottom-0 grid h-(--thumbsH) grid-cols-1 items-center gap-3 bg-white px-3.5 pb-3.5 max-sm:px-2.5 max-sm:pb-2.5"
  aria-label="All images"
  onMouseDown={(e) => e.stopPropagation()}
  >
- <div className={styles.expandMeta} aria-hidden="true">
- <h2 className={styles.expandCaption}>{display.caption}</h2>
+ <div className="flex items-center justify-center pt-2.5" aria-hidden="true">
+ <h2 className="mt-[-5%] max-w-[min(860px,calc(100vw-40px))] overflow-hidden text-ellipsis whitespace-nowrap px-0 py-1.5 text-center text-[30px] font-medium leading-[1.1] tracking-tighter text-black/92 select-none">
+ {display.caption}
+ </h2>
  </div>
  <div
- className={`${styles.expandThumbsWrap} ${
- isThumbDragging ? styles.expandThumbsWrapDragging :""
+ className={`relative w-full overflow-hidden border-t border-black/12 pt-3 select-none ${
+ isThumbDragging ? "cursor-grabbing" :"cursor-grab"
  }`}
  onPointerDown={onThumbPointerDown}
  onPointerMove={onThumbPointerMove}
@@ -538,7 +549,10 @@ export default function InfiniteGridGallery() {
  >
  <div
  ref={expandThumbsRef}
- className={styles.expandThumbs}
+ className={`flex overflow-x-auto overflow-y-hidden px-1 scrollbar-none [-ms-overflow-style:none] overscroll-x-contain [touch-action:pan-x] ${
+ isThumbDragging ? "cursor-grabbing scroll-auto" :"cursor-grab scroll-smooth"
+ }`}
+ style={{ gap: "10px" }}
  role="list"
  aria-label="All images"
  >
@@ -551,8 +565,8 @@ export default function InfiniteGridGallery() {
  type="button"
  role="listitem"
  data-thumb-index={idx}
- className={`${styles.expandThumb} ${
- isActive ? styles.expandThumbActive :""
+ className={`box-border h-17.5 w-22.5 shrink-0 overflow-hidden border-2 bg-black/4 p-0 transition-[border-color,transform] duration-200 ease-[ease] hover:-translate-y-px hover:border-black/35 max-sm:h-12 max-sm:w-18 ${
+ isActive ? "border-black" :"border-transparent"
  }`}
  ref={(el) => {
  expandThumbRefs.current[idx] = el;
@@ -560,7 +574,9 @@ export default function InfiniteGridGallery() {
  aria-label={`Open ${item.caption}`}
  >
  <img
- className={styles.expandThumbImg}
+ className={`block h-full w-full object-cover transition-[filter] duration-300 ease-[cubic-bezier(0.785,0.135,0.15,0.86)] ${
+ isActive ? "brightness-105" :"brightness-[0.8]"
+ }`}
  src={item.src}
  alt={item.caption}
  loading="lazy"
@@ -577,5 +593,146 @@ export default function InfiniteGridGallery() {
  </div>
  ) : null}
  </section>
+
+ <style jsx global>{`
+ html.dragging .infinite-grid-gallery-root {
+   cursor: grabbing;
+ }
+
+ .infinite-grid-gallery-images .item {
+   position: absolute;
+   top: 0;
+   left: 0;
+   will-change: transform;
+   white-space: normal;
+ }
+
+ .infinite-grid-gallery-images .item-wrapper {
+   position: relative;
+   height: 100%;
+   width: 100%;
+   will-change: transform;
+ }
+
+ .infinite-grid-gallery-images .item-image {
+   overflow: hidden;
+   border: 1px solid rgba(0, 0, 0, 0.12);
+   background: #ffffff;
+   transform-origin: 50% 50%;
+   transition:
+     box-shadow 350ms cubic-bezier(0.785, 0.135, 0.15, 0.86),
+     transform 350ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+ }
+
+ .infinite-grid-gallery-images .item:hover .item-image {
+   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.12);
+   transform: scale(1.015);
+ }
+
+ .infinite-grid-gallery-images .item:hover {
+   z-index: 2;
+ }
+
+ .infinite-grid-gallery-images .item-image img {
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+   object-fit: cover;
+   will-change: transform;
+ }
+
+ .infinite-grid-gallery-images .caption {
+   position: absolute;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   display: block;
+   width: 100%;
+   height: auto;
+   padding: 10px;
+   font-size: 15px;
+   line-height: 1.2;
+   letter-spacing: -0.04em;
+   opacity: 0;
+   white-space: normal;
+   user-select: none;
+   color: #ffffff;
+   background: rgba(255, 255, 255, 0.38);
+   backdrop-filter: blur(5px);
+   border: 1px solid rgba(0, 0, 0, 0.08);
+   transform: translateY(12px);
+   transition:
+     opacity 350ms cubic-bezier(0.785, 0.135, 0.15, 0.86),
+     transform 350ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+   pointer-events: none;
+ }
+
+ .infinite-grid-gallery-images .item:hover .caption {
+   opacity: 1;
+   transform: translateY(0);
+ }
+
+ .infinite-grid-gallery-opening-media {
+   transform: translate(var(--dx), var(--dy)) scale(var(--sx), var(--sy));
+ }
+
+ .infinite-grid-gallery-closing-media {
+   transform: translate(var(--dx), var(--dy)) scale(var(--sx), var(--sy));
+   transition-duration: 750ms;
+ }
+
+ .infinite-grid-gallery-slide-left-from {
+   animation: infinite-grid-gallery-slide-from-left 600ms ease-in-out forwards;
+ }
+
+ .infinite-grid-gallery-slide-left-to {
+   animation: infinite-grid-gallery-slide-to-left 600ms ease-in-out forwards;
+ }
+
+ .infinite-grid-gallery-slide-right-from {
+   animation: infinite-grid-gallery-slide-from-right 600ms ease-in-out forwards;
+ }
+
+ .infinite-grid-gallery-slide-right-to {
+   animation: infinite-grid-gallery-slide-to-right 600ms ease-in-out forwards;
+ }
+
+ @keyframes infinite-grid-gallery-slide-from-left {
+   from {
+     transform: translate3d(0%, 0, 0);
+   }
+   to {
+     transform: translate3d(-100%, 0, 0);
+   }
+ }
+
+ @keyframes infinite-grid-gallery-slide-to-left {
+   from {
+     transform: translate3d(100%, 0, 0);
+   }
+   to {
+     transform: translate3d(0%, 0, 0);
+   }
+ }
+
+ @keyframes infinite-grid-gallery-slide-from-right {
+   from {
+     transform: translate3d(0%, 0, 0);
+   }
+   to {
+     transform: translate3d(100%, 0, 0);
+   }
+ }
+
+ @keyframes infinite-grid-gallery-slide-to-right {
+   from {
+     transform: translate3d(-100%, 0, 0);
+   }
+   to {
+     transform: translate3d(0%, 0, 0);
+   }
+ }
+ `}</style>
+ </>
  );
 }

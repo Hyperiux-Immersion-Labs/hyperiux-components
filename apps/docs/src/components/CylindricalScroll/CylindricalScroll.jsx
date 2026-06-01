@@ -3,7 +3,6 @@
 import React, { useLayoutEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
-import "./CylindricalScrollCards.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -171,35 +170,35 @@ export default function CylindricalScrollCards({
     return (
         <section
             ref={sectionRef}
-            className={`cylindrical-scroll-section ${className}`}
+            className={`relative h-screen w-full overflow-hidden bg-[#020202] before:pointer-events-none before:absolute before:left-0 before:top-0 before:z-20 before:h-[14%] before:w-full before:bg-[linear-gradient(to_bottom,#020202_0%,rgba(2,2,2,0)_100%)] after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:z-20 after:h-[14%] after:w-full after:bg-[linear-gradient(to_top,#020202_0%,rgba(2,2,2,0)_100%)] max-md:[--card-height:245px] max-md:[--card-width:180px] max-sm:[--card-height:190px] max-sm:[--card-width:140px] ${className}`}
             style={{
                 "--card-width": `${cardWidth}px`,
                 "--card-height": `${cardHeight}px`,
                 "--scene-perspective": `${perspective}px`,
             }}
         >
-            <div className="cylindrical-scroll-stage">
-                <div className="cylindrical-scroll-scene">
+            <div className="relative h-screen w-full overflow-hidden perspective-(--scene-perspective,1800px) perspective-origin-[center_center]">
+                <div className="relative h-full w-full transform-3d">
                     {repeatedItems.map((item, index) => (
                         <div
                             key={`${item.id}-${index}`}
                             ref={addToRefs}
-                            className="cylindrical-scroll-card"
+                            className="absolute left-1/2 top-1/2 h-(--card-height,300px) w-(--card-width,220px) opacity-0 will-change-transform ml-[calc(var(--card-width,220px)/-2)] mt-[calc(var(--card-height,300px)/-2)] transform-3d"
                         >
-                            <div className="cylindrical-scroll-card-inner">
-                                <div className="cylindrical-scroll-card-face cylindrical-scroll-card-front">
+                            <div className="relative h-full w-full transform-3d">
+                                <div className="absolute inset-0 h-full w-full overflow-hidden bg-[#f2eee2] shadow-[0_18px_40px_rgba(0,0,0,0.22),0_4px_12px_rgba(0,0,0,0.16)] backface-hidden [-webkit-backface-visibility:hidden] transform-[rotateY(0deg)_translateZ(1px)]">
                                     <img
                                         src={item.image}
                                         alt={item.title || `Card ${index + 1}`}
-                                        className="cylindrical-scroll-card-image"
+                                        className="block h-full w-full object-cover"
                                     />
                                 </div>
 
-                                <div className="cylindrical-scroll-card-face cylindrical-scroll-card-back">
+                                <div className="absolute inset-0 flex h-full w-full items-center justify-center overflow-hidden bg-[#111111] shadow-[0_18px_40px_rgba(0,0,0,0.22),0_4px_12px_rgba(0,0,0,0.16)] backface-hidden [-webkit-backface-visibility:hidden] transform-[rotateY(180deg)_translateZ(1px)]">
                                     <img
                                         src={item.image}
                                         alt={`${item.title || `Card ${index + 1}`} back`}
-                                        className="cylindrical-scroll-card-image"
+                                        className="block h-full w-full object-cover"
                                     />
                                 </div>
                             </div>
