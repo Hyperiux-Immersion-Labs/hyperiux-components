@@ -6,8 +6,8 @@
   "category": "components",
   "dependencies": ["three", "@react-three/fiber", "@react-three/drei"],
   "registryDependencies": [],
-  "coverImage": "/assets/img/image07.png",
-  "videoUrl": null,
+  "coverImage": "/assets/list/book-flip.png",
+  "videoUrl": "book-flip.mp4",
   "previewUrl": "/book-flip.mp4"
 }
 

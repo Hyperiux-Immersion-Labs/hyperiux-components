@@ -6,6 +6,6 @@
   "category": "carousels",
   "dependencies": ["gsap", "lucide-react"],
   "registryDependencies": [],
-  "coverImage": "/assets/img/image02.webp",
+  "coverImage": "/assets/list/ring-carousel.png",
   "previewUrl": "/ring-carousel"
 }

@@ -470,7 +470,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/cursor-move",
-      "coverImage": "/assets/img/image05.png",
+      "coverImage": "/assets/list/cursor-move.png",
       "videoUrl": "cursor-move.mp4",
       "addedAt": 1780033385471.9756
     },
@@ -502,7 +502,7 @@
       ],
       "dependencies": [],
       "previewUrl": "/full-screen-crosshair",
-      "coverImage": "/assets/img/image06.png",
+      "coverImage": "/assets/list/full-screen-crosshair.png",
       "videoUrl": "full-screen-crosshair.mp4",
       "addedAt": 1780033385521.4321
     },
@@ -833,7 +833,7 @@
         "gsap"
       ],
       "previewUrl": "/counter",
-      "coverImage": "/assets/img/image01.webp",
+      "coverImage": "/assets/list/counter.png",
       "videoUrl": "/counter.mp4",
       "addedAt": 1780034080094.5066
     },
@@ -1169,7 +1169,7 @@
         "gsap"
       ],
       "previewUrl": "/infinite-carousel",
-      "coverImage": "/assets/img/image01.webp",
+      "coverImage": "/assets/list/infinite-carousel.png",
       "videoUrl": "infinite-carousel.mp4",
       "addedAt": 1780032389948.5715
     },
@@ -1186,7 +1186,7 @@
         "lucide-react"
       ],
       "previewUrl": "/ring-carousel",
-      "coverImage": "/assets/img/image02.webp",
+      "coverImage": "/assets/list/ring-carousel.png",
       "videoUrl": "ring-carousel.mp4",
       "addedAt": 1780032389998.6636
     },
@@ -1204,7 +1204,7 @@
         "lenis"
       ],
       "previewUrl": "/webgl-slider",
-      "coverImage": "/assets/img/image03.webp",
+      "coverImage": "/assets/list/webgl-slider.png",
       "videoUrl": "webgl-slider.mp4",
       "addedAt": 1780032390048.9692
     },
@@ -1254,7 +1254,7 @@
         "@react-three/drei"
       ],
       "previewUrl": "/book-flip",
-      "coverImage": "/assets/img/image07.png",
+      "coverImage":"/assets/list/book-flip.png",
       "videoUrl": "book-flip.mp4",
       "addedAt": 1780033740008.63
     },
@@ -1277,7 +1277,7 @@
         "next"
       ],
       "previewUrl": "/colliding-models",
-      "coverImage": "/assets/img/image01.webp",
+      "coverImage": "/assets/list/colliding-models.png",
       "videoUrl": "colliding-models.mp4",
       "addedAt": 1780033740097.651
     },
@@ -1387,7 +1387,7 @@
         "postprocessing"
       ],
       "previewUrl": "/hyperiux-glitter-concept",
-      "coverImage": "/assets/img/image01.webp",
+      "coverImage": "/assets/list/hyperiux-glitter-concept.png",
       "videoUrl": "/hyperiux-glitter-concept.mp4",
       "addedAt": 1780033740184.2185
     },
@@ -1401,8 +1401,8 @@
       ],
       "dependencies": [],
       "previewUrl": "/infinite-grid-gallery",
-      "coverImage": "/assets/img/image01.webp",
-      "videoUrl": null,
+      "coverImage": "/assets/list/infinite-grid-gallery.png",
+      "videoUrl":  "infinite-grid-gallery.mp4",
       "addedAt": 1780033740271.181
     },
     {
@@ -1468,7 +1468,7 @@
         "lenis"
       ],
       "previewUrl": "/portfolio-concept",
-      "coverImage": "/assets/img/image11.png",
+      "coverImage": "/assets/list/portfolio-concept.png",
       "videoUrl": "portfolio-concept.mp4",
       "addedAt": 1780033740357.1067
     },
@@ -1688,7 +1688,7 @@
         "@react-three/fiber"
       ],
       "previewUrl": "/donut-particles",
-      "coverImage": "/assets/img/image04.png",
+      "coverImage": "/assets/list/donut-particles.png",
       "videoUrl": "donut-particles.mp4",
       "addedAt": 1780033112376.8445
     },

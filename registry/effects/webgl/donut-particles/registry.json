@@ -6,7 +6,7 @@
   "category": "webgl",
   "dependencies": ["three", "@react-three/fiber"],
   "registryDependencies": [],
-  "coverImage": "/assets/img/image04.png",
+  "coverImage": "/assets/list/donut-particles.png",
   "videoUrl": "donut-particles.mp4",
   "previewUrl": "/donut-particles"
 }

@@ -6,6 +6,6 @@
   "category": "carousels",
   "dependencies": ["gsap"],
   "registryDependencies": [],
-  "coverImage": "/assets/img/image01.webp",
+  "coverImage": "/assets/list/infinite-carousel.png",
   "previewUrl": "/infinite-carousel"
 }

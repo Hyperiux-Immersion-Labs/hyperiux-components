@@ -6,6 +6,6 @@
   "category": "carousels",
   "dependencies": ["three", "gsap", "lenis"],
   "registryDependencies": [],
-  "coverImage": "/assets/img/image03.webp",
+  "coverImage": "/assets/list/webgl-slider.png",
   "previewUrl": "/webgl-slider"
 }
