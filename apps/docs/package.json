@@ -12,12 +12,14 @@
   },
   "dependencies": {
     "@14islands/r3f-scroll-rig": "^8.15.0",
+    "@clerk/nextjs": "^7.4.2",
     "@imagekit/next": "^2.1.5",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.0",
     "@react-three/postprocessing": "^3.0.4",
     "@react-three/rapier": "^2.2.0",
     "@sentry/nextjs": "^10.53.1",
+    "@supabase/supabase-js": "^2.106.2",
     "@vercel/analytics": "^2.0.1",
     "@whatisjery/react-fluid-distortion": "^1.6.1",
     "cloudinary": "^2.9.0",
@@ -37,6 +39,7 @@
     "postprocessing": "^6.39.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "stripe": "^22.2.0",
     "three": "^0.183.2"
   },
   "devDependencies": {

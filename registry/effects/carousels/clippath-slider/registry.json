@@ -4,7 +4,10 @@
   "title": "Clip Path Slider",
   "description": "Fullscreen image slider where transitions sweep via two canvas-drawn radial clip-path arcs. Includes a dual-layer background crossfade, GSAP SplitText line reveals, and a smooth custom cursor that flips direction arrows left/right.",
   "category": "carousels",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/clippath-slider"
+  "previewUrl": "/clippath-slider",
+  "tier": "free"
 }

@@ -4,7 +4,10 @@
   "title": "Parallax Image",
   "description": "Image with smooth parallax scrolling effect using GSAP ScrollTrigger",
   "category": "scroll",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/parallax-image-animation"
+  "previewUrl": "/parallax-image-animation",
+  "tier": "pro"
 }

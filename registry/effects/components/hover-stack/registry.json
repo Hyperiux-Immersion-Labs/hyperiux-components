@@ -6,5 +6,6 @@
   "category": "components",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/stack-hovered-cards"
+  "previewUrl": "/stack-hovered-cards",
+  "tier": "pro"
 }

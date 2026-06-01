@@ -1,85 +1,92 @@
 "use client";
 
-import { useLayoutEffect, useState } from"react";
-import Link from"next/link";
-import { ArrowRight } from"lucide-react";
-import"./LinkButton.css";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useLayoutEffect, useState } from "react";
 
-export const LinkButton = ({
- text,
- mobileText ="Click me",
- clickedColor ="#ff6b00",
- href ="#",
- className ="",
- linkProps = {},
- icon: Icon = ArrowRight,
- iconClassName ="",
- children,
- disableNavigation = false,
- onClick,
- ...props
-}) => {
- const [isCompactViewport, setIsCompactViewport] = useState(false);
- const [hasMeasuredViewport, setHasMeasuredViewport] = useState(false);
- const [isIconRotated, setIsIconRotated] = useState(false);
+import "./LinkButton.css";
 
- useLayoutEffect(() => {
- const handleResize = () => {
- setIsCompactViewport(window.innerWidth <= 1024);
- setHasMeasuredViewport(true);
- };
+const TABLET_BREAKPOINT = 1024;
+const DEFAULT_MOBILE_TEXT = "Click me";
+const DEFAULT_CLICKED_COLOR = "#ff6b00";
+const DEFAULT_HREF = "#";
 
- handleResize();
- window.addEventListener("resize", handleResize);
+export default function LinkButton({
+  text,
+  mobileText = DEFAULT_MOBILE_TEXT,
+  clickedColor = DEFAULT_CLICKED_COLOR,
+  href = DEFAULT_HREF,
+  className = "",
+  linkProps = {},
+  icon: Icon = ArrowRight,
+  iconClassName = "",
+  children,
+  disableNavigation = false,
+  onClick,
+  ...props
+}) {
+  const [isCompactViewport, setIsCompactViewport] = useState(false);
+  const [hasMeasuredViewport, setHasMeasuredViewport] = useState(false);
+  const [isIconRotated, setIsIconRotated] = useState(false);
 
- return () => window.removeEventListener("resize", handleResize);
- }, []);
+  useLayoutEffect(() => {
+    const onResize = () => {
+      setIsCompactViewport(window.innerWidth <= TABLET_BREAKPOINT);
+      setHasMeasuredViewport(true);
+    };
 
- const handleClick = (event) => {
- setIsIconRotated((prev) => !prev);
+    onResize();
+    window.addEventListener("resize", onResize);
 
- if (disableNavigation) {
- event.preventDefault();
- }
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
 
- onClick?.(event);
- };
+  const onLinkClick = (event) => {
+    setIsIconRotated((previousValue) => !previousValue);
 
- const displayText = hasMeasuredViewport && isCompactViewport ? mobileText : children || text;
- const compactClickedStyle =
- hasMeasuredViewport && isCompactViewport && isIconRotated
- ? { color: clickedColor }
- : undefined;
+    if (disableNavigation) {
+      event.preventDefault();
+    }
 
- return (
- <Link
- href={href}
- {...linkProps}
- {...props}
- onClick={handleClick}
-  className={`group w-fit block duration-300 leading-[1.2] ${className}`}
- style={compactClickedStyle}
- >
- <div className="flex items-center justify-start gap-2">
- <span
- className="btn-link-line relative inline-block w-fit max-md:text-[3vw] max-sm:text-[5vw] "
- style={{
- visibility: hasMeasuredViewport ? "visible" :"hidden",
- }}
- >
- {displayText}
- </span>
+    onClick?.(event);
+  };
 
- <span className="sr-only">About {href}</span>
+  // Derived values
+  const displayText =
+    hasMeasuredViewport && isCompactViewport ? mobileText : children || text;
+  const clickedStyle =
+    hasMeasuredViewport && isCompactViewport && isIconRotated
+      ? { color: clickedColor }
+      : undefined;
+  const iconClassNames = `${isIconRotated ? "-rotate-45" : ""} ${
+    !isCompactViewport ? "group-hover:-rotate-45" : ""
+  } transition-transform duration-300 ${iconClassName}`;
 
- {Icon && (
- <Icon
- className={`${isIconRotated ?"-rotate-45" :""} ${!isCompactViewport ?"group-hover:-rotate-45" :""} transition-transform duration-300 ${iconClassName}`}
- />
- )}
- </div>
- </Link>
- );
-};
+  return (
+    <Link
+      href={href}
+      {...linkProps}
+      {...props}
+      onClick={onLinkClick}
+      className={`group block w-fit leading-[1.2] duration-300 ${className}`}
+      style={clickedStyle}
+    >
+      <div className="flex items-center justify-start gap-2">
+        <span
+          className="btn-link-line relative inline-block w-fit max-md:text-[3vw] max-sm:text-[5vw]"
+          style={{
+            visibility: hasMeasuredViewport ? "visible" : "hidden",
+          }}
+        >
+          {displayText}
+        </span>
 
-export default LinkButton;
+        <span className="sr-only">About {href}</span>
+
+        {Icon && <Icon className={iconClassNames} />}
+      </div>
+    </Link>
+  );
+}

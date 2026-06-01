@@ -7,6 +7,7 @@
   "categories": [
     "components"
   ],
+  "tier": "pro",
   "dependencies": [
     "lucide-react"
   ],
@@ -18,14 +19,12 @@
     {
       "path": "modal.jsx",
       "type": "registry:component",
-      "target": "components/hyperiux/modal.jsx",
-      "content": "\"use client\";\n\nimport { useEffect } from \"react\";\nimport { X } from \"lucide-react\";\nimport \"./modal.css\";\n\nexport default function Modal({\n  isOpen = false,\n  onClose,\n  children,\n  className = \"\",\n  contentClassName = \"\",\n  showCloseButton = true,\n  closeOnBackdrop = true,\n  closeOnEsc = true,\n  closeButtonClassName = \"\",\n}) {\n  useEffect(() => {\n    if (!isOpen) return undefined;\n\n    const handleKeyDown = (event) => {\n      if (closeOnEsc && event.key === \"Escape\") onClose?.();\n    };\n\n    document.addEventListener(\"keydown\", handleKeyDown);\n    document.body.style.overflow = \"hidden\";\n\n    return () => {\n      document.removeEventListener(\"keydown\", handleKeyDown);\n      document.body.style.overflow = \"\";\n    };\n  }, [closeOnEsc, isOpen, onClose]);\n\n  return (\n    <div\n      className={`custom-modal ${className} duration-500 ${\n        isOpen ? \"pointer-events-auto opacity-100\" : \"pointer-events-none opacity-0\"\n      }`}\n    >\n      <button\n        type=\"button\"\n        className=\"custom-modal__backdrop\"\n        aria-label=\"Close modal\"\n        onClick={closeOnBackdrop ? onClose : undefined}\n      />\n\n      <div className={`custom-modal__content ${contentClassName}`}>\n        {showCloseButton ? (\n          <button\n            type=\"button\"\n            className={`custom-modal__close ${closeButtonClassName}`}\n            onClick={onClose}\n            aria-label=\"Close modal\"\n          >\n            <X size={24} />\n          </button>\n        ) : null}\n        {children}\n      </div>\n    </div>\n  );\n}\n"
+      "target": "components/hyperiux/modal.jsx"
     },
     {
       "path": "modal.css",
       "type": "registry:style",
-      "target": "styles/modal.css",
-      "content": ".custom-modal {\n  position: fixed;\n  inset: 0;\n  z-index: 9999;\n}\n\n.custom-modal__backdrop {\n  position: absolute;\n  inset: 0;\n  border: 0;\n  background: rgba(0, 0, 0, 0.82);\n  backdrop-filter: blur(10px);\n  cursor: pointer;\n}\n\n.custom-modal__content {\n  position: relative;\n  z-index: 1;\n  display: flex;\n  width: 100vw;\n  height: 100vh;\n  align-items: center;\n}\n\n.custom-modal__close {\n  position: absolute;\n  top: 1.5vw;\n  right: 1.5vw;\n  z-index: 20;\n  display: flex;\n  min-width: 42px;\n  min-height: 42px;\n  width: 3vw;\n  height: 3vw;\n  align-items: center;\n  justify-content: center;\n  border: 0;\n  border-radius: 999px;\n  background: rgba(0, 0, 0, 0.8);\n  color: #fff;\n  cursor: pointer;\n  backdrop-filter: blur(10px);\n}\n"
+      "target": "styles/modal.css"
     }
   ]
 }

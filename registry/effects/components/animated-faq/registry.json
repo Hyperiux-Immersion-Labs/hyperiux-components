@@ -4,7 +4,12 @@
   "title": "Animated FAQ",
   "description": "Accessible accordion-style FAQ component with smooth GSAP animations",
   "category": "components",
-  "dependencies": ["gsap"],
-  "registryDependencies": ["chevron-bird"],
-  "previewUrl": "/animated-faq"
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [
+    "chevron-bird"
+  ],
+  "previewUrl": "/animated-faq",
+  "tier": "pro"
 }

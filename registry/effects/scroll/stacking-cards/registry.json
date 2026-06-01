@@ -4,7 +4,11 @@
   "title": "Stacking Cards",
   "description": "Full-screen card sequence that stacks, tilts, and reveals the next scene on scroll",
   "category": "scroll",
-  "dependencies": ["gsap", "next"],
+  "dependencies": [
+    "gsap",
+    "next"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/stacking-cards"
+  "previewUrl": "/stacking-cards",
+  "tier": "free"
 }

@@ -4,7 +4,10 @@
   "title": "Scroll Stack",
   "description": "Successive content cards that hand off focus and fade as the next section enters",
   "category": "scroll",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/stacked-card"
+  "previewUrl": "/stacked-card",
+  "tier": "pro"
 }

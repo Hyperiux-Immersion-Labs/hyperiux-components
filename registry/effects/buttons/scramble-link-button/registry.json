@@ -6,5 +6,6 @@
   "category": "buttons",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/buttons/scramble-link-button"
+  "previewUrl": "/buttons/scramble-link-button",
+  "tier": "pro"
 }

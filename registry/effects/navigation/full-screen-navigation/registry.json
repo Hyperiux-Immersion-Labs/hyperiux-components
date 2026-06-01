@@ -4,7 +4,10 @@
   "title": "Immersive Full screen Navigation",
   "description": "Clip-path powered full-screen navigation overlay with animated hamburger transitions",
   "category": "navigation",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/navigation/immersive-fullscreen-nav"
+  "previewUrl": "/navigation/immersive-fullscreen-nav",
+  "tier": "pro"
 }

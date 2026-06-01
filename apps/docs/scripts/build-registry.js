@@ -149,6 +149,14 @@ async function buildRegistry() {
         registryJson.name,
         registryJson.coverImage
       );
+      const effectTier = registryJson.tier === "free" ? "free" : "pro";
+
+      // Pro effect files have their content stripped from the public registry.
+      // The actual source is served by the protected API route /api/effects/[slug].
+      const publicFiles = effectTier === "pro"
+        ? fileContents.map(({ content: _content, ...rest }) => rest)
+        : fileContents;
+
       const registryItem = {
         name: registryJson.name,
         type: registryJson.type || "registry:component",
@@ -156,12 +164,13 @@ async function buildRegistry() {
         description: registryJson.description,
         category: primaryCategory,
         categories: categories_list,
+        tier: effectTier,
         dependencies: registryJson.dependencies || [],
         registryDependencies: registryJson.registryDependencies || [],
         previewUrl: registryJson.previewUrl || null,
         coverImage: resolvedCoverImage,
         videoUrl: resolvedVideoUrl,
-        files: fileContents,
+        files: publicFiles,
       };
 
       // Write individual effect JSON
@@ -177,6 +186,7 @@ async function buildRegistry() {
         description: registryJson.description,
         category: primaryCategory,
         categories: categories_list,
+        tier: effectTier,
         dependencies: registryJson.dependencies || [],
         previewUrl: registryJson.previewUrl || null,
         coverImage: resolvedCoverImage,

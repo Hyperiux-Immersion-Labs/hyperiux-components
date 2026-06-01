@@ -36,7 +36,7 @@ export default function Page() {
                     <div className="h-[35vw] w-[40vw] max-md:w-full max-md:h-[40vw] bg-red-500 rounded-lg overflow-hidden">
                         <Image
                             alt="Square Translate"
-                            src="/assets/img/image11.png"
+                            src="/assets/img/laptop.png"
                             width={1000}
                             height={1000}
                             className="w-full h-full object-cover"

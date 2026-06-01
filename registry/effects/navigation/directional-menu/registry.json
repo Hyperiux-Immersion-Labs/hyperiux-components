@@ -4,7 +4,12 @@
   "title": "Directional Menu",
   "description": "Mega menu with directional content transitions using GSAP",
   "category": "navigation",
-  "dependencies": ["gsap"],
-  "registryDependencies": ["chevron-bird"],
-  "previewUrl": "/navigation/directional-menu"
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [
+    "chevron-bird"
+  ],
+  "previewUrl": "/navigation/directional-menu",
+  "tier": "pro"
 }

@@ -29,7 +29,7 @@ const MENU_ITEMS = [
   },
   {
     name: "Extras",
-    href: "/extras",
+    href: "#",
     isDropdown: false,
     dropdown: null,
   },

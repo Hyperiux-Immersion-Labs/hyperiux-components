@@ -4,7 +4,10 @@
   "title": "Text Hover Expand",
   "description": "Expandable text list with hover/click to reveal descriptions and animated corner brackets",
   "category": "text",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/text-hover"
+  "previewUrl": "/text-hover",
+  "tier": "pro"
 }

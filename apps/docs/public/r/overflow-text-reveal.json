@@ -7,6 +7,7 @@
   "categories": [
     "text"
   ],
+  "tier": "pro",
   "dependencies": [
     "gsap"
   ],
@@ -18,8 +19,7 @@
     {
       "path": "overflow-text-reveal.jsx",
       "type": "registry:component",
-      "target": "components/hyperiux/overflow-text-reveal.jsx",
-      "content": "\"use client\";\n\nimport React, { useEffect, useRef } from \"react\";\nimport gsap from \"gsap\";\nimport { SplitText } from \"gsap/SplitText\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\n\ngsap.registerPlugin(SplitText, ScrollTrigger);\n\nexport function OverflowTextReveal({\n  children,\n  animateOnScroll = true,\n  delay = 0,\n  className = \"\",\n  scrub = true,\n}) {\n  const containerRef = useRef(null);\n  const splitRefs = useRef([]);\n  const linesRef = useRef([]);\n  const triggersRef = useRef([]);\n\n  useEffect(() => {\n    const el = containerRef.current;\n    if (!el) return;\n\n    const prefersReduced =\n      window.matchMedia &&\n      window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n\n    splitRefs.current = [];\n    linesRef.current = [];\n    triggersRef.current = [];\n\n    const elements = Array.from(el.children);\n\n    const waitForFonts = async () => {\n      if (document.fonts && document.fonts.ready) {\n        try {\n          await document.fonts.ready;\n        } catch {}\n      }\n    };\n\n    let unmounted = false;\n\n    (async () => {\n      await waitForFonts();\n      if (unmounted) return;\n\n      elements.forEach((element) => {\n        const split = SplitText.create(element, {\n          type: \"lines\",\n          mask: \"lines\",\n          linesClass: \"line\",\n          lineThreshold: 0.1,\n        });\n\n        splitRefs.current.push(split);\n\n        const textIndent = getComputedStyle(element).textIndent;\n        if (textIndent && textIndent !== \"0px\" && split.lines.length > 0) {\n          split.lines[0].style.paddingLeft = textIndent;\n          element.style.textIndent = \"0\";\n        }\n\n        linesRef.current.push(...split.lines);\n      });\n\n      if (!linesRef.current.length) return;\n\n      if (prefersReduced) {\n        gsap.set(linesRef.current, { y: \"0%\" });\n        return;\n      }\n\n      gsap.set(linesRef.current, { y: \"100%\" });\n\n      const animationProps = {\n        y: \"0%\",\n        duration: 1.4,\n        stagger: 0.15,\n        ease: \"power4.out\",\n        delay,\n        onComplete: () =>\n          gsap.set(linesRef.current, { clearProps: \"transform\" }),\n      };\n\n      if (animateOnScroll) {\n        const tween = gsap.to(linesRef.current, {\n          ...animationProps,\n          scrollTrigger: {\n            trigger: el,\n            start: \"top 70%\",\n            scrub,\n          },\n        });\n\n        if (tween?.scrollTrigger) {\n          triggersRef.current.push(tween.scrollTrigger);\n        }\n      } else {\n        gsap.to(linesRef.current, animationProps);\n      }\n    })();\n\n    return () => {\n      unmounted = true;\n\n      triggersRef.current.forEach((trigger) => trigger?.kill());\n      triggersRef.current = [];\n\n      splitRefs.current.forEach((split) => split?.revert());\n      splitRefs.current = [];\n\n      linesRef.current = [];\n    };\n  }, [animateOnScroll, delay, scrub]);\n\n  return (\n    <div ref={containerRef} data-copy-wrapper=\"true\" className={className}>\n      {children}\n    </div>\n  );\n}\n\nexport default OverflowTextReveal;\n"
+      "target": "components/hyperiux/overflow-text-reveal.jsx"
     }
   ]
 }

@@ -4,7 +4,10 @@
   "title": "Overflow Text Reveal",
   "description": "Text lines slide up from hidden overflow with smooth stagger animation on scroll",
   "category": "text",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/overflow-text-reveal"
+  "previewUrl": "/overflow-text-reveal",
+  "tier": "pro"
 }
