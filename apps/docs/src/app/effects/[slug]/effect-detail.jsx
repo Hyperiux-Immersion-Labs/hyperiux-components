@@ -598,7 +598,7 @@ function TutorialBlock({
           </h3>
         )}
 
-        <div className="max-h-[30vw] overflow-y-auto rounded-lg border border-border/60 fadeup">
+        <div className="">
           <CodeBlock
             code={resolvedCode}
             language={block.language || "jsx"}
@@ -843,7 +843,7 @@ headings.forEach((el, index) => {
   if (items.length === 0) return null;
 
   return (
-    <div className="rounded-lg border border-border/30 bg-black/20 backdrop-blur-md p-5 mt-6">
+    <div className="rounded-md border border-border/60 bg-black/20 backdrop-blur-md p-5 mt-6">
       <p className="text-sm font-medium text-muted uppercase tracking-wider mb-3">
         On this page
       </p>

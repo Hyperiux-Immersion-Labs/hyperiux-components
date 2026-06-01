@@ -1,12 +1,5 @@
-import React from 'react'
-import MagnetLogo from '@/components/CollidingModels/MagneticEffect'
+import { redirect } from "next/navigation";
 
-const page = () => {
-  return (
-    <>
-      <MagnetLogo />
-    </>
-  )
+export default function Page() {
+  redirect("/webgl/colliding-models");
 }
-
-export default page

@@ -48,7 +48,7 @@ export default function DocsTable({
   return (
     <div
       className={cx(
-        "w-full overflow-x-auto rounded-lg border border-border/30 bg-black/20 backdrop-blur-md fadeup",
+        "w-full overflow-x-auto rounded-lg border border-border/60 bg-black/20 backdrop-blur-md fadeup",
         className
       )}
       {...props}
@@ -59,7 +59,7 @@ export default function DocsTable({
         ) : null}
 
         {normalizedColumns.length ? (
-          <thead className="border-b border-border/30">
+          <thead className="border-b border-border/60">
             <tr className={cx("align-top", headerRowClassName)}>
               {normalizedColumns.map((col, idx) => (
                 <th
@@ -67,7 +67,7 @@ export default function DocsTable({
                   scope="col"
                   className={cx(
                     "px-4 py-3 text-sm font-medium text-foreground/80",
-                    idx === 0 ? "" : "border-l border-border/20",
+                    idx === 0 ? "" : "border-l border-border/60",
                     col.headerClassName,
                     headerCellClassName
                   )}
@@ -79,7 +79,7 @@ export default function DocsTable({
           </thead>
         ) : null}
 
-        <tbody className="divide-y divide-border/20">
+        <tbody className="divide-y divide-border/60">
           {rows.map((row, rowIdx) => (
             <tr key={rowIdx} className={cx("align-top", bodyRowClassName)}>
               {normalizedColumns.map((col, colIdx) => {
@@ -101,7 +101,7 @@ export default function DocsTable({
                     key={col.key ?? colIdx}
                     className={cx(
                       "px-4 py-3 text-sm md:text-base leading-relaxed text-muted",
-                      colIdx === 0 ? "" : "border-l border-border/20",
+                      colIdx === 0 ? "" : "border-l border-border/60",
                       col.cellClassName,
                       cellClassName
                     )}

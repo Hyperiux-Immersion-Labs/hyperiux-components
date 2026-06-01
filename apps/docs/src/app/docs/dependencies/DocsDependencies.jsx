@@ -67,7 +67,7 @@ export default function DocsDependencies() {
 
       <Para>
         When utilizing Method A, the Hyperiux CLI, to add an effect, our scaffolding engine
-        will automatically audit your <strong>package.json</strong>, install missing peer
+        will automatically audit your <span className="text-primary">package.json</span>, install missing peer
         engines dynamically, and isolate their application scope.
       </Para>
 
@@ -122,7 +122,7 @@ export default function DocsDependencies() {
             category: "Scroll Behaviors",
             deps: (
               <>
-                <strong>framer-motion</strong>, <strong>gsap</strong>
+                <span className="text-primary">framer-motion</span>, <span className="text-primary">gsap</span>
               </>
             ),
             purpose: "Smooth frame interpolation, kinetic scroll tracking, and timeline scrub pinning.",
@@ -131,7 +131,7 @@ export default function DocsDependencies() {
             category: "Cursor Systems",
             deps: (
               <>
-                <strong>gsap</strong>
+                <span className="text-primary">gsap</span>
               </>
             ),
             purpose: "Sub-pixel pointer tracking, physical inertia calculations, and magnetic attraction arrays.",
@@ -140,7 +140,7 @@ export default function DocsDependencies() {
             category: "Typographic Motion",
             deps: (
               <>
-                <strong>framer-motion</strong>, <strong>gsap</strong>
+                <span className="text-primary">framer-motion</span>, <span className="text-primary">gsap</span>
               </>
             ),
             purpose: "Complex text-splitting, character layout morphing, and dynamic sequencing.",
@@ -149,7 +149,7 @@ export default function DocsDependencies() {
             category: "Page Transitions",
             deps: (
               <>
-                <strong>framer-motion</strong>
+                <span className="text-primary">framer-motion</span>
               </>
             ),
             purpose: "Route-listener orchestration and fluid layout continuity during mounting and unmounting.",
@@ -158,8 +158,8 @@ export default function DocsDependencies() {
             category: "WebGL & Creative UI",
             deps: (
               <>
-                <strong>three</strong>, <strong>@react-three/fiber</strong>,{" "}
-                <strong>@react-three/drei</strong>
+                <span className="text-primary">three</span>, <span className="text-primary">@react-three/fiber</span>,{" "}
+                <span className="text-primary">@react-three/drei</span>
               </>
             ),
             purpose:
@@ -259,7 +259,7 @@ rotate3d()`}
 
       <Para>
         This utility will thoroughly inspect your local repository space, map component
-        requirements against your <strong>package.json</strong>, and output precise
+        requirements against your <span className="text-primary">package.json</span>, and output precise
         installation directives to restore environment stability.
       </Para>
     </DocsContent>

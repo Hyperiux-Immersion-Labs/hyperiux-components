@@ -3,9 +3,9 @@
   "type": "registry:component",
   "title": "Colliding Models",
   "description": "Physics-driven colliding 3D connectors with transmission material and postprocessing, built with R3F + Rapier.",
-  "category": "components",
+  "category": "webgl",
   "categories": [
-    "components"
+    "webgl"
   ],
   "dependencies": [
     "three",
@@ -18,9 +18,9 @@
     "next"
   ],
   "registryDependencies": [],
-  "previewUrl": "/colliding-models",
-  "coverImage": "/assets/img/image01.webp",
-  "videoUrl": null,
+  "previewUrl": "/webgl/colliding-models",
+  "coverImage": "/assets/list/colliding-models.png",
+  "videoUrl": "colliding-models.mp4",
   "files": [
     {
       "path": "colliding-models.jsx",
