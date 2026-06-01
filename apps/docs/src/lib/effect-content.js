@@ -2567,7 +2567,7 @@ export default function ScrollDistortion({
       },
     },
   },
-  "backgrounds": {
+  backgrounds: {
     "spider-particles": {
       seo: {
         primaryKeyword: "React spider particles background",
@@ -3173,6 +3173,1930 @@ export default function SpiderParticles({
         primary: "Install Spider Particles",
         secondary: "View Interactive Effects",
         commercial: "Request a Custom Particle Experience",
+      },
+    },
+    "dotted-grid": {
+      seo: {
+        primaryKeyword: "React dotted grid background",
+        secondaryKeywords: [
+          "dotted background React",
+          "CSS dotted grid background",
+          "Next.js dotted background",
+          "animated dotted grid",
+          "SaaS website background",
+          "React background effect",
+        ],
+        title: "Dotted Grid Background for React & Next.js | Hyperiux Vault",
+        description:
+          "Add a clean dotted grid background to your React or Next.js website. Preview the effect, install it with the Hyperiux CLI, and customize it for SaaS, AI, product, developer tool, and technical landing pages.",
+      },
+
+      h1: "Dotted Grid Background for React and Next.js",
+
+      shortDescription:
+        "A clean dotted grid background for SaaS, AI, product, developer tool, and technical landing pages.",
+
+      heroCopy: [
+        "The Dotted Grid effect is the most commercially useful background effect in this category because it solves a common design problem: how do you make a technical or product website feel structured without making it visually heavy? Many SaaS, AI, fintech, developer tool, and product websites need a background system that adds depth, precision, and atmosphere. But full illustrations can feel too specific. Gradients can feel generic. 3D backgrounds can be too heavy. Dotted Grid offers a cleaner middle ground.",
+
+        "A dotted grid gives the page a sense of structure. It suggests systems, alignment, product thinking, technical architecture, interface design, or digital infrastructure without needing to explain any of that directly. It works especially well behind hero sections, feature blocks, product mockups, pricing sections, CTA areas, documentation intros, and developer-facing pages. The grid adds visual order while allowing the main content to stay clear.",
+
+        "For SaaS landing pages, Dotted Grid can help the hero section feel more designed without distracting from the product message. For AI product pages, it can suggest technical depth and system intelligence. For developer tool websites, it can reinforce a precise, engineering-led visual identity. For agencies and portfolios, it can add a clean structural layer behind case studies, project sections, or service pages.",
+
+        "The effect is powerful because it is flexible. It can be static, lightly animated, radial, masked, faded at the edges, used in dark mode, used in light mode, or blended with gradients. It can be subtle enough for enterprise products or more expressive for creative technology brands. It can sit behind text, but only when contrast is carefully managed.",
+
+        "The biggest mistake is making the grid too visible. A background should support hierarchy, not compete with it. If the dots are too large, too bright, too dense, or too animated, the page can feel noisy. The best version feels almost invisible at first glance but adds polish when the user looks closer.",
+
+        "Use Dotted Grid when your website needs a background that feels modern, technical, lightweight, and highly usable. It is one of the safest background effects for production websites because it gives visual depth without sacrificing performance or clarity.",
+      ],
+
+      bestUsedFor: [
+        "SaaS landing pages",
+        "AI product websites",
+        "Developer tool websites",
+        "Fintech websites",
+        "Technical product pages",
+        "Documentation intros",
+        "Hero backgrounds",
+        "Feature sections",
+        "CTA blocks",
+        "Dashboard marketing pages",
+      ],
+
+      tutorial: [
+        {
+          title: "Step 1: Install the effect",
+          body: "Install the effect using the Hyperiux CLI.",
+          blocks: [
+            {
+              type: "code",
+              title: "Installation",
+              code: "npx hyperiux add dotted-grid",
+              language: "bash",
+            },
+          ],
+        },
+
+        {
+          title: "Step 2: Place the background correctly",
+          body: "Place the Dotted Grid component inside a hero, feature, CTA, pricing, or page wrapper section. Keep content layered above the background.",
+        },
+
+        {
+          title: "Step 3: Add the component",
+          body: "Import the Dotted Grid component and render it inside your page or layout. The background fills the container and creates a structured technical visual layer behind the content.",
+          blocks: [
+            {
+              type: "code",
+              title: "Usage",
+              filename: "page.jsx",
+              language: "jsx",
+              code: `import DottedGrid from "@/components/DottedGrid/DottedGrid";
+import React from "react";
+
+const page = () => {
+  return (
+    <DottedGrid />
+  );
+};
+
+export default page;
+`,
+            },
+          ],
+        },
+
+        {
+          title: "Step 4: Adjust spacing and density",
+          body: "Set the dot size, grid spacing, and density. Tighter grids feel more technical; wider grids feel more premium and editorial.",
+        },
+
+        {
+          title: "Step 5: Keep the grid subtle",
+          body: "Keep the grid subtle. Use neutral tones, soft contrast, or brand accent colours only where appropriate. Use radial masks, edge fades, or gradient overlays to prevent the grid from feeling too rigid across the entire section.",
+        },
+
+        {
+          title: "Step 6: Tune responsiveness and polish",
+          body: "Tune grid colour, opacity, and contrast separately for light and dark backgrounds. Review responsiveness, motion intensity, pointer behaviour, and overall readability across desktop and mobile layouts.",
+          blocks: [
+            {
+              type: "code",
+              title: "Component Code",
+              filename: "dotted-grid.jsx",
+              language: "jsx",
+              code: `"use client";
+
+import { useEffect, useRef } from "react";
+
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+const SPACING = 24;
+const BASE_RADIUS = 7.2;
+const MOUSE_RADIUS = 380;
+const TRAIL_LENGTH = 456;
+const TRAIL_RADIUS = 230;
+const TRAIL_FADE_MS = 1200;
+
+const RANDOM_TIME = 0.6;
+const COLLECT_TIME = 1.1;
+const SHAPE_HOLD_TIME = 1.2;
+const GRAY_DISPERSE_TIME = 0.9;
+
+const TOTAL_CYCLE_TIME =
+  RANDOM_TIME +
+  COLLECT_TIME +
+  SHAPE_HOLD_TIME +
+  GRAY_DISPERSE_TIME;
+
+const TOTAL_SHAPES = 5;
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+const lerp = (a, b, t) => a + (b - a) * t;
+
+const clamp01 = (v) => Math.max(0, Math.min(1, v));
+
+const smoothstep = (e0, e1, v) => {
+  const t = clamp01((v - e0) / (e1 - e0));
+  return t * t * (3 - 2 * t);
+};
+
+// ─── Pure Shape Math ──────────────────────────────────────────────────────────
+
+const getStarStrength = (x, y, time, width, height) => {
+  const cx = width / 2;
+  const cy = height / 2;
+  const scale = Math.min(width, height) * 0.28;
+
+  const nx = (x - cx) / scale;
+  const ny = (y - cy) / scale;
+
+  const r = Math.sqrt(nx * nx + ny * ny);
+  const angle = Math.atan2(ny, nx);
+
+  const spikes = 5;
+  const star = Math.cos(spikes * angle);
+  const radius = 0.55 + 0.25 * star;
+
+  return clamp01(
+    1 - smoothstep(radius - 0.05, radius + 0.05, r)
+  );
+};
+
+const getSquareStrength = (x, y, width, height) => {
+  const cx = width / 2;
+  const cy = height / 2;
+  const scale = Math.min(width, height) * 0.26;
+
+  const rx = (x - cx) / scale;
+  const ry = (y - cy) / scale;
+
+  const d = Math.max(Math.abs(rx), Math.abs(ry));
+
+  return clamp01(1 - smoothstep(0.78, 0.82, d));
+};
+
+const getCircleRingStrength = (x, y, width, height) => {
+  const cx = width / 2;
+  const cy = height / 2;
+  const scale = Math.min(width, height) * 0.28;
+
+  const r = Math.sqrt(
+    ((x - cx) / scale) ** 2 +
+    ((y - cy) / scale) ** 2
+  );
+
+  return clamp01(
+    1 - smoothstep(0.13, 0.17, Math.abs(r - 0.72))
+  );
+};
+
+const getPlusStrength = (x, y, width, height) => {
+  const cx = width / 2;
+  const cy = height / 2;
+  const scale = Math.min(width, height) * 0.27;
+
+  const rx = (x - cx) / scale;
+  const ry = (y - cy) / scale;
+
+  const thickness = 0.18;
+  const length = 0.75;
+
+  const vertical =
+    Math.abs(rx) < thickness &&
+    Math.abs(ry) < length;
+
+  const horizontal =
+    Math.abs(ry) < thickness &&
+    Math.abs(rx) < length;
+
+  const d = Math.min(
+    Math.max(
+      Math.abs(rx) - thickness,
+      Math.abs(ry) - length
+    ),
+    Math.max(
+      Math.abs(ry) - thickness,
+      Math.abs(rx) - length
+    )
+  );
+
+  return vertical || horizontal
+    ? 1
+    : clamp01(1 - smoothstep(0, 0.06, d));
+};
+
+const getTriangleStrength = (
+  x,
+  y,
+  time,
+  width,
+  height
+) => {
+  const cx = width / 2;
+  const cy = height / 2;
+  const scale = Math.min(width, height) * 0.32;
+
+  const rotation = Math.sin(time * 0.3) * 0.12;
+
+  const cos = Math.cos(rotation);
+  const sin = Math.sin(rotation);
+
+  const rx =
+    ((x - cx) * cos - (y - cy) * sin) / scale;
+
+  const ry =
+    ((x - cx) * sin + (y - cy) * cos) / scale;
+
+  const a = Math.abs(rx) * 0.9 + ry * 0.52;
+  const b = -ry * 0.95;
+
+  return clamp01(
+    1 - smoothstep(0.38, 0.48, Math.max(a, b))
+  );
+};
+
+const getRawShapeStrength = (
+  shapeIndex,
+  x,
+  y,
+  time,
+  width,
+  height
+) => {
+  const i = shapeIndex % TOTAL_SHAPES;
+
+  if (i === 0)
+    return getStarStrength(x, y, time, width, height);
+
+  if (i === 1)
+    return getSquareStrength(x, y, width, height);
+
+  if (i === 2)
+    return getCircleRingStrength(x, y, width, height);
+
+  if (i === 3)
+    return getPlusStrength(x, y, width, height);
+
+  return getTriangleStrength(
+    x,
+    y,
+    time,
+    width,
+    height
+  );
+};
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
+export default function DottedGrid() {
+  const canvasRef = useRef(null);
+
+  const patternRef = useRef({
+    currentShapeIndex: 0,
+    transitionStartTime: null,
+  });
+
+  const mouseRef = useRef({
+    x: 0,
+    y: 0,
+    targetX: 0,
+    targetY: 0,
+    active: false,
+    trail: [],
+  });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+
+    const ctx = canvas.getContext("2d", {
+      alpha: false,
+    });
+
+    let width = 0;
+    let height = 0;
+    let dpr = window.devicePixelRatio || 1;
+    let animationId;
+    let dots = [];
+
+    // ─── Dot Setup ─────────────────────────────────────────────────────────────
+
+    const createDots = () => {
+      dots = [];
+
+      for (
+        let y = SPACING / 2;
+        y < height;
+        y += SPACING
+      ) {
+        for (
+          let x = SPACING / 2;
+          x < width;
+          x += SPACING
+        ) {
+          dots.push({
+            x,
+            y,
+            phase: Math.random() * Math.PI * 2,
+            speed: 0.3 + Math.random() * 1.0,
+            randomOffset: Math.random() * 10,
+            currentShapeStrength: 0,
+            currentRandomStrength: 1,
+            currentMouseStrength: 0,
+            currentTrailStrength: 0,
+            currentGrayDisperseStrength: 0,
+          });
+        }
+      }
+    };
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+
+      width = rect.width;
+      height = rect.height;
+
+      dpr = window.devicePixelRatio || 1;
+
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      createDots();
+    };
+
+    // ─── Event Handlers ────────────────────────────────────────────────────────
+
+    const handlePointerMove = (e) => {
+      const rect = canvas.getBoundingClientRect();
+
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      mouseRef.current.targetX = x;
+      mouseRef.current.targetY = y;
+      mouseRef.current.active = true;
+
+      mouseRef.current.trail.push({
+        x,
+        y,
+        t: performance.now(),
+      });
+
+      if (
+        mouseRef.current.trail.length >
+        TRAIL_LENGTH
+      ) {
+        mouseRef.current.trail.shift();
+      }
+    };
+
+    const handlePointerLeave = () => {
+      mouseRef.current.active = false;
+    };
+
+    const handleClick = () => {
+      patternRef.current.currentShapeIndex =
+        (patternRef.current.currentShapeIndex + 1) %
+        TOTAL_SHAPES;
+
+      patternRef.current.transitionStartTime =
+        performance.now() * 0.001;
+    };
+
+    // ─── Main Loop ─────────────────────────────────────────────────────────────
+
+    const animate = (ms) => {
+      const time = ms * 0.001;
+
+      const mouse = mouseRef.current;
+      const now = performance.now();
+
+      mouse.x = lerp(mouse.x, mouse.targetX, 0.12);
+      mouse.y = lerp(mouse.y, mouse.targetY, 0.12);
+
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(0, 0, width, height);
+
+      for (const dot of dots) {
+        // animation logic...
+      }
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    resize();
+
+    window.addEventListener("resize", resize);
+
+    canvas.addEventListener(
+      "pointermove",
+      handlePointerMove
+    );
+
+    canvas.addEventListener(
+      "pointerleave",
+      handlePointerLeave
+    );
+
+    canvas.addEventListener("click", handleClick);
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+
+      canvas.removeEventListener(
+        "pointermove",
+        handlePointerMove
+      );
+
+      canvas.removeEventListener(
+        "pointerleave",
+        handlePointerLeave
+      );
+
+      canvas.removeEventListener(
+        "click",
+        handleClick
+      );
+
+      cancelAnimationFrame(animationId);
+    };
+  }, []);
+
+  return (
+    <section className="relative h-screen w-full overflow-hidden bg-black">
+      <canvas
+        ref={canvasRef}
+        className="block h-full w-full cursor-pointer touch-none bg-black"
+      />
+
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-white/4 via-transparent to-black/40" />
+
+      <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_140px_rgba(0,0,0,0.95)]" />
+
+      <div className="hidden max-sm:flex fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md text-white text-center text-sm leading-tight pointer-events-none">
+        Works best on desktop
+        <br />
+        Here, tap & drag to explore
+      </div>
+    </section>
+  );
+}
+`,
+            },
+          ],
+        },
+      ],
+
+      customizationOptions: [
+        {
+          option: "Grid spacing",
+          recommendation:
+            "Tighter spacing creates a more technical system feel while wider spacing feels cleaner and more premium.",
+        },
+        {
+          option: "Dot size",
+          recommendation:
+            "Keep dots small and restrained so the background supports the layout instead of competing with it.",
+        },
+        {
+          option: "Opacity",
+          recommendation:
+            "Use subtle opacity values to maintain readability across large sections.",
+        },
+        {
+          option: "Edge masking",
+          recommendation:
+            "Use radial fades or gradient overlays to soften the outer boundaries of the grid.",
+        },
+        {
+          option: "Dark and light mode",
+          recommendation:
+            "Tune grid contrast independently for dark and light themes instead of using the same values globally.",
+        },
+        {
+          option: "Motion intensity",
+          recommendation:
+            "Keep movement minimal and ambient for production product pages and technical layouts.",
+        },
+      ],
+
+      notes: {
+        performance:
+          "Dotted Grid should be lightweight. Prefer CSS-based implementation where possible. Avoid expensive canvas or animation logic if a static CSS background achieves the same result.",
+
+        accessibility:
+          "Make sure the background does not reduce text contrast. Avoid placing dense dotted patterns directly behind small body copy, form labels, or important CTAs.",
+
+        mobile:
+          "On mobile, reduce density and contrast. Dense dot patterns can make small layouts feel busy.",
+      },
+
+      commonMistakes: [
+        "Making dots too bright",
+        "Using too much grid density",
+        "Placing the grid behind small text",
+        "Over-animating the background",
+        "Not tuning for light and dark mode",
+        "Using strong brand colours everywhere",
+        "Forgetting responsive spacing",
+      ],
+
+      relatedEffectNames: [
+        "Dither Canvas",
+        "Spider Particles",
+        "Square Translate",
+        "Grid Lift",
+        "Grid Tunnel",
+      ],
+
+      faq: [
+        {
+          question: "Is Dotted Grid suitable for SaaS websites?",
+          answer:
+            "Yes. It is one of the safest background effects for SaaS, AI, fintech, developer tools, and product marketing websites.",
+        },
+        {
+          question: "Does Dotted Grid need JavaScript?",
+          answer:
+            "Usually no. A dotted grid can often be implemented with CSS, making it lightweight and production-friendly.",
+        },
+        {
+          question: "Can the grid be animated?",
+          answer:
+            "Yes, but animation should be subtle. For most product pages, a static or lightly masked grid is enough.",
+        },
+        {
+          question: "Can I use it behind text?",
+          answer:
+            "Yes, if contrast is carefully managed. Keep opacity low and avoid dense patterns behind long body copy.",
+        },
+      ],
+
+      finalCta: {
+        body: "Use Dotted Grid when your product page needs structure, depth, and a clean technical background without visual noise.",
+        primary: "Install Dotted Grid",
+        secondary: "View Background Effects",
+        commercial: "Request a Custom Dotted Grid Background",
+      },
+    },
+  },
+  components: {
+    "hover-stack": {
+      seo: {
+        primaryKeyword: "React hover stack cards",
+        secondaryKeywords: [
+          "stacked cards React",
+          "hover stack component",
+          "interactive card stack",
+          "Next.js stacked cards",
+          "animated card stack",
+          "portfolio hover cards",
+        ],
+
+        title: "Hover Stack Cards for React & Next.js | Hyperiux Vault",
+
+        description:
+          "Create interactive stacked card layouts for React and Next.js websites. Add hover-based depth, layered motion, and premium card interactions for portfolios, SaaS websites, agencies, testimonials, and product sections.",
+      },
+
+      h1: "Hover Stack Cards for React and Next.js",
+
+      shortDescription:
+        "An interactive stacked card component for portfolios, SaaS websites, agencies, testimonials, and premium content layouts.",
+
+      heroCopy: [
+        "The Hover Stack component is designed for websites that want stacked content to feel interactive without requiring scroll sequences or complex navigation. A stack of cards naturally suggests depth, hierarchy, and grouped information. Hover Stack adds a direct interaction: when users hover over the stack or a specific card, the layers can spread, lift, shift, fan out, or reveal additional content. This makes the stack feel more tactile and discoverable.",
+
+        "This component is especially useful for portfolios, agency websites, product cards, feature previews, service blocks, team sections, testimonial cards, resource cards, and creative landing pages. It can turn a compact content block into something more engaging. Instead of displaying all details upfront, the stack can reveal depth through hover interaction.",
+
+        "For portfolios, Hover Stack can show multiple project images or case study previews in a compact footprint. For agency websites, it can present service layers, process steps, deliverables, or proof points. For SaaS and product websites, it can show related features, product cards, use cases, or interface states. For editorial or resource pages, it can make article groups or content previews feel more dynamic.",
+
+        "The effect works best when the stack has a clear purpose. If the layers are purely decorative, users may interact once and move on. If each layer communicates something useful - an image, stat, label, preview, or CTA - the interaction becomes more valuable. The hover behaviour should also be predictable. Users should understand that the stack can be interacted with and should not lose access to content when hover ends.",
+
+        "The biggest risk is hiding important information behind hover. Since hover is not available on most touch devices, critical content should remain accessible in another format. On mobile, the stack can become a tap-to-expand component, swipeable cards, or a vertical list.",
+
+        "Use Hover Stack when a compact content group needs depth, motion, and tactile interaction. It is best for creative and marketing websites where card-based content should feel more premium than a static grid.",
+      ],
+
+      bestUsedFor: [
+        "Portfolio previews",
+        "Project cards",
+        "Service cards",
+        "Product feature cards",
+        "Team cards",
+        "Testimonial groups",
+        "Resource cards",
+        "Process previews",
+        "Creative landing pages",
+        "Agency capability sections",
+      ],
+
+      tutorial: [
+        {
+          title: "Step 1: Install the component",
+
+          body: "Install the Hover Stack component using the Hyperiux CLI.",
+
+          blocks: [
+            {
+              type: "code",
+              title: "Installation",
+              code: "npx hyperiux add hover-stack",
+              language: "bash",
+            },
+          ],
+        },
+
+        {
+          title: "Step 2: Create a card group",
+
+          body: "Create a small group of cards with images, labels, titles, testimonials, or short descriptions. Keep each card visually simple so the interaction stays clear.",
+        },
+
+        {
+          title: "Step 3: Add the component",
+
+          body: "Import the Hover Stack component and pass your card data into the layout. The stack automatically creates layered depth and interactive hover behaviour.",
+
+          blocks: [
+            {
+              type: "code",
+              title: "Usage",
+              filename: "page.jsx",
+              language: "jsx",
+
+              code: `import StackedHoverCards from "@/components/StackHoverCards/StackedHoverCards";
+import React from "react";
+
+const cards = [
+  {
+    id: 1,
+    quote:
+      "A must-have for anyone looking to save time and boost productivity.",
+    tag: "Efficiency",
+    bg: "#E4FF1A",
+    accent: "text-[#1A1A1A]",
+  },
+
+  {
+    id: 2,
+    quote:
+      "This tech has completely streamlined my daily tasks.",
+    tag: "Workflow",
+    bg: "#DD1155",
+    accent: "text-[#ffffff]",
+  },
+
+  {
+    id: 3,
+    quote:
+      "Innovative and powerful, yet so easy to use!",
+    tag: "Simplicity",
+    bg: "#FF5714",
+    accent: "text-[#1A1A1A]",
+  },
+];
+
+const TestimonialsSection = () => {
+  return (
+    <StackedHoverCards
+      cards={cards}
+      cardWidth={280}
+      cardHeight={360}
+      overlap={96}
+      pushDistance={235}
+      hoverLift={30}
+    />
+  );
+};
+
+export default TestimonialsSection;
+`,
+            },
+          ],
+        },
+
+        {
+          title: "Step 4: Configure motion behaviour",
+
+          body: "Choose whether cards lift, fan out, shift, rotate, or reveal details on hover. Use movement carefully so the interaction feels intentional instead of chaotic.",
+        },
+
+        {
+          title: "Step 5: Support accessibility and mobile",
+
+          body: "Add active and focus states for keyboard users. On mobile, adapt the desktop hover interaction into tap-to-expand cards, swipeable layouts, or vertical stacked content.",
+        },
+
+        {
+          title: "Step 6: Optimize the interaction",
+
+          body: "Tune spacing, overlap, animation speed, layering depth, and responsiveness. Keep the interaction smooth and predictable across different viewport sizes.",
+
+          blocks: [
+            {
+              type: "code",
+              title: "Component Code",
+              filename: "hover-stack.jsx",
+              language: "jsx",
+
+              code: `"use client";
+
+import React, { useMemo, useState } from "react";
+
+const PRESET_ROTATIONS = [-8, 4, -3, 5, -4, 6, 3, -6, 2, -5];
+
+const StackedHoverCards = ({
+    cards = [],
+    cardWidth = 280,
+    cardHeight = 360,
+    overlap = 92,
+    hoverLift = 28,
+    pushDistance = 110,
+    className = "",
+}) => {
+    const [activeIndex, setActiveIndex] = useState(null);
+
+    const preparedCards = useMemo(() => {
+        return cards.map((card, index) => {
+            const rotation =
+                PRESET_ROTATIONS[index % PRESET_ROTATIONS.length] +
+                (index % 2 === 0 ? 0 : 1);
+
+            const baseX = index * overlap;
+
+            return {
+                ...card,
+                _rotation: rotation,
+                _baseX: baseX,
+                _baseZ: index + 1,
+            };
+        });
+    }, [cards, overlap]);
+
+    const getCardStyle = (card, index) => {
+        const isActive = activeIndex === index;
+        const hasActive = activeIndex !== null;
+
+        let x = card._baseX;
+        let y = 0;
+        let rotate = card._rotation;
+        let zIndex = card._baseZ;
+        let scale = 1;
+
+        if (hasActive) {
+            if (index < activeIndex) {
+                x -= pushDistance;
+            } else if (index > activeIndex) {
+                x += pushDistance;
+            }
+
+            if (isActive) {
+                x = card._baseX;
+                y = -hoverLift;
+                rotate = 0;
+                zIndex = 999;
+                scale = 1.035;
+            }
+        }
+
+        const transition = isActive
+            ? "transform 480ms cubic-bezier(0.22, 1.6, 0.32, 1), box-shadow 900ms cubic-bezier(0.22, 1.6, 0.32, 1)"
+            : hasActive
+                ? "transform 700ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 700ms cubic-bezier(0.22, 1, 0.36, 1)"
+                : "transform 480ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 380ms cubic-bezier(0.4, 0, 0.2, 1)";
+
+        return {
+            "--card-width": \`\${cardWidth}px\`,
+            "--card-height": \`\${cardHeight}px\`,
+            transform: \`translate3d(\${x}px, \${y}px, 0) rotate(\${rotate}deg) scale(\${scale})\`,
+            zIndex,
+            transition,
+            background: card.bg,
+        };
+    };
+
+    const totalWidth =
+        preparedCards.length > 0
+            ? preparedCards.at(-1)._baseX + cardWidth
+            : cardWidth;
+
+    return (
+        <div className={\`relative w-full px-[7vw] \${className}\`}>
+            {/* desktop */}
+            <div
+                className="relative mx-auto max-md:hidden"
+                style={{
+                    "--stack-width": \`\${totalWidth}px\`,
+                    "--stack-height": \`\${cardHeight + hoverLift + 24}px\`,
+                    width: "var(--stack-width)",
+                    height: "var(--stack-height)",
+                }}
+            >
+                {preparedCards.map((card, index) => (
+                    <div
+                        key={card.id ?? index}
+                        className={\`absolute top-0 left-0 flex h-(--card-height) w-(--card-width) cursor-pointer select-none flex-col justify-between overflow-hidden rounded-[1.667vw] border border-black/10 p-[1.667vw] origin-[center_center] will-change-transform \${card.accent || ""}\`}
+                        style={getCardStyle(card, index)}
+                        onMouseEnter={() => setActiveIndex(index)}
+                        onMouseLeave={() => setActiveIndex(null)}
+                    >
+                        <div />
+
+                        <div className="relative z-2 flex flex-1 items-center">
+                            <p className="m-0 max-w-[92%] text-[1.9rem] leading-[0.95] tracking-tighter">
+                                “{card.quote}”
+                            </p>
+                        </div>
+
+                        <div className="relative z-2 flex flex-col gap-[1.111vw]">
+                            <div className="h-[0.069vw] w-full bg-black/20" />
+
+                            <div className="flex items-center justify-between gap-[1.111vw]">
+                                <div className="flex items-center gap-[0.556vw]">
+                                    <div className="flex size-[2.5vw] items-center justify-center rounded-full border border-black/10 bg-black text-[0.9rem] text-white shadow-[0_0.417vw_0.972vw_rgba(0,0,0,0.12)]">
+                                        ↗
+                                    </div>
+
+                                    <span className="text-[0.833vw] font-semibold uppercase tracking-[0.14em]">
+                                        Explore
+                                    </span>
+                                </div>
+
+                                <span className="text-[0.764vw] uppercase tracking-[0.16em] opacity-70">
+                                    0{index + 1}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* tablet + mobile */}
+            <div className="hidden flex-col gap-[1.563vw] max-md:flex max-md:gap-[2.083vw] max-sm:gap-[8.8vw]">
+                {cards.map((card, index) => (
+                    <div
+                        key={card.id ?? index}
+                        className={\`relative flex min-h-[20.313vw] w-full cursor-default select-none flex-col justify-between overflow-hidden rounded-[2.148vw] border border-black/10 p-[2.148vw] max-md:h-auto max-md:min-h-[25.391vw] max-md:rounded-[2.148vw] max-md:p-[2.148vw] max-md:transform-[none!important] max-md:[transition:none!important] max-sm:min-h-[58.667vw] max-sm:rounded-[4.8vw] max-sm:p-[4.8vw] \${card.accent || ""}\`}
+                        style={{
+                            background: card.bg,
+                        }}
+                    >
+                        <div />
+
+                        <div className="relative z-2 flex flex-1 items-center">
+                            <p className="m-0 max-w-full text-[1.55rem] leading-none tracking-tighter max-sm:text-[1.2rem] max-sm:leading-[1.05] max-sm:tracking-[-0.04em]">
+                                “{card.quote}”
+                            </p>
+                        </div>
+
+                        <div className="relative z-2 flex flex-col gap-[1.563vw] max-md:gap-[2.083vw] max-sm:gap-[3.2vw]">
+                            <div className="h-[0.098vw] w-full bg-black/20 max-sm:h-[0.267vw]" />
+
+                            <div className="flex items-center justify-between gap-[1.563vw] max-md:gap-[2.083vw] max-sm:gap-[3.2vw]">
+                                <div className="flex items-center gap-[0.781vw] max-md:gap-[1.042vw] max-sm:gap-[2.1vw]">
+                                    <div className="flex size-[3.5vw] items-center justify-center rounded-full border border-black/10 bg-black text-[0.9rem] text-white shadow-[0_0.586vw_1.367vw_rgba(0,0,0,0.12)] max-md:size-[4.1vw] max-sm:size-[8.5vw] max-sm:text-[0.82rem]">
+                                        ↗
+                                    </div>
+
+                                    <span className="text-[1.172vw] font-semibold uppercase tracking-[0.14em] max-md:text-[1.367vw] max-sm:text-[2.667vw]">
+                                        Explore
+                                    </span>
+                                </div>
+
+                                <span className="text-[1vw] uppercase tracking-[0.16em] opacity-70 max-md:text-[1.2vw] max-sm:text-[2.6vw]">
+                                    0{index + 1}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default StackedHoverCards;
+`,
+            },
+          ],
+        },
+      ],
+
+      customizationOptions: [
+        {
+          option: "Card overlap",
+
+          recommendation:
+            "Smaller overlap creates a cleaner layered layout while larger overlap increases the stacked visual depth.",
+        },
+
+        {
+          option: "Hover lift",
+
+          recommendation:
+            "Use subtle lift distances for professional websites and larger lift values for more expressive creative layouts.",
+        },
+
+        {
+          option: "Rotation intensity",
+
+          recommendation:
+            "Keep card rotation restrained so the stack remains readable and visually organized.",
+        },
+
+        {
+          option: "Push distance",
+
+          recommendation:
+            "Increase spacing between neighbouring cards on hover to improve clarity and focus.",
+        },
+
+        {
+          option: "Animation timing",
+
+          recommendation:
+            "Use smooth easing curves and medium-duration transitions for premium interaction quality.",
+        },
+
+        {
+          option: "Mobile layout",
+
+          recommendation:
+            "Convert hover behaviour into tap, swipe, accordion, or vertical stacking patterns on touch devices.",
+        },
+      ],
+
+      notes: {
+        performance:
+          "Optimize assets and keep animations transform-based where possible. Avoid loading heavy previews or content until needed.",
+
+        accessibility:
+          "Support keyboard focus, semantic markup, accessible labels, and non-hover access to important content.",
+
+        mobile:
+          "Adapt desktop interaction patterns into tap, swipe, stacked, or simplified layouts on small screens.",
+      },
+
+      commonMistakes: [
+        "No mobile fallback",
+        "Weak active state",
+        "Poor keyboard support",
+        "Overloaded content",
+        "Slow transitions",
+        "Unoptimized assets",
+        "Overusing animation",
+      ],
+
+      relatedEffectNames: [
+        "Depth Card Stack",
+        "Interactive Hover Slider",
+        "Stacking Cards",
+        "Scroll Shuffled Cards",
+        "Interactive List Preview",
+      ],
+
+      faq: [
+        {
+          question: "What is this component best used for?",
+
+          answer:
+            "Hover Stack is best used when its interaction pattern directly supports browsing, clarity, trust, or conversion rather than acting as decoration.",
+        },
+
+        {
+          question: "Does it work on mobile?",
+
+          answer:
+            "Yes, but hover or dense desktop behaviours should be adapted into touch-friendly patterns.",
+        },
+
+        {
+          question: "Is it suitable for SaaS websites?",
+
+          answer:
+            "Yes when used to improve comprehension, proof, conversion, or product storytelling.",
+        },
+
+        {
+          question: "What is the main implementation risk?",
+
+          answer:
+            "The main risk is hiding content or creating interaction friction. Keep accessibility, keyboard behaviour, and fallbacks intact.",
+        },
+      ],
+
+      finalCta: {
+        body: "Use Hover Stack when the page needs a clearer, more polished, and more conversion-aware interaction pattern.",
+
+        primary: "Install Hover Stack",
+
+        secondary: "View Interactive Components",
+
+        commercial: "Request a Custom Hover Stack Component",
+      },
+    },
+    "gooey-counter": {
+      seo: {
+        primaryKeyword: "React gooey counter",
+        secondaryKeywords: [
+          "gooey counter animation",
+          "animated stats React",
+          "React number counter",
+          "Next.js animated counter",
+          "fluid counter animation",
+          "interactive statistics component",
+        ],
+        title: "Gooey Counter for React & Next.js | Hyperiux Vault",
+        description:
+          "Add a fluid gooey counter animation to your React or Next.js website. Perfect for SaaS stats, portfolio metrics, proof sections, dashboards, and interactive landing pages.",
+      },
+
+      h1: "Gooey Counter for React and Next.js",
+
+      shortDescription:
+        "A fluid animated counter component for statistics, proof sections, dashboards, and interactive product metrics.",
+
+      heroCopy: [
+        "The Gooey Counter component is designed for websites that want numbers to feel more animated, tactile, and visually memorable. Many landing pages use statistics to build trust: number of users, projects completed, hours saved, revenue processed, integrations supported, countries served, performance improvements, or customer outcomes. A standard count-up animation can work, but it is common. Gooey Counter adds a more playful, fluid motion style to numeric transitions.",
+
+        "This component is especially useful for creative websites, portfolio pages, SaaS landing pages, agency proof sections, product metrics, dashboard previews, campaign pages, and interactive data sections. It can make a statistics block feel more alive while still keeping the numbers readable. The gooey effect gives the digits a sense of elasticity, merging, or fluid movement as they change.",
+
+        "For agencies and portfolios, Gooey Counter can make proof metrics feel more distinctive: projects launched, industries served, awards won, page speed gains, conversion improvements, or years of experience. For SaaS websites, it can show product usage, automation volume, customer count, time saved, or performance metrics. For product pages, it can add a more interactive feel to quantified benefits.",
+
+        "The effect should be used carefully because numbers carry trust. If the animation is too playful or hard to read, it can reduce credibility. The counter should settle quickly into clear, legible digits. The gooey motion should add personality, not make the number feel unstable. It is better suited for creative, product, and marketing contexts than for financial dashboards or compliance-heavy data displays where precision must feel serious.",
+
+        "The best implementation pairs the animated number with a clear label and context. A number without context is weak. “120+” means little until users know whether it refers to projects, clients, integrations, or hours saved. The component should also avoid false precision or inflated claims.",
+
+        "Use Gooey Counter when you want statistics to feel more visual and engaging while still supporting trust. It is a niche component, but useful for proof sections that need more personality than a static metric grid.",
+      ],
+
+      bestUsedFor: [
+        "Agency proof sections",
+        "Portfolio metrics",
+        "SaaS landing page stats",
+        "Product usage metrics",
+        "Dashboard previews",
+        "Campaign counters",
+        "Performance result sections",
+        "Customer proof blocks",
+        "Creative statistics sections",
+        "Interactive data moments",
+      ],
+
+      tutorial: [
+        {
+          title: "Step 1: Install the component",
+          body: "Install the Gooey Counter component using the Hyperiux CLI.",
+          blocks: [
+            {
+              type: "code",
+              title: "Installation",
+              code: "npx hyperiux add gooey-counter",
+              language: "bash",
+            },
+          ],
+        },
+
+        {
+          title: "Step 2: Configure the counter values",
+          body: "Define the starting value, ending value, duration, and label for the statistic. Make sure the number has clear context so users understand what the metric represents.",
+        },
+
+        {
+          title: "Step 3: Add the component",
+          body: "Import the Gooey Counter component and render it inside your page, dashboard preview, proof section, or metrics block.",
+          blocks: [
+            {
+              type: "code",
+              title: "Usage",
+              filename: "page.jsx",
+              language: "jsx",
+              code: `import GooeyCounter from "@/components/GooeyCounter";
+import React from "react";
+
+const page = () => {
+  return (
+    <GooeyCounter />
+  );
+};
+
+export default page;
+`,
+            },
+          ],
+        },
+
+        {
+          title: "Step 4: Tune the gooey motion",
+          body: "Adjust blur intensity, transition timing, merge behaviour, elasticity, and digit movement. Keep the effect smooth but readable so the numbers remain trustworthy.",
+        },
+
+        {
+          title: "Step 5: Trigger animations correctly",
+          body: "Trigger the animation when the section enters the viewport or after a user interaction. Avoid replaying the animation repeatedly while scrolling.",
+        },
+
+        {
+          title: "Step 6: Respect accessibility and responsiveness",
+          body: "Provide reduced-motion fallbacks and make sure the digits remain readable across mobile, tablet, and desktop layouts.",
+          blocks: [
+            {
+              type: "code",
+              title: "Component Code",
+              filename: "gooey-counter.jsx",
+              language: "jsx",
+              code: `"use client";
+import { useEffect, useRef } from "react";
+
+const COLS = 22;
+const ROWS = 13;
+const ROWS_TABLET = 30;
+const ROWS_MOBILE = 32;
+const CELL_MAX = 48;
+const TRANSITION_MS = 480;
+const NUMBER_DWELL_MS = 1000;
+const RANDOM_DWELL_MS = 300;
+const RANGE_MIN = 0;
+const RANGE_MAX = 10;
+const BG = "#d1d1d1";
+const GRID_STROKE = "rgba(255,255,255,0.55)";
+const INK = "#111";
+const MOBILE_MAX_WIDTH = 768;
+const TABLET_MAX_WIDTH = 1024;
+const DIGIT_HEIGHT = 9;
+const DIGIT_WIDTH = 6;
+const DIGIT_GAP = 1;
+const MOBILE_DIGIT_HEIGHT = 13;
+const MOBILE_DIGIT_WIDTH = 8;
+const MOBILE_DIGIT_GAP = 1;
+
+const DIGIT_MAPS = {
+ 0: ["011100","110011","110011","110011","110011","110011","110011","110011","011100"],
+ 1: ["001100","011100","001100","001100","001100","001100","001100","001100","011110"],
+ 2: ["011100","110011","000011","000110","001100","011000","110000","110000","111111"],
+ 3: ["111100","000011","000011","000011","011100","000011","000011","000011","111100"],
+ 4: ["000110","001110","011010","110010","110010","111111","000010","000010","000010"],
+ 5: ["111111","110000","110000","110000","111100","000011","000011","000011","111100"],
+ 6: ["001110","011000","110000","110000","111100","110011","110011","110011","011100"],
+ 7: ["111111","000011","000011","000011","000110","001100","001100","011000","011000"],
+ 8: ["011100","110011","110011","110011","011100","110011","110011","110011","011100"],
+ 9: ["011100","110011","110011","110011","011111","000011","000011","000110","011000"],
+};
+
+function strokeize(rows) {
+ const h = rows.length, w = rows[0].length;
+ const on = (r, c) => r >= 0 && r < h && c >= 0 && c < w && rows[r][c] === "1";
+ return rows.map((row, r) =>
+  [...row].map((ch, c) => {
+   if (ch !== "1") return "0";
+   return (!on(r-1,c) || !on(r+1,c) || !on(r,c-1) || !on(r,c+1)) ? "1" : "0";
+  }).join("")
+ );
+}
+
+const STROKE = Object.fromEntries(
+ Object.entries(DIGIT_MAPS).map(([k, v]) => [k, strokeize(v)])
+);
+
+function getDigitMetrics(width) {
+ if (width <= MOBILE_MAX_WIDTH) {
+  return {
+   digitHeight: MOBILE_DIGIT_HEIGHT,
+   digitWidth: MOBILE_DIGIT_WIDTH,
+   digitGap: MOBILE_DIGIT_GAP,
+  };
+ }
+
+ return {
+  digitHeight: DIGIT_HEIGHT,
+  digitWidth: DIGIT_WIDTH,
+  digitGap: DIGIT_GAP,
+ };
+}
+
+function getScaledCellIndexes(index, sourceSize, targetSize) {
+ const start = Math.floor((index * targetSize) / sourceSize);
+ const end = Math.floor(((index + 1) * targetSize) / sourceSize);
+ const scaledIndexes = [];
+
+ for (let scaledIndex = start; scaledIndex < Math.max(start + 1, end); scaledIndex++) {
+  scaledIndexes.push(scaledIndex);
+ }
+
+ return scaledIndexes;
+}
+
+function getNumberCells(n, rows, width) {
+ const digits = [...String(n)].map(Number);
+ const { digitHeight, digitWidth, digitGap } = getDigitMetrics(width);
+ const totalW = digits.length * digitWidth + (digits.length - 1) * digitGap;
+ const startCol = Math.floor((COLS - totalW) / 2);
+ const rowOff = Math.max(0, Math.floor((rows - digitHeight) / 2));
+ const cells = [];
+
+ digits.forEach((d, i) => {
+  const baseCol = startCol + i * (digitWidth + digitGap);
+
+  STROKE[d].forEach((row, r) =>
+   [...row].forEach((ch, c) => {
+    if (ch !== "1") return;
+
+    const scaledRows = getScaledCellIndexes(r, DIGIT_HEIGHT, digitHeight);
+    const scaledCols = getScaledCellIndexes(c, DIGIT_WIDTH, digitWidth);
+
+    scaledRows.forEach(scaledRow => {
+     scaledCols.forEach(scaledCol => {
+      cells.push([scaledRow + rowOff, scaledCol + baseCol]);
+     });
+    });
+   })
+  );
+ });
+
+ return cells;
+}
+
+function computeMaxBlocks(rows, width) {
+ let max = 0;
+
+ for (let n = RANGE_MIN; n <= RANGE_MAX; n++) {
+  max = Math.max(max, getNumberCells(n, rows, width).length);
+ }
+
+ return max;
+}
+
+const lerp = (a, b, t) => a + (b - a) * t;
+const clamp01 = t => Math.max(0, Math.min(1, t));
+
+const easeInOut = t =>
+ t < 0.5
+  ? 4 * t * t * t
+  : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+function shuffle(arr) {
+ const a = [...arr];
+
+ for (let i = a.length - 1; i > 0; i--) {
+  const j = (Math.random() * (i + 1)) | 0;
+  [a[i], a[j]] = [a[j], a[i]];
+ }
+
+ return a;
+}
+
+function randomLayout(n, rows) {
+ const all = [];
+
+ for (let r = 0; r < rows; r++) {
+  for (let c = 0; c < COLS; c++) {
+   all.push([r, c]);
+  }
+ }
+
+ return shuffle(all).slice(0, n);
+}
+
+function getRowsForWidth(width) {
+ if (width <= MOBILE_MAX_WIDTH) return ROWS_MOBILE;
+ if (width <= TABLET_MAX_WIDTH) return ROWS_TABLET;
+ return ROWS;
+}
+
+function assignTargets(blocks, targets) {
+ const used = new Set();
+
+ blocks.slice(0, targets.length).forEach(b => {
+  let best = -1;
+  let bestD = Infinity;
+
+  targets.forEach(([tr, tc], i) => {
+   if (used.has(i)) return;
+
+   const d = (b.cr - tr) ** 2 + (b.cc - tc) ** 2;
+
+   if (d < bestD) {
+    bestD = d;
+    best = i;
+   }
+  });
+
+  used.add(best);
+
+  b.tr = targets[best][0];
+  b.tc = targets[best][1];
+  b.idle = false;
+ });
+
+ blocks.slice(targets.length).forEach(b => {
+  const t = targets[Math.floor(Math.random() * targets.length)];
+
+  b.tr = t[0];
+  b.tc = t[1];
+  b.idle = true;
+ });
+}
+
+function drawCapsule(ctx, x1, y1, x2, y2, r) {
+ const dx = x2 - x1;
+ const dy = y2 - y1;
+ const d = Math.hypot(dx, dy);
+
+ if (d < 0.001) {
+  ctx.beginPath();
+  ctx.arc(x1, y1, r, 0, Math.PI * 2);
+  ctx.fill();
+  return;
+ }
+
+ const nx = -dy / d;
+ const ny = dx / d;
+ const ang = Math.atan2(dy, dx);
+
+ ctx.beginPath();
+
+ ctx.moveTo(x1 + nx * r, y1 + ny * r);
+ ctx.lineTo(x2 + nx * r, y2 + ny * r);
+
+ ctx.arc(x2, y2, r, ang + Math.PI / 2, ang - Math.PI / 2);
+
+ ctx.lineTo(x1 - nx * r, y1 - ny * r);
+
+ ctx.arc(x1, y1, r, ang - Math.PI / 2, ang + Math.PI / 2);
+
+ ctx.closePath();
+ ctx.fill();
+}
+
+export default function GooeyCounter() {
+ const canvasRef = useRef(null);
+ const stateRef = useRef(null);
+
+ useEffect(() => {
+  const canvas = canvasRef.current;
+  const ctx = canvas.getContext("2d");
+
+  let offscreen = new OffscreenCanvas(1, 1);
+  let offCtx = offscreen.getContext("2d");
+
+  const sim = {
+   blocks: [],
+   phase: "idle",
+   nextNumber: RANGE_MIN + 1,
+   timer: null,
+   raf: null,
+   layout: null,
+   transition: null,
+   activeRows: ROWS,
+   viewportWidth: window.innerWidth,
+   maxBlocks: computeMaxBlocks(ROWS, window.innerWidth),
+  };
+
+  stateRef.current = sim;
+
+  function beginTransition(dur, onDone) {
+   for (const b of sim.blocks) {
+    b.sr = b.cr;
+    b.sc = b.cc;
+   }
+
+   sim.transition = {
+    start: performance.now(),
+    duration: dur,
+    onDone,
+   };
+  }
+
+  function goToNumber(n, onDone) {
+   const targets = getNumberCells(
+    n,
+    sim.activeRows,
+    sim.viewportWidth
+   );
+
+   while (sim.blocks.length < sim.maxBlocks) {
+    const p =
+     targets[Math.floor(Math.random() * targets.length)];
+
+    sim.blocks.push({
+     cr: p[0],
+     cc: p[1],
+     tr: p[0],
+     tc: p[1],
+     sr: p[0],
+     sc: p[1],
+     idle: true,
+    });
+   }
+
+   assignTargets(sim.blocks, targets);
+
+   beginTransition(TRANSITION_MS, onDone);
+  }
+
+  function goToRandom(onDone) {
+   const targets = randomLayout(
+    sim.maxBlocks,
+    sim.activeRows
+   );
+
+   sim.blocks.forEach((b, i) => {
+    b.tr = targets[i][0];
+    b.tc = targets[i][1];
+    b.idle = false;
+   });
+
+   beginTransition(TRANSITION_MS, onDone);
+  }
+
+  function loop() {
+   clearTimeout(sim.timer);
+
+   sim.timer = setTimeout(() => {
+    goToRandom(() => {
+     sim.timer = setTimeout(() => {
+      const n = sim.nextNumber;
+
+      sim.nextNumber =
+       n >= RANGE_MAX ? RANGE_MIN : n + 1;
+
+      goToNumber(n, loop);
+     }, RANDOM_DWELL_MS);
+    });
+   }, NUMBER_DWELL_MS);
+  }
+
+  function start() {
+   clearTimeout(sim.timer);
+
+   sim.blocks = [];
+   sim.nextNumber = RANGE_MIN + 1;
+   sim.transition = null;
+
+   const rpos = randomLayout(
+    sim.maxBlocks,
+    sim.activeRows
+   );
+
+   const firstTargets = getNumberCells(
+    RANGE_MIN,
+    sim.activeRows,
+    sim.viewportWidth
+   );
+
+   sim.blocks = rpos.map(p => ({
+    cr: p[0],
+    cc: p[1],
+    tr: p[0],
+    tc: p[1],
+    sr: p[0],
+    sc: p[1],
+    idle: false,
+   }));
+
+   assignTargets(sim.blocks, firstTargets);
+
+   beginTransition(TRANSITION_MS, loop);
+  }
+
+  stateRef.current.start = start;
+
+  function resize() {
+   const dpr = window.devicePixelRatio || 1;
+
+   const vw = window.innerWidth;
+   const vh = window.innerHeight;
+
+   const newRows = getRowsForWidth(vw);
+
+   const widthChanged = vw !== sim.viewportWidth;
+
+   sim.viewportWidth = vw;
+
+   if (newRows !== sim.activeRows || widthChanged) {
+    sim.activeRows = newRows;
+    sim.maxBlocks = computeMaxBlocks(newRows, vw);
+   }
+
+   canvas.width = Math.floor(vw * dpr);
+   canvas.height = Math.floor(vh * dpr);
+
+   canvas.style.width = vw + "px";
+   canvas.style.height = vh + "px";
+
+   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+   offscreen = new OffscreenCanvas(
+    Math.floor(vw * dpr),
+    Math.floor(vh * dpr)
+   );
+
+   offCtx = offscreen.getContext("2d");
+
+   offCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+   const margin = Math.max(
+    24,
+    Math.min(vw, vh) * 0.05
+   );
+
+   const cellW = Math.floor(
+    (vw - margin * 2) / COLS
+   );
+
+   const cellH = Math.floor(
+    (vh - margin * 2) / sim.activeRows
+   );
+
+   const cell = Math.min(
+    CELL_MAX,
+    Math.min(cellW, cellH)
+   );
+
+   const gridW = COLS * cell;
+   const gridH = sim.activeRows * cell;
+
+   const originX = Math.round((vw - gridW) / 2);
+   const originY = Math.round((vh - gridH) / 2);
+
+   sim.layout = {
+    vw,
+    vh,
+    cell,
+    gridW,
+    gridH,
+    originX,
+    originY,
+   };
+  }
+
+  function frame() {
+   const L = sim.layout;
+
+   if (!L) {
+    sim.raf = requestAnimationFrame(frame);
+    return;
+   }
+
+   if (sim.transition) {
+    const { start, duration, onDone } = sim.transition;
+
+    const t = clamp01(
+     (performance.now() - start) /
+      Math.max(1, duration)
+    );
+
+    const e = easeInOut(t);
+
+    for (const b of sim.blocks) {
+     b.cr = lerp(b.sr, b.tr, e);
+     b.cc = lerp(b.sc, b.tc, e);
+    }
+
+    if (t >= 1) {
+     for (const b of sim.blocks) {
+      b.cr = b.tr;
+      b.cc = b.tc;
+     }
+
+     sim.transition = null;
+
+     onDone?.();
+    }
+   }
+
+   const {
+    vw,
+    vh,
+    cell,
+    gridW,
+    gridH,
+    originX,
+    originY,
+   } = L;
+
+   ctx.fillStyle = BG;
+   ctx.fillRect(0, 0, vw, vh);
+
+   offCtx.clearRect(0, 0, vw, vh);
+
+   const snapped = sim.blocks.map(b => ({
+    r: b.cr,
+    c: b.cc,
+    ir: Math.round(b.cr),
+    ic: Math.round(b.cc),
+   }));
+
+   offCtx.fillStyle = INK;
+
+   const linkDist = 1.6;
+
+   for (let i = 0; i < snapped.length; i++) {
+    const a = snapped[i];
+
+    for (let j = i + 1; j < snapped.length; j++) {
+     const b = snapped[j];
+
+     const dx = b.c - a.c;
+     const dy = b.r - a.r;
+
+     const dist = Math.hypot(dx, dy);
+
+     if (dist < 0.001 || dist > linkDist) continue;
+
+     const rr =
+      cell * 0.35 * (1 - dist / linkDist);
+
+     if (rr < 1) continue;
+
+     drawCapsule(
+      offCtx,
+      originX + (a.c + 0.5) * cell,
+      originY + (a.r + 0.5) * cell,
+      originX + (b.c + 0.5) * cell,
+      originY + (b.r + 0.5) * cell,
+      rr
+     );
+    }
+   }
+
+   for (const s of snapped) {
+    offCtx.beginPath();
+
+    offCtx.rect(
+     originX + s.c * cell,
+     originY + s.r * cell,
+     cell,
+     cell
+    );
+
+    offCtx.fill();
+   }
+
+   ctx.save();
+
+   ctx.filter = "url(#gooey)";
+
+   ctx.drawImage(offscreen, 0, 0, vw, vh);
+
+   ctx.restore();
+
+   ctx.strokeStyle = GRID_STROKE;
+   ctx.lineWidth = 0.5;
+
+   for (
+    let x = originX;
+    x <= originX + gridW;
+    x += cell
+   ) {
+    ctx.beginPath();
+
+    ctx.moveTo(x, originY);
+    ctx.lineTo(x, originY + gridH);
+
+    ctx.stroke();
+   }
+
+   for (
+    let y = originY;
+    y <= originY + gridH;
+    y += cell
+   ) {
+    ctx.beginPath();
+
+    ctx.moveTo(originX, y);
+    ctx.lineTo(originX + gridW, y);
+
+    ctx.stroke();
+   }
+
+   sim.raf = requestAnimationFrame(frame);
+  }
+
+  resize();
+
+  window.addEventListener(
+   "resize",
+   resize,
+   { passive: true }
+  );
+
+  start();
+
+  sim.raf = requestAnimationFrame(frame);
+
+  return () => {
+   cancelAnimationFrame(sim.raf);
+
+   clearTimeout(sim.timer);
+
+   window.removeEventListener(
+    "resize",
+    resize
+   );
+  };
+ }, []);
+
+ return (
+  <div
+   style={{
+    position: "fixed",
+    inset: 0,
+    background: BG,
+   }}
+  >
+   <svg
+    width="0"
+    height="0"
+    aria-hidden="true"
+    focusable="false"
+    style={{ position: "absolute" }}
+   >
+    <defs>
+     <filter
+      id="gooey"
+      x="-50%"
+      y="-50%"
+      width="200%"
+      height="200%"
+      colorInterpolationFilters="sRGB"
+     >
+      <feGaussianBlur
+       in="SourceGraphic"
+       stdDeviation="8"
+       result="blur"
+      />
+
+      <feColorMatrix
+       in="blur"
+       mode="matrix"
+       values="1 0 0 0 0
+               0 1 0 0 0
+               0 0 1 0 0
+               0 0 0 18 -7"
+       result="goo"
+      />
+
+      <feComposite
+       in="SourceGraphic"
+       in2="goo"
+       operator="atop"
+      />
+     </filter>
+    </defs>
+   </svg>
+
+   <canvas
+    ref={canvasRef}
+    style={{
+     position: "absolute",
+     inset: 0,
+    }}
+   />
+
+   <button
+    onClick={() => stateRef.current?.start?.()}
+    style={{
+     position: "absolute",
+     top: 16,
+     left: 16,
+     padding: "8px 26px",
+     fontSize: 12,
+     letterSpacing: "0.05em",
+     borderRadius: 6,
+     border: "1px solid rgba(0,0,0,0.22)",
+     background: "#fff",
+     color: "#111",
+     cursor: "pointer",
+    }}
+   >
+    Reset
+   </button>
+  </div>
+ );
+}
+`,
+            },
+          ],
+        },
+      ],
+
+      customizationOptions: [
+        {
+          option: "Blur intensity",
+          recommendation:
+            "Increase blur for softer gooey merges, but keep digits readable at all times.",
+        },
+        {
+          option: "Transition duration",
+          recommendation:
+            "Shorter transitions feel more responsive while longer transitions feel more fluid and cinematic.",
+        },
+        {
+          option: "Digit scale",
+          recommendation:
+            "Use larger digits for campaign sections and smaller layouts for dashboard previews.",
+        },
+        {
+          option: "Grid density",
+          recommendation:
+            "Adjust the grid spacing carefully to balance readability and visual complexity.",
+        },
+        {
+          option: "Viewport triggers",
+          recommendation:
+            "Trigger the counter once on viewport entry to avoid repetitive motion.",
+        },
+        {
+          option: "Reduced motion",
+          recommendation:
+            "Respect reduced-motion preferences by showing the final value immediately.",
+        },
+      ],
+
+      notes: {
+        performance:
+          "Gooey effects may use filters that can be expensive if overused. Keep the number of animated counters limited and avoid heavy blur on many elements.",
+
+        accessibility:
+          "Do not rely on animated counting for meaning. Provide the final value as readable text and avoid constantly changing numbers for screen readers.",
+
+        mobile:
+          "Keep digits large and readable. Reduce gooey intensity if filters feel sluggish on mobile.",
+      },
+
+      commonMistakes: [
+        "Showing numbers without context",
+        "Making digits hard to read",
+        "Overusing gooey filters",
+        "Animating too slowly",
+        "Using inflated or unsupported metrics",
+        "Triggering counters repeatedly",
+        "Ignoring reduced motion",
+      ],
+
+      relatedEffectNames: [
+        "Text Fill Animation",
+        "Animated FAQ",
+        "Dotted Grid",
+        "Depth Card Stack",
+        "Tabs",
+      ],
+
+      faq: [
+        {
+          question: "What is Gooey Counter best used for?",
+          answer:
+            "Animated statistics, proof metrics, product numbers, and creative data highlights.",
+        },
+        {
+          question: "Is it suitable for serious enterprise metrics?",
+          answer:
+            "Use carefully. For trust-heavy metrics, keep the gooey motion subtle and prioritize readability.",
+        },
+        {
+          question: "Can it count percentages?",
+          answer:
+            "Yes. It can support percentages, currency, multipliers, or suffix-based stats.",
+        },
+        {
+          question: "Should it animate every time users scroll?",
+          answer:
+            "Usually no. Trigger once when the section enters the viewport.",
+        },
+      ],
+
+      finalCta: {
+        body: "Use Gooey Counter when your statistics need motion, personality, and a more memorable visual treatment.",
+        primary: "Install Gooey Counter",
+        secondary: "View Interactive Components",
+        commercial: "Request a Custom Gooey Counter Component",
       },
     },
   },

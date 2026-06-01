@@ -11,7 +11,7 @@ const DOCS_TOP_LINKS = [
   { href: "/docs/installation", label: "Installation" },
   { href: "/docs/cli", label: "CLI" },
   { href: "/docs/dependencies", label: "Dependencies" },
-  { href: "/docs/licnese", label: "License" },
+  { href: "/docs/license", label: "License" },
 ];
 
 function SidebarFallback({ totalEffects }) {
