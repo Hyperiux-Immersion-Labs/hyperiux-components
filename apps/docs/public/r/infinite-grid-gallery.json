@@ -3,13 +3,13 @@
   "type": "registry:component",
   "title": "Infinite Grid Gallery",
   "description": "Infinite scrollable grid gallery with expandable overlay, thumbnails rail, and smooth open/close transitions.",
-  "category": "components",
+  "category": "webgl",
   "categories": [
-    "components"
+    "webgl"
   ],
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/infinite-grid-gallery",
+  "previewUrl": "/webgl/infinite-grid-gallery",
   "coverImage": "/assets/list/infinite-grid-gallery.png",
   "videoUrl": "infinite-grid-gallery.mp4",
   "files": [

@@ -1,12 +1,5 @@
-import InfiniteGridGallery from'@/components/InfiniteGridGallery/InfiniteGridGallery'
-import React from'react'
+import { redirect } from "next/navigation";
 
-const page = () => {
- return (
- <>
- <InfiniteGridGallery/>
- </>
- )
+export default function Page() {
+  redirect("/webgl/infinite-grid-gallery");
 }
-
-export default page

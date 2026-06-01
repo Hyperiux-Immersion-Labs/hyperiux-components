@@ -70,7 +70,7 @@ export default function DocsLicense() {
 
       <Para>
         All individual interaction patterns designated as <strong>Free</strong> on our{" "}
-        <strong>/effects</strong> index are distributed under the terms of the standard MIT
+        <span className="text-primary">/effects</span> index are distributed under the terms of the standard MIT
         License.
       </Para>
 

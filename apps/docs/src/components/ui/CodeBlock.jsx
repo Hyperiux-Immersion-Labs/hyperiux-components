@@ -24,27 +24,32 @@ export function CodeBlock({ code, language = "jsx", filename }) {
     };
 
     return (
-        <div className="relative ">
-            <div className="flex items-center justify-between px-4 py-2 border-b border-border/60 bg-black sticky top-0 z-10">
-                <span className="text-sm text-muted">{filename || ""}</span>
-                <button
-                    onClick={handleCopy}
-                    className="text-xs px-3 cursor-pointer py-1.5 rounded-sm bg-black/40 border border-border/60 text-muted hover:text-foreground transition-colors"
-                >
-                    {copied ? "Copied!" : "Copy"}
-                </button>
-            </div>
-            <div className="relative">
-                <pre className=" overflow-x-auto text-sm bg-transparent!">
-                    {highlighted ? (
-                        <code
-                            className={`hljs language-${language}`}
-                            dangerouslySetInnerHTML={{ __html: highlighted }}
-                        />
-                    ) : (
-                        <code className={`hljs language-${language}`}>{code}</code>
-                    )}
-                </pre>
+        <div className="relative border border-border/60 rounded-md overflow-hidden fadeup">
+            <div
+                className="max-h-[30vw] overflow-y-auto"
+                style={{ scrollbarGutter: "stable" }}
+            >
+                <div className="flex items-center justify-between px-4 py-2 border-b border-border/60 bg-black sticky top-0 z-10">
+                    <span className="text-sm text-muted">{filename || ""}</span>
+                    <button
+                        onClick={handleCopy}
+                        className="text-xs px-3 cursor-pointer py-1.5 rounded-sm bg-black/40 border border-border/60 text-muted hover:text-foreground transition-colors"
+                    >
+                        {copied ? "Copied!" : "Copy"}
+                    </button>
+                </div>
+                <div className="relative">
+                    <pre className="overflow-x-auto text-sm bg-transparent!">
+                        {highlighted ? (
+                            <code
+                                className={`hljs language-${language}`}
+                                dangerouslySetInnerHTML={{ __html: highlighted }}
+                            />
+                        ) : (
+                            <code className={`hljs language-${language}`}>{code}</code>
+                        )}
+                    </pre>
+                </div>
             </div>
         </div>
     );

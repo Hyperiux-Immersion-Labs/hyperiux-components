@@ -82,7 +82,7 @@ export default function DocsInstallation() {
 
       <Para>
         We recognize that engineering workflows dictate repository structures. To preserve
-        your team&apos;s development autonomy, we offer two deliberate integration frameworks
+        your team&apos;s development autonomy, we offer <b> two deliberate integration frameworks </b> 
         engineered to respect your pipeline architecture.
       </Para>
 
@@ -98,8 +98,8 @@ export default function DocsInstallation() {
       </Para>
 
       <Para>
-        This approach aligns natively with modern, modular registry specifications such as
-        shadcn/ui, giving you the speed of a package manager with the complete customizability
+        This approach aligns natively with modern, modular registry specifications (such as
+        <span className="text-primary"> shadcn/ui</span>), giving you the speed of a package manager with the complete customizability
         of local code space.
       </Para>
 
@@ -109,7 +109,7 @@ export default function DocsInstallation() {
 
       <Para>
         To route incoming component injections smoothly into your designated workspace, append
-        our remote registry extension directly within your local <strong>components.json</strong>{" "}
+        our remote registry extension directly within your local <span className="text-primary">components.json</span>{" "}
         blueprint:
       </Para>
 
@@ -151,9 +151,9 @@ export default function DocsInstallation() {
 
       <Para>
         High-fidelity interaction work often depends on specialized animation and rendering
-        tools. Some Vaults may need <strong>gsap</strong>. Others may need{" "}
-        <strong>framer-motion</strong>, <strong>three</strong>, or{" "}
-        <strong>@react-three/fiber</strong>.
+        tools. Some Vaults may need <span className="text-primary">gsap</span>. Others may need{" "}
+        <span className="text-primary">framer-motion</span>, <span className="text-primary">three</span>, or{" "}
+        <span className="text-primary">@react-three/fiber</span>.
       </Para>
 
       <Para>
@@ -194,7 +194,7 @@ export default function DocsInstallation() {
       </Heading2>
 
       <Para>
-        Browse our modular <strong>/effects</strong> catalog and isolate the exact behavioral
+        Browse our modular <span className="text-primary">/effects</span> catalog and isolate the exact behavioral
         layer required for your layout block.
       </Para>
 
@@ -215,8 +215,8 @@ export default function DocsInstallation() {
       <Para>
         Review the explicit Dependencies Checklist declared on that specific interaction page.
         Before extracting the component code, ensure that any necessary math or physics
-        sub-engines such as <strong>three</strong> or <strong>gsap</strong> are correctly
-        mapped inside your local <strong>package.json</strong> manifest and compiled:
+        sub-engines such as <span className="text-primary">three</span> or <span className="text-primary">gsap</span> are correctly
+        mapped inside your local <span className="text-primary">package.json</span> manifest and compiled:
       </Para>
 
       <CodeBlock language="bash" code={`npm install gsap framer-motion`} />
@@ -227,15 +227,15 @@ export default function DocsInstallation() {
 
       <Para>
         Open the verified production Code Tab, copy the complete, unminified script, and
-        transition it into your local repository directory structure, for example{" "}
-        <strong>@/components/hyperiux/TextMorph.tsx</strong>.
+        transition it into your local repository directory structure(e.g., 
+        <span className="text-primary"> @/components/hyperiux/TextMorph.tsx</span>).
       </Para>
 
       <Heading2 id="verify-import-pathways">5. Verify Import Pathways</Heading2>
 
       <Para>
         Once the script is in place, manually audit the internal relative file pathways to
-        align with your project&apos;s custom utility aliases such as <strong>@/lib/utils</strong>,
+        align with your project&apos;s custom utility aliases (such as <span className="text-primary">@/lib/utils</span>),
         and let your native compiler initialize the physics engine.
       </Para>
 
@@ -251,7 +251,7 @@ export default function DocsInstallation() {
       <CodeBlock
         language="tsx"
         filename="app/page.tsx"
-        code={`import { KineticHeader } from "@/components/hyperiux/KineticHeader";
+        code={`import {KineticHeader} from "@/components/hyperiux/KineticHeader";
 
 export default function Home() {
   return (
@@ -281,7 +281,7 @@ export default function Home() {
       <DocsList>
         <DocsListItem>
           <Para>
-            <strong>Deploy From the Index:</strong> Head over to our <strong>/effects</strong>{" "}
+            <strong>Deploy From the Index:</strong> Head over to our <span className="text-primary">/effects</span>{" "}
             index to find and configure your very first interaction pattern.
           </Para>
         </DocsListItem>

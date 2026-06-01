@@ -17,7 +17,7 @@ export default function Heading2({ children, text, className, ...props }) {
     >
       <span
         aria-hidden="true"
-        className="docs-heading2-line absolute left-0 right-0 top-0 h-px bg-border/30 lineDraw block"
+        className="docs-heading2-line absolute left-0 right-0 top-0 h-px bg-border/60 lineDraw block"
       />
       
         <span className="relative inline-block fadeup">{children ?? text}</span>

@@ -1168,7 +1168,7 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/infinite-carousel",
+      "previewUrl": "/webgl/infinite-carousel",
       "coverImage": "/assets/list/infinite-carousel.png",
       "videoUrl": "infinite-carousel.mp4",
       "addedAt": 1780032389948.5715
@@ -1244,16 +1244,16 @@
       "name": "book-flip",
       "title": "Book Flip",
       "description": "3D interactive book viewer with realistic page flips, built with React Three Fiber and Drei.",
-      "category": "components",
+      "category": "webgl",
       "categories": [
-        "components"
+        "webgl"
       ],
       "dependencies": [
         "three",
         "@react-three/fiber",
         "@react-three/drei"
       ],
-      "previewUrl": "/book-flip",
+      "previewUrl": "/webgl/book-flip",
       "coverImage":"/assets/list/book-flip.png",
       "videoUrl": "book-flip.mp4",
       "addedAt": 1780033740008.63
@@ -1262,9 +1262,9 @@
       "name": "colliding-models",
       "title": "Colliding Models",
       "description": "Physics-driven colliding 3D connectors with transmission material and postprocessing, built with R3F + Rapier.",
-      "category": "components",
+      "category": "webgl",
       "categories": [
-        "components"
+        "webgl"
       ],
       "dependencies": [
         "three",
@@ -1276,7 +1276,7 @@
         "maath",
         "next"
       ],
-      "previewUrl": "/colliding-models",
+      "previewUrl": "/webgl/colliding-models",
       "coverImage": "/assets/list/colliding-models.png",
       "videoUrl": "colliding-models.mp4",
       "addedAt": 1780033740097.651
@@ -1317,14 +1317,14 @@
       "name": "file-encryption",
       "title": "File Encryption",
       "description": "Auto-scrolling draggable card marquee with a WebGL laser beam that splits each card between its plain and ASCII/encrypted face, plus Canvas 2D particle scatter.",
-      "category": "components",
+      "category": "webgl",
       "categories": [
-        "components"
+        "webgl"
       ],
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/file-encryption",
+      "previewUrl": "/webgl/file-encryption",
       "coverImage": "/assets/list/file-encryption.png",
       "videoUrl": "file-encryption.mp4",
       "addedAt": 1779961997313.1304
@@ -1347,9 +1347,9 @@
       "name": "gooey-counter",
       "title": "Gooey Counter",
       "description": "Canvas-based animated counter that morphs pixel-grid blocks between numbers 0–10 using an SVG gooey filter. Blocks scatter to a random layout between each number with eased transitions.",
-      "category": "components",
+      "category": "others",
       "categories": [
-        "components"
+        "others"
       ],
       "dependencies": [],
       "previewUrl": "/gooey-counter",
@@ -1375,9 +1375,9 @@
       "name": "hyperiux-glitter-concept",
       "title": "Hyperiux Glitter Concept",
       "description": "Glittery particle logo concept with morphing model particles, cursor trail particles, and bloom postprocessing.",
-      "category": "components",
+      "category": "webgl",
       "categories": [
-        "components"
+        "webgl"
       ],
       "dependencies": [
         "three",
@@ -1386,7 +1386,7 @@
         "@react-three/postprocessing",
         "postprocessing"
       ],
-      "previewUrl": "/hyperiux-glitter-concept",
+      "previewUrl": "/webgl/hyperiux-glitter-concept",
       "coverImage": "/assets/list/hyperiux-glitter-concept.png",
       "videoUrl": "/hyperiux-glitter-concept.mp4",
       "addedAt": 1780033740184.2185
@@ -1395,12 +1395,12 @@
       "name": "infinite-grid-gallery",
       "title": "Infinite Grid Gallery",
       "description": "Infinite scrollable grid gallery with expandable overlay, thumbnails rail, and smooth open/close transitions.",
-      "category": "components",
+      "category": "webgl",
       "categories": [
-        "components"
+        "webgl"
       ],
       "dependencies": [],
-      "previewUrl": "/infinite-grid-gallery",
+      "previewUrl": "/webgl/infinite-grid-gallery",
       "coverImage": "/assets/list/infinite-grid-gallery.png",
       "videoUrl":  "infinite-grid-gallery.mp4",
       "addedAt": 1780033740271.181
@@ -1409,15 +1409,15 @@
       "name": "interactive-hover-slider",
       "title": "Hover Slider",
       "description": "WebGL-powered list where hovering a row reveals a vertically-scrolling image stack with circular-arc curvature, velocity-based elastic snap, and GSAP-driven fade/curve transitions.",
-      "category": "components",
+      "category": "webgl",
       "categories": [
-        "components"
+        "webgl"
       ],
       "dependencies": [
         "three",
         "gsap"
       ],
-      "previewUrl": "/interactive-hover-slider",
+      "previewUrl": "/webgl/interactive-hover-slider",
       "coverImage": "/assets/list/interactive-hover-slider.png",
       "videoUrl": "interactive-hover-slider.mp4",
       "addedAt": 1779961997313.9673
@@ -1426,9 +1426,9 @@
       "name": "interactive-list-preview",
       "title": "Interactive List Preview",
       "description": "Hover-driven table list that reveals clipped images with a sliding highlight bar and mix-blend-mode difference inversion effect",
-      "category": "components",
+      "category": "others",
       "categories": [
-        "components"
+        "others"
       ],
       "dependencies": [
         "gsap"
@@ -1458,9 +1458,9 @@
       "name": "portfolio-concept",
       "title": "Portfolio Concept",
       "description": "Motion-led portfolio landing concept with GSAP ScrollTrigger + SplitText and image strips.",
-      "category": "components",
+      "category": "others",
       "categories": [
-        "components"
+        "others"
       ],
       "dependencies": [
         "gsap",

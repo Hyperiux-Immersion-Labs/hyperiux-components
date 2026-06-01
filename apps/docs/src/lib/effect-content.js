@@ -2567,7 +2567,7 @@ export default function ScrollDistortion({
       },
     },
   },
-  backgrounds: {
+  "backgrounds": {
     "spider-particles": {
       seo: {
         primaryKeyword: "React spider particles background",
