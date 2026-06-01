@@ -34,7 +34,7 @@ export default function DocsCli() {
       <Heading2 id="cli-reference">CLI Reference</Heading2>
 
       <Para>
-        The Hyperiux CLI <strong>hyperiux</strong> is a surgical scaffolding and environment
+        The Hyperiux CLI is a surgical scaffolding and environment
         automation toolkit engineered to manage the high-fidelity interaction layer of your
         repository.
       </Para>
@@ -53,7 +53,7 @@ export default function DocsCli() {
         a global machine installation for persistent workflow acceleration.
       </Para>
 
-      <Heading2 id="on-demand-execution">On-Demand Execution — Recommended</Heading2>
+      <Heading2 id="on-demand-execution">On-Demand Execution - Recommended</Heading2>
 
       <Para>Run commands directly without local environment contamination:</Para>
 
@@ -67,7 +67,7 @@ export default function DocsCli() {
 
       <Heading2 id="core-commands">Core Commands</Heading2>
 
-      <Heading2 id="init">init</Heading2>
+      <Heading2 id="init" className="text-primary">init</Heading2>
 
       <Para>
         Initializes a clean, production-calibrated frontend repository pre-configured with the
@@ -81,19 +81,25 @@ export default function DocsCli() {
         <strong>Options</strong>
       </Para>
 
-      <Para>
-        <strong>-t, --template &lt;string&gt;:</strong> Specifies the starter architecture
-        blueprint, for example <strong>next-app</strong>, <strong>next-pages</strong>, or{" "}
-        <strong>vite</strong>.
-      </Para>
+      <DocsList>
+        <DocsListItem>
+          <Para>
+            <span className="text-primary">-t, --template &lt;string&gt;:</span> Specifies the starter
+            architecture blueprint, for example <span className="text-primary">next-app</span>,{" "}
+            <span className="text-primary">next-pages</span>, or <span className="text-primary">vite</span>.
+          </Para>
+        </DocsListItem>
+        <DocsListItem>
+          <Para>
+            <span className="text-primary">-p, --package &lt;string&gt;:</span> Forces a specific workspace
+            runtime package manager, such as <span className="text-primary">npm</span>,{" "}
+            <span className="text-primary">pnpm</span>, <span className="text-primary">yarn</span>, or{" "}
+            <span className="text-primary">bun</span>.
+          </Para>
+        </DocsListItem>
+      </DocsList>
 
-      <Para>
-        <strong>-p, --package &lt;string&gt;:</strong> Forces a specific workspace runtime
-        package manager, such as <strong>npm</strong>, <strong>pnpm</strong>,{" "}
-        <strong>yarn</strong>, or <strong>bun</strong>.
-      </Para>
-
-      <Heading2 id="add">add</Heading2>
+      <Heading2 id="add" className="text-primary">add</Heading2>
 
       <Para>Adds a Hyperiux Vault component to your project.</Para>
 
@@ -109,15 +115,20 @@ export default function DocsCli() {
         <strong>Options</strong>
       </Para>
 
-      <Para>
-        <strong>-o, --overwrite:</strong> Forces a fresh override of an existing component
-        script, resetting modified visual physics to factory production baselines.
-      </Para>
-
-      <Para>
-        <strong>-y, --yes:</strong> Skips interactive terminal checklist prompts,
-        automatically resolving peer layout structures.
-      </Para>
+      <DocsList>
+        <DocsListItem>
+          <Para>
+            <span className="text-primary">-o, --overwrite:</span> Forces a fresh override of an existing
+            component script, resetting modified visual physics to factory production baselines.
+          </Para>
+        </DocsListItem>
+        <DocsListItem>
+          <Para>
+            <span className="text-primary">-y, --yes:</span> Skips interactive terminal checklist prompts,
+            automatically resolving peer layout structures.
+          </Para>
+        </DocsListItem>
+      </DocsList>
 
       <CodeBlock
         language="bash"
@@ -125,17 +136,21 @@ export default function DocsCli() {
 npx hyperiux add kinetic-header`}
       />
 
-      <Heading2 id="upgrade">upgrade</Heading2>
+      <Heading2 id="upgrade" className="text-primary">
+        upgrade
+      </Heading2>
 
       <Para>
-        Audits your local <strong>/components/hyperiux</strong> source files against our master
+        Audits your local <span className="text-primary">/components/hyperiux</span> source files against our master
         registry, performing surgical upstream updates on your motion math matrices while
         carefully preserving your custom inline styling properties.
       </Para>
 
       <CodeBlock language="bash" code={`npx hyperiux upgrade [effect-name]`} />
 
-      <Heading2 id="uninstall">uninstall</Heading2>
+      <Heading2 id="uninstall" className="text-primary">
+        uninstall
+      </Heading2>
 
       <Para>
         Safely purges an interaction pattern from your local directory, recursively auditing
@@ -145,7 +160,9 @@ npx hyperiux add kinetic-header`}
 
       <CodeBlock language="bash" code={`npx hyperiux uninstall [effect-name]`} />
 
-      <Heading2 id="list">list</Heading2>
+      <Heading2 id="list" className="text-primary">
+        list
+      </Heading2>
 
       <Para>
         Generates a complete architectural overview of all Hyperiux interaction layers
@@ -154,7 +171,9 @@ npx hyperiux add kinetic-header`}
 
       <CodeBlock language="bash" code={`npx hyperiux list`} />
 
-      <Heading2 id="doctor">doctor</Heading2>
+      <Heading2 id="doctor" className="text-primary">
+        doctor
+      </Heading2>
 
       <Para>
         An environment diagnostics utility built to protect your site&apos;s Core Web Vitals.
@@ -171,15 +190,15 @@ npx hyperiux add kinetic-header`}
       <DocsList>
         <DocsListItem>
           <Para>
-            Validates that mandatory peer engines such as <strong>gsap</strong>,{" "}
-            <strong>framer-motion</strong>, and <strong>three</strong> match minimal physics
+            Validates that mandatory peer engines such as <span className="text-primary">gsap</span>,{" "}
+            <span className="text-primary">framer-motion</span>, and <span className="text-primary">three</span> match minimal physics
             calculation criteria.
           </Para>
         </DocsListItem>
 
         <DocsListItem>
           <Para>
-            Inspects local configuration integrity within your <strong>components.json</strong>{" "}
+            Inspects local configuration integrity within your <span className="text-primary">components.json</span>{" "}
             registry file.
           </Para>
         </DocsListItem>
@@ -210,7 +229,9 @@ The interaction file '@components/hyperiux/TextMorph.tsx' relies on missing peer
 Run \`npx hyperiux add text-morph --resolve\` to automatically patch this workspace.`}
       />
 
-      <Heading2 id="env">env</Heading2>
+      <Heading2 id="env" className="text-primary">
+        env
+      </Heading2>
 
       <Para>
         Outputs a clean debug snapshot of your current hardware-rendering software layer,
@@ -228,7 +249,7 @@ Run \`npx hyperiux add text-morph --resolve\` to automatically patch this worksp
         <DocsListItem>
           <Para>
             <strong>Deploy an Asset:</strong> Execute{" "}
-            <strong>npx hyperiux add [effect-name]</strong> to inject your first cinematic
+            <span className="text-primary">npx hyperiux add [effect-name]</span> to inject your first cinematic
             interaction.
           </Para>
         </DocsListItem>
@@ -237,7 +258,7 @@ Run \`npx hyperiux add text-morph --resolve\` to automatically patch this worksp
           <Para>
             <strong>Explore Pro Capabilities:</strong> Unlock premium multi-variant CLI wrappers
             and curated high-end templates by authenticating your workspace access token via{" "}
-            <strong>npx hyperiux auth [pro-token]</strong>.
+            <span className="text-primary">npx hyperiux auth [pro-token]</span>.
           </Para>
         </DocsListItem>
       </DocsList>

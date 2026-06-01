@@ -93,7 +93,7 @@ function TableOfContents({ containerRef, watchKey }) {
   if (items.length === 0) return null;
 
   return (
-    <div className="rounded-lg border border-border/30 bg-black/20 backdrop-blur-md p-5">
+    <div className="rounded-md border border-border/60 bg-black/20 backdrop-blur-md p-5">
       <p className="text-sm font-medium text-muted uppercase tracking-wider mb-3">On this page</p>
       <ul className="space-y-3 mt-8">
         {items.map((it) => (
