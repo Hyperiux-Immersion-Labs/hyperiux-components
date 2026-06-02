@@ -1,4 +1,4 @@
-import GooeyCounter from'@/components/Gooeycounter'
+import { GooeyCounter } from'@/components/Gooeycounter'
 import React from'react'
 
 const page = () => {

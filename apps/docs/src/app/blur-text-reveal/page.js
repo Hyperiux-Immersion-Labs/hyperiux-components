@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from"react";
-import BlurText from"@/components/effects/BlurText";
+import { BlurText } from"@/components/effects/BlurText";
 import ParallaxAnim from"@/components/ParallaxAnim/ParallaxAnim";
 import { ReactLenis } from"lenis/react";
 import { gsap } from"gsap";

@@ -1,12 +1,12 @@
-"use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
-export function Lines() {
+const Lines = () => {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const pointsRef = useRef([]);
   const animationFrameRef = useRef(null);
-  const lineLength = 30;
+
+  const lineLength = 30; 
 
   class Point {
     constructor(x, y) {
@@ -22,10 +22,11 @@ export function Lines() {
       const unitY = dy / distance;
       const lineEndX = this.x + unitX * lineLength;
       const lineEndY = this.y + unitY * lineLength;
+
       ctx.beginPath();
       ctx.moveTo(this.x, this.y);
       ctx.lineTo(lineEndX, lineEndY);
-      ctx.strokeStyle = "black";
+      ctx.strokeStyle = 'black';
       ctx.lineWidth = 1.5;
       ctx.stroke();
     }
@@ -36,6 +37,7 @@ export function Lines() {
     const spacing = 60;
     const cols = Math.floor(canvas.width / spacing);
     const rows = Math.floor(canvas.height / spacing);
+
     for (let y = 0; y <= rows; y++) {
       for (let x = 0; x <= cols; x++) {
         points.push(new Point(x * spacing, y * spacing));
@@ -66,11 +68,9 @@ export function Lines() {
 
   const main = () => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    pointsRef.current.forEach((point) =>
-      point.draw(ctx, mouseRef.current.x, mouseRef.current.y)
-    );
+    pointsRef.current.forEach(point => point.draw(ctx, mouseRef.current.x, mouseRef.current.y));
     animationFrameRef.current = requestAnimationFrame(main);
   };
 
@@ -79,21 +79,17 @@ export function Lines() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     pointsRef.current = initializePoints(canvas);
-    window.addEventListener("resize", handleResize);
-    canvas.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener('resize', handleResize);
+    canvas.addEventListener('mousemove', handleMouseMove);
     main();
     return () => {
-      window.removeEventListener("resize", handleResize);
-      canvas.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      canvas.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameRef.current);
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="w-full h-full"
-      style={{ cursor: "pointer" }}
-    />
-  );
-}
+  return <canvas ref={canvasRef} className="w-full h-full " style={{ cursor: 'pointer' }} />;
+};
+
+export default Lines;

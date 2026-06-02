@@ -3,9 +3,9 @@
   "type": "registry:component",
   "title": "Hyperiux Glitter Concept",
   "description": "Glittery particle logo concept with morphing model particles, cursor trail particles, and bloom postprocessing.",
-  "category": "webgl",
+  "category": "components",
   "categories": [
-    "webgl"
+    "components"
   ],
   "dependencies": [
     "three",
@@ -15,7 +15,7 @@
     "postprocessing"
   ],
   "registryDependencies": [],
-  "previewUrl": "/webgl/hyperiux-glitter-concept",
+  "previewUrl": "/hyperiux-glitter-concept",
   "coverImage": "/assets/list/hyperiux-glitter-concept.png",
   "videoUrl": "/hyperiux-glitter-concept.mp4",
   "files": [
@@ -23,7 +23,7 @@
       "path": "hyperiux-glitter-concept.jsx",
       "type": "registry:component",
       "target": "components/hyperiux/hyperiux-glitter-concept.jsx",
-      "content": "\"use client\";\n\nimport React, { Suspense } from \"react\";\nimport { Canvas } from \"@react-three/fiber\";\nimport { Center } from \"@react-three/drei\";\nimport { EffectComposer, Bloom } from \"@react-three/postprocessing\";\nimport MouseTrailParticles from \"./MouseTrailParticles\";\nimport MorphingParticleModel from \"./MorphingParticleModelNew\";\n\nexport default function HyperiuxGlitterConcept() {\n  return (\n    <div className=\"relative h-screen w-screen overflow-hidden bg-black\">\n      <Canvas\n        className=\"h-full w-full\"\n        camera={{ position: [0, 0, 5], fov: 45 }}\n        dpr={[1, 2]}\n        gl={{ antialias: true, alpha: false }}\n      >\n        <color attach=\"background\" args={[\"#000000\"]} />\n        <ambientLight intensity={0.2} />\n\n        <Suspense fallback={null}>\n          <Center>\n            <MorphingParticleModel\n              url=\"/assets/models/hyperiux-new-model.glb\"\n              scale={0.15}\n              particleCount={10000}\n              color=\"#ffffff\"\n              size={0.18}\n              speed={1.15}\n              opacity={1}\n              brightness={4.5}\n              showModel={false}\n              modelOpacity={0}\n              frontFacingThreshold={0.12}\n              frontFacingSoftness={0.05}\n            />\n          </Center>\n\n          <MouseTrailParticles\n            maxParticles={700}\n            spawnPerMove={4}\n            particleLife={0.4}\n            size={0.14}\n            color=\"#ffffff\"\n            brightness={5.5}\n            zOffset={0.1}\n            spread={0.035}\n            velocityStrength={0.24}\n            lerpFactor={0.12}\n            idleDamping={0.92}\n            stopSpeedThreshold={0.0015}\n            idleModeDelay={1.2}\n            idleCometDelayMin={0.5}\n            idleCometDelayMax={1.4}\n            idleCometLife={0.85}\n            idleCometSpeedMin={4.1}\n            idleCometSpeedMax={10.1}\n            idleCometSpawnPerFrame={10}\n            idleCometTrailSpread={0.08}\n            idleCometViewportPadding={0.25}\n          />\n        </Suspense>\n\n        <EffectComposer multisampling={4}>\n          <Bloom intensity={0.25} luminanceThreshold={0.72} luminanceSmoothing={0.08} />\n        </EffectComposer>\n      </Canvas>\n    </div>\n  );\n}\n\n"
+      "content": "\"use client\";\n\nimport React, { Suspense } from \"react\";\nimport { Canvas } from \"@react-three/fiber\";\nimport { Center } from \"@react-three/drei\";\nimport { EffectComposer, Bloom } from \"@react-three/postprocessing\";\nimport MouseTrailParticles from \"./MouseTrailParticles\";\nimport MorphingParticleModel from \"./MorphingParticleModelNew\";\n\nexport function HyperiuxGlitterConcept() {\n  return (\n    <div className=\"relative h-screen w-screen overflow-hidden bg-black\">\n      <Canvas\n        className=\"h-full w-full\"\n        camera={{ position: [0, 0, 5], fov: 45 }}\n        dpr={[1, 2]}\n        gl={{ antialias: true, alpha: false }}\n      >\n        <color attach=\"background\" args={[\"#000000\"]} />\n        <ambientLight intensity={0.2} />\n\n        <Suspense fallback={null}>\n          <Center>\n            <MorphingParticleModel\n              url=\"/assets/models/hyperiux-new-model.glb\"\n              scale={0.15}\n              particleCount={10000}\n              color=\"#ffffff\"\n              size={0.18}\n              speed={1.15}\n              opacity={1}\n              brightness={4.5}\n              showModel={false}\n              modelOpacity={0}\n              frontFacingThreshold={0.12}\n              frontFacingSoftness={0.05}\n            />\n          </Center>\n\n          <MouseTrailParticles\n            maxParticles={700}\n            spawnPerMove={4}\n            particleLife={0.4}\n            size={0.14}\n            color=\"#ffffff\"\n            brightness={5.5}\n            zOffset={0.1}\n            spread={0.035}\n            velocityStrength={0.24}\n            lerpFactor={0.12}\n            idleDamping={0.92}\n            stopSpeedThreshold={0.0015}\n            idleModeDelay={1.2}\n            idleCometDelayMin={0.5}\n            idleCometDelayMax={1.4}\n            idleCometLife={0.85}\n            idleCometSpeedMin={4.1}\n            idleCometSpeedMax={10.1}\n            idleCometSpawnPerFrame={10}\n            idleCometTrailSpread={0.08}\n            idleCometViewportPadding={0.25}\n          />\n        </Suspense>\n\n        <EffectComposer multisampling={4}>\n          <Bloom intensity={0.25} luminanceThreshold={0.72} luminanceSmoothing={0.08} />\n        </EffectComposer>\n      </Canvas>\n    </div>\n  );\n}\n\n"
     },
     {
       "path": "MorphingParticleModelNew.jsx",

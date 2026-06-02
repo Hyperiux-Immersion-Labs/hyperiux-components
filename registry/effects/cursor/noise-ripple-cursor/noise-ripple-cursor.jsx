@@ -332,7 +332,7 @@ export function NoiseRippleShader({
   return <div ref={containerRef} className={className} style={style} aria-label="Noise ripple cursor canvas" />
 }
 
-export default function NoiseRippleCursor({
+export function NoiseRippleCursor({
   overlayColor = 'bg-[#1825AA]/30',
   wrapperClassName = 'h-screen w-screen',
   imageSrc = 'https://images.prismic.io/oci-awards/aYePB90YXLCxVj72_adrien-olichon-_UuN_2ixJvA-unsplash.jpg?auto=format%2Ccompress&rect=784%2C783%2C4918%2C2754&w=1000&h=1400&q=80',

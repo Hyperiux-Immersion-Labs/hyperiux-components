@@ -146,4 +146,3 @@ export function ColorfulCursorAura({
   );
 }
 
-export default ColorfulCursorAura;

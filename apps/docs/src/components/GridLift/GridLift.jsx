@@ -60,7 +60,7 @@ const levaTheme = {
  },
 };
 
-export default function GridLift() {
+export function GridLift() {
  const canvasRef = useRef(null);
  const fileInputRef = useRef(null);
 

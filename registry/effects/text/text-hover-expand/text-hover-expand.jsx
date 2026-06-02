@@ -323,4 +323,3 @@ export function TextHoverExpand({
   );
 }
 
-export default TextHoverExpand;

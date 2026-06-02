@@ -616,7 +616,7 @@
     },
     {
       "name": "pixel-bloom",
-      "title": "Fiddle Ascii Cursor",
+      "title": "Pixel Bloom",
       "description": "Cursor-reactive media grid that swaps nearby cells into a textured ASCII collage",
       "category": "cursor",
       "categories": [
@@ -1167,7 +1167,7 @@
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/webgl/infinite-carousel",
+      "previewUrl": "/infinite-carousel",
       "coverImage": "/assets/list/infinite-carousel.png",
       "videoUrl": "infinite-carousel.mp4",
       "addedAt": 1780292718738.1763
@@ -1243,27 +1243,27 @@
       "name": "book-flip",
       "title": "Book Flip",
       "description": "3D interactive book viewer with realistic page flips, built with React Three Fiber and Drei.",
-      "category": "webgl",
+      "category": "components",
       "categories": [
-        "webgl"
+        "components"
       ],
       "dependencies": [
         "three",
         "@react-three/fiber",
         "@react-three/drei"
       ],
-      "previewUrl": "/webgl/book-flip",
-      "coverImage":"/assets/list/book-flip.png",
+      "previewUrl": "/book-flip",
+      "coverImage": "/assets/list/book-flip.png",
       "videoUrl": "book-flip.mp4",
-      "addedAt": 1780292718738.6863
+      "addedAt": 1780379527538.881
     },
     {
       "name": "colliding-models",
       "title": "Colliding Models",
       "description": "Physics-driven colliding 3D connectors with transmission material and postprocessing, built with R3F + Rapier.",
-      "category": "webgl",
+      "category": "components",
       "categories": [
-        "webgl"
+        "components"
       ],
       "dependencies": [
         "three",
@@ -1275,7 +1275,7 @@
         "maath",
         "next"
       ],
-      "previewUrl": "/webgl/colliding-models",
+      "previewUrl": "/colliding-models",
       "coverImage": "/assets/list/colliding-models.png",
       "videoUrl": "colliding-models.mp4",
       "addedAt": 1780292718738.838
@@ -1316,14 +1316,14 @@
       "name": "file-encryption",
       "title": "File Encryption",
       "description": "Auto-scrolling draggable card marquee with a WebGL laser beam that splits each card between its plain and ASCII/encrypted face, plus Canvas 2D particle scatter.",
-      "category": "webgl",
+      "category": "components",
       "categories": [
-        "webgl"
+        "components"
       ],
       "dependencies": [
         "gsap"
       ],
-      "previewUrl": "/webgl/file-encryption",
+      "previewUrl": "/file-encryption",
       "coverImage": "/assets/list/file-encryption.png",
       "videoUrl": "file-encryption.mp4",
       "addedAt": 1779431290515.7
@@ -1346,9 +1346,9 @@
       "name": "gooey-counter",
       "title": "Gooey Counter",
       "description": "Canvas-based animated counter that morphs pixel-grid blocks between numbers 0–10 using an SVG gooey filter. Blocks scatter to a random layout between each number with eased transitions.",
-      "category": "others",
+      "category": "components",
       "categories": [
-        "others"
+        "components"
       ],
       "dependencies": [],
       "previewUrl": "/gooey-counter",
@@ -1374,9 +1374,9 @@
       "name": "hyperiux-glitter-concept",
       "title": "Hyperiux Glitter Concept",
       "description": "Glittery particle logo concept with morphing model particles, cursor trail particles, and bloom postprocessing.",
-      "category": "webgl",
+      "category": "components",
       "categories": [
-        "webgl"
+        "components"
       ],
       "dependencies": [
         "three",
@@ -1385,7 +1385,7 @@
         "@react-three/postprocessing",
         "postprocessing"
       ],
-      "previewUrl": "/webgl/hyperiux-glitter-concept",
+      "previewUrl": "/hyperiux-glitter-concept",
       "coverImage": "/assets/list/hyperiux-glitter-concept.png",
       "videoUrl": "/hyperiux-glitter-concept.mp4",
       "addedAt": 1780062531144.4338
@@ -1394,12 +1394,12 @@
       "name": "infinite-grid-gallery",
       "title": "Infinite Grid Gallery",
       "description": "Infinite scrollable grid gallery with expandable overlay, thumbnails rail, and smooth open/close transitions.",
-      "category": "webgl",
+      "category": "components",
       "categories": [
-        "webgl"
+        "components"
       ],
       "dependencies": [],
-      "previewUrl": "/webgl/infinite-grid-gallery",
+      "previewUrl": "/infinite-grid-gallery",
       "coverImage": "/assets/list/infinite-grid-gallery.png",
       "videoUrl": "infinite-grid-gallery.mp4",
       "addedAt": 1780062531144.651
@@ -1408,15 +1408,15 @@
       "name": "interactive-hover-slider",
       "title": "Hover Slider",
       "description": "WebGL-powered list where hovering a row reveals a vertically-scrolling image stack with circular-arc curvature, velocity-based elastic snap, and GSAP-driven fade/curve transitions.",
-      "category": "webgl",
+      "category": "components",
       "categories": [
-        "webgl"
+        "components"
       ],
       "dependencies": [
         "three",
         "gsap"
       ],
-      "previewUrl": "/webgl/interactive-hover-slider",
+      "previewUrl": "/interactive-hover-slider",
       "coverImage": "/assets/list/interactive-hover-slider.png",
       "videoUrl": "interactive-hover-slider.mp4",
       "addedAt": 1779431290516.5527
@@ -1425,9 +1425,9 @@
       "name": "interactive-list-preview",
       "title": "Interactive List Preview",
       "description": "Hover-driven table list that reveals clipped images with a sliding highlight bar and mix-blend-mode difference inversion effect",
-      "category": "others",
+      "category": "components",
       "categories": [
-        "others"
+        "components"
       ],
       "dependencies": [
         "gsap"
@@ -1457,9 +1457,9 @@
       "name": "portfolio-concept",
       "title": "Portfolio Concept",
       "description": "Motion-led portfolio landing concept with GSAP ScrollTrigger + SplitText and image strips.",
-      "category": "others",
+      "category": "components",
       "categories": [
-        "others"
+        "components"
       ],
       "dependencies": [
         "gsap",

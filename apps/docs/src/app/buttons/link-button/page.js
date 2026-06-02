@@ -1,4 +1,4 @@
-import LinkButton from"@/components/Buttons/LinkButtons/LinkButton/LinkButton";
+import { LinkButton } from"@/components/Buttons/LinkButtons/LinkButton/LinkButton";
 import { ButtonDemoShell } from"@/components/Buttons/ButtonDemoShell";
 
 export default function Page() {

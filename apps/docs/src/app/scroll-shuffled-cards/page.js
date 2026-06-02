@@ -1,4 +1,4 @@
-import ScrollShuffledCards from"@/components/ScrollShuffledCards/ScrollShuffledCards";
+import { ScrollShuffledCards } from"@/components/ScrollShuffledCards/ScrollShuffledCards";
 import React from"react";
 import { ReactLenis } from"lenis/react";
 const cardsData = [

@@ -1,4 +1,4 @@
-import InfiniteGridTunnel from'@/components/GridTunnel/GridTunnel';
+import { GridTunnel as InfiniteGridTunnel } from'@/components/GridTunnel/GridTunnel';
 import React from'react'
 
 const images = [

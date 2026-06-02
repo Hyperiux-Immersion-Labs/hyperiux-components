@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from'react'
 import { useRouter } from'next/navigation'
-import NumericTunnel from'@/components/Loaders/NumericTunnel'
+import { NumericTunnel } from'@/components/Loaders/NumericTunnel'
 
 export default function HomeLoader({ children }) {
   const router = useRouter()

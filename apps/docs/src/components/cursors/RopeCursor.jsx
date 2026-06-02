@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from'react'
 import gsap from'gsap'
 
-export default function RopeCursor({
+export function RopeCursor({
 	ropeColor ='#bda985',
 	ropeWidth = 2,
 	ropeOpacity = 0.6,

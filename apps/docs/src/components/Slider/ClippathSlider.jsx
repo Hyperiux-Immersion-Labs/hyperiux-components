@@ -5,7 +5,7 @@ import SplitText from "gsap/dist/SplitText";
 
 gsap.registerPlugin(SplitText);
 
-export default function ClippathSlider({ slides = [], cursorBg = "#d9f99d", cursorLineColor = "#000", }) {
+export function ClippathSlider({ slides = [], cursorBg = "#d9f99d", cursorLineColor = "#000", }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [nextSlideIndex, setNextSlideIndex] = useState(0);

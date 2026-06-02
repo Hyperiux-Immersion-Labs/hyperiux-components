@@ -123,4 +123,3 @@ export function OverflowTextReveal({
   );
 }
 
-export default OverflowTextReveal;

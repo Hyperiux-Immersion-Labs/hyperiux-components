@@ -1,5 +1,5 @@
 import React from'react'
-import SpotlightText from'@/components/SpotlightText/SpotlightText'
+import { SpotlightText } from'@/components/SpotlightText/SpotlightText'
 
 const page = () => {
  return (
@@ -18,4 +18,3 @@ const page = () => {
 }
 
 export default page
-

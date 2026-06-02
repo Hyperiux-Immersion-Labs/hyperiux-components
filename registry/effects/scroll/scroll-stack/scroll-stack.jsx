@@ -6,7 +6,7 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ScrollStack({ bgColor = "bg-white", cards = [] }) {
+export function ScrollStack({ bgColor = "bg-white", cards = [] }) {
   const sectionRef = useRef(null);
   const rowRefs = useRef([]);
   const cardRefs = useRef([]);

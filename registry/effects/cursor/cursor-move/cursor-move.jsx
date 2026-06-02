@@ -91,7 +91,7 @@ function VariableFontAndCursor({
   );
 }
 
-export default function CursorMove({
+export function CursorMove({
   interClassName = "",
   containerClassName = "",
   backgroundClassName = "bg-zinc-950",

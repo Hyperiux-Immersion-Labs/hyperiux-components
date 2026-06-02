@@ -209,7 +209,6 @@ const galleryFrag = /* glsl */`
  }
 `;
 
-
 const stripVert = /* glsl */`
  uniform int uPortrait;
  uniform float uWidth; // animated strip width in [0..1]
@@ -388,16 +387,12 @@ const hazeFrag = /* glsl */`
  }
 `;
 
-
-
-
-export default function StripSlider({ items }) {
+export function StripSlider({ items }) {
     const canvasRef = useRef(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
-
 
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -413,7 +408,6 @@ export default function StripSlider({ items }) {
 
         const dummyVec3 = new THREE.Vector3();
         const dummyMat4 = new THREE.Matrix4();
-
 
         const randomSeed = randRange(1_000_000);
         let normalsScene, normalsCamera, normalsMesh;
@@ -491,7 +485,6 @@ export default function StripSlider({ items }) {
         const galleryItems = new THREE.Object3D();
         galleryContainer.add(galleryItems);
 
-
         const stripGeo = new THREE.PlaneGeometry(1, 1, 32, 32);
 
         const stripMeshes = galleryContent.map((item) => {
@@ -524,7 +517,6 @@ export default function StripSlider({ items }) {
 
             return mesh;
         });
-
 
         const sharedMat = new THREE.ShaderMaterial({
             vertexShader: galleryVert,
@@ -571,8 +563,6 @@ export default function StripSlider({ items }) {
         const galleryHighRes = new THREE.Mesh(highResGeo, highResMat);
         galleryHighRes.matrixAutoUpdate = false;
         galleryContainer.add(galleryHighRes);
-
-
 
         // --- overlay bracket ---
         const GALLERY_OVERLAY_Z = -0.5;
@@ -667,7 +657,6 @@ export default function StripSlider({ items }) {
             ribbon.rotation.z = 0.9;
             scene.add(ribbon);
         })();
-
 
         const HAZE_INTERVAL = 5000;
         const HAZE_LIFESPAN = 30000;

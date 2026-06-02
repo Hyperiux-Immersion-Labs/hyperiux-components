@@ -1,17 +1,37 @@
 "use client";
-import { useRef, useEffect, useMemo } from "react";
+
+import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-const vertexShader = () => `
+const DEFAULT_IMAGE = "/assets/img/image06.png";
+const IMAGE_ASPECT_RATIO = 1920 / 1080;
+const TABLET_MAX_WIDTH = 768;
+const MOBILE_MAX_WIDTH = 640;
+const MOUSE_LERP = 0.15;
+const VELOCITY_TARGET_SCALE = 35;
+const VELOCITY_SMOOTH_LERP = 0.06;
+const VELOCITY_CURRENT_LERP = 0.15;
+const VELOCITY_DECAY = 0.96;
+const MOVEMENT_TIMEOUT_MS = 300;
+const MOVEMENT_STATE_LERP = 0.05;
+const INITIAL_MOUSE = 0.5;
+const INITIAL_VELOCITY_Y = 0.5;
+const INITIAL_TIME = 2;
+const BLOCK_SIZE = 1 / 35;
+const EFFECT_RADIUS = 0.3;
+const EFFECT_INTENSITY = 1.8;
+
+const ZANJO_VERT = /* glsl */ `
   varying vec2 vUv;
+
   void main() {
     vUv = uv;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   }
 `;
 
-const fragmentShader = () => `
+const ZANJO_FRAG = /* glsl */ `
   uniform vec2 uMouse;
   uniform vec2 uVelocity;
   uniform float uBlockSize;
@@ -20,6 +40,7 @@ const fragmentShader = () => `
   uniform float uTime;
   uniform float uIsMoving;
   uniform sampler2D uTexture;
+
   varying vec2 vUv;
 
   void main() {
@@ -35,11 +56,14 @@ const fragmentShader = () => `
     influence *= 1.0 + sin(uTime * 1.5) * 0.15 + cos(uTime * 2.3) * 0.05;
     influence *= smoothstep(0.0, 1.0, uIsMoving);
 
-    vec2 dir = uVelocity;
-    float blend = smoothstep(-0.05, 0.15, abs(uVelocity.x) - abs(uVelocity.y));
-    dir = mix(
-      vec2(0.0, sign(uVelocity.y)),
-      vec2(sign(uVelocity.x), 0.0),
+    vec2 vel = uVelocity;
+    float smoothSignX = vel.x / (abs(vel.x) + 0.08);
+    float smoothSignY = vel.y / (abs(vel.y) + 0.08);
+    float blend = smoothstep(-0.05, 0.15, abs(vel.x) - abs(vel.y));
+
+    vec2 dir = mix(
+      vec2(0.0, smoothSignY),
+      vec2(smoothSignX, 0.0),
       blend
     );
 
@@ -48,7 +72,7 @@ const fragmentShader = () => `
 
     vec2 displacedUV = uv - displacement;
     displacedUV += sin(displacedUV.x * 8.0 + uTime) * 0.002
-                 + cos(displacedUV.y * 6.0 + uTime * 0.8) * 0.001;
+      + cos(displacedUV.y * 6.0 + uTime * 0.8) * 0.001;
 
     vec4 color = texture2D(uTexture, displacedUV);
     color.rgb *= 1.0 + influence * 0.1;
@@ -58,85 +82,115 @@ const fragmentShader = () => `
 `;
 
 function PlaneWithShader({ texture }) {
-  const materialRef = useRef();
-  const { size, viewport } = useThree();
-  const clock = useRef(new THREE.Clock());
-  const isMovingRef = useRef(1.0);
+  const materialRef = useRef(null);
+  const shaderMaterialRef = useRef(null);
   const moveTimeoutRef = useRef(null);
-  const mouseRef = useRef(new THREE.Vector2(0.5, 0.5));
-  const velocityRef = useRef(new THREE.Vector2(0.0, 0.0));
-  const lastMouseRef = useRef(new THREE.Vector2(0.5, 0.5));
-  const targetMouseRef = useRef(new THREE.Vector2(0.5, 0.5));
-  const targetVelocityRef = useRef(new THREE.Vector2(0.0, 0.0));
-  const smoothedVelocityRef = useRef(new THREE.Vector2(0.0, 0.0));
+  const clockRef = useRef(new THREE.Clock());
+  const isMovingRef = useRef(1);
+  const lastMouseRef = useRef(new THREE.Vector2(INITIAL_MOUSE, INITIAL_MOUSE));
+  const targetMouseRef = useRef(new THREE.Vector2(INITIAL_MOUSE, INITIAL_MOUSE));
+  const targetVelocityRef = useRef(new THREE.Vector2(0, 0));
+  const smoothedVelocityRef = useRef(new THREE.Vector2(0, 0));
+  const { size, viewport } = useThree();
 
   const shaderMaterial = useMemo(
     () =>
       new THREE.ShaderMaterial({
         uniforms: {
-          uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-          uVelocity: { value: new THREE.Vector2(0.0, 0.5) },
-          uBlockSize: { value: 1.0 / 35.0 },
-          uRadius: { value: 0.3 },
-          uIntensity: { value: 1.8 },
-          uTime: { value: 2 },
-          uIsMoving: { value: 1.0 },
+          uMouse: { value: new THREE.Vector2(INITIAL_MOUSE, INITIAL_MOUSE) },
+          uVelocity: { value: new THREE.Vector2(0, INITIAL_VELOCITY_Y) },
+          uBlockSize: { value: BLOCK_SIZE },
+          uRadius: { value: EFFECT_RADIUS },
+          uIntensity: { value: EFFECT_INTENSITY },
+          uTime: { value: INITIAL_TIME },
+          uIsMoving: { value: 1 },
           uTexture: { value: texture },
         },
-        vertexShader: vertexShader(),
-        fragmentShader: fragmentShader(),
+        vertexShader: ZANJO_VERT,
+        fragmentShader: ZANJO_FRAG,
         transparent: false,
       }),
     [texture]
   );
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const newMouse = new THREE.Vector2(
-        e.clientX / size.width,
-        1.0 - e.clientY / size.height
+    shaderMaterialRef.current = shaderMaterial;
+  }, [shaderMaterial]);
+
+  useEffect(() => {
+    const onMouseMove = (event) => {
+      const nextMouse = new THREE.Vector2(
+        event.clientX / size.width,
+        1 - event.clientY / size.height
       );
-      const vel = newMouse.clone().sub(lastMouseRef.current);
-      targetMouseRef.current.copy(newMouse);
-      targetVelocityRef.current.copy(vel.multiplyScalar(35.0));
-      lastMouseRef.current.copy(newMouse);
-      isMovingRef.current = 1.0;
-      if (moveTimeoutRef.current) clearTimeout(moveTimeoutRef.current);
+      const nextVelocity = nextMouse
+        .clone()
+        .sub(lastMouseRef.current)
+        .multiplyScalar(VELOCITY_TARGET_SCALE);
+
+      targetMouseRef.current.copy(nextMouse);
+      targetVelocityRef.current.copy(nextVelocity);
+      lastMouseRef.current.copy(nextMouse);
+      isMovingRef.current = 1;
+
+      if (moveTimeoutRef.current) {
+        clearTimeout(moveTimeoutRef.current);
+      }
+
       moveTimeoutRef.current = setTimeout(() => {
-        isMovingRef.current = 0.0;
-      }, 300);
+        isMovingRef.current = 0;
+      }, MOVEMENT_TIMEOUT_MS);
     };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      if (moveTimeoutRef.current) clearTimeout(moveTimeoutRef.current);
+      window.removeEventListener("mousemove", onMouseMove);
+      if (moveTimeoutRef.current) {
+        clearTimeout(moveTimeoutRef.current);
+      }
     };
-  }, [size]);
+  }, [size.height, size.width]);
 
   useFrame(() => {
-    shaderMaterial.uniforms.uTime.value = clock.current.getElapsedTime();
-    const currentMouse = shaderMaterial.uniforms.uMouse.value;
-    currentMouse.lerp(targetMouseRef.current, 0.15);
-    smoothedVelocityRef.current.lerp(targetVelocityRef.current, 0.06);
-    const currentVelocity = shaderMaterial.uniforms.uVelocity.value;
-    currentVelocity.lerp(smoothedVelocityRef.current, 0.15);
-    targetVelocityRef.current.multiplyScalar(0.96);
-    shaderMaterial.uniforms.uIsMoving.value = THREE.MathUtils.lerp(
-      shaderMaterial.uniforms.uIsMoving.value,
+    const shader = shaderMaterialRef.current;
+
+    if (!shader) {
+      return;
+    }
+
+    // Animation loop
+    shader.uniforms.uTime.value = clockRef.current.getElapsedTime();
+    shader.uniforms.uMouse.value.lerp(targetMouseRef.current, MOUSE_LERP);
+    smoothedVelocityRef.current.lerp(
+      targetVelocityRef.current,
+      VELOCITY_SMOOTH_LERP
+    );
+    shader.uniforms.uVelocity.value.lerp(
+      smoothedVelocityRef.current,
+      VELOCITY_CURRENT_LERP
+    );
+    targetVelocityRef.current.multiplyScalar(VELOCITY_DECAY);
+    shader.uniforms.uIsMoving.value = THREE.MathUtils.lerp(
+      shader.uniforms.uIsMoving.value,
       isMovingRef.current,
-      0.05
+      MOVEMENT_STATE_LERP
     );
   });
 
-  const imageAspect = 1920 / 1080;
-  const viewportAspect = viewport.width / viewport.height;
-  let planeWidth, planeHeight;
-  if (imageAspect > viewportAspect) {
+  const viewportAspectRatio = viewport.width / viewport.height;
+  const isTabletViewport =
+    size.width <= TABLET_MAX_WIDTH && size.width > MOBILE_MAX_WIDTH;
+  let planeWidth;
+  let planeHeight;
+
+  // Plane sizing
+  if (isTabletViewport || IMAGE_ASPECT_RATIO > viewportAspectRatio) {
     planeWidth = viewport.width;
-    planeHeight = viewport.width / imageAspect;
+    planeHeight = viewport.width / IMAGE_ASPECT_RATIO;
   } else {
     planeHeight = viewport.height;
-    planeWidth = viewport.height * imageAspect;
+    planeWidth = viewport.height * IMAGE_ASPECT_RATIO;
   }
 
   return (
@@ -149,12 +203,20 @@ function PlaneWithShader({ texture }) {
 
 function Scene({ img }) {
   const texture = useMemo(() => new THREE.TextureLoader().load(img), [img]);
+
   return <PlaneWithShader texture={texture} />;
 }
 
-export function Zanjo({ img = "/assets/pixelation/zanjo.jpg" }) {
+export default function Zanjo({ img = DEFAULT_IMAGE }) {
   return (
-    <div className="h-screen w-full relative">
+    <div className="relative h-screen w-full">
+      <div className="pointer-events-none absolute left-1/2 top-40 z-10 hidden w-full -translate-x-1/2 px-5 max-md:flex max-md:justify-center max-sm:left-0 max-sm:block max-sm:translate-x-0 max-sm:pt-5">
+        <p className="inline-flex max-w-[92vw] rounded-sm border border-white/15 bg-black/40 px-4 py-2 font-medium text-white/75 backdrop-blur max-md:w-[80%] max-md:text-center max-md:text-[2.8vw] max-sm:w-full max-sm:text-[3.5vw]">
+          Heads up: the pixel-drift responds to cursor velocity - desktop is the
+          sweet spot.
+        </p>
+      </div>
+
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
         <color attach="background" args={["#000000"]} />
         <Scene img={img} />

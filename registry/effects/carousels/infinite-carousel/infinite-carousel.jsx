@@ -177,7 +177,7 @@ function horizontalLoop(items, config = {}) {
  return tl;
 }
 
-export default function HorizontalCarousel({
+function HorizontalCarousel({
  children,
  draggable = true,
  speed = 1,
@@ -452,3 +452,5 @@ export default function HorizontalCarousel({
  </div>
  );
 }
+
+export { HorizontalCarousel as InfiniteCarousel };

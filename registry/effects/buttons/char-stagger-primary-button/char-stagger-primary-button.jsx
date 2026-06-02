@@ -170,4 +170,3 @@ export function CharStaggerPrimaryButton({
   );
 }
 
-export default CharStaggerPrimaryButton;

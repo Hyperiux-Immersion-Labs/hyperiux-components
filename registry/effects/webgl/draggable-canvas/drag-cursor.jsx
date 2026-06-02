@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 
-export function DragCursor({ isHoveringDraggable = false }) {
+export default function DragCursor({ isHoveringDraggable = false }) {
   const cursorRef = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -10,28 +10,31 @@ export function DragCursor({ isHoveringDraggable = false }) {
     const cursor = cursorRef.current;
     if (!cursor) return;
 
-    const handleMouseMove = (e) => {
+    const handlePointerMove = (e) => {
       const x = e.clientX;
       const y = e.clientY;
-
+      
       setPosition({ x, y });
-
+      
       gsap.to(cursor, {
-        x,
-        y,
+        x: x,
+        y: y,
         duration: 0.3,
-        ease: "power2.out",
+        ease: "power2.out"
       });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("pointermove", handlePointerMove);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+    };
   }, []);
 
   return (
-    <div
+    <div 
       ref={cursorRef}
-      className="fixed w-4 h-4 pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
+      className="fixed w-4 h-4 pointer-events-none z-9999 -translate-x-1/2 -translate-y-1/2"
       style={{ left: 0, top: 0 }}
     >
       <div className="absolute top-4 left-[120%] text-white text-[.5vw] font-head whitespace-nowrap">

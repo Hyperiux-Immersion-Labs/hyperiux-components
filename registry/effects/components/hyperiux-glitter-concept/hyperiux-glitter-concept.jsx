@@ -7,7 +7,7 @@ import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import MouseTrailParticles from "./MouseTrailParticles";
 import MorphingParticleModel from "./MorphingParticleModelNew";
 
-export default function HyperiuxGlitterConcept() {
+export function HyperiuxGlitterConcept() {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-black">
       <Canvas

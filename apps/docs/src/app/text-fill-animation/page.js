@@ -1,5 +1,5 @@
 import React from'react'
-import TextFillAnimation from'@/components/TextAnims/TextFillAnimation'
+import { TextFillAnimation } from'@/components/TextAnims/TextFillAnimation'
 import { ReactLenis } from'lenis/react'
 
 

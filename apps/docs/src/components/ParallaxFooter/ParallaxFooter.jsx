@@ -60,4 +60,4 @@ const ParallaxFooter = ({
  );
 };
 
-export default ParallaxFooter;
+export { ParallaxFooter };

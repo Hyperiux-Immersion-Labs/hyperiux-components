@@ -1,4 +1,4 @@
-import EncryptionMarquee from "@/components/FileEncryption/FileEncryption";
+import { FileEncryption as EncryptionMarquee } from "@/components/FileEncryption/FileEncryption";
 
 const CARDS = [
   {
@@ -162,4 +162,3 @@ export default function Page() {
     </main>
   );
 }
-

@@ -137,4 +137,3 @@ export function OrbitSlider({
   );
 }
 
-export default OrbitSlider;

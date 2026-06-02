@@ -177,4 +177,4 @@ const ScrambleText = ({  text,  speed = 0.6,  charType ='lowercase',  textSize =
  );
 };
 
-export default ScrambleText;
+export { ScrambleText };

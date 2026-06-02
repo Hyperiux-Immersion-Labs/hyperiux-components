@@ -92,4 +92,3 @@ export function OverflowStaggerText({
   );
 }
 
-export default OverflowStaggerText;

@@ -415,4 +415,4 @@ const VideoPlayer = ({
   );
 };
 
-export default VideoPlayer;
+export { VideoPlayer as CustomVideoPlayer };

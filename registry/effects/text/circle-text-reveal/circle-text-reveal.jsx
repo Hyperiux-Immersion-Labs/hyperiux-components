@@ -117,4 +117,3 @@ export function CircleTextReveal({
   );
 }
 
-export default CircleTextReveal;

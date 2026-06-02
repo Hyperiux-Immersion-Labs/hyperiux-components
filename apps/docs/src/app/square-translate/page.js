@@ -1,5 +1,5 @@
 import React from "react";
-import SquareTranslate from "@/components/scroll-based-animations/SquareTranslate";
+import { SquareTranslate } from "@/components/scroll-based-animations/SquareTranslate";
 import LenisSmoothScroll from "@/components/SmoothScroll/LenisScroll";
 import Image from "next/image";
 

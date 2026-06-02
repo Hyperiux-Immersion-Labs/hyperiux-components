@@ -160,7 +160,7 @@ function ButterflyTrail() {
 
 useGLTF.preload('/assets/cursors/butterflies/butterfly3.glb')
 
-export default function ButterflyTrailCursor() {
+export function ButterflyTrailCursor() {
   return (
     <div className="relative h-screen w-full bg-[#EAEAE9]">
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }} gl={{ antialias: false, powerPreference: 'high-performance', alpha: false }} dpr={[1, 1]} performance={{ min: 0.5 }}>

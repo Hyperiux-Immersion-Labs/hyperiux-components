@@ -1,7 +1,6 @@
-"use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
-export function ArrowsLimit({ rows = 5, columns = 10 }) {
+const ArrowsLimit = ({ rows = 5, columns = 10 }) => {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const arrowsRef = useRef([]);
@@ -20,22 +19,23 @@ export function ArrowsLimit({ rows = 5, columns = 10 }) {
       this.dx = 0;
       this.dy = 0;
       this.angle = 0;
-      this.ease = 0.1;
+      this.ease = 0.1;  
     }
-
+  
     update(mouseX, mouseY) {
       const targetDx = mouseX - this.pos.x;
       const targetDy = mouseY - this.pos.y;
-      this.dx += (targetDx - this.dx) * this.ease * 0.35;
-      this.dy += (targetDy - this.dy) * this.ease * 0.35;
+      this.dx += (targetDx - this.dx) * this.ease*0.35;
+      this.dy += (targetDy - this.dy) * this.ease*0.35;
       this.angle = Math.atan2(this.dy, this.dx);
     }
-
+  
     draw(ctx) {
       ctx.save();
       ctx.translate(this.pos.x, this.pos.y);
       ctx.rotate(this.angle);
       ctx.beginPath();
+  
       ctx.moveTo(50, 0);
       ctx.lineTo(-50, 0);
       ctx.moveTo(50, 0);
@@ -43,19 +43,28 @@ export function ArrowsLimit({ rows = 5, columns = 10 }) {
       ctx.moveTo(50, 0);
       ctx.lineTo(10, 40);
       ctx.lineWidth = 2;
-      ctx.strokeStyle = "white";
+      ctx.strokeStyle = 'white';
       ctx.stroke();
+  
       ctx.restore();
     }
   }
-
+  
   const initializeArrows = (canvas) => {
     const arrows = [];
     const spacingX = canvas.width / (columns + 1);
     const spacingY = canvas.height / (rows + 1);
+    
     for (let y = 1; y <= rows; y++) {
       for (let x = 1; x <= columns; x++) {
-        arrows.push(new Arrow(new Point(x * spacingX, y * spacingY)));
+        arrows.push(
+          new Arrow(
+            new Point(
+              x * spacingX,
+              y * spacingY
+            )
+          )
+        );
       }
     }
     return arrows;
@@ -72,7 +81,7 @@ export function ArrowsLimit({ rows = 5, columns = 10 }) {
 
   const handleMouseMove = (e) => {
     const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();  
     if (
       e.clientX >= rect.left &&
       e.clientX <= rect.right &&
@@ -80,20 +89,25 @@ export function ArrowsLimit({ rows = 5, columns = 10 }) {
       e.clientY <= rect.bottom
     ) {
       mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
+        x: e.clientX - rect.left, 
+        y: e.clientY - rect.top,  
       };
     }
   };
 
   const main = () => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
+    const arrows = arrowsRef.current;
+    const mouse = mouseRef.current;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    arrowsRef.current.forEach((arrow) => {
-      arrow.update(mouseRef.current.x, mouseRef.current.y);
+
+    arrows.forEach(arrow => {
+      arrow.update(mouse.x, mouse.y);
       arrow.draw(ctx);
     });
+
     animationFrameRef.current = requestAnimationFrame(main);
   };
 
@@ -101,20 +115,30 @@ export function ArrowsLimit({ rows = 5, columns = 10 }) {
     const canvas = canvasRef.current;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
     arrowsRef.current = initializeArrows(canvas);
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
+
     main();
+
     return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", handleMouseMove);
-      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
-  }, [rows, columns]);
+  }, [rows, columns]); 
 
   return (
     <div className="w-full h-full">
-      <canvas ref={canvasRef} className="w-full h-full" />
+      <canvas 
+        ref={canvasRef}
+        className="w-full h-full "
+      />
     </div>
   );
-}
+};
+
+export default ArrowsLimit;

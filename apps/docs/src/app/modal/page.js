@@ -1,7 +1,7 @@
 "use client";
 
 import DotScaleFillCharBtn from "@/components/Buttons/PrimaryButtons/DotBgFillPrimaryBtn/DotBgFillPrimaryBtn";
-import Modal from "@/components/Modal/Modal";
+import { Modal } from "@/components/Modal/Modal";
 import ScrollablePopupContent from "@/components/ScrollablePopupContent/ScrollablePopupContent";
 import VideoPlayer from "@/components/VideoPlayer/VideoPlayer";
 import { useState } from "react";

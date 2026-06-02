@@ -3,9 +3,9 @@
   "type": "registry:component",
   "title": "Colliding Models",
   "description": "Physics-driven colliding 3D connectors with transmission material and postprocessing, built with R3F + Rapier.",
-  "category": "webgl",
+  "category": "components",
   "categories": [
-    "webgl"
+    "components"
   ],
   "dependencies": [
     "three",
@@ -18,7 +18,7 @@
     "next"
   ],
   "registryDependencies": [],
-  "previewUrl": "/webgl/colliding-models",
+  "previewUrl": "/colliding-models",
   "coverImage": "/assets/list/colliding-models.png",
   "videoUrl": "colliding-models.mp4",
   "files": [
@@ -26,7 +26,7 @@
       "path": "colliding-models.jsx",
       "type": "registry:component",
       "target": "components/hyperiux/colliding-models.jsx",
-      "content": "\"use client\";\n\nimport MagnetLogo from \"./MagneticEffect\";\n\nexport default function CollidingModels(props) {\n  return <MagnetLogo {...props} />;\n}\n\n"
+      "content": "\"use client\";\n\nimport MagnetLogo from \"./MagneticEffect\";\n\nexport function CollidingModels(props) {\n  return <MagnetLogo {...props} />;\n}\n\n"
     },
     {
       "path": "MagneticEffect.jsx",

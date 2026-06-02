@@ -34,7 +34,7 @@ function NavigationButtons({ onPrev, onNext, isAnimating }) {
   );
 }
 
-export default function TestimonialSwiper({ testimonials = [], bgColor = "#ffffff" }) {
+export function TestimonialSwiper({ testimonials = [], bgColor = "#ffffff" }) {
   const [current, setCurrent] = useState(0);
   const [displayItem, setDisplayItem] = useState(testimonials[0] ?? null);
   const [isAnimating, setIsAnimating] = useState(false);

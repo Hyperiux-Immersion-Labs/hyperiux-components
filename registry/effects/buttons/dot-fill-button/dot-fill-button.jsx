@@ -149,4 +149,3 @@ export function DotFillButton({
   );
 }
 
-export default DotFillButton;

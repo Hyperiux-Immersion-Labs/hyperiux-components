@@ -1,4 +1,4 @@
-import DottedGrid from'@/components/DottedGrid/DottedGrid'
+import { DottedGrid } from'@/components/DottedGrid/DottedGrid'
 import React from'react'
 
 const page = () => {

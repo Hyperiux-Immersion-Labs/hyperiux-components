@@ -1,5 +1,5 @@
 import React from'react'
-import StripSlider from'@/components/Slider/StripSlider'
+import { StripSlider } from'@/components/Slider/StripSlider'
 import LenisSmoothScroll from'@/components/SmoothScroll/LenisScroll'
 
 const items = [

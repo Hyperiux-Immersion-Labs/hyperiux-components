@@ -1,12 +1,11 @@
-"use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
-export function ArrowsPlay() {
+const ArrowsPlay = () => {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const arrowsRef = useRef([]);
   const animationFrameRef = useRef(null);
-  const divRef = useRef(null);
+  const divRef = useRef(null); // For the center div with text
 
   class Point {
     constructor(x, y) {
@@ -21,12 +20,20 @@ export function ArrowsPlay() {
       this.dx = 0;
       this.dy = 0;
       this.angle = 0;
+      this.rotationEase = 0.12;
     }
 
     update(mouseX, mouseY) {
       this.dx = mouseX - this.pos.x;
       this.dy = mouseY - this.pos.y;
-      this.angle = Math.atan2(this.dy, this.dx);
+      const targetAngle = Math.atan2(this.dy, this.dx);
+
+      // Ease rotation across the shortest arc so large direction changes do not snap.
+      let delta = targetAngle - this.angle;
+      while (delta > Math.PI) delta -= Math.PI * 2;
+      while (delta < -Math.PI) delta += Math.PI * 2;
+
+      this.angle += delta * this.rotationEase;
     }
 
     draw(ctx) {
@@ -41,7 +48,7 @@ export function ArrowsPlay() {
       ctx.moveTo(30, 0);
       ctx.lineTo(10, 20);
       ctx.lineWidth = 2.5;
-      ctx.strokeStyle = "white";
+      ctx.strokeStyle = 'white'; 
       ctx.stroke();
       ctx.restore();
     }
@@ -50,34 +57,45 @@ export function ArrowsPlay() {
   const initializeArrows = (canvas) => {
     const arrows = [];
     const spacing = 120;
+    
     const cols = Math.floor(canvas.width / spacing);
     const rows = Math.floor(canvas.height / spacing);
-    const xPadding = (canvas.width - cols * spacing) / 2;
-    const yPadding = (canvas.height - rows * spacing) / 2;
-
+    
+    const xPadding = (canvas.width - (cols * spacing)) / 2;
+    const yPadding = (canvas.height - (rows * spacing)) / 2;
+  
+    // Get div position relative to canvas
     const divRect = divRef.current.getBoundingClientRect();
     const canvasRect = canvas.getBoundingClientRect();
+    
     const divLeft = divRect.left - canvasRect.left;
     const divRight = divRect.right - canvasRect.left;
     const divTop = divRect.top - canvasRect.top;
     const divBottom = divRect.bottom - canvasRect.top;
-
+  
     for (let y = 0; y <= rows; y++) {
       for (let x = 0; x <= cols; x++) {
-        const arrowPos = new Point(x * spacing + xPadding, y * spacing + yPadding);
+        const arrowPos = new Point(
+          x * spacing + xPadding,
+          y * spacing + yPadding
+        );
+  
+        
         if (
-          arrowPos.x >= divLeft &&
-          arrowPos.x <= divRight &&
-          arrowPos.y >= divTop &&
+          arrowPos.x >= divLeft && 
+          arrowPos.x <= divRight && 
+          arrowPos.y >= divTop && 
           arrowPos.y <= divBottom
         ) {
-          continue;
+          continue; 
         }
+  
         arrows.push(new Arrow(arrowPos));
       }
     }
     return arrows;
   };
+  
 
   const handleResize = () => {
     const canvas = canvasRef.current;
@@ -90,7 +108,8 @@ export function ArrowsPlay() {
 
   const handleMouseMove = (e) => {
     const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();  
+    
     if (
       e.clientX >= rect.left &&
       e.clientX <= rect.right &&
@@ -98,20 +117,25 @@ export function ArrowsPlay() {
       e.clientY <= rect.bottom
     ) {
       mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
+        x: e.clientX - rect.left,  
+        y: e.clientY - rect.top, 
       };
     }
   };
 
   const main = () => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
+    const arrows = arrowsRef.current;
+    const mouse = mouseRef.current;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    arrowsRef.current.forEach((arrow) => {
-      arrow.update(mouseRef.current.x, mouseRef.current.y);
+
+    arrows.forEach(arrow => {
+      arrow.update(mouse.x, mouse.y);
       arrow.draw(ctx);
     });
+
     animationFrameRef.current = requestAnimationFrame(main);
   };
 
@@ -119,37 +143,49 @@ export function ArrowsPlay() {
     const canvas = canvasRef.current;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    mouseRef.current = {
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+    };
+
     arrowsRef.current = initializeArrows(canvas);
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
+
     main();
+
     return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", handleMouseMove);
-      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
   }, []);
 
   return (
-    <div className="relative w-full h-full">
-      <canvas ref={canvasRef} className="w-full h-full" style={{ cursor: "pointer" }} />
-      <div
+    <div className="relative w-full h-full ">
+      <canvas 
+        ref={canvasRef}
+        className="w-full h-full"
+        style={{ cursor: 'pointer' }}
+      />
+      <div 
         ref={divRef}
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+        className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
         style={{
-          cursor: "pointer",
-          height: "25vw",
-          width: "35vw",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "transparent",
+          cursor:"pointer",
+          height:"25vw",
+          width:"32vw",
+          backgroundColor: "transparent", 
         }}
       >
-        <h1 className="text-[18vw] text-white font-medium transition-all ease duration-500">
+        <h1 className='translate-y-[-8vw] translate-x-[-4vw] text-center text-[15vw] leading-none text-white transition-all duration-500 ease'>
           Play
         </h1>
       </div>
     </div>
   );
-}
+};
+
+export default ArrowsPlay;

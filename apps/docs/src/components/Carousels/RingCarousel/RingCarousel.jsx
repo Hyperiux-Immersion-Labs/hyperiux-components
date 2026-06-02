@@ -419,4 +419,4 @@ const RingGallery = ({
  );
 };
 
-export default RingGallery;
+export { RingGallery as RingCarousel };

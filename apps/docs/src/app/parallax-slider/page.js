@@ -1,5 +1,5 @@
 import React from'react'
-import ParallaxImgSlider from'@/components/ParallaxImgSlider/ParallaxSlider'
+import { ParallaxSlider as ParallaxImgSlider } from'@/components/ParallaxImgSlider/ParallaxSlider'
 import LenisSmoothScroll from'@/components/SmoothScroll/LenisScroll'
 
 const page = () => {

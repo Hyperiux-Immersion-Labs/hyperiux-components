@@ -91,4 +91,3 @@ export function SlideTextReveal({
   );
 }
 
-export default SlideTextReveal;

@@ -22,7 +22,7 @@ const SHIFT_DURATION_IN = 0.8;
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function BlockTransition({ children, enableContentShift = false }) {
+export function BlockTransition({ children, enableContentShift = false }) {
   const wrapperRef = useRef(null);
   const rowRefs    = useRef([]);
 

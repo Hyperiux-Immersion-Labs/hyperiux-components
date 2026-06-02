@@ -1,5 +1,5 @@
 import React from'react'
-import ClippathSlider from'@/components/Slider/ClippathSlider'
+import { ClippathSlider } from'@/components/Slider/ClippathSlider'
 
 const page = () => {
  return (

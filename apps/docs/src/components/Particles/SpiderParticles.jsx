@@ -67,7 +67,7 @@ const POINT_FRAG = /* glsl */ `
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function SpiderParticles({
+export function SpiderParticles({
   particleCount = 180,
   gridGap = 0,
   particleSize = 20.0,

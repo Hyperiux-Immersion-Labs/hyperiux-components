@@ -11,7 +11,7 @@ const variantMap = {
   down: { x: 0, y: 40 },
 };
 
-export default function BlurText({
+export function BlurText({
   children,
   delay = 0,
   duration = 0.5,

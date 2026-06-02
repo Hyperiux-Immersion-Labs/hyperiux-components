@@ -4,7 +4,7 @@ import { TransitionRouter } from 'next-transition-router'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 
-export default function PageFlipTransition({
+export function PageFlipTransition({
   children,
   config = {
     enableBlur: false,

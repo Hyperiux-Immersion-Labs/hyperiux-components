@@ -68,7 +68,7 @@ export const effectContent = {
               language: "jsx",
               code: `"use client";
 
-import LinkButton from "@/components/Buttons/LinkButtons/LinkButton/LinkButton";
+import { LinkButton } from "@/components/Buttons/LinkButtons/LinkButton/LinkButton";
 import StickyContentWrapper from "@/components/StickyContent/StickyContent";
 import { ReactLenis } from "lenis/react";
 
@@ -2647,7 +2647,7 @@ export default function ScrollDistortion({
               filename: "page.jsx",
               language: "jsx",
               code: `import React from "react";
-import SpiderParticles from "@/components/Particles/SpiderParticles";
+import { SpiderParticles } from "@/components/Particles/SpiderParticles";
 
 const page = () => {
   return <SpiderParticles />;
@@ -3251,7 +3251,7 @@ export default function SpiderParticles({
               title: "Usage",
               filename: "page.jsx",
               language: "jsx",
-              code: `import DottedGrid from "@/components/DottedGrid/DottedGrid";
+              code: `import { DottedGrid } from "@/components/DottedGrid/DottedGrid";
 import React from "react";
 
 const page = () => {

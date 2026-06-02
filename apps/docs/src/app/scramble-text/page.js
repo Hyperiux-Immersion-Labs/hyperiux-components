@@ -1,5 +1,5 @@
 import React from "react";
-import ScrambleText from "@/components/TextAnims/ScrambleText";
+import { ScrambleText } from "@/components/TextAnims/ScrambleText";
 import ParallaxAnim from "@/components/ParallaxAnim/ParallaxAnim";
 import LenisSmoothScroll from "@/components/SmoothScroll/LenisScroll";
 import Image from "next/image";

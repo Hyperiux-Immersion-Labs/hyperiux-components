@@ -8,10 +8,7 @@ const EFFECT_RADIUS = 40
 const MAX_TRAIL_LENGTH = 8
 const CELL_LIFETIME = 100
 
-
-
-
-export default function PixelBloom({  src,  type ='video',  className ='h-[30vw] w-auto aspect-video',
+export function PixelBloom({  src,  type ='video',  className ='h-[30vw] w-auto aspect-video',
  gridSize = GRID_SIZE,
  effectRadius = EFFECT_RADIUS,
  maxTrailLength = MAX_TRAIL_LENGTH,

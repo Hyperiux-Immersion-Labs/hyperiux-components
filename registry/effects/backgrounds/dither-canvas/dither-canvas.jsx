@@ -375,4 +375,3 @@ export function DitherCanvas({ videoSrc = "/assets/videos/enigma-video.mp4", cla
   return <canvas ref={ref} className={`fixed inset-0 h-full w-full bg-black ${className}`} />;
 }
 
-export default DitherCanvas;

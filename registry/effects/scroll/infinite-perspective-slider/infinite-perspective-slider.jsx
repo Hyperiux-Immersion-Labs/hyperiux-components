@@ -32,7 +32,7 @@ const clamp       = (value, min, max) => Math.max(min, Math.min(max, value));
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function InfinitePerspectiveSlider({ images = [] }) {
+export function InfinitePerspectiveSlider({ images = [] }) {
   const stripRef       = useRef(null);
   const settersRef     = useRef([]);
   const cardRefs       = useRef([]);

@@ -19,7 +19,7 @@
       "path": "counter.jsx",
       "type": "registry:component",
       "target": "components/hyperiux/counter.jsx",
-      "content": "\"use client\";\n\nimport CounterOne from \"./CounterOne\";\nimport CounterTwo from \"./CounterTwo\";\nimport CounterThree from \"./CounterThree\";\n\nexport { CounterOne, CounterTwo, CounterThree };\n\nexport function Counter(props) {\n  const { variant = \"two\", ...rest } = props || {};\n\n  if (variant === \"one\") return <CounterOne {...rest} />;\n  if (variant === \"three\") return <CounterThree {...rest} />;\n  return <CounterTwo {...rest} />;\n}\n\nexport default Counter;\n\n"
+      "content": "\"use client\";\n\nimport CounterOne from \"./CounterOne\";\nimport CounterTwo from \"./CounterTwo\";\nimport CounterThree from \"./CounterThree\";\n\nexport { CounterOne, CounterTwo, CounterThree };\n\nexport function Counter(props) {\n  const { variant = \"two\", ...rest } = props || {};\n\n  if (variant === \"one\") return <CounterOne {...rest} />;\n  if (variant === \"three\") return <CounterThree {...rest} />;\n  return <CounterTwo {...rest} />;\n}\n\n"
     },
     {
       "path": "CounterOne.jsx",

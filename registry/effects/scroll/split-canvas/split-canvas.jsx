@@ -256,4 +256,3 @@ export function SplitCanvas({
   );
 }
 
-export default SplitCanvas;

@@ -157,4 +157,4 @@ const StackedHoverCards = ({
     );
 };
 
-export default StackedHoverCards;
+export { StackedHoverCards as HoverStack };

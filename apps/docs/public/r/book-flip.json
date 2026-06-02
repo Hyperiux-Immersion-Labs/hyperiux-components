@@ -3,9 +3,9 @@
   "type": "registry:component",
   "title": "Book Flip",
   "description": "3D interactive book viewer with realistic page flips, built with React Three Fiber and Drei.",
-  "category": "webgl",
+  "category": "components",
   "categories": [
-    "webgl"
+    "components"
   ],
   "dependencies": [
     "three",
@@ -13,7 +13,7 @@
     "@react-three/drei"
   ],
   "registryDependencies": [],
-  "previewUrl": "/webgl/book-flip",
+  "previewUrl": "/book-flip",
   "coverImage": "/assets/list/book-flip.png",
   "videoUrl": "book-flip.mp4",
   "files": [
@@ -21,7 +21,7 @@
       "path": "book-flip.jsx",
       "type": "registry:component",
       "target": "components/hyperiux/book-flip.jsx",
-      "content": "\"use client\";\n\nimport { BookFlipViewer } from \"./BookFlipViewer\";\n\nexport default BookFlipViewer;\n\n"
+      "content": "\"use client\";\n\nimport { BookFlipViewer } from \"./BookFlipViewer\";\n\nexport { BookFlipViewer as BookFlip };\n"
     },
     {
       "path": "Book.jsx",

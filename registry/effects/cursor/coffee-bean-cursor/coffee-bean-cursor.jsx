@@ -178,7 +178,7 @@ function MouseTracker({ mousePositionRef, mouseVelocityRef, targetPositionRef, t
   return null
 }
 
-export default function CoffeeBeanCursor() {
+export function CoffeeBeanCursor() {
   const mousePositionRef = useRef({ x: 0, y: 0 })
   const mouseVelocityRef = useRef({ x: 0, y: 0 })
   const targetPositionRef = useRef({ x: 0, y: 0 })

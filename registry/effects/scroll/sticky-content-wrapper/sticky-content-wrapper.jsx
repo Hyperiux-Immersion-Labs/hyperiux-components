@@ -6,7 +6,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-
 const injectStyles = () => {
   if (typeof document === "undefined") return;
   if (document.getElementById("sticky-content-wrapper-styles")) return;
@@ -310,4 +309,3 @@ export function StickyContentWrapper({
   );
 }
 
-export default StickyContentWrapper;

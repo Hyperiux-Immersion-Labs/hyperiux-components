@@ -1,6 +1,6 @@
 'use client'
 import { useState } from"react";
-import GlassStripParallax from"@/components/GlassEffects/FractalGlass";
+import { FractalGlass as GlassStripParallax } from"@/components/GlassEffects/FractalGlass";
 
 const images = {
  blob:"/assets/img/image10.jpg",

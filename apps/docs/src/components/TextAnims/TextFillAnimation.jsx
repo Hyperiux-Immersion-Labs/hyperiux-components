@@ -12,7 +12,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, SplitText);
 }
 
-export default function TextFillAnimation({
+export function TextFillAnimation({
   text = 'Go cashless, shop & sell virtually, access credit, insurance, and investment products seamlessly with Montra.',
   textColor = '#111111',
   primaryColor = '#ff6b00',

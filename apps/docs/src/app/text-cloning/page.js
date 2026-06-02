@@ -1,4 +1,4 @@
-import TextCloning from'@/components/TextCloning/TextCloning'
+import { TextCloning } from'@/components/TextCloning/TextCloning'
 import React from'react'
 
 const page = () => {

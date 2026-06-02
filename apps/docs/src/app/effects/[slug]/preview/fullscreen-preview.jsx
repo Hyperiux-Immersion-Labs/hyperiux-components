@@ -6,7 +6,7 @@ import { PropsPanel } from"@/components/ui/PropsPanel";
 import { getEffectHref } from"@/lib/categories";
 
 // Import all effects
-import BlurText from"@/components/effects/BlurText";
+import { BlurText } from"@/components/effects/BlurText";
 import { TextReveal } from"@/components/effects/text-reveal";
 
 // Effects that need special handling

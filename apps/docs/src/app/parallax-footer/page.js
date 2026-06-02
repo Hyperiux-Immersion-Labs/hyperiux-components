@@ -1,4 +1,4 @@
-import ParallaxFooter from"@/components/ParallaxFooter/ParallaxFooter";
+import { ParallaxFooter } from"@/components/ParallaxFooter/ParallaxFooter";
 import React from"react";
 import { ReactLenis } from"lenis/react";
 

@@ -150,4 +150,3 @@ export function MaskTextReveal({
   );
 }
 
-export default MaskTextReveal;

@@ -2,5 +2,4 @@
 
 import { BookFlipViewer } from "./BookFlipViewer";
 
-export default BookFlipViewer;
-
+export { BookFlipViewer as BookFlip };

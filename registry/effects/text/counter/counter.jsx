@@ -14,5 +14,3 @@ export function Counter(props) {
   return <CounterTwo {...rest} />;
 }
 
-export default Counter;
-

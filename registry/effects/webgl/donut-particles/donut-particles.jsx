@@ -565,7 +565,7 @@ function DonutParticles({
  );
 }
 
-export default function DonutParticle({
+function DonutParticle({
  className = "",
  canvasClassName = "",
  donutPosition = [0, 0, 0],
@@ -584,3 +584,5 @@ export default function DonutParticle({
  </div>
  );
 }
+
+export { DonutParticle as DonutParticles };

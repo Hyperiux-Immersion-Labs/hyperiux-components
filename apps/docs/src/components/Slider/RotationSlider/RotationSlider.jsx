@@ -26,7 +26,7 @@ const useIsomorphicLayoutEffect =
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-export default function RotationSlider({ images }) {
+export function RotationSlider({ images }) {
   // State and refs
 
   const outerRef = useRef(null);

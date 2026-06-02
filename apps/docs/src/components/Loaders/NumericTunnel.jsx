@@ -289,8 +289,6 @@ function NumericTunnelCanvas({ loaderValue, onComplete }) {
  }
  }, [loaderValue, onComplete])
 
-
-
  return (
  <div
  ref={canvasRef}
@@ -311,7 +309,7 @@ function NumericTunnelCanvas({ loaderValue, onComplete }) {
  )
 }
 
-export default function NumericTunnel({ onComplete }) {
+export function NumericTunnel({ onComplete }) {
  const [loaderValue, setLoaderValue] = useState(0)
 
  useEffect(() => {

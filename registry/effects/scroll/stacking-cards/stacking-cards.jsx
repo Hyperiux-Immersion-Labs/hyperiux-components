@@ -62,7 +62,7 @@ function SliderCard({ id, category, title, description, image, backgroundColor }
   );
 }
 
-export default function StackingCards({ data = [] }) {
+export function StackingCards({ data = [] }) {
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
 

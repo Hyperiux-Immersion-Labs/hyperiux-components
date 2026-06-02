@@ -1,4 +1,4 @@
-import ScrambleLinkButton from"@/components/Buttons/LinkButtons/ScrambleLinkButton/ScrambleLinkButton";
+import { ScrambleLinkButton } from"@/components/Buttons/LinkButtons/ScrambleLinkButton/ScrambleLinkButton";
 import { ButtonDemoShell } from"@/components/Buttons/ButtonDemoShell";
 
 export default function Page() {

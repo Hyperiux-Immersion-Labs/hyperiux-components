@@ -1,7 +1,6 @@
-"use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
-export function ArrowsOpacity() {
+const ArrowsOpacity = () => {
   const canvasRef = useRef(null);
   const requestIdRef = useRef(null);
   const arrowArrRef = useRef([]);
@@ -42,7 +41,7 @@ export function ArrowsOpacity() {
       ctx.moveTo(30, 0);
       ctx.lineTo(5, 30);
       ctx.lineWidth = 5;
-      const alpha = 1 - this.dist / 300;
+      const alpha = 1 - (this.dist / 300);
       ctx.strokeStyle = `rgba(0, 0, 0, ${Math.max(0, alpha)})`;
       ctx.stroke();
       ctx.restore();
@@ -53,7 +52,8 @@ export function ArrowsOpacity() {
     arrowArrRef.current = [];
     for (let y = 0; y < canvas.height / 20; y++) {
       for (let x = 0; x < canvas.width / 50; x++) {
-        arrowArrRef.current.push(new Arrow(new Point(x * 75, y * 75)));
+        const arr = new Arrow(new Point(x * 75, y * 75));
+        arrowArrRef.current.push(arr);
       }
     }
   };
@@ -79,7 +79,7 @@ export function ArrowsOpacity() {
 
   const animate = () => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const { x: mx, y: my } = mouseRef.current;
     for (let y = 0; y < canvas.height / 20; y++) {
@@ -99,20 +99,19 @@ export function ArrowsOpacity() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     initializeArrows(canvas);
-    window.addEventListener("resize", handleResize);
-    canvas.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener('resize', handleResize);
+    canvas.addEventListener('mousemove', handleMouseMove);
     requestIdRef.current = requestAnimationFrame(animate);
     return () => {
-      window.removeEventListener("resize", handleResize);
-      canvas.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      canvas.removeEventListener('mousemove', handleMouseMove);
       if (requestIdRef.current) cancelAnimationFrame(requestIdRef.current);
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{ width: "100%", height: "100%", pointerEvents: "auto" }}
-    />
+      <canvas ref={canvasRef} style={{ width: '100%', height: '100%', pointerEvents: 'auto' }} />
   );
-}
+};
+
+export default ArrowsOpacity;

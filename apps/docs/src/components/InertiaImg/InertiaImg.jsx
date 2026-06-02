@@ -6,7 +6,7 @@ import { InertiaPlugin } from"gsap/InertiaPlugin";
 
 gsap.registerPlugin(InertiaPlugin);
 
-export default function InertiaImage({ images = [] }) {
+function InertiaImage({ images = [] }) {
   const rootRef = useRef(null);
   const deltaRef = useRef({ x: 0, y: 0, oldX: null, oldY: null });
   const isTouchRef = useRef(false);
@@ -140,3 +140,5 @@ export default function InertiaImage({ images = [] }) {
  </section>
  );
 }
+
+export { InertiaImage as InertiaImg };

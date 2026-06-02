@@ -53,4 +53,4 @@ const CrosshairCursor = ({
  );
 };
 
-export default CrosshairCursor;
+export { CrosshairCursor as FullScreenCrosshair };

@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { LIQUID_TEXTURE } from "./liquid-tex";
 
-export default function LiquidCursor({
+function LiquidCursor({
   baseSize = 40,
   textHoverSize = 120,
   distortionScale = 1.5,
@@ -223,3 +223,5 @@ export default function LiquidCursor({
     </>
   );
 }
+
+export { LiquidCursor as LiquidGlassCursor };

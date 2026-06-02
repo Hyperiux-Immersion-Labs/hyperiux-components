@@ -1,5 +1,5 @@
 "use client"
-import GridTextMask from'@/components/GridLift/GridLift'
+import { GridLift as GridTextMask } from'@/components/GridLift/GridLift'
 import React from'react'
 
 

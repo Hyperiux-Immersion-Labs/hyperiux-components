@@ -1,4 +1,4 @@
-import Tabs from"@/components/Tabs/Tabs";
+import { Tabs } from"@/components/Tabs/Tabs";
 import CharStaggerPrimaryBtn from"@/components/Buttons/PrimaryButtons/CharStaggerPrimaryBtn/CharStaggerPrimaryBtn";
 
 const tabsData = [

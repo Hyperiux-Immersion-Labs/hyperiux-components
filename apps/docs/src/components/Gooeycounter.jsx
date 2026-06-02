@@ -172,7 +172,7 @@ function drawCapsule(ctx, x1, y1, x2, y2, r) {
  ctx.closePath(); ctx.fill();
 }
 
-export default function GooeyCounter() {
+export function GooeyCounter() {
  const canvasRef = useRef(null);
  const stateRef = useRef(null);
 

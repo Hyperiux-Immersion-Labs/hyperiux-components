@@ -123,7 +123,7 @@ const CircularText = ({
  translate(${radius}px)
  rotate(90deg)
  `,
- transformOrigin:'0 0', // 👈 IMPORTANT FIX
+ transformOrigin:'0 0', 
  fontSize: 20,
  fontWeight: 600,
  whiteSpace:'pre',

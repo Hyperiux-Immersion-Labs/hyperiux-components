@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import Image from 'next/image'
 
-export default function ChessGridTransition({ children, enableContentShift = false }) {
+export function ChessGridTransition({ children, enableContentShift = false }) {
   const wrapperRef = useRef(null)
   const gridRef = useRef(null)
   const bgRef = useRef(null)

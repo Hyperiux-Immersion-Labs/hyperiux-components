@@ -34,7 +34,7 @@ function FieldShell({ label, error, children }) {
   );
 }
 
-export default function Form({
+export function Form({
   fields = [],
   onSubmit,
   submitLabel = "Submit",

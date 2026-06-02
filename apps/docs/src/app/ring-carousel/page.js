@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from"react";
-import RingGallery from"@/components/Carousels/RingCarousel/RingCarousel";
+import { RingCarousel } from "@/components/Carousels/RingCarousel/RingCarousel";
 
 const imageItems = [
  {
@@ -94,7 +94,7 @@ export default function Page() {
  </div>
 
  <div className="relative w-full">
- <RingGallery
+ <RingCarousel
  items={imageItems}
  itemWidth={galleryConfig.itemWidth}
  itemHeight={galleryConfig.itemHeight}

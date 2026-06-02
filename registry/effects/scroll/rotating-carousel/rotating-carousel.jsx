@@ -132,4 +132,3 @@ export function RotatingCarousel({
   );
 }
 
-export default RotatingCarousel;

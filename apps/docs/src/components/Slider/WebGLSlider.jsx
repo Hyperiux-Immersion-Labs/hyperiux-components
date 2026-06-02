@@ -76,7 +76,7 @@ const fragmentShader = /* glsl */ `
 const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
 const mod = (n, m) => ((n % m) + m) % m;
 
-export default function WebGLSlider({ images = [] }) {
+function WebGLSlider({ images = [] }) {
  const containerRef = useRef(null);
  const scrollRef = useRef(0);
  const lastScroll = useRef(0);
@@ -377,3 +377,5 @@ export default function WebGLSlider({ images = [] }) {
  </div>
  );
 }
+
+export { WebGLSlider as WebglSlider };

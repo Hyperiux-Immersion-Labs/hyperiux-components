@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useRef, useState } from"react";
 
-export default function TextCloning() {
+export function TextCloning() {
  const canvasRef = useRef(null);
  const [text, setText] = useState("404");
 

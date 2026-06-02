@@ -150,4 +150,3 @@ function ThumbStrip({ refProp, slides, side, frameW, thumbW, thumbH, thumbGap, b
   );
 }
 
-export default ParallaxGallery;

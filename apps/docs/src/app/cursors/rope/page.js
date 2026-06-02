@@ -1,5 +1,5 @@
 import React from'react'
-import RopeCursor from'@/components/cursors/RopeCursor'
+import { RopeCursor } from'@/components/cursors/RopeCursor'
 export default function page() {
  return (
  <div className='h-screen w-full bg-[#F1EADE] text-[#bda985] overflow-hidden'>

@@ -128,4 +128,3 @@ export function HelixSlider({
   );
 }
 
-export default HelixSlider;

@@ -1,6 +1,6 @@
 'use client'
 
-import ImageTrail from '@/components/MagneticImageTrail'
+import { MagneticImageTrail as ImageTrail } from '@/components/MagneticImageTrail'
 import React, { useEffect, useState } from 'react'
 
 const Content = () => (

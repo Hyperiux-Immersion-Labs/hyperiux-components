@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from"react";
 
-export default function SpotlightText({
+export function SpotlightText({
  text ="",
  className ="",
  size ="text-3xl md:text-5xl",
@@ -19,7 +19,6 @@ export default function SpotlightText({
  const [isMobile, setIsMobile] = useState(false);
 
  const lerp = (start, end, factor) => start + (end - start) * factor;
-
 
  useEffect(() => {
  const checkMobile = () => {

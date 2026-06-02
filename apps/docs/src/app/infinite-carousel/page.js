@@ -1,6 +1,6 @@
 "use client";
 
-import HorizontalCarousel from"@/components/Carousels/InfiniteCarousel";
+import { InfiniteCarousel as HorizontalCarousel } from"@/components/Carousels/InfiniteCarousel";
 import Card from"@/components/Card/Card";
 import { ArrowLeft, ArrowRight } from"lucide-react";
 

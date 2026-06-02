@@ -389,7 +389,6 @@ function Header() {
   );
 }
 
-
 function HeroContent() {
   return (
     <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6">
@@ -427,7 +426,6 @@ function HeroContent() {
   );
 }
 
-
 function FooterMark() {
  return (
  <div className="pointer-events-none absolute bottom-6 right-6 z-20 text-xs font-medium text-neutral-400">
@@ -436,7 +434,7 @@ function FooterMark() {
  );
 }
 
-export default function InfiniteGridTunnel({ images = [] }) {
+function InfiniteGridTunnel({ images = [] }) {
  const fallbackImages = [
 "/assets/img/image01.webp",
 "/assets/img/image02.webp",
@@ -517,3 +515,5 @@ export default function InfiniteGridTunnel({ images = [] }) {
  </section>
  );
 }
+
+export { InfiniteGridTunnel as GridTunnel };

@@ -178,4 +178,4 @@ const ScrollShuffledCards = ({
   );
 };
 
-export default ScrollShuffledCards;
+export { ScrollShuffledCards };

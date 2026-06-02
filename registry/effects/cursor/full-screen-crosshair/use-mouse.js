@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from"react";
 
 const lerp = (a, b, n) => (1 - n) * a + n * b;
 

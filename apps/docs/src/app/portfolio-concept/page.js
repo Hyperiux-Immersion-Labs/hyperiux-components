@@ -1,4 +1,4 @@
-import PortfolioConcept from"@/components/Concept/PortfolioConcept";
+import { PortfolioConcept } from"@/components/Concept/PortfolioConcept";
 import React from"react";
 import { ReactLenis } from"lenis/react";
 

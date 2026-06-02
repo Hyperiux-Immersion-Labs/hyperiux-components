@@ -9,7 +9,7 @@ const DEFAULT_MOBILE_TEXT = "Click me";
 const DEFAULT_CLICKED_COLOR = "#ff6b00";
 const DEFAULT_HREF = "#";
 
-export default function LinkButton({
+export function LinkButton({
   text,
   mobileText = DEFAULT_MOBILE_TEXT,
   clickedColor = DEFAULT_CLICKED_COLOR,

@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import * as THREE from "three";
-import { useLenis } from "lenis/react";
-import gsap from "gsap";
+import { useEffect, useRef } from"react";
+import * as THREE from"three";
+import { useLenis } from"lenis/react";
+import gsap from"gsap";
 
 // ─── vertex shader ───
 const vertexShader = /* glsl */ `
@@ -76,7 +76,7 @@ const fragmentShader = /* glsl */ `
 const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
 const mod = (n, m) => ((n % m) + m) % m;
 
-export function WebGLSlider({ images = [] }) {
+function WebGLSlider({ images = [] }) {
  const containerRef = useRef(null);
  const scrollRef = useRef(0);
  const lastScroll = useRef(0);
@@ -378,4 +378,4 @@ export function WebGLSlider({ images = [] }) {
  );
 }
 
-export default WebGLSlider;
+export { WebGLSlider as WebglSlider };

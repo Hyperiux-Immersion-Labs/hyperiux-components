@@ -1,51 +1,63 @@
-"use client"
-import React, { useEffect, useRef, useState } from "react";
+"use client";
 
-export function ParallaxFooter({
-  children,
-  id = "footer",
-  outerClassName = "",
-  footerClassName = "",
-}) {
-  const footerRef = useRef(null);
-  const [height, setHeight] = useState(0);
+import React, { useEffect, useRef, useState } from"react";
 
-  useEffect(() => {
-    if (!footerRef.current) return;
+const ParallaxFooter = ({
+ children,
+ id ="footer",
+ outerClassName ="",
+ footerClassName ="",
+}) => {
+ const footerRef = useRef(null);
+ const [height, setHeight] = useState(1);
 
-    const updateHeight = () => {
-      const rect = footerRef.current.getBoundingClientRect();
-      setHeight(rect.height);
-    };
+ useEffect(() => {
+ let frameId;
 
-    updateHeight();
+ const updateHeight = () => {
+ const el = footerRef.current;
+ if (!el) return;
 
-    const resizeObserver = new ResizeObserver(updateHeight);
-    resizeObserver.observe(footerRef.current);
+ frameId = requestAnimationFrame(() => {
+ const rect = el.getBoundingClientRect();
+ setHeight(rect.height);
+ });
+ };
 
-    window.addEventListener("resize", updateHeight);
+ updateHeight();
 
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener("resize", updateHeight);
-    };
-  }, []);
+ const el = footerRef.current;
+ if (!el) return;
 
-  return (
-    <div
-      id={id}
-      className={`w-screen z-1 ${outerClassName}`}
-      style={{
-        height: height || "auto",
-        clipPath: "rect(0px, 100%, 100%, 0px)",
-      }}
-    >
-      <footer
-        ref={footerRef}
-        className={`w-screen fixed bottom-0 left-0 ${footerClassName}`}
-      >
-        {children}
-      </footer>
-    </div>
-  );
-}
+ const resizeObserver = new ResizeObserver(updateHeight);
+ resizeObserver.observe(el);
+
+ window.addEventListener("resize", updateHeight);
+
+ return () => {
+ cancelAnimationFrame(frameId);
+ resizeObserver.disconnect();
+ window.removeEventListener("resize", updateHeight);
+ };
+ }, [children]);
+
+ return (
+ <div
+ id={id}
+ className={`w-screen relative z-[1] ${outerClassName}`}
+ style={{
+ height,
+ clipPath:"rect(0px, 100%, 100%, 0px)",
+ }}
+ >
+ <footer
+ ref={footerRef}
+ className={`w-screen fixed bottom-0 left-0 ${footerClassName}`}
+ >
+ {children}
+ </footer>
+ </div>
+ );
+};
+
+export { ParallaxFooter };

@@ -1,98 +1,104 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useLayoutEffect, useState } from "react";
 
-const injectStyles = () => {
-  if (typeof document === "undefined") return;
-  if (document.getElementById("link-btn-styles")) return;
-
-  const style = document.createElement("style");
-  style.id = "link-btn-styles";
-  style.textContent = `
-    .link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-      background: transparent;
-      border: none;
-      padding: 0;
-    }
-
-    .link-btn__text {
-      position: relative;
-      width: fit-content;
-    }
-
-    .link-btn__text::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -2%;
-      width: 100%;
-      height: 1.5px;
-      background-color: currentColor;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.5s cubic-bezier(0.62, 0.05, 0.01, 0.99);
-    }
-
-    .link-btn:hover .link-btn__text::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-
-    .link-btn__icon {
-      transition: transform 0.3s ease;
-    }
-
-    .link-btn:hover .link-btn__icon {
-      transform: rotate(-45deg);
-    }
-  `;
-  document.head.appendChild(style);
-};
+const TABLET_BREAKPOINT = 1025;
+const DEFAULT_MOBILE_TEXT = "Click me";
+const DEFAULT_CLICKED_COLOR = "#ff6b00";
+const DEFAULT_HREF = "#";
 
 export function LinkButton({
-  children,
+  text,
+  mobileText = DEFAULT_MOBILE_TEXT,
+  clickedColor = DEFAULT_CLICKED_COLOR,
+  href = DEFAULT_HREF,
   className = "",
-  showArrow = true,
-  arrowClassName = "",
-  as: Component = "a",
+  linkProps = {},
+  icon: Icon = ArrowRight,
+  iconClassName = "",
+  children,
+  disableNavigation = false,
+  onClick,
   ...props
 }) {
-  const hasInjected = useRef(false);
+  const [isCompactViewport, setIsCompactViewport] = useState(false);
+  const [hasMeasuredViewport, setHasMeasuredViewport] = useState(false);
+  const [isIconRotated, setIsIconRotated] = useState(false);
 
-  useEffect(() => {
-    if (!hasInjected.current) {
-      injectStyles();
-      hasInjected.current = true;
-    }
+  useLayoutEffect(() => {
+    const onResize = () => {
+      setIsCompactViewport(window.innerWidth <= TABLET_BREAKPOINT);
+      setHasMeasuredViewport(true);
+    };
+
+    onResize();
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
-  return (
-    <Component {...props} className={`link-btn ${className}`}>
-      <span className="link-btn__text">{children}</span>
+  const onLinkClick = (event) => {
+    setIsIconRotated((previousValue) => !previousValue);
 
-      {showArrow && (
-        <svg
-          className={`link-btn__icon ${arrowClassName}`}
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
-      )}
-    </Component>
+    if (disableNavigation) {
+      event.preventDefault();
+    }
+
+    onClick?.(event);
+  };
+
+  // Derived values
+  const displayText =
+    hasMeasuredViewport && isCompactViewport ? mobileText : children || text;
+  const clickedStyle =
+    hasMeasuredViewport && isCompactViewport && isIconRotated
+      ? { color: clickedColor }
+      : undefined;
+  const iconClassNames = `${isIconRotated ? "-rotate-45" : ""} ${
+    !isCompactViewport ? "group-hover:-rotate-45" : ""
+  } transition-transform duration-300 ${iconClassName}`;
+
+  return (
+    <>
+      <Link
+        href={href}
+        {...linkProps}
+        {...props}
+        onClick={onLinkClick}
+        className={`group block w-fit leading-[1.2] duration-300 ${className}`}
+        style={clickedStyle}
+      >
+        <div className="flex items-center justify-start gap-2">
+          <span
+            className={`btn-link-line relative inline-block w-fit after:absolute after:left-0 after:bottom-[-2%] after:h-[1.5px] after:w-full after:bg-current after:content-[''] after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.62,0.05,0.01,0.99)] max-md:text-[3vw] max-sm:text-[5vw] ${
+              hasMeasuredViewport && isCompactViewport
+                ? isIconRotated
+                  ? "after:origin-left after:scale-x-100"
+                  : "after:origin-right after:scale-x-0"
+                : "after:origin-right after:scale-x-0 group-hover:after:origin-left group-hover:after:scale-x-100"
+            }`}
+            style={{
+              visibility: hasMeasuredViewport ? "visible" : "hidden",
+            }}
+          >
+            {displayText}
+          </span>
+
+          <span className="sr-only">About {href}</span>
+
+          {Icon && <Icon className={iconClassNames} />}
+        </div>
+      </Link>
+
+      <style jsx>{`
+        li :global(.btn-link-line)::after {
+          bottom: -20%;
+        }
+      `}</style>
+    </>
   );
 }
-
-export default LinkButton;

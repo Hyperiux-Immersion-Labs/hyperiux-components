@@ -96,7 +96,7 @@ function drawRoundedImage(ctx, img, x, y, w, h, r = 0) {
  ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
 }
 
-export default function ImageTrail() {
+function ImageTrail() {
  const wrapRef = useRef(null);
  const canvasRef = useRef(null);
  const imagesRef = useRef([]);
@@ -374,3 +374,5 @@ Components developers love.
  </section>
  );
 }
+
+export { ImageTrail as MagneticImageTrail };

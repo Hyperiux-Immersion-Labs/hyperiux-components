@@ -1,5 +1,5 @@
 import React from'react'
-import WebGLProjectSlider from'@/components/Slider/WebGLSlider'
+import { WebglSlider as WebGLProjectSlider } from'@/components/Slider/WebGLSlider'
 import { ReactLenis } from'lenis/react'
 import'lenis/dist/lenis.css'
 

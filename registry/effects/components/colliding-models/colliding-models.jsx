@@ -2,7 +2,7 @@
 
 import MagnetLogo from "./MagneticEffect";
 
-export default function CollidingModels(props) {
+export function CollidingModels(props) {
   return <MagnetLogo {...props} />;
 }
 

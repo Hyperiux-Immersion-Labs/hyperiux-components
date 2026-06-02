@@ -71,7 +71,7 @@ function drawGrid(canvas, progress, isEnter, cols = COLS, rows = ROWS, fromTopLe
  }
 }
 
-export default function PixelTransition({
+export function PixelTransition({
  children,
  cols = COLS,
  rows = ROWS,

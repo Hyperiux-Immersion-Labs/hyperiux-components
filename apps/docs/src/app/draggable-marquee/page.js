@@ -1,5 +1,5 @@
 "use client";
-import DraggableMarquee from"@/components/DraggableMarquee/DraggableMarquee";
+import { DraggableMarquee } from"@/components/DraggableMarquee/DraggableMarquee";
 import Image from"next/image";
 import React from"react";
 

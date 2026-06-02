@@ -1,5 +1,5 @@
 import React from "react";
-import InertiaImage from "@/components/InertiaImg/InertiaImg";
+import { InertiaImg as InertiaImage } from "@/components/InertiaImg/InertiaImg";
 
 const images = [
     "/assets/without-bg/strawberry.png",

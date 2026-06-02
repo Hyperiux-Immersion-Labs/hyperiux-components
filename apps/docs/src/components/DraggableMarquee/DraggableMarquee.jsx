@@ -319,4 +319,4 @@ const DraggableMarquee = ({
     );
 };
 
-export default DraggableMarquee;
+export { DraggableMarquee };

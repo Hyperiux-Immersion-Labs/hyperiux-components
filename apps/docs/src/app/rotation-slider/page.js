@@ -1,4 +1,4 @@
-import RotationSlider from"@/components/Slider/RotationSlider/RotationSlider";
+import { RotationSlider } from"@/components/Slider/RotationSlider/RotationSlider";
 import LenisSmoothScroll from"@/components/SmoothScroll/LenisScroll";
 
 export default function Page() {

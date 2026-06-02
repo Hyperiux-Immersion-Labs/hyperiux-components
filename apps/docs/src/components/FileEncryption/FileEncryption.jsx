@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from"react";
 import gsap from"gsap";
 
-
 const CARD_W = 380;
 const CARD_H = 240;
 const DESKTOP_CARD_GAP = 200;
@@ -391,7 +390,6 @@ const fade =
  }, [beamStateRef, canvasRef, particles]);
 }
 
-
 function Chip() {
  return (
  <div className="relative h-9 w-12 rounded-md bg-[#f0ead6] shadow-inner overflow-hidden">
@@ -558,8 +556,7 @@ function CardShell({ card, settersRef }) {
  );
 }
 
-
-export default function FileEncryption({ cards = [] }) {
+export function FileEncryption({ cards = [] }) {
  const rootRef = useRef(null);
  const trackRef = useRef(null);
  const xRef = useRef(null);

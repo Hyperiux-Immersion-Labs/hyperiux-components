@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from"react";
 import InfiniteGrid from"./InfiniteGrid";
 
-export default function InfiniteGridGallery() {
+export function InfiniteGridGallery() {
  const imagesRef = useRef(null);
  const gridRef = useRef(null);
 

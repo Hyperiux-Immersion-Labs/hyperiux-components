@@ -340,7 +340,7 @@ const PortfolioConcept = () => {
  <div className="w-full flex justify-between">
  <h2
  ref={headingRef}
- className="text-[4vw] font-medium w-fit leading-[1]"
+ className="text-[4vw] font-medium w-fit leading-none"
  >
  Gradient Portfolio Concept
  </h2>
@@ -353,7 +353,7 @@ const PortfolioConcept = () => {
  </div>
  </div>
 
- <div className="w-screen h-screen sticky top-0 flex justify-between px-[7vw] mt-[-100vh] portfolio-card-container z-[2]">
+ <div className="w-screen h-screen sticky top-0 flex justify-between px-[7vw] mt-[-100vh] portfolio-card-container z-2">
  <div className="w-[23vw] h-fit flex flex-col gap-[4vw] items-center left-strip">
  {leftCards.map((item, index) => {
  const currentIndex = titleIndex++;
@@ -473,4 +473,4 @@ const PortfolioConcept = () => {
  );
 };
 
-export default PortfolioConcept;
+export { PortfolioConcept };

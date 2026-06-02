@@ -7,7 +7,7 @@ import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
 
 gsap.registerPlugin(DrawSVGPlugin)
 
-export default function SvgDrawPageTransition({
+export function SvgDrawPageTransition({
   children,
   config = {
     enableBlur: false,

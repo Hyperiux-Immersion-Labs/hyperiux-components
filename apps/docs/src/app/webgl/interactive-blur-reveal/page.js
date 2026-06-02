@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import FrostedGlassShader from '@/components/InteractiveBlurReveal/InteractiveBlurReveal'
+import { InteractiveBlurReveal as FrostedGlassShader } from '@/components/InteractiveBlurReveal/InteractiveBlurReveal'
 
 const Page = () => {
   return (

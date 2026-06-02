@@ -1,141 +1,180 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { SplitText } from "gsap/SplitText";
-import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useEffect, useRef } from'react';
+import gsap from'gsap';
+import SplitText from'gsap/dist/SplitText';
+import ScrambleTextPlugin from'gsap/dist/ScrambleTextPlugin';
+import ScrollTrigger from'gsap/dist/ScrollTrigger';
 
 gsap.registerPlugin(SplitText, ScrambleTextPlugin, ScrollTrigger);
 
-export function ScrambleText({
-  text,
-  speed = 0.6,
-  charType = "lowercase",
-  className = "",
-  as: Tag = "p",
-}) {
-  const elRef = useRef(null);
-  const splitRef = useRef(null);
-  const tlRef = useRef(null);
+const ScrambleText = ({  text,  speed = 0.6,  charType ='lowercase',  textSize ='text-base',
+ textColor ='text-white',
+ align ='left',
+ start ='top 40%',
+ className }) => {
+ const elRef = useRef(null);
+ const splitRef = useRef(null);
+ const tlRef = useRef(null);
 
-  useEffect(() => {
-    let isCancelled = false;
+ const alignClass =
+ align ==='right'
+ ?'text-right'
+ :'text-left';
 
-    const setup = async () => {
-      try {
-        if (document?.fonts?.ready) {
-          await document.fonts.ready;
-        } else {
-          await new Promise((r) => requestAnimationFrame(() => r(null)));
-        }
-      } catch {}
+ useEffect(() => {
+ let isCancelled = false;
 
-      if (isCancelled || !elRef.current) return;
+ const setup = async () => {
+ try {
+ if (document?.fonts?.ready) {
+ await document.fonts.ready;
+ } else {
+ await new Promise((r) => requestAnimationFrame(() => r(null)));
+ }
+ } catch {}
 
-      tlRef.current?.kill();
-      splitRef.current?.revert();
-      splitRef.current = null;
+ if (isCancelled || !elRef.current) return;
 
-      const ctx = gsap.context(() => {
-        const el = elRef.current;
+ tlRef.current?.kill();
+ splitRef.current?.revert();
+ splitRef.current = null;
 
-        const originalHeight = el.offsetHeight;
-        gsap.set(el, { minHeight: originalHeight });
+ const ctx = gsap.context(() => {
+ const el = elRef.current;
 
-        const split = new SplitText(el, { type: "words,chars" });
-        splitRef.current = split;
+ // LOCK HEIGHT BEFORE SPLIT (IMPORTANT FIX)
+ const originalHeight = el.offsetHeight;
+ gsap.set(el, { minHeight: originalHeight });
 
-        const chars = split.chars;
-        const words = split.words;
+ const split = new SplitText(el, { type:'words,chars' });
+ splitRef.current = split;
 
-        gsap.set(words, {
-          display: "inline-block",
-          whiteSpace: "nowrap",
-        });
+ const chars = split.chars;
+ const words = split.words;
 
-        gsap.set(el, {
-          wordBreak: "keep-all",
-        });
+ // Prevent word breaking
+ gsap.set(words, {
+ display:'inline-block',
+ whiteSpace:'nowrap',
+ });
 
-        gsap.set(chars, {
-          display: "inline-block",
-        });
+ gsap.set(el, {
+ wordBreak:'keep-all',
+ });
 
-        el.removeAttribute("aria-label");
-        chars.forEach((c) => c.removeAttribute("aria-label"));
+ // Character styling
+ gsap.set(chars, {
+ display:'inline-block',
+ });
 
-        gsap.set(chars, { opacity: 0 });
+ el.removeAttribute('aria-label');
+ chars.forEach((c) => c.removeAttribute('aria-label'));
 
-        const originals = chars.map((c) => c.textContent || "");
+ gsap.set(chars, { opacity: 0 });
 
-        const tl = gsap.timeline({
-          paused: true,
-          defaults: { ease: "none" },
-          onComplete: () => {
-            gsap.set(el, { minHeight: "auto" });
-          },
-        });
+ const originals = chars.map((c) => c.textContent ||'');
 
-        tlRef.current = tl;
+ const tl = gsap.timeline({
+ paused: true,
+ defaults: { ease:'none' },
+ onComplete: () => {
+  gsap.set(el, { minHeight:'auto' });
+ }
 
-        tl.to(chars, {
-          duration: 0.7,
-          scrambleText: {
-            text: (i) => originals[i],
-            chars: charType || "lowercase",
-            speed,
-            revealDelay: 0.2,
-          },
-          opacity: 1,
-          stagger: 0.04,
-        });
+ });
 
-        tl.to(
-          chars,
-          {
-            opacity: 1,
-            duration: 0.4,
-            stagger: 0.02,
-            ease: "power1.out",
-          },
-          ">-0.2"
-        );
+ tlRef.current = tl;
 
-        ScrollTrigger.create({
-          trigger: el,
-          start: "top 40%",
-          once: true,
-          onEnter: () => tl.play(),
-        });
-      }, elRef);
+ tl.fromTo(
+ el,
+ { opacity: 0 },
+ { opacity: 1, duration: 0.4, ease:'power1.out' }
+ );
 
-      return () => ctx.revert();
-    };
+ tl.to(chars, {
+ duration: 0.7,
+ scrambleText: {
+ text: (i) => originals[i],
+ chars: charType ||'lowercase',
+ speed,
+ revealDelay: 0.2,
+ },
+ opacity: 1,
+ stagger: 0.04,
+ });
 
-    const clean = setup();
+ tl.to(
+ chars,
+ {
+ opacity: 1,
+ duration: 0.4,
+ stagger: 0.02,
+ ease:'power1.out',
+ },
+'>-0.2'
+ );
 
-    return () => {
-      (async () => {
-        await clean;
-      })();
-      tlRef.current?.kill();
-      splitRef.current?.revert();
-    };
-  }, [text, speed, charType]);
+ tl.to(
+ chars,
+ {
+ opacity: 0.85,
+ duration: 0.3,
+ stagger: 0.02,
+ },
+'>-0.2'
+ );
 
-  return (
-    <Tag
-      ref={elRef}
-      className={className}
-      style={{
-        wordBreak: "keep-all",
-        overflowWrap: "normal",
-      }}
-    >
-      {text}
-    </Tag>
-  );
-}
+ ScrollTrigger.create({
+ trigger: el,
+ start,
+ once: true,
+ onEnter: () => tl.play(),
+ });
+ }, elRef);
 
-export default ScrambleText;
+ return () => ctx.revert();
+ };
+
+ const clean = setup();
+
+ return () => {
+ (async () => {
+ await clean;
+ })();
+ tlRef.current?.kill();
+ splitRef.current?.revert();
+ };
+ }, [text, speed, charType, start]);
+
+ return (
+ <div className="relative w-full">
+ <p
+ aria-hidden="true"
+ className={`${textSize} ${textColor} ${alignClass} invisible w-full tracking-tight ${
+ className ??''
+ }`}
+ style={{
+ wordBreak:'keep-all',
+ overflowWrap:'normal',
+ }}
+ >
+ {text}
+ </p>
+ <p
+ ref={elRef}
+ className={`${textSize} ${textColor} ${alignClass} absolute inset-0 w-full tracking-tight opacity-0 ${
+ className ??''
+ }`}
+ style={{
+ wordBreak:'keep-all',
+ overflowWrap:'normal',
+ }}
+ >
+ {text}
+ </p>
+ </div>
+ );
+};
+
+export { ScrambleText };

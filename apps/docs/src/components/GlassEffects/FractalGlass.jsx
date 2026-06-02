@@ -99,7 +99,7 @@ const fragmentShader = `
  }
 `;
 
-export default function GlassStripParallax({
+function GlassStripParallax({
  imageSrc ="/assets/img/image10.jpg", // ← new prop: path/URL to image file
  videoSrc = null, 
  mediaType ="image", 
@@ -283,3 +283,4 @@ export default function GlassStripParallax({
  );
 }
 
+export { GlassStripParallax as FractalGlass };

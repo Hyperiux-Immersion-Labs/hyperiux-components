@@ -1,6 +1,6 @@
 "use client";
 
-import LinkButton from"@/components/Buttons/LinkButtons/LinkButton/LinkButton";
+import { LinkButton } from"@/components/Buttons/LinkButtons/LinkButton/LinkButton";
 import StickyContentWrapper from"@/components/StickyContent/StickyContent";
 import { ReactLenis } from"lenis/react";
 
