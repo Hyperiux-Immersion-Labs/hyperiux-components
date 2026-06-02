@@ -9,84 +9,21 @@ import Link from"next/link";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-const IMAGE_POOL = [
- "/assets/gradient/image1.png",
- "/assets/gradient/image2.png",
- "/assets/gradient/image3.png",
- "/assets/gradient/image4.png",
- "/assets/gradient/image5.png",
- "/assets/gradient/image6.png",
- "/assets/gradient/image7.png",
- "/assets/gradient/image8.png",
- "/assets/gradient/image9.png",
- "/assets/gradient/image10.png",
- "/assets/gradient/image11.png",
- "/assets/gradient/image12.png",
- "/assets/gradient/image13.png",
- "/assets/gradient/image14.png",
- "/assets/gradient/image15.png",
- "/assets/dark/image01.png",
- "/assets/dark/image02.png",
- "/assets/dark/image03.png",
- "/assets/dark/image04.png",
- "/assets/dark/image05.png",
- "/assets/dark/image06.png",
- "/assets/dark/image07.png",
- "/assets/dark/image08.png",
- "/assets/dark/image09.png",
- "/assets/dark/image10.png",
- "/assets/dark/image11.png",
- "/assets/dark/image12.png",
- "/assets/dark/image13.png",
- "/assets/dark/image14.png",
- "/assets/dark/image15.png",
- "/assets/dark/image16.png",
- "/assets/dark/image17.png",
- "/assets/dark/image18.png",
- "/assets/dark/image19.png",
- "/assets/dark/image20.png",
- "/assets/dark/image21.png",
-];
 
-const PROJECT_NAMES = [
- "Nebula Drift",
- "Velvet Orbit",
- "Prism Bloom",
- "Midnight Aurora",
- "Chromatic Tide",
- "Ion Garden",
- "Lunar Gradient",
- "Violet Haze",
- "Echo Spectrum",
- "Noir Fluence",
- "Solar Jelly",
- "Plasma Atelier",
- "Hyperwave Studio",
- "Glassline",
- "Starlit Systems",
- "Pulse & Grain",
- "Arclight",
- "Soft Collision",
-];
 
-function buildCards(count, startIndex = 0) {
- return Array.from({ length: count }, (_, i) => {
- const idx = (startIndex + i) % IMAGE_POOL.length;
- const name = PROJECT_NAMES[(startIndex + i) % PROJECT_NAMES.length];
- return { src: IMAGE_POOL[idx], title: name, href: "#" };
- });
+function buildCards(count, startIndex = 0, imagesArr = IMAGE_POOL, namesArr = PROJECT_NAMES) {
+	return Array.from({ length: count }, (_, i) => {
+		const idx = (startIndex + i) % imagesArr.length;
+		const name = namesArr[(startIndex + i) % namesArr.length];
+		return { src: imagesArr[idx], title: name, href: "#" };
+	});
 }
-
-const allCards = buildCards(22, 0);
-const leftCards = allCards.slice(0, 8);
-const midCards = allCards.slice(8, 14);
-const rightCards = allCards.slice(14, 22);
 
 const sectionBreakText = `Design is a feeling before it’s a layout. This concept explores
 motion-first composition, gradient-led art direction, and small details
 that make a brand experience unforgettable.`;
 
-const PortfolioConcept = () => {
+const PortfolioConcept = ({ images = IMAGE_POOL, projectNames = PROJECT_NAMES }) => {
  const headingRef = useRef(null);
  const paragraphRef = useRef(null);
  const sectionBreakFillRef = useRef(null);
@@ -119,7 +56,7 @@ const PortfolioConcept = () => {
  gsap.set(".left-strip", { yPercent: 3, scale: 0.5 });
  gsap.set(".right-strip", { yPercent: 3, scale: 0.5 });
 
- gsap.set(sectionBreakSplit.lines, {
+		gsap.set(sectionBreakSplit.lines, {
  color:"transparent",
  backgroundImage:
 "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%)",
@@ -130,13 +67,19 @@ const PortfolioConcept = () => {
  backgroundClip:"text",
  });
 
- const allTitles = titleRefs.current.filter(Boolean);
+		
+		gsap.set(".section-break-content, .section-break-wrapper > p", { opacity: 1 });
+
+	const allTitles = titleRefs.current.filter(Boolean);
 
  hoverSplitsRef.current = allTitles.map((el) => {
  const split = new SplitText(el, {
  type:"chars",
  charsClass:"project-char",
  });
+
+	
+	gsap.set(allTitles, { opacity: 1 });
 
  gsap.set(split.chars, {
  yPercent: 120,
@@ -147,7 +90,7 @@ const PortfolioConcept = () => {
  return split;
  });
 
- const cards = gsap.utils.toArray(".project-card");
+	const cards = gsap.utils.toArray(".project-card");
 
  cards.forEach((card, index) => {
  const split = hoverSplitsRef.current[index];
@@ -155,10 +98,11 @@ const PortfolioConcept = () => {
 
  if (!split || !image) return;
 
- gsap.set(image, {
- force3D: true,
- scale: 1,
- });
+				gsap.set(image, {
+					force3D: true,
+					scale: 1,
+					opacity: 1,
+				});
 
  const onEnter = () => {
  gsap.killTweensOf(image);
@@ -331,6 +275,11 @@ const PortfolioConcept = () => {
 
  let titleIndex = 0;
 
+ const allCards = buildCards(22, 0, images, projectNames);
+ const leftCards = allCards.slice(0, 8);
+ const midCards = allCards.slice(8, 14);
+ const rightCards = allCards.slice(14, 22);
+
  return (
  <div
  className="w-screen h-[1000vh] bg-white text-[#1a1a1a]"
@@ -364,24 +313,24 @@ const PortfolioConcept = () => {
  key={`left-${index}`}
  className="project-card w-[90%] h-[27vw] portfolio-card overflow-hidden drop-shadow-md relative"
  >
- <Image
- src={item.src}
- alt={item.title}
- width={400}
- height={600}
- className="project-image w-full h-full object-cover hover:brightness-75 transition duration-500 cursor-pointer hover:scale-[1.2] ease-in-out"
- />
+					<Image
+						src={item.src}
+						alt={item.title}
+						width={400}
+						height={600}
+						className="project-image opacity-0 w-full h-full object-cover hover:brightness-75 transition duration-500 cursor-pointer hover:scale-[1.2] ease-in-out"
+					/>
 
- <div className="absolute bottom-[5%] left-[5%] overflow-hidden pointer-events-none">
- <p
- ref={(el) => {
- titleRefs.current[currentIndex] = el;
- }}
- className="text-white text-[2vw] project-name font-medium leading-none"
- >
- {item.title}
- </p>
- </div>
+				<div className="absolute bottom-[5%] left-[5%] overflow-hidden pointer-events-none">
+					<p
+						ref={(el) => {
+							titleRefs.current[currentIndex] = el;
+						}}
+						className="text-white text-[2vw] project-name font-medium leading-none opacity-0"
+					>
+						{item.title}
+					</p>
+				</div>
  </Link>
  );
  })}
@@ -399,24 +348,24 @@ const PortfolioConcept = () => {
  index === 0 ?"card-1" :""
  } ${index === 1 ?"card-2" :""}`}
  >
- <Image
- src={item.src}
- alt={item.title}
- width={500}
- height={700}
- className="project-image w-full h-full object-cover hover:brightness-75 transition duration-500 cursor-pointer hover:scale-[1.2] ease-in-out"
- />
+					<Image
+						src={item.src}
+						alt={item.title}
+						width={500}
+						height={700}
+						className="project-image opacity-0 w-full h-full object-cover hover:brightness-75 transition duration-500 cursor-pointer hover:scale-[1.2] ease-in-out"
+					/>
 
- <div className="absolute bottom-[5%] left-[5%] overflow-hidden pointer-events-none">
- <p
- ref={(el) => {
- titleRefs.current[currentIndex] = el;
- }}
- className="text-white text-[2.2vw] project-name font-medium leading-none"
- >
- {item.title}
- </p>
- </div>
+				<div className="absolute bottom-[5%] left-[5%] overflow-hidden pointer-events-none">
+					<p
+						ref={(el) => {
+							titleRefs.current[currentIndex] = el;
+						}}
+						className="text-white text-[2.2vw] project-name font-medium leading-none opacity-0"
+					>
+						{item.title}
+					</p>
+				</div>
  </Link>
  );
  })}
@@ -432,24 +381,24 @@ const PortfolioConcept = () => {
  key={`right-${index}`}
  className="project-card w-[90%] h-[27vw] portfolio-card overflow-hidden drop-shadow-md relative"
  >
- <Image
- src={item.src}
- alt={item.title}
- width={400}
- height={600}
- className="project-image w-full h-full object-cover hover:brightness-75 transition duration-500 cursor-pointer hover:scale-[1.2] ease-in-out"
- />
+					<Image
+						src={item.src}
+						alt={item.title}
+						width={400}
+						height={600}
+						className="project-image opacity-0 w-full h-full object-cover hover:brightness-75 transition duration-500 cursor-pointer hover:scale-[1.2] ease-in-out"
+					/>
 
- <div className="absolute bottom-[5%] left-[5%] overflow-hidden pointer-events-none">
- <p
- ref={(el) => {
- titleRefs.current[currentIndex] = el;
- }}
- className="text-white text-[2vw] project-name font-medium leading-none"
- >
- {item.title}
- </p>
- </div>
+				<div className="absolute bottom-[5%] left-[5%] overflow-hidden pointer-events-none">
+					<p
+						ref={(el) => {
+							titleRefs.current[currentIndex] = el;
+						}}
+						className="text-white text-[2vw] project-name font-medium leading-none opacity-0"
+					>
+						{item.title}
+					</p>
+				</div>
  </Link>
  );
  })}
@@ -458,15 +407,15 @@ const PortfolioConcept = () => {
 
  <div className="w-screen h-screen sticky top-0 section-break text-[3.5vw] leading-[1.2] flex justify-center items-center">
  <div className="w-[75%] text-center relative section-break-wrapper">
- <p className="font-medium text-black/20">{sectionBreakText}</p>
+		<p className="font-medium text-black/20 opacity-0">{sectionBreakText}</p>
 
- <p
- ref={sectionBreakFillRef}
- className="section-break-content font-medium absolute inset-0 pointer-events-none"
- aria-hidden="true"
- >
- {sectionBreakText}
- </p>
+		<p
+			ref={sectionBreakFillRef}
+			className="section-break-content font-medium absolute inset-0 pointer-events-none opacity-0"
+			aria-hidden="true"
+		>
+			{sectionBreakText}
+		</p>
  </div>
  </div>
  </div>
