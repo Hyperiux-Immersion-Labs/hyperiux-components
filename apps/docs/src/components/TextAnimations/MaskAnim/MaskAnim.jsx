@@ -3,7 +3,6 @@ import gsap from"gsap";
 import { SplitText } from"gsap/SplitText";
 import React, { useEffect, useRef } from"react";
 import ScrollTrigger from"gsap/dist/ScrollTrigger";
-import"./MaskAnim.css";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
@@ -47,6 +46,13 @@ export default function MaskAnim({
  hidden.forEach((node) => node.setAttribute("aria-hidden","false"));
  };
 
+ const applyMaskStyles = (line) => {
+ if (!line) return;
+
+ line.style.maskSize ="500% 100%";
+ line.style.maskImage ="linear-gradient(150deg, #e8e8e8 33.3%, rgba(255, 255, 255, 0) 66.6%)";
+ };
+
  let unmounted = false;
 
  (async () => {
@@ -67,6 +73,8 @@ export default function MaskAnim({
  split.lines[0].style.paddingLeft = textIndent;
  element.style.textIndent ="0";
  }
+
+ split.lines.forEach(applyMaskStyles);
 
  forceAriaVisible(element);
  linesRef.current.push(...split.lines);

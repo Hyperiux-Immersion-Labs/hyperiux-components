@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
@@ -18,28 +18,10 @@ export function MaskTextReveal({
   const splitRefs = useRef([]);
   const linesRef = useRef([]);
   const triggersRef = useRef([]);
-  const styleRef = useRef(null);
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-
-    // Inject styles for mask animation
-    if (!styleRef.current) {
-      const style = document.createElement("style");
-      style.textContent = `
-        .mask-text-reveal-line {
-          mask-size: 500% 100%;
-          mask-image: linear-gradient(
-            150deg,
-            #e8e8e8 33.3%,
-            rgba(255, 255, 255, 0) 66.6%
-          );
-        }
-      `;
-      document.head.appendChild(style);
-      styleRef.current = style;
-    }
 
     const prefersReduced =
       window.matchMedia &&
@@ -65,6 +47,14 @@ export function MaskTextReveal({
       hidden.forEach((node) => node.setAttribute("aria-hidden", "false"));
     };
 
+    const applyMaskStyles = (line) => {
+      if (!line) return;
+
+      line.style.maskSize = "500% 100%";
+      line.style.maskImage =
+        "linear-gradient(150deg, #e8e8e8 33.3%, rgba(255, 255, 255, 0) 66.6%)";
+    };
+
     let unmounted = false;
 
     (async () => {
@@ -74,7 +64,7 @@ export function MaskTextReveal({
       elements.forEach((element) => {
         const split = SplitText.create(element, {
           type: "lines",
-          linesClass: "mask-text-reveal-line",
+          linesClass: "Headingline++",
           lineThreshold: 0.1,
         });
 
@@ -85,6 +75,8 @@ export function MaskTextReveal({
           split.lines[0].style.paddingLeft = textIndent;
           element.style.textIndent = "0";
         }
+
+        split.lines.forEach(applyMaskStyles);
 
         forceAriaVisible(element);
         linesRef.current.push(...split.lines);
@@ -149,4 +141,3 @@ export function MaskTextReveal({
     </div>
   );
 }
-

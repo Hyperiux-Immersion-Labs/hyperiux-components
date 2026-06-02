@@ -7,20 +7,29 @@ gsap.registerPlugin(CustomEase);
 
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./HoverFillLink.module.css";
 
 function HoverFillLink({ href, children, className = "", isActive, ...props }) {
     const text = typeof children === "string" ? children : "";
     return (
-        <Link
-            href={href}
-            data-content={text}
-            data-active={isActive ? "true" : undefined}
-            className={`${styles.link} ${className}`}
-            {...props}
-        >
-            {children}
-        </Link>
+        <>
+            <Link
+                href={href}
+                data-content={text}
+                data-active={isActive ? "true" : undefined}
+                className={`relative inline-block overflow-hidden text-[rgba(255,255,255,0.92)] no-underline before:absolute before:inset-0 before:content-[attr(data-content)] before:text-(--color-primary) before:[clip-path:polygon(0_0,0_0,0_100%,0_100%)] before:transition-[clip-path] before:duration-300 before:ease-[ease] hover:before:[clip-path:polygon(0_0,100%_0,100%_100%,0_100%)] focus-visible:before:[clip-path:polygon(0_0,100%_0,100%_100%,0_100%)] data-[active=true]:before:[clip-path:polygon(0_0,100%_0,100%_100%,0_100%)] ${className}`}
+                {...props}
+            >
+                {children}
+            </Link>
+
+            <style jsx global>{`
+                @media (prefers-reduced-motion: reduce) {
+                    [data-content]::before {
+                        transition: none;
+                    }
+                }
+            `}</style>
+        </>
     );
 }
 
@@ -465,7 +474,7 @@ export default function ExpandingNavbar() {
                 >
                     <span
                         ref={seprationLineRef}
-                        className={`w-full h-[2px] absolute top-[-.5vw] left-1/2 -translate-x-1/2  bg-[#1A1A1A] transition-all duration-300 opacity-0`}
+                        className={`w-full h-0.5 absolute top-[-.5vw] left-1/2 -translate-x-1/2  bg-[#1A1A1A] transition-all duration-300 opacity-0`}
                         style={{ display: "block" }}
                     />
                     <div className="w-[8vw] h-auto relative">
@@ -487,7 +496,7 @@ export default function ExpandingNavbar() {
                         className="flex cursor-pointer duration-300 transition-all hover:bg-[#2E2A2A] p-[1vw] rounded-md items-center justify-center"
                     >
                         <div className="w-[1.5vw] h-[1vw] relative flex items-center justify-center">
-                            <span className={`absolute block w-full h-px bg-white transition-all duration-300 ${isMenuOpen ? "rotate-45" : "-translate-y-[0.3vw]"}`}></span>
+                            <span className={`absolute block w-full h-px bg-white transition-all duration-300 ${isMenuOpen ? "rotate-45" : "translate-y-[-0.3vw]"}`}></span>
                             <span className={`absolute block w-full h-px bg-white transition-all duration-300 ${isMenuOpen ? "-rotate-45" : "translate-y-[0.3vw]"}`}></span>
                         </div>
                     </div>

@@ -2,7 +2,7 @@ import CrosshairCursor from"@/components/CrosshairCursor/CrosshairCursor";
 
 export default function Page() {
  return (
- <main className="crosshair-page w-screen h-screen bg-[#211951] text-[#826fffaa]">
+ <main className="h-screen w-screen bg-[#211951] text-[#826fffaa]">
  <CrosshairCursor
  lineSize={1500}
  thickness={0.5}

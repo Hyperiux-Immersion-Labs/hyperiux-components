@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from "react";
 import { gsap, Expo } from "gsap";
 
-import "./base.css";
 import { useMouse } from "../hooks/useMouse";
 
 const MOBILE_POINTER_QUERY = "(pointer: coarse)";
@@ -246,14 +245,8 @@ export default function ImagesAnimation({
   // Return
   return (
     <div
-      className="content"
+      className="relative h-screen w-full overflow-hidden"
       onClick={onTap}
-      style={{
-        position: "relative",
-        width: "100%",
-        height: "100vh",
-        overflow: "hidden",
-      }}
     >
       {Array.from({ length: totalImages }).map((_, index) => {
         const baseImageIndex = index % images.length;
@@ -267,7 +260,7 @@ export default function ImagesAnimation({
         return (
           <img
             key={index}
-            className="content__img"
+            className="pointer-events-none absolute left-0 top-0 h-[30vh] w-[17vw] max-w-none rounded-[0.7vw] object-cover opacity-0 will-change-[transform,opacity] max-md:h-[24vh] max-md:w-[24vw] max-md:rounded-[1.2vw] max-sm:h-[22vh] max-sm:w-[38vw] max-sm:rounded-[3vw]"
             src={imageSrc}
             alt={imageAlt}
             ref={(element) => {

@@ -51,9 +51,9 @@ const Page = () => {
     <ReactLenis root>
       <main className="overflow-hidden bg-[#f8f2df] text-[#111111]">
         <section className="relative min-h-screen px-8 py-8 max-sm:px-4 max-sm:py-4">
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,17,0.06)_1px,transparent_1px),linear-gradient(180deg,rgba(17,17,17,0.06)_1px,transparent_1px)] bg-[size:72px_72px] max-sm:bg-[size:38px_38px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,17,0.06)_1px,transparent_1px),linear-gradient(180deg,rgba(17,17,17,0.06)_1px,transparent_1px)] bg-size-[72px_72px] max-sm:bg-size-[38px_38px]" />
 
-          <div className="relative mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-7xl flex-col justify-between rounded-[2rem] border border-black/15 bg-[#f8f2df]/80 p-8 shadow-[0_24px_80px_rgba(0,0,0,0.16)] backdrop-blur max-sm:min-h-[calc(100vh-2rem)] max-sm:rounded-[1.25rem] max-sm:p-4">
+          <div className="relative mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-7xl flex-col justify-between rounded-4xl border border-black/15 bg-[#f8f2df]/80 p-8 shadow-[0_24px_80px_rgba(0,0,0,0.16)] backdrop-blur max-sm:min-h-[calc(100vh-2rem)] max-sm:rounded-[1.25rem] max-sm:p-4">
             <div className="flex items-center justify-between gap-4 text-xs font-black uppercase tracking-[0.28em] max-sm:tracking-[0.18em]">
               <span>Mask Text Reveal</span>
               <span className="rounded-full bg-[#111111] px-4 py-2 text-[#f8f2df] max-sm:px-3">
@@ -85,7 +85,7 @@ const Page = () => {
                 </div>
               </div>
 
-              <div className="relative min-h-[560px] max-sm:min-h-[430px]">
+              <div className="relative min-h-140 max-sm:min-h-107.5">
                 {frames.map(({ src, label, className }, index) => (
                   <figure
                     key={src}
@@ -157,7 +157,7 @@ const Page = () => {
         </section>
 
         <section className="relative min-h-screen bg-[#111111] px-8 py-24 text-white max-sm:px-4 max-sm:py-16">
-          <div className="mx-auto grid min-h-[calc(100vh-12rem)] max-w-7xl items-center gap-10 lg:grid-cols-[1fr_0.85fr] max-sm:min-h-[auto]">
+          <div className="mx-auto grid min-h-[calc(100vh-12rem)] max-w-7xl items-center gap-10 lg:grid-cols-[1fr_0.85fr] max-sm:min-h-auto">
             <div>
               <div className="mb-8 flex flex-wrap gap-3">
                 {["poster copy", "hero headlines", "launch pages", "story sections"].map((item) => (
@@ -184,7 +184,7 @@ const Page = () => {
                 width={3840}
                 height={2160}
                 sizes="(max-width: 640px) 100vw, 42vw"
-                className="h-[520px] w-full object-cover saturate-150 max-sm:h-72"
+                className="h-130 w-full object-cover saturate-150 max-sm:h-72"
               />
               <div className="absolute left-7 top-7 max-w-64 bg-[#f8f2df] p-4 text-sm font-black uppercase leading-tight shadow-[6px_6px_0_#111111] max-sm:left-5 max-sm:top-5 max-sm:max-w-48 max-sm:text-[0.72rem]">
                 A reveal animation for headlines that need drama without losing readability.

@@ -1,89 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-
-const injectStyles = () => {
-  if (typeof document === "undefined") return;
-  if (document.getElementById("dot-fill-btn-styles")) return;
-
-  const style = document.createElement("style");
-  style.id = "dot-fill-btn-styles";
-  style.textContent = `
-    .dot-fill-btn {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 3rem;
-      padding-left: 2rem;
-      padding-right: 1.5rem;
-      border-radius: 1000px;
-      background: var(--btn-bg);
-      color: var(--btn-text);
-      font-size: 0.875rem;
-      font-weight: 500;
-      overflow: hidden;
-      white-space: nowrap;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-    }
-
-    .dot-fill-btn__dot {
-      position: absolute;
-      left: 1rem;
-      top: 50%;
-      width: 0.5rem;
-      height: 0.5rem;
-      background: var(--btn-dot);
-      border-radius: 50%;
-      transform: translateY(-50%) scale(1);
-      transform-origin: center;
-      z-index: 1;
-      transition: transform 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-    }
-
-    .dot-fill-btn__text-wrap {
-      position: relative;
-      z-index: 2;
-      display: inline-block;
-    }
-
-    .dot-fill-btn__text {
-      overflow: hidden;
-      position: relative;
-      display: inline-block;
-      line-height: 1.2;
-    }
-
-    .dot-fill-btn__text span {
-      display: inline-block;
-      position: relative;
-      text-shadow: 0px 1.3em currentColor;
-      transform: translateY(0em) rotate(0.001deg);
-      transition:
-        transform 0.6s cubic-bezier(0.625, 0.05, 0, 1),
-        color 0.6s cubic-bezier(0.625, 0.05, 0, 1);
-      will-change: transform;
-    }
-
-    .dot-fill-btn:hover {
-      color: var(--btn-hover-text);
-    }
-
-    .dot-fill-btn:hover .dot-fill-btn__dot {
-      transform: translateY(-50%) scale(120);
-    }
-
-    .dot-fill-btn:hover .dot-fill-btn__text span {
-      transform: translateY(-1.3em) rotate(0.001deg);
-    }
-  `;
-  document.head.appendChild(style);
-};
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export function DotFillButton({
-  children,
+  btnText = "",
   className = "",
   textClassName = "",
   staggerStep = 0.01,
@@ -92,28 +13,19 @@ export function DotFillButton({
   fillColor = "#ffffff",
   hoverTextColor = "#ff6b00",
   dotColor,
-  as: Component = "a",
   ...props
 }) {
   const textRef = useRef(null);
-  const hasInjected = useRef(false);
-
-  const text = typeof children === "string" ? children : "";
-
-  useEffect(() => {
-    if (!hasInjected.current) {
-      injectStyles();
-      hasInjected.current = true;
-    }
-  }, []);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     const el = textRef.current;
-    if (!el || !text) return;
+    if (!el) return;
 
+    const sourceText = btnText || "";
     el.innerHTML = "";
 
-    [...text].forEach((char, index) => {
+    [...sourceText].forEach((char, index) => {
       const span = document.createElement("span");
       span.textContent = char;
       span.style.transitionDelay = `${index * staggerStep}s`;
@@ -124,28 +36,76 @@ export function DotFillButton({
 
       el.appendChild(span);
     });
-  }, [text, staggerStep]);
+  }, [btnText, staggerStep]);
+
+  useEffect(() => {
+    const el = textRef.current;
+    if (!el) return;
+
+    const spans = Array.from(el.children || []);
+    spans.forEach((span) => {
+      span.style.display = "inline-block";
+      span.style.position = "relative";
+      span.style.textShadow = "0px 1.3em currentColor";
+      span.style.transform = "translateY(0em) rotate(0.001deg)";
+      span.style.transition =
+        "transform 0.6s cubic-bezier(0.625, 0.05, 0, 1), color 0.6s cubic-bezier(0.625, 0.05, 0, 1)";
+      span.style.willChange = "transform";
+    });
+  }, [btnText, staggerStep]);
+
+  const handleMouseEnter = () => {
+    const el = textRef.current;
+    if (el) {
+      Array.from(el.children).forEach((span) => {
+        span.style.transform = "translateY(-1.3em) rotate(0.001deg)";
+      });
+    }
+    setHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    const el = textRef.current;
+    if (el) {
+      Array.from(el.children).forEach((span) => {
+        span.style.transform = "translateY(0em) rotate(0.001deg)";
+      });
+    }
+    setHovered(false);
+  };
 
   return (
-    <Component
+    <Link
       {...props}
-      className={`dot-fill-btn ${className}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`group relative flex h-[4.2vw] items-center justify-center overflow-hidden whitespace-nowrap rounded-full pl-[2.8vw] pr-[2vw] pt-[0.2vw] text-[1.05vw] font-medium no-underline max-md:h-[11vw] max-md:pl-[7vw] max-md:pr-[5vw] max-md:pt-[0.5vw] max-md:text-[3vw] max-md:font-normal max-sm:h-[15vw] max-sm:pl-[11vw] max-sm:pr-[9vw] max-sm:pt-[0.7vw] max-sm:text-[4.2vw] ${className}`}
       style={{
-        "--btn-bg": bgColor,
-        "--btn-text": textColor,
-        "--btn-fill": fillColor,
-        "--btn-hover-text": hoverTextColor,
-        "--btn-dot": dotColor || fillColor,
+        background: bgColor,
+        color: hovered ? hoverTextColor : textColor,
       }}
     >
-      <span className="dot-fill-btn__dot" />
+      <span
+        aria-hidden
+        className="absolute left-[1.7vw] top-[54%] z-10 h-[0.5vw] w-[0.5vw] -translate-y-1/2 rounded-full transition-transform duration-500 max-md:left-[3.5vw] max-md:top-[57%] max-md:h-[2vw] max-md:w-[2vw] max-sm:left-[6vw] max-sm:h-[2.5vw] max-sm:w-[2.5vw]"
+        style={{
+          background: dotColor || fillColor,
+          transform: hovered
+            ? "translateY(-50%) scale(120)"
+            : "translateY(-50%) scale(1)",
+          transitionTimingFunction: "cubic-bezier(0.785, 0.135, 0.15, 0.86)",
+        }}
+      />
 
-      <span className="dot-fill-btn__text-wrap">
-        <span ref={textRef} className={`dot-fill-btn__text ${textClassName}`}>
-          {text}
+      <span className="relative z-20 inline-block">
+        <span
+          ref={textRef}
+          className={`relative inline-block overflow-hidden leading-[1.2] ${textClassName}`}
+          aria-hidden={false}
+        >
+          {btnText}
         </span>
       </span>
-    </Component>
+    </Link>
   );
 }
-

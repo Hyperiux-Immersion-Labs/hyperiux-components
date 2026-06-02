@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef } from"react";
+import React, { useEffect, useRef, useState } from"react";
 import Link from"next/link";
 import { ArrowRight } from"lucide-react";
-import"./CharStaggerPrimary.css";
 
 const CharStaggerPrimaryBtn = ({
  text ="",
@@ -22,58 +21,98 @@ const CharStaggerPrimaryBtn = ({
  onClick,
  ...props
 }) => {
- const textRef = useRef(null);
+ const linkRef = useRef(null);
+ const [isTouchHovered, setIsTouchHovered] = useState(false);
+ const [supportsTouchHover, setSupportsTouchHover] = useState(false);
+ const sourceText = typeof children ==="string" ? children : text;
 
  useEffect(() => {
- const el = textRef.current;
- if (!el) return;
+ if (typeof window ==="undefined") return undefined;
 
- const sourceText = text || el.getAttribute("data-text") ||"";
- el.innerHTML ="";
+ const mediaQuery = window.matchMedia("(hover: none), (pointer: coarse)");
+ const updateTouchSupport = () => {
+ setSupportsTouchHover(mediaQuery.matches);
+ };
 
- [...sourceText].forEach((char, index) => {
- const span = document.createElement("span");
- span.textContent = char;
- span.style.transitionDelay = `${index * staggerStep}s`;
+ updateTouchSupport();
+ mediaQuery.addEventListener("change", updateTouchSupport);
 
- if (char ===" ") {
- span.style.whiteSpace ="pre";
+ return () => {
+ mediaQuery.removeEventListener("change", updateTouchSupport);
+ };
+ }, []);
+
+ useEffect(() => {
+ if (!isTouchHovered) return undefined;
+
+ const handlePointerDown = (event) => {
+ if (linkRef.current?.contains(event.target)) return;
+ setIsTouchHovered(false);
+ };
+
+ document.addEventListener("pointerdown", handlePointerDown);
+
+ return () => {
+ document.removeEventListener("pointerdown", handlePointerDown);
+ };
+ }, [isTouchHovered]);
+
+ const handleClick = (event) => {
+ if (supportsTouchHover && !isTouchHovered) {
+ event.preventDefault();
+ setIsTouchHovered(true);
+ return;
  }
 
- el.appendChild(span);
- });
- }, [text, staggerStep]);
+ onClick?.(event);
+ };
+
+ const hoverStateClass = isTouchHovered ?"text-[var(--char-hover-color)]" :"";
+ const bgHoverClass = isTouchHovered ?"scale-[0.95]" :"";
+ const iconHoverClass = isTouchHovered ?"translate-x-[5%]" :"";
 
  return (
  <Link
+ ref={linkRef}
  href={href}
  {...linkProps}
  {...props}
- onClick={onClick}
- className={`char-stagger-primary group inline-flex justify-center items-center gap-2 relative px-10 py-3 ${btnClassName}`}
+ onClick={handleClick}
+ className={`group relative inline-flex h-[4.2vw] items-center justify-center gap-2 px-10 py-3 text-inherit no-underline transition-colors duration-500 ease-[cubic-bezier(0.625,0.05,0,1)] hover:text-(--char-hover-color) focus-visible:text-(--char-hover-color) max-md:h-[11vw] max-md:text-[3vw] max-md:font-normal max-sm:h-[15vw] max-sm:text-[4.2vw] ${hoverStateClass} ${btnClassName}`}
  style={{"--char-hover-color": hoverColor }}
  >
- <div className="mt-[0.3vw] relative z-2">
+ <div className="relative z-2 mt-[0.3vw]">
  <span
- className={`char-stagger-primary__inner `}
+ className="relative inline-block"
  >
  <span
- ref={textRef}
- data-text={typeof children ==="string" ? children : text}
- className={`char-stagger-primary__text ${textClassName}`}
+ className={`relative inline-block overflow-hidden leading-[1.2] ${textClassName}`}
  >
- {typeof children ==="string" ? children : text}
+ {[...sourceText].map((char, index) => (
+ <span
+ key={`${char}-${index}`}
+ className="relative inline-block translate-y-0 rotate-[0.001deg] transition-transform duration-600 ease-[cubic-bezier(0.625,0.05,0,1)] will-change-transform group-hover:translate-y-[-1.3em] group-focus-visible:translate-y-[-1.3em]"
+ style={{
+ transitionDelay: `${index * staggerStep}s`,
+ transform: isTouchHovered ?"translateY(-1.3em) rotate(0.001deg)" :undefined,
+ textShadow:"0px 1.3em currentColor",
+ whiteSpace: char ===" " ?"pre" :"normal",
+ }}
+ >
+ {char}
+ </span>
+ ))}
  </span>
  </span>
  </div>
- <div className={`w-full h-full absolute group-hover:scale-[0.95] duration-500 ${bgClassName}`}/>
+ <div className={`absolute h-full w-full duration-500 group-hover:scale-[0.95] group-focus-visible:scale-[0.95] ${bgHoverClass} ${bgClassName}`}/>
 
  
  {showArrow && Icon && (
- <div className={`char-stagger-primary__icon ${iconClassName}`}>
- <div className={`icon-wrapper ${iconClassName}`}>
- <Icon className="char-stagger-primary__svg" />
- <Icon className="char-stagger-primary__svg" />
+ <div className={`flex items-center justify-start overflow-hidden ${iconClassName}`}>
+ <div className={`flex w-max -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.625,0.05,0,1)] will-change-transform group-hover:translate-x-[5%] group-focus-visible:translate-x-[5%] ${iconHoverClass} ${iconClassName}`}>
+ <Icon className="h-full w-full flex-none" />
+ <Icon className="h-full w-full flex-none" />
  </div>
  </div>
  )}
