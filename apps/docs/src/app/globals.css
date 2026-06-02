@@ -154,6 +154,9 @@ h4 {
 ::selection {
   background: rgba(0, 0, 0, 0.1);
 }
+.codeblock-root ::selection {
+  background: rgba(99, 102, 241, 0.35);
+}
 
 @media (max-width: 542px) {
   body {

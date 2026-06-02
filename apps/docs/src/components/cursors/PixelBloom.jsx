@@ -1,5 +1,6 @@
 "use client"
 
+import Image from'next/image'
 import React, { useRef, useEffect, useState } from'react'
 import { registerFxTarget, unregisterFxTarget } from'@/lib/2dCanvasTracker'
 
@@ -58,7 +59,7 @@ export function PixelBloom({  src,  type ='video',  className ='h-[30vw] w-auto 
  return () => {
  unregisterFxTarget(container)
  }
- }, [])
+ }, [maxTrailLength])
 
  useEffect(() => {
  const canvas = canvasRef.current
@@ -209,7 +210,7 @@ export function PixelBloom({  src,  type ='video',  className ='h-[30vw] w-auto 
  }
  if (animationRef.current) cancelAnimationFrame(animationRef.current)
  }
- }, [gridImages, type])
+ }, [cellLifetime, effectRadius, gridImages, gridSize, type])
 
  const defaultVideoSrc ="/assets/videos/draggable-video.mp4"
 
@@ -223,10 +224,12 @@ export function PixelBloom({  src,  type ='video',  className ='h-[30vw] w-auto 
  autoPlay loop muted playsInline
  className='w-full h-full object-cover absolute inset-0 opacity-0'  />
  ) : (
- <img
+ <Image
  ref={mediaRef}
  src={src}
  alt=""
+ fill
+ sizes="100vw"
  className='w-full h-full object-cover absolute inset-0 opacity-0'
  />
  )}

@@ -148,8 +148,21 @@ const Page = ({  number,  front,  back,  page,  opened,  bookClosed,
  const frontPath = `${pathPattern}/${front}.png`;
  const backPath = `${pathPattern}/${back}.png`;
 
- const [picture, picture2] = useTexture([frontPath, backPath]);
- picture.colorSpace = picture2.colorSpace = SRGBColorSpace;
+ const [frontTexture, backTexture] = useTexture([frontPath, backPath]);
+
+ const picture = useMemo(() => {
+ const texture = frontTexture.clone();
+ texture.colorSpace = SRGBColorSpace;
+ texture.needsUpdate = true;
+ return texture;
+ }, [frontTexture]);
+
+ const picture2 = useMemo(() => {
+ const texture = backTexture.clone();
+ texture.colorSpace = SRGBColorSpace;
+ texture.needsUpdate = true;
+ return texture;
+ }, [backTexture]);
 
  const group = useRef();
  const turnedAt = useRef(0);

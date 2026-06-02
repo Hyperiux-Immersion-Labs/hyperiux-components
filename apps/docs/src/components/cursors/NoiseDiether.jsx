@@ -1,4 +1,5 @@
 'use client'
+import Image from'next/image';
 import { useEffect, useRef } from'react';
 import * as THREE from'three';
 import { registerFxTarget, unregisterFxTarget } from'@/lib/2dCanvasTracker';
@@ -352,9 +353,11 @@ export default function NoiseDiether({
  return (
  <div className={`${wrapperClassName} relative`}>
 
-  <img
+  <Image
  src={imageSrc}
  alt="Background"
+ fill
+ sizes="100vw"
  className='brightness-100'
  style={{
  position:'absolute',

@@ -120,7 +120,7 @@ const CurvedImageSwiper = () => {
   const scrollIntensityRef = useRef(0); // New: Track scroll intensity
   const dragging = useRef(false);
   const lastX = useRef(0);
-  const lastTime = useRef(Date.now());
+  const lastTime = useRef(0);
 
   const [imagesLoaded, setImagesLoaded] = useState(false);
 

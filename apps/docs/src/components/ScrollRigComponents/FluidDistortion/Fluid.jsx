@@ -1,5 +1,5 @@
 import { createPortal, useFrame, useThree } from'@react-three/fiber';
-import { useCallback, useMemo, useRef, useState } from'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from'react';
 import { Camera, Color, Mesh, Scene, Texture, Vector2, Vector3 } from'three';
 import { ShaderPass } from'three/examples/jsm/Addons.js';
 import { FluidEffectComponent } from'./FluidEffectComponent';
@@ -39,16 +39,21 @@ export const Fluid = ({
 
  const FBOs = useFBOs();
  const materials = useMaterials();
- const splatStack = usePointer({ force });
+ const materialsRef = useRef(materials);
+ const splatStackRef = usePointer({ force });
+
+ useEffect(() => {
+ materialsRef.current = materials;
+ }, [materials]);
 
  const setShaderMaterial = useCallback(
  (name) => {
  if (!meshRef.current) return;
 
- meshRef.current.material = materials[name];
+ meshRef.current.material = materialsRef.current[name];
  meshRef.current.material.needsUpdate = true;
  },
- [materials],
+ [],
  );
 
  const setRenderTarget = useCallback(
@@ -71,17 +76,19 @@ export const Fluid = ({
 
  const setUniforms = useCallback(
  (material, uniform, value) => {
- const mat = materials[material];
+ const mat = materialsRef.current[material];
 
  if (mat && mat.uniforms[uniform]) {
  mat.uniforms[uniform].value = value;
  }
  },
- [materials],
+ [],
  );
 
  useFrame((_, delta) => {
  if (!meshRef.current || !postRef.current) return;
+
+ const splatStack = splatStackRef.current;
 
  for (let i = splatStack.length - 1; i >= 0; i--) {
  const { mouseX, mouseY, velocityX, velocityY } = splatStack[i];

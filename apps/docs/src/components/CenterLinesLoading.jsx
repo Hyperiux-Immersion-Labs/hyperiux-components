@@ -219,7 +219,7 @@ export default function CenterLinesLoading(
             revealStart + 0.32
         );
         tl.to({}, { duration: Math.max(0, HOLD_END_MS / 1000) }, revealStart + TRANSLATE_UP_MS / 1000);
-    }, [heroWords.length, lineCount, onComplete, recomputeLayout, title]);
+    }, [heroWords.length, lineCount, onComplete, recomputeLayout]);
 
     useEffect(() => {
         const el = containerRef.current;
@@ -293,7 +293,7 @@ export default function CenterLinesLoading(
             {done && (
                 <button
                     onClick={run}
-                    className="absolute bottom-7 left-1/2 z-60 -translate-x-1/2 cursor-pointer rounded-sm border border-black/20 bg-black/5 px-[22px] py-[7px] font-mono text-[11px] tracking-[0.1em] text-black/70 backdrop-blur"
+                    className="absolute bottom-7 left-1/2 z-60 -translate-x-1/2 cursor-pointer rounded-sm border border-black/20 bg-black/5 px-5.5 py-1.75 font-mono text-[11px] tracking-widest text-black/70 backdrop-blur"
                 >
                     replay
                 </button>

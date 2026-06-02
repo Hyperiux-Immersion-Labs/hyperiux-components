@@ -10,6 +10,7 @@ export const useFBOs = () => {
  format: THREE.RGBAFormat,
  minFilter: THREE.LinearFilter,
  depthBuffer: false,
+ generateMipmaps: false,
  });
 
  const velocity = useDoubleFBO(DEFAULT_CONFIG.simRes, DEFAULT_CONFIG.simRes, {
@@ -17,6 +18,7 @@ export const useFBOs = () => {
  format: THREE.RGFormat,
  minFilter: THREE.LinearFilter,
  depthBuffer: false,
+ generateMipmaps: false,
  });
 
  const pressure = useDoubleFBO(DEFAULT_CONFIG.simRes, DEFAULT_CONFIG.simRes, {
@@ -24,6 +26,7 @@ export const useFBOs = () => {
  format: THREE.RedFormat,
  minFilter: THREE.NearestFilter,
  depthBuffer: false,
+ generateMipmaps: false,
  });
 
  const divergence = useFBO(DEFAULT_CONFIG.simRes, DEFAULT_CONFIG.simRes, {
@@ -31,6 +34,7 @@ export const useFBOs = () => {
  format: THREE.RedFormat,
  minFilter: THREE.NearestFilter,
  depthBuffer: false,
+ generateMipmaps: false,
  });
 
  const curl = useFBO(DEFAULT_CONFIG.simRes, DEFAULT_CONFIG.simRes, {
@@ -38,6 +42,7 @@ export const useFBOs = () => {
  format: THREE.RedFormat,
  minFilter: THREE.NearestFilter,
  depthBuffer: false,
+ generateMipmaps: false,
  });
 
  const FBOs = useMemo(() => {
@@ -51,14 +56,6 @@ export const useFBOs = () => {
  }, [curl, density, divergence, pressure, velocity]);
 
  useEffect(() => {
- for (const FBO of Object.values(FBOs)) {
- if ('write' in FBO) {
- FBO.setGenerateMipmaps(false);
- } else {
- FBO.texture.generateMipmaps = false;
- }
- }
-
  return () => {
  for (const FBO of Object.values(FBOs)) {
  FBO.dispose();

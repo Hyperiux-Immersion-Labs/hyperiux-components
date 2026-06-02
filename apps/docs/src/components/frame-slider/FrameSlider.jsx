@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from"react";
+import { useEffect, useId, useRef, useState, useCallback } from"react";
 import Image from"next/image";
 import gsap from"gsap";
 import { ScrollTrigger } from"gsap/ScrollTrigger";
@@ -344,7 +344,8 @@ function SVGDashedBorder({ width, height, padding = 12, strokeWidth = 1 }) {
  // The mask path ref — this is the solid path we animate to reveal the dashes
  const maskPathRef = useRef(null);
  // Unique ID per instance to avoid clipPath conflicts
- const clipId = useRef(`dash-clip-${Math.random().toString(36).slice(2)}`);
+ const generatedClipId = useId();
+ const clipId = `dash-clip-${generatedClipId.replace(/:/g, "")}`;
 
  const DASH = 8;
  const GAP = 6;
@@ -393,7 +394,7 @@ function SVGDashedBorder({ width, height, padding = 12, strokeWidth = 1 }) {
  }}
  >
  <defs>
-  <clipPath id={clipId.current}>
+  <clipPath id={clipId}>
  <path
  ref={maskPathRef}
  d={pathData}
@@ -412,9 +413,8 @@ function SVGDashedBorder({ width, height, padding = 12, strokeWidth = 1 }) {
  strokeDasharray={`${DASH} ${GAP}`}
  strokeLinecap="round"
  strokeLinejoin="round"
- clipPath={`url(#${clipId.current})`}
+ clipPath={`url(#${clipId})`}
  />
  </svg>
  );
 }
-

@@ -10,6 +10,7 @@ gsap.registerPlugin(Draggable, InertiaPlugin);
 
 export default function DraggableVideo() {
   const videoRef = useRef(null);
+  const [videoElement, setVideoElement] = useState(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const [isHoveringDraggable, setIsHoveringDraggable] = useState(false);
@@ -22,8 +23,13 @@ export default function DraggableVideo() {
     extra3: { x: 0, y: 0 }
   });
 
+  const setVideoRef = useCallback((node) => {
+    videoRef.current = node;
+    setVideoElement(node);
+  }, []);
+
   useEffect(() => {
-    const video = videoRef.current;
+    const video = videoElement;
 
     if (!video) return;
 
@@ -60,7 +66,7 @@ export default function DraggableVideo() {
       video.removeEventListener("canplay", handleVideoCanPlay);
       video.removeEventListener("error", handleVideoError);
     };
-  }, []);
+  }, [videoElement]);
 
   
   const handlePositionUpdate = useCallback((size, position) => {
@@ -80,7 +86,7 @@ export default function DraggableVideo() {
         <div className="absolute w-full h-full inset-0  z-10"></div>
       {/* Hidden video element - single source for all masks */}
       <video
-        ref={videoRef}
+        ref={setVideoRef}
         src="/assets/videos/draggable-video.mp4"
         className="opacity-0 absolute top-0 left-0 w-full h-full object-cover"
         autoPlay
@@ -97,7 +103,7 @@ export default function DraggableVideo() {
           size="large"
           initialPosition={{ x: 0, y: 0 }}
           className="w-[60vw] h-[35vw] absolute top-[10vh] left-[10vw]"
-          video={videoRef.current}
+          video={videoElement}
           canvasSize={canvasSize}
           onPositionUpdate={handlePositionUpdate}
           onHoverChange={handleHoverChange}
@@ -109,7 +115,7 @@ export default function DraggableVideo() {
           size="medium"
           initialPosition={{ x: 0, y: 0 }}
           className="w-[17vw] h-[9vw] absolute top-[5%] left-[5vw]"
-          video={videoRef.current}
+          video={videoElement}
           canvasSize={canvasSize}
           onPositionUpdate={handlePositionUpdate}
           onHoverChange={handleHoverChange}
@@ -123,7 +129,7 @@ export default function DraggableVideo() {
           size="extra1"
           initialPosition={{ x: 0, y: 0 }}
           className="w-[35vw] h-[19vw] absolute top-[5vh] right-[5vw]"
-          video={videoRef.current}
+          video={videoElement}
           canvasSize={canvasSize}
           onPositionUpdate={handlePositionUpdate}
           onHoverChange={handleHoverChange}
@@ -135,7 +141,7 @@ export default function DraggableVideo() {
           size="extra2"
           initialPosition={{ x: 0, y: 0 }}
           className="w-[38vw] h-[22vw] absolute top-[50vh] left-[5vw]"
-          video={videoRef.current}
+          video={videoElement}
           canvasSize={canvasSize}
           onPositionUpdate={handlePositionUpdate}
           onHoverChange={handleHoverChange}
@@ -147,7 +153,7 @@ export default function DraggableVideo() {
           size="extra3"
           initialPosition={{ x: 0, y: 0 }}
           className="w-[25vw] h-[14vw] absolute bottom-[20%] right-[10vw]"
-          video={videoRef.current}
+          video={videoElement}
           canvasSize={canvasSize}
           onPositionUpdate={handlePositionUpdate}
           onHoverChange={handleHoverChange}
@@ -158,7 +164,7 @@ export default function DraggableVideo() {
           size="small"
           initialPosition={{ x: 0, y: 0 }}
           className="w-[22vw] h-[12vw] absolute bottom-[15vh] left-1/2 -translate-x-1/2"
-          video={videoRef.current}
+          video={videoElement}
           canvasSize={canvasSize}
           onPositionUpdate={handlePositionUpdate}
           onHoverChange={handleHoverChange}

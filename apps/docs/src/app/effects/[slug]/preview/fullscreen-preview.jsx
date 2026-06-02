@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from"react";
+import { useState, useCallback } from"react";
 import Link from"next/link";
-import { PropsPanel } from"@/components/ui/PropsPanel";
 import { getEffectHref } from"@/lib/categories";
 
 // Import all effects
@@ -27,7 +26,7 @@ function BlurTextDemo({ props, replayKey }) {
  );
 }
 
-function TextRevealDemo({ props, replayKey, scrollerRef }) {
+function TextRevealDemo({ props, replayKey, scroller }) {
  return (
  <TextReveal
  key={replayKey}
@@ -37,7 +36,7 @@ function TextRevealDemo({ props, replayKey, scrollerRef }) {
  className="text-4xl md:text-6xl font-bold text-white text-center max-w-4xl"
  trigger="top 80%"
  once={false}
- scroller={scrollerRef?.current}
+ scroller={scroller}
  >
  Scroll to reveal this amazing text animation effect
  </TextReveal>
@@ -53,7 +52,7 @@ export function FullscreenPreview({ slug, effect, config }) {
  const [propValues, setPropValues] = useState(config?.defaults || {});
  const [replayKey, setReplayKey] = useState(0);
  const [showProps, setShowProps] = useState(true);
- const scrollerRef = useRef(null);
+ const [scrollerElement, setScrollerElement] = useState(null);
 
  const handlePropChange = useCallback((name, value) => {
  setPropValues((prev) => ({ ...prev, [name]: value }));
@@ -74,7 +73,7 @@ export function FullscreenPreview({ slug, effect, config }) {
  {/* Main preview area */}
  <div className="flex-1 relative">
  {/* Header */}
- <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-5 bg-gradient-to-b from-dark-surface/90 to-transparent backdrop-blur-sm">
+ <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-5 bg-linear-to-b from-dark-surface/90 to-transparent backdrop-blur-sm">
  <Link
  href={effectHref}
  className="flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-primary-hover text-white text-sm transition-colors backdrop-blur-sm font-sans font-medium"
@@ -126,10 +125,10 @@ export function FullscreenPreview({ slug, effect, config }) {
  </div>
 
  {/* Preview content */}
- {isScrollEffect ? (
- <div
- ref={scrollerRef}
- className="absolute inset-0 overflow-y-auto"
+	 {isScrollEffect ? (
+	 <div
+	 ref={setScrollerElement}
+	 className="absolute inset-0 overflow-y-auto"
  >
  <div className="min-h-[150vh] flex flex-col">
  <div className="flex-1 flex items-end justify-center pb-32">
@@ -137,11 +136,11 @@ export function FullscreenPreview({ slug, effect, config }) {
  </div>
  <div className="flex items-center justify-center py-32 px-8">
  {DemoComponent && (
- <DemoComponent
- props={propValues}
- replayKey={replayKey}
- scrollerRef={scrollerRef}
- />
+	 <DemoComponent
+	 props={propValues}
+	 replayKey={replayKey}
+	 scroller={scrollerElement}
+	 />
  )}
  </div>
  <div className="flex-1 flex items-start justify-center pt-32">

@@ -160,7 +160,7 @@ export function InteractiveArrows() {
               />
             </svg>
           </div>
-          <p className="text-[1.5vw] !text-white w-[45%] leading-[1.5] opacity-0 z-[10] text-center font-medium arrow-animation-text">
+          <p className="text-[1.5vw] text-white! w-[45%] leading-normal opacity-0 z-10 text-center font-medium arrow-animation-text">
             The arrow effect provides immediate feedback to user interactions, perfect for high-performance websites.
           </p>
         </div>

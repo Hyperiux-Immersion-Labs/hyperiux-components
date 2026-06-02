@@ -118,6 +118,7 @@ const MorphingParticleModel = ({
   const { scene } = useGLTF(url);
   const { pointer, camera } = useThree();
 
+  const particleBuffersRef = useRef(null);
   const [particleBuffers, setParticleBuffers] = useState(null);
 
   const basePositionsRef = useRef(null);
@@ -126,39 +127,13 @@ const MorphingParticleModel = ({
   const normalsRef = useRef(null);
   const countRef = useRef(0);
 
-  const parallaxTarget = useRef(new THREE.Vector3());
-  const parallaxCurrent = useRef(new THREE.Vector3());
-
-  const rotationTarget = useRef(new THREE.Euler(0, 0, 0));
-  const rotationCurrent = useRef(new THREE.Euler(0, 0, 0));
-
-  const raycasterRef = useRef(new THREE.Raycaster());
-  const hitPointWorldRef = useRef(new THREE.Vector3());
-  const hitPointLocalRef = useRef(new THREE.Vector3());
-  const smoothHitPointLocalRef = useRef(new THREE.Vector3());
-  const prevSmoothHitPointLocalRef = useRef(new THREE.Vector3());
-
-  const planeNormalRef = useRef(new THREE.Vector3());
-  const planePointRef = useRef(new THREE.Vector3());
-  const groupWorldQuatRef = useRef(new THREE.Quaternion());
-
-  const cursorVelocityLocalRef = useRef(new THREE.Vector3());
-  const hasPrevHitRef = useRef(false);
-
-  const tempTarget = useMemo(() => new THREE.Vector3(), []);
-  const tempOffset = useMemo(() => new THREE.Vector3(), []);
-  const tempCursorDir = useMemo(() => new THREE.Vector3(), []);
-
   useEffect(() => {
     if (!scene) return;
 
     const mergedGeometry = buildMergedSurface(scene);
     if (!mergedGeometry) return;
 
-    const tempMesh = new THREE.Mesh(
-      mergedGeometry,
-      new THREE.MeshBasicMaterial()
-    );
+    const tempMesh = new THREE.Mesh(mergedGeometry, new THREE.MeshBasicMaterial());
     const sampler = new MeshSurfaceSampler(tempMesh).build();
 
     const positions = new Float32Array(particleCount * 3);
@@ -189,19 +164,47 @@ const MorphingParticleModel = ({
     const basePositions = new Float32Array(positions);
     const currentPositions = new Float32Array(positions);
 
+    const nextBuffers = {
+      positions: currentPositions,
+      normals,
+      meta,
+      count: particleCount,
+      basePositions,
+      currentPositions,
+    };
+
+    particleBuffersRef.current = nextBuffers;
     basePositionsRef.current = basePositions;
     currentPositionsRef.current = currentPositions;
     normalsRef.current = normals;
     metaRef.current = meta;
     countRef.current = particleCount;
 
-    setParticleBuffers({
-      positions: currentPositions,
-      normals,
-      meta,
-      count: particleCount,
-    });
+    Promise.resolve().then(() => setParticleBuffers(nextBuffers));
   }, [scene, particleCount]);
+
+  const parallaxTarget = useRef(new THREE.Vector3());
+  const parallaxCurrent = useRef(new THREE.Vector3());
+
+  const rotationTarget = useRef(new THREE.Euler(0, 0, 0));
+  const rotationCurrent = useRef(new THREE.Euler(0, 0, 0));
+
+  const raycasterRef = useRef(new THREE.Raycaster());
+  const hitPointWorldRef = useRef(new THREE.Vector3());
+  const hitPointLocalRef = useRef(new THREE.Vector3());
+  const smoothHitPointLocalRef = useRef(new THREE.Vector3());
+  const prevSmoothHitPointLocalRef = useRef(new THREE.Vector3());
+
+  const planeNormalRef = useRef(new THREE.Vector3());
+  const planePointRef = useRef(new THREE.Vector3());
+  const groupWorldQuatRef = useRef(new THREE.Quaternion());
+
+  const cursorVelocityLocalRef = useRef(new THREE.Vector3());
+  const hasPrevHitRef = useRef(false);
+
+  const tempTarget = useRef(new THREE.Vector3());
+  const tempOffset = useRef(new THREE.Vector3());
+  const tempCursorDir = useRef(new THREE.Vector3());
 
   useEffect(() => {
     scene.traverse((child) => {
@@ -400,28 +403,28 @@ const MorphingParticleModel = ({
     }
 
     if (isActivelyMoving) {
-      tempCursorDir.copy(cursorVelocityLocalRef.current);
-      if (tempCursorDir.lengthSq() > 0.000001) {
-        tempCursorDir.normalize();
+      tempCursorDir.current.copy(cursorVelocityLocalRef.current);
+      if (tempCursorDir.current.lengthSq() > 0.000001) {
+        tempCursorDir.current.normalize();
       } else {
-        tempCursorDir.set(0, 0, 0);
+        tempCursorDir.current.set(0, 0, 0);
       }
     } else {
-      tempCursorDir.set(0, 0, 0);
+      tempCursorDir.current.set(0, 0, 0);
     }
 
-    const posArray = currentPositionsRef.current;
-    const baseArray = basePositionsRef.current;
     const count = countRef.current;
+    const basePositions = basePositionsRef.current;
+    const currentPositions = currentPositionsRef.current;
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
 
-      const bx = baseArray[i3 + 0];
-      const by = baseArray[i3 + 1];
-      const bz = baseArray[i3 + 2];
+      const bx = basePositions[i3 + 0];
+      const by = basePositions[i3 + 1];
+      const bz = basePositions[i3 + 2];
 
-      tempTarget.set(bx, by, bz);
+      tempTarget.current.set(bx, by, bz);
 
       if (isActivelyMoving && hasPlaneHit) {
         const dx = bx - smoothHitPointLocalRef.current.x;
@@ -432,33 +435,33 @@ const MorphingParticleModel = ({
           const falloff = 1 - dist / interactionRadius;
           const soft = falloff * falloff;
 
-          tempTarget.x += tempCursorDir.x * interactionStrength * soft;
-          tempTarget.y += tempCursorDir.y * interactionStrength * soft;
-          tempTarget.z += interactionDepth * soft;
+          tempTarget.current.x += tempCursorDir.current.x * interactionStrength * soft;
+          tempTarget.current.y += tempCursorDir.current.y * interactionStrength * soft;
+          tempTarget.current.z += interactionDepth * soft;
         }
       }
 
-      tempOffset.set(
-        tempTarget.x - bx,
-        tempTarget.y - by,
-        tempTarget.z - bz
+      tempOffset.current.set(
+        tempTarget.current.x - bx,
+        tempTarget.current.y - by,
+        tempTarget.current.z - bz
       );
 
-      const len = tempOffset.length();
+      const len = tempOffset.current.length();
       if (len > maxOffset) {
-        tempOffset.normalize().multiplyScalar(maxOffset);
-        tempTarget.set(
-          bx + tempOffset.x,
-          by + tempOffset.y,
-          bz + tempOffset.z
+        tempOffset.current.normalize().multiplyScalar(maxOffset);
+        tempTarget.current.set(
+          bx + tempOffset.current.x,
+          by + tempOffset.current.y,
+          bz + tempOffset.current.z
         );
       }
 
       const currentLerp = isActivelyMoving ? interactionLerp : returnLerp;
 
-      posArray[i3 + 0] = THREE.MathUtils.lerp(posArray[i3 + 0], tempTarget.x, currentLerp);
-      posArray[i3 + 1] = THREE.MathUtils.lerp(posArray[i3 + 1], tempTarget.y, currentLerp);
-      posArray[i3 + 2] = THREE.MathUtils.lerp(posArray[i3 + 2], tempTarget.z, currentLerp);
+      currentPositions[i3 + 0] = THREE.MathUtils.lerp(currentPositions[i3 + 0], tempTarget.current.x, currentLerp);
+      currentPositions[i3 + 1] = THREE.MathUtils.lerp(currentPositions[i3 + 1], tempTarget.current.y, currentLerp);
+      currentPositions[i3 + 2] = THREE.MathUtils.lerp(currentPositions[i3 + 2], tempTarget.current.z, currentLerp);
     }
 
     pointsRef.current.geometry.getAttribute("position").needsUpdate = true;

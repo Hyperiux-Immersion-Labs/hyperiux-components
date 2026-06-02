@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import Image from "next/image";
+import React, { useCallback, useEffect, useRef } from "react";
 import { gsap, Expo } from "gsap";
 
 import { useMouse } from "../hooks/useMouse";
@@ -49,7 +50,7 @@ export default function ImagesAnimation({
   const hasImages = images.length > 0;
   const totalImages = hasImages ? images.length * imageMultiplier : 0;
 
-  const getMouseDistance = () => {
+  const getMouseDistance = useCallback(() => {
     const currentMouse = mouse.current;
     const lastTriggerPosition = lastTriggerPositionRef.current;
 
@@ -57,9 +58,9 @@ export default function ImagesAnimation({
       currentMouse.x - lastTriggerPosition.x,
       currentMouse.y - lastTriggerPosition.y
     );
-  };
+  }, [mouse]);
 
-  const getIdleDistance = () => {
+  const getIdleDistance = useCallback(() => {
     const currentMouse = mouse.current;
     const lastIdleSpawnPosition = lastIdleSpawnPositionRef.current;
 
@@ -67,18 +68,18 @@ export default function ImagesAnimation({
       currentMouse.x - lastIdleSpawnPosition.x,
       currentMouse.y - lastIdleSpawnPosition.y
     );
-  };
+  }, [mouse]);
 
-  const getCenteredPosition = (width, height, useSmoothMouse = false) => {
+  const getCenteredPosition = useCallback((width, height, useSmoothMouse = false) => {
     const mouseSource = useSmoothMouse ? smoothMouse.current : mouse.current;
 
     return {
       x: mouseSource.x - width / 2 + cursorOffsetX,
       y: mouseSource.y - height / 2 + cursorOffsetY,
     };
-  };
+  }, [cursorOffsetX, cursorOffsetY, mouse, smoothMouse]);
 
-  const showNextImage = ({
+  const showNextImage = useCallback(({
     lockToCursor = false,
     isIdle = false,
     overridePosition = null,
@@ -151,9 +152,18 @@ export default function ImagesAnimation({
     zIndexRef.current += 1;
     imageIndexRef.current =
       (imageIndexRef.current + 1) % imagesRef.current.length;
-  };
+  }, [
+    cursorOffsetX,
+    cursorOffsetY,
+    enableRotation,
+    fadeOutDuration,
+    getCenteredPosition,
+    idleFadeMultiplier,
+    idlePopOutMultiplier,
+    popOutDuration,
+  ]);
 
-  const scheduleIdleSpawn = () => {
+  const scheduleIdleSpawn = useCallback(function scheduleIdleSpawn() {
     if (!idleSpawn) {
       return;
     }
@@ -173,9 +183,9 @@ export default function ImagesAnimation({
       lastIdleSpawnPositionRef.current = { ...mouse.current };
       scheduleIdleSpawn();
     }, idleDelay);
-  };
+  }, [getIdleDistance, idleDelay, idleSpawn, mouse, showNextImage]);
 
-  const runAnimationLoop = () => {
+  const runAnimationLoop = useCallback(function runAnimationLoop() {
     if (isMobileRef.current) {
       animationFrameRef.current = requestAnimationFrame(runAnimationLoop);
       return;
@@ -201,9 +211,9 @@ export default function ImagesAnimation({
     }
 
     animationFrameRef.current = requestAnimationFrame(runAnimationLoop);
-  };
+  }, [getMouseDistance, idleSpawn, mouse, scheduleIdleSpawn, showNextImage]);
 
-  const onTap = (event) => {
+  const onTap = useCallback((event) => {
     if (!isMobileRef.current) {
       return;
     }
@@ -217,7 +227,7 @@ export default function ImagesAnimation({
     showNextImage({
       overridePosition: tapPosition,
     });
-  };
+  }, [showNextImage]);
 
   // Effects
   useEffect(() => {
@@ -240,7 +250,7 @@ export default function ImagesAnimation({
         clearTimeout(idleTimerRef.current);
       }
     };
-  }, [idleDelay, idleSpawn]);
+  }, [idleDelay, idleSpawn, runAnimationLoop, scheduleIdleSpawn]);
 
   // Return
   return (
@@ -258,11 +268,13 @@ export default function ImagesAnimation({
             : image?.alt || `Trail ${baseImageIndex + 1}`;
 
         return (
-          <img
+          <Image
             key={index}
             className="pointer-events-none absolute left-0 top-0 h-[30vh] w-[17vw] max-w-none rounded-[0.7vw] object-cover opacity-0 will-change-[transform,opacity] max-md:h-[24vh] max-md:w-[24vw] max-md:rounded-[1.2vw] max-sm:h-[22vh] max-sm:w-[38vw] max-sm:rounded-[3vw]"
             src={imageSrc}
             alt={imageAlt}
+            width={360}
+            height={520}
             ref={(element) => {
               if (element) {
                 imagesRef.current[index] = element;

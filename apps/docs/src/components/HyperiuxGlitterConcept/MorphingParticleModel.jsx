@@ -274,9 +274,9 @@ const ImageParticleModel = ({
   const cursorVelocityLocalRef = useRef(new THREE.Vector3());
   const hasPrevHitRef = useRef(false);
 
-  const tempTarget = useMemo(() => new THREE.Vector3(), []);
-  const tempOffset = useMemo(() => new THREE.Vector3(), []);
-  const tempCursorDir = useMemo(() => new THREE.Vector3(), []);
+  const tempTargetRef = useRef(new THREE.Vector3());
+  const tempOffsetRef = useRef(new THREE.Vector3());
+  const tempCursorDirRef = useRef(new THREE.Vector3());
 
   useEffect(() => {
     let mounted = true;
@@ -495,6 +495,10 @@ const ImageParticleModel = ({
   } else {
     cursorVelocityLocalRef.current.set(0, 0, 0);
   }
+
+  const tempTarget = tempTargetRef.current;
+  const tempOffset = tempOffsetRef.current;
+  const tempCursorDir = tempCursorDirRef.current;
 
   if (isActivelyMoving) {
     tempCursorDir.copy(cursorVelocityLocalRef.current);

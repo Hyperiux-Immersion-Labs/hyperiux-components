@@ -1,7 +1,7 @@
 "use client";
 
 import Image from"next/image";
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from"react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from"react";
 import gsap from"gsap";
 import { Draggable } from"gsap/Draggable";
 import { ArrowLeft, ArrowRight } from"lucide-react";
@@ -53,34 +53,34 @@ const RingGallery = ({
  return stepAngle + gap;
  }, [stepAngle, gap]);
 
- const normalizeIndex = (index) => {
+ const normalizeIndex = useCallback((index) => {
  if (!totalItems) return 0;
  return ((index % totalItems) + totalItems) % totalItems;
- };
+ }, [totalItems]);
 
- const stopMomentum = () => {
+ const stopMomentum = useCallback(() => {
  if (momentumFrameRef.current) {
  cancelAnimationFrame(momentumFrameRef.current);
  momentumFrameRef.current = null;
  }
- };
+ }, []);
 
- const stopAutoplay = () => {
+ const stopAutoplay = useCallback(() => {
  if (autoplayRef.current) {
  clearInterval(autoplayRef.current);
  autoplayRef.current = null;
  }
- };
+ }, []);
 
- const getRotationForStep = (step) => {
+ const getRotationForStep = useCallback((step) => {
  return 180 + step * stepAngle;
- };
+ }, [stepAngle]);
 
- const setActiveFromStep = (step) => {
+ const setActiveFromStep = useCallback((step) => {
  setActiveIndex(normalizeIndex(step));
- };
+ }, [normalizeIndex]);
 
- const rotateToStep = (step, animate = true) => {
+ const rotateToStep = useCallback((step, animate = true) => {
  if (!ringRef.current || !totalItems) return;
 
  currentStepRef.current = step;
@@ -99,9 +99,9 @@ const RingGallery = ({
  rotationY: targetRotation,
  });
  }
- };
+ }, [getRotationForStep, setActiveFromStep, totalItems]);
 
- const updateStepFromRotation = () => {
+ const updateStepFromRotation = useCallback(() => {
  if (!ringRef.current || !stepAngle) return;
 
  const currentRotation = Number(gsap.getProperty(ringRef.current,"rotationY"));
@@ -109,9 +109,9 @@ const RingGallery = ({
 
  currentStepRef.current = rawStep;
  setActiveFromStep(rawStep);
- };
+ }, [setActiveFromStep, stepAngle]);
 
- const goToNext = (fromAutoplay = false) => {
+ const goToNext = useCallback((fromAutoplay = false) => {
  stopMomentum();
 
  if (!fromAutoplay) {
@@ -119,15 +119,15 @@ const RingGallery = ({
  }
 
  rotateToStep(currentStepRef.current + 1);
- };
+ }, [rotateToStep, stopAutoplay, stopMomentum]);
 
- const goToPrev = () => {
+ const goToPrev = useCallback(() => {
  stopMomentum();
  stopAutoplay();
  rotateToStep(currentStepRef.current - 1);
- };
+ }, [rotateToStep, stopAutoplay, stopMomentum]);
 
- const goToSlide = (targetIndex) => {
+ const goToSlide = useCallback((targetIndex) => {
  stopMomentum();
  stopAutoplay();
 
@@ -145,9 +145,9 @@ const RingGallery = ({
  : currentStep - backwardDistance;
 
  rotateToStep(nextStep);
- };
+ }, [normalizeIndex, rotateToStep, stopAutoplay, stopMomentum, totalItems]);
 
- const startAutoplay = () => {
+ const startAutoplay = useCallback(() => {
  if (!autoPlay || totalItems <= 1) return;
 
  stopAutoplay();
@@ -156,7 +156,7 @@ const RingGallery = ({
  if (pauseOnHover && isHoveredRef.current) return;
  goToNext(true);
  }, autoPlayInterval);
- };
+ }, [autoPlay, autoPlayInterval, goToNext, pauseOnHover, stopAutoplay, totalItems]);
 
  useEffect(() => {
  const mediaQuery = window.matchMedia("(max-width: 639px)");
@@ -297,6 +297,12 @@ const RingGallery = ({
  autoPlay,
  pauseOnHover,
  autoPlayInterval,
+ updateStepFromRotation,
+ rotateToStep,
+ getRotationForStep,
+ startAutoplay,
+ stopAutoplay,
+ stopMomentum,
  ]);
 
  useEffect(() => {
@@ -309,7 +315,7 @@ const RingGallery = ({
  return () => {
  stopAutoplay();
  };
- }, [autoPlay, autoPlayInterval, totalItems, pauseOnHover]);
+ }, [autoPlay, autoPlayInterval, totalItems, pauseOnHover, startAutoplay, stopAutoplay]);
 
  return (
  <div

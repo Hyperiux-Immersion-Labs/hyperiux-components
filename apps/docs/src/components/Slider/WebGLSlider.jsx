@@ -351,7 +351,7 @@ function WebGLSlider({ images = [] }) {
  });
  document.body.style.height ="";
  };
- }, []);
+ }, [images]);
 
  return (
  <div className="relative w-full">

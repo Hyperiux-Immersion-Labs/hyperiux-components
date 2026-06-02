@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from"react";
+import { useMemo } from"react";
 import * as THREE from"three";
 
 function clampVal(v, lo, hi) {
@@ -235,18 +235,15 @@ function generateValleyFlowers(curve, terrain, config) {
 }
 
 export default function useValleyData(gltf, terrainTex, config) {
- const [terrain, setTerrain] = useState(null);
-
  const curve = useMemo(() => {
  if (!gltf) return null;
  return extractCameraPath(gltf);
  }, [gltf]);
 
- useEffect(() => {
+ const terrain = useMemo(() => {
  const img = terrainTex?.image;
- if (!img) return;
- const built = buildTerrainPixels(img);
- if (built) setTerrain(built);
+ if (!img) return null;
+ return buildTerrainPixels(img);
  }, [terrainTex]);
 
  const flowers = useMemo(() => {

@@ -1,32 +1,35 @@
 import * as THREE from'three';
 import { useFBO } from'@react-three/drei';
-import { useRef } from'react';
+import { useMemo } from'react';
 
 export const useDoubleFBO = (width, height, options) => {
  const read = useFBO(width, height, options);
  const write = useFBO(width, height, options);
 
- const fboRef = useRef();
-  if (!fboRef.current) {
- fboRef.current = {
+ const fbo = useMemo(() => {
+ const state = {
  read,
  write,
+ };
+
+ return {
+ get read() {
+ return state.read;
+ },
+ get write() {
+ return state.write;
+ },
  swap: () => {
- const temp = fboRef.current.read;
- fboRef.current.read = fboRef.current.write;
- fboRef.current.write = temp;
+ const temp = state.read;
+ state.read = state.write;
+ state.write = temp;
  },
  dispose: () => {
- read.dispose();
- write.dispose();
- },
- setGenerateMipmaps: (value) => {
- read.texture.generateMipmaps = value;
- write.texture.generateMipmaps = value;
+ state.read.dispose();
+ state.write.dispose();
  },
  };
- }
-  const fbo = fboRef.current;
+ }, [read, write]);
 
  return fbo;
 };

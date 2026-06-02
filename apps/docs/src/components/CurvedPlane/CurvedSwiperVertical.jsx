@@ -119,7 +119,7 @@ const CurvedSwiperVertical = ({ routes }) => {
   const targetDeformationRef = useRef(0);
   const dragging = useRef(false);
   const lastY = useRef(0);
-  const lastTime = useRef(Date.now());
+  const lastTime = useRef(0);
 
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
@@ -392,7 +392,6 @@ const CurvedSwiperVertical = ({ routes }) => {
 
   const mouseRef = useRef({ x: 0, y: 0 });
   const followerRef = useRef(null);
-  const lastMouseMoveTime = useRef(Date.now());
   const isFollowerVisible = useRef(false);
 
   useEffect(() => {

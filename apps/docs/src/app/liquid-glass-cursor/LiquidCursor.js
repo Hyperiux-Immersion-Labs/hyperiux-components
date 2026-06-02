@@ -117,7 +117,7 @@ export default function LiquidCursor({
  document.removeEventListener("mouseout", handleMouseOut);
  document.body.style.cursor ="auto";
  };
- }, []);
+ }, [baseSize, borderColor, maxButtonHeight, maxButtonWidth, textHoverSize]);
 
  return (
  <>

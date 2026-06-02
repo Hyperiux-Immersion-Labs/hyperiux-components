@@ -76,7 +76,7 @@ const Content = () => (
   </main>
 )
 
-const page = () => {
+export default function Page() {
   const [isMobile, setIsMobile] = useState(null)
 
   useEffect(() => {
@@ -104,5 +104,3 @@ const page = () => {
     </ReactLenis>
   )
 }
-
-export default page

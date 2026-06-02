@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import SplitText from "gsap/dist/SplitText";
 
@@ -30,93 +30,8 @@ export function ClippathSlider({ slides = [], cursorBg = "#d9f99d", cursorLineCo
   const mouse = useRef({ x: 0, y: 0 });
   const pos = useRef({ x: 0, y: 0 });
 
-  // Init on mount
-  useEffect(() => {
-    // Active layer A: visible, locked at 1.25 (resting state after canvas zoom)
-    if (bgRefA.current) gsap.set(bgRefA.current, { scale: 1.25, opacity: 1, zIndex: 1 });
-    // Standby layer B: hidden, pre-set to 1.25 ready for reuse
-    if (bgRefB.current) gsap.set(bgRefB.current, { scale: 1.25, opacity: 0, zIndex: 0 });
-
-    const canvas = canvasRef.current;
-    if (canvas) {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    }
-    drawStaticLines();
-  }, []);
-
-  // Redraw lines on resize
-  useEffect(() => {
-    const handleResize = () => {
-      const canvas = canvasRef.current;
-      if (canvas) {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-      }
-      drawStaticLines();
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // AUTO PLAY
-  useEffect(() => {
-    if (isTransitioning || slides.length === 0) return;
-    autoPlayTimerRef.current = setTimeout(() => {
-      nextSlideNav();
-    }, 8000);
-    return () => clearTimeout(autoPlayTimerRef.current);
-  }, [currentSlide, isTransitioning]);
-
-  // TEXT IN
-  useEffect(() => {
-    if (!textRef.current || isTransitioning) return;
-
-    gsap.set(textRef.current, { opacity: 1 });
-
-    requestAnimationFrame(() => {
-      if (splitRef.current) {
-        splitRef.current.revert();
-        splitRef.current = null;
-      }
-      const split = new SplitText(".about-slider-text", {
-        type: "lines",
-        linesClass: "lines",
-        mask: "lines",
-      });
-      splitRef.current = split;
-      gsap.from(split.lines, {
-        yPercent: 100,
-        opacity: 0,
-        stagger: 0.05,
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    });
-  }, [currentSlide]);
-
-  // FADE OUT TEXT
-  const fadeOutText = () => {
-    return new Promise((resolve) => {
-      if (!textRef.current) return resolve();
-      gsap.killTweensOf(textRef.current);
-      gsap.to(textRef.current, {
-        opacity: 0,
-        duration: 0.3,
-        ease: "power1.out",
-        onComplete: () => {
-          if (splitRef.current) {
-            splitRef.current.revert();
-            splitRef.current = null;
-          }
-          resolve();
-        },
-      });
-    });
-  };
-
   // ─── Draw static white lines ───
-  const drawStaticLines = () => {
+  const drawStaticLines = useCallback(() => {
     const canvas = linesCanvasRef.current;
     if (!canvas) return;
 
@@ -159,9 +74,85 @@ export function ClippathSlider({ slides = [], cursorBg = "#d9f99d", cursorLineCo
     ctx.moveTo(cx + gap * Math.cos(pos5), cy + gap * Math.sin(pos5));
     ctx.lineTo(cx + R * Math.cos(pos5), cy + R * Math.sin(pos5));
     ctx.stroke();
-  };
+  }, []);
 
-  const runSweepAnimation = (nextIndex) => {
+  // Init on mount
+  useEffect(() => {
+    // Active layer A: visible, locked at 1.25 (resting state after canvas zoom)
+    if (bgRefA.current) gsap.set(bgRefA.current, { scale: 1.25, opacity: 1, zIndex: 1 });
+    // Standby layer B: hidden, pre-set to 1.25 ready for reuse
+    if (bgRefB.current) gsap.set(bgRefB.current, { scale: 1.25, opacity: 0, zIndex: 0 });
+
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    drawStaticLines();
+  }, [drawStaticLines]);
+
+  // Redraw lines on resize
+  useEffect(() => {
+    const handleResize = () => {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      drawStaticLines();
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [drawStaticLines]);
+
+  // TEXT IN
+  useEffect(() => {
+    if (!textRef.current || isTransitioning) return;
+
+    gsap.set(textRef.current, { opacity: 1 });
+
+    requestAnimationFrame(() => {
+      if (splitRef.current) {
+        splitRef.current.revert();
+        splitRef.current = null;
+      }
+      const split = new SplitText(".about-slider-text", {
+        type: "lines",
+        linesClass: "lines",
+        mask: "lines",
+      });
+      splitRef.current = split;
+      gsap.from(split.lines, {
+        yPercent: 100,
+        opacity: 0,
+        stagger: 0.05,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+    });
+  }, [currentSlide, isTransitioning]);
+
+  // FADE OUT TEXT
+  const fadeOutText = useCallback(() => {
+    return new Promise((resolve) => {
+      if (!textRef.current) return resolve();
+      gsap.killTweensOf(textRef.current);
+      gsap.to(textRef.current, {
+        opacity: 0,
+        duration: 0.3,
+        ease: "power1.out",
+        onComplete: () => {
+          if (splitRef.current) {
+            splitRef.current.revert();
+            splitRef.current = null;
+          }
+          resolve();
+        },
+      });
+    });
+  }, []);
+
+  const runSweepAnimation = useCallback((nextIndex) => {
     return new Promise((resolve) => {
       const canvas = canvasRef.current;
       if (!canvas) return resolve();
@@ -246,10 +237,10 @@ export function ClippathSlider({ slides = [], cursorBg = "#d9f99d", cursorLineCo
         img.onerror = animate;
       }
     });
-  };
+  }, [slides]);
 
   // SLIDE CHANGE
-  const changeSlide = async (newIndex) => {
+  const changeSlide = useCallback(async (newIndex) => {
     if (isTransitioning || slides.length === 0) return;
 
     setIsTransitioning(true);
@@ -319,15 +310,24 @@ export function ClippathSlider({ slides = [], cursorBg = "#d9f99d", cursorLineCo
 
     setCurrentSlide(newIndex);
     setIsTransitioning(false);
-  };
+  }, [fadeOutText, isTransitioning, runSweepAnimation, slides]);
 
-  const nextSlideNav = () =>
+  const nextSlideNav = useCallback(() => {
+    if (slides.length === 0) return;
     changeSlide((currentSlide + 1) % slides.length);
+  }, [changeSlide, currentSlide, slides.length]);
 
   const prevSlideNav = () =>
     changeSlide((currentSlide - 1 + slides.length) % slides.length);
 
-  if (slides.length === 0) return null;
+  // AUTO PLAY
+  useEffect(() => {
+    if (isTransitioning || slides.length === 0) return;
+    autoPlayTimerRef.current = setTimeout(() => {
+      nextSlideNav();
+    }, 8000);
+    return () => clearTimeout(autoPlayTimerRef.current);
+  }, [isTransitioning, nextSlideNav, slides.length]);
 
   useEffect(() => {
     const cursor = cursorRef.current;
@@ -487,6 +487,8 @@ export function ClippathSlider({ slides = [], cursorBg = "#d9f99d", cursorLineCo
       window.removeEventListener("mouseleave", handleLeave);
     };
   }, []);
+
+  if (slides.length === 0) return null;
 
   return (
     <section className="relative w-screen h-screen overflow-hidden">

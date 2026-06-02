@@ -24,7 +24,8 @@ export function CodeBlock({ code, language = "jsx", filename }) {
     };
 
     return (
-        <div className="relative border border-border/60 rounded-md overflow-hidden fadeup">
+        <div className="relative border border-border/60 rounded-md overflow-hidden fadeup codeblock-root">
+            
             <div
                 className="max-h-[30vw] overflow-y-auto"
                 style={{ scrollbarGutter: "stable" }}

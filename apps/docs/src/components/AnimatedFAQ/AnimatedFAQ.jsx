@@ -2,6 +2,7 @@
 
 import React, {
  createContext,
+ useCallback,
  useContext,
  useEffect,
  useId,
@@ -37,7 +38,7 @@ export function FAQGroup({
 
  const openItems = isControlled ? value : internalOpenItems;
 
- const toggleItem = (itemId) => {
+ const toggleItem = useCallback((itemId) => {
  const next = (() => {
  const isOpen = openItems.includes(itemId);
 
@@ -55,7 +56,7 @@ export function FAQGroup({
  }
 
  onChange?.(next);
- };
+ }, [allowMultiple, isControlled, onChange, openItems]);
 
  const contextValue = useMemo(
  () => ({
@@ -63,7 +64,7 @@ export function FAQGroup({
  openItems,
  toggleItem,
  }),
- [allowMultiple, openItems]
+ [allowMultiple, openItems, toggleItem]
  );
 
  return (

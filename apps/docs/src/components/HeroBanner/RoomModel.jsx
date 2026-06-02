@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useEffect, useCallback } from"react";
+import React, { useRef, useEffect, useCallback, useMemo } from"react";
 import {
  useGLTF,
  useTexture,
@@ -111,33 +111,54 @@ export default function RoomModel({ onClick, isZoomed, videoRef, ...props }) {
  // =========================
  // 📺 TEXTURES
  // =========================
- const TVtexture = useTexture("/601/tvtexture.png");
- TVtexture.colorSpace = THREE.SRGBColorSpace;
- TVtexture.flipY = false;
+ const tvTextureSource = useTexture("/601/tvtexture.png");
+ const TVtexture = useMemo(() => {
+ const texture = tvTextureSource.clone();
+ texture.colorSpace = THREE.SRGBColorSpace;
+ texture.flipY = false;
+ texture.needsUpdate = true;
+ return texture;
+ }, [tvTextureSource]);
 
- const videoTexture = useVideoTexture(
+ const videoTextureSource = useVideoTexture(
 "/showreel.mp4",
  { start: false }
  );
- videoTexture.colorSpace = THREE.SRGBColorSpace;
- videoTexture.flipY = false;
+ const videoTexture = useMemo(() => {
+ const texture = videoTextureSource.clone();
+ texture.colorSpace = THREE.SRGBColorSpace;
+ texture.flipY = false;
+ texture.needsUpdate = true;
+ return texture;
+ }, [videoTextureSource]);
+ const videoElement = videoTextureSource.image;
+
+ useEffect(() => {
+ return () => {
+ TVtexture.dispose();
+ videoTexture.dispose();
+ };
+ }, [TVtexture, videoTexture]);
 
 
  // =========================
  // 🎬 VIDEO CONTROL
  // =========================
  useEffect(() => {
- if (!videoTexture?.image) return;
+ if (!videoElement) return;
 
- videoRef.current = videoTexture.image;
+ videoRef.current = videoElement;
 
  if (isZoomed) {
- videoTexture.image.play();
+ const timeout = setTimeout(() => {
+ videoElement.play();
+ }, 300);
+ return () => clearTimeout(timeout);
  } else {
- videoTexture.image.pause();
+ videoElement.pause();
  }
 
- }, [isZoomed, videoTexture, videoRef]);
+ }, [isZoomed, videoElement, videoRef]);
 
 
  // =========================
@@ -233,52 +254,44 @@ export default function RoomModel({ onClick, isZoomed, videoRef, ...props }) {
  }
  });
 
-
- useEffect(() => {
- if (!videoTexture?.image) return;
-
- videoRef.current = videoTexture.image;
-
- // preload
- videoTexture.image.preload ="auto";
- videoTexture.image.load();
-
- }, [videoTexture]);
-
- useEffect(() => {
- if (!videoTexture?.image) return;
-
- if (isZoomed) {
- setTimeout(() => {
- videoTexture.image.play();
- }, 300);
- } else {
- videoTexture.image.pause();
- }
- }, [isZoomed]);
-
-
-
  // =========================
  // 🎨 MATERIALS
  // =========================
- const normalMap = useTexture("/601/normal.webp");
- normalMap.colorSpace = THREE.NoColorSpace;
+ const normalMapSource = useTexture("/601/normal.webp");
+ const normalMap = useMemo(() => {
+ const texture = normalMapSource.clone();
+ texture.colorSpace = THREE.NoColorSpace;
+ texture.needsUpdate = true;
+ return texture;
+ }, [normalMapSource]);
 
- const baseMat = {
+ const baseMat = useMemo(() => ({
  color:"#000",
  normalMap,
  normalScale: new THREE.Vector2(0.3, 0.3),
  roughness: 10.,
  side: THREE.DoubleSide
- };
+ }), [normalMap]);
 
 
- const roughnessMap = useTexture(
+ const roughnessMapSource = useTexture(
 "https://png.pngtree.com/png-clipart/20241204/original/pngtree-textured-background-of-bathroom-floor-tiles-png-image_17548659.png"
  );
- roughnessMap.wrapS = roughnessMap.wrapT = THREE.RepeatWrapping;
- roughnessMap.repeat.set(4, 4);
+ const roughnessMap = useMemo(() => {
+ const texture = roughnessMapSource.clone();
+ texture.wrapS = THREE.RepeatWrapping;
+ texture.wrapT = THREE.RepeatWrapping;
+ texture.repeat.set(4, 4);
+ texture.needsUpdate = true;
+ return texture;
+ }, [roughnessMapSource]);
+
+ useEffect(() => {
+ return () => {
+ normalMap.dispose();
+ roughnessMap.dispose();
+ };
+ }, [normalMap, roughnessMap]);
 
 
  // =========================

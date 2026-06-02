@@ -6,6 +6,9 @@ const isTouch = () => {
  return false;
  }
 }
-export default {
+
+const touchUtils = {
  isTouch: isTouch,
 }
+
+export default touchUtils

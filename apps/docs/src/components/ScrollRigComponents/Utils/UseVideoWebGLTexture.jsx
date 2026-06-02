@@ -3,18 +3,17 @@ import React, { useRef, useState, useEffect, useMemo } from"react";
 import { ScrollScene, UseCanvas } from"@14islands/r3f-scroll-rig";
 import * as THREE from"three";
 
-function VideoTexturePlane({ videoRef, sceneProps = {}, materialProps = {} }) {
+function VideoTexturePlane({ videoRef, videoElement, sceneProps = {}, materialProps = {} }) {
  const videoTexture = useMemo(() => {
- const vid = videoRef?.current;
- if (!vid) return null;
- const t = new THREE.VideoTexture(vid);
+ if (!videoElement) return null;
+ const t = new THREE.VideoTexture(videoElement);
  t.colorSpace = THREE.SRGBColorSpace;
  t.minFilter = THREE.LinearFilter;
  t.magFilter = THREE.LinearFilter;
  t.generateMipmaps = false;
  return t;
- }, [videoRef?.current]);
- if (!videoRef?.current || !videoTexture) return null;
+ }, [videoElement]);
+ if (!videoElement || !videoTexture) return null;
  return (
  <ScrollScene track={videoRef} {...sceneProps}>
  {({ scale, ...rest }) => (
@@ -41,10 +40,12 @@ export default function VideoWebGLTexture({
  const internal = useRef(null);
  const videoRef = extRef ?? internal;
  const [ready, setReady] = useState(false);
+ const [videoElement, setVideoElement] = useState(null);
 
  useEffect(() => {
  const v = videoRef.current;
  if (!v) return;
+ setVideoElement(v);
  v.muted = true;
  v.playsInline = true;
  const set = () => setReady(true);
@@ -53,6 +54,7 @@ export default function VideoWebGLTexture({
  return () => {
  v.removeEventListener("loadeddata", set);
  v.removeEventListener("canplay", set);
+ setVideoElement(null);
  };
  }, [videoRef]);
 
@@ -60,7 +62,12 @@ export default function VideoWebGLTexture({
  <>
  <UseCanvas {...canvasProps}>
  {ready && (
- <VideoTexturePlane videoRef={videoRef} sceneProps={sceneProps} materialProps={materialProps} />
+ <VideoTexturePlane
+ videoRef={videoRef}
+ videoElement={videoElement}
+ sceneProps={sceneProps}
+ materialProps={materialProps}
+ />
  )}
  </UseCanvas>
  <div className={trackedWrapperClassName}>

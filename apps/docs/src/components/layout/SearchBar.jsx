@@ -54,7 +54,7 @@ export function GlobalSearch({ effects = [], externalOpen = false }) {
   // Open when externalOpen changes to true
   useEffect(() => {
     if (externalOpen) {
-      setIsOpen(true);
+      requestAnimationFrame(() => setIsOpen(true));
     }
   }, [externalOpen]);
 

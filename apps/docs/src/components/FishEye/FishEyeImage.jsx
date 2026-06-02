@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
 import * as THREE from 'three/webgpu'
@@ -10,7 +10,7 @@ const damp = (current, target, lambda, delta) =>
   current + (target - current) * (1 - Math.exp(-lambda * delta))
 
 function ImageNodeMaterial({ src, isMobile }) {
-  const map = useTexture(src)
+  const sourceMap = useTexture(src)
   const { size, camera } = useThree()
 
   const height =
@@ -22,13 +22,25 @@ function ImageNodeMaterial({ src, isMobile }) {
   const target = useRef(new THREE.Vector2(0.5, 0.5))
   const strength = useRef(0)
   const strengthTarget = useRef(0)
+  const materialRef = useRef(null)
+
+  const map = useMemo(() => {
+    const clonedMap = sourceMap.clone()
+    clonedMap.colorSpace = THREE.SRGBColorSpace
+    clonedMap.needsUpdate = true
+    return clonedMap
+  }, [sourceMap])
+
+  useEffect(() => {
+    return () => {
+      map.dispose()
+    }
+  }, [map])
 
   const material = useMemo(() => {
-    map.colorSpace = THREE.SRGBColorSpace
-
     const mat = new THREE.MeshBasicNodeMaterial()
 
-    const mouseU = uniform(mouse.current)
+    const mouseU = uniform(new THREE.Vector2(0.5, 0.5))
     const strengthU = uniform(0)
 
     const baseUV = uv()
@@ -49,7 +61,17 @@ function ImageNodeMaterial({ src, isMobile }) {
     return mat
   }, [map])
 
+  useEffect(() => {
+    materialRef.current = material
+    return () => {
+      materialRef.current = null
+    }
+  }, [material])
+
   useFrame((_, delta) => {
+    const currentMaterial = materialRef.current
+    if (!currentMaterial) return
+
     if (!isMobile) {
       mouse.current.x = damp(mouse.current.x, target.current.x, 12, delta)
       mouse.current.y = damp(mouse.current.y, target.current.y, 12, delta)
@@ -62,7 +84,8 @@ function ImageNodeMaterial({ src, isMobile }) {
       )
     }
 
-    material.userData.strengthU.value = isMobile ? 0 : strength.current
+    currentMaterial.userData.mouseU.value.copy(mouse.current)
+    currentMaterial.userData.strengthU.value = isMobile ? 0 : strength.current
   })
 
   return (

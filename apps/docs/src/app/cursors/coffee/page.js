@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useMemo, useCallback } from'react'
+import React, { useRef, useMemo, useCallback, useEffect } from'react'
 import { Canvas, useFrame } from'@react-three/fiber'
 import { useGLTF } from'@react-three/drei'
 import * as THREE from'three'
@@ -46,33 +46,47 @@ const tempObject = new THREE.Object3D()
 // Shared material
 const beanMaterial = new THREE.MeshStandardMaterial({ color:"#392416", roughness: 0.6, metalness: 0.1 })
 
+function seededUnit(index, salt) {
+ const value = Math.sin(index * 91.713 + salt * 37.529) * 10000
+ return value - Math.floor(value)
+}
+
 function CoffeeBeans({ count = BEAN_COUNT, mousePositionRef, mouseVelocityRef, isMouseActiveRef }) {
  const { nodes } = useGLTF('/assets/models/coffebean.glb')
  const meshRef = useRef()
+ const beansRef = useRef([])
   // Precompute all bean data once
  const beansData = useMemo(() => {
  return Array.from({ length: count }, (_, i) => ({
  offset: (i / count) * Math.PI * 2,
- speed: BASE_SPEED + Math.random() * SPEED_VARIANCE,
- xSpread: (Math.random() - 0.5) * X_SPREAD_RANGE,
- zSpread: (Math.random() - 0.5) * Z_SPREAD_RANGE,
+ speed: BASE_SPEED + seededUnit(i, 1) * SPEED_VARIANCE,
+ xSpread: (seededUnit(i, 2) - 0.5) * X_SPREAD_RANGE,
+ zSpread: (seededUnit(i, 3) - 0.5) * Z_SPREAD_RANGE,
  rotationSpeed: [
- (Math.random() - 0.5) * ROTATION_SPEED_RANGE,
- (Math.random() - 0.5) * ROTATION_SPEED_RANGE,
- (Math.random() - 0.5) * ROTATION_SPEED_RANGE
+ (seededUnit(i, 4) - 0.5) * ROTATION_SPEED_RANGE,
+ (seededUnit(i, 5) - 0.5) * ROTATION_SPEED_RANGE,
+ (seededUnit(i, 6) - 0.5) * ROTATION_SPEED_RANGE
  ],
- scale: BASE_SCALE + Math.random() * SCALE_VARIANCE,
- mass: 0.5 + Math.random() * 0.5,
+ scale: BASE_SCALE + seededUnit(i, 7) * SCALE_VARIANCE,
+ mass: 0.5 + seededUnit(i, 8) * 0.5,
  // Per-bean state
  velocity: new THREE.Vector3(0, 0, 0),
  offsetPosition: new THREE.Vector3(0, 0, 0),
  rotation: new THREE.Euler(
- Math.random() * Math.PI * 2,
- Math.random() * Math.PI * 2,
- Math.random() * Math.PI * 2
+ seededUnit(i, 9) * Math.PI * 2,
+ seededUnit(i, 10) * Math.PI * 2,
+ seededUnit(i, 11) * Math.PI * 2
  )
  }))
  }, [count])
+
+ useEffect(() => {
+ beansRef.current = beansData
+ return () => {
+ beansRef.current = []
+ }
+ }, [beansData])
+
   useFrame((state, delta) => {
  if (!meshRef.current) return
   const time = state.clock.elapsedTime
@@ -87,7 +101,8 @@ function CoffeeBeans({ count = BEAN_COUNT, mousePositionRef, mouseVelocityRef, i
  const dampingFactor = Math.pow(viscosity, deltaScaled)
  const returnMultiplier = isActive ? 1 : 2.5
   for (let i = 0; i < count; i++) {
- const bean = beansData[i]
+ const bean = beansRef.current[i]
+ if (!bean) continue
  const beanTime = time * bean.speed + bean.offset
   // Flow path calculation
  const progress = ((beanTime % FLOW_DURATION) / FLOW_DURATION)
@@ -214,14 +229,20 @@ function MouseTracker({ mousePositionRef, mouseVelocityRef, targetPositionRef, t
   return null
 }
 
-export default function page() {
+export default function Page() {
  const mousePositionRef = useRef({ x: 0, y: 0 })
  const mouseVelocityRef = useRef({ x: 0, y: 0 })
  const targetPositionRef = useRef({ x: 0, y: 0 })
  const targetVelocityRef = useRef({ x: 0, y: 0 })
- const lastMouseRef = useRef({ x: 0, y: 0, time: Date.now() })
+ const lastMouseRef = useRef({ x: 0, y: 0, time: 0 })
  const isMouseActiveRef = useRef(false)
  const lastMoveTimeRef = useRef(0)
+
+ useEffect(() => {
+ const now = Date.now()
+ lastMouseRef.current.time = now
+ lastMoveTimeRef.current = now
+ }, [])
   const handleMouseMove = useCallback((e) => {
  const rect = e.currentTarget.getBoundingClientRect()
  const x = ((e.clientX - rect.left) / rect.width) * 2 - 1

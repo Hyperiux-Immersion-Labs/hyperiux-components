@@ -61,21 +61,6 @@ const MouseTrailParticles = ({
     nextSpawnTime: 0,
   });
 
-  const data = useMemo(() => {
-    return {
-      positions: new Float32Array(maxParticles * 3),
-      ages: new Float32Array(maxParticles),
-      lifes: new Float32Array(maxParticles),
-      seeds: new Float32Array(maxParticles),
-      alphas: new Float32Array(maxParticles),
-      sizes: new Float32Array(maxParticles),
-      count: 0,
-      cursor: 0,
-    };
-  }, [maxParticles]);
-
-  const velocityArray = useMemo(() => new Float32Array(maxParticles * 3), [maxParticles]);
-
   useEffect(() => {
     const handlePointerMove = (e) => {
       const rect = gl.domElement.getBoundingClientRect();
@@ -163,8 +148,8 @@ const MouseTrailParticles = ({
     comet.active = true;
   };
 
-  const spawnParticle = (basePos, velocity, lifeMul = 1, localSpread = spread) => {
-    const i = data.cursor;
+  const spawnParticle = (particles, basePos, velocity, lifeMul = 1, localSpread = spread) => {
+    const i = particles.cursor;
 
     const angle = Math.random() * Math.PI * 2;
     const radius = Math.random() * localSpread;
@@ -172,35 +157,47 @@ const MouseTrailParticles = ({
     const ox = Math.cos(angle) * radius;
     const oy = Math.sin(angle) * radius;
 
-    data.positions[i * 3 + 0] = basePos.x + ox;
-    data.positions[i * 3 + 1] = basePos.y + oy;
-    data.positions[i * 3 + 2] = zOffset + (Math.random() - 0.5) * 0.01;
+    particles.positions[i * 3 + 0] = basePos.x + ox;
+    particles.positions[i * 3 + 1] = basePos.y + oy;
+    particles.positions[i * 3 + 2] = zOffset + (Math.random() - 0.5) * 0.01;
 
-    data.ages[i] = 0;
-    data.lifes[i] = particleLife * lifeMul * (0.75 + Math.random() * 0.5);
-    data.seeds[i] = Math.random() * 1000;
-    data.alphas[i] = 1;
-    data.sizes[i] = 0.9 + Math.random() * 0.4;
+    particles.ages[i] = 0;
+    particles.lifes[i] = particleLife * lifeMul * (0.75 + Math.random() * 0.5);
+    particles.seeds[i] = Math.random() * 1000;
+    particles.alphas[i] = 1;
+    particles.sizes[i] = 0.9 + Math.random() * 0.4;
 
-    velocityArray[i * 3 + 0] = velocity.x + (Math.random() - 0.5) * 0.04;
-    velocityArray[i * 3 + 1] = velocity.y + (Math.random() - 0.5) * 0.04;
-    velocityArray[i * 3 + 2] = 0;
+    particles.velocities[i * 3 + 0] = velocity.x + (Math.random() - 0.5) * 0.04;
+    particles.velocities[i * 3 + 1] = velocity.y + (Math.random() - 0.5) * 0.04;
+    particles.velocities[i * 3 + 2] = 0;
 
-    data.cursor = (data.cursor + 1) % maxParticles;
-    data.count = Math.min(data.count + 1, maxParticles);
+    particles.cursor = (particles.cursor + 1) % maxParticles;
+    particles.count = Math.min(particles.count + 1, maxParticles);
   };
 
   const geometry = useMemo(() => {
+    const particles = {
+      positions: new Float32Array(maxParticles * 3),
+      ages: new Float32Array(maxParticles),
+      lifes: new Float32Array(maxParticles),
+      seeds: new Float32Array(maxParticles),
+      alphas: new Float32Array(maxParticles),
+      sizes: new Float32Array(maxParticles),
+      velocities: new Float32Array(maxParticles * 3),
+      count: 0,
+      cursor: 0,
+    };
     const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.BufferAttribute(data.positions, 3));
-    g.setAttribute("aAge", new THREE.BufferAttribute(data.ages, 1));
-    g.setAttribute("aLife", new THREE.BufferAttribute(data.lifes, 1));
-    g.setAttribute("aSeed", new THREE.BufferAttribute(data.seeds, 1));
-    g.setAttribute("aAlpha", new THREE.BufferAttribute(data.alphas, 1));
-    g.setAttribute("aSizeMul", new THREE.BufferAttribute(data.sizes, 1));
-    g.setDrawRange(0, data.count);
+    g.setAttribute("position", new THREE.BufferAttribute(particles.positions, 3));
+    g.setAttribute("aAge", new THREE.BufferAttribute(particles.ages, 1));
+    g.setAttribute("aLife", new THREE.BufferAttribute(particles.lifes, 1));
+    g.setAttribute("aSeed", new THREE.BufferAttribute(particles.seeds, 1));
+    g.setAttribute("aAlpha", new THREE.BufferAttribute(particles.alphas, 1));
+    g.setAttribute("aSizeMul", new THREE.BufferAttribute(particles.sizes, 1));
+    g.setDrawRange(0, particles.count);
+    g.userData.particles = particles;
     return g;
-  }, [data]);
+  }, [maxParticles]);
 
   const materialArgs = useMemo(() => {
     return {
@@ -282,6 +279,10 @@ const MouseTrailParticles = ({
   useFrame((state, delta) => {
     if (!pointsRef.current) return;
 
+    const geometry = pointsRef.current.geometry;
+    const particles = geometry.userData.particles;
+    if (!particles) return;
+
     const now = clock.getElapsedTime();
     pointsRef.current.material.uniforms.uTime.value = now;
 
@@ -315,6 +316,7 @@ const MouseTrailParticles = ({
             const vel = tempVelocity.clone().multiplyScalar(velocityStrength);
 
             spawnParticle(
+              particles,
               tempInterp,
               vel,
               THREE.MathUtils.clamp(1 + speed * 8, 1, 1.45),
@@ -348,6 +350,7 @@ const MouseTrailParticles = ({
             tempInterp.lerpVectors(comet.prevHead, comet.head, t);
 
             spawnParticle(
+              particles,
               tempInterp,
               cometVelocity.clone().multiplyScalar(0.012),
               idleCometLife / particleLife,
@@ -367,35 +370,37 @@ const MouseTrailParticles = ({
       }
     }
 
-    for (let i = 0; i < data.count; i++) {
-      data.ages[i] += delta;
+    const velocities = particles.velocities;
 
-      const life = data.lifes[i];
-      const age = data.ages[i];
+    for (let i = 0; i < particles.count; i++) {
+      particles.ages[i] += delta;
+
+      const life = particles.lifes[i];
+      const age = particles.ages[i];
       const t = Math.min(age / Math.max(life, 0.0001), 1);
 
       if (t >= 1) {
-        data.alphas[i] = 0;
+        particles.alphas[i] = 0;
         continue;
       }
 
-      data.positions[i * 3 + 0] += velocityArray[i * 3 + 0] * delta;
-      data.positions[i * 3 + 1] += velocityArray[i * 3 + 1] * delta;
-      data.positions[i * 3 + 2] += velocityArray[i * 3 + 2] * delta;
+      particles.positions[i * 3 + 0] += velocities[i * 3 + 0] * delta;
+      particles.positions[i * 3 + 1] += velocities[i * 3 + 1] * delta;
+      particles.positions[i * 3 + 2] += velocities[i * 3 + 2] * delta;
 
-      velocityArray[i * 3 + 0] *= 0.965;
-      velocityArray[i * 3 + 1] *= 0.965;
+      velocities[i * 3 + 0] *= 0.965;
+      velocities[i * 3 + 1] *= 0.965;
 
-      data.alphas[i] = 1 - t;
+      particles.alphas[i] = 1 - t;
     }
 
-    pointsRef.current.geometry.getAttribute("position").needsUpdate = true;
-    pointsRef.current.geometry.getAttribute("aAge").needsUpdate = true;
-    pointsRef.current.geometry.getAttribute("aAlpha").needsUpdate = true;
-    pointsRef.current.geometry.getAttribute("aLife").needsUpdate = true;
-    pointsRef.current.geometry.getAttribute("aSizeMul").needsUpdate = true;
-    pointsRef.current.geometry.getAttribute("aSeed").needsUpdate = true;
-    pointsRef.current.geometry.setDrawRange(0, data.count);
+    geometry.getAttribute("position").needsUpdate = true;
+    geometry.getAttribute("aAge").needsUpdate = true;
+    geometry.getAttribute("aAlpha").needsUpdate = true;
+    geometry.getAttribute("aLife").needsUpdate = true;
+    geometry.getAttribute("aSizeMul").needsUpdate = true;
+    geometry.getAttribute("aSeed").needsUpdate = true;
+    geometry.setDrawRange(0, particles.count);
   });
 
   return (

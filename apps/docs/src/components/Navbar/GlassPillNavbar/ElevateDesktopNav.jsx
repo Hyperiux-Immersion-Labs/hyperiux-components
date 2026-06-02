@@ -342,6 +342,7 @@ export default function ElevateNavbarDesktop() {
       killHideCall,
       killItemTween,
       killSwitchTween,
+      renderedDropdownIndex,
       setRenderedDropdownIndex,
       showWrapper,
     ]

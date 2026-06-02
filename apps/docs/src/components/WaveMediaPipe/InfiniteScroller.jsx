@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from"react";
+import Image from"next/image";
+import React, { useEffect, useLayoutEffect, useMemo, useRef } from"react";
 import"./InfiniteScrollSlider.css";
 
 const defaultImages = [
@@ -43,7 +44,7 @@ export default function InfiniteScroller({
  const spanRef = useRef(itemWidth + gap);
  const readyRef = useRef(false);
 
- const [isReady, setIsReady] = useState(false);
+ const isReady = images.length > 0;
 
  const repeatedImages = useMemo(() => [...images, ...images, ...images], [images]);
 
@@ -69,7 +70,6 @@ export default function InfiniteScroller({
  spanRef.current = itemWidth * 0.5;
  progressRef.current = images.length * spanRef.current * 2.2;
  readyRef.current = true;
- setIsReady(true);
  }, [images.length, itemWidth, gap]);
 
  useEffect(() => {
@@ -210,7 +210,13 @@ export default function InfiniteScroller({
  ref={(el) => setItemRef(el, index)}
  className="surf-strip__card"
  >
- <img src={src} alt={`surf-card-${index + 1}`} draggable="false" />
+ <Image
+ src={src}
+ alt={`surf-card-${index + 1}`}
+ width={itemWidth}
+ height={itemHeight}
+ draggable={false}
+ />
  </article>
  ))}
  </div>

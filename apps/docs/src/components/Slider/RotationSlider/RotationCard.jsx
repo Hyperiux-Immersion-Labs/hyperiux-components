@@ -30,4 +30,6 @@ const RotationCard = forwardRef(({ src, index, total }, ref) => {
   );
 });
 
+RotationCard.displayName = "RotationCard";
+
 export default RotationCard;

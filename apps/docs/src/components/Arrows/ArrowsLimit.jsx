@@ -1,4 +1,48 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
+
+class Point {
+  constructor(x, y) {
+    this.x = x || 0;
+    this.y = y || 0;
+  }
+}
+
+class Arrow {
+  constructor(position) {
+    this.pos = position;
+    this.dx = 0;
+    this.dy = 0;
+    this.angle = 0;
+    this.ease = 0.1;
+  }
+
+  update(mouseX, mouseY) {
+    const targetDx = mouseX - this.pos.x;
+    const targetDy = mouseY - this.pos.y;
+    this.dx += (targetDx - this.dx) * this.ease * 0.35;
+    this.dy += (targetDy - this.dy) * this.ease * 0.35;
+    this.angle = Math.atan2(this.dy, this.dx);
+  }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.translate(this.pos.x, this.pos.y);
+    ctx.rotate(this.angle);
+    ctx.beginPath();
+
+    ctx.moveTo(50, 0);
+    ctx.lineTo(-50, 0);
+    ctx.moveTo(50, 0);
+    ctx.lineTo(10, -40);
+    ctx.moveTo(50, 0);
+    ctx.lineTo(10, 40);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'white';
+    ctx.stroke();
+
+    ctx.restore();
+  }
+}
 
 const ArrowsLimit = ({ rows = 5, columns = 10 }) => {
   const canvasRef = useRef(null);
@@ -6,51 +50,7 @@ const ArrowsLimit = ({ rows = 5, columns = 10 }) => {
   const arrowsRef = useRef([]);
   const animationFrameRef = useRef(null);
 
-  class Point {
-    constructor(x, y) {
-      this.x = x || 0;
-      this.y = y || 0;
-    }
-  }
-
-  class Arrow {
-    constructor(position) {
-      this.pos = position;
-      this.dx = 0;
-      this.dy = 0;
-      this.angle = 0;
-      this.ease = 0.1;  
-    }
-  
-    update(mouseX, mouseY) {
-      const targetDx = mouseX - this.pos.x;
-      const targetDy = mouseY - this.pos.y;
-      this.dx += (targetDx - this.dx) * this.ease*0.35;
-      this.dy += (targetDy - this.dy) * this.ease*0.35;
-      this.angle = Math.atan2(this.dy, this.dx);
-    }
-  
-    draw(ctx) {
-      ctx.save();
-      ctx.translate(this.pos.x, this.pos.y);
-      ctx.rotate(this.angle);
-      ctx.beginPath();
-  
-      ctx.moveTo(50, 0);
-      ctx.lineTo(-50, 0);
-      ctx.moveTo(50, 0);
-      ctx.lineTo(10, -40);
-      ctx.moveTo(50, 0);
-      ctx.lineTo(10, 40);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = 'white';
-      ctx.stroke();
-  
-      ctx.restore();
-    }
-  }
-  
-  const initializeArrows = (canvas) => {
+  const initializeArrows = useCallback((canvas) => {
     const arrows = [];
     const spacingX = canvas.width / (columns + 1);
     const spacingY = canvas.height / (rows + 1);
@@ -68,19 +68,20 @@ const ArrowsLimit = ({ rows = 5, columns = 10 }) => {
       }
     }
     return arrows;
-  };
+  }, [columns, rows]);
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     const canvas = canvasRef.current;
     if (canvas) {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       arrowsRef.current = initializeArrows(canvas);
     }
-  };
+  }, [initializeArrows]);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const rect = canvas.getBoundingClientRect();  
     if (
       e.clientX >= rect.left &&
@@ -93,10 +94,11 @@ const ArrowsLimit = ({ rows = 5, columns = 10 }) => {
         y: e.clientY - rect.top,  
       };
     }
-  };
+  }, []);
 
-  const main = () => {
+  const main = useCallback(function drawFrame() {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const arrows = arrowsRef.current;
     const mouse = mouseRef.current;
@@ -108,8 +110,8 @@ const ArrowsLimit = ({ rows = 5, columns = 10 }) => {
       arrow.draw(ctx);
     });
 
-    animationFrameRef.current = requestAnimationFrame(main);
-  };
+    animationFrameRef.current = requestAnimationFrame(drawFrame);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -129,7 +131,7 @@ const ArrowsLimit = ({ rows = 5, columns = 10 }) => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [rows, columns]); 
+  }, [handleMouseMove, handleResize, initializeArrows, main]); 
 
   return (
     <div className="w-full h-full">

@@ -267,7 +267,7 @@ plane.material.uniforms.uZoom.value = targetZoom;
  container.removeChild(renderer.domElement);
  lenis.destroy();
  };
- }, []);
+ }, [items]);
 
  const scrollHeight = items.length * 100; // 100vh per image for smooth infinite scrolling
 

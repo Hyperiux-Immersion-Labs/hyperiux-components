@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Volume2, VolumeX, Play, Pause, X } from "lucide-react";
 
 const formatTime = (time) => {
@@ -50,34 +50,34 @@ const VideoPlayer = ({
     return Math.min(100, Math.max(0, (currentTime / d) * 100));
   }, [currentTime, duration]);
 
-  const clearHideTimer = () => {
+  const clearHideTimer = useCallback(() => {
     if (hideControlsTimeoutRef.current) {
       clearTimeout(hideControlsTimeoutRef.current);
       hideControlsTimeoutRef.current = null;
     }
-  };
+  }, []);
 
-  const startHideTimer = () => {
+  const startHideTimer = useCallback(() => {
     clearHideTimer();
     hideControlsTimeoutRef.current = setTimeout(() => {
       if (!isDraggingRef.current) {
         setShowControls(false);
       }
     }, hideControlsDelay);
-  };
+  }, [clearHideTimer, hideControlsDelay]);
 
-  const revealControls = () => {
+  const revealControls = useCallback(() => {
     setShowControls(true);
     startHideTimer();
-  };
+  }, [startHideTimer]);
 
-  const syncMutedState = () => {
+  const syncMutedState = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
     video.muted = isMuted;
-  };
+  }, [isMuted]);
 
-  const playVideo = async () => {
+  const playVideo = useCallback(async () => {
     const video = videoRef.current;
     if (!video) return false;
 
@@ -89,15 +89,15 @@ const VideoPlayer = ({
       setIsPlaying(false);
       return false;
     }
-  };
+  }, []);
 
-  const pauseVideo = () => {
+  const pauseVideo = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
 
     video.pause();
     setIsPlaying(false);
-  };
+  }, []);
 
   const resetVideoState = () => {
     const video = videoRef.current;
@@ -192,11 +192,11 @@ const VideoPlayer = ({
       video.removeEventListener("pause", handlePause);
       video.removeEventListener("ended", handleEnded);
     };
-  }, []);
+  }, [clearHideTimer]);
 
   useEffect(() => {
     syncMutedState();
-  }, [isMuted]);
+  }, [isMuted, syncMutedState]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -207,24 +207,26 @@ const VideoPlayer = ({
 
       if (resetOnClose) {
         video.currentTime = 0;
-        setCurrentTime(0);
+        requestAnimationFrame(() => setCurrentTime(0));
       }
 
-      setDuration(0);
-      setIsMuted(startMuted);
+      requestAnimationFrame(() => {
+        setDuration(0);
+        setIsMuted(startMuted);
+        setShowControls(true);
+      });
       video.muted = startMuted;
-      setShowControls(true);
     } else {
       hasInitializedRef.current = true;
     }
 
-    revealControls();
+    requestAnimationFrame(() => revealControls());
 
     return () => {
       clearHideTimer();
       video.pause();
     };
-  }, [videoSrc, poster, resetOnClose, startMuted]);
+  }, [videoSrc, poster, resetOnClose, startMuted, pauseVideo, revealControls, clearHideTimer]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -235,27 +237,29 @@ const VideoPlayer = ({
 
       if (resetOnClose) {
         video.currentTime = 0;
-        setCurrentTime(0);
+        requestAnimationFrame(() => setCurrentTime(0));
       }
 
       clearHideTimer();
       return;
     }
 
-    revealControls();
+    requestAnimationFrame(() => revealControls());
 
     if (autoPlay) {
-      playVideo();
+      requestAnimationFrame(() => {
+        playVideo();
+      });
     }
-  }, [isActive, autoPlay, resetOnClose]);
+  }, [isActive, autoPlay, resetOnClose, pauseVideo, playVideo, revealControls, clearHideTimer]);
 
   useEffect(() => {
+    const video = videoRef.current;
     return () => {
       clearHideTimer();
-      const video = videoRef.current;
       if (video) video.pause();
     };
-  }, []);
+  }, [clearHideTimer]);
 
   const handleTogglePlay = async () => {
     const video = videoRef.current;
