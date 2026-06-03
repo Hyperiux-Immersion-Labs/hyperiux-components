@@ -27,7 +27,7 @@ Pick the effects you want. Copy the code into your project via the CLI. Own it c
 
 ## ❓ What is Hyperiux Vault?
 
-Hyperiux Vault is **not an npm component library** that you install as a single giant dependency. It's closer in spirit to [shadcn/ui](https://ui.shadcn.com) — a registry of source code that you add directly into your project via a command-line interface.
+Hyperiux Vault is **not an npm component library** that you install as a single giant dependency. It is a fully custom-built registry and CLI where you fetch the source code directly into your project.
 
 - **Zero Lock-in**: Every effect lives in your codebase as a native file. You can edit, customize, or debug it directly.
 - **Tailored Aesthetics**: Crafted with a premium orange-and-white theme (`#ff5f00`), ultra-tight typography headings, and fluid, financial-grade transitions.
@@ -260,7 +260,6 @@ Hyperiux Vault is built on top of incredible open-source tools. We want to thank
 - **[Three.js](https://threejs.org/) & [React Three Fiber](https://github.com/pmndrs/react-three-fiber)** for enabling seamless WebGL scenes in modern React.
 - **[Framer Motion](https://www.framer.com/motion/)** for making UI micro-interactions lightweight and delightful.
 - **[Lenis Scroll](https://github.com/darkroomengineering/lenis)** for unifying smooth scrolling controls across diverse browsers.
-- **[shadcn/ui](https://ui.shadcn.com/)** for the inspiration behind the CLI distribution model that respects developer code ownership.
 
 ---
 
