@@ -29,7 +29,7 @@ const LINK_GROUPS = [
   },
 ];
 
-export default function Menu3() {
+export function Menu3() {
   return (
     <div className="grid grid-cols-3 gap-10 max-md:grid-cols-2">
       {LINK_GROUPS.map((group) => (

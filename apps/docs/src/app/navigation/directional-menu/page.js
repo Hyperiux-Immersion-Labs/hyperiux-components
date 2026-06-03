@@ -1,9 +1,9 @@
-"use client";
 
-import DirectionalMegaMenu from "@/components/Menu/DirectionalMegaMenu";
-import Menu1 from "@/components/Menu/Menu1";
-import Menu2 from "@/components/Menu/Menu2";
-import Menu3 from "@/components/Menu/Menu3";
+
+import { DirectionalMegaMenu } from "@/components/Menu/DirectionalMegaMenu";
+import { Menu1 } from "@/components/Menu/Menu1";
+import { Menu2 } from "@/components/Menu/Menu2";
+import { Menu3 } from "@/components/Menu/Menu3";
 
 const menuItems = [
   {

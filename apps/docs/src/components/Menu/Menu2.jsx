@@ -23,7 +23,7 @@ const SOLUTION_BLOCKS = [
   },
 ];
 
-export default function Menu2() {
+export function Menu2() {
   return (
     <div className="flex flex-col gap-6 max-md:gap-10">
       <div className="flex flex-col gap-2 max-md:gap-3">

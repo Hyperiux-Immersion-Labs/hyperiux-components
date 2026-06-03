@@ -1,9 +1,9 @@
-import Pixelation from '@/components/MousePixelationEffects/PixelCircle'
+import { PixelCircle } from '@/components/MousePixelationEffects/MousePixelation'
 import React from 'react'
 
 const page = () => {
   return (
-    <Pixelation/>
+    <PixelCircle/>
   )
 }
 

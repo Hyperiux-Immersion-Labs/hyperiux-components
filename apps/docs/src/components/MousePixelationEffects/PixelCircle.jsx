@@ -117,6 +117,25 @@ class PixelCirclesMaterial extends THREE.ShaderMaterial {
 
 extend({ PixelCirclesMaterial });
 
+const DEFAULT_FIRST_LINE = {
+  prefix: "Building ",
+  highlight: "Interfaces.",
+  highlightClassName: "font-light",
+  className: "text-left",
+};
+
+const DEFAULT_SECOND_LINE = {
+  prefix: "Shipping ",
+  highlight: "Experiences.",
+  highlightClassName: "font-medium",
+  className: "text-right font-light max-sm:text-left",
+};
+
+const DEFAULT_MOBILE_NOTICE =
+  "Pro tip: this one's built for a mouse - try it on desktop for the cleanest pixel trail.";
+const DEFAULT_DESCRIPTION =
+  "Hyperiux is a modern UI animation library crafted for developers who want stunning interactions, smooth transitions, and production-ready components.";
+
 function PixelCirclesPlane() {
   const materialRef = useRef(null);
   const pointerRef = useRef({
@@ -240,7 +259,12 @@ function PixelCirclesPlane() {
   );
 }
 
-export default function Pixelation() {
+export default function Pixelation({
+  firstLine = DEFAULT_FIRST_LINE,
+  secondLine = DEFAULT_SECOND_LINE,
+  mobileNotice = DEFAULT_MOBILE_NOTICE,
+  description = DEFAULT_DESCRIPTION,
+}) {
   return (
     <div className="relative h-screen w-screen overflow-hidden">
       <div className="fixed left-0 top-0 h-full w-full overflow-hidden">
@@ -253,23 +277,26 @@ export default function Pixelation() {
         className="pointer-events-none relative z-10 flex h-screen w-full flex-col justify-center gap-[12vw] px-[5vw] max-md:h-[90vh] max-md:gap-[7vw] max-sm:h-[90vh] max-sm:gap-[7vw]"
       >
         <h1 className="mt-[4vw] flex flex-col text-[8vw] font-medium leading-[1.2] text-white max-md:text-[12vw] max-sm:text-[15vw]">
-          <span className="text-left">
-            Building <span className="font-light">Interfaces.</span>
+          <span className={firstLine.className}>
+            {firstLine.prefix}
+            <span className={firstLine.highlightClassName}>
+              {firstLine.highlight}
+            </span>
           </span>
-          <span className="text-right font-light max-sm:text-left">
-            Shipping <span className="font-medium">Experiences.</span>
+          <span className={secondLine.className}>
+            {secondLine.prefix}
+            <span className={secondLine.highlightClassName}>
+              {secondLine.highlight}
+            </span>
           </span>
         </h1>
 
         <p className="hidden font-medium tracking-wide text-white/70 max-md:block max-md:text-[3vw] max-sm:text-[4vw]">
-          Pro tip: this one&apos;s built for a mouse - try it on desktop for the
-          cleanest pixel trail.
+          {mobileNotice}
         </p>
 
         <p className="w-[30%] text-[1.5vw] text-justify text-white max-md:mt-[5vw] max-md:w-[80%] max-md:text-[3vw] max-sm:w-[90%] max-sm:text-[5vw]">
-          Hyperiux is a modern UI animation library crafted for developers who
-          want stunning interactions, smooth transitions, and production -
-          ready components .
+          {description}
         </p>
       </section>
     </div>

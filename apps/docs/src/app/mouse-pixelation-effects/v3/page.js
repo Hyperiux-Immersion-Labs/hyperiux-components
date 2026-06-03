@@ -1,4 +1,4 @@
-import EnhancedPixelCube from '@/components/MousePixelationEffects/EnhancedPixelCube'
+import { EnhancedPixelCube } from '@/components/MousePixelationEffects/MousePixelation'
 import React from 'react'
 
 const page = () => {

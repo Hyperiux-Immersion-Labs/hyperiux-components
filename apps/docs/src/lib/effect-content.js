@@ -9292,10 +9292,10 @@ export default LenisSmoothScroll;`,
           language: "jsx",
           code: `"use client";
 
-import DirectionalMegaMenu from "@/components/Menu/DirectionalMegaMenu";
-import Menu1 from "@/components/Menu/Menu1";
-import Menu2 from "@/components/Menu/Menu2";
-import Menu3 from "@/components/Menu/Menu3";
+import { DirectionalMegaMenu } from "@/components/Menu/DirectionalMegaMenu";
+import { Menu1 } from "@/components/Menu/Menu1";
+import { Menu2 } from "@/components/Menu/Menu2";
+import { Menu3 } from "@/components/Menu/Menu3";
 
 const menuItems = [
   {
@@ -9614,8 +9614,8 @@ export default function DemoPage() {
           filename: "page.jsx",
           language: "jsx",
           code: `import React from "react";
-import ElevateNavbarDesktop from "@/components/Navbar/GlassPillNavbar/ElevateDesktopNav";
-import ElevateNavbarMobile from "@/components/Navbar/GlassPillNavbar/ElevateMobileNav";
+import { ElevateNavbarDesktop } from "@/components/Navbar/GlassPillNavbar/ElevateDesktopNav";
+import { ElevateNavbarMobile } from "@/components/Navbar/GlassPillNavbar/ElevateMobileNav";
 
 export default function Page() {
   return (
@@ -9723,7 +9723,7 @@ const PANEL_OPEN_DURATION = 0.3;
 const PANEL_CLOSE_DURATION = 0.2;
 const ACCORDION_DURATION = 0.25;
 
-export default function ElevateNavbarMobile() {
+export function ElevateNavbarMobile() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdownIndex, setActiveDropdownIndex] = useState(null);
 

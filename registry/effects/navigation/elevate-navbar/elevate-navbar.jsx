@@ -4,13 +4,11 @@ import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
 import gsap from "gsap";
 
-// ─── Icons ────────────────────────────────────────────────────────────────────
 
 function ChevronDown({ className }) {
   return (
@@ -55,9 +53,8 @@ function XIcon({ size = 18 }) {
   );
 }
 
-// ─── Desktop Nav ──────────────────────────────────────────────────────────────
 
-function GlassPillDesktopNav({ menuItems, ctaLabel }) {
+function ElevateNavbarDesktop({ menuItems, cta }) {
   const navWrapRef = useRef(null);
   const navLinksRef = useRef([]);
   const ctaRef = useRef(null);
@@ -338,14 +335,14 @@ function GlassPillDesktopNav({ menuItems, ctaLabel }) {
 
         <a
           ref={ctaRef}
-          href="#"
+          href={cta.href}
           style={{ background: "#fff", position: "relative", overflow: "hidden", color: "#000", padding: "0.5vw", borderRadius: "2px", textDecoration: "none", fontSize: "inherit" }}
           onMouseEnter={() => handleCta(true)}
           onMouseLeave={() => handleCta(false)}
         >
-          <span data-default style={{ display: "block", textTransform: "uppercase" }}>{ctaLabel}</span>
+          <span data-default style={{ display: "block", textTransform: "uppercase" }}>{cta.label}</span>
           <span data-hover style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", textTransform: "uppercase" }}>
-            {ctaLabel}
+            {cta.label}
           </span>
         </a>
 
@@ -398,9 +395,8 @@ function GlassPillDesktopNav({ menuItems, ctaLabel }) {
   );
 }
 
-// ─── Mobile Nav ───────────────────────────────────────────────────────────────
 
-function GlassPillMobileNav({ menuItems, ctaLabel }) {
+function ElevateNavbarMobile({ menuItems, cta }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(null);
 
@@ -480,17 +476,19 @@ function GlassPillMobileNav({ menuItems, ctaLabel }) {
           })}
 
           <div style={{ marginTop: "3vw" }}>
-            <button style={{ width: "100%", padding: "3vw", borderRadius: "3vw", background: "#fff", color: "#000", fontSize: "3vw", fontWeight: 600, border: "none", cursor: "pointer" }}>
-              {ctaLabel}
-            </button>
+            <a
+              href={cta.href}
+              onClick={() => setOpen(false)}
+              style={{ width: "100%", padding: "3vw", borderRadius: "3vw", background: "#fff", color: "#000", fontSize: "3vw", fontWeight: 600, cursor: "pointer", display: "block", textAlign: "center", textDecoration: "none" }}
+            >
+              {cta.label}
+            </a>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// ─── Public Export ─────────────────────────────────────────────────────────────
 
 const DEFAULT_MENU_ITEMS = [
   { name: "Solutions", href: "#", isDropdown: false, dropdown: null },
@@ -516,14 +514,19 @@ const DEFAULT_MENU_ITEMS = [
   },
 ];
 
-export function GlassPillHeader({
+const DEFAULT_CTA = {
+  label: "BUILT W/ HYPERIUX",
+  href: "#",
+};
+
+export function ElevateNavbar({
   menuItems = DEFAULT_MENU_ITEMS,
-  ctaLabel = "BUILT W/ HYPERIUX",
+  cta = DEFAULT_CTA,
 }) {
   return (
     <>
-      <GlassPillDesktopNav menuItems={menuItems} ctaLabel={ctaLabel} />
-      <GlassPillMobileNav menuItems={menuItems} ctaLabel={ctaLabel} />
+      <ElevateNavbarDesktop menuItems={menuItems} cta={cta} />
+      <ElevateNavbarMobile menuItems={menuItems} cta={cta} />
     </>
   );
 }

@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-const DEFAULT_IMAGE = "/assets/img/image06.png";
 const IMAGE_ASPECT_RATIO = 1920 / 1080;
 const TABLET_MAX_WIDTH = 768;
 const MOBILE_MAX_WIDTH = 640;
@@ -21,6 +20,8 @@ const INITIAL_TIME = 2;
 const BLOCK_SIZE = 1 / 35;
 const EFFECT_RADIUS = 0.3;
 const EFFECT_INTENSITY = 1.8;
+const DEFAULT_NOTICE =
+  "Heads up: the pixel-drift responds to cursor velocity - desktop is the sweet spot.";
 
 const PIXEL_SHIFT_VERT = /* glsl */ `
   varying vec2 vUv;
@@ -210,13 +211,16 @@ function Scene({ imageUrl }) {
   return <PlaneWithShader texture={texture} />;
 }
 
-export function PixelShift({ img, imageUrl = img ?? DEFAULT_IMAGE }) {
+export function PixelShift({
+  img,
+  imageUrl = img,
+  notice = DEFAULT_NOTICE,
+}) {
   return (
     <div className="relative h-screen w-full">
       <div className="pointer-events-none absolute left-1/2 top-40 z-10 hidden w-full -translate-x-1/2 px-5 max-md:flex max-md:justify-center max-sm:left-0 max-sm:block max-sm:translate-x-0 max-sm:pt-5">
         <p className="inline-flex max-w-[92vw] rounded-sm border border-white/15 bg-black/40 px-4 py-2 font-medium text-white/75 backdrop-blur max-md:w-[80%] max-md:text-center max-md:text-[2.8vw] max-sm:w-full max-sm:text-[3.5vw]">
-          Heads up: the pixel-drift responds to cursor velocity - desktop is the
-          sweet spot.
+          {notice}
         </p>
       </div>
 

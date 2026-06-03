@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ImmersiveFullscreenNavContent } from "./immersive-fullscreen-nav-content";
 
 const CLIPS = {
   bottom: {
@@ -109,7 +110,7 @@ export function FullScreenNavigation({
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-[70] flex h-16 items-center justify-between px-8 ${headerClassName}`}>
+      <header className={`fixed top-0 left-0 right-0 z-70 flex h-16 items-center justify-between px-8 ${headerClassName}`}>
         <a
           href={brandHref}
           style={{ color: isOpen ? headerOpenColor : undefined }}
@@ -129,9 +130,9 @@ export function FullScreenNavigation({
               key={bar}
               style={{ backgroundColor: isOpen ? headerOpenColor : undefined }}
               className={`block h-px w-6 transition-all duration-700 ease-in-out ${
-                bar === 0 ? (isOpen ? "translate-y-[5px] rotate-45" : "bg-black") : ""
+                bar === 0 ? (isOpen ? "translate-y-1.25 rotate-45" : "bg-black") : ""
               } ${bar === 1 ? (isOpen ? "opacity-0 scale-x-0" : "bg-black duration-500") : ""} ${
-                bar === 2 ? (isOpen ? "-translate-y-[9px] -rotate-45" : "bg-black") : ""
+                bar === 2 ? (isOpen ? "-translate-y-1.25 -rotate-45" : "bg-black") : ""
               }`}
             />
           ))}
@@ -141,7 +142,7 @@ export function FullScreenNavigation({
       <nav
         ref={overlayRef}
         style={{ clipPath: closedInitial, backgroundColor: overlayBg }}
-        className={`fixed inset-0 z-[60] flex flex-col items-center justify-center gap-2 ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+        className={`fixed inset-0 z-60 flex flex-col items-center justify-center gap-2 ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
         aria-hidden={!isOpen}
       >
         <div ref={linksWrapperRef} className="flex h-screen w-screen flex-col items-center justify-center">
@@ -170,4 +171,55 @@ export function FullScreenNavigation({
   );
 }
 
-export default FullScreenNavigation;
+const NAV_CONFIG = {
+  brand: "Hyperiux",
+  brandHref: "/",
+  clipOrigin: "bottom",
+  overlayBg: "#1a1a2e",
+  headerOpenColor: "#ff6600",
+  openDuration: 1.2,
+  closeDuration: 1.2,
+};
+
+const NAV_CONTENT = {
+  agencyName: "",
+  tagline: "Crafting digital experiences.",
+  location: "Noida, India",
+  links: [
+    { label: "Home", href: "/" },
+    { label: "Work", href: "/work" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+  ],
+  images: ["/assets/img/image01.webp", "/assets/img/image02.webp"],
+  socials: [
+    { type: "instagram", href: "#" },
+    { type: "facebook", href: "#" },
+    { type: "twitter", href: "#" },
+    { type: "linkedIn", href: "#" },
+  ],
+};
+
+export function ImmersiveFullScreenNavigation({
+  navConfig = NAV_CONFIG,
+  navContent = NAV_CONTENT,
+}) {
+  return (
+    <>
+      <FullScreenNavigation {...navConfig}>
+        {(isOpen) => (
+          <ImmersiveFullscreenNavContent
+            {...navContent}
+            isOpen={isOpen}
+            overlayBg={navConfig.overlayBg}
+            delay={navConfig.openDuration}
+          />
+        )}
+      </FullScreenNavigation>
+
+      <main className="flex h-screen items-center justify-center bg-white">
+        <p className="text-5xl text-neutral-700">Hello !</p>
+      </main>
+    </>
+  );
+}

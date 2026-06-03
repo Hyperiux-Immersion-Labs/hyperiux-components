@@ -1,6 +1,6 @@
 "use client"
 
-const ChevronBird = ({
+export const ChevronBird = ({
  isActive = false,
  size = 14,
  strokeWidth = 10,
@@ -48,5 +48,3 @@ const ChevronBird = ({
  </svg>
  );
 }
-
-export default ChevronBird

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from"react";
-import ChevronBird from"@/components/ChevronBird/ChevronBird";
+import { ChevronBird } from "@/components/ChevronBird/ChevronBird";
 import Cross from"@/components/AnimatedToggle/Cross";
 import Plus from"@/components/AnimatedToggle/Plus";
 import Image from"next/image";

@@ -6,7 +6,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import { ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
 
-const MENU_ITEMS = [
+const DEFAULT_MENU_ITEMS = [
   {
     name: "Effects",
     href: "/effects",
@@ -56,7 +56,15 @@ const DEFAULT_CTA_BACKGROUND = "#fff";
 const HOVER_CTA_BACKGROUND = "#000";
 const IMAGE_TINT = "rgba(255, 0, 0, 0.9)";
 
-export default function ElevateNavbarDesktop() {
+const DEFAULT_CTA = {
+  label: "BUILT W/ HYPERIUX",
+  href: "#",
+};
+
+export function ElevateNavbarDesktop({
+  menuItems = DEFAULT_MENU_ITEMS,
+  cta = DEFAULT_CTA,
+}) {
   // State & refs
   const navWrapRef = useRef(null);
   const navLinksRef = useRef([]);
@@ -274,7 +282,7 @@ export default function ElevateNavbarDesktop() {
 
   const openDropdownForIndex = useCallback(
     (index) => {
-      const menuItem = MENU_ITEMS[index];
+      const menuItem = menuItems[index];
 
       killHideCall();
       killSwitchTween();
@@ -353,7 +361,7 @@ export default function ElevateNavbarDesktop() {
 
     hideCallRef.current = gsap.delayedCall(DROPDOWN_POINTER_DELAY, () => {
       if (isPointerInsideDropdownRef.current) return;
-      if (activeDropdownIndexRef.current !== null && MENU_ITEMS[activeDropdownIndexRef.current]?.isDropdown) {
+      if (activeDropdownIndexRef.current !== null && menuItems[activeDropdownIndexRef.current]?.isDropdown) {
         return;
       }
 
@@ -388,7 +396,7 @@ export default function ElevateNavbarDesktop() {
       animateTextSwap(item, true);
       setNavVisualState(index);
 
-      if (MENU_ITEMS[index]?.isDropdown) {
+      if (menuItems[index]?.isDropdown) {
         activeDropdownIndexRef.current = index;
         openDropdownForIndex(index);
         return;
@@ -407,7 +415,7 @@ export default function ElevateNavbarDesktop() {
 
       animateTextSwap(item, false);
 
-      if (MENU_ITEMS[index]?.isDropdown) {
+      if (menuItems[index]?.isDropdown) {
         killHideCall();
 
         hideCallRef.current = gsap.delayedCall(NAV_POINTER_DELAY, () => {
@@ -518,7 +526,7 @@ export default function ElevateNavbarDesktop() {
   }, [killHideCall, killItemTween, killSwitchTween]);
 
   // Derived values
-  const dropdownItems = MENU_ITEMS[renderedDropdownIndex]?.dropdown || [];
+  const dropdownItems = menuItems[renderedDropdownIndex]?.dropdown || [];
 
   return (
     <div
@@ -529,7 +537,7 @@ export default function ElevateNavbarDesktop() {
     >
       <div className="relative flex h-full w-full items-center gap-[1.5vw] p-[0.3vw] pl-[1vw]">
         <div className="flex h-full items-center gap-[1.5vw]">
-          {MENU_ITEMS.map((item, index) => (
+          {menuItems.map((item, index) => (
             <Link
               key={item.name}
               ref={(element) => {
@@ -562,19 +570,19 @@ export default function ElevateNavbarDesktop() {
 
         <Link
           ref={ctaRef}
-          href="#"
+          href={cta.href}
           className="relative overflow-hidden rounded-sm bg-white px-[0.5vw] py-[0.5vw] text-black"
           onMouseEnter={() => onCtaHover(true)}
           onMouseLeave={() => onCtaHover(false)}
         >
           <span data-default className="block">
-            BUILT W/ HYPERIUX
+            {cta.label}
           </span>
           <span
             data-hover
             className="absolute inset-0 flex items-center justify-center text-white"
           >
-            BUILT W/ HYPERIUX
+            {cta.label}
           </span>
         </Link>
 

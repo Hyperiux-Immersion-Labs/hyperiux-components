@@ -89,6 +89,18 @@ export function DirectionalMenu({
     transitionDirectionRef.current = 1;
   };
 
+  const restoreMenuPanel = () => {
+    if (!menuPannelRef.current) {
+      return;
+    }
+
+    gsap.killTweensOf(menuPannelRef.current);
+    gsap.set(menuPannelRef.current, {
+      opacity: 1,
+      height: "auto",
+    });
+  };
+
   const closeMenu = () => {
     clearCloseTimer();
 
@@ -129,6 +141,7 @@ export function DirectionalMenu({
     const item = items[index];
     if (!item || !hasDropdownContent(item)) return;
 
+    restoreMenuPanel();
     setIsOpen(true);
     setCurrentIndex(index);
     setNextIndex(null);
@@ -146,6 +159,7 @@ export function DirectionalMenu({
     if (!item) return;
 
     clearCloseTimer();
+    restoreMenuPanel();
     setHighlightedIndex(index);
 
     if (!hasDropdownContent(item)) {

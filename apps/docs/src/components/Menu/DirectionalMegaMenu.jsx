@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
-import ChevronBird from "../ChevronBird/ChevronBird";
+import { ChevronBird } from "../ChevronBird/ChevronBird";
 
 const DEFAULT_ANIMATION = {
   contentFadeDelay: 0.06,
@@ -31,7 +31,7 @@ const getPaneHeight = (element) => {
   return element.offsetHeight || element.scrollHeight || 0;
 };
 
-export default function DirectionalMegaMenu({
+export function DirectionalMegaMenu({
   items = [],
   className = "",
   navClassName = "",
@@ -113,6 +113,18 @@ export default function DirectionalMegaMenu({
     ]);
   };
 
+  const restoreMenuPanel = () => {
+    if (!menuPanelRef.current) {
+      return;
+    }
+
+    gsap.killTweensOf(menuPanelRef.current);
+    gsap.set(menuPanelRef.current, {
+      opacity: 1,
+      height: "auto",
+    });
+  };
+
   const closeMenu = () => {
     clearCloseTimer();
 
@@ -146,6 +158,7 @@ export default function DirectionalMegaMenu({
       return;
     }
 
+    restoreMenuPanel();
     setIsOpen(true);
     setCurrentIndex(index);
     setNextIndex(NO_INDEX);
@@ -166,6 +179,7 @@ export default function DirectionalMegaMenu({
     }
 
     clearCloseTimer();
+    restoreMenuPanel();
     setHighlightedIndex(index);
 
     if (!hasDropdownContent(item)) {

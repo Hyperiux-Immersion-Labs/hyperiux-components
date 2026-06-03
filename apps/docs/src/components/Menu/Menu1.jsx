@@ -23,7 +23,7 @@ const PREVIEW_IMAGES = [
   },
 ];
 
-export default function Menu1() {
+export function Menu1() {
   return (
     <div className="flex justify-between gap-8 max-md:flex-wrap max-sm:flex-col">
       <div className="flex w-[65%] flex-col gap-6 max-md:w-[70%] max-sm:w-full">

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useEffect } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/dist/SplitText";
 
@@ -19,13 +19,31 @@ const IMAGE_FADE_STAGGER = 0.08;
 
 gsap.registerPlugin(SplitText);
 
-export default function StackToSpreadIntro() {
+const DEFAULT_IMAGE_SOURCES = [
+  "/assets/img/image01.webp",
+  "/assets/img/image07.png",
+  "/assets/img/image04.png",
+  "/assets/img/image05.png",
+  "/assets/img/image10.jpg",
+  "/assets/img/distortion.jpg",
+  "/img/mobile.png",
+];
+
+export default function StackToSpreadIntro({
+  images = DEFAULT_IMAGE_SOURCES,
+  onComplete,
+}) {
   // State and refs
   const rootRef = useRef(null);
   const imagesRef = useRef([]);
   const text1Ref = useRef(null);
   const text2Ref = useRef(null);
   const descriptionTextRef = useRef(null);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -48,6 +66,7 @@ export default function StackToSpreadIntro() {
         transformOrigin: "50% 100%",
         willChange: "transform",
       });
+      gsap.set(imageElements, { opacity: 0 });
       gsap.set(descriptionTextRef.current, { opacity: 1 });
 
       const tl = gsap.timeline({});
@@ -55,12 +74,25 @@ export default function StackToSpreadIntro() {
       // Entry
       tl.fromTo(
         "#imgs-wrapper",
-        { yPercent: IMAGE_ENTRY_Y_PERCENT },
+        { yPercent: IMAGE_ENTRY_Y_PERCENT, opacity: 0 },
         {
           yPercent: 0,
+          opacity: 1,
           duration: 0.5,
           ease: INTRO_EASE,
         },
+      );
+
+      tl.set([text1Ref.current, text2Ref.current], { opacity: 1 }, "<");
+
+      tl.to(
+        imageElements,
+        {
+          opacity: 1,
+          duration: 0.5,
+          ease: INTRO_EASE,
+        },
+        "<",
       );
 
       tl.to(
@@ -176,6 +208,7 @@ export default function StackToSpreadIntro() {
               ease: INTRO_EASE,
               onComplete: () => {
                 gsap.set(rootRef.current, { display: "none" });
+                onCompleteRef.current?.();
               },
             });
           },
@@ -195,15 +228,7 @@ export default function StackToSpreadIntro() {
   }, []);
 
   // Derived values
-  const imgSources = [
-    "/assets/img/image01.webp",
-    "/assets/img/image07.png",
-    "/assets/img/image04.png",
-    "/assets/img/image05.png",
-    "/assets/img/image10.jpg",
-    "/assets/img/distortion.jpg",
-    "/img/mobile.png",
-  ];
+  const imgSources = images;
 
   return (
     <section
@@ -212,7 +237,10 @@ export default function StackToSpreadIntro() {
       className="bg-[#FCFCFC] text-black px-[2.5vw] max-md:px-[5vw] max-sm:px-[6vw] h-screen flex items-center justify-center w-full"
     >
       <div className="w-full flex items-center justify-between max-md:flex-col max-md:justify-center max-md:gap-[33vh] max-sm:gap-[70vw]">
-        <p ref={text1Ref} className="max-md:text-[2.8vw] max-sm:text-[5vw]">
+        <p
+          ref={text1Ref}
+          className="opacity-0 max-md:text-[2.8vw] max-sm:text-[5vw]"
+        >
           HUMAN THINKERS
         </p>
 
@@ -224,7 +252,7 @@ export default function StackToSpreadIntro() {
             <div
               key={i}
               ref={(el) => (imagesRef.current[i] = el)}
-              className="absolute top-0 left-0 rounded-sm  size-full overflow-hidden"
+              className="absolute top-0 left-0 rounded-sm size-full overflow-hidden opacity-0"
             >
               <Image
                 src={src}
@@ -237,7 +265,10 @@ export default function StackToSpreadIntro() {
           ))}
         </div>
 
-        <p ref={text2Ref} className="max-md:text-[2.8vw] max-sm:text-[4vw]">
+        <p
+          ref={text2Ref}
+          className="opacity-0 max-md:text-[2.8vw] max-sm:text-[4vw]"
+        >
           DIGITAL MAKERS
         </p>
       </div>

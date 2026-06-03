@@ -1,7 +1,8 @@
 "use client";
-import PixelCircle from "./pixel-circle";
-import PixelShift from "./pixel-shift";
-import EnhancedPixelCube from "./enhanced-pixel-cube";
+
+import PixelCircle from "./PixelCircle";
+import PixelShift from "./PixelShift";
+import EnhancedPixelCube from "./EnhancedPixelCube";
 
 const VARIANTS = {
   "pixel-circle": PixelCircle,

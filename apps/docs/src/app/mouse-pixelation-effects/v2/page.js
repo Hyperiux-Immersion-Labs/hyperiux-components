@@ -1,9 +1,9 @@
-import PixelShift from '@/components/MousePixelationEffects/PixelShift'
+import { PixelShift } from '@/components/MousePixelationEffects/MousePixelation'
 import React from 'react'
 
 const page = () => {
   return (
-    <PixelShift/>
+    <PixelShift imageUrl="/assets/img/image06.png" />
   )
 }
 

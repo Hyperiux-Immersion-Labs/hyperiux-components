@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import * as THREE from "three";
@@ -32,20 +32,20 @@ const CUBE_ARGS = [1, 1, 1, 20, 20, 20];
 const BLOOM_INTENSITY = 1;
 const BLOOM_THRESHOLD = 1.5;
 const BLOOM_SMOOTHING = 0.5;
-const NOTICE_TEXT =
+const DEFAULT_NOTICE_TEXT =
   "Best on desktop: whip your mouse to see the trail snap, bloom, and bend the grid.";
-const COLOR_OPTIONS = [
+const DEFAULT_COLOR_OPTIONS = [
   {
-    color: new THREE.Color("#39FF14"),
-    emissive: new THREE.Color("#39FF14"),
+    color: "#39FF14",
+    emissive: "#39FF14",
   },
   {
-    color: new THREE.Color("aqua"),
-    emissive: new THREE.Color("aqua"),
+    color: "aqua",
+    emissive: "aqua",
   },
   {
-    color: new THREE.Color("#FFD600"),
-    emissive: new THREE.Color("#FFD600"),
+    color: "#FFD600",
+    emissive: "#FFD600",
   },
 ];
 
@@ -369,22 +369,45 @@ function PixelGrid({ mousePositionRef, mouseVelocityRef, trailStrengthRef }) {
   );
 }
 
-function DeformingCube({ mousePositionRef, mouseVelocityRef, trailStrengthRef }) {
+function DeformingCube({
+  mousePositionRef,
+  mouseVelocityRef,
+  trailStrengthRef,
+  colorOptions,
+}) {
   const cubeRef = useRef(null);
   const geometryRef = useRef(null);
   const materialRef = useRef(null);
   const originalPositionsRef = useRef(null);
   const targetRotationRef = useRef({ x: 0, y: 0 });
   const currentRotationRef = useRef({ x: 0, y: 0 });
+  const parsedColorOptions = useMemo(
+    () => {
+      const palette = colorOptions.length ? colorOptions : DEFAULT_COLOR_OPTIONS;
+
+      return palette.map((option) => ({
+        color: new THREE.Color(option.color),
+        emissive: new THREE.Color(option.emissive ?? option.color),
+      }));
+    },
+    [colorOptions]
+  );
   const colorStateRef = useRef({
-    current: COLOR_OPTIONS[0].color.clone(),
-    target: COLOR_OPTIONS[0].color.clone(),
-    currentEmissive: COLOR_OPTIONS[0].emissive.clone(),
-    targetEmissive: COLOR_OPTIONS[0].emissive.clone(),
+    current: parsedColorOptions[0].color.clone(),
+    target: parsedColorOptions[0].color.clone(),
+    currentEmissive: parsedColorOptions[0].emissive.clone(),
+    targetEmissive: parsedColorOptions[0].emissive.clone(),
     lastSwitch: 0,
     interval: 0,
   });
   const { camera } = useThree();
+
+  useEffect(() => {
+    colorStateRef.current.current.copy(parsedColorOptions[0].color);
+    colorStateRef.current.target.copy(parsedColorOptions[0].color);
+    colorStateRef.current.currentEmissive.copy(parsedColorOptions[0].emissive);
+    colorStateRef.current.targetEmissive.copy(parsedColorOptions[0].emissive);
+  }, [parsedColorOptions]);
 
   useEffect(() => {
     if (colorStateRef.current.lastSwitch === 0) {
@@ -415,18 +438,18 @@ function DeformingCube({ mousePositionRef, mouseVelocityRef, trailStrengthRef })
     // Color state
     const now = Date.now();
     if (now - colorStateRef.current.lastSwitch > colorStateRef.current.interval) {
-      let nextIndex = Math.floor(Math.random() * COLOR_OPTIONS.length);
-      const currentIndex = COLOR_OPTIONS.findIndex((option) =>
+      let nextIndex = Math.floor(Math.random() * parsedColorOptions.length);
+      const currentIndex = parsedColorOptions.findIndex((option) =>
         option.emissive.equals(colorStateRef.current.targetEmissive)
       );
 
       if (nextIndex === currentIndex) {
-        nextIndex = (nextIndex + 1) % COLOR_OPTIONS.length;
+        nextIndex = (nextIndex + 1) % parsedColorOptions.length;
       }
 
-      colorStateRef.current.target.copy(COLOR_OPTIONS[nextIndex].color);
+      colorStateRef.current.target.copy(parsedColorOptions[nextIndex].color);
       colorStateRef.current.targetEmissive.copy(
-        COLOR_OPTIONS[nextIndex].emissive
+        parsedColorOptions[nextIndex].emissive
       );
       colorStateRef.current.lastSwitch = now;
       colorStateRef.current.interval =
@@ -520,7 +543,10 @@ function DeformingCube({ mousePositionRef, mouseVelocityRef, trailStrengthRef })
   );
 }
 
-export default function EnhancedPixelCube() {
+export default function EnhancedPixelCube({
+  notice = DEFAULT_NOTICE_TEXT,
+  colorOptions = DEFAULT_COLOR_OPTIONS,
+}) {
   const mousePositionRef = useRef({ x: INITIAL_POINTER, y: INITIAL_POINTER });
   const mouseVelocityRef = useRef({ x: 0, y: 0 });
   const trailStrengthRef = useRef(0);
@@ -529,7 +555,7 @@ export default function EnhancedPixelCube() {
     <div style={{ width: "100vw", height: "100vh", background: "#000" }}>
       <div className="pointer-events-none absolute left-1/2 top-30 z-10 hidden w-full -translate-x-1/2 px-5 pt-5 max-md:flex max-md:justify-center max-sm:left-0 max-sm:block max-sm:translate-x-0">
         <p className="inline-flex max-w-[92vw] rounded-sm border border-white/15 bg-black/40 px-4 py-2 font-medium text-white/75 backdrop-blur max-md:text-center max-md:text-[2.8vw] max-sm:text-[3.5vw]">
-          {NOTICE_TEXT}
+          {notice}
         </p>
       </div>
 
@@ -561,6 +587,7 @@ export default function EnhancedPixelCube() {
           mousePositionRef={mousePositionRef}
           mouseVelocityRef={mouseVelocityRef}
           trailStrengthRef={trailStrengthRef}
+          colorOptions={colorOptions}
         />
       </Canvas>
     </div>

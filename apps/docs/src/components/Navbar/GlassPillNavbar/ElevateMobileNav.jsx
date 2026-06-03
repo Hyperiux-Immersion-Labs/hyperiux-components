@@ -6,7 +6,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import { ChevronDown, Menu, X } from "lucide-react";
 
-const MENU_ITEMS = [
+const DEFAULT_MENU_ITEMS = [
   {
     name: "Effects",
     dropdown: [
@@ -49,7 +49,15 @@ const MOBILE_ICON_SIZE = "max-sm:w-[4.5vw] max-sm:h-[4.5vw]";
 const TABLET_CHEVRON_SIZE = "max-md:w-[2.4vw] max-md:h-[2.4vw]";
 const MOBILE_CHEVRON_SIZE = "max-sm:w-[3.5vw] max-sm:h-[3.5vw]";
 
-export default function ElevateNavbarMobile() {
+const DEFAULT_CTA = {
+  label: "BUILT W/ HYPERIUX",
+  href: "#",
+};
+
+export function ElevateNavbarMobile({
+  menuItems = DEFAULT_MENU_ITEMS,
+  cta = DEFAULT_CTA,
+}) {
   // State & refs
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdownIndex, setActiveDropdownIndex] = useState(null);
@@ -146,7 +154,7 @@ export default function ElevateNavbarMobile() {
         style={{ pointerEvents: "none", opacity: 0 }}
       >
         <div className="space-y-[1vw]">
-          {MENU_ITEMS.map((item, index) => {
+          {menuItems.map((item, index) => {
             const hasDropdown = Boolean(item.dropdown);
             const isDropdownOpen = activeDropdownIndex === index;
 
@@ -224,9 +232,13 @@ export default function ElevateNavbarMobile() {
           })}
 
           <div className="pt-[3vw]">
-            <button className="w-full rounded-[3vw] bg-white py-[3vw] font-semibold text-black max-md:text-[2.5vw] max-sm:text-[3vw]">
-              BUILT W/ HYPERIUX
-            </button>
+            <Link
+              href={cta.href}
+              onClick={() => setIsMenuOpen(false)}
+              className="block w-full rounded-[3vw] bg-white py-[3vw] text-center font-semibold text-black max-md:text-[2.5vw] max-sm:text-[3vw]"
+            >
+              {cta.label}
+            </Link>
           </div>
         </div>
       </div>
