@@ -22,7 +22,7 @@ const BLOCK_SIZE = 1 / 35;
 const EFFECT_RADIUS = 0.3;
 const EFFECT_INTENSITY = 1.8;
 
-const ZANJO_VERT = /* glsl */ `
+const PIXEL_SHIFT_VERT = /* glsl */ `
   varying vec2 vUv;
 
   void main() {
@@ -31,7 +31,7 @@ const ZANJO_VERT = /* glsl */ `
   }
 `;
 
-const ZANJO_FRAG = /* glsl */ `
+const PIXEL_SHIFT_FRAG = /* glsl */ `
   uniform vec2 uMouse;
   uniform vec2 uVelocity;
   uniform float uBlockSize;
@@ -106,8 +106,8 @@ function PlaneWithShader({ texture }) {
           uIsMoving: { value: 1 },
           uTexture: { value: texture },
         },
-        vertexShader: ZANJO_VERT,
-        fragmentShader: ZANJO_FRAG,
+        vertexShader: PIXEL_SHIFT_VERT,
+        fragmentShader: PIXEL_SHIFT_FRAG,
         transparent: false,
       }),
     [texture]
@@ -201,13 +201,16 @@ function PlaneWithShader({ texture }) {
   );
 }
 
-function Scene({ img }) {
-  const texture = useMemo(() => new THREE.TextureLoader().load(img), [img]);
+function Scene({ imageUrl }) {
+  const texture = useMemo(
+    () => new THREE.TextureLoader().load(imageUrl),
+    [imageUrl]
+  );
 
   return <PlaneWithShader texture={texture} />;
 }
 
-export default function Zanjo({ img = DEFAULT_IMAGE }) {
+export function PixelShift({ img, imageUrl = img ?? DEFAULT_IMAGE }) {
   return (
     <div className="relative h-screen w-full">
       <div className="pointer-events-none absolute left-1/2 top-40 z-10 hidden w-full -translate-x-1/2 px-5 max-md:flex max-md:justify-center max-sm:left-0 max-sm:block max-sm:translate-x-0 max-sm:pt-5">
@@ -219,8 +222,10 @@ export default function Zanjo({ img = DEFAULT_IMAGE }) {
 
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
         <color attach="background" args={["#000000"]} />
-        <Scene img={img} />
+        <Scene imageUrl={imageUrl} />
       </Canvas>
     </div>
   );
 }
+
+export default PixelShift;

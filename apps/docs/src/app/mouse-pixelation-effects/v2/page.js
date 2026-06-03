@@ -1,9 +1,9 @@
-import Zanjo from '@/components/MousePixelationEffects/Zanjo'
+import PixelShift from '@/components/MousePixelationEffects/PixelShift'
 import React from 'react'
 
 const page = () => {
   return (
-    <Zanjo/>
+    <PixelShift/>
   )
 }
 

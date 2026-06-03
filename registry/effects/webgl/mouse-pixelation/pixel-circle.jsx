@@ -240,7 +240,7 @@ function PixelCirclesPlane() {
   );
 }
 
-export default function Pixelation() {
+export function PixelCircle() {
   return (
     <div className="relative h-screen w-screen overflow-hidden">
       <div className="fixed left-0 top-0 h-full w-full overflow-hidden">
@@ -275,3 +275,5 @@ export default function Pixelation() {
     </div>
   );
 }
+
+export default PixelCircle;

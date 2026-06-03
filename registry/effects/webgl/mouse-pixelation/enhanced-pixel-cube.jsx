@@ -520,7 +520,7 @@ function DeformingCube({ mousePositionRef, mouseVelocityRef, trailStrengthRef })
   );
 }
 
-export default function EnhancedPixelCube() {
+export function EnhancedPixelCube() {
   const mousePositionRef = useRef({ x: INITIAL_POINTER, y: INITIAL_POINTER });
   const mouseVelocityRef = useRef({ x: 0, y: 0 });
   const trailStrengthRef = useRef(0);
@@ -566,3 +566,5 @@ export default function EnhancedPixelCube() {
     </div>
   );
 }
+
+export default EnhancedPixelCube;

@@ -1,10 +1,27 @@
 "use client";
-import { PixelCircle } from "./pixel-circle";
-import { Zanjo } from "./zanjo";
-import { EnhancedPixelCube } from "./enhanced-pixel-cube";
+import PixelCircle from "./pixel-circle";
+import PixelShift from "./pixel-shift";
+import EnhancedPixelCube from "./enhanced-pixel-cube";
 
-export function MousePixelation() {
-  return <PixelCircle />;
+const VARIANTS = {
+  "pixel-circle": PixelCircle,
+  "pixel-shift": PixelShift,
+  "enhanced-pixel-cube": EnhancedPixelCube,
+};
+
+export function MousePixelation({
+  variant = "pixel-circle",
+  imageUrl,
+  ...props
+}) {
+  const Component = VARIANTS[variant] ?? PixelCircle;
+
+  if (Component === PixelShift) {
+    return <Component img={imageUrl} {...props} />;
+  }
+
+  return <Component {...props} />;
 }
 
-export { PixelCircle, Zanjo, EnhancedPixelCube };
+export default MousePixelation;
+export { PixelCircle, PixelShift, EnhancedPixelCube };
