@@ -113,12 +113,18 @@ async function fetchRemoteRegistryIndex() {
   }
 }
 
-export function getRegistryItemFiles(item, config) {
+export function getRegistryItemFiles(item, config, cwd = process.cwd()) {
+  const usesSrc = fs.existsSync(path.join(cwd, "src"));
+  const prefix = usesSrc ? "src/" : "";
+
   return item.files.map((file) => {
     let targetPath = file.target;
 
     // Replace alias with actual path
-    if (targetPath.startsWith("components/effects/")) {
+    if (targetPath.startsWith("components/hyperiux/")) {
+      const effectsPath = config.aliases?.effects?.replace("@/", "") || "components/effects";
+      targetPath = targetPath.replace("components/hyperiux/", `${effectsPath}/`);
+    } else if (targetPath.startsWith("components/effects/")) {
       const effectsPath = config.aliases?.effects?.replace("@/", "") || "components/effects";
       targetPath = targetPath.replace("components/effects/", `${effectsPath}/`);
     } else if (targetPath.startsWith("hooks/")) {
@@ -131,7 +137,7 @@ export function getRegistryItemFiles(item, config) {
 
     return {
       ...file,
-      targetPath: `src/${targetPath}`,
+      targetPath: `${prefix}${targetPath}`,
     };
   });
 }
