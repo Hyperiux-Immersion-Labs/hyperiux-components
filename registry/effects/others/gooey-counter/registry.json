@@ -3,7 +3,7 @@
   "type": "registry:component",
   "title": "Gooey Counter",
   "description": "Canvas-based animated counter that morphs pixel-grid blocks between numbers 0–10 using an SVG gooey filter. Blocks scatter to a random layout between each number with eased transitions.",
-  "category": "components",
+  "category": "others",
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/gooey-counter"

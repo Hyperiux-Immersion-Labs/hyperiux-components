@@ -3,7 +3,7 @@
   "type": "registry:component",
   "title": "Hyperiux Glitter Concept",
   "description": "Glittery particle logo concept with morphing model particles, cursor trail particles, and bloom postprocessing.",
-  "category": "components",
+  "category": "webgl",
   "dependencies": [
     "three",
     "@react-three/fiber",
