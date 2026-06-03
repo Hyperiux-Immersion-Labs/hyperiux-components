@@ -37,6 +37,12 @@ describe("registry utilities", () => {
         type: "registry:component",
         target: "hooks/use-animation.js",
       },
+      {
+        path: "assets/img/image01.webp",
+        type: "registry:asset",
+        target: "public/assets/img/image01.webp",
+        source: "/assets/img/image01.webp",
+      },
     ],
   };
 
@@ -57,6 +63,7 @@ describe("registry utilities", () => {
       
       expect(files[0].targetPath).toBe("src/components/effects/blur-text.jsx");
       expect(files[1].targetPath).toBe("src/hooks/use-animation.js");
+      expect(files[2].targetPath).toBe("public/assets/img/image01.webp");
     });
   });
 
@@ -70,6 +77,7 @@ describe("registry utilities", () => {
       
       expect(files[0].targetPath).toBe("components/effects/blur-text.jsx");
       expect(files[1].targetPath).toBe("hooks/use-animation.js");
+      expect(files[2].targetPath).toBe("public/assets/img/image01.webp");
     });
   });
 });

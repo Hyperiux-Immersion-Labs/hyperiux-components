@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "MagneticImageTrail",
+  "exportKind": "named",
   "previewUrl": "/magnetic-image-trail",
   "coverImage": "/assets/list/magnetic-image-trail.png",
   "videoUrl": "magnetic-image-trail.mp4",
@@ -18,6 +20,72 @@
       "type": "registry:component",
       "target": "components/hyperiux/magnetic-image-trail.jsx",
       "content": "\"use client\";\nimport { useCallback, useEffect, useRef } from\"react\";\n\nconst imageUrls = [\n    \"/assets/img/distortion.jpg\",\n  \"/assets/img/image01.webp\",\n  \"/assets/img/image02.webp\",\n  \"/assets/img/image03.webp\",\n  \"/assets/img/image04.png\",\n  \"/assets/img/image05.png\",\n  \"/assets/img/image06.png\",\n  \"/assets/img/image07.png\",\n  \"/assets/img/image08.jpg\",\n  \"/assets/img/image09.jpg\",\n  \"/assets/img/image10.jpg\",\n];\n\nconst SLOTS = [\n { y: 0, size: 1.19, w: 206, h: 167 }, // mid - just a bit bigger\n { y: -30, size: 1.10, w: 214, h: 167 }, // 2nd closest - little bigger, spread more\n { y: 30, size: 1.20, w: 214, h: 167 },\n { y: -60, size: 1.06, w: 186, h: 144 }, // spread more\n { y: 60, size: 1.06, w: 186, h: 144 },\n\n { y: -94, size: 0.91, w: 157, h: 122 }, // spread more\n { y: 94, size: 0.91, w: 157, h: 122 },\n { y: -122, size: 0.80, w: 139, h: 109 },\n { y: 122, size: 0.80, w: 139, h: 109 },\n\n { y: -18, size: 1.04, w: 166, h: 129 }, // very little more than before\n { y: 18, size: 1.02, w: 161, h: 126 },\n { y: -52, size: 0.97, w: 153, h: 118 },\n { y: 52, size: 0.97, w: 153, h: 118 },\n\n { y: -78, size: 0.87, w: 137, h: 108 },\n { y: 78, size: 0.87, w: 137, h: 108 },\n { y: -134, size: 0.70, w: 111, h: 83 }, // spread a bit more at edges\n { y: 134, size: 0.70, w: 111, h: 83 },\n { y: 10, size: 0.91, w: 140, h: 108 }, // very little\n];\n\n// Faster + tighter motion.\nconst SPEED = 0.0003;\nconst MAX_SPEED = 0.0015; // Added max speed limit for generation\nconst FOLLOW = 0.22;\nconst SPREAD_X = 250; // Slightly more spread since sizes increased\nconst DEPTH_POWER = 0.95;\nconst THICKNESS = 0.62;\n\n// Interaction Config\nconst MOUSE_SPEED_BOOST = 0.003;\nconst FORWARD_PUSH_AMOUNT = 40;\nconst UPWARD_PUSH_AMOUNT = 30;\nconst SCALE_OUT_MIN = 0.68;\nconst SCALE_OUT_MAX = 1.48;\n\nfunction clamp(v, min, max) {\n return Math.max(min, Math.min(max, v));\n}\n\nfunction lerp(a, b, t) {\n return a + (b - a) * t;\n}\n\nfunction drawRoundedImage(ctx, img, x, y, w, h, r = 0) {\n if (!img?.complete || img.naturalWidth <= 0) return;\n\n const imgAspect = img.naturalWidth / img.naturalHeight;\n const boxAspect = w / h;\n\n let sx, sy, sw, sh;\n\n if (imgAspect > boxAspect) {\n sh = img.naturalHeight;\n sw = sh * boxAspect;\n sx = (img.naturalWidth - sw) / 2;\n sy = 0;\n } else {\n sw = img.naturalWidth;\n sh = sw / boxAspect;\n sx = 0;\n sy = (img.naturalHeight - sh) / 2;\n }\n\n if (r > 0) {\n ctx.save();\n ctx.beginPath();\n ctx.roundRect(x, y, w, h, r);\n ctx.clip();\n ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);\n ctx.restore();\n return;\n }\n\n // No rounded corners.\n ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);\n}\n\nfunction ImageTrail() {\n const wrapRef = useRef(null);\n const canvasRef = useRef(null);\n const imagesRef = useRef([]);\n const rafRef = useRef(0);\n\n const pointer = useRef({ x: 0, y: 0 });\n const lerpedPointer = useRef({ x: 0, y: 0 }); // lerped pointer position\n const smooth = useRef({ x: 0, y: 0 });\n const dirRef = useRef({ x: 1, y: 0 });\n const lastMoveAt = useRef(0);\n const inside = useRef(false);\n const phase = useRef(0);\n const lastTime = useRef(0);\n\n useEffect(() => {\n const imgs = SLOTS.map((_, i) => {\n const img = new Image();\n img.crossOrigin =\"anonymous\";\n img.src = imageUrls[i % imageUrls.length];\n return img;\n });\n\n imagesRef.current = imgs;\n\n const canvas = canvasRef.current;\n const wrap = wrapRef.current;\n const ctx = canvas.getContext(\"2d\");\n\n function resize() {\n const dpr = Math.min(window.devicePixelRatio || 1, 2);\n const w = wrap.clientWidth;\n const h = wrap.clientHeight;\n\n canvas.width = Math.round(w * dpr);\n canvas.height = Math.round(h * dpr);\n canvas.style.width = `${w}px`;\n canvas.style.height = `${h}px`;\n\n ctx.setTransform(dpr, 0, 0, dpr, 0, 0);\n\n pointer.current = { x: w / 2, y: h / 2 };\n lerpedPointer.current = { x: w / 2, y: h / 2 };\n smooth.current = { x: w / 2, y: h / 2 };\n }\n\n resize();\n window.addEventListener(\"resize\", resize);\n\n function frame(now) {\n const W = wrap.clientWidth;\n const H = wrap.clientHeight;\n ctx.clearRect(0, 0, W, H);\n\n const dt = Math.min(32, now - (lastTime.current || now));\n lastTime.current = now;\n\n // --- lerp pointer on every frame ---\n // The lerped pointer smoothly follows the actual pointer.\n // A lerp amount of 0.18 gives a nice responsive but eased motion.\n const LERP_AMOUNT = 0.18;\n lerpedPointer.current.x = lerp(lerpedPointer.current.x, pointer.current.x, LERP_AMOUNT);\n lerpedPointer.current.y = lerp(lerpedPointer.current.y, pointer.current.y, LERP_AMOUNT);\n\n // Phase increment will be calculated after mouse speed is determined\n\n const prevSX = smooth.current.x;\n const prevSY = smooth.current.y;\n\n // use lerpedPointer instead of pointer directly for the trailing smooth position\n smooth.current.x += (lerpedPointer.current.x - smooth.current.x) * FOLLOW;\n smooth.current.y += (lerpedPointer.current.y - smooth.current.y) * FOLLOW;\n\n const cx = smooth.current.x;\n const cy = smooth.current.y;\n\n const vx = cx - prevSX;\n const vy = cy - prevSY;\n const vmag = Math.hypot(vx, vy);\n if (vmag > 0.35) {\n const tx = vx / vmag;\n const ty = vy / vmag;\n dirRef.current.x = dirRef.current.x + (tx - dirRef.current.x) * 0.2;\n dirRef.current.y = dirRef.current.y + (ty - dirRef.current.y) * 0.2;\n const m = Math.hypot(dirRef.current.x, dirRef.current.y) || 1;\n dirRef.current.x /= m;\n dirRef.current.y /= m;\n lastMoveAt.current = now;\n } else if (!lastMoveAt.current) {\n lastMoveAt.current = now;\n }\n\n const speed01 = clamp(vmag / 18, 0, 1);\n  // INCREASE GENERATING SPEED BASED ON MOUSE MOVEMENT, CLAMPED TO MAX_SPEED\n const currentSpeed = clamp(SPEED + speed01 * MOUSE_SPEED_BOOST, SPEED, MAX_SPEED);\n phase.current += dt * currentSpeed;\n const dir = dirRef.current;\n const denom = Math.max(1, SPREAD_X);\n const dirIntensity = 0.18 + speed01 * 0.12;\n\n const cards = SLOTS.map((slot, i) => {\n const n = SLOTS.length;\n\n // Animation progress per image.\n const t = (phase.current + i / n) % 1;\n\n // -1 → 0 → 1\n // This controls the movement along the diagonal path.\n const pathNorm = t * 2 - 1;\n\n // Diagonal movement direction.\n // Start: bottom-right\n // Center: middle\n // End: top-left\n // Bottom-left → top-right, but less steep.\n const moveX = pathNorm;\n const moveY = -pathNorm;\n\n // Keep the circular cluster shape.\n const yOffset = clamp(slot.y, -SPREAD_X * 0.82, SPREAD_X * 0.82);\n\n const circleWidthAtY =\n Math.sqrt(Math.max(0, SPREAD_X * SPREAD_X - yOffset * yOffset)) * 0.74;\n\n // Lower number = flatter/slanting movement.\n // 0.38 was too steep.\n const diagonalPush = SPREAD_X * 0.15;\n\n // Move the whole diagonal slightly upward,\n // so it starts a little above bottom-left\n // and ends a little below top-right.\n const verticalLift = -SPREAD_X * 0.06;\n\n const x = cx + moveX * circleWidthAtY;\n const y = cy + yOffset + moveY * diagonalPush + verticalLift;\n\n // Scale follows the same diagonal movement:\n // small → big at center → small\n const rawCenterScale = Math.max(0, 1 - Math.abs(pathNorm));\n const easedCenterScale =\n rawCenterScale * rawCenterScale * (3 - 2 * rawCenterScale);\n const centerScale = lerp(0.06, 0.9, easedCenterScale);\n\n // Scale images up in the direction of mouse movement.\n // Images ahead of the mouse direction get larger.\n // Images behind the mouse direction get smaller.\n const dx = x - cx;\n const dy = y - cy;\n\n const directionalProjection = clamp(\n (dx * dir.x + dy * dir.y) / Math.max(1, SPREAD_X),\n -1,\n 1\n );\n\n // Scaling out works on OPPOSITE direction.\n // Images behind the mouse direction get larger (scale out).\n const oppositeProjection = -directionalProjection;\n const backwardAmount = (oppositeProjection + 1) * 0.5;\n\n const movementBoost = lerp(1, 1.18, speed01);\n const directionalScale = lerp(SCALE_OUT_MIN, SCALE_OUT_MAX, backwardAmount) * movementBoost;\n const scale = centerScale * directionalScale * 1.14;\n\n // Image translate effect on mouse move direction.\n // Images ahead of the mouse are pushed forward.\n const forwardPush = Math.max(0, directionalProjection) * speed01 * FORWARD_PUSH_AMOUNT;\n\n // Images scaling out (behind) translate a little up\n const upwardPush = Math.max(0, oppositeProjection) * speed01 * UPWARD_PUSH_AMOUNT;\n\n return {\n i,\n img: imgs[i % imgs.length],\n\n x: x + dir.x * forwardPush,\n y: y + dir.y * forwardPush - upwardPush,\n\n w: slot.w * slot.size * scale,\n h: slot.h * slot.size * scale,\n\n rot: 0,\n alpha: 1,\n order: i,\n };\n });\n\n // Stable stacking: never sort by `depth` (which changes during animation).\n cards.sort((a, b) => a.i - b.i);\n\n for (const card of cards) {\n if (card.w < 2 || card.h < 2) continue;\n\n ctx.save();\n ctx.translate(card.x, card.y);\n ctx.globalAlpha = 1;\n ctx.shadowColor =\"rgba(0,0,0,0.14)\";\n ctx.shadowBlur = 12;\n ctx.shadowOffsetY = 5;\n\n drawRoundedImage(ctx, card.img, -card.w / 2, -card.h / 2, card.w, card.h, 0);\n\n ctx.restore();\n }\n\n rafRef.current = requestAnimationFrame(frame);\n }\n\n rafRef.current = requestAnimationFrame(frame);\n\n return () => {\n cancelAnimationFrame(rafRef.current);\n window.removeEventListener(\"resize\", resize);\n };\n }, []);\n\n const updatePointer = useCallback((e) => {\n const rect = wrapRef.current?.getBoundingClientRect();\n if (!rect) return;\n // On mouse move, we set pointer to the actual event location (no lerp here).\n pointer.current = {\n x: e.clientX - rect.left,\n y: e.clientY - rect.top,\n };\n inside.current = true;\n }, []);\n\n return (\n <section\n ref={wrapRef}\n onPointerMove={updatePointer}\n onPointerEnter={updatePointer}\n style={{\n position:\"relative\",\n width:\"100%\",\n height:\"100vh\",\n background:\"#EDEBE6\",\n overflow:\"hidden\",\n }}\n >\n <div\n className=\"w-[70%] mx-auto\"\n style={{\n position:\"absolute\",\n inset: 0,\n display:\"flex\",\n alignItems:\"center\",\n justifyContent:\"center\",\n pointerEvents:\"none\",\n userSelect:\"none\",\n zIndex: 1,\n color:\"#111\",\n fontSize:\"3vw\",\n\n letterSpacing:\"-0.03em\",\n lineHeight: 1.05,\n textAlign:\"center\",\n padding:\"0 20px\",\n }}\n >\n Interfaces people remember.\n <br />\nComponents developers love.\n </div>\n <canvas\n ref={canvasRef}\n style={{\n position:\"absolute\",\n inset: 0,\n width:\"100%\",\n height:\"100%\",\n pointerEvents:\"none\",\n zIndex: 2,\n }}\n />\n </section>\n );\n}\n\nexport { ImageTrail as MagneticImageTrail };\n"
+    },
+    {
+      "path": "assets/img/distortion.jpg",
+      "type": "registry:asset",
+      "target": "public/assets/img/distortion.jpg",
+      "source": "/assets/img/distortion.jpg"
+    },
+    {
+      "path": "assets/img/image01.webp",
+      "type": "registry:asset",
+      "target": "public/assets/img/image01.webp",
+      "source": "/assets/img/image01.webp"
+    },
+    {
+      "path": "assets/img/image02.webp",
+      "type": "registry:asset",
+      "target": "public/assets/img/image02.webp",
+      "source": "/assets/img/image02.webp"
+    },
+    {
+      "path": "assets/img/image03.webp",
+      "type": "registry:asset",
+      "target": "public/assets/img/image03.webp",
+      "source": "/assets/img/image03.webp"
+    },
+    {
+      "path": "assets/img/image04.png",
+      "type": "registry:asset",
+      "target": "public/assets/img/image04.png",
+      "source": "/assets/img/image04.png"
+    },
+    {
+      "path": "assets/img/image05.png",
+      "type": "registry:asset",
+      "target": "public/assets/img/image05.png",
+      "source": "/assets/img/image05.png"
+    },
+    {
+      "path": "assets/img/image06.png",
+      "type": "registry:asset",
+      "target": "public/assets/img/image06.png",
+      "source": "/assets/img/image06.png"
+    },
+    {
+      "path": "assets/img/image07.png",
+      "type": "registry:asset",
+      "target": "public/assets/img/image07.png",
+      "source": "/assets/img/image07.png"
+    },
+    {
+      "path": "assets/img/image08.jpg",
+      "type": "registry:asset",
+      "target": "public/assets/img/image08.jpg",
+      "source": "/assets/img/image08.jpg"
+    },
+    {
+      "path": "assets/img/image09.jpg",
+      "type": "registry:asset",
+      "target": "public/assets/img/image09.jpg",
+      "source": "/assets/img/image09.jpg"
+    },
+    {
+      "path": "assets/img/image10.jpg",
+      "type": "registry:asset",
+      "target": "public/assets/img/image10.jpg",
+      "source": "/assets/img/image10.jpg"
     }
   ]
 }

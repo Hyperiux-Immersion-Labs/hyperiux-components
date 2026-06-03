@@ -13,6 +13,8 @@
   "registryDependencies": [
     "chevron-bird"
   ],
+  "exportName": "DirectionalMenu",
+  "exportKind": "named",
   "previewUrl": "/navigation/directional-menu",
   "coverImage": "/assets/list/directional-menu.png",
   "videoUrl": "directional-menu.mp4",

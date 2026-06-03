@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "SpiderParticles",
+  "exportKind": "named",
   "previewUrl": "/spider-particles",
   "coverImage": "/assets/list/spider-particles.png",
   "videoUrl": "spider-particles.mp4",

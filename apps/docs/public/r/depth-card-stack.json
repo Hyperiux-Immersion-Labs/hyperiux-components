@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "DepthCardStack",
+  "exportKind": "named",
   "previewUrl": "/depth-card-stack",
   "coverImage": "/assets/list/depth-card-stack.png",
   "videoUrl": "depth-card-stack.mp4",

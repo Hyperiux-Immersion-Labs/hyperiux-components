@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, URL } from "url";
+import { Buffer } from "buffer";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -113,12 +114,31 @@ async function fetchRemoteRegistryIndex() {
   }
 }
 
+export async function fetchRegistryAsset(source) {
+  const url = source.startsWith("http")
+    ? source
+    : `${new URL(REGISTRY_URL).origin}${source}`;
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch asset: ${response.statusText}`);
+    }
+
+    return Buffer.from(await response.arrayBuffer());
+  } catch (error) {
+    throw new Error(`Failed to fetch asset "${source}": ${error.message}`);
+  }
+}
+
 export function getRegistryItemFiles(item, config, cwd = process.cwd()) {
   const usesSrc = fs.existsSync(path.join(cwd, "src"));
   const prefix = usesSrc ? "src/" : "";
 
   return item.files.map((file) => {
     let targetPath = file.target;
+    const shouldPrefixSrc = !targetPath.startsWith("public/");
 
     // Replace alias with actual path
     if (targetPath.startsWith("components/hyperiux/")) {
@@ -137,7 +157,7 @@ export function getRegistryItemFiles(item, config, cwd = process.cwd()) {
 
     return {
       ...file,
-      targetPath: `${prefix}${targetPath}`,
+      targetPath: `${shouldPrefixSrc ? prefix : ""}${targetPath}`,
     };
   });
 }

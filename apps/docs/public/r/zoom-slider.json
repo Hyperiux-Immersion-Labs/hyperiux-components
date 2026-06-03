@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "ZoomSlider",
+  "exportKind": "named",
   "previewUrl": "/webgl/zoom-slider",
   "coverImage": "/assets/list/zoom-slider.png",
   "videoUrl": "zoom-slider.mp4",

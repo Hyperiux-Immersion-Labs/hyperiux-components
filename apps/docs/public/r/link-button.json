@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "LinkButton",
+  "exportKind": "named",
   "previewUrl": "/buttons/link-button",
   "coverImage": "/assets/list/link-button.png",
   "videoUrl": "link-button.mp4",

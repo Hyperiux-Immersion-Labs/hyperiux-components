@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "ScrambleLinkButton",
+  "exportKind": "named",
   "previewUrl": "/buttons/scramble-link-button",
   "coverImage": "/assets/list/scramble-link-button.png",
   "videoUrl": "scramble-link-button.mp4",

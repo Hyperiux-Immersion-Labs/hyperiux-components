@@ -11,6 +11,8 @@
     "lucide-react"
   ],
   "registryDependencies": [],
+  "exportName": "Modal",
+  "exportKind": "named",
   "previewUrl": "/modal",
   "coverImage": "/assets/list/modal.png",
   "videoUrl": "modal.mp4",

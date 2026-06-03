@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "InfiniteGridGallery",
+  "exportKind": "named",
   "previewUrl": "/infinite-grid-gallery",
   "coverImage": "/assets/list/infinite-grid-gallery.png",
   "videoUrl": "infinite-grid-gallery.mp4",
@@ -36,6 +38,96 @@
       "type": "registry:component",
       "target": "components/hyperiux/util.js",
       "content": "const isTouch = () => {\n try {\n document.createEvent('TouchEvent');\n return true;\n } catch (e) {\n return false;\n }\n}\nexport default {\n isTouch: isTouch,\n}"
+    },
+    {
+      "path": "assets/gradient/image1.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image1.png",
+      "source": "/assets/gradient/image1.png"
+    },
+    {
+      "path": "assets/gradient/image12.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image12.png",
+      "source": "/assets/gradient/image12.png"
+    },
+    {
+      "path": "assets/gradient/image3.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image3.png",
+      "source": "/assets/gradient/image3.png"
+    },
+    {
+      "path": "assets/gradient/image14.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image14.png",
+      "source": "/assets/gradient/image14.png"
+    },
+    {
+      "path": "assets/gradient/image5.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image5.png",
+      "source": "/assets/gradient/image5.png"
+    },
+    {
+      "path": "assets/gradient/image9.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image9.png",
+      "source": "/assets/gradient/image9.png"
+    },
+    {
+      "path": "assets/gradient/image6.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image6.png",
+      "source": "/assets/gradient/image6.png"
+    },
+    {
+      "path": "assets/gradient/image7.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image7.png",
+      "source": "/assets/gradient/image7.png"
+    },
+    {
+      "path": "assets/gradient/image10.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image10.png",
+      "source": "/assets/gradient/image10.png"
+    },
+    {
+      "path": "assets/gradient/image8.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image8.png",
+      "source": "/assets/gradient/image8.png"
+    },
+    {
+      "path": "assets/gradient/image11.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image11.png",
+      "source": "/assets/gradient/image11.png"
+    },
+    {
+      "path": "assets/gradient/image2.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image2.png",
+      "source": "/assets/gradient/image2.png"
+    },
+    {
+      "path": "assets/gradient/image13.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image13.png",
+      "source": "/assets/gradient/image13.png"
+    },
+    {
+      "path": "assets/gradient/image4.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image4.png",
+      "source": "/assets/gradient/image4.png"
+    },
+    {
+      "path": "assets/gradient/image15.png",
+      "type": "registry:asset",
+      "target": "public/assets/gradient/image15.png",
+      "source": "/assets/gradient/image15.png"
     }
   ]
 }

@@ -12,6 +12,8 @@
     "@react-three/fiber"
   ],
   "registryDependencies": [],
+  "exportName": "DonutParticles",
+  "exportKind": "named",
   "previewUrl": "/donut-particles",
   "coverImage": "/assets/list/donut-particles.png",
   "videoUrl": "donut-particles.mp4",

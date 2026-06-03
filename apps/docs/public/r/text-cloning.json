@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "TextCloning",
+  "exportKind": "named",
   "previewUrl": "/text-cloning",
   "coverImage": "/assets/list/text-cloning.png",
   "videoUrl": "text-cloning.mp4",

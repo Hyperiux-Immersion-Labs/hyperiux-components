@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "FileEncryption",
+  "exportKind": "named",
   "previewUrl": "/file-encryption",
   "coverImage": "/assets/list/file-encryption.png",
   "videoUrl": "file-encryption.mp4",

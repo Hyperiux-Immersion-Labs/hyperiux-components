@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "TextStream",
+  "exportKind": "named",
   "previewUrl": "/text-stream",
   "coverImage": "/assets/list/text-stream.png",
   "videoUrl": "text-stream.mp4",

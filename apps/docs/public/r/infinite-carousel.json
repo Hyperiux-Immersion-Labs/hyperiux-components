@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "InfiniteCarousel",
+  "exportKind": "named",
   "previewUrl": "/infinite-carousel",
   "coverImage": "/assets/list/infinite-carousel.png",
   "videoUrl": "infinite-carousel.mp4",

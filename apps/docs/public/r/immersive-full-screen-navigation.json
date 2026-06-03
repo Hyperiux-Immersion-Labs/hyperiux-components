@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "FullScreenNavigation",
+  "exportKind": "named",
   "previewUrl": "/navigation/immersive-fullscreen-nav",
   "coverImage": "/assets/list/immersive-full-screen-navigation.png",
   "videoUrl": "immersive-full-screen-navigation.mp4",

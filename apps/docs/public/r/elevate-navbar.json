@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "GlassPillHeader",
+  "exportKind": "named",
   "previewUrl": "/navigation/elevate-navbar",
   "coverImage": "/assets/list/elevate-navbar.png",
   "videoUrl": "elevate-navbar.mp4",

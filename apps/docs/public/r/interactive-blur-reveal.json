@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "InteractiveBlurReveal",
+  "exportKind": "named",
   "previewUrl": "/webgl/interactive-blur-reveal",
   "coverImage": "/assets/list/interactive-blur-reveal.png",
   "videoUrl": "interactive-blur-reveal.mp4",

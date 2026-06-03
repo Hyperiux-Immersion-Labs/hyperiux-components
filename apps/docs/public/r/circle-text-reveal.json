@@ -11,6 +11,8 @@
     "framer-motion"
   ],
   "registryDependencies": [],
+  "exportName": "CircleTextReveal",
+  "exportKind": "named",
   "previewUrl": "/circle-reveal",
   "coverImage": "/assets/img/image01.webp",
   "videoUrl": "circle-text-reveal.mp4",

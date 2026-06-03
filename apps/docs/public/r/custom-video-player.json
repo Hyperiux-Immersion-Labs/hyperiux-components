@@ -11,6 +11,8 @@
     "lucide-react"
   ],
   "registryDependencies": [],
+  "exportName": "CustomVideoPlayer",
+  "exportKind": "named",
   "previewUrl": "/video-player",
   "coverImage": "/assets/img/image01.webp",
   "videoUrl": "custom-video-player.mp4",

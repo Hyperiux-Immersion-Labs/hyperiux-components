@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "ScrambleText",
+  "exportKind": "named",
   "previewUrl": "/scramble-text",
   "coverImage": "/assets/list/scramble-text.png",
   "videoUrl": "scramble-text.mp4",
