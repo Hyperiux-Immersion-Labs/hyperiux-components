@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "GooeyCounter",
+  "exportKind": "named",
   "previewUrl": "/gooey-counter",
   "coverImage": "/assets/list/gooey-counter.png",
   "videoUrl": "gooey-counter.mp4",

@@ -12,6 +12,8 @@
     "lucide-react"
   ],
   "registryDependencies": [],
+  "exportName": "RotatingCarousel",
+  "exportKind": "named",
   "previewUrl": "/circular-slider",
   "coverImage": "/assets/list/rotating-carousel.png",
   "videoUrl": "rotating-carousel.mp4",

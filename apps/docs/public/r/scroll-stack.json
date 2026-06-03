@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "ScrollStack",
+  "exportKind": "named",
   "previewUrl": "/stacked-card",
   "coverImage": "/assets/list/scroll-stack.png",
   "videoUrl": "scroll-stack.mp4",

@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "DotFillButton",
+  "exportKind": "named",
   "previewUrl": "/buttons/dot-fill-button",
   "coverImage": "/assets/list/dot-fill-button.png",
   "videoUrl": "dot-fill-button.mp4",

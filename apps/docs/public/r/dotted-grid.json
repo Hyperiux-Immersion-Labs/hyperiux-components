@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "DottedGrid",
+  "exportKind": "named",
   "previewUrl": "/dotted-grid",
   "coverImage": "/assets/list/dotted-grid.png",
   "videoUrl": "dotted-grid.mp4",

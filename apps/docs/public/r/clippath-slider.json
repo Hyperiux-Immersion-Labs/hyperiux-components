@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "ClippathSlider",
+  "exportKind": "named",
   "previewUrl": "/clippath-slider",
   "coverImage": "/assets/list/clippath-slider.png",
   "videoUrl": "clippath-slider.mp4",

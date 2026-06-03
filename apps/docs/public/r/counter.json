@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "Counter",
+  "exportKind": "named",
   "previewUrl": "/counter",
   "coverImage": "/assets/list/counter.png",
   "videoUrl": "/counter.mp4",

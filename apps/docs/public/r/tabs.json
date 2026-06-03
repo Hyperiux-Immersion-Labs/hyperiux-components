@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "Tabs",
+  "exportKind": "named",
   "previewUrl": "/tabs",
   "coverImage": "/assets/list/tabs.png",
   "videoUrl": "tabs.mp4",

@@ -14,6 +14,8 @@
     "lenis"
   ],
   "registryDependencies": [],
+  "exportName": "WebGLPortfolioSlider",
+  "exportKind": "named",
   "previewUrl": "/webgl-portfolio-slider",
   "coverImage": "/assets/img/image01.webp",
   "videoUrl": "webgl-portfolio-slider.mp4",

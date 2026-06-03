@@ -12,6 +12,8 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
+  "exportName": "SvgDrawPageTransition",
+  "exportKind": "named",
   "previewUrl": "/page-transitions/brush-strokes",
   "coverImage": "/assets/list/svg-draw-page-transition.png",
   "videoUrl": "svg-draw-page-transition.mp4",

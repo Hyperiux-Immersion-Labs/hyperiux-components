@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "ScrollShuffledCards",
+  "exportKind": "named",
   "previewUrl": "/scroll-shuffled-cards",
   "coverImage": "/assets/list/scroll-shuffled-cards.png",
   "videoUrl": "scroll-shuffled-cards.mp4",

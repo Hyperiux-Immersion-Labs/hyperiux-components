@@ -13,6 +13,8 @@
     "@react-three/drei"
   ],
   "registryDependencies": [],
+  "exportName": "BookFlip",
+  "exportKind": "named",
   "previewUrl": "/book-flip",
   "coverImage": "/assets/list/book-flip.png",
   "videoUrl": "book-flip.mp4",
@@ -52,6 +54,12 @@
       "type": "registry:component",
       "target": "components/hyperiux/UI.jsx",
       "content": "'use client'\nimport { useEffect } from\"react\";\nimport { usePage } from\"./PageContext\";\n\nexport const UI = ({ images = [] }) => {\n const { page, setPage } = usePage();\n  // Generate page count from images array\n const pageCount = Math.ceil((images.length || 0) / 2);\n\n useEffect(() => {\n try {\n const audio = new Audio(\"/assets/audio/page-flip-01a.mp3\");\n audio.play().catch(() => {\n // Audio file not found or playback failed, silently continue\n });\n } catch (err) {\n // Silently handle audio errors\n }\n }, [page]);\n\n return (\n <>\n <main className=\" pointer-events-none select-none z-10 fixed inset-0 flex justify-between flex-col\">\n  <div className=\"w-full overflow-auto pointer-events-auto flex justify-center\">\n <div className=\"overflow-auto flex items-center gap-4 max-w-full p-10\">\n {Array.from({ length: pageCount + 1 }).map((_, index) => (\n <button\n key={index}\n className={`border-transparent cursor-pointer transition-all duration-300 px-4 py-3 rounded-full text-lg uppercase shrink-0 border ${\n index === page\n ?\"bg-white/90 text-black\"\n :\"bg-black/30 text-white\"\n }`}\n onClick={() => setPage(index)}\n >\n {index === 0 ?\"Cover\" : index === pageCount ?\"Back Cover\" : `Page ${index}`}\n </button>\n ))}\n </div>\n </div>\n </main>\n\n {/* <div className=\"fixed inset-0 bg-black flex items-start justify-center pt-20 select-none\">\n </div> */}\n </>\n );\n};"
+    },
+    {
+      "path": "assets/audio/page-flip-01a.mp3",
+      "type": "registry:asset",
+      "target": "public/assets/audio/page-flip-01a.mp3",
+      "source": "/assets/audio/page-flip-01a.mp3"
     }
   ]
 }

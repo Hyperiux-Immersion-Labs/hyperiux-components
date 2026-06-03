@@ -13,6 +13,8 @@
     "next"
   ],
   "registryDependencies": [],
+  "exportName": "TestimonialSwiper",
+  "exportKind": "named",
   "previewUrl": "/testimonial",
   "coverImage": "/assets/list/testimonial-swiper.png",
   "videoUrl": "testimonial-swiper.mp4",

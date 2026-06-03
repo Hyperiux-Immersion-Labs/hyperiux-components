@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "StickyContentWrapper",
+  "exportKind": "named",
   "previewUrl": "/sticky-content-wrapper",
   "coverImage": "/assets/list/sticky-content-wrapper.png",
   "videoUrl": "sticky-content-wrapper.mp4",

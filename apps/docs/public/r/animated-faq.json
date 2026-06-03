@@ -13,6 +13,8 @@
   "registryDependencies": [
     "chevron-bird"
   ],
+  "exportName": "FAQGroup",
+  "exportKind": "named",
   "previewUrl": "/animated-faq",
   "coverImage": "/assets/list/animated-faq.png",
   "videoUrl": "animated-faq.mp4",

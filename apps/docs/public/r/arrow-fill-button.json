@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "ArrowFillButton",
+  "exportKind": "named",
   "previewUrl": "/buttons/arrow-fill-button",
   "coverImage": "/assets/list/arrow-fill-button.png",
   "videoUrl": "arrow-fill-button.mp4",

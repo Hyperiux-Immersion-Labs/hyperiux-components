@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "Form",
+  "exportKind": "named",
   "previewUrl": "/form",
   "coverImage": "/assets/list/form.png",
   "videoUrl": "form.mp4",

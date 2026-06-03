@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "MaskTextReveal",
+  "exportKind": "named",
   "previewUrl": "/mask-text-reveal",
   "coverImage": "/assets/list/mask-text-reveal.png",
   "videoUrl": "mask-text-reveal.mp4",

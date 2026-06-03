@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "CharStaggerPrimaryButton",
+  "exportKind": "named",
   "previewUrl": "/buttons/char-stagger-primary-button",
   "coverImage": "/assets/list/char-stagger-primary-button.png",
   "videoUrl": "char-stagger-primary-button.mp4",

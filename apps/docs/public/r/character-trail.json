@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "CharacterTrail",
+  "exportKind": "named",
   "previewUrl": "/character-trail",
   "coverImage": "/assets/list/character-trail.png",
   "videoUrl": "character-trail.mp4",

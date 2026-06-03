@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "SlideTextReveal",
+  "exportKind": "named",
   "previewUrl": "/slide-text-reveal",
   "coverImage": "/assets/list/slide-text-reveal.png",
   "videoUrl": "slide-text-reveal.mp4",

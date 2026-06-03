@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "CardDrift",
+  "exportKind": "named",
   "previewUrl": "/card-drift",
   "coverImage": "/assets/list/card-drift.png",
   "videoUrl": "card-drift.mp4",

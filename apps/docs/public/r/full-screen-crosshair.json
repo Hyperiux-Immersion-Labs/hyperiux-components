@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "FullScreenCrosshair",
+  "exportKind": "named",
   "previewUrl": "/full-screen-crosshair",
   "coverImage": "/assets/list/full-screen-crosshair.png",
   "videoUrl": "full-screen-crosshair.mp4",

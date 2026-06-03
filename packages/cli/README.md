@@ -73,10 +73,10 @@ Fetches the component source, installs any required npm dependencies, and writes
 **3. Import and use**
 
 ```jsx
-import { BlurText } from "@/components/hyperiux/blur-text";
+import { BlurText } from "@/components/effects/blur-text";
 
 export default function Page() {
-  return <BlurText text="Hello, world." />;
+  return <BlurText>Hello, world.</BlurText>;
 }
 ```
 

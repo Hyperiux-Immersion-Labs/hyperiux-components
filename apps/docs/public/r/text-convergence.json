@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "TextConvergence",
+  "exportKind": "named",
   "previewUrl": "/text-convergence",
   "coverImage": "/assets/list/text-convergence.png",
   "videoUrl": "text-convergence.mp4",

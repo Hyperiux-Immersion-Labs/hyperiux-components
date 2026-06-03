@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "Cappen",
+  "exportKind": "named",
   "previewUrl": "/loaders/stack-loader",
   "coverImage": "/assets/list/stack-loader.png",
   "videoUrl": "stack-loader.mp4",

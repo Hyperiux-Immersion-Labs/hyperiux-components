@@ -11,6 +11,8 @@
     "framer-motion"
   ],
   "registryDependencies": [],
+  "exportName": "BlurText",
+  "exportKind": "named",
   "previewUrl": "/blur-text-reveal",
   "coverImage": "/assets/list/blur-text.png",
   "videoUrl": "blur-text.mp4",

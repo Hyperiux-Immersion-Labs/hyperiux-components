@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "OverflowTextReveal",
+  "exportKind": "named",
   "previewUrl": "/overflow-text-reveal",
   "coverImage": "/assets/list/overflow-text-reveal.png",
   "videoUrl": "overflow-text-reveal.mp4",

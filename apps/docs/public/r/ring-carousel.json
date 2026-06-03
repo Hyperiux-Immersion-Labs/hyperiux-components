@@ -12,6 +12,8 @@
     "lucide-react"
   ],
   "registryDependencies": [],
+  "exportName": "RingCarousel",
+  "exportKind": "named",
   "previewUrl": "/ring-carousel",
   "coverImage": "/assets/list/ring-carousel.png",
   "videoUrl": "ring-carousel.mp4",
