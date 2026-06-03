@@ -1,7 +1,7 @@
 'use client'
 
 import { TransitionRouter } from 'next-transition-router'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 
 const DURATION_LEAVE = 0.6
@@ -37,6 +37,9 @@ function easeOutQuart(t) {
   return 1 - (--t) * t * t * t
 }
 
+const getCols = () => (window.innerWidth < 640 ? 12 : 30)
+const getRows = () => (window.innerWidth < 640 ? 22 : 20)
+
 export default function PixelRandom({
   children,
   color = COLOR,
@@ -49,10 +52,7 @@ export default function PixelRandom({
   const stateRef = useRef({ progress: 0 })
   const pixelOrderRef = useRef(null)
 
-  const getCols = () => (window.innerWidth < 640 ? 12 : 30)
-  const getRows = () => (window.innerWidth < 640 ? 22 : 20)
-
-  const resizeCanvas = () => {
+  const resizeCanvas = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     const dpr = window.devicePixelRatio || 1
@@ -69,7 +69,7 @@ export default function PixelRandom({
     const cols = getCols()
     const rows = getRows()
     pixelOrderRef.current = generatePixelOrder(cols, rows)
-  }
+  }, [])
 
   // Draw the pixel grid at a given progress (0 = empty, 1 = full)
   // isEnter = true means we're revealing (dissolving away pixels)
@@ -165,7 +165,7 @@ export default function PixelRandom({
       window.removeEventListener('resize', resizeCanvas)
       tweenRef.current?.kill()
     }
-  }, [])
+  }, [resizeCanvas])
 
   return (
     <TransitionRouter

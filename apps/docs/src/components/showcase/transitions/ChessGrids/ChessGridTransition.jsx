@@ -87,7 +87,7 @@ export function ChessGridTransition({ children, enableContentShift = false }) {
       gsap.set(cell, { xPercent: -(colIndex + 2) * 100 })
     })
 
-    setMounted(true)
+    requestAnimationFrame(() => setMounted(true))
   }, [rows])
 
   const totalCells = cols * rows

@@ -20,6 +20,7 @@ const HyperiuxLogo = () => {
   const [actionPhase, setActionPhase] = useState(PHASE_IDLE);
   const [burstKey, setBurstKey] = useState(0);
   const [isLightMode, setIsLightMode] = useState(false);
+  const [holdStartTime, setHoldStartTime] = useState(0);
 
   const actionPhaseRef = useRef(PHASE_IDLE);
   const lockRef = useRef(false);
@@ -65,6 +66,7 @@ const HyperiuxLogo = () => {
     lockRef.current = false;
     activePointerIdRef.current = null;
     holdStartTimeRef.current = 0;
+    setHoldStartTime(0);
 
     actionPhaseRef.current = PHASE_IDLE;
     setActionPhase(PHASE_IDLE);
@@ -108,6 +110,7 @@ const HyperiuxLogo = () => {
     lockRef.current = true;
     activePointerIdRef.current = e.pointerId ?? null;
     holdStartTimeRef.current = performance.now();
+    setHoldStartTime(holdStartTimeRef.current);
 
     actionPhaseRef.current = PHASE_HOLDING;
     setActionPhase(PHASE_HOLDING);
@@ -180,7 +183,7 @@ const HyperiuxLogo = () => {
       <HoldCursorIndicator
         isHolding={actionPhase === PHASE_HOLDING}
         actionPhase={actionPhase}
-        holdStartTime={holdStartTimeRef.current}
+        holdStartTime={holdStartTime}
       />
 
       <button
@@ -250,7 +253,7 @@ const HyperiuxLogo = () => {
             floatingRotationSpeedMax={1.1}
             floatingXSpreadMultiplier={1.25}
             actionPhase={actionPhase}
-            holdStartTime={holdStartTimeRef.current}
+            holdStartTime={holdStartTime}
             holdTriggerDuration={HOLD_TRIGGER_DURATION}
             burstKey={burstKey}
             explosionDuration={explosionDuration}

@@ -921,7 +921,7 @@ export function StripSlider({ items }) {
             window.removeEventListener('keydown', onKeyDown);
             renderer.dispose();
         };
-    }, []);
+    }, [items]);
 
     return (
         <canvas

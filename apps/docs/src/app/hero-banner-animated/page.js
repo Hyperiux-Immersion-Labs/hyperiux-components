@@ -70,7 +70,8 @@ function MovingPointLight({ lightRef }) {
 function SceneContent({ isZoomed, setIsZoomed, videoRef, isMobile }) {
   const groupRef = useRef()
   const lightRef = useRef()
-  const { camera, scene } = useThree()
+  const { camera } = useThree()
+  const [environmentIntensity, setEnvironmentIntensity] = useState(ENV_INTENSITY_CONFIG.out)
 
   const intensityState = useRef({
     env: ENV_INTENSITY_CONFIG.out,
@@ -111,11 +112,11 @@ function SceneContent({ isZoomed, setIsZoomed, videoRef, isMobile }) {
       light: isZoomed ? ENV_INTENSITY_CONFIG.lightZoomed : ENV_INTENSITY_CONFIG.lightOut,
       duration,
       ease,
+      onUpdate: () => setEnvironmentIntensity(intensityState.current.env),
     })
   }, [isZoomed, camera, isMobile])
 
   useFrame(() => {
-    scene.environmentIntensity = intensityState.current.env
     if (lightRef.current) {
       lightRef.current.intensity = intensityState.current.light
     }
@@ -128,6 +129,7 @@ function SceneContent({ isZoomed, setIsZoomed, videoRef, isMobile }) {
       <Environment
         background={false}
         files='https://dl.polyhaven.org/file/ph-assets/HDRIs/exr/1k/wooden_studio_08_1k.exr'
+        environmentIntensity={environmentIntensity}
         environmentRotation={[0, degToRad(40), 0]}
       />
 

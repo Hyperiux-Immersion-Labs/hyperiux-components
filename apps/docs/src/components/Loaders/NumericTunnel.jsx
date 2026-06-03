@@ -31,6 +31,7 @@ const TUNNEL_CONFIG = {
 function TunnelRing({ index, loaderValue, tunnelPhase }) {
  const groupRef = useRef()
  const ringContentRef = useRef()
+ const textMaterialRef = useRef(null)
  const direction = index % 2 === 0 ? 1 : -1
 
  const textMaterial = useMemo(
@@ -45,11 +46,17 @@ function TunnelRing({ index, loaderValue, tunnelPhase }) {
  )
 
  useEffect(() => {
- return () => textMaterial.dispose()
+ textMaterialRef.current = textMaterial
+ return () => {
+ textMaterialRef.current = null
+ textMaterial.dispose()
+ }
  }, [textMaterial])
 
  useFrame((state, delta) => {
  if (!groupRef.current || !ringContentRef.current) return
+ const material = textMaterialRef.current
+ if (!material) return
 
  const time = state.clock.getElapsedTime()
  const speed = 0.25
@@ -60,7 +67,7 @@ function TunnelRing({ index, loaderValue, tunnelPhase }) {
 
  if (rawPhase < 0) {
  groupRef.current.scale.set(0.001, 0.001, 0.001)
- textMaterial.opacity = 0
+ material.opacity = 0
  } else {
  const phase = rawPhase % 1
 
@@ -82,7 +89,7 @@ function TunnelRing({ index, loaderValue, tunnelPhase }) {
  else opacity = 0
 
  // Fade out rings as tunnelPhase progresses
- textMaterial.opacity = opacity * (1 - tunnelPhase)
+ material.opacity = opacity * (1 - tunnelPhase)
  }
 
  ringContentRef.current.rotation.z += delta * TUNNEL_CONFIG.ringRotateSpeed * direction
@@ -131,6 +138,7 @@ function WholeSceneEffect({ children, active, tunnelPhase }) {
  const { gl, camera, size, viewport } = useThree()
  const portalScene = useMemo(() => new THREE.Scene(), [])
  const fbo = useFBO(size.width, size.height, { samples: 0, depth: false })
+ const materialRef = useRef(null)
 
  // Pass tunnelPhase as a uniform for smooth shader transition
  const material = useMemo(() => {
@@ -204,11 +212,15 @@ function WholeSceneEffect({ children, active, tunnelPhase }) {
  }, [fbo.texture, size.width, size.height])
 
  useEffect(() => {
- material.uniforms.uResolution.value.set(size.width, size.height)
+ materialRef.current = material
+ materialRef.current.uniforms.uResolution.value.set(size.width, size.height)
  }, [material, size.width, size.height])
 
  useEffect(() => {
- return () => material.dispose()
+ return () => {
+ materialRef.current = null
+ material.dispose()
+ }
  }, [material])
 
  useFrame((state, delta) => {
@@ -218,10 +230,13 @@ function WholeSceneEffect({ children, active, tunnelPhase }) {
  gl.render(portalScene, camera)
  gl.setRenderTarget(null)
 
- material.uniforms.uTime.value = state.clock.getElapsedTime()
- material.uniforms.uTunnelPhase.value = tunnelPhase
+ const shaderMaterial = materialRef.current
+ if (!shaderMaterial) return
+
+ shaderMaterial.uniforms.uTime.value = state.clock.getElapsedTime()
+ shaderMaterial.uniforms.uTunnelPhase.value = tunnelPhase
  // Strength ramps with phase for extra pop; smooth easing
- material.uniforms.uStrength.value = THREE.MathUtils.lerp(
+ shaderMaterial.uniforms.uStrength.value = THREE.MathUtils.lerp(
  5.5,
  1,
  tunnelPhase

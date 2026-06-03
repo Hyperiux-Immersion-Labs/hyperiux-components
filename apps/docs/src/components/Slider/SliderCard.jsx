@@ -1,13 +1,17 @@
-import { useRef } from"react";
-
 const CARD_W = 300;
 const CARD_H = 450;
 
-export default function SliderCard({ card, index, cardRefs, cardFaceRefs, textureRefs }) {
+export default function SliderCard({
+ card,
+ index,
+ cardRefs: cardRefsRef,
+ cardFaceRefs: cardFaceRefsRef,
+ textureRefs: textureRefsRef,
+}) {
  return (
  <div
  key={card.num}
- ref={(el) => { cardRefs.current[index] = el; }}
+ ref={(el) => { cardRefsRef.current[index] = el; }}
  className="absolute will-change-transform cursor-pointer"
  style={{
  width: CARD_W,
@@ -21,7 +25,7 @@ export default function SliderCard({ card, index, cardRefs, cardFaceRefs, textur
  }}
  >
  <div
- ref={(el) => { cardFaceRefs.current[index] = el; }}
+ ref={(el) => { cardFaceRefsRef.current[index] = el; }}
  className="relative w-full h-full will-change-transform"
  style={{
  borderRadius: 18,
@@ -31,7 +35,7 @@ export default function SliderCard({ card, index, cardRefs, cardFaceRefs, textur
  }}
  >
  <div
- ref={(el) => { textureRefs.current[index] = el; }}
+ ref={(el) => { textureRefsRef.current[index] = el; }}
  className="absolute bg-repeat-y mix-blend-screen inset-0 pointer-events-none opacity-0"
  style={{
  borderRadius: 18,

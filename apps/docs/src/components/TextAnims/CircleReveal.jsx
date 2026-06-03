@@ -18,11 +18,13 @@ function useMousePosition() {
 }
 
 function useIsPointerFine() {
- const [isPointerFine, setIsPointerFine] = useState(false);
+ const [isPointerFine, setIsPointerFine] = useState(
+ () => typeof window !== 'undefined'
+ && window.matchMedia('(pointer: fine)').matches
+ );
 
  useEffect(() => {
  const mq = window.matchMedia('(pointer: fine)');
- setIsPointerFine(mq.matches);
  const handler = (e) => setIsPointerFine(e.matches);
  mq.addEventListener('change', handler);
  return () => mq.removeEventListener('change', handler);

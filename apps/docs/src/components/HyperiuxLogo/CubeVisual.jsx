@@ -13,16 +13,21 @@ export function CubeVisual({
     return new THREE.EdgesGeometry(geo);
   }, []);
 
-  useEffect(() => {
-    texture.wrapS = THREE.ClampToEdgeWrapping;
-    texture.wrapT = THREE.ClampToEdgeWrapping;
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.needsUpdate = true;
+  const configuredTexture = useMemo(() => {
+    const nextTexture = texture.clone();
+    nextTexture.wrapS = THREE.ClampToEdgeWrapping;
+    nextTexture.wrapT = THREE.ClampToEdgeWrapping;
+    nextTexture.colorSpace = THREE.SRGBColorSpace;
+    nextTexture.needsUpdate = true;
+    return nextTexture;
+  }, [texture]);
 
+  useEffect(() => {
     return () => {
       edgeGeometry.dispose();
+      configuredTexture.dispose();
     };
-  }, [texture, edgeGeometry]);
+  }, [edgeGeometry, configuredTexture]);
 
   return (
     <>
@@ -34,7 +39,7 @@ export function CubeVisual({
       <mesh renderOrder={2}>
         <boxGeometry args={[1.002, 1.002, 1.002]} />
         <meshBasicMaterial
-          map={texture}
+          map={configuredTexture}
           color="#ffffff"
           transparent
           alphaTest={0.01}

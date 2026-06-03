@@ -54,9 +54,9 @@ export default function MaskedContainer({
   }, [video, canvasSize]);
 
   // Animation loop for individual mask
-  const animate = useCallback(() => {
+  const animate = useCallback(function drawFrame() {
     drawMaskedVideo();
-    animationFrameRef.current = requestAnimationFrame(animate);
+    animationFrameRef.current = requestAnimationFrame(drawFrame);
   }, [drawMaskedVideo]);
 
   // Start animation when video is available

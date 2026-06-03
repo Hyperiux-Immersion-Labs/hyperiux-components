@@ -38,7 +38,7 @@ const Content = () => (
   </main>
 )
 
-const page = () => {
+export default function Page() {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -66,5 +66,3 @@ const page = () => {
     </>
   )
 }
-
-export default page

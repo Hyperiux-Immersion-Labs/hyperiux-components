@@ -24,6 +24,7 @@ export const useMouse = ({
  distance: 0,
  });
 
+ useEffect(() => {
  const handleMouseMove = (e) => {
  mouse.current = {
  x: e.clientX,
@@ -64,7 +65,6 @@ export const useMouse = ({
  rafRef.current = requestAnimationFrame(loop);
  };
 
- useEffect(() => {
  window.addEventListener("mousemove", handleMouseMove);
  rafRef.current = requestAnimationFrame(loop);
 
@@ -72,7 +72,7 @@ export const useMouse = ({
  window.removeEventListener("mousemove", handleMouseMove);
  if (rafRef.current) cancelAnimationFrame(rafRef.current);
  };
- }, []);
+ }, [lerpFactor, smooth]);
 
  return {
  // RAW values

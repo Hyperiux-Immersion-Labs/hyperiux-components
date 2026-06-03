@@ -11,12 +11,8 @@ export function HoldCursorIndicator({
 }) {
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
   const [displayProgress, setDisplayProgress] = useState(0);
-  const [showRelease, setShowRelease] = useState(false);
-  const [releaseOpacity, setReleaseOpacity] = useState(0);
-  const [circleOpacity, setCircleOpacity] = useState(1);
 
   const rafRef = useRef(null);
-  const releaseShownRef = useRef(false);
 
   const radius = 28;
   const strokeWidth = 2;
@@ -60,38 +56,20 @@ export function HoldCursorIndicator({
     };
   }, [isHolding, holdStartTime]);
 
-  useEffect(() => {
-    const completed = displayProgress >= 0.995;
-
-    if (completed && !releaseShownRef.current) {
-      releaseShownRef.current = true;
-      setShowRelease(true);
-      setReleaseOpacity(1);
-      setCircleOpacity(0);
-    }
-
-    if (!isHolding && actionPhase === "idle") {
-      releaseShownRef.current = false;
-      setShowRelease(false);
-      setReleaseOpacity(0);
-      setCircleOpacity(1);
-    }
-  }, [displayProgress, isHolding, actionPhase]);
-
-  useEffect(() => {
-    if (actionPhase === "exploding" || actionPhase === "reforming") {
-      setShowRelease(false);
-      setReleaseOpacity(0);
-      setCircleOpacity(0);
-    } else if (actionPhase === "idle" && !isHolding) {
-      setCircleOpacity(displayProgress > 0.01 ? 1 : 0);
-    } else if (actionPhase === "holding") {
-      if (!releaseShownRef.current) {
-        setCircleOpacity(1);
-      }
-    }
-  }, [actionPhase, isHolding, displayProgress]);
-
+  const isTransitioning =
+    actionPhase === "exploding" || actionPhase === "reforming";
+  const showRelease =
+    !isTransitioning && displayProgress >= 0.995 && isHolding;
+  const releaseOpacity = showRelease ? 1 : 0;
+  const circleOpacity = isTransitioning
+    ? 0
+    : showRelease
+    ? 0
+    : actionPhase === "idle" && !isHolding
+    ? displayProgress > 0.01
+      ? 1
+      : 0
+    : 1;
   const dashOffset = circumference * (1 - displayProgress);
 
   return (

@@ -95,7 +95,7 @@ export default function DocsIntro() {
 
       <Para>
         <span className="font-bold">
-          "High-fidelity interaction should make the interface feel more intentional, not merely more animated."
+          &quot;High-fidelity interaction should make the interface feel more intentional, not merely more animated.&quot;
         </span>
       </Para>
 

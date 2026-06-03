@@ -8,48 +8,11 @@ import { useEffect } from "react";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-// ──── Component
+const defaultPropertiesData = [];
 
-export default function HorizontalScroll({ propertiesData = [] }) {
-  // ── Effects
-
+export default function HorizontalScroll({ propertiesData = defaultPropertiesData }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".head-btn", {
-        scrollTrigger: {
-          trigger: "#industries",
-          start: "top top",
-          end: "bottom bottom",
-          onEnter: () => {
-            gsap.to(".head-btn", {
-              color: "#fff9ec",
-              backgroundColor: "#231204",
-            });
-            gsap.to(".head-text", {
-              color: "#231204",
-            });
-          },
-          onEnterBack: () => {
-            gsap.to(".head-btn", {
-              color: "#fff9ec",
-              backgroundColor: "#231204",
-            });
-            gsap.to(".head-text", {
-              color: "#231204",
-            });
-          },
-          onLeaveBack: () => {
-            gsap.to(".head-btn", {
-              color: "#231204",
-              backgroundColor: "#fff9ec",
-            });
-            gsap.to(".head-text", {
-              color: "#fff9ec",
-            });
-          },
-        },
-      });
-
       if (window.innerWidth <= 1024) return;
 
       const head = document.querySelector(".industry-head");
@@ -186,7 +149,7 @@ export default function HorizontalScroll({ propertiesData = [] }) {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [propertiesData]);
 
   // ── Return (JSX) 
 

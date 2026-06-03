@@ -46,7 +46,7 @@ export default function useInput({
  el.removeEventListener("touchmove", onTouchMove);
  window.removeEventListener("mousemove", onMouseMove);
  };
- }, [gl.domElement]);
+ }, [gl.domElement, scrollIntensity]);
 
  useEffect(() => {
  let running = true;
@@ -80,7 +80,7 @@ export default function useInput({
  return () => {
  running = false;
  };
- }, []);
+ }, [autoSpeed, damping, loopPoint]);
 
  return { mouse, scroll };
 }

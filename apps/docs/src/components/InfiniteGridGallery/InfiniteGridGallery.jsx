@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from"react";
+import Image from"next/image";
+import { useCallback, useEffect, useMemo, useRef, useState } from"react";
 import InfiniteGrid from"./InfiniteGrid";
 
 export function InfiniteGridGallery() {
@@ -249,7 +250,7 @@ export function InfiniteGridGallery() {
  const active = expanded ? sources[expanded.index] : null;
  const display = displayIndex === null ? null : sources[displayIndex];
 
- const centerActiveThumb = (index, behavior ="smooth") => {
+ const centerActiveThumb = useCallback((index, behavior ="smooth") => {
  const container = expandThumbsRef.current;
  const activeThumb = expandThumbRefs.current[index];
 
@@ -261,9 +262,9 @@ export function InfiniteGridGallery() {
  activeThumb.clientWidth / 2;
 
  container.scrollTo({ left, behavior });
- };
+ }, []);
 
- const navigateTo = (nextIndex) => {
+ const navigateTo = useCallback((nextIndex) => {
  if (!expanded) return;
  if (isAnimating) return;
 
@@ -287,9 +288,9 @@ export function InfiniteGridGallery() {
  setDisplayIndex(nextIndex);
  setSlide(null);
  }, slideDurationMs);
- };
+ }, [centerActiveThumb, expanded, isAnimating, sources.length, slideDurationMs]);
 
- const closeExpanded = () => {
+ const closeExpanded = useCallback(() => {
  if (!expanded || isClosing) return;
 
  setIsClosing(true);
@@ -302,7 +303,7 @@ export function InfiniteGridGallery() {
  setIsClosing(false);
  setDisplayIndex(null);
  }, openCloseDurationMs);
- };
+ }, [expanded, isClosing, openCloseDurationMs]);
 
  useEffect(() => {
  gridRef.current?.setEnabled?.(!expanded);
@@ -321,7 +322,7 @@ export function InfiniteGridGallery() {
  requestAnimationFrame(() => {
  centerActiveThumb(expanded.index,"smooth");
  });
- }, [expanded?.index]);
+ }, [centerActiveThumb, expanded]);
 
  useEffect(() => {
  return () => {
@@ -347,7 +348,7 @@ export function InfiniteGridGallery() {
 
  window.addEventListener("keydown", onKeyDown);
  return () => window.removeEventListener("keydown", onKeyDown);
- }, [expanded, sources.length]);
+ }, [closeExpanded, expanded, navigateTo, sources.length]);
 
  const onThumbPointerDown = (e) => {
  const container = expandThumbsRef.current;
@@ -464,7 +465,7 @@ export function InfiniteGridGallery() {
  >
  {slide ? (
  <>
- <img
+ <Image
  className={`absolute inset-0 block h-full w-full object-cover backface-hidden ${
  slide.dir > 0
  ? "infinite-grid-gallery-slide-left-from"
@@ -472,12 +473,12 @@ export function InfiniteGridGallery() {
  }`}
  src={sources[slide.from].src}
  alt={sources[slide.from].caption}
- loading="eager"
- decoding="async"
- referrerPolicy="no-referrer"
+ fill
+ sizes="70vw"
+ priority
  />
 
- <img
+ <Image
  className={`absolute inset-0 block h-full w-full object-cover backface-hidden ${
  slide.dir > 0
  ? "infinite-grid-gallery-slide-left-to"
@@ -485,19 +486,19 @@ export function InfiniteGridGallery() {
  }`}
  src={sources[slide.to].src}
  alt={sources[slide.to].caption}
- loading="eager"
- decoding="async"
- referrerPolicy="no-referrer"
+ fill
+ sizes="70vw"
+ priority
  />
  </>
  ) : (
- <img
+ <Image
  className="block h-full w-full object-cover"
  src={display.src}
  alt={display.caption}
- loading="eager"
- decoding="async"
- referrerPolicy="no-referrer"
+ fill
+ sizes="70vw"
+ priority
  />
  )}
  </div>
@@ -565,7 +566,7 @@ export function InfiniteGridGallery() {
  type="button"
  role="listitem"
  data-thumb-index={idx}
- className={`box-border h-17.5 w-22.5 shrink-0 overflow-hidden border-2 bg-black/4 p-0 transition-[border-color,transform] duration-200 ease-[ease] hover:-translate-y-px hover:border-black/35 max-sm:h-12 max-sm:w-18 ${
+ className={`relative box-border h-17.5 w-22.5 shrink-0 overflow-hidden border-2 bg-black/4 p-0 transition-[border-color,transform] duration-200 ease-[ease] hover:-translate-y-px hover:border-black/35 max-sm:h-12 max-sm:w-18 ${
  isActive ? "border-black" :"border-transparent"
  }`}
  ref={(el) => {
@@ -573,15 +574,14 @@ export function InfiniteGridGallery() {
  }}
  aria-label={`Open ${item.caption}`}
  >
- <img
+ <Image
  className={`block h-full w-full object-cover transition-[filter] duration-300 ease-[cubic-bezier(0.785,0.135,0.15,0.86)] ${
  isActive ? "brightness-105" :"brightness-[0.8]"
  }`}
  src={item.src}
  alt={item.caption}
- loading="lazy"
- decoding="async"
- referrerPolicy="no-referrer"
+ fill
+ sizes="90px"
  />
  </button>
  );

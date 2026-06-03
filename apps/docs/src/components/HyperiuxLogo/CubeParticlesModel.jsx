@@ -81,8 +81,8 @@ export function CubeParticlesModel({
   const baseGroupRef = useRef(null);
   const interactionGroupRef = useRef(null);
 
-  useEffect(() => {
-    if (!faceTexture.image) return;
+  const displayFaceTexture = useMemo(() => {
+    if (!faceTexture.image) return faceTexture;
 
     const img = faceTexture.image;
     const canvas = document.createElement("canvas");
@@ -90,7 +90,7 @@ export function CubeParticlesModel({
     canvas.height = img.height;
 
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) return faceTexture;
 
     ctx.drawImage(img, 0, 0);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -110,10 +110,15 @@ export function CubeParticlesModel({
     invertedTexture.colorSpace = THREE.SRGBColorSpace;
     invertedTexture.needsUpdate = true;
 
-    faceTexture.dispose();
-    faceTexture.image = invertedTexture.image;
-    faceTexture.needsUpdate = true;
+    return invertedTexture;
   }, [faceTexture]);
+
+  useEffect(() => {
+    if (displayFaceTexture === faceTexture) return;
+    return () => {
+      displayFaceTexture.dispose();
+    };
+  }, [displayFaceTexture, faceTexture]);
 
   const prepared = useMemo(() => {
     const sceneClone = gltf.scene.clone(true);
@@ -379,7 +384,7 @@ export function CubeParticlesModel({
   return (
     <>
       <FloatingCubes
-        texture={faceTexture}
+        texture={displayFaceTexture}
         count={floatingCubeCount}
         faceColor={faceColor}
         outlineColor={outlineColor}
@@ -411,7 +416,7 @@ export function CubeParticlesModel({
 
             <InteractiveParticles
               particles={particleData}
-              texture={faceTexture}
+              texture={displayFaceTexture}
               interactionGroupRef={interactionGroupRef}
               interactionRadius={interactionRadius}
               maxShrink={maxShrink}

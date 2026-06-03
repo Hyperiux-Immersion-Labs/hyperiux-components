@@ -1,6 +1,6 @@
 'use client'
 import * as THREE from 'three'
-import { useRef, useReducer, useMemo } from 'react'
+import { useEffect, useRef, useReducer, useMemo, useCallback } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import {
   useGLTF,
@@ -73,6 +73,12 @@ function Scene() {
   const [accent, click] = useReducer((state) => ++state % accents.length, 0)
   const connectors = useMemo(() => shuffle(accent), [accent])
   const connectorRefs = useRef([])
+  const registerConnector = useCallback((index, api) => {
+    connectorRefs.current[index] = api
+    return () => {
+      connectorRefs.current[index] = null
+    }
+  }, [])
 
   return (
     <Canvas
@@ -107,9 +113,9 @@ function Scene() {
       <Physics gravity={[0, 0, 0]}>
         <Pointer />
         {connectors.map((props, i) => (
-          <Connector key={i} {...props} connectorRefs={connectorRefs} index={i} />
+          <Connector key={i} {...props} connectorRefs={connectorRefs} registerConnector={registerConnector} index={i} />
         ))}
-        <Connector position={[10, 10, 5]} connectorRefs={connectorRefs} index={connectors.length}>
+        <Connector position={[10, 10, 5]} connectorRefs={connectorRefs} registerConnector={registerConnector} index={connectors.length}>
           <Model>
             <MeshTransmissionMaterial
               clearcoat={1}
@@ -176,15 +182,16 @@ function Connector({
   r = THREE.MathUtils.randFloatSpread,
   accent,
   connectorRefs,
+  registerConnector,
   index,
   ...props
 }) {
   const api = useRef()
   const pos = useMemo(() => position || [r(10), r(10), r(10)], [position, r])
 
-  useMemo(() => {
-    connectorRefs.current[index] = api
-  }, [index, connectorRefs])
+  useEffect(() => {
+    return registerConnector(index, api)
+  }, [index, registerConnector])
 
   useFrame((state, delta) => {
     delta = Math.min(0.1, delta)

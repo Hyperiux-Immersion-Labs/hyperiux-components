@@ -1,25 +1,19 @@
-import React, { useMemo, useRef, useEffect } from'react';
+import React, { useEffect, useState } from'react';
 import { FluidEffect } from'./effects/FluidEffect';
 
 export const FluidEffectComponent = React.forwardRef((props, ref) => {
- const effectRef = useRef();
-
- const effect = useMemo(() => {
- const fluidEffect = new FluidEffect(props);
- effectRef.current = fluidEffect;
- return fluidEffect;
- }, []);
+ const [effect] = useState(() => new FluidEffect(props));
 
  // Update effect when props change
  useEffect(() => {
- if (effectRef.current) {
- effectRef.current.state = props;
- effectRef.current.update();
- }
- }, [props]);
+ effect.state = props;
+ effect.update();
+ }, [effect, props]);
 
  // Expose effect instance via ref
- React.useImperativeHandle(ref, () => effectRef.current, []);
+ React.useImperativeHandle(ref, () => effect, [effect]);
 
  return <primitive object={effect} />;
 });
+
+FluidEffectComponent.displayName = 'FluidEffectComponent';

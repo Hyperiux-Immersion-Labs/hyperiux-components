@@ -4,8 +4,6 @@ import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 
 export default function TextMarquee({ items = [] }) {
-  if (!items.length) return null;
-
   const trackRef = useRef(null);
   const contentRef = useRef(null);
   const containerRef = useRef(null);
@@ -168,6 +166,8 @@ export default function TextMarquee({ items = [] }) {
   const revealMask = isMobile
     ? "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 49%, rgba(0,0,0,1) 49%, rgba(0,0,0,1) 52%, rgba(0,0,0,0.2) 52%, rgba(0,0,0,0.2) 100%)"
     : "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 48%, rgba(0,0,0,1) 48%, rgba(0,0,0,1) 53%, rgba(0,0,0,0.3) 53%, rgba(0,0,0,0.3) 100%)";
+
+  if (!items.length) return null;
 
   return (
     <div className="flex h-screen">

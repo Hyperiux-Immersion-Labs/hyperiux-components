@@ -41,24 +41,25 @@ export default function HomeAero({
  useEffect(() => {
  const el = container.current
  const maskEl = maskedText.current
+ const trackers = circleTrackers.current
  if (!el || !maskEl || !isDesktop) {
- gsap.killTweensOf(circleTrackers.current)
+ gsap.killTweensOf(trackers)
  return
  }
 
  const syncMaskVars = () => {
- maskEl.style.setProperty('--x-color1', `${circleTrackers.current[0].x}px`)
- maskEl.style.setProperty('--y-color1', `${circleTrackers.current[0].y}px`)
- maskEl.style.setProperty('--x-color2', `${circleTrackers.current[1].x}px`)
- maskEl.style.setProperty('--y-color2', `${circleTrackers.current[1].y}px`)
- maskEl.style.setProperty('--x-color3', `${circleTrackers.current[2].x}px`)
- maskEl.style.setProperty('--y-color3', `${circleTrackers.current[2].y}px`)
+ maskEl.style.setProperty('--x-color1', `${trackers[0].x}px`)
+ maskEl.style.setProperty('--y-color1', `${trackers[0].y}px`)
+ maskEl.style.setProperty('--x-color2', `${trackers[1].x}px`)
+ maskEl.style.setProperty('--y-color2', `${trackers[1].y}px`)
+ maskEl.style.setProperty('--x-color3', `${trackers[2].x}px`)
+ maskEl.style.setProperty('--y-color3', `${trackers[2].y}px`)
  }
 
  const initRect = maskEl.getBoundingClientRect()
  const cx = initRect.width / 2
  const cy = initRect.height / 2
- circleTrackers.current.forEach((item) => {
+ trackers.forEach((item) => {
  item.x = cx
  item.y = cy
  })
@@ -69,7 +70,7 @@ export default function HomeAero({
  const localX = evt.clientX - rect.left
  const localY = evt.clientY - rect.top
 
- gsap.to(circleTrackers.current, {
+ gsap.to(trackers, {
  x: localX,
  y: localY,
  duration: 0.5,
@@ -83,7 +84,7 @@ export default function HomeAero({
  el.addEventListener('mousemove', onMove)
  return () => {
  el.removeEventListener('mousemove', onMove)
- gsap.killTweensOf(circleTrackers.current)
+ gsap.killTweensOf(trackers)
  }
  }, [isDesktop])
 

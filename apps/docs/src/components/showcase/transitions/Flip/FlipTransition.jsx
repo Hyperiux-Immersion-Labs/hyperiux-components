@@ -31,7 +31,7 @@ export default function FlipTransition({
     // Boxes hidden initially
     gsap.set(boxesRef.current.children, { scaleY: 0 })
 
-    setMounted(true)
+    requestAnimationFrame(() => setMounted(true))
   }, [])
 
   return (

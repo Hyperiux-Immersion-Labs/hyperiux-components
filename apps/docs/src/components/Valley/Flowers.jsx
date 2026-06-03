@@ -5,9 +5,11 @@ import { VERTEX, FRAGMENT } from"./shaders";
 
 export default function Flowers({ data, sprite, config }) {
  const pointsRef = useRef();
+ const materialRef = useRef(null);
 
  const targetMouse = useRef(new THREE.Vector2(0.5, 0.5));
  const currentMouse = useRef(new THREE.Vector2(0.5, 0.5));
+ const mouseUniform = useMemo(() => new THREE.Vector2(0.5, 0.5), []);
  const targetIntensity = useRef(0.0);
  const currentIntensity = useRef(0.0);
  const lastRawMouse = useRef(new THREE.Vector2(-999, -999));
@@ -21,7 +23,7 @@ export default function Flowers({ data, sprite, config }) {
  uSaturation: { value: 1.5 },
  uSpriteSheet: { value: sprite },
  uColorTint: { value: config?.colorTint },
- uMouse: { value: currentMouse.current },
+ uMouse: { value: mouseUniform },
  uAspect: { value: 1.0 },
  uHoverIntensity: { value: 0.0 },
   // Custom Hover Configs sent to shaders
@@ -37,10 +39,16 @@ export default function Flowers({ data, sprite, config }) {
  depthTest: false,
  depthWrite: false,
  });
- }, [sprite, config]);
+ }, [sprite, config, mouseUniform]);
 
  useEffect(() => {
- return () => material?.dispose();
+ materialRef.current = material;
+ return () => {
+ material.dispose();
+ if (materialRef.current === material) {
+ materialRef.current = null;
+ }
+ };
  }, [material]);
 
  // Track raw mouse position in NDC (-1 to 1) and calculate velocity/intensity
@@ -63,20 +71,21 @@ export default function Flowers({ data, sprite, config }) {
  }, []);
 
  useFrame((state, delta) => {
- if (material) {
- material.uniforms.uTime.value = state.clock.elapsedTime;
- material.uniforms.uAspect.value = state.size.width / state.size.height;
+ const runtimeMaterial = materialRef.current;
+ if (runtimeMaterial) {
+ runtimeMaterial.uniforms.uTime.value = state.clock.elapsedTime;
+ runtimeMaterial.uniforms.uAspect.value = state.size.width / state.size.height;
 
  // EXTREME SMOOTHNESS: The actual mathematical center of the interaction heavily lags behind the  // physical cursor, creating a syrupy, organic drag (reduced from 8.0 to 3.0)
  currentMouse.current.lerp(targetMouse.current, Math.min(1.0, delta * 3.0));
- material.uniforms.uMouse.value = currentMouse.current;
+ mouseUniform.copy(currentMouse.current);
 
  // Slowly decay the target intensity if not moving (fades completely in ~3 seconds for"smoothest more duration")
  targetIntensity.current = Math.max(0.0, targetIntensity.current - delta * 0.35);
   // EXTREME SMOOTHNESS: The elasticity of the magnetic pull and bloom fade-in/fade-out
  // is slowed down drastically (reduced from 2.5 to 1.5)
  currentIntensity.current += (targetIntensity.current - currentIntensity.current) * Math.min(1.0, delta * 1.5);
- material.uniforms.uHoverIntensity.value = currentIntensity.current;
+ runtimeMaterial.uniforms.uHoverIntensity.value = currentIntensity.current;
  }
  });
 

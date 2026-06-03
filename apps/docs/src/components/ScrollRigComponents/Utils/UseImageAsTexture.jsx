@@ -1,5 +1,6 @@
 "use client"
 import { ScrollScene, UseCanvas, useImageAsTexture } from"@14islands/r3f-scroll-rig";
+import Image from"next/image";
 
 import React, { useRef } from"react";
 
@@ -50,10 +51,12 @@ export default function ScrollRigImage({
  </UseCanvas>
 
  <div className={trackedWrapperClassName}>
- <img
+ <Image
  ref={ref}
  src={src}
  alt={alt}
+ fill
+ sizes="4vw"
  className={trackedImgClassName}
  {...trackedImgProps}
  />

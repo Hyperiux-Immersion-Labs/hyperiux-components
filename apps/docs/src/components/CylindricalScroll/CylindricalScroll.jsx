@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useLayoutEffect, useMemo, useRef } from "react";
+import Image from "next/image";
+import React, { useCallback, useLayoutEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
@@ -39,17 +40,13 @@ export default function CylindricalScrollCards({
     const sectionRef = useRef(null);
     const cardRefs = useRef([]);
 
-    cardRefs.current = [];
-
     const repeatedItems = useMemo(() => {
         return [...items, ...items, ...items];
     }, [items]);
 
-    const addToRefs = (el) => {
-        if (el && !cardRefs.current.includes(el)) {
-            cardRefs.current.push(el);
-        }
-    };
+    const setCardRef = useCallback((index) => (el) => {
+        cardRefs.current[index] = el;
+    }, []);
 
     useLayoutEffect(() => {
         if (!sectionRef.current || !cardRefs.current.length) return;
@@ -182,23 +179,27 @@ export default function CylindricalScrollCards({
                     {repeatedItems.map((item, index) => (
                         <div
                             key={`${item.id}-${index}`}
-                            ref={addToRefs}
+                            ref={setCardRef(index)}
                             className="absolute left-1/2 top-1/2 h-(--card-height,300px) w-(--card-width,220px) opacity-0 will-change-transform ml-[calc(var(--card-width,220px)/-2)] mt-[calc(var(--card-height,300px)/-2)] transform-3d"
                         >
                             <div className="relative h-full w-full transform-3d">
                                 <div className="absolute inset-0 h-full w-full overflow-hidden bg-[#f2eee2] shadow-[0_18px_40px_rgba(0,0,0,0.22),0_4px_12px_rgba(0,0,0,0.16)] backface-hidden [-webkit-backface-visibility:hidden] transform-[rotateY(0deg)_translateZ(1px)]">
-                                    <img
+                                    <Image
                                         src={item.image}
                                         alt={item.title || `Card ${index + 1}`}
-                                        className="block h-full w-full object-cover"
+                                        fill
+                                        sizes={`(max-width: 640px) 140px, (max-width: 768px) 180px, ${cardWidth}px`}
+                                        className="object-cover"
                                     />
                                 </div>
 
                                 <div className="absolute inset-0 flex h-full w-full items-center justify-center overflow-hidden bg-[#111111] shadow-[0_18px_40px_rgba(0,0,0,0.22),0_4px_12px_rgba(0,0,0,0.16)] backface-hidden [-webkit-backface-visibility:hidden] transform-[rotateY(180deg)_translateZ(1px)]">
-                                    <img
+                                    <Image
                                         src={item.image}
                                         alt={`${item.title || `Card ${index + 1}`} back`}
-                                        className="block h-full w-full object-cover"
+                                        fill
+                                        sizes={`(max-width: 640px) 140px, (max-width: 768px) 180px, ${cardWidth}px`}
+                                        className="object-cover"
                                     />
                                 </div>
                             </div>

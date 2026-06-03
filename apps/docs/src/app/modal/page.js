@@ -1,6 +1,7 @@
 "use client";
 
 import DotScaleFillCharBtn from "@/components/Buttons/PrimaryButtons/DotBgFillPrimaryBtn/DotBgFillPrimaryBtn";
+import Image from "next/image";
 import { Modal } from "@/components/Modal/Modal";
 import ScrollablePopupContent from "@/components/ScrollablePopupContent/ScrollablePopupContent";
 import VideoPlayer from "@/components/VideoPlayer/VideoPlayer";
@@ -91,10 +92,12 @@ export default function Page() {
               max-sm:w-[94vw] max-sm:h-[36vh] max-sm:rounded-[4vw]
             "
           >
-            <img
+            <Image
               src="/assets/cover-showreel.png"
               alt="Video thumbnail"
-              className="block h-full w-full object-cover"
+              fill
+              sizes="(max-width: 640px) 94vw, (max-width: 768px) 88vw, 50vw"
+              className="object-cover"
             />
 
             <button

@@ -39,6 +39,7 @@ function computeSlot(cardIdx, centerIdx, total) {
 function useCountdown(targetDate) {
  const [time, setTime] = useState({ d: 0, h: 0, m: 0, s: 0 });
  useEffect(() => {
+ if (!targetDate) return;
  const tick = () => {
  const diff = Math.max(0, Math.floor((targetDate.getTime() - Date.now()) / 1000));
  setTime({
@@ -65,8 +66,10 @@ export default function CardSlider({ cards }) {
  const timelineRef = useRef(null);
  const [autoplayResetKey, setAutoplayResetKey] = useState(0);
  const [claimedText, setClaimedText] = useState(cards[0].claimedText);
- const presaleEnd = useRef(new Date(Date.now() + (2 * 86400 + 16 * 3600 + 36 * 60 + 57) * 1000));
- const countdown = useCountdown(presaleEnd.current);
+ const [presaleEnd] = useState(
+ () => new Date(Date.now() + (2 * 86400 + 16 * 3600 + 36 * 60 + 57) * 1000)
+ );
+ const countdown = useCountdown(presaleEnd);
  const pad = (n) => String(n).padStart(2,"0");
  const [isMobile, setIsMobile] = useState(false);
 

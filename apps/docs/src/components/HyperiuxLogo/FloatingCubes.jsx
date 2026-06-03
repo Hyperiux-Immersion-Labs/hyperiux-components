@@ -11,30 +11,31 @@ function deterministicNoise(x, y, z) {
 }
 
 function FloatingCube({
-  data,
+  initialData,
   texture,
   faceColor = "#1a1a1a",
   outlineColor = "#ffffff",
   speedFactorRef,
 }) {
   const ref = useRef(null);
+  const dataRef = useRef(initialData);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
 
-    const d = data.current;
+    const d = dataRef.current;
     const y = THREE.MathUtils.lerp(d.yStart, d.yEnd, d.progress);
 
     node.position.set(d.x, y, d.z);
     node.rotation.set(d.xRot, d.yRot, d.zRot);
     node.scale.setScalar(d.scale);
-  }, [data]);
+  }, []);
 
   useFrame((_, delta) => {
     if (!ref.current) return;
 
-    const d = data.current;
+    const d = dataRef.current;
 
     d.progress += delta * d.speed * speedFactorRef.current;
 
@@ -86,44 +87,13 @@ export function FloatingCubes({
   parallaxPositionStrength = 0.18,
   parallaxRotationStrength = 0.08,
 }) {
-  const { viewport, pointer, size } = useThree();
+  const { viewport, pointer } = useThree();
   const speedFactorRef = useRef(1);
   const layerRef = useRef(null);
 
-  // Freeze field bounds so camera shake / tiny viewport shifts do not regenerate paths
-  const frozenBoundsRef = useRef(null);
-
-  if (!frozenBoundsRef.current) {
-    frozenBoundsRef.current = {
-      width: viewport.width,
-      height: viewport.height,
-      screenWidth: size.width,
-      screenHeight: size.height,
-    };
-  }
-
-  // Only refresh frozen bounds if actual screen size changes materially
-  useEffect(() => {
-    const current = frozenBoundsRef.current;
-    if (!current) return;
-
-    if (
-      current.screenWidth !== size.width ||
-      current.screenHeight !== size.height
-    ) {
-      frozenBoundsRef.current = {
-        width: viewport.width,
-        height: viewport.height,
-        screenWidth: size.width,
-        screenHeight: size.height,
-      };
-    }
-  }, [size.width, size.height, viewport.width, viewport.height]);
-
   const cubes = useMemo(() => {
-    const frozen = frozenBoundsRef.current;
-    const fieldWidth = frozen?.width ?? viewport.width;
-    const fieldHeight = frozen?.height ?? viewport.height;
+    const fieldWidth = viewport.width;
+    const fieldHeight = viewport.height;
 
     const xMin = -fieldWidth * xSpreadMultiplier * 0.5;
     const xMax = fieldWidth * xSpreadMultiplier * 0.5;
@@ -144,41 +114,41 @@ export function FloatingCubes({
       const n9 = deterministicNoise(t * 2.03, 1.53, 1.83);
 
       return {
-        current: {
-          progress: n1,
-          x: THREE.MathUtils.lerp(xMin, xMax, n2),
-          yStart,
-          yEnd,
-          z: THREE.MathUtils.lerp(zMin, zMax, n3),
-          scale: THREE.MathUtils.lerp(scaleMin, scaleMax, n4),
-          speed: THREE.MathUtils.lerp(speedMin, speedMax, n5),
+        progress: n1,
+        x: THREE.MathUtils.lerp(xMin, xMax, n2),
+        yStart,
+        yEnd,
+        z: THREE.MathUtils.lerp(zMin, zMax, n3),
+        scale: THREE.MathUtils.lerp(scaleMin, scaleMax, n4),
+        speed: THREE.MathUtils.lerp(speedMin, speedMax, n5),
 
-          xRot: THREE.MathUtils.lerp(-Math.PI, Math.PI, n6),
-          yRot: THREE.MathUtils.lerp(-Math.PI, Math.PI, n7),
-          zRot: THREE.MathUtils.lerp(-Math.PI, Math.PI, n8),
+        xRot: THREE.MathUtils.lerp(-Math.PI, Math.PI, n6),
+        yRot: THREE.MathUtils.lerp(-Math.PI, Math.PI, n7),
+        zRot: THREE.MathUtils.lerp(-Math.PI, Math.PI, n8),
 
-          xRotSpeed: THREE.MathUtils.lerp(
-            -rotationSpeedMax,
-            rotationSpeedMax,
-            deterministicNoise(t * 1.7, 0.4, 2.2)
-          ),
-          yRotSpeed: THREE.MathUtils.lerp(
-            -rotationSpeedMax,
-            rotationSpeedMax,
-            deterministicNoise(t * 0.8, 1.9, 2.9)
-          ),
-          zRotSpeed: THREE.MathUtils.lerp(
-            -rotationSpeedMax,
-            rotationSpeedMax,
-            deterministicNoise(t * 2.3, 1.2, 0.6)
-          ),
+        xRotSpeed: THREE.MathUtils.lerp(
+          -rotationSpeedMax,
+          rotationSpeedMax,
+          deterministicNoise(t * 1.7, 0.4, 2.2)
+        ),
+        yRotSpeed: THREE.MathUtils.lerp(
+          -rotationSpeedMax,
+          rotationSpeedMax,
+          deterministicNoise(t * 0.8, 1.9, 2.9)
+        ),
+        zRotSpeed: THREE.MathUtils.lerp(
+          -rotationSpeedMax,
+          rotationSpeedMax,
+          deterministicNoise(t * 2.3, 1.2, 0.6)
+        ),
 
-          rotationTravel: THREE.MathUtils.lerp(1.2, 3.4, n9),
-          easePower,
-        },
+        rotationTravel: THREE.MathUtils.lerp(1.2, 3.4, n9),
+        easePower,
       };
     });
   }, [
+    viewport.width,
+    viewport.height,
     count,
     xSpreadMultiplier,
     yStartOffset,
@@ -241,7 +211,7 @@ export function FloatingCubes({
       {cubes.map((cube, i) => (
         <FloatingCube
           key={i}
-          data={cube}
+          initialData={cube}
           texture={texture}
           faceColor={faceColor}
           outlineColor={outlineColor}

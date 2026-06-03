@@ -28,23 +28,8 @@ export default function StickyContentWrapper({
   // State & refs
   const sectionRef = useRef(null);
   const stickyRef = useRef(null);
-  const contentRefs = useRef([]);
-  const imageRefs = useRef([]);
-
-  contentRefs.current = [];
-  imageRefs.current = [];
-
-  const addContentRef = (element) => {
-    if (element && !contentRefs.current.includes(element)) {
-      contentRefs.current.push(element);
-    }
-  };
-
-  const addImageRef = (element) => {
-    if (element && !imageRefs.current.includes(element)) {
-      imageRefs.current.push(element);
-    }
-  };
+  const contentRefsRef = useRef([]);
+  const imageRefsRef = useRef([]);
 
   // Effects
   useLayoutEffect(() => {
@@ -54,8 +39,8 @@ export default function StickyContentWrapper({
 
     const context = gsap.context(() => {
       // Initial element state
-      const contents = contentRefs.current;
-      const images = imageRefs.current;
+      const contents = contentRefsRef.current;
+      const images = imageRefsRef.current;
 
       contents.forEach((content, index) => {
         gsap.set(content, {
@@ -193,7 +178,9 @@ export default function StickyContentWrapper({
           {items.map((item, index) => (
             <div
               key={`content-${index}`}
-              ref={addContentRef}
+              ref={(element) => {
+                contentRefsRef.current[index] = element;
+              }}
               className={`absolute inset-0 h-full w-full pl-[5vw] pt-[35%] opacity-0 [&_a]:mb-[1vw] [&_a]:text-[1.2vw] [&_h3]:mb-[2.5vw] [&_h3]:text-[4vw] [&_li]:mb-[0.5vw] [&_li]:text-[1.05vw] [&_p]:mb-[1vw] [&_p]:text-[1.2vw] [&_ul]:mb-[1vw] max-md:pl-0 max-md:pt-[7%] max-md:[&_a]:mb-[3vw] max-md:[&_a]:text-[2.8vw] max-md:[&_h3]:mb-[4vw] max-md:[&_h3]:text-[5.5vw] max-md:[&_li]:mb-[1vw] max-md:[&_li]:text-[2.5vw] max-md:[&_p]:mb-[3vw] max-md:[&_p]:text-[2.8vw] max-md:[&_ul]:mb-[4vw] max-sm:pt-[10%] max-sm:[&_a]:text-[4.5vw] max-sm:[&_h3]:text-[7.5vw] max-sm:[&_li]:text-[4vw] max-sm:[&_p]:text-[4.5vw] ${contentClassName}`}
             >
               {item.renderContent ? (
@@ -222,7 +209,9 @@ export default function StickyContentWrapper({
           {items.map((item, index) => (
             <div
               key={`image-${index}`}
-              ref={addImageRef}
+              ref={(element) => {
+                imageRefsRef.current[index] = element;
+              }}
               className={`absolute inset-0 h-full w-full opacity-0 ${imageClassName}`}
             >
               {item.renderImage ? (

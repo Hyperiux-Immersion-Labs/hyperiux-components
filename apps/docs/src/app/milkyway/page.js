@@ -5,10 +5,8 @@ import { Canvas, useFrame, useThree } from'@react-three/fiber'
 import { Center } from'@react-three/drei'
 import * as THREE from'three'
 import { degToRad } from'three/src/math/MathUtils'
-import { Bloom, EffectComposer, Vignette } from'@react-three/postprocessing'
-import Image from'next/image'
-import FilmGrainEffect from'@/components/Valley/FilmGrainEffect'
-import { ArrowLeft, ArrowRight, PlaneTakeoff, Rocket, Search, Space, Star, StarIcon, Stars } from'lucide-react'
+import { EffectComposer, Vignette } from'@react-three/postprocessing'
+import {Stars } from'lucide-react'
 import Link from'next/link'
 import EdgeBlurEffect from'@/components/Valley/EdgeBlurEffect'
 import CircularText from'@/components/Valley/CircularText'
@@ -668,6 +666,7 @@ function buildSmokeGeo(cfg) {
 const SmokeFlow = React.memo(function SmokeFlow() {
  const { gl } = useThree()
  const gpuRef = useRef(null)
+ const matRef = useRef(null)
  const dataRef = useRef(null)
  const { geo, posTex, dataTex } = useMemo(() => {
  const { posTex, dataTex } = buildSmokeTextures(SMOKE_CFG)
@@ -692,6 +691,7 @@ const SmokeFlow = React.memo(function SmokeFlow() {
  const gpu = new GPUCompute(SMOKE_CFG.texSize, SMOKE_CFG.texSize, gl)
  gpu.addVar('smokePos', SMOKE_SIM_FRAG, posTex)
  gpuRef.current = gpu
+ matRef.current = mat
  dataRef.current = dataTex
 
  return () => {
@@ -700,16 +700,18 @@ const SmokeFlow = React.memo(function SmokeFlow() {
  dataTex.dispose()
  geo.dispose()
  mat.dispose()
+ matRef.current = null
  }
  }, [gl]) // eslint-disable-line react-hooks/exhaustive-deps
 
  useFrame((state, rawDelta) => {
  const gpu = gpuRef.current
- if (!gpu) return
+ const material = matRef.current
+ if (!gpu || !material) return
  const dt = Math.min(rawDelta, 0.05)
  const tex = gpu.compute('smokePos', state.clock.elapsedTime, dt, dataRef.current)
- mat.uniforms.uPosition.value = tex
- mat.uniforms.uTime.value = state.clock.elapsedTime
+ material.uniforms.uPosition.value = tex
+ material.uniforms.uTime.value = state.clock.elapsedTime
  })
 
  return (
@@ -808,15 +810,17 @@ const MilkyWayGPGPU = React.memo(function MilkyWayGPGPU() {
  dataTex.dispose()
  geo.dispose()
  mat.dispose()
+ matRef.current = null
  }
  }, [gl]) // eslint-disable-line react-hooks/exhaustive-deps
 
  useFrame((state, rawDelta) => {
  const gpu = gpuRef.current
- if (!gpu) return
+ const material = matRef.current
+ if (!gpu || !material) return
  const dt = Math.min(rawDelta, 0.05)
  const tex = gpu.compute('pos', state.clock.elapsedTime, dt, dataRef.current)
- mat.uniforms.uPosition.value = tex
+ material.uniforms.uPosition.value = tex
  })
 
  return (
@@ -859,20 +863,6 @@ const BackgroundStars = React.memo(function BackgroundStars() {
  return <primitive object={mesh} />
 })
 
-// ─────────────────────────────────────────────────────────────
-// Responsive camera
-// ─────────────────────────────────────────────────────────────
-function ResponsiveCamera() {
- const { camera, size } = useThree()
- useEffect(() => {
- if (camera?.isPerspectiveCamera) {
- camera.aspect = size.width / size.height
- camera.updateProjectionMatrix()
- }
- }, [camera, size.width, size.height])
- return null
-}
-
 const MOBILE_QUERY = '(max-width: 767px)'
 
 function subscribeToViewportChange(callback) {
@@ -913,7 +903,6 @@ export default function Page() {
  gl={{ antialias: false, powerPreference:'high-performance' }}
  camera={{ position: [-1, -1.8, 4], fov: 45, near: 0.01, far: 200 }}
  >
- <ResponsiveCamera />
  <BackgroundStars />
  <Center rotation={[degToRad(-10), degToRad(0), degToRad(0)]} position={[-1.2, 0.5, 0]}>
  <GalaxyMouseGroup>

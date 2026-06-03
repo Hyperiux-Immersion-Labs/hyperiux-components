@@ -1,4 +1,40 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
+
+class Point {
+  constructor(x, y) {
+    this.x = x || 0;
+    this.y = y || 0;
+  }
+
+  draw(ctx, mouseX, mouseY, mouseEntered, lineLength) {
+    if (mouseEntered) {
+      const dx = mouseX - this.x;
+      const dy = mouseY - this.y;
+
+       
+      const distance = Math.sqrt(dx * dx + dy * dy) || 1;
+      const unitX = dx / distance;
+      const unitY = dy / distance;
+
+        
+      const lineEndX = this.x + unitX * lineLength;
+      const lineEndY = this.y + unitY * lineLength;
+
+        
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(lineEndX, lineEndY);
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = 'black';
+      ctx.fill();
+    }
+  }
+}
 
 const Points = () => {
   const canvasRef = useRef(null);
@@ -6,47 +42,11 @@ const Points = () => {
   const pointsRef = useRef([]);
   const animationFrameRef = useRef(null);
   const mouseEnteredRef = useRef(false); 
-  const [lineLength, setLineLength] = useState(0); 
+  const lineLengthRef = useRef(0); 
   const maxLineLength = 25; 
   const easingSpeed = 0.05; 
 
-  class Point {
-    constructor(x, y) {
-      this.x = x || 0;
-      this.y = y || 0;
-    }
-
-    draw(ctx, mouseX, mouseY) {
-      if (mouseEnteredRef.current) {
-        const dx = mouseX - this.x;
-        const dy = mouseY - this.y;
-
-       
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const unitX = dx / distance;
-        const unitY = dy / distance;
-
-        
-        const lineEndX = this.x + unitX * lineLength;
-        const lineEndY = this.y + unitY * lineLength;
-
-        
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(lineEndX, lineEndY);
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-      } else {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = 'black';
-        ctx.fill();
-      }
-    }
-  }
-
-  const initializePoints = (canvas) => {
+  const initializePoints = useCallback((canvas) => {
     const points = [];
     const spacing = 60;
     const cols = Math.floor(canvas.width / spacing);
@@ -64,19 +64,20 @@ const Points = () => {
       }
     }
     return points;
-  };
+  }, []);
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     const canvas = canvasRef.current;
     if (canvas) {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       pointsRef.current = initializePoints(canvas);
     }
-  };
+  }, [initializePoints]);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
@@ -84,25 +85,26 @@ const Points = () => {
       x: (e.clientX - rect.left) * scaleX,
       y: (e.clientY - rect.top) * scaleY,
     };
-  };
+  }, []);
 
-  const handleMouseEnter = () => {
-    mouseEnteredRef.current = true; }
+  const handleMouseEnter = useCallback(() => {
+    mouseEnteredRef.current = true; }, [])
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     mouseEnteredRef.current = false; 
-  };
+  }, []);
 
-  const updateLineLength = () => {
-    if (mouseEnteredRef.current && lineLength < maxLineLength) {
-      setLineLength(prevLength => Math.min(prevLength + easingSpeed, maxLineLength));
-    } else if (!mouseEnteredRef.current && lineLength > 0) {
-      setLineLength(prevLength => Math.max(prevLength - easingSpeed, 0));
+  const updateLineLength = useCallback(() => {
+    if (mouseEnteredRef.current && lineLengthRef.current < maxLineLength) {
+      lineLengthRef.current = Math.min(lineLengthRef.current + easingSpeed, maxLineLength);
+    } else if (!mouseEnteredRef.current && lineLengthRef.current > 0) {
+      lineLengthRef.current = Math.max(lineLengthRef.current - easingSpeed, 0);
     }
-  };
+  }, []);
 
-  const main = () => {
+  const main = useCallback(function drawFrame() {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const points = pointsRef.current;
     const mouse = mouseRef.current;
@@ -111,11 +113,11 @@ const Points = () => {
     updateLineLength();
 
     points.forEach(point => {
-      point.draw(ctx, mouse.x, mouse.y);
+      point.draw(ctx, mouse.x, mouse.y, mouseEnteredRef.current, lineLengthRef.current);
     });
 
-    animationFrameRef.current = requestAnimationFrame(main);
-  };
+    animationFrameRef.current = requestAnimationFrame(drawFrame);
+  }, [updateLineLength]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -139,7 +141,7 @@ const Points = () => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [lineLength]);
+  }, [handleMouseEnter, handleMouseMove, handleResize, initializePoints, main]);
 
   return (
     <div className="w-full h-full ">

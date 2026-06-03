@@ -3,7 +3,7 @@
   "type": "registry:component",
   "title": "Book Flip",
   "description": "3D interactive book viewer with realistic page flips, built with React Three Fiber and Drei.",
-  "category": "components",
+  "category": "webgl",
   "dependencies": ["three", "@react-three/fiber", "@react-three/drei"],
   "registryDependencies": [],
   "coverImage": "/assets/list/book-flip.png",

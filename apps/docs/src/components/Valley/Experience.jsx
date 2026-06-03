@@ -33,11 +33,20 @@ export default function Experience() {
  const sprite = useTexture("/valley/pool_summer.png");
  const terrainTex = useTexture("/valley/terrain.png");
 
- useEffect(() => {
- sprite.colorSpace = THREE.SRGBColorSpace;
- sprite.minFilter = THREE.LinearFilter;
- sprite.magFilter = THREE.LinearFilter;
+ const flowerSprite = useMemo(() => {
+ const nextSprite = sprite.clone();
+ nextSprite.colorSpace = THREE.SRGBColorSpace;
+ nextSprite.minFilter = THREE.LinearFilter;
+ nextSprite.magFilter = THREE.LinearFilter;
+ nextSprite.needsUpdate = true;
+ return nextSprite;
  }, [sprite]);
+
+ useEffect(() => {
+ return () => {
+ flowerSprite.dispose();
+ };
+ }, [flowerSprite]);
 
  const cameraProps = useMemo(() => {
  const scene = gltf?.scene;
@@ -69,10 +78,10 @@ export default function Experience() {
  loopPoint: 0.85,
  }} />
  {/* Copy 1: flowers at original position */}
- <Flowers data={flowers} sprite={sprite} config={FLOWER_CONFIG} />
+ <Flowers data={flowers} sprite={flowerSprite} config={FLOWER_CONFIG} />
  {/* Copy 2: same flowers shifted forward — fills the gap at the end */}
  <group position={pathOffset}>
- <Flowers data={flowers} sprite={sprite} config={FLOWER_CONFIG} />
+ <Flowers data={flowers} sprite={flowerSprite} config={FLOWER_CONFIG} />
  </group>
  </>
  );
