@@ -37,8 +37,17 @@ export function getInstallCommand(packageManager, packages) {
   }
 }
 
+const VALID_PACKAGE_NAME_REGEX = /^[a-z0-9-@/_.]+$/;
+
 export function installDependencies(packages, options = {}) {
   const { cwd = process.cwd(), dryRun = false } = options;
+
+  // Sanitize package names to prevent command injection
+  const invalidPackages = packages.filter((pkg) => !VALID_PACKAGE_NAME_REGEX.test(pkg));
+  if (invalidPackages.length > 0) {
+    throw new Error(`Invalid package name(s) detected: ${invalidPackages.join(", ")}`);
+  }
+
   const packageManager = detectPackageManager(cwd);
   const command = getInstallCommand(packageManager, packages);
 

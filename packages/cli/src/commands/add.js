@@ -37,7 +37,7 @@ export async function add(effectName, options) {
   }
 
   // Get files to install
-  const files = getRegistryItemFiles(registryItem, config);
+  const files = getRegistryItemFiles(registryItem, config, cwd);
 
   // Check for existing files
   const existingFiles = files.filter((f) =>
@@ -154,14 +154,15 @@ export async function add(effectName, options) {
 
 function getImportPath(file, config) {
   const targetPath = file.targetPath;
-  const effectsPath = config.aliases?.effects || "@/components/effects";
+  const effectsAlias = config.aliases?.effects || "@/components/effects";
+  const effectsPath = effectsAlias.replace("@/", "");
 
-  if (targetPath.includes("components/effects/")) {
+  if (targetPath.includes(effectsPath)) {
     const fileName = path.basename(targetPath, ".jsx");
-    return `${effectsPath}/${fileName}`;
+    return `${effectsAlias}/${fileName}`;
   }
 
-  return `@/${targetPath.replace("src/", "").replace(".jsx", "")}`;
+  return `@/${targetPath.replace(/^src\//, "").replace(".jsx", "")}`;
 }
 
 function getComponentName(effectName) {
