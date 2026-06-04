@@ -51,5 +51,5 @@ export function getEffectCode(slug) {
  effect.files.find((f) => f.path.endsWith(".jsx")) ||
  effect.files.find((f) => f.path.endsWith(".js")) ||
  effect.files[0];
- return primary.content;
+ return primary?.content ?? null;
 }

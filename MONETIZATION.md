@@ -764,9 +764,21 @@ SUPABASE_SERVICE_ROLE_KEY=eyJ...
 
 # App
 NEXT_PUBLIC_APP_URL=https://components.hyperiux.com
+
+# GitHub — private pro effects repo
+# Create a fine-grained personal access token with read-only Contents access to the private repo
+GITHUB_PRO_REPO_TOKEN=github_pat_...
+GITHUB_PRO_REPO_OWNER=hyperiux
+GITHUB_PRO_REPO_NAME=hyperiux-pro-effects
+GITHUB_PRO_REPO_BRANCH=main
+
+# Sanity CMS — for effect detail page content (add when Sanity is set up)
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=production
+SANITY_API_TOKEN=
 ```
 
-Also add these to `turbo.json` under the `build` task's `env` array (same as the others already there) to avoid Turborepo cache warnings.
+All of these are already in `turbo.json` under the `build` task's `env` array.
 
 ---
 

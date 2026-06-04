@@ -1,6 +1,6 @@
 {
   "name": "hyperiux",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "CLI for adding Hyperiux Vault effects to your project",
   "type": "module",
   "bin": {
@@ -9,7 +9,8 @@
   "files": [
     "src/commands",
     "src/utils",
-    "src/index.js"
+    "src/index.js",
+    "README.md"
   ],
   "scripts": {
     "build": "echo 'No build step required'",
@@ -40,10 +41,10 @@
   "homepage": "https://components.hyperiux.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hyperiux"
+    "url": "https://github.com/hyperiux/hyperiux-components"
   },
   "bugs": {
-    "url": "https://github.com/hyperiux/issues"
+    "url": "https://github.com/hyperiux/hyperiux-components/issues"
   },
   "engines": {
     "node": ">=18"

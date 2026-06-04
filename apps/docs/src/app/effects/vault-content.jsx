@@ -199,7 +199,7 @@ export function VaultContent({
             <div className="flex items-center justify-center gap-4 text-lg font-sans max-sm:flex-wrap max-sm:gap-2 max-sm:text-base fadeup">
               <span>{totalEffects} effects</span>
               <span>•</span>
-              <span>Free & open source</span>
+              <span>Free & Pro effects</span>
               <span>•</span>
               <span>Copy & paste</span>
             </div>

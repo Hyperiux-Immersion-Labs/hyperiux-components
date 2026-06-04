@@ -1,12 +1,11 @@
 import { supabase } from "@/lib/supabase";
 import crypto from "crypto";
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 
-// The full registry lives on disk at build time — read directly from source,
-// not from public/r/ (which has file contents stripped for pro effects).
-const REGISTRY_SOURCE = path.join(process.cwd(), "../../../registry/effects");
+const GITHUB_TOKEN = process.env.GITHUB_PRO_REPO_TOKEN;
+const GITHUB_OWNER = process.env.GITHUB_PRO_REPO_OWNER || "Hyperiux-Immersion-Labs";
+const GITHUB_REPO = process.env.GITHUB_PRO_REPO_NAME || "hyperiux-pro-components";
+const GITHUB_BRANCH = process.env.GITHUB_PRO_REPO_BRANCH || "master";
 
 // GET /api/effects/[slug]
 // Returns the full registry JSON including file contents for a pro effect.
@@ -22,7 +21,7 @@ export async function GET(req, { params }) {
     return NextResponse.json({ error: "Authorization token required." }, { status: 401 });
   }
 
-  // Hash the token and look it up
+  // Hash the token and look it up in Supabase
   const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
 
   const { data, error } = await supabase
@@ -43,8 +42,12 @@ export async function GET(req, { params }) {
     return NextResponse.json({ error: "Subscription has expired." }, { status: 403 });
   }
 
-  // Find the effect in the source registry
-  const effectData = findEffectInSource(slug);
+  if (!GITHUB_TOKEN) {
+    return NextResponse.json({ error: "Server misconfiguration." }, { status: 500 });
+  }
+
+  // Fetch the effect from the private GitHub repo
+  const effectData = await fetchEffectFromGitHub(slug);
   if (!effectData) {
     return NextResponse.json({ error: `Effect "${slug}" not found.` }, { status: 404 });
   }
@@ -52,48 +55,83 @@ export async function GET(req, { params }) {
   return NextResponse.json(effectData);
 }
 
-function findEffectInSource(slug) {
-  // Walk all category directories looking for a folder named `slug`
-  if (!fs.existsSync(REGISTRY_SOURCE)) return null;
+async function githubFetch(apiPath) {
+  const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/${apiPath}`, {
+    headers: {
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+    next: { revalidate: 300 }, // cache GitHub responses for 5 min
+  });
 
-  const categories = fs.readdirSync(REGISTRY_SOURCE);
-  for (const category of categories) {
-    const categoryPath = path.join(REGISTRY_SOURCE, category);
-    if (!fs.statSync(categoryPath).isDirectory()) continue;
+  if (!res.ok) return null;
+  return res.json();
+}
 
-    const effectPath = path.join(categoryPath, slug);
-    if (!fs.existsSync(effectPath) || !fs.statSync(effectPath).isDirectory()) continue;
+async function getFileContent(path) {
+  const data = await githubFetch(`contents/${path}?ref=${GITHUB_BRANCH}`);
+  if (!data || !data.content) return null;
+  // GitHub returns base64-encoded content
+  return Buffer.from(data.content, "base64").toString("utf-8");
+}
 
-    const registryJsonPath = path.join(effectPath, "registry.json");
-    if (!fs.existsSync(registryJsonPath)) continue;
+async function fetchEffectFromGitHub(slug) {
+  // The private repo mirrors the same structure: registry/effects/<category>/<name>/
+  // First fetch the registry.json to find which category the effect is in
+  // We do this by listing all category directories
+  const categoriesData = await githubFetch(`contents/registry/effects?ref=${GITHUB_BRANCH}`);
+  if (!categoriesData || !Array.isArray(categoriesData)) return null;
 
-    const registryJson = JSON.parse(fs.readFileSync(registryJsonPath, "utf-8"));
+  for (const categoryEntry of categoriesData) {
+    if (categoryEntry.type !== "dir") continue;
 
-    // Read all component files
-    const files = fs
-      .readdirSync(effectPath)
-      .filter((f) => f.endsWith(".jsx") || f.endsWith(".js") || f.endsWith(".css"))
-      .filter((f) => f !== "registry.json");
+    const category = categoryEntry.name;
+    const effectDirPath = `registry/effects/${category}/${slug}`;
 
-    const fileContents = files.map((fileName) => {
-      const filePath = path.join(effectPath, fileName);
-      const content = fs.readFileSync(filePath, "utf-8");
-      const isCss = fileName.endsWith(".css");
-      const isModuleCss = fileName.endsWith(".module.css");
+    // Check if this effect exists in this category
+    const registryJsonContent = await getFileContent(`${effectDirPath}/registry.json`);
+    if (!registryJsonContent) continue;
 
-      return {
-        path: fileName,
-        type: isCss ? "registry:style" : "registry:component",
-        target: isCss
-          ? isModuleCss
-            ? `components/hyperiux/${fileName}`
-            : `styles/${fileName}`
-          : `components/hyperiux/${fileName}`,
-        content,
-      };
-    });
+    let registryJson;
+    try {
+      registryJson = JSON.parse(registryJsonContent);
+    } catch {
+      continue;
+    }
 
-    // Sort: entry file first, then helpers, then CSS
+    // List all files in the effect directory
+    const effectDirData = await githubFetch(`contents/${effectDirPath}?ref=${GITHUB_BRANCH}`);
+    if (!effectDirData || !Array.isArray(effectDirData)) continue;
+
+    const componentFiles = effectDirData.filter(
+      (f) =>
+        f.type === "file" &&
+        f.name !== "registry.json" &&
+        (f.name.endsWith(".jsx") || f.name.endsWith(".js") || f.name.endsWith(".css"))
+    );
+
+    // Fetch all file contents in parallel
+    const fileContents = await Promise.all(
+      componentFiles.map(async (file) => {
+        const content = await getFileContent(`${effectDirPath}/${file.name}`);
+        const isCss = file.name.endsWith(".css");
+        const isModuleCss = file.name.endsWith(".module.css");
+
+        return {
+          path: file.name,
+          type: isCss ? "registry:style" : "registry:component",
+          target: isCss
+            ? isModuleCss
+              ? `components/hyperiux/${file.name}`
+              : `styles/${file.name}`
+            : `components/hyperiux/${file.name}`,
+          content: content || "",
+        };
+      })
+    );
+
+    // Sort: entry file first, helpers, then CSS
     const entryBase = registryJson.name;
     fileContents.sort((a, b) => {
       const tier = (entry) => {
