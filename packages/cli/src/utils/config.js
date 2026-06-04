@@ -43,27 +43,35 @@ export function getDefaultConfig() {
   return { ...DEFAULT_CONFIG };
 }
 
-export function resolveAlias(alias, config) {
+export function resolveAlias(alias, config, cwd = process.cwd()) {
+  const usesSrc = fs.existsSync(path.join(cwd, "src"));
+  const prefix = usesSrc ? "src/" : "";
   const aliasMap = config.aliases || {};
   for (const [key, value] of Object.entries(aliasMap)) {
     if (alias.startsWith(`@/${key}`)) {
-      return alias.replace(`@/${key}`, value.replace("@/", "src/"));
+      return alias.replace(`@/${key}`, value.replace("@/", prefix));
     }
   }
-  return alias.replace("@/", "src/");
+  return alias.replace("@/", prefix);
 }
 
-export function getEffectsPath(config) {
+export function getEffectsPath(config, cwd = process.cwd()) {
+  const usesSrc = fs.existsSync(path.join(cwd, "src"));
+  const prefix = usesSrc ? "src/" : "";
   const effectsAlias = config.aliases?.effects || "@/components/effects";
-  return effectsAlias.replace("@/", "src/");
+  return effectsAlias.replace("@/", prefix);
 }
 
-export function getHooksPath(config) {
+export function getHooksPath(config, cwd = process.cwd()) {
+  const usesSrc = fs.existsSync(path.join(cwd, "src"));
+  const prefix = usesSrc ? "src/" : "";
   const hooksAlias = config.aliases?.hooks || "@/hooks";
-  return hooksAlias.replace("@/", "src/");
+  return hooksAlias.replace("@/", prefix);
 }
 
-export function getLibPath(config) {
+export function getLibPath(config, cwd = process.cwd()) {
+  const usesSrc = fs.existsSync(path.join(cwd, "src"));
+  const prefix = usesSrc ? "src/" : "";
   const libAlias = config.aliases?.lib || "@/lib";
-  return libAlias.replace("@/", "src/");
+  return libAlias.replace("@/", prefix);
 }

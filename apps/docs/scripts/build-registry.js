@@ -8,6 +8,8 @@ const __dirname = path.dirname(__filename);
 const REGISTRY_PATH = path.join(__dirname, "../../../registry/effects");
 const OUTPUT_PATH = path.join(__dirname, "../public/r");
 const PUBLIC_PATH = path.join(__dirname, "../public");
+const PUBLIC_ASSET_REGEX =
+  /(?<![\w])["'`]((?:\/(?:assets|models|valley|601|svgs|img)\/[^"'`)\s]+)|(?:\/(?:showreel|eye-loop|hyperiux-wordmark|hyperiux)\.(?:mp4|svg)))["'`]/g;
 
 function resolveCoverImage(effectName, explicitCoverImage) {
   const normalize = (p) => (typeof p === "string" ? p.trim() : "");
@@ -44,12 +46,99 @@ const CATEGORY_ORDER = [
   "others",
 ];
 
+function toPascalCase(value) {
+  return value
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join("");
+}
+
+function detectExport(content, preferredName) {
+  const namedExportRegex = /export\s+(?:function|const|class)\s+([A-Za-z_$][\w$]*)/g;
+  const namedExports = [...content.matchAll(namedExportRegex)].map((match) => match[1]);
+
+  if (namedExports.length > 0) {
+    return {
+      exportName: namedExports.includes(preferredName) ? preferredName : namedExports[0],
+      exportKind: "named",
+    };
+  }
+
+  const defaultNamed = content.match(
+    /export\s+default\s+(?:function|class)\s+([A-Za-z_$][\w$]*)/
+  );
+  if (defaultNamed) {
+    return {
+      exportName: defaultNamed[1],
+      exportKind: "default",
+    };
+  }
+
+  if (/export\s+default\b/.test(content)) {
+    return {
+      exportName: preferredName,
+      exportKind: "default",
+    };
+  }
+
+  const exportList = content.match(/export\s*\{([^}]+)\}/);
+  if (exportList) {
+    const exportedNames = exportList[1]
+      .split(",")
+      .map((entry) => entry.trim().split(/\s+as\s+/).pop()?.trim())
+      .filter(Boolean);
+
+    if (exportedNames.length > 0) {
+      return {
+        exportName: exportedNames.includes(preferredName)
+          ? preferredName
+          : exportedNames[0],
+        exportKind: "named",
+      };
+    }
+  }
+
+  return null;
+}
+
+function collectPublicAssets(fileContents) {
+  const seen = new Set();
+  const assets = [];
+
+  for (const file of fileContents) {
+    for (const match of file.content.matchAll(PUBLIC_ASSET_REGEX)) {
+      const publicPath = match[1].split(/[?#]/)[0];
+      if (seen.has(publicPath)) continue;
+      seen.add(publicPath);
+
+      const sourcePath = path.join(PUBLIC_PATH, publicPath.slice(1));
+      if (!fs.existsSync(sourcePath) || !fs.statSync(sourcePath).isFile()) continue;
+
+      assets.push({
+        path: publicPath.slice(1),
+        type: "registry:asset",
+        target: `public/${publicPath.slice(1)}`,
+        source: publicPath,
+      });
+    }
+  }
+
+  return assets;
+}
+
 async function buildRegistry() {
   console.log("Building registry...");
 
   // Ensure output directory exists
   if (!fs.existsSync(OUTPUT_PATH)) {
     fs.mkdirSync(OUTPUT_PATH, { recursive: true });
+  }
+
+  for (const fileName of fs.readdirSync(OUTPUT_PATH)) {
+    if (fileName.endsWith(".json")) {
+      fs.rmSync(path.join(OUTPUT_PATH, fileName));
+    }
   }
 
   const index = {
@@ -123,17 +212,42 @@ async function buildRegistry() {
 
       // Entry component first: effect detail "Component Code" and CLI import hint use files[0].
       const entryBase = registryJson.name;
+      const preferredExportName = registryJson.exportName || toPascalCase(registryJson.name);
       fileContents.sort((a, b) => {
-        const tier = (entry) => {
-          if (entry.path === `${entryBase}.jsx` || entry.path === `${entryBase}.js`) return 0;
-          if (entry.path.endsWith(".css")) return 2;
-          if (entry.path.endsWith(".jsx") || entry.path.endsWith(".js")) return 1;
-          return 1;
+        const score = (entry) => {
+          if (registryJson.entry && entry.path === registryJson.entry) return -100;
+          if (entry.path === `${entryBase}.jsx` || entry.path === `${entryBase}.js`) return -90;
+          if (entry.path === `${effect}.jsx` || entry.path === `${effect}.js`) return -80;
+          if (entry.path.endsWith(".css")) return 100;
+
+          const baseName = entry.path.replace(/\.(jsx|js|css)$/, "");
+          const nameParts = new Set(entryBase.split("-").filter(Boolean));
+          const overlap = baseName
+            .split("-")
+            .filter((part) => nameParts.has(part)).length;
+          const hasExport = detectExport(entry.content, preferredExportName) ? 0 : 20;
+
+          return hasExport - overlap;
         };
-        const d = tier(a) - tier(b);
+        const d = score(a) - score(b);
         if (d !== 0) return d;
         return a.path.localeCompare(b.path);
       });
+
+      const entryFile = fileContents.find((file) => file.type === "registry:component");
+      const exportInfo = entryFile
+        ? detectExport(entryFile.content, preferredExportName)
+        : null;
+      const exportName = registryJson.exportName || exportInfo?.exportName;
+      const exportKind = registryJson.exportKind || exportInfo?.exportKind;
+
+      if (!exportName || !exportKind) {
+        throw new Error(
+          `Unable to detect public export for ${registryJson.name}. Add exportName/exportKind to ${registryJsonPath}.`
+        );
+      }
+
+      const assetFiles = collectPublicAssets(fileContents);
 
       // Resolve categories: support both legacy `category` string and new `categories` array
       const primaryCategory = registryJson.category || category;
@@ -158,10 +272,12 @@ async function buildRegistry() {
         categories: categories_list,
         dependencies: registryJson.dependencies || [],
         registryDependencies: registryJson.registryDependencies || [],
+        exportName,
+        exportKind,
         previewUrl: registryJson.previewUrl || null,
         coverImage: resolvedCoverImage,
         videoUrl: resolvedVideoUrl,
-        files: fileContents,
+        files: [...fileContents, ...assetFiles],
       };
 
       // Write individual effect JSON
@@ -178,6 +294,8 @@ async function buildRegistry() {
         category: primaryCategory,
         categories: categories_list,
         dependencies: registryJson.dependencies || [],
+        exportName,
+        exportKind,
         previewUrl: registryJson.previewUrl || null,
         coverImage: resolvedCoverImage,
         videoUrl: resolvedVideoUrl,

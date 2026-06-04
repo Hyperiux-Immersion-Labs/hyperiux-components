@@ -12,6 +12,8 @@
     "next"
   ],
   "registryDependencies": [],
+  "exportName": "RotationSlider",
+  "exportKind": "named",
   "previewUrl": "/rotation-slider",
   "coverImage": "/assets/list/rotation-slider.png",
   "videoUrl": "rotation-slider.mp4",

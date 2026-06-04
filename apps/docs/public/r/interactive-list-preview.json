@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "InteractiveListPreview",
+  "exportKind": "named",
   "previewUrl": "/interactive-list-preview",
   "coverImage": "/assets/list/interactive-list-preview.png",
   "videoUrl": "interactive-list-preview.mp4",

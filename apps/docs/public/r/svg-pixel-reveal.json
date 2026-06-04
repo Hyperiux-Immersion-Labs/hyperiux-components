@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "SvgPixelReveal",
+  "exportKind": "named",
   "previewUrl": "/svg-pixel-reveal",
   "coverImage": "/assets/list/svg-pixel-reveal.png",
   "videoUrl": "svg-pixel-reveal.mp4",

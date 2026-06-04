@@ -1,0 +1,78 @@
+CHANGES LOG - HYPERIUX CLI & PACKAGING (PRODUCTION READY)
+
+===================================================================
+1. CORE BUG FIXES & SECURITY HARDENING (CLI UTILITY)
+===================================================================
+
+[MODIFIED] packages/cli/src/utils/config.js
+  - Replaced hardcoded 'src/' target folder mappings.
+  - Dynamically detects the presence of a root 'src/' directory in the consumer project.
+  - Generates correct paths depending on the workspace structure.
+
+[MODIFIED] packages/cli/src/utils/registry.js
+  - Fixed path alias translation by checking for 'components/hyperiux/' registry prefixes.
+  - Restored configuration mapping so custom aliases (e.g. aliases.effects in hyperiux.json) are respected.
+  - Dynamically prepends 'src/' layout prefix to target paths only when 'src/' directory is detected.
+
+[MODIFIED] packages/cli/src/utils/package-manager.js
+  - Added strict regex sanitization checking for dependency package installations: /^[a-z0-9-@/_.]+$/
+  - Blocks command injection and execution of malicious code if remote registry files are compromised.
+
+[MODIFIED] packages/cli/src/commands/init.js
+  - Dynamically creates configuration templates using detected layout values.
+  - Fallbacks default global CSS search to 'app/globals.css' if 'src/' is not present.
+
+[MODIFIED] packages/cli/src/commands/add.js
+  - Passes execution directory context to registry mapping functions.
+  - Corrects import path resolver replacement rules using safe string start regex rules (^src/).
+
+===================================================================
+2. LINTING & QUALITY GATES
+===================================================================
+
+[MODIFIED] packages/cli/package.json
+  - Added 'eslint' and 'vitest' to devDependencies list.
+  - Added run scripts for 'lint', 'test', and 'test:coverage'.
+
+[CREATED] packages/cli/eslint.config.js
+  - Set up Flat ESLint rules configuration.
+  - Added read-only globals for Node environment and 'fetch' APIs.
+
+===================================================================
+3. AUTOMATED TESTING
+===================================================================
+
+[CREATED] packages/cli/vitest.config.js
+  - Added Vitest runner configurations.
+
+[CREATED] packages/cli/src/tests/config.test.js
+  - Wrote 8 unit tests validating layout prefixing and directory settings.
+
+[CREATED] packages/cli/src/tests/registry.test.js
+  - Wrote 2 unit tests verifying path translations to custom aliases.
+
+[CREATED] packages/cli/src/tests/package-manager.test.js
+  - Wrote 3 unit tests verifying package sanitization, operator blocks, and execution control.
+
+===================================================================
+4. LEGAL, METADATA, & CI/CD PIPELINES
+===================================================================
+
+[CREATED] LICENSE
+  - Added root level MIT license copy.
+
+[CREATED] CHANGELOG.md
+  - Added root level release logs documenting initial 0.1.0 and fixed 0.1.1 versions.
+
+[CREATED] .github/workflows/ci.yml
+  - Added GitHub Actions pipeline to run lint checks and testing matrices on pushes/PRs.
+
+[CREATED] .github/workflows/release.yml
+  - Added release script pipeline to automate npm publishes with cryptographic provenance badges.
+
+===================================================================
+5. VERIFICATION DASHBOARD
+===================================================================
+
+[CREATED] preview.html
+  - Interactive HTML preview page displaying full audits, checklists, and test result outputs.

@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "HelixSlider",
+  "exportKind": "named",
   "previewUrl": "/cylindrical-scroll",
   "coverImage": "/assets/list/helix-slider.png",
   "videoUrl": "helix-slider.mp4",

@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "CircularScrollShowcase",
+  "exportKind": "default",
   "previewUrl": "/circular-split-roll",
   "coverImage": "/assets/list/orbit-slider.png",
   "videoUrl": "orbit-slider.mp4",

@@ -11,6 +11,8 @@
     "motion"
   ],
   "registryDependencies": [],
+  "exportName": "MarqueeAlongSvgPath",
+  "exportKind": "named",
   "previewUrl": "/svg-path",
   "coverImage": "/assets/list/svg-path-marquee.png",
   "videoUrl": "svg-path-marquee.mp4",

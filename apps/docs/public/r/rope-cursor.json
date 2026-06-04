@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "RopeCursor",
+  "exportKind": "named",
   "previewUrl": "/cursors/rope",
   "coverImage": "/assets/list/rope-cursor.png",
   "videoUrl": "rope-cursor",

@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "DraggableMarquee",
+  "exportKind": "named",
   "previewUrl": "/draggable-marquee",
   "coverImage": "/assets/list/draggable-marquee.png",
   "videoUrl": "draggable-marquee.mp4",

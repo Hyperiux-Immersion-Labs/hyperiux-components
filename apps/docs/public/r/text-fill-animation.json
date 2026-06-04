@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "TextFillAnimation",
+  "exportKind": "named",
   "previewUrl": "/text-fill-animation",
   "coverImage": "/assets/list/text-fill-animation.png",
   "videoUrl": "text-fill-animation.mp4",

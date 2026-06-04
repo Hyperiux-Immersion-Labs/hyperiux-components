@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "ColorfulCursorAura",
+  "exportKind": "named",
   "previewUrl": "/colorful-cursor-aura",
   "coverImage": "/assets/list/colorful-cursor-aura.png",
   "videoUrl": "colorful-cursor-aura.mp4",

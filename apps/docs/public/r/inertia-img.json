@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "InertiaImg",
+  "exportKind": "named",
   "previewUrl": "/inertia-img",
   "coverImage": "/assets/list/inertia-img.png",
   "videoUrl": "inertia-img.mp4",

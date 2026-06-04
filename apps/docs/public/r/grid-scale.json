@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "GridScale",
+  "exportKind": "named",
   "previewUrl": "/grid-scale",
   "coverImage": "/assets/list/grid-scale.png",
   "videoUrl": "grid-scale.mp4",

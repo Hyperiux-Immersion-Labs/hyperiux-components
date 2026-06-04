@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "OverflowStaggerText",
+  "exportKind": "named",
   "previewUrl": "/overflow-stagger-text",
   "coverImage": "/assets/list/overflow-stagger-text.png",
   "videoUrl": "overflow-stagger-text.mp4",

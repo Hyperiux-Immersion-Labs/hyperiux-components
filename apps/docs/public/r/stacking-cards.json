@@ -12,6 +12,8 @@
     "next"
   ],
   "registryDependencies": [],
+  "exportName": "StackingCards",
+  "exportKind": "named",
   "previewUrl": "/stacking-cards",
   "coverImage": "/assets/list/stacking-cards.png",
   "videoUrl": "stacking-cards.mp4",

@@ -12,6 +12,8 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
+  "exportName": "ChessGridTransition",
+  "exportKind": "named",
   "previewUrl": "/page-transitions/chess-grids",
   "coverImage": "/assets/list/chess-grid-transition.png",
   "videoUrl": "chess-grid-transition.mp4",

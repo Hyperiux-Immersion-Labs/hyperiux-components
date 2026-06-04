@@ -11,6 +11,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "DraggableMarquee",
+      "exportKind": "named",
       "previewUrl": "/draggable-marquee",
       "coverImage": "/assets/list/draggable-marquee.png",
       "videoUrl": "draggable-marquee.mp4",
@@ -27,6 +29,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "GridScale",
+      "exportKind": "named",
       "previewUrl": "/grid-scale",
       "coverImage": "/assets/list/grid-scale.png",
       "videoUrl": "grid-scale.mp4",
@@ -43,6 +47,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "HelixSlider",
+      "exportKind": "named",
       "previewUrl": "/cylindrical-scroll",
       "coverImage": "/assets/list/helix-slider.png",
       "videoUrl": "helix-slider.mp4",
@@ -59,6 +65,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "HorizonScroll",
+      "exportKind": "named",
       "previewUrl": "/horizontal-feature-reveal",
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "horizontal-feature-reveal.mp4",
@@ -76,6 +84,8 @@
         "gsap",
         "lenis"
       ],
+      "exportName": "InertiaScrollEffect",
+      "exportKind": "named",
       "previewUrl": "/inertia-scroll-effect",
       "coverImage": "/assets/list/inertia-scroll-effect.png",
       "videoUrl": "inertia-scroll-effect.mp4",
@@ -92,6 +102,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "InfinitePerspectiveSlider",
+      "exportKind": "named",
       "previewUrl": "/infinite-perspective-slider",
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "infinite-perspective-slider.mp4",
@@ -108,6 +120,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "CircularScrollShowcase",
+      "exportKind": "default",
       "previewUrl": "/circular-split-roll",
       "coverImage": "/assets/list/orbit-slider.png",
       "videoUrl": "orbit-slider.mp4",
@@ -122,6 +136,8 @@
         "scroll"
       ],
       "dependencies": [],
+      "exportName": "ParallaxFooter",
+      "exportKind": "named",
       "previewUrl": "/parallax-footer",
       "coverImage": "/assets/list/parallax-footer.png",
       "videoUrl": "parallax-footer.mp4",
@@ -138,6 +154,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "ParallaxGallery",
+      "exportKind": "named",
       "previewUrl": "/frame-slider",
       "coverImage": "/assets/list/parallax-gallery.png",
       "videoUrl": "parallax-gallery.mp4",
@@ -154,6 +172,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "ParallaxImage",
+      "exportKind": "named",
       "previewUrl": "/parallax-image-animation",
       "coverImage": "/assets/list/parallax-image.png",
       "videoUrl": "parallax-image.mp4",
@@ -171,6 +191,8 @@
         "gsap",
         "next"
       ],
+      "exportName": "ParallaxSlider",
+      "exportKind": "named",
       "previewUrl": "/parallax-slider",
       "coverImage": "/assets/list/parallax-slider.png",
       "videoUrl": "parallax-slider.mp4",
@@ -191,6 +213,8 @@
         "three",
         "postprocessing"
       ],
+      "exportName": "ProgressiveBloomValley",
+      "exportKind": "named",
       "previewUrl": "/webgl/progressive-bloom-valley",
       "coverImage": "/assets/list/progressive-bloom-valley.png",
       "videoUrl": "progressive-bloom-valley.mp4",
@@ -208,6 +232,8 @@
         "gsap",
         "lucide-react"
       ],
+      "exportName": "RotatingCarousel",
+      "exportKind": "named",
       "previewUrl": "/circular-slider",
       "coverImage": "/assets/list/rotating-carousel.png",
       "videoUrl": "rotating-carousel.mp4",
@@ -225,6 +251,8 @@
         "gsap",
         "next"
       ],
+      "exportName": "RotationSlider",
+      "exportKind": "named",
       "previewUrl": "/rotation-slider",
       "coverImage": "/assets/list/rotation-slider.png",
       "videoUrl": "rotation-slider.mp4",
@@ -243,6 +271,8 @@
         "lenis",
         "three"
       ],
+      "exportName": "ScrollDistortion",
+      "exportKind": "named",
       "previewUrl": "/scroll-distortion",
       "coverImage": "/assets/list/scroll-distortion.png",
       "videoUrl": "scroll-distortion.mp4",
@@ -259,6 +289,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "ScrollShuffledCards",
+      "exportKind": "named",
       "previewUrl": "/scroll-shuffled-cards",
       "coverImage": "/assets/list/scroll-shuffled-cards.png",
       "videoUrl": "scroll-shuffled-cards.mp4",
@@ -275,6 +307,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "ScrollStack",
+      "exportKind": "named",
       "previewUrl": "/stacked-card",
       "coverImage": "/assets/list/scroll-stack.png",
       "videoUrl": "scroll-stack.mp4",
@@ -292,6 +326,8 @@
         "gsap",
         "three"
       ],
+      "exportName": "SplitCanvas",
+      "exportKind": "named",
       "previewUrl": "/split-canvas",
       "coverImage": "/assets/list/split-canvas.png",
       "videoUrl": "split-canvas.mp4",
@@ -308,6 +344,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "SquareTranslate",
+      "exportKind": "named",
       "previewUrl": "/square-translate",
       "coverImage": "/assets/list/square-translate.png",
       "videoUrl": "square-translate.mp4",
@@ -325,6 +363,8 @@
         "gsap",
         "next"
       ],
+      "exportName": "StackingCards",
+      "exportKind": "named",
       "previewUrl": "/stacking-cards",
       "coverImage": "/assets/list/stacking-cards.png",
       "videoUrl": "stacking-cards.mp4",
@@ -341,6 +381,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "StickyContentWrapper",
+      "exportKind": "named",
       "previewUrl": "/sticky-content-wrapper",
       "coverImage": "/assets/list/sticky-content-wrapper.png",
       "videoUrl": "sticky-content-wrapper.mp4",
@@ -357,6 +399,8 @@
       "dependencies": [
         "motion"
       ],
+      "exportName": "MarqueeAlongSvgPath",
+      "exportKind": "named",
       "previewUrl": "/svg-path",
       "coverImage": "/assets/list/svg-path-marquee.png",
       "videoUrl": "svg-path-marquee.mp4",
@@ -373,6 +417,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "SvgPixelReveal",
+      "exportKind": "named",
       "previewUrl": "/svg-pixel-reveal",
       "coverImage": "/assets/list/svg-pixel-reveal.png",
       "videoUrl": "svg-pixel-reveal.mp4",
@@ -389,6 +435,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "TextConvergence",
+      "exportKind": "named",
       "previewUrl": "/text-convergence",
       "coverImage": "/assets/list/text-convergence.png",
       "videoUrl": "text-convergence.mp4",
@@ -407,6 +455,8 @@
         "@react-three/fiber",
         "three"
       ],
+      "exportName": "ButterflyTrailCursor",
+      "exportKind": "named",
       "previewUrl": "/cursors/butterflies",
       "coverImage": "/assets/list/butterfly-trail-cursor.png",
       "videoUrl": "butterfly-trail-cursor.mp4",
@@ -421,6 +471,8 @@
         "cursor"
       ],
       "dependencies": [],
+      "exportName": "CharacterTrail",
+      "exportKind": "named",
       "previewUrl": "/character-trail",
       "coverImage": "/assets/list/character-trail.png",
       "videoUrl": "character-trail.mp4",
@@ -439,6 +491,8 @@
         "@react-three/fiber",
         "three"
       ],
+      "exportName": "CoffeeBeanCursor",
+      "exportKind": "named",
       "previewUrl": "/cursors/coffee",
       "coverImage": "/assets/list/coffee-bean-cursor.png",
       "videoUrl": "coffee-bean-cursor.mp4",
@@ -455,6 +509,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "ColorfulCursorAura",
+      "exportKind": "named",
       "previewUrl": "/colorful-cursor-aura",
       "coverImage": "/assets/list/colorful-cursor-aura.png",
       "videoUrl": "colorful-cursor-aura.mp4",
@@ -469,6 +525,8 @@
         "cursor"
       ],
       "dependencies": [],
+      "exportName": "CursorMove",
+      "exportKind": "named",
       "previewUrl": "/cursor-move",
       "coverImage": "/assets/list/cursor-move.png",
       "videoUrl": "cursor-move.mp4",
@@ -487,6 +545,8 @@
         "@react-three/drei",
         "three"
       ],
+      "exportName": "FishEyeImage",
+      "exportKind": "named",
       "previewUrl": "/cursors/fish-eye",
       "coverImage": "/assets/list/fish-eye.png",
       "videoUrl": "fish-eye.mp4",
@@ -501,6 +561,8 @@
         "cursor"
       ],
       "dependencies": [],
+      "exportName": "FullScreenCrosshair",
+      "exportKind": "named",
       "previewUrl": "/full-screen-crosshair",
       "coverImage": "/assets/list/full-screen-crosshair.png",
       "videoUrl": "full-screen-crosshair.mp4",
@@ -517,6 +579,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "InertiaImg",
+      "exportKind": "named",
       "previewUrl": "/inertia-img",
       "coverImage": "/assets/list/inertia-img.png",
       "videoUrl": "inertia-img.mp4",
@@ -533,6 +597,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "InteractiveArrows",
+      "exportKind": "named",
       "previewUrl": "/interactive-arrows",
       "coverImage": "/assets/list/interactive-arrows.png",
       "videoUrl": "interactive-arrows.mp4",
@@ -549,6 +615,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "LiquidGlassCursor",
+      "exportKind": "named",
       "previewUrl": "/liquid-glass-cursor",
       "coverImage": "/assets/list/liquid-glass-cursor.png",
       "videoUrl": "liquid-glass-cursor.mp4",
@@ -563,6 +631,8 @@
         "cursor"
       ],
       "dependencies": [],
+      "exportName": "MagneticImageTrail",
+      "exportKind": "named",
       "previewUrl": "/magnetic-image-trail",
       "coverImage": "/assets/list/magnetic-image-trail.png",
       "videoUrl": "magnetic-image-trail.mp4",
@@ -579,6 +649,8 @@
       "dependencies": [
         "three"
       ],
+      "exportName": "NoiseRippleCursor",
+      "exportKind": "named",
       "previewUrl": "/cursors/noiseripple",
       "coverImage": "/assets/list/noise-ripple-cursor.png",
       "videoUrl": "noise-ripple-cursor",
@@ -595,6 +667,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "PhantomImageTrail",
+      "exportKind": "named",
       "previewUrl": "/mouse-hover-image",
       "coverImage": "/assets/list/phantom-image-trail.png",
       "videoUrl": "phantom-image-trail.mp4",
@@ -609,6 +683,8 @@
         "cursor"
       ],
       "dependencies": [],
+      "exportName": "PixelatedImageEffect",
+      "exportKind": "named",
       "previewUrl": "/pixelated-image-effect",
       "coverImage": "/assets/list/pixelated-image-effect.png",
       "videoUrl": "pixelated-image-effect.mp4",
@@ -623,6 +699,8 @@
         "cursor"
       ],
       "dependencies": [],
+      "exportName": "PixelBloom",
+      "exportKind": "named",
       "previewUrl": "/cursors/pixel-bloom",
       "coverImage": "/assets/list/pixel-bloom.png",
       "videoUrl": "pixel-bloom",
@@ -639,6 +717,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "RopeCursor",
+      "exportKind": "named",
       "previewUrl": "/cursors/rope",
       "coverImage": "/assets/list/rope-cursor.png",
       "videoUrl": "rope-cursor",
@@ -653,6 +733,8 @@
         "backgrounds"
       ],
       "dependencies": [],
+      "exportName": "DitherCanvas",
+      "exportKind": "named",
       "previewUrl": "/binary-effect",
       "coverImage": "/assets/list/dither-canvas.png",
       "videoUrl": "dither-canvas.mp4",
@@ -667,6 +749,8 @@
         "backgrounds"
       ],
       "dependencies": [],
+      "exportName": "DottedGrid",
+      "exportKind": "named",
       "previewUrl": "/dotted-grid",
       "coverImage": "/assets/list/dotted-grid.png",
       "videoUrl": "dotted-grid.mp4",
@@ -681,6 +765,8 @@
         "backgrounds"
       ],
       "dependencies": [],
+      "exportName": "SpiderParticles",
+      "exportKind": "named",
       "previewUrl": "/spider-particles",
       "coverImage": "/assets/list/spider-particles.png",
       "videoUrl": "spider-particles.mp4",
@@ -698,6 +784,8 @@
         "gsap",
         "next-transition-router"
       ],
+      "exportName": "BlockTransition",
+      "exportKind": "named",
       "previewUrl": "/page-transitions/block",
       "coverImage": "/assets/list/block-transition.png",
       "videoUrl": "block-transition.mp4",
@@ -715,6 +803,8 @@
         "gsap",
         "next-transition-router"
       ],
+      "exportName": "ChessGridTransition",
+      "exportKind": "named",
       "previewUrl": "/page-transitions/chess-grids",
       "coverImage": "/assets/list/chess-grid-transition.png",
       "videoUrl": "chess-grid-transition.mp4",
@@ -732,6 +822,8 @@
         "gsap",
         "next-transition-router"
       ],
+      "exportName": "PageFlipTransition",
+      "exportKind": "named",
       "previewUrl": "/page-transitions/flip",
       "coverImage": "/assets/list/page-flip-transition.png",
       "videoUrl": "page-flip-transition.mp4",
@@ -749,6 +841,8 @@
         "gsap",
         "next-transition-router"
       ],
+      "exportName": "PieRotationTransition",
+      "exportKind": "named",
       "previewUrl": "/page-transitions/pie-rotation",
       "coverImage": "/assets/list/pie-rotation-transition.png",
       "videoUrl": "pie-rotation-transition.mp4",
@@ -766,6 +860,8 @@
         "gsap",
         "next-transition-router"
       ],
+      "exportName": "PixelTransition",
+      "exportKind": "named",
       "previewUrl": "/page-transitions/pixels",
       "coverImage": "/assets/list/pixel-transition.png",
       "videoUrl": "pixel-transition.mp4",
@@ -783,6 +879,8 @@
         "gsap",
         "next-transition-router"
       ],
+      "exportName": "SvgDrawPageTransition",
+      "exportKind": "named",
       "previewUrl": "/page-transitions/brush-strokes",
       "coverImage": "/assets/list/svg-draw-page-transition.png",
       "videoUrl": "svg-draw-page-transition.mp4",
@@ -799,6 +897,8 @@
       "dependencies": [
         "framer-motion"
       ],
+      "exportName": "BlurText",
+      "exportKind": "named",
       "previewUrl": "/blur-text-reveal",
       "coverImage": "/assets/list/blur-text.png",
       "videoUrl": "blur-text.mp4",
@@ -815,6 +915,8 @@
       "dependencies": [
         "framer-motion"
       ],
+      "exportName": "CircleTextReveal",
+      "exportKind": "named",
       "previewUrl": "/circle-reveal",
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "circle-text-reveal.mp4",
@@ -831,6 +933,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "Counter",
+      "exportKind": "named",
       "previewUrl": "/counter",
       "coverImage": "/assets/list/counter.png",
       "videoUrl": "/counter.mp4",
@@ -847,6 +951,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "GlitchyText",
+      "exportKind": "named",
       "previewUrl": "/glitchy-text",
       "coverImage": "/assets/list/glitchy-text.png",
       "videoUrl": "glitchy-text.mp4",
@@ -863,6 +969,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "MaskTextReveal",
+      "exportKind": "named",
       "previewUrl": "/mask-text-reveal",
       "coverImage": "/assets/list/mask-text-reveal.png",
       "videoUrl": "mask-text-reveal.mp4",
@@ -879,6 +987,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "OverflowStaggerText",
+      "exportKind": "named",
       "previewUrl": "/overflow-stagger-text",
       "coverImage": "/assets/list/overflow-stagger-text.png",
       "videoUrl": "overflow-stagger-text.mp4",
@@ -895,6 +1005,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "OverflowTextReveal",
+      "exportKind": "named",
       "previewUrl": "/overflow-text-reveal",
       "coverImage": "/assets/list/overflow-text-reveal.png",
       "videoUrl": "overflow-text-reveal.mp4",
@@ -911,6 +1023,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "PerspectiveTextReveal",
+      "exportKind": "named",
       "previewUrl": "/perspective-text-reveal",
       "coverImage": "/assets/list/perspective-text-reveal.png",
       "videoUrl": "perspective-text-reveal.mp4",
@@ -927,6 +1041,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "RectangularTextReveal",
+      "exportKind": "named",
       "previewUrl": "/rectangular-text-reveal",
       "coverImage": "/assets/list/rectangular-text-reveal.png",
       "videoUrl": "rectangular-text-reveal.mp4",
@@ -943,6 +1059,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "ScrambleText",
+      "exportKind": "named",
       "previewUrl": "/scramble-text",
       "coverImage": "/assets/list/scramble-text.png",
       "videoUrl": "scramble-text.mp4",
@@ -959,6 +1077,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "SlideTextReveal",
+      "exportKind": "named",
       "previewUrl": "/slide-text-reveal",
       "coverImage": "/assets/list/slide-text-reveal.png",
       "videoUrl": "slide-text-reveal.mp4",
@@ -973,6 +1093,8 @@
         "text"
       ],
       "dependencies": [],
+      "exportName": "SpotlightText",
+      "exportKind": "named",
       "previewUrl": "/spotlight-text",
       "coverImage": "/assets/list/spotlight-text.png",
       "videoUrl": "spotlight-text.mp4",
@@ -987,6 +1109,8 @@
         "text"
       ],
       "dependencies": [],
+      "exportName": "TextCloning",
+      "exportKind": "named",
       "previewUrl": "/text-cloning",
       "coverImage": "/assets/list/text-cloning.png",
       "videoUrl": "text-cloning.mp4",
@@ -1003,6 +1127,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "TextFillAnimation",
+      "exportKind": "named",
       "previewUrl": "/text-fill-animation",
       "coverImage": "/assets/list/text-fill-animation.png",
       "videoUrl": "text-fill-animation.mp4",
@@ -1019,6 +1145,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "TextHoverExpand",
+      "exportKind": "named",
       "previewUrl": "/text-hover",
       "coverImage": "/assets/list/text-hover-expand.png",
       "videoUrl": "text-hover-expand.mp4",
@@ -1035,6 +1163,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "TextStream",
+      "exportKind": "named",
       "previewUrl": "/text-stream",
       "coverImage": "/assets/list/text-stream.png",
       "videoUrl": "text-stream.mp4",
@@ -1049,6 +1179,8 @@
         "buttons"
       ],
       "dependencies": [],
+      "exportName": "ChevronBird",
+      "exportKind": "named",
       "previewUrl": "/buttons/animated-toggle",
       "coverImage": "/assets/list/animated-toggle.png",
       "videoUrl": "animated-toggle.mp4",
@@ -1063,6 +1195,8 @@
         "buttons"
       ],
       "dependencies": [],
+      "exportName": "ArrowFillButton",
+      "exportKind": "named",
       "previewUrl": "/buttons/arrow-fill-button",
       "coverImage": "/assets/list/arrow-fill-button.png",
       "videoUrl": "arrow-fill-button.mp4",
@@ -1079,6 +1213,8 @@
       "dependencies": [
         "lucide-react"
       ],
+      "exportName": "CharStaggerButton",
+      "exportKind": "named",
       "previewUrl": "/buttons/char-stagger-button",
       "coverImage": "/assets/list/char-stagger-button.png",
       "videoUrl": "char-stagger-button.mp4",
@@ -1093,6 +1229,8 @@
         "buttons"
       ],
       "dependencies": [],
+      "exportName": "CharStaggerPrimaryButton",
+      "exportKind": "named",
       "previewUrl": "/buttons/char-stagger-primary-button",
       "coverImage": "/assets/list/char-stagger-primary-button.png",
       "videoUrl": "char-stagger-primary-button.mp4",
@@ -1107,6 +1245,8 @@
         "buttons"
       ],
       "dependencies": [],
+      "exportName": "DotFillButton",
+      "exportKind": "named",
       "previewUrl": "/buttons/dot-fill-button",
       "coverImage": "/assets/list/dot-fill-button.png",
       "videoUrl": "dot-fill-button.mp4",
@@ -1121,6 +1261,8 @@
         "buttons"
       ],
       "dependencies": [],
+      "exportName": "LinkButton",
+      "exportKind": "named",
       "previewUrl": "/buttons/link-button",
       "coverImage": "/assets/list/link-button.png",
       "videoUrl": "link-button.mp4",
@@ -1135,6 +1277,8 @@
         "buttons"
       ],
       "dependencies": [],
+      "exportName": "ScrambleLinkButton",
+      "exportKind": "named",
       "previewUrl": "/buttons/scramble-link-button",
       "coverImage": "/assets/list/scramble-link-button.png",
       "videoUrl": "scramble-link-button.mp4",
@@ -1151,6 +1295,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "ClippathSlider",
+      "exportKind": "named",
       "previewUrl": "/clippath-slider",
       "coverImage": "/assets/list/clippath-slider.png",
       "videoUrl": "clippath-slider.mp4",
@@ -1167,6 +1313,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "InfiniteCarousel",
+      "exportKind": "named",
       "previewUrl": "/infinite-carousel",
       "coverImage": "/assets/list/infinite-carousel.png",
       "videoUrl": "infinite-carousel.mp4",
@@ -1184,6 +1332,8 @@
         "gsap",
         "lucide-react"
       ],
+      "exportName": "RingCarousel",
+      "exportKind": "named",
       "previewUrl": "/ring-carousel",
       "coverImage": "/assets/list/ring-carousel.png",
       "videoUrl": "ring-carousel.mp4",
@@ -1202,6 +1352,8 @@
         "gsap",
         "lenis"
       ],
+      "exportName": "WebglSlider",
+      "exportKind": "named",
       "previewUrl": "/webgl-slider",
       "coverImage": "/assets/list/webgl-slider.png",
       "videoUrl": "webgl-slider.mp4",
@@ -1218,6 +1370,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "ZoomSlider",
+      "exportKind": "named",
       "previewUrl": "/webgl/zoom-slider",
       "coverImage": "/assets/list/zoom-slider.png",
       "videoUrl": "zoom-slider.mp4",
@@ -1234,6 +1388,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "FAQGroup",
+      "exportKind": "named",
       "previewUrl": "/animated-faq",
       "coverImage": "/assets/list/animated-faq.png",
       "videoUrl": "animated-faq.mp4",
@@ -1250,6 +1406,8 @@
       "dependencies": [
         "lucide-react"
       ],
+      "exportName": "CustomVideoPlayer",
+      "exportKind": "named",
       "previewUrl": "/video-player",
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "custom-video-player.mp4",
@@ -1266,6 +1424,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "DepthCardStack",
+      "exportKind": "named",
       "previewUrl": "/depth-card-stack",
       "coverImage": "/assets/list/depth-card-stack.png",
       "videoUrl": "depth-card-stack.mp4",
@@ -1280,6 +1440,8 @@
         "components"
       ],
       "dependencies": [],
+      "exportName": "Form",
+      "exportKind": "named",
       "previewUrl": "/form",
       "coverImage": "/assets/list/form.png",
       "videoUrl": "form.mp4",
@@ -1294,6 +1456,8 @@
         "components"
       ],
       "dependencies": [],
+      "exportName": "HoverStack",
+      "exportKind": "named",
       "previewUrl": "/stack-hovered-cards",
       "coverImage": "/assets/list/hover-stack.png",
       "videoUrl": "hover-stack.mp4",
@@ -1310,6 +1474,8 @@
       "dependencies": [
         "lucide-react"
       ],
+      "exportName": "Modal",
+      "exportKind": "named",
       "previewUrl": "/modal",
       "coverImage": "/assets/list/modal.png",
       "videoUrl": "modal.mp4",
@@ -1326,6 +1492,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "Tabs",
+      "exportKind": "named",
       "previewUrl": "/tabs",
       "coverImage": "/assets/list/tabs.png",
       "videoUrl": "tabs.mp4",
@@ -1344,6 +1512,8 @@
         "lucide-react",
         "next"
       ],
+      "exportName": "TestimonialSwiper",
+      "exportKind": "named",
       "previewUrl": "/testimonial",
       "coverImage": "/assets/list/testimonial-swiper.png",
       "videoUrl": "testimonial-swiper.mp4",
@@ -1360,6 +1530,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "DirectionalMenu",
+      "exportKind": "named",
       "previewUrl": "/navigation/directional-menu",
       "coverImage": "/assets/list/directional-menu.png",
       "videoUrl": "directional-menu.mp4",
@@ -1377,6 +1549,8 @@
         "gsap",
         "next"
       ],
+      "exportName": "ExpandingNavbar",
+      "exportKind": "default",
       "previewUrl": "/expanding-navbar",
       "coverImage": "/assets/list/expanding-navbar.png",
       "videoUrl": "expanding-navbar.mp4",
@@ -1393,6 +1567,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "FullScreenNavigation",
+      "exportKind": "named",
       "previewUrl": "/navigation/immersive-fullscreen-nav",
       "coverImage": "/assets/list/immersive-full-screen-navigation.png",
       "videoUrl": "immersive-full-screen-navigation.mp4",
@@ -1409,6 +1585,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "GlassPillHeader",
+      "exportKind": "named",
       "previewUrl": "/navigation/elevate-navbar",
       "coverImage": "/assets/list/elevate-navbar.png",
       "videoUrl": "elevate-navbar.mp4",
@@ -1425,6 +1603,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "CenterLinesLoader",
+      "exportKind": "named",
       "previewUrl": "/loaders/lines-loading",
       "coverImage": "/assets/list/lines-loader.png",
       "videoUrl": "lines-loader.mp4",
@@ -1444,6 +1624,8 @@
         "@react-three/drei",
         "three"
       ],
+      "exportName": "NumericTunnel",
+      "exportKind": "named",
       "previewUrl": "/loaders/numeric-tunnel",
       "coverImage": "/assets/list/numeric-tunnel.png",
       "videoUrl": "numeric-tunnel.mp4",
@@ -1460,6 +1642,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "Cappen",
+      "exportKind": "named",
       "previewUrl": "/loaders/stack-loader",
       "coverImage": "/assets/list/stack-loader.png",
       "videoUrl": "stack-loader.mp4",
@@ -1479,6 +1663,8 @@
         "gsap",
         "lenis"
       ],
+      "exportName": "WebGLPortfolioSlider",
+      "exportKind": "named",
       "previewUrl": "/webgl-portfolio-slider",
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "webgl-portfolio-slider.mp4",
@@ -1497,10 +1683,12 @@
         "@react-three/fiber",
         "@react-three/drei"
       ],
+      "exportName": "BookFlip",
+      "exportKind": "named",
       "previewUrl": "/book-flip",
       "coverImage": "/assets/list/book-flip.png",
       "videoUrl": "book-flip.mp4",
-      "addedAt": 1780469987379.401
+      "addedAt": 1780469480260.1152
     },
     {
       "name": "colliding-models",
@@ -1520,10 +1708,12 @@
         "maath",
         "next"
       ],
+      "exportName": "CollidingModels",
+      "exportKind": "named",
       "previewUrl": "/colliding-models",
       "coverImage": "/assets/list/colliding-models.png",
       "videoUrl": "colliding-models.mp4",
-      "addedAt": 1780469987380.0679
+      "addedAt": 1780469480260.5327
     },
     {
       "name": "curved-plane",
@@ -1537,6 +1727,8 @@
         "three",
         "gsap"
       ],
+      "exportName": "CurvedPlane",
+      "exportKind": "named",
       "previewUrl": "/curved-plane",
       "coverImage": "/assets/list/curved-plane.png",
       "videoUrl": "curved-plane.mp4",
@@ -1554,6 +1746,8 @@
         "three",
         "gsap"
       ],
+      "exportName": "CurvedPlaneV2",
+      "exportKind": "named",
       "previewUrl": "/curved-plane/v2",
       "coverImage": "/assets/list/curved-plane-v2.png",
       "videoUrl": "curved-plane-v2.mp4",
@@ -1571,6 +1765,8 @@
         "three",
         "@react-three/fiber"
       ],
+      "exportName": "DonutParticles",
+      "exportKind": "named",
       "previewUrl": "/donut-particles",
       "coverImage": "/assets/list/donut-particles.png",
       "videoUrl": "donut-particles.mp4",
@@ -1587,6 +1783,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "DraggableCanvas",
+      "exportKind": "named",
       "previewUrl": "/webgl/draggable-canvas",
       "coverImage": "/assets/list/draggable-canvas.png",
       "videoUrl": "draggable-canvas.mp4",
@@ -1603,10 +1801,12 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "FileEncryption",
+      "exportKind": "named",
       "previewUrl": "/file-encryption",
       "coverImage": "/assets/list/file-encryption.png",
       "videoUrl": "file-encryption.mp4",
-      "addedAt": 1780469987381.6575
+      "addedAt": 1780469480260.9377
     },
     {
       "name": "fractal-glass",
@@ -1619,6 +1819,8 @@
       "dependencies": [
         "three"
       ],
+      "exportName": "FractalGlass",
+      "exportKind": "named",
       "previewUrl": "/webgl/fractal-glass",
       "coverImage": "/assets/list/fractal-glass.png",
       "videoUrl": "fractal-glass.mp4",
@@ -1635,6 +1837,8 @@
       "dependencies": [
         "leva"
       ],
+      "exportName": "GridLift",
+      "exportKind": "named",
       "previewUrl": "/webgl/grid-lift",
       "coverImage": "/assets/list/grid-lift.png",
       "videoUrl": "grid-lift.mp4",
@@ -1653,6 +1857,8 @@
         "@react-three/drei",
         "three"
       ],
+      "exportName": "GridTunnel",
+      "exportKind": "named",
       "previewUrl": "/grid-tunnel",
       "coverImage": "/assets/list/grid-tunnel.png",
       "videoUrl": "grid-tunnel.mp4",
@@ -1674,6 +1880,8 @@
         "gsap",
         "three"
       ],
+      "exportName": "HeroBanner",
+      "exportKind": "named",
       "previewUrl": "/hero-banner-animated",
       "coverImage": "/assets/list/hero-banner-animated.png",
       "videoUrl": "hero-banner-animated.mp4",
@@ -1694,10 +1902,12 @@
         "@react-three/postprocessing",
         "postprocessing"
       ],
+      "exportName": "HyperiuxGlitterConcept",
+      "exportKind": "named",
       "previewUrl": "/hyperiux-glitter-concept",
       "coverImage": "/assets/list/hyperiux-glitter-concept.png",
       "videoUrl": "/hyperiux-glitter-concept.mp4",
-      "addedAt": 1780469987382.7407
+      "addedAt": 1780469480261.5251
     },
     {
       "name": "infinite-grid-gallery",
@@ -1708,10 +1918,12 @@
         "webgl"
       ],
       "dependencies": [],
+      "exportName": "InfiniteGridGallery",
+      "exportKind": "named",
       "previewUrl": "/infinite-grid-gallery",
       "coverImage": "/assets/list/infinite-grid-gallery.png",
       "videoUrl": "infinite-grid-gallery.mp4",
-      "addedAt": 1780469987384.221
+      "addedAt": 1780469480262.2056
     },
     {
       "name": "interactive-blur-reveal",
@@ -1722,6 +1934,8 @@
         "webgl"
       ],
       "dependencies": [],
+      "exportName": "InteractiveBlurReveal",
+      "exportKind": "named",
       "previewUrl": "/webgl/interactive-blur-reveal",
       "coverImage": "/assets/list/interactive-blur-reveal.png",
       "videoUrl": "interactive-blur-reveal.mp4",
@@ -1739,10 +1953,12 @@
         "three",
         "gsap"
       ],
+      "exportName": "HoverSlider",
+      "exportKind": "default",
       "previewUrl": "/interactive-hover-slider",
       "coverImage": "/assets/list/interactive-hover-slider.png",
       "videoUrl": "interactive-hover-slider.mp4",
-      "addedAt": 1780469987385.2937
+      "addedAt": 1780469480262.5767
     },
     {
       "name": "milkyway",
@@ -1761,6 +1977,8 @@
         "lucide-react",
         "gsap"
       ],
+      "exportName": "MilkyWay",
+      "exportKind": "named",
       "previewUrl": "/milkyway",
       "coverImage": "/assets/list/milkyway.png",
       "videoUrl": "milkyway.mp4",
@@ -1780,6 +1998,8 @@
         "@react-three/postprocessing",
         "gsap"
       ],
+      "exportName": "MousePixelation",
+      "exportKind": "named",
       "previewUrl": "/mouse-pixelation-effects",
       "coverImage": "/assets/list/mouse-pixelation.png",
       "videoUrl": "mouse-pixelation.mp4",
@@ -1798,6 +2018,8 @@
         "three",
         "gsap"
       ],
+      "exportName": "StripSlider",
+      "exportKind": "named",
       "previewUrl": "/strip-slider",
       "coverImage": "/assets/list/strip-slider.png",
       "videoUrl": "strip-slider.mp4",
@@ -1814,6 +2036,8 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "CardDrift",
+      "exportKind": "named",
       "previewUrl": "/card-drift",
       "coverImage": "/assets/list/card-drift.png",
       "videoUrl": "card-drift.mp4",
@@ -1828,10 +2052,12 @@
         "others"
       ],
       "dependencies": [],
+      "exportName": "GooeyCounter",
+      "exportKind": "named",
       "previewUrl": "/gooey-counter",
       "coverImage": "/assets/list/gooey-counter.png",
       "videoUrl": "gooey-counter.mp4",
-      "addedAt": 1780469987377.3247
+      "addedAt": 1780469480258.257
     },
     {
       "name": "interactive-list-preview",
@@ -1844,10 +2070,12 @@
       "dependencies": [
         "gsap"
       ],
+      "exportName": "InteractiveListPreview",
+      "exportKind": "named",
       "previewUrl": "/interactive-list-preview",
       "coverImage": "/assets/list/interactive-list-preview.png",
       "videoUrl": "interactive-list-preview.mp4",
-      "addedAt": 1780469987377.5432
+      "addedAt": 1780469480258.6245
     },
     {
       "name": "portfolio-concept",
@@ -1862,10 +2090,12 @@
         "next",
         "lenis"
       ],
+      "exportName": "PortfolioConcept",
+      "exportKind": "named",
       "previewUrl": "/portfolio-concept",
       "coverImage": "/assets/list/portfolio-concept.png",
       "videoUrl": "portfolio-concept.mp4",
-      "addedAt": 1780469987378.3225
+      "addedAt": 1780469480259.1816
     }
   ]
 }

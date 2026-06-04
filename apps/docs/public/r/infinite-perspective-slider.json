@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "InfinitePerspectiveSlider",
+  "exportKind": "named",
   "previewUrl": "/infinite-perspective-slider",
   "coverImage": "/assets/img/image01.webp",
   "videoUrl": "infinite-perspective-slider.mp4",

@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "ChevronBird",
+  "exportKind": "named",
   "previewUrl": "/buttons/animated-toggle",
   "coverImage": "/assets/list/animated-toggle.png",
   "videoUrl": "animated-toggle.mp4",

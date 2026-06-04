@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "CenterLinesLoader",
+  "exportKind": "named",
   "previewUrl": "/loaders/lines-loading",
   "coverImage": "/assets/list/lines-loader.png",
   "videoUrl": "lines-loader.mp4",

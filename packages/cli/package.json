@@ -7,11 +7,15 @@
     "hyperiux": "./src/index.js"
   },
   "files": [
-    "src"
+    "src/commands",
+    "src/utils",
+    "src/index.js"
   ],
   "scripts": {
     "build": "echo 'No build step required'",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "chalk": "^5.4.1",
@@ -46,5 +50,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "eslint": "^9",
+    "vitest": "^4.1.8"
   }
 }

@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "SquareTranslate",
+  "exportKind": "named",
   "previewUrl": "/square-translate",
   "coverImage": "/assets/list/square-translate.png",
   "videoUrl": "square-translate.mp4",

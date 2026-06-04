@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "RectangularTextReveal",
+  "exportKind": "named",
   "previewUrl": "/rectangular-text-reveal",
   "coverImage": "/assets/list/rectangular-text-reveal.png",
   "videoUrl": "rectangular-text-reveal.mp4",

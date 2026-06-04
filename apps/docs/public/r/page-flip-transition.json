@@ -12,6 +12,8 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
+  "exportName": "PageFlipTransition",
+  "exportKind": "named",
   "previewUrl": "/page-transitions/flip",
   "coverImage": "/assets/list/page-flip-transition.png",
   "videoUrl": "page-flip-transition.mp4",

@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "InteractiveArrows",
+  "exportKind": "named",
   "previewUrl": "/interactive-arrows",
   "coverImage": "/assets/list/interactive-arrows.png",
   "videoUrl": "interactive-arrows.mp4",

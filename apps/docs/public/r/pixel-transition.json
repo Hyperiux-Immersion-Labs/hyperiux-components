@@ -12,6 +12,8 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
+  "exportName": "PixelTransition",
+  "exportKind": "named",
   "previewUrl": "/page-transitions/pixels",
   "coverImage": "/assets/list/pixel-transition.png",
   "videoUrl": "pixel-transition.mp4",

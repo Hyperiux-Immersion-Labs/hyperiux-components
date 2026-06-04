@@ -12,6 +12,8 @@
     "next"
   ],
   "registryDependencies": [],
+  "exportName": "ParallaxSlider",
+  "exportKind": "named",
   "previewUrl": "/parallax-slider",
   "coverImage": "/assets/list/parallax-slider.png",
   "videoUrl": "parallax-slider.mp4",

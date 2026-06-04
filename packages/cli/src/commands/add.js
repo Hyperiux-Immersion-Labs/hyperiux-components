@@ -1,10 +1,11 @@
 import fs from "fs";
 import path from "path";
+import { Buffer } from "buffer";
 import chalk from "chalk";
 import ora from "ora";
 import prompts from "prompts";
 import { readConfig, configExists } from "../utils/config.js";
-import { fetchRegistry, getRegistryItemFiles } from "../utils/registry.js";
+import { fetchRegistry, fetchRegistryAsset, getRegistryItemFiles } from "../utils/registry.js";
 import { installDependencies, getMissingDependencies } from "../utils/package-manager.js";
 
 export async function add(effectName, options) {
@@ -37,7 +38,7 @@ export async function add(effectName, options) {
   }
 
   // Get files to install
-  const files = getRegistryItemFiles(registryItem, config);
+  const files = getRegistryItemFiles(registryItem, config, cwd);
 
   // Check for existing files
   const existingFiles = files.filter((f) =>
@@ -118,7 +119,8 @@ export async function add(effectName, options) {
       }
 
       // Write file
-      fs.writeFileSync(targetPath, file.content);
+      const content = await getFileContent(file);
+      fs.writeFileSync(targetPath, content);
     }
 
     filesSpinner.succeed("Files written successfully");
@@ -147,21 +149,39 @@ export async function add(effectName, options) {
   console.log();
 
   const importPath = getImportPath(files[0], config);
-  const componentName = getComponentName(effectName);
-  console.log(chalk.cyan(`  import { ${componentName} } from "${importPath}";`));
+  const exportName = registryItem.exportName || getComponentName(effectName);
+  const exportKind = registryItem.exportKind || "named";
+  const importStatement =
+    exportKind === "default"
+      ? `import ${exportName} from "${importPath}";`
+      : `import { ${exportName} } from "${importPath}";`;
+  console.log(chalk.cyan(`  ${importStatement}`));
   console.log();
+}
+
+async function getFileContent(file) {
+  if (file.type === "registry:asset" && file.source && !file.content) {
+    return fetchRegistryAsset(file.source);
+  }
+
+  if (file.encoding === "base64") {
+    return Buffer.from(file.content, "base64");
+  }
+
+  return file.content;
 }
 
 function getImportPath(file, config) {
   const targetPath = file.targetPath;
-  const effectsPath = config.aliases?.effects || "@/components/effects";
+  const effectsAlias = config.aliases?.effects || "@/components/effects";
+  const effectsPath = effectsAlias.replace("@/", "");
 
-  if (targetPath.includes("components/effects/")) {
+  if (targetPath.includes(effectsPath)) {
     const fileName = path.basename(targetPath, ".jsx");
-    return `${effectsPath}/${fileName}`;
+    return `${effectsAlias}/${fileName}`;
   }
 
-  return `@/${targetPath.replace("src/", "").replace(".jsx", "")}`;
+  return `@/${targetPath.replace(/^src\//, "").replace(".jsx", "")}`;
 }
 
 function getComponentName(effectName) {

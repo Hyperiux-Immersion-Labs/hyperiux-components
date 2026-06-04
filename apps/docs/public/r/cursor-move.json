@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "CursorMove",
+  "exportKind": "named",
   "previewUrl": "/cursor-move",
   "coverImage": "/assets/list/cursor-move.png",
   "videoUrl": "cursor-move.mp4",

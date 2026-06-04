@@ -11,6 +11,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "DraggableCanvas",
+  "exportKind": "named",
   "previewUrl": "/webgl/draggable-canvas",
   "coverImage": "/assets/list/draggable-canvas.png",
   "videoUrl": "draggable-canvas.mp4",

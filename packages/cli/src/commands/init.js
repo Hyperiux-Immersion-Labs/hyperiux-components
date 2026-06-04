@@ -81,10 +81,13 @@ export async function init(options) {
     // Write config file
     writeConfig(config, cwd);
 
+    const usesSrc = fs.existsSync(path.join(cwd, "src"));
+    const prefix = usesSrc ? "src/" : "";
+
     // Create directories if they don't exist
-    const effectsDir = path.join(cwd, config.aliases.effects.replace("@/", "src/"));
-    const hooksDir = path.join(cwd, config.aliases.hooks.replace("@/", "src/"));
-    const libDir = path.join(cwd, config.aliases.lib.replace("@/", "src/"));
+    const effectsDir = path.join(cwd, config.aliases.effects.replace("@/", prefix));
+    const hooksDir = path.join(cwd, config.aliases.hooks.replace("@/", prefix));
+    const libDir = path.join(cwd, config.aliases.lib.replace("@/", prefix));
 
     ensureDir(effectsDir);
     ensureDir(hooksDir);
@@ -119,7 +122,8 @@ function detectCssPath(cwd) {
     }
   }
 
-  return "src/app/globals.css";
+  const usesSrc = fs.existsSync(path.join(cwd, "src"));
+  return usesSrc ? "src/app/globals.css" : "app/globals.css";
 }
 
 function detectTailwindConfig(cwd) {

@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "ParallaxFooter",
+  "exportKind": "named",
   "previewUrl": "/parallax-footer",
   "coverImage": "/assets/list/parallax-footer.png",
   "videoUrl": "parallax-footer.mp4",

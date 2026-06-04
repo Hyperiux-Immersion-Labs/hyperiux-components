@@ -13,6 +13,8 @@
     "three"
   ],
   "registryDependencies": [],
+  "exportName": "FishEyeImage",
+  "exportKind": "named",
   "previewUrl": "/cursors/fish-eye",
   "coverImage": "/assets/list/fish-eye.png",
   "videoUrl": "fish-eye.mp4",

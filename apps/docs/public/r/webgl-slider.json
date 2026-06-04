@@ -13,6 +13,8 @@
     "lenis"
   ],
   "registryDependencies": [],
+  "exportName": "WebglSlider",
+  "exportKind": "named",
   "previewUrl": "/webgl-slider",
   "coverImage": "/assets/list/webgl-slider.png",
   "videoUrl": "webgl-slider.mp4",

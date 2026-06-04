@@ -17,6 +17,8 @@
     "gsap"
   ],
   "registryDependencies": [],
+  "exportName": "MilkyWay",
+  "exportKind": "named",
   "previewUrl": "/milkyway",
   "coverImage": "/assets/list/milkyway.png",
   "videoUrl": "milkyway.mp4",

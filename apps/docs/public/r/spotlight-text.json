@@ -9,6 +9,8 @@
   ],
   "dependencies": [],
   "registryDependencies": [],
+  "exportName": "SpotlightText",
+  "exportKind": "named",
   "previewUrl": "/spotlight-text",
   "coverImage": "/assets/list/spotlight-text.png",
   "videoUrl": "spotlight-text.mp4",
