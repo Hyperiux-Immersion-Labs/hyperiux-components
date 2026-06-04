@@ -29,6 +29,22 @@ function resolveCoverImage(effectName, explicitCoverImage) {
   return "/assets/img/image01.webp";
 }
 
+function ensureMp4Extension(videoUrl, fallbackName) {
+  if (videoUrl === null) return null;
+
+  const rawValue =
+    typeof videoUrl === "string" && videoUrl.trim()
+      ? videoUrl.trim()
+      : `${fallbackName}.mp4`;
+
+  const [pathname, suffix = ""] = rawValue.split(/([?#].*)/, 2);
+  if (pathname.toLowerCase().endsWith(".mp4")) {
+    return `${pathname}${suffix}`;
+  }
+
+  return `${pathname}.mp4${suffix}`;
+}
+
 // Controls the order categories appear in the listing.
 // Categories not listed here will appear at the end alphabetically.
 const CATEGORY_ORDER = [
@@ -256,9 +272,10 @@ async function buildRegistry() {
         : [primaryCategory];
 
       // Build the full registry item
-      const defaultVideoUrl = `${registryJson.name}.mp4`;
-      const resolvedVideoUrl =
-        registryJson.videoUrl === null ? null : registryJson.videoUrl || defaultVideoUrl;
+      const resolvedVideoUrl = ensureMp4Extension(
+        registryJson.videoUrl,
+        registryJson.name
+      );
       const resolvedCoverImage = resolveCoverImage(
         registryJson.name,
         registryJson.coverImage

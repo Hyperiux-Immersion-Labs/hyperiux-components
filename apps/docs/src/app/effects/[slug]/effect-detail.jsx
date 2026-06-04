@@ -408,7 +408,7 @@ const EffectDynamicContent = forwardRef(function EffectDynamicContent(
           </h2>
 
           <div className="bg-secondary-surface/60 backdrop-blur-md rounded-xl border border-border/60 overflow-x-auto fadeup">
-            <table className="w-full text-sm max-sm:min-w-[640px] ">
+            <table className="w-full text-sm max-sm:min-w-160 ">
               <thead className="bg-black/20 border-b border-border/60">
                 <tr>
                   <th className="text-left px-4 py-3 font-medium text-muted">

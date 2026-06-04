@@ -1,6 +1,24 @@
 {
   "items": [
     {
+      "name": "circular-split-roll",
+      "title": "Circular Split Roll",
+      "description": "Split circular slider with orbiting titles on one side and image cards on the other",
+      "category": "scroll",
+      "categories": [
+        "scroll"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "exportName": "CircularScrollShowcase",
+      "exportKind": "default",
+      "previewUrl": "/circular-split-roll",
+      "coverImage": "/assets/list/circular-split-roll.png",
+      "videoUrl": "circular-split-roll.mp4",
+      "addedAt": 1780556948835.7812
+    },
+    {
       "name": "draggable-marquee",
       "title": "Draggable Marquee",
       "description": "Infinite horizontal marquee with drag interaction and momentum physics",
@@ -108,24 +126,6 @@
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "infinite-perspective-slider.mp4",
       "addedAt": 1779787659797.352
-    },
-    {
-      "name": "circular-split-roll",
-      "title": "Circular Split Roll",
-      "description": "Split circular slider with orbiting titles on one side and image cards on the other",
-      "category": "scroll",
-      "categories": [
-        "scroll"
-      ],
-      "dependencies": [
-        "gsap"
-      ],
-      "exportName": "CircularScrollShowcase",
-      "exportKind": "default",
-      "previewUrl": "/circular-split-roll",
-      "coverImage": "/assets/list/circular-split-roll.png",
-      "videoUrl": "circular-split-roll.mp4",
-      "addedAt": 1780403176710.8745
     },
     {
       "name": "parallax-footer",
@@ -276,7 +276,7 @@
       "previewUrl": "/scroll-distortion",
       "coverImage": "/assets/list/scroll-distortion.png",
       "videoUrl": "scroll-distortion.mp4",
-      "addedAt": 1780478800154.5286
+      "addedAt": 1780556948836.1062
     },
     {
       "name": "scroll-shuffled-cards",
@@ -653,7 +653,7 @@
       "exportKind": "named",
       "previewUrl": "/cursors/noiseripple",
       "coverImage": "/assets/list/noise-ripple-cursor.png",
-      "videoUrl": "noise-ripple-cursor",
+      "videoUrl": "noise-ripple-cursor.mp4",
       "addedAt": 1779786600702.4802
     },
     {
@@ -703,8 +703,8 @@
       "exportKind": "named",
       "previewUrl": "/cursors/pixel-bloom",
       "coverImage": "/assets/list/pixel-bloom.png",
-      "videoUrl": "pixel-bloom",
-      "addedAt": 1780392687289.6504
+      "videoUrl": "pixel-bloom.mp4",
+      "addedAt": 1780559561538.9326
     },
     {
       "name": "rope-cursor",
@@ -721,7 +721,7 @@
       "exportKind": "named",
       "previewUrl": "/cursors/rope",
       "coverImage": "/assets/list/rope-cursor.png",
-      "videoUrl": "rope-cursor",
+      "videoUrl": "rope-cursor.mp4",
       "addedAt": 1779786600702.9834
     },
     {
@@ -1461,7 +1461,7 @@
       "previewUrl": "/hover-stack",
       "coverImage": "/assets/list/hover-stack.png",
       "videoUrl": "hover-stack.mp4",
-      "addedAt": 1779786600700.2349
+      "addedAt": 1780556948834.0632
     },
     {
       "name": "modal",
@@ -1538,6 +1538,24 @@
       "addedAt": 1779431290522.2007
     },
     {
+      "name": "elevate-navbar",
+      "title": "Elevate Navbar",
+      "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
+      "category": "navigation",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "exportName": "ElevateNavbar",
+      "exportKind": "named",
+      "previewUrl": "/navigation/elevate-navbar",
+      "coverImage": "/assets/list/elevate-navbar.png",
+      "videoUrl": "elevate-navbar.mp4",
+      "addedAt": 1780556948835.1338
+    },
+    {
       "name": "expanding-navbar",
       "title": "Expanding Navbar",
       "description": "Animated multi-column mega menu with GSAP timelines, square cursor indicators, and hover-fill link transitions.",
@@ -1567,30 +1585,12 @@
       "dependencies": [
         "gsap"
       ],
-      "exportName": "FullScreenNavigation",
+      "exportName": "ImmersiveFullScreenNavigation",
       "exportKind": "named",
       "previewUrl": "/navigation/immersive-full-screen-nav",
       "coverImage": "/assets/list/immersive-full-screen-navigation.png",
       "videoUrl": "immersive-full-screen-navigation.mp4",
-      "addedAt": 1779786600703.4233
-    },
-    {
-      "name": "elevate-navbar",
-      "title": "Elevate Navbar",
-      "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
-      "category": "navigation",
-      "categories": [
-        "navigation"
-      ],
-      "dependencies": [
-        "gsap"
-      ],
-      "exportName": "GlassPillHeader",
-      "exportKind": "named",
-      "previewUrl": "/navigation/elevate-navbar",
-      "coverImage": "/assets/list/elevate-navbar.png",
-      "videoUrl": "elevate-navbar.mp4",
-      "addedAt": 1779692404903.4817
+      "addedAt": 1780556948835.568
     },
     {
       "name": "lines-loader",
@@ -1688,7 +1688,7 @@
       "previewUrl": "/book-flip",
       "coverImage": "/assets/list/book-flip.png",
       "videoUrl": "book-flip.mp4",
-      "addedAt": 1780469480260.1152
+      "addedAt": 1780469987379.401
     },
     {
       "name": "colliding-models",
@@ -1713,7 +1713,7 @@
       "previewUrl": "/colliding-models",
       "coverImage": "/assets/list/colliding-models.png",
       "videoUrl": "colliding-models.mp4",
-      "addedAt": 1780469480260.5327
+      "addedAt": 1780469987380.0679
     },
     {
       "name": "curved-plane",
@@ -1806,7 +1806,7 @@
       "previewUrl": "/file-encryption",
       "coverImage": "/assets/list/file-encryption.png",
       "videoUrl": "file-encryption.mp4",
-      "addedAt": 1780469480260.9377
+      "addedAt": 1780469987381.6575
     },
     {
       "name": "fractal-glass",
@@ -1907,7 +1907,7 @@
       "previewUrl": "/hyperiux-glitter-concept",
       "coverImage": "/assets/list/hyperiux-glitter-concept.png",
       "videoUrl": "/hyperiux-glitter-concept.mp4",
-      "addedAt": 1780469480261.5251
+      "addedAt": 1780469987382.7407
     },
     {
       "name": "infinite-grid-gallery",
@@ -1923,7 +1923,7 @@
       "previewUrl": "/infinite-grid-gallery",
       "coverImage": "/assets/list/infinite-grid-gallery.png",
       "videoUrl": "infinite-grid-gallery.mp4",
-      "addedAt": 1780469480262.2056
+      "addedAt": 1780469987384.221
     },
     {
       "name": "interactive-blur-reveal",
@@ -1958,7 +1958,7 @@
       "previewUrl": "/interactive-hover-slider",
       "coverImage": "/assets/list/interactive-hover-slider.png",
       "videoUrl": "interactive-hover-slider.mp4",
-      "addedAt": 1780469480262.5767
+      "addedAt": 1780469987385.2937
     },
     {
       "name": "milkyway",
@@ -2003,7 +2003,7 @@
       "previewUrl": "/mouse-pixelation",
       "coverImage": "/assets/list/mouse-pixelation.png",
       "videoUrl": "mouse-pixelation.mp4",
-      "addedAt": 1779786600706.7988
+      "addedAt": 1780556948837.558
     },
     {
       "name": "strip-slider",
@@ -2057,7 +2057,7 @@
       "previewUrl": "/gooey-counter",
       "coverImage": "/assets/list/gooey-counter.png",
       "videoUrl": "gooey-counter.mp4",
-      "addedAt": 1780469480258.257
+      "addedAt": 1780469987377.3247
     },
     {
       "name": "interactive-list-preview",
@@ -2075,7 +2075,7 @@
       "previewUrl": "/interactive-list-preview",
       "coverImage": "/assets/list/interactive-list-preview.png",
       "videoUrl": "interactive-list-preview.mp4",
-      "addedAt": 1780469480258.6245
+      "addedAt": 1780469987377.5432
     },
     {
       "name": "portfolio-concept",
@@ -2095,7 +2095,7 @@
       "previewUrl": "/portfolio-concept",
       "coverImage": "/assets/list/portfolio-concept.png",
       "videoUrl": "portfolio-concept.mp4",
-      "addedAt": 1780469480259.1816
+      "addedAt": 1780469987378.3225
     }
   ]
 }
