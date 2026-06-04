@@ -1,70 +1,72 @@
-import { Suspense } from"react";
-import { notFound } from"next/navigation";
-import { getEffectCategoryBySlug } from"@/lib/categories";
-import { getEffectsByCategory, getRegistryIndex } from"@/lib/registry";
-import { VaultContent } from"../vault-content";
+import { Suspense } from "react";
+import { notFound } from "next/navigation";
+import { getEffectCategoryBySlug } from "@/lib/categories";
+import { getEffectsByCategory, getRegistryIndex } from "@/lib/registry";
+import { VaultContent } from "../vault-content";
 import { getUserPlan } from "@/lib/subscription";
+import { auth } from "@clerk/nextjs/server";
 
 function VaultFallback() {
- return (
- <div className="h-screen w-screen bg-black">
- </div>
- );
+  return <div className="h-screen w-screen bg-black"></div>;
 }
 
 export async function generateStaticParams() {
- const slugs = new Set();
+  const slugs = new Set();
 
- for (const categorySlug of Object.keys(getEffectsByCategory())) {
- const category = getEffectCategoryBySlug(categorySlug);
- slugs.add(categorySlug);
- slugs.add(category?.slug || categorySlug);
- }
+  for (const categorySlug of Object.keys(getEffectsByCategory())) {
+    const category = getEffectCategoryBySlug(categorySlug);
+    slugs.add(categorySlug);
+    slugs.add(category?.slug || categorySlug);
+  }
 
- return [...slugs].map((slug) => ({ slug }));
+  return [...slugs].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {
- const { slug } = await params;
- const category = getEffectCategoryBySlug(slug);
+  const { slug } = await params;
+  const category = getEffectCategoryBySlug(slug);
 
- if (category) {
- return {
- title: `${category.name} | Hyperiux Vault`,
- description: `Browse ${category.name.toLowerCase()} in the Hyperiux Vault`,
- };
- }
+  if (category) {
+    return {
+      title: `${category.name} | Hyperiux Vault`,
+      description: `Browse ${category.name.toLowerCase()} in the Hyperiux Vault`,
+    };
+  }
 
- return { title:"Category Not Found" };
+  return { title: "Category Not Found" };
 }
 
 export default async function EffectsCategoryPage({ params }) {
- const { slug } = await params;
- const category = getEffectCategoryBySlug(slug);
- const categoriesMap = getEffectsByCategory();
-   const userPlan = await getUserPlan(userId);
+  const { slug } = await params;
+  const category = getEffectCategoryBySlug(slug);
+  const categoriesMap = getEffectsByCategory();
+  const { userId } = await auth();
 
- // Get effect counts for sidebar
- const effectCounts = {};
- for (const [categoryId, effects] of Object.entries(categoriesMap)) {
- effectCounts[categoryId] = effects.length;
- }
+  const userPlan = await getUserPlan(userId);
 
- if (!category || !categoriesMap[category.id]) {
- notFound();
- }
+  // Get effect counts for sidebar
+  const effectCounts = {};
+  for (const [categoryId, effects] of Object.entries(categoriesMap)) {
+    effectCounts[categoryId] = effects.length;
+  }
 
- const registry = getRegistryIndex();
+  if (!category || !categoriesMap[category.id]) {
+    notFound();
+  }
 
- return (
- <Suspense fallback={<VaultFallback />}>
- <VaultContent
- key={category.id}
- effects={[...registry.items].sort((a, b) => (b.addedAt ?? 0) - (a.addedAt ?? 0))}
- effectCounts={effectCounts}
- initialCategory={category.id}
-  userPlan={userPlan}
- />
- </Suspense>
- );
+  const registry = getRegistryIndex();
+
+  return (
+    <Suspense fallback={<VaultFallback />}>
+      <VaultContent
+        key={category.id}
+        effects={[...registry.items].sort(
+          (a, b) => (b.addedAt ?? 0) - (a.addedAt ?? 0),
+        )}
+        effectCounts={effectCounts}
+        initialCategory={category.id}
+        userPlan={userPlan}
+      />
+    </Suspense>
+  );
 }
