@@ -17,7 +17,7 @@ export function UpgradeCard({ effectTitle }) {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/checkout", { method: "POST" });
+      const res = await fetch("/api/stripe/checkout", { method: "POST" });
       if (!res.ok) throw new Error("Failed to start checkout");
       const { url } = await res.json();
       window.location.href = url;

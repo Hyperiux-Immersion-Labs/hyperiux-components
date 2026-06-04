@@ -19,9 +19,15 @@ import Footer from "@/components/Footer";
 import HeadAnim from "@/components/Animations/HeadAnim";
 import { fadeUp } from "@/components/Animations/gsapAnimations";
 
-export function VaultContent({ effects, effectCounts, initialCategory = "all" }) {
+export function VaultContent({
+  effects,
+  effectCounts,
+  initialCategory = "all",
+  userPlan = "free",
+}) {
   fadeUp();
   const pathname = usePathname();
+  const isProUser = userPlan === "pro";
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
@@ -63,6 +69,57 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
 
     return [...knownCategories, ...extraCategories];
   }, [effectCounts]);
+  const [wishlist, setWishlist] = useState([]);
+
+  useEffect(() => {
+    async function loadWishlist() {
+      try {
+        const res = await fetch("/api/wishlist");
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+
+        setWishlist(
+          (data || []).map((item) => item.effect_slug || item.name || item)
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadWishlist();
+  }, []);
+
+  const toggleWishlist = async (effect) => {
+    try {
+      const slug = effect.name;
+
+      const res = await fetch("/api/wishlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ effect }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        console.error(data);
+        return;
+      }
+
+      const data = await res.json();
+
+      if (data.saved) {
+        setWishlist((prev) => (prev.includes(slug) ? prev : [...prev, slug]));
+      } else {
+        setWishlist((prev) => prev.filter((x) => x !== slug));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // Filter effects based on search and category
   const filteredEffects = useMemo(() => {
@@ -319,11 +376,31 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
             <>
               <EffectsGrid
                 filteredEffects={filteredEffects}
+                wishlist={wishlist}
+                toggleWishlist={toggleWishlist}
+                 isProUser={isProUser}
               />
 
 
             </>
           )}
+        </div>
+        <div className="py-32 text-center">
+          <h2 className="text-5xl font-display text-white mb-4">
+            Unlock Hyperiux Pro
+          </h2>
+
+          <p className="text-zinc-400 max-w-2xl mx-auto mb-8">
+            Access every premium effect, source code, CLI installs,
+            future releases, and advanced dashboard features.
+          </p>
+
+          <Link
+            href="/pricing"
+            className="inline-flex px-8 py-4 bg-white text-black rounded-full"
+          >
+            Get Pro
+          </Link>
         </div>
         <div className="px-10 py-8">
           <Footer />
@@ -333,7 +410,12 @@ export function VaultContent({ effects, effectCounts, initialCategory = "all" })
   );
 }
 
-function EffectsGrid({ filteredEffects }) {
+function EffectsGrid({
+  filteredEffects,
+  wishlist,
+  toggleWishlist,
+  isProUser = false,
+}) {
   const [showAllMobileCards, setShowAllMobileCards] = useState(false);
   const gridRef = useRef(null);
 
@@ -377,7 +459,13 @@ function EffectsGrid({ filteredEffects }) {
             className={`effect-card-shell ${!showAllMobileCards && i >= 10 ? "max-sm:hidden" : ""
               }`}
           >
-            <EffectCard effect={effect} priority={i < 4} />
+            <EffectCard
+              effect={effect}
+              priority={i < 4}
+              isWishlisted={wishlist.includes(effect.name)}
+              toggleWishlist={toggleWishlist}
+              isProUser={isProUser}
+            />
           </div>
         ))}
       </div>

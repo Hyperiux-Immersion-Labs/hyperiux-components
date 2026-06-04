@@ -1,13 +1,14 @@
-import { SignUp } from "@clerk/nextjs";
+import AuthShell from "@/components/auth/AuthShell";
+import AccessRequestForm from "@/components/auth/AccessRequestForm";
 
 export const metadata = {
-  title: "Sign Up | Hyperiux Vault",
+  title: "Request Access | Hyperiux Vault",
 };
 
 export default function SignUpPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black">
-      <SignUp />
-    </div>
+    <AuthShell>
+      <AccessRequestForm />
+    </AuthShell>
   );
 }

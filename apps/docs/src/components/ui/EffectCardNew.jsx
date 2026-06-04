@@ -7,11 +7,17 @@ import gsap from "gsap";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { useAnimate, useInView } from "motion/react";
 import { getEffectHref, getEffectPreviewHref } from "@/lib/categories";
+import { Heart } from "lucide-react";
 
 gsap.registerPlugin(DrawSVGPlugin);
 
-export function EffectCard({ effect, priority = false }) {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+export function EffectCard({
+  effect,
+  priority = false,
+  isWishlisted = false,
+  toggleWishlist,
+  isProUser = false,
+}) {
   const [isHovered, setIsHovered] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const [videoError, setVideoError] = useState(false);
@@ -66,18 +72,13 @@ export function EffectCard({ effect, priority = false }) {
     });
   }, [isHovered]);
 
-  const videoPreviewUrl = effect.videoUrl
+  const videoUrl = effect.videoUrl || effect.videoURL || effect.video_url;
+  const videoPreviewUrl = videoUrl
     ? `${process.env.NEXT_PUBLIC_DEV_URL || ""}${
-        effect.videoUrl.startsWith("/") ? "" : "/"
-      }${effect.videoUrl}`
+        videoUrl.startsWith("/") ? "" : "/"
+      }${videoUrl}`
     : null;
-
-  useEffect(() => {
-    const wishlist = JSON.parse(localStorage.getItem("hyperiux-wishlist") || "[]");
-    const next = wishlist.includes(effect.name);
-    const raf = requestAnimationFrame(() => setIsWishlisted(next));
-    return () => cancelAnimationFrame(raf);
-  }, [effect.name]);
+  const coverImage = effect.coverImage || effect.imageSrc || "/assets/img/image01.webp";
 
   useEffect(() => {
     if (!isHovered && videoRef.current) {
@@ -86,8 +87,6 @@ export function EffectCard({ effect, priority = false }) {
       setVideoReady(false);
     }
   }, [isHovered]);
-
-
 
   const shouldLoadVideo = videoPreviewUrl && !videoError && isHovered;
   const showVideo = shouldLoadVideo && videoReady;
@@ -129,7 +128,7 @@ export function EffectCard({ effect, priority = false }) {
       <Link href={effectHref} className="block">
         <div className="aspect-video bg-black/20 rounded-[1vw] max-sm:rounded-[4vw] overflow-hidden relative">
           <Image
-            src={effect.coverImage || "/assets/img/image01.webp"}
+            src={coverImage}
             alt={effect.title || effect.name}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
@@ -159,13 +158,26 @@ export function EffectCard({ effect, priority = false }) {
 
       {/* Pro lock badge — always visible on pro effects */}
       {effect.tier === "pro" && (
-        <div className="absolute top-6 left-6 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 border border-white/20 backdrop-blur-sm">
-          <svg className="w-3 h-3 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
-          <span className="text-white/70 text-xs font-medium">Pro</span>
-        </div>
-      )}
+  <div className="absolute top-6 left-6 z-20 flex items-center gap-1.5 rounded-full border border-white/20 bg-black/60 px-2.5 py-1 backdrop-blur-sm">
+    {!isProUser && (
+      <svg
+        className="h-3 w-3 text-white/70"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+        />
+      </svg>
+    )}
+
+    <span className="text-xs font-medium text-white/70">Pro</span>
+  </div>
+)}
 
       {/* Action Buttons */}
       <div className="absolute top-6 right-6 z-20 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -183,8 +195,23 @@ export function EffectCard({ effect, priority = false }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
           </svg>
         </button>
-
-       
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleWishlist?.(effect);
+          }}
+          className="p-2.5 bg-black/20 border border-border/50 duration-300 ease-in-out backdrop-blur-sm text-foreground rounded-full hover:bg-primary hover:text-white transition-colors cursor-pointer"
+        >
+          <Heart
+            className={`
+      h-4 w-4
+      ${isWishlisted
+                ? "fill-white text-white"
+                : "text-white"}
+    `}
+          />
+        </button>
       </div>
 
       {/* Info */}
@@ -195,7 +222,7 @@ export function EffectCard({ effect, priority = false }) {
           </h3>
         </Link>
         <div className="flex items-center gap-2 flex-wrap">
-          {(effect.categories?.length ? effect.categories : [effect.category]).map((cat) => (
+          {(effect.categories?.length ? effect.categories : [effect.category]).filter(Boolean).map((cat) => (
             <span
               key={cat}
               className="px-2.5 py-0.5 max-sm:py-1 max-sm:px-3 max-sm:text-lg border border-border/80 backdrop-blur-sm text-sm font-medium font-sans text-white/60 capitalize rounded-lg"

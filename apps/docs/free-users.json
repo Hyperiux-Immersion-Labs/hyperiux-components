@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "clerkUserId": "user_3EcCMFvMyeyjTRaVStisfXM5lIT",
+      "name": "Harsh Goyal",
+      "email": "harsh@weareenigma.com",
+      "firstName": "Harsh",
+      "lastName": "Goyal",
+      "userType": "organisation",
+      "organisationName": "Enigma",
+      "plan": "free",
+      "role": "user",
+      "passwordHash": "$2b$12$o9IV.oq.c.GCOiHaBvk8yuZV4EgBUmIkGZPa2pGqYtM2djtleWjua",
+      "hasLoggedIn": true,
+      "temporaryPasswordIssuedAt": "2026-06-03T07:53:04.828Z",
+      "createdAt": "2026-06-03T07:53:04.828Z",
+      "updatedAt": "2026-06-03T07:53:29.475Z",
+      "firstLoggedInAt": "2026-06-03T07:53:29.475Z",
+      "lastLoggedInAt": "2026-06-03T07:53:29.475Z"
+    }
+  ]
+}

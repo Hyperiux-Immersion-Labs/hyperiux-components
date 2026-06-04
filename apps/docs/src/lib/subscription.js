@@ -1,35 +1,52 @@
-import { supabase } from "./supabase";
+import "server-only";
+import { currentUser } from "@clerk/nextjs/server";
+import { supabase } from "@/lib/supabase";
 
-/**
- * Returns the user's current plan: "pro" | "free".
- * Called server-side only (Server Components, API routes).
- *
- * A user is considered "pro" only when:
- *   - A row exists for their Clerk user ID
- *   - status === "active"
- *   - current_period_end is in the future
- */
-export async function getUserPlan(clerkUserId) {
-  if (!clerkUserId) return "free";
+const ACTIVE_STATUSES = ["active", "trialing"];
+
+export async function getUserPlan(userId) {
+  if (!userId) {
+    return "free";
+  }
 
   const { data, error } = await supabase
     .from("subscriptions")
-    .select("plan, status, current_period_end")
-    .eq("clerk_user_id", clerkUserId)
-    .single();
+    .select("plan,status,current_period_end")
+    .eq("clerk_user_id", userId)
+    .maybeSingle();
 
-  if (error || !data) return "free";
-  if (data.status !== "active") return "free";
-  if (data.current_period_end && new Date(data.current_period_end) < new Date()) return "free";
+  if (error) {
+    console.error("GET_USER_PLAN_SUPABASE_ERROR:", error);
+  }
 
-  return data.plan === "pro" ? "pro" : "free";
+  if (data?.plan === "pro" && ACTIVE_STATUSES.includes(data.status)) {
+    if (!data.current_period_end) {
+      return "pro";
+    }
+
+    const periodEnd = new Date(data.current_period_end).getTime();
+
+    if (Number.isNaN(periodEnd) || periodEnd > Date.now()) {
+      return "pro";
+    }
+  }
+
+  const user = await currentUser();
+
+  if (
+    user?.publicMetadata?.plan === "pro" ||
+    user?.publicMetadata?.proAccess === true
+  ) {
+    return "pro";
+  }
+
+  return "free";
 }
 
-/**
- * Returns true if the given effect tier is accessible to the user's plan.
- * Free effects are always accessible. Pro effects require a pro plan.
- */
-export function canAccessEffect(effectTier, userPlan) {
-  if (effectTier === "free") return true;
+export function canAccessEffect(effectTier = "free", userPlan = "free") {
+  if (!effectTier || effectTier === "free") {
+    return true;
+  }
+
   return userPlan === "pro";
 }
