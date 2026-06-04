@@ -6,5 +6,5 @@
   "category": "webgl",
   "dependencies": ["three", "@react-three/fiber", "@react-three/postprocessing", "gsap"],
   "registryDependencies": [],
-  "previewUrl": "/mouse-pixelation-effects"
+  "previewUrl": "/mouse-pixelation"
 }

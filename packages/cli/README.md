@@ -29,7 +29,7 @@ The library spans 103+ effects across 12 categories — from GSAP scroll sequenc
 ### Scroll
 Scroll-driven animations built on GSAP ScrollTrigger — parallax galleries, pinned sequences, horizontal storytelling, stacking cards, and more.
 
-`draggable-marquee` · `helix-slider` · `horizon-scroll` · `orbit-slider` · `parallax-gallery` · `parallax-slider` · `rotating-carousel` · `rotation-slider` · `scroll-distortion` · `scroll-stack` · `stacking-cards` · `sticky-content-wrapper` · `svg-path-marquee` · `text-convergence` · [+more](https://components.hyperiux.com/effects)
+`draggable-marquee` · `helix-slider` · `horizon-scroll` · `circular-split-roll` · `parallax-gallery` · `parallax-slider` · `rotating-carousel` · `rotation-slider` · `scroll-distortion` · `scroll-stack` · `stacking-cards` · `sticky-content-wrapper` · `svg-path-marquee` · `text-convergence` · [+more](https://components.hyperiux.com/effects)
 
 ### WebGL
 Three.js and R3F scenes with custom GLSL shaders — image carousels that curve on drag, pixel trail grids, frosted glass refraction, GPU particle galaxies, and full immersive 3D heroes.

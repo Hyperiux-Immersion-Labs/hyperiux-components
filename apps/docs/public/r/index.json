@@ -110,8 +110,8 @@
       "addedAt": 1779787659797.352
     },
     {
-      "name": "orbit-slider",
-      "title": "Orbit Slider",
+      "name": "circular-split-roll",
+      "title": "Circular Split Roll",
       "description": "Split circular slider with orbiting titles on one side and image cards on the other",
       "category": "scroll",
       "categories": [
@@ -123,8 +123,8 @@
       "exportName": "CircularScrollShowcase",
       "exportKind": "default",
       "previewUrl": "/circular-split-roll",
-      "coverImage": "/assets/list/orbit-slider.png",
-      "videoUrl": "orbit-slider.mp4",
+      "coverImage": "/assets/list/circular-split-roll.png",
+      "videoUrl": "circular-split-roll.mp4",
       "addedAt": 1780403176710.8745
     },
     {
@@ -1458,7 +1458,7 @@
       "dependencies": [],
       "exportName": "HoverStack",
       "exportKind": "named",
-      "previewUrl": "/stack-hovered-cards",
+      "previewUrl": "/hover-stack",
       "coverImage": "/assets/list/hover-stack.png",
       "videoUrl": "hover-stack.mp4",
       "addedAt": 1779786600700.2349
@@ -1569,7 +1569,7 @@
       ],
       "exportName": "FullScreenNavigation",
       "exportKind": "named",
-      "previewUrl": "/navigation/immersive-fullscreen-nav",
+      "previewUrl": "/navigation/immersive-full-screen-nav",
       "coverImage": "/assets/list/immersive-full-screen-navigation.png",
       "videoUrl": "immersive-full-screen-navigation.mp4",
       "addedAt": 1779786600703.4233
@@ -2000,7 +2000,7 @@
       ],
       "exportName": "MousePixelation",
       "exportKind": "named",
-      "previewUrl": "/mouse-pixelation-effects",
+      "previewUrl": "/mouse-pixelation",
       "coverImage": "/assets/list/mouse-pixelation.png",
       "videoUrl": "mouse-pixelation.mp4",
       "addedAt": 1779786600706.7988

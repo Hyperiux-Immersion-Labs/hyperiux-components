@@ -779,7 +779,7 @@ export default function MyComponent() {
 
       relatedEffectNames: [
         "Helix Slider",
-        "Orbit Slider",
+        "Circular Split Roll",
         "Rotating Carousel",
         "Parallax Slider",
         "3D Portfolio Slider",
@@ -1224,7 +1224,7 @@ export default function MyComponent() {
 
       relatedEffectNames: [
         "Rotating Carousel",
-        "Orbit Slider",
+        "Circular Split Roll",
         "Infinite Perspective Slider",
         "Helix Slider",
         "Parallax Slider",
@@ -1488,7 +1488,7 @@ export default function MyComponent() {
       },
     },
 
-    "orbit-slider": {
+    "circular-split-roll": {
       seo: {
         primaryKeyword: "React circular scroll showcase",
         secondaryKeywords: [
@@ -1499,12 +1499,12 @@ export default function MyComponent() {
           "scroll driven circular layout",
         ],
         title:
-          "Circular Scroll Showcase React Component | Orbit Scroll Animation | Hyperiux Vault",
+          "Circular Split Roll React Component | Orbit Scroll Animation | Hyperiux Vault",
         description:
           "Add a Circular Scroll Showcase effect to your React or Next.js website. Preview the effect, install it with the Hyperiux CLI, and customize it for portfolio highlights, creative galleries, visual storytelling sections, product showcases, and premium landing pages.",
       },
 
-      h1: "Circular Scroll Showcase for React and Next.js",
+      h1: "Circular Split Roll for React and Next.js",
 
       shortDescription:
         "A scroll-driven circular showcase effect where titles and images orbit vertically during page scroll.",
@@ -1988,7 +1988,7 @@ export default function CircularScrollShowcase({
       ],
 
       relatedEffectNames: [
-        "Orbit Slider",
+        "Circular Split Roll",
         "Parallax Gallery",
         "Infinite Perspective Slider",
         "Scroll Stack",

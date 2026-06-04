@@ -1,7 +1,6 @@
 import LenisSmoothScroll from "@/components/SmoothScroll/LenisScroll";
-import StackedHoverCards from"@/components/StackHoverCards/StackedHoverCards";
+import {StackedHoverCards} from"@/components/StackHoverCards/StackedHoverCards";
 import React from"react";
-// import StackedHoverCards from"./StackedHoverCards";
 
 const cards = [
  {

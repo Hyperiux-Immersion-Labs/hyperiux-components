@@ -1,5 +1,5 @@
 import React from'react'
-import ListHover from'@/components/ListHover/ListHover'
+import {ListHover} from'@/components/ListHover/ListHover'
 import LenisSmoothScroll from'@/components/SmoothScroll/LenisScroll'
 
 const page = () => {

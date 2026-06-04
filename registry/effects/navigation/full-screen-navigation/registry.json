@@ -6,5 +6,5 @@
   "category": "navigation",
   "dependencies": ["gsap"],
   "registryDependencies": [],
-  "previewUrl": "/navigation/immersive-fullscreen-nav"
+  "previewUrl": "/navigation/immersive-full-screen-nav"
 }

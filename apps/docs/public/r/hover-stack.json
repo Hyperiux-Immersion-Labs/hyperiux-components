@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "exportName": "HoverStack",
   "exportKind": "named",
-  "previewUrl": "/stack-hovered-cards",
+  "previewUrl": "/hover-stack",
   "coverImage": "/assets/list/hover-stack.png",
   "videoUrl": "hover-stack.mp4",
   "files": [

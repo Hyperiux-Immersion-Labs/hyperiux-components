@@ -3,9 +3,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const VERSIONS = [
-  { label: "V1", href: "/mouse-pixelation-effects" },
-  { label: "V2", href: "/mouse-pixelation-effects/v2" },
-  { label: "V3", href: "/mouse-pixelation-effects/v3" },
+  { label: "V1", href: "/mouse-pixelation" },
+  { label: "V2", href: "/mouse-pixelation/v2" },
+  { label: "V3", href: "/mouse-pixelation/v3" },
 ];
 
 export function VersionNav() {

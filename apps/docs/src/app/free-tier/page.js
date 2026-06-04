@@ -25,7 +25,7 @@ const FREE_TIER_LINKS = [
   { label: "Arrow Fill button", href: "/effects/buttons/arrow-fill-button" },
   { label: "Rotation slider", href: "/effects/scroll-effects/rotation-slider" },
   { label: "Parallax Slider", href: "/effects/scroll-effects/parallax-slider" },
-  { label: "Orbit Slider", href: "/effects/scroll-effects/orbit-slider" },
+  { label: "Circular Split Roll", href: "/effects/scroll-effects/circular-split-roll" },
   { label: "Zoom Slider", href: "/effects/carousels/zoom-slider" },
   { label: "Interactive List Preview", href: "/effects/others/interactive-list-preview" },
   { label: "Stack hovered cards", href: "/effects/components/hover-stack" },

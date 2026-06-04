@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ImmersiveFullscreenNavContent } from "./immersive-fullscreen-nav-content";
+import { ImmersiveFullscreenNavContent } from "./immersive-full-screen-nav-content";
 
 const CLIPS = {
   bottom: {

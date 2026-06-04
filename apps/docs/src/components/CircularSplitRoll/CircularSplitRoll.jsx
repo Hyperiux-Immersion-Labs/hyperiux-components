@@ -36,7 +36,7 @@ function getCircularPosition(progress, radiusX, radiusY, angleOffset = 0) {
   };
 }
 
-export default function CircularScrollShowcase({
+export function CircularScrollShowcase({
   items = [],
   className = "",
   sectionHeight = 260,

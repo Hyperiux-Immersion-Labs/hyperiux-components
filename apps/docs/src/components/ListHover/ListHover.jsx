@@ -21,7 +21,7 @@ const ITEM_LABEL_START_CODE = 97;
 
 const getItemLabel = (index) => `(${String.fromCharCode(ITEM_LABEL_START_CODE + index)}.)`;
 
-export default function ListHover({ items }) {
+export function ListHover({ items }) {
   const imageRefs = useRef([]);
   const imageContainerRef = useRef(null);
   const tableRef = useRef(null);
