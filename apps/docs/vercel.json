@@ -1,5 +1,0 @@
-{
-  "framework": "nextjs",
-  "installCommand": "cd ../.. && pnpm install",
-  "buildCommand": "cd ../.. && pnpm turbo build --filter=@hyperiux/docs"
-}
