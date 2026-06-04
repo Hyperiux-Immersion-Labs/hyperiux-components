@@ -1,4 +1,5 @@
 import { notFound } from"next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { getEffectConfig } from"@/lib/effect-configs";
 import {
  getEffectCategory,
@@ -6,6 +7,7 @@ import {
  getEffectPrimaryCategory,
 } from"@/lib/categories";
 import { getEffectBySlug, getRegistryIndex } from"@/lib/registry";
+import { getUserPlan, canAccessEffect } from "@/lib/subscription";
 import { FullscreenPreview } from"../../preview/fullscreen-preview";
 
 function effectBelongsToCategory(effect, categoryId) {
@@ -51,7 +53,21 @@ export default async function PreviewPage({ params }) {
  const category = getEffectCategoryBySlug(slug);
 
  if (!effect || !category || !effectBelongsToCategory(effect, category.id)) {
- notFound();
+   notFound();
+ }
+
+ // Gate pro previews — return a minimal locked page so the iframe shows nothing
+ const { userId } = await auth();
+ const userPlan = await getUserPlan(userId);
+ if (!canAccessEffect(effect.tier ?? "pro", userPlan)) {
+   return (
+     <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-4 text-white">
+       <svg className="w-10 h-10 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+       </svg>
+       <p className="text-white/60 text-sm">Pro effect — subscribe to preview</p>
+     </div>
+   );
  }
 
  const config = getEffectConfig(effectSlug);

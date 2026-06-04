@@ -39,12 +39,12 @@ program
 
 program
   .command("login")
-  .description("Connect your Hyperiux Pro account")
+  .description("Log in to Hyperiux Pro to access premium effects")
   .action(login);
 
 program
   .command("logout")
-  .description("Remove saved credentials")
+  .description("Remove saved Hyperiux Pro credentials")
   .action(logout);
 
 program

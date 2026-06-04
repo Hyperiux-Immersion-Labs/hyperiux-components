@@ -17,7 +17,7 @@
   --secondary-surface: #101010;
   --dark-surface: #000000;
   --dark-card: #141414;
-  --border: #BCBCBC;
+  --border: #bcbcbc;
   --muted: #d2d2d2;
 }
 
@@ -79,21 +79,21 @@ h4 {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: 80px;
   font-weight: 400;
-  line-height: 1.0;
+  line-height: 1;
 }
 
 .display-secondary {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: 64px;
   font-weight: 400;
-  line-height: 1.0;
+  line-height: 1;
 }
 
 .display-third {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: 52px;
   font-weight: 400;
-  line-height: 1.0;
+  line-height: 1;
 }
 
 /* Button base style - Coinbase pill */
@@ -104,7 +104,9 @@ h4 {
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.16px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .btn-pill-primary {
@@ -152,7 +154,7 @@ h4 {
 
 /* Selection color */
 ::selection {
-  background: rgba(0, 0, 0, 0.1);
+  background: #ff5f00;
 }
 .codeblock-root ::selection {
   background: rgba(99, 102, 241, 0.35);
@@ -161,5 +163,302 @@ h4 {
 @media (max-width: 542px) {
   body {
     font-size: 4vw;
+  }
+}
+
+/* Clerk sign-in must visually match AccessRequestForm */
+.hyperiux-clerk {
+  width: 100%;
+}
+
+.hyperiux-clerk .cl-rootBox {
+  width: 100%;
+}
+
+.hyperiux-clerk .cl-cardBox {
+  width: 100% !important;
+  border-radius: 2rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: transparent !important;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(28px) !important;
+  overflow: hidden !important;
+}
+
+.hyperiux-clerk .cl-card {
+  width: 100% !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 2rem !important;
+  padding-top: 3rem !important;
+}
+
+.hyperiux-clerk .cl-header {
+  margin-bottom: 2rem !important;
+  text-align: center !important;
+}
+
+.hyperiux-clerk .cl-headerTitle {
+  color: #ffffff !important;
+  font-size: 2.25rem !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.05em !important;
+  line-height: 1 !important;
+}
+
+.hyperiux-clerk .cl-headerSubtitle {
+  margin-top: 0.75rem !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5rem !important;
+}
+
+.hyperiux-clerk .cl-main {
+  gap: 0 !important;
+}
+
+.hyperiux-clerk .cl-socialButtonsRoot,
+.hyperiux-clerk .cl-dividerRow,
+.hyperiux-clerk .cl-footerItem,
+.hyperiux-clerk .cl-lastAuthenticationStrategyBadge {
+  display: none !important;
+}
+
+.hyperiux-clerk .cl-form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+}
+
+.hyperiux-clerk .cl-formFieldRow,
+.hyperiux-clerk .cl-formField {
+  margin: 0 !important;
+}
+
+.hyperiux-clerk .cl-formFieldLabelRow {
+  margin-bottom: 0.5rem !important;
+}
+
+.hyperiux-clerk .cl-formFieldLabel {
+  display: block !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.25rem !important;
+}
+
+.hyperiux-clerk .cl-input,
+.hyperiux-clerk .cl-formFieldInput {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 100px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  /* background: rgba(255, 255, 255, 0.04) !important; */
+  padding: 0.75rem 1rem !important;
+  color: #ffffff !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease !important;
+  max-height: 3.5vw !important;
+  height: 3.5vw !important;
+}
+
+.hyperiux-clerk .cl-input:focus,
+.hyperiux-clerk .cl-formFieldInput:focus {
+  border-color: #ff5f00 !important;
+  box-shadow: none !important;
+}
+
+.hyperiux-clerk .cl-input::placeholder,
+.hyperiux-clerk .cl-formFieldInput::placeholder {
+  color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.hyperiux-clerk .cl-formFieldInputGroup:focus-within {
+  border-color: #ff5f00 !important;
+}
+
+.hyperiux-clerk .cl-formFieldInputGroup .cl-input,
+.hyperiux-clerk .cl-formFieldInputGroup .cl-formFieldInput {
+  /* border: none !important; */
+  background: transparent !important;
+  padding-right: 3rem !important;
+}
+
+.hyperiux-clerk .cl-formFieldInputShowPasswordButton {
+  color: rgba(255, 255, 255, 0.45) !important;
+  box-shadow: none !important;
+}
+
+.hyperiux-clerk .cl-formFieldInputShowPasswordButton:hover {
+  color: #ffffff !important;
+}
+
+.cl-internal-1l3ge8z[data-variant="solid"]::after {
+  background: #ff5f00 !important;
+}
+.hyperiux-clerk .cl-formButtonPrimary {
+  width: 100% !important;
+  border-radius: 9999px !important;
+  background: #ff5f00 !important;
+  padding: 0.75rem 1.5rem !important;
+  color: #ffffff !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  line-height: 1.25rem !important;
+  box-shadow: none !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.hyperiux-clerk .cl-formButtonPrimary:hover {
+  background: #ff5f00 !important;
+}
+
+.hyperiux-clerk .cl-buttonArrowIcon {
+  display: none !important;
+}
+
+.hyperiux-clerk .cl-footer {
+  padding: 2vw !important;
+  background: transparent !important;
+}
+
+.hyperiux-clerk .cl-footerAction {
+  text-align: center !important;
+}
+
+.hyperiux-clerk .cl-footerActionText {
+  color: rgba(255, 255, 255, 0.45) !important;
+  font-size: 0.875rem !important;
+}
+
+.hyperiux-clerk .cl-footerActionLink {
+  color: var(--primary) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+.hyperiux-clerk .cl-footerActionLink:hover {
+  color: var(--primary-hover) !important;
+}
+
+.hyperiux-clerk .cl-formFieldErrorText,
+.hyperiux-clerk .cl-alertText {
+  color: #fecaca !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5rem !important;
+}
+
+.hyperiux-clerk .cl-alert {
+  border-radius: 1rem !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  padding: 0.75rem 1rem !important;
+}
+
+/* Autofill exact dark treatment */
+.hyperiux-clerk input:-webkit-autofill,
+.hyperiux-clerk input:-webkit-autofill:active {
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  box-shadow: 0 0 0px 1000px rgba(255, 107, 0, 0.08) inset !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: transparent !important;
+  transition: background-color 9999s ease-in-out 500s !important;
+}
+.hyperiux-clerk input:-webkit-autofill:focus {
+  border-color: #ff5f00 !important;
+  background: transparent !important;
+}
+
+.hyperiux-clerk input {
+  color-scheme: dark;
+  background: transparent !important;
+}
+
+.cl-internal-1fenm81 {
+  display: none !important;
+}
+.cl-internal-9vgtee {
+  display: none !important;
+}
+.cl-internal-n9kjv {
+  color: #ffffff !important;
+}
+.cl-internal-1q19z9n {
+  color: #ff5f00 !important;
+}
+.cl-internal-9vgtee {
+  color: #ffffff !important;
+  margin-bottom: 2rem !important;
+}
+.cl-footerAction{
+  margin-top: 1rem !important;
+}
+.cl-internal-brtq98[data-variant="solid"][data-color="primary"]{
+  background: #ff5f00 !important;
+  height: 2.5vw !important;
+  border-radius: 9999px !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin-bottom: 1rem !important;
+}
+.cl-internal-1yioxat[data-variant="outline"]{
+   box-shadow: none !important;
+   height: 2.5vw !important;
+  border-radius: 9999px !important;
+
+   background: white !important;
+}
+.cl-internal-brtq98[data-variant="solid"]::after{
+  background: #ff5f00 !important;
+}
+.cl-internal-10u89jk{
+  color: #ff5f00 !important;
+}
+.cl-internal-wq8kjp{
+display: none !important;
+}
+.cl-internal-bails5{
+  margin-top: 2rem !important;
+
+}
+.cl-formFieldInfoText__password{
+  color:white !important;
+}
+.cl-internal-1h6fgzy{
+  color:white !important;
+
+}
+.cl-formFieldRow__signOutOfOtherSessions{
+  display:none !important;
+}
+.cl-footerAction__alternativeMethods{
+  color:#ff5f00 !important;
+}
+.cl-internal-5ur8x{
+  color:white !important;
+}
+.cl-formFieldSuccessText{
+   color:white !important;
+}
+.cl-formFieldWarningText{
+   color:white !important;
+}
+.cl-backLink{
+   color:#ff5f00 !important;
+}
+
+
+@media (max-width: 640px) {
+  .hyperiux-clerk .cl-cardBox {
+    border-radius: 1.5rem !important;
+  }
+
+  .hyperiux-clerk .cl-card {
+    padding: 1.5rem !important;
   }
 }

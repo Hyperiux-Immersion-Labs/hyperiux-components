@@ -1,104 +1,99 @@
 import fs from "fs";
-import path from "path";
 import os from "os";
+import path from "path";
+import prompts from "prompts";
 import chalk from "chalk";
+import ora from "ora";
 
-const AUTH_DIR = path.join(os.homedir(), ".hyperiux");
-const AUTH_FILE = path.join(AUTH_DIR, "auth.json");
+const CONFIG_DIR = path.join(os.homedir(), ".hyperiux");
+const AUTH_FILE = path.join(CONFIG_DIR, "auth.json");
+
 const APP_URL = process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
+
+export async function login() {
+  console.log();
+  console.log(chalk.bold("Hyperiux Pro — CLI Login"));
+  console.log();
+  console.log("Open this URL in your browser to generate your CLI token:");
+  console.log();
+  console.log(chalk.cyan(`  ${APP_URL}/cli-auth`));
+  console.log();
+
+  const { token } = await prompts(
+    {
+      type: "password",
+      name: "token",
+      message: "Paste your CLI token here:",
+    },
+    {
+      onCancel: () => {
+        console.log(chalk.yellow("\nLogin cancelled."));
+        process.exit(0);
+      },
+    }
+  );
+
+  if (!token || !token.trim()) {
+    console.log(chalk.red("\nNo token provided. Run `npx hyperiux login` again."));
+    process.exit(1);
+  }
+
+  // Validate the token against the API before saving
+  const spinner = ora("Verifying token…").start();
+  try {
+    const res = await fetch(`${APP_URL}/api/cli/validate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: token.trim() }),
+    });
+
+    const data = await res.json();
+
+    if (!data.valid) {
+      spinner.fail(chalk.red(`Token invalid: ${data.reason || "unknown error"}`));
+      process.exit(1);
+    }
+
+    spinner.succeed("Token verified.");
+  } catch (err) {
+    spinner.fail(chalk.red(`Could not reach Hyperiux: ${err.message}`));
+    process.exit(1);
+  }
+
+  // Persist to ~/.hyperiux/auth.json
+  fs.mkdirSync(CONFIG_DIR, { recursive: true });
+  fs.writeFileSync(AUTH_FILE, JSON.stringify({ token: token.trim() }, null, 2) + "\n");
+
+  console.log();
+  console.log(chalk.green("✓ Logged in. You can now install pro effects with `npx hyperiux add <effect>`."));
+  console.log();
+}
+
+export async function logout() {
+  if (fs.existsSync(AUTH_FILE)) {
+    fs.rmSync(AUTH_FILE);
+    console.log(chalk.green("Logged out."));
+  } else {
+    console.log(chalk.yellow("Not logged in."));
+  }
+}
 
 export function getAuthToken() {
   if (!fs.existsSync(AUTH_FILE)) return null;
   try {
-    const data = JSON.parse(fs.readFileSync(AUTH_FILE, "utf-8"));
-    return data.token || null;
+    const { token } = JSON.parse(fs.readFileSync(AUTH_FILE, "utf-8"));
+    return token || null;
   } catch {
     return null;
   }
 }
 
-function saveAuthToken(token) {
-  if (!fs.existsSync(AUTH_DIR)) {
-    fs.mkdirSync(AUTH_DIR, { recursive: true });
-  }
-  fs.writeFileSync(AUTH_FILE, JSON.stringify({ token }, null, 2), { mode: 0o600 });
-}
-
-export async function login() {
-  console.log();
-  console.log(chalk.bold("Log in to Hyperiux"));
-  console.log();
-  console.log("1. Open this URL in your browser:");
-  console.log();
-  console.log(chalk.cyan(`   ${APP_URL}/cli-auth`));
-  console.log();
-  console.log("2. Sign in with your Pro account and copy the token shown.");
-  console.log();
-
-  // Prompt for token
-  const { default: prompts } = await import("prompts");
-  const { token } = await prompts({
-    type: "password",
-    name: "token",
-    message: "Paste your CLI token:",
-  });
-
-  if (!token) {
-    console.log(chalk.yellow("Login cancelled."));
-    return;
-  }
-
-  // Validate token against API
-  const spinner = (await import("ora")).default("Verifying token...").start();
-
-  try {
-    const res = await fetch(`${APP_URL}/api/cli/validate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token }),
-    });
-    const data = await res.json();
-
-    if (!data.valid) {
-      spinner.fail(chalk.red(`Invalid token: ${data.reason}`));
-      console.log();
-      return;
-    }
-
-    saveAuthToken(token);
-    spinner.succeed(chalk.green("Logged in successfully!"));
-    console.log();
-    console.log(chalk.dim("Token saved to ~/.hyperiux/auth.json"));
-    console.log();
-  } catch (err) {
-    spinner.fail(chalk.red(`Could not verify token: ${err.message}`));
-    console.log();
-  }
-}
-
-export async function logout() {
-  if (!fs.existsSync(AUTH_FILE)) {
-    console.log();
-    console.log(chalk.yellow("You are not logged in."));
-    console.log();
-    return;
-  }
-
-  fs.rmSync(AUTH_FILE);
-  console.log();
-  console.log(chalk.green("Logged out successfully."));
-  console.log(chalk.dim("Token removed from ~/.hyperiux/auth.json"));
-  console.log();
-}
-
 export function whoami() {
   const token = getAuthToken();
-  console.log();
-  if (token) {
-    console.log(chalk.green("Logged in") + chalk.dim(" — token found in ~/.hyperiux/auth.json"));
+  if (!token) {
+    console.log(chalk.yellow("Not logged in. Run `npx hyperiux login`."));
   } else {
-    console.log(chalk.yellow("Not logged in."));
-    console.log(chalk.dim(`Run \`npx hyperiux login\` to connect your Pro account.`));
+    console.log(chalk.green("Logged in with a saved CLI token."));
+    console.log(chalk.dim("Token file: " + AUTH_FILE));
   }
-  console.log();
 }

@@ -3,6 +3,7 @@ import { notFound } from"next/navigation";
 import { getEffectCategoryBySlug } from"@/lib/categories";
 import { getEffectsByCategory, getRegistryIndex } from"@/lib/registry";
 import { VaultContent } from"../vault-content";
+import { getUserPlan } from "@/lib/subscription";
 
 function VaultFallback() {
  return (
@@ -41,6 +42,7 @@ export default async function EffectsCategoryPage({ params }) {
  const { slug } = await params;
  const category = getEffectCategoryBySlug(slug);
  const categoriesMap = getEffectsByCategory();
+   const userPlan = await getUserPlan(userId);
 
  // Get effect counts for sidebar
  const effectCounts = {};
@@ -61,6 +63,7 @@ export default async function EffectsCategoryPage({ params }) {
  effects={[...registry.items].sort((a, b) => (b.addedAt ?? 0) - (a.addedAt ?? 0))}
  effectCounts={effectCounts}
  initialCategory={category.id}
+  userPlan={userPlan}
  />
  </Suspense>
  );

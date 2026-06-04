@@ -53,5 +53,13 @@ export function getEffectHref(effect) {
 }
 
 export function getEffectPreviewHref(effect) {
-  return `${getEffectHref(effect)}/preview`;
+
+  const categoryId = effect.categories?.[0] || effect.category || "others";
+
+  const category = getEffectCategory(categoryId);
+
+  const categorySlug = category?.slug || categoryId;
+
+
+  return `/${categorySlug}/${effect.name}`;
 }

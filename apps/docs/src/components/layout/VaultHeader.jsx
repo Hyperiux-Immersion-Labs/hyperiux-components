@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { GlobalSearch } from "./SearchBar";
 import { useState } from "react";
+import ProfileDropdown from "./ProfileDropDown";
+import { useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
 
 const categoryNames = {
   text: "Text Animations",
@@ -30,8 +33,28 @@ export function VaultHeader({
 }) {
   const searchParams = useSearchParams();
   const currentCategory = searchParams.get("category");
+  const { isSignedIn } = useUser();
 
   const [openTrigger, setOpenTrigger] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  useEffect(() => {
+    async function loadWishlistCount() {
+      try {
+        const res = await fetch("/api/wishlist");
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+
+        setWishlistCount(data.length);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadWishlistCount();
+  }, []);
 
   return (
     <>
@@ -87,6 +110,37 @@ export function VaultHeader({
                   (⌘K / Ctrl+K)
                 </kbd>
               </button>
+            )}
+            {!isSignedIn ? (
+              <>
+                <Link
+                  href="/sign-in"
+                  className="hidden md:flex px-5 py-2.5 rounded-full border border-white/10 text-white hover:bg-white hover:text-black transition-all"
+                >
+                  Sign In
+                </Link>
+
+                <Link
+                  href="/pricing"
+                  className="px-5 py-2.5 rounded-full bg-white text-black hover:opacity-90 transition-all"
+                >
+                  Get Pro
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/pricing"
+                  className="px-5 py-2.5 rounded-full bg-white text-black hover:opacity-90 transition-all"
+                >
+                  Upgrade
+                </Link>
+
+                <ProfileDropdown
+                  savedCount={wishlistCount}
+                  plan="free"
+                />
+              </>
             )}
           </div>
         </div>
