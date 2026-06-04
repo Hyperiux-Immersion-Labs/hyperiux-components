@@ -4,7 +4,15 @@
   "title": "Block Transition",
   "description": "Horizontal split-block route transition with row-based stagger and optional content shift blur using GSAP.",
   "category": "transitions",
-  "dependencies": ["gsap", "next-transition-router"],
+  "dependencies": [
+    "gsap",
+    "next-transition-router"
+  ],
   "registryDependencies": [],
+<<<<<<< Updated upstream
   "previewUrl": "/page-transitions/block-transition"
+=======
+  "previewUrl": "/page-transitions/block",
+  "tier": "free"
+>>>>>>> Stashed changes
 }

@@ -6,5 +6,6 @@
   "category": "components",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/hover-stack"
+  "previewUrl": "/hover-stack",
+  "tier": "free"
 }

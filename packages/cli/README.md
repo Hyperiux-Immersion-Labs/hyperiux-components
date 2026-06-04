@@ -8,7 +8,7 @@ Pick the effects you want. Copy the code into your project. Own it completely.
 npx hyperiux add blur-text
 ```
 
-**[ui.hyperiux.com](https://components.hyperiux.com/)** · **[hyperiux.com](https://hyperiux.com)** · **[GitHub](https://github.com/hyperiux/hyperiux-ui)**
+**[components.hyperiux.com](https://components.hyperiux.com/)** · **[hyperiux.com](https://hyperiux.com)** · **[GitHub](https://github.com/hyperiux)**
 
 ---
 
@@ -151,13 +151,13 @@ The `aliases.effects` value controls where effect files are written. Change it t
 Found a bug or want to add an effect? Pull requests are welcome.
 
 ```bash
-git clone https://github.com/hyperiux/hyperiux-ui
+git clone https://github.com/hyperiux
 cd hyperiux-ui
 pnpm install
 pnpm dev
 ```
 
-To add a new effect, see the [contribution guide](https://github.com/hyperiux/hyperiux-ui#contributing) in the root README.
+To add a new effect, see the [contribution guide](https://github.com/hyperiux#contributing) in the root README.
 
 ---
 
@@ -169,7 +169,7 @@ Built by the team at [Hyperiux](https://hyperiux.com) — a digital design and d
 |---|---|
 | 🌐 Agency | [hyperiux.com](https://hyperiux.com) |
 | 🎨 UI Library | [ui.hyperiux.com](https://components.hyperiux.com/) |
-| 💻 GitHub | [github.com/hyperiux/hyperiux-ui](https://github.com/hyperiux/hyperiux-ui) |
+| 💻 GitHub | [github.com/hyperiux/hyperiux-ui](https://github.com/hyperiux) |
 | 𝕏 X / Twitter | [@hyperiux](https://x.com/hyperiux) |
 | 📸 Instagram | [@hyperiux](https://instagram.com/hyperiux) |
 | 💼 LinkedIn | [Hyperiux](https://linkedin.com/company/hyperiux) |

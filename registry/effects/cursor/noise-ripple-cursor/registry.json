@@ -4,9 +4,12 @@
   "title": "Noise Ripple Cursor",
   "description": "Interactive shader overlay that distorts and dithers an image with fluid cursor ripples",
   "category": "cursor",
-  "dependencies": ["three"],
+  "dependencies": [
+    "three"
+  ],
   "registryDependencies": [],
   "previewUrl": "/cursors/noiseripple",
   "coverImage": "/assets/list/noise-ripple-cursor.png",
-  "videoUrl": "noise-ripple-cursor"
+  "videoUrl": "noise-ripple-cursor",
+  "tier": "pro"
 }

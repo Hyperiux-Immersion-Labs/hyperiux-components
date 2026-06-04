@@ -6,5 +6,6 @@
   "category": "components",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/form"
+  "previewUrl": "/form",
+  "tier": "pro"
 }

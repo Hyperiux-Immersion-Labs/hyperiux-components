@@ -8,6 +8,6 @@
   "registryDependencies": [],
   "coverImage": "/assets/list/cursor-move.png",
   "videoUrl": "cursor-move.mp4",
-  "previewUrl": "/cursor-move"
+  "previewUrl": "/cursor-move",
+  "tier": "pro"
 }
-

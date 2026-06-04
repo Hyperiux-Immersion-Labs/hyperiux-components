@@ -45,7 +45,6 @@ export default function FreeTierPage() {
     <main className="min-h-screen bg-white px-4 py-16 text-black">
       <div className="mx-auto max-w-3xl">
         <h1 className="mb-8 text-4xl font-semibold">Free tier</h1>
-
         <ul className="space-y-3">
           {FREE_TIER_LINKS.map((item, index) => (
             <li key={index}>

@@ -4,7 +4,10 @@
   "title": "Tabs",
   "description": "Animated tabs with a moving active indicator and panel transitions",
   "category": "components",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/tabs"
+  "previewUrl": "/tabs",
+  "tier": "pro"
 }

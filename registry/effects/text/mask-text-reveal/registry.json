@@ -4,7 +4,10 @@
   "title": "Mask Text Reveal",
   "description": "Text reveal animation with gradient mask effect that sweeps across each line on scroll",
   "category": "text",
-  "dependencies": ["gsap"],
+  "dependencies": [
+    "gsap"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/mask-text-reveal"
+  "previewUrl": "/mask-text-reveal",
+  "tier": "pro"
 }

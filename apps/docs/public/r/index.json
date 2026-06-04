@@ -1,6 +1,24 @@
 {
   "items": [
     {
+      "name": "circular-split-roll",
+      "title": "Circular Split Roll",
+      "description": "Split circular slider with orbiting titles on one side and image cards on the other",
+      "category": "scroll",
+      "categories": [
+        "scroll"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "exportName": "CircularScrollShowcase",
+      "exportKind": "default",
+      "previewUrl": "/circular-split-roll",
+      "coverImage": "/assets/list/circular-split-roll.png",
+      "videoUrl": "circular-split-roll.mp4",
+      "addedAt": 1780557015313.27
+    },
+    {
       "name": "draggable-marquee",
       "title": "Draggable Marquee",
       "description": "Infinite horizontal marquee with drag interaction and momentum physics",
@@ -16,7 +34,7 @@
       "previewUrl": "/draggable-marquee",
       "coverImage": "/assets/list/draggable-marquee.png",
       "videoUrl": "draggable-marquee.mp4",
-      "addedAt": 1779431290523.5776
+      "addedAt": 1780557015312.3645
     },
     {
       "name": "grid-scale",
@@ -34,7 +52,7 @@
       "previewUrl": "/grid-scale",
       "coverImage": "/assets/list/grid-scale.png",
       "videoUrl": "grid-scale.mp4",
-      "addedAt": 1780047742213.221
+      "addedAt": 1780557015312.9377
     },
     {
       "name": "helix-slider",
@@ -52,7 +70,7 @@
       "previewUrl": "/cylindrical-scroll",
       "coverImage": "/assets/list/helix-slider.png",
       "videoUrl": "helix-slider.mp4",
-      "addedAt": 1779786600703.709
+      "addedAt": 1780557015312.762
     },
     {
       "name": "horizontal-feature-reveal",
@@ -70,7 +88,7 @@
       "previewUrl": "/horizontal-feature-reveal",
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "horizontal-feature-reveal.mp4",
-      "addedAt": 1780062520264.8674
+      "addedAt": 1780557015311.9617
     },
     {
       "name": "inertia-scroll-effect",
@@ -89,7 +107,7 @@
       "previewUrl": "/inertia-scroll-effect",
       "coverImage": "/assets/list/inertia-scroll-effect.png",
       "videoUrl": "inertia-scroll-effect.mp4",
-      "addedAt": 1779431290524.2744
+      "addedAt": 1780557015313.1006
     },
     {
       "name": "infinite-perspective-slider",
@@ -107,25 +125,7 @@
       "previewUrl": "/infinite-perspective-slider",
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "infinite-perspective-slider.mp4",
-      "addedAt": 1779787659797.352
-    },
-    {
-      "name": "circular-split-roll",
-      "title": "Circular Split Roll",
-      "description": "Split circular slider with orbiting titles on one side and image cards on the other",
-      "category": "scroll",
-      "categories": [
-        "scroll"
-      ],
-      "dependencies": [
-        "gsap"
-      ],
-      "exportName": "CircularScrollShowcase",
-      "exportKind": "default",
-      "previewUrl": "/circular-split-roll",
-      "coverImage": "/assets/list/circular-split-roll.png",
-      "videoUrl": "circular-split-roll.mp4",
-      "addedAt": 1780403176710.8745
+      "addedAt": 1780557015311.6511
     },
     {
       "name": "parallax-footer",
@@ -141,7 +141,7 @@
       "previewUrl": "/parallax-footer",
       "coverImage": "/assets/list/parallax-footer.png",
       "videoUrl": "parallax-footer.mp4",
-      "addedAt": 1779431290525.029
+      "addedAt": 1780557015310.4111
     },
     {
       "name": "parallax-gallery",
@@ -159,7 +159,7 @@
       "previewUrl": "/frame-slider",
       "coverImage": "/assets/list/parallax-gallery.png",
       "videoUrl": "parallax-gallery.mp4",
-      "addedAt": 1779786600704.2053
+      "addedAt": 1780557015312.1367
     },
     {
       "name": "parallax-image",
@@ -177,7 +177,7 @@
       "previewUrl": "/parallax-image-animation",
       "coverImage": "/assets/list/parallax-image.png",
       "videoUrl": "parallax-image.mp4",
-      "addedAt": 1779786600704.3074
+      "addedAt": 1780557015311.2961
     },
     {
       "name": "parallax-slider",
@@ -196,7 +196,7 @@
       "previewUrl": "/parallax-slider",
       "coverImage": "/assets/list/parallax-slider.png",
       "videoUrl": "parallax-slider.mp4",
-      "addedAt": 1779431290525.5427
+      "addedAt": 1780557015309.984
     },
     {
       "name": "progressive-bloom-valley",
@@ -218,7 +218,7 @@
       "previewUrl": "/webgl/progressive-bloom-valley",
       "coverImage": "/assets/list/progressive-bloom-valley.png",
       "videoUrl": "progressive-bloom-valley.mp4",
-      "addedAt": 1779431290526.0022
+      "addedAt": 1780557015313.4692
     },
     {
       "name": "rotating-carousel",
@@ -237,7 +237,7 @@
       "previewUrl": "/circular-slider",
       "coverImage": "/assets/list/rotating-carousel.png",
       "videoUrl": "rotating-carousel.mp4",
-      "addedAt": 1779786600704.591
+      "addedAt": 1780557015313.6565
     },
     {
       "name": "rotation-slider",
@@ -256,7 +256,7 @@
       "previewUrl": "/rotation-slider",
       "coverImage": "/assets/list/rotation-slider.png",
       "videoUrl": "rotation-slider.mp4",
-      "addedAt": 1780047742213.4011
+      "addedAt": 1780557015310.8982
     },
     {
       "name": "scroll-distortion",
@@ -276,7 +276,7 @@
       "previewUrl": "/scroll-distortion",
       "coverImage": "/assets/list/scroll-distortion.png",
       "videoUrl": "scroll-distortion.mp4",
-      "addedAt": 1780478800154.5286
+      "addedAt": 1780557015310.5857
     },
     {
       "name": "scroll-shuffled-cards",
@@ -294,7 +294,7 @@
       "previewUrl": "/scroll-shuffled-cards",
       "coverImage": "/assets/list/scroll-shuffled-cards.png",
       "videoUrl": "scroll-shuffled-cards.mp4",
-      "addedAt": 1779431290527.0027
+      "addedAt": 1780557015311.4854
     },
     {
       "name": "scroll-stack",
@@ -312,7 +312,7 @@
       "previewUrl": "/stacked-card",
       "coverImage": "/assets/list/scroll-stack.png",
       "videoUrl": "scroll-stack.mp4",
-      "addedAt": 1779786600704.7075
+      "addedAt": 1780557015312.5762
     },
     {
       "name": "split-canvas",
@@ -331,7 +331,7 @@
       "previewUrl": "/split-canvas",
       "coverImage": "/assets/list/split-canvas.png",
       "videoUrl": "split-canvas.mp4",
-      "addedAt": 1779713486252.6055
+      "addedAt": 1780557015309.754
     },
     {
       "name": "square-translate",
@@ -349,7 +349,7 @@
       "previewUrl": "/square-translate",
       "coverImage": "/assets/list/square-translate.png",
       "videoUrl": "square-translate.mp4",
-      "addedAt": 1780062531146.1992
+      "addedAt": 1780557015309.3826
     },
     {
       "name": "stacking-cards",
@@ -368,7 +368,7 @@
       "previewUrl": "/stacking-cards",
       "coverImage": "/assets/list/stacking-cards.png",
       "videoUrl": "stacking-cards.mp4",
-      "addedAt": 1779431290527.8071
+      "addedAt": 1780557015310.749
     },
     {
       "name": "sticky-content-wrapper",
@@ -386,7 +386,7 @@
       "previewUrl": "/sticky-content-wrapper",
       "coverImage": "/assets/list/sticky-content-wrapper.png",
       "videoUrl": "sticky-content-wrapper.mp4",
-      "addedAt": 1779431290528.0012
+      "addedAt": 1780557015311.8071
     },
     {
       "name": "svg-path-marquee",
@@ -404,7 +404,7 @@
       "previewUrl": "/svg-path",
       "coverImage": "/assets/list/svg-path-marquee.png",
       "videoUrl": "svg-path-marquee.mp4",
-      "addedAt": 1779786600704.9666
+      "addedAt": 1780557015310.2192
     },
     {
       "name": "svg-pixel-reveal",
@@ -422,7 +422,7 @@
       "previewUrl": "/svg-pixel-reveal",
       "coverImage": "/assets/list/svg-pixel-reveal.png",
       "videoUrl": "svg-pixel-reveal.mp4",
-      "addedAt": 1779431290528.3984
+      "addedAt": 1780557015313.8242
     },
     {
       "name": "text-convergence",
@@ -440,7 +440,7 @@
       "previewUrl": "/text-convergence",
       "coverImage": "/assets/list/text-convergence.png",
       "videoUrl": "text-convergence.mp4",
-      "addedAt": 1779431290528.5608
+      "addedAt": 1780557015311.0808
     },
     {
       "name": "butterfly-trail-cursor",
@@ -460,7 +460,7 @@
       "previewUrl": "/cursors/butterflies",
       "coverImage": "/assets/list/butterfly-trail-cursor.png",
       "videoUrl": "butterfly-trail-cursor.mp4",
-      "addedAt": 1780062520263.2883
+      "addedAt": 1780557015314.9746
     },
     {
       "name": "character-trail",
@@ -476,7 +476,7 @@
       "previewUrl": "/character-trail",
       "coverImage": "/assets/list/character-trail.png",
       "videoUrl": "character-trail.mp4",
-      "addedAt": 1779431290518.0452
+      "addedAt": 1780557015314.809
     },
     {
       "name": "coffee-bean-cursor",
@@ -496,7 +496,7 @@
       "previewUrl": "/cursors/coffee",
       "coverImage": "/assets/list/coffee-bean-cursor.png",
       "videoUrl": "coffee-bean-cursor.mp4",
-      "addedAt": 1780062520263.4407
+      "addedAt": 1780557015316.5183
     },
     {
       "name": "colorful-cursor-aura",
@@ -514,7 +514,7 @@
       "previewUrl": "/colorful-cursor-aura",
       "coverImage": "/assets/list/colorful-cursor-aura.png",
       "videoUrl": "colorful-cursor-aura.mp4",
-      "addedAt": 1779786761789.877
+      "addedAt": 1780557015315.9902
     },
     {
       "name": "cursor-move",
@@ -530,7 +530,7 @@
       "previewUrl": "/cursor-move",
       "coverImage": "/assets/list/cursor-move.png",
       "videoUrl": "cursor-move.mp4",
-      "addedAt": 1780292718738.999
+      "addedAt": 1780557015315.4365
     },
     {
       "name": "fish-eye",
@@ -550,7 +550,7 @@
       "previewUrl": "/cursors/fish-eye",
       "coverImage": "/assets/list/fish-eye.png",
       "videoUrl": "fish-eye.mp4",
-      "addedAt": 1779431290518.601
+      "addedAt": 1780557015315.1292
     },
     {
       "name": "full-screen-crosshair",
@@ -566,7 +566,7 @@
       "previewUrl": "/full-screen-crosshair",
       "coverImage": "/assets/list/full-screen-crosshair.png",
       "videoUrl": "full-screen-crosshair.mp4",
-      "addedAt": 1780292718739.1558
+      "addedAt": 1780557015314.068
     },
     {
       "name": "inertia-img",
@@ -584,7 +584,7 @@
       "previewUrl": "/inertia-img",
       "coverImage": "/assets/list/inertia-img.png",
       "videoUrl": "inertia-img.mp4",
-      "addedAt": 1779431290518.7622
+      "addedAt": 1780557015315.6377
     },
     {
       "name": "interactive-arrows",
@@ -602,7 +602,7 @@
       "previewUrl": "/interactive-arrows",
       "coverImage": "/assets/list/interactive-arrows.png",
       "videoUrl": "interactive-arrows.mp4",
-      "addedAt": 1779431290519.582
+      "addedAt": 1780557015314.6416
     },
     {
       "name": "liquid-glass-cursor",
@@ -620,7 +620,7 @@
       "previewUrl": "/liquid-glass-cursor",
       "coverImage": "/assets/list/liquid-glass-cursor.png",
       "videoUrl": "liquid-glass-cursor.mp4",
-      "addedAt": 1779431290519.9902
+      "addedAt": 1780557015314.4255
     },
     {
       "name": "magnetic-image-trail",
@@ -636,7 +636,7 @@
       "previewUrl": "/magnetic-image-trail",
       "coverImage": "/assets/list/magnetic-image-trail.png",
       "videoUrl": "magnetic-image-trail.mp4",
-      "addedAt": 1779431290520.24
+      "addedAt": 1780557015314.2295
     },
     {
       "name": "noise-ripple-cursor",
@@ -654,7 +654,7 @@
       "previewUrl": "/cursors/noiseripple",
       "coverImage": "/assets/list/noise-ripple-cursor.png",
       "videoUrl": "noise-ripple-cursor",
-      "addedAt": 1779786600702.4802
+      "addedAt": 1780557015316.3018
     },
     {
       "name": "phantom-image-trail",
@@ -672,7 +672,7 @@
       "previewUrl": "/mouse-hover-image",
       "coverImage": "/assets/list/phantom-image-trail.png",
       "videoUrl": "phantom-image-trail.mp4",
-      "addedAt": 1779786600702.8157
+      "addedAt": 1780557015315.8274
     },
     {
       "name": "pixelated-image-effect",
@@ -688,7 +688,7 @@
       "previewUrl": "/pixelated-image-effect",
       "coverImage": "/assets/list/pixelated-image-effect.png",
       "videoUrl": "pixelated-image-effect.mp4",
-      "addedAt": 1779431290520.9148
+      "addedAt": 1780557015316.757
     },
     {
       "name": "pixel-bloom",
@@ -704,7 +704,7 @@
       "previewUrl": "/cursors/pixel-bloom",
       "coverImage": "/assets/list/pixel-bloom.png",
       "videoUrl": "pixel-bloom",
-      "addedAt": 1780392687289.6504
+      "addedAt": 1780557015316.1438
     },
     {
       "name": "rope-cursor",
@@ -722,7 +722,7 @@
       "previewUrl": "/cursors/rope",
       "coverImage": "/assets/list/rope-cursor.png",
       "videoUrl": "rope-cursor",
-      "addedAt": 1779786600702.9834
+      "addedAt": 1780557015315.2844
     },
     {
       "name": "dither-canvas",
@@ -738,7 +738,7 @@
       "previewUrl": "/binary-effect",
       "coverImage": "/assets/list/dither-canvas.png",
       "videoUrl": "dither-canvas.mp4",
-      "addedAt": 1779786600699.3955
+      "addedAt": 1780557015323.4087
     },
     {
       "name": "dotted-grid",
@@ -754,7 +754,7 @@
       "previewUrl": "/dotted-grid",
       "coverImage": "/assets/list/dotted-grid.png",
       "videoUrl": "dotted-grid.mp4",
-      "addedAt": 1779431290512.8079
+      "addedAt": 1780557015323.7366
     },
     {
       "name": "spider-particles",
@@ -770,7 +770,7 @@
       "previewUrl": "/spider-particles",
       "coverImage": "/assets/list/spider-particles.png",
       "videoUrl": "spider-particles.mp4",
-      "addedAt": 1779431290512.9087
+      "addedAt": 1780557015323.568
     },
     {
       "name": "block-transition",
@@ -787,7 +787,7 @@
       "previewUrl": "/page-transitions/block-transition",
       "coverImage": "/assets/list/block-transition.png",
       "videoUrl": "block-transition.mp4",
-      "addedAt": 1779786600705.6729
+      "addedAt": 1780557015329.749
     },
     {
       "name": "chess-grid-transition",
@@ -804,7 +804,7 @@
       "previewUrl": "/page-transitions/chess-grid-transition",
       "coverImage": "/assets/list/chess-grid-transition.png",
       "videoUrl": "chess-grid-transition.mp4",
-      "addedAt": 1780062520265.305
+      "addedAt": 1780557015329.4329
     },
     {
       "name": "page-flip-transition",
@@ -823,7 +823,7 @@
       "previewUrl": "/page-transitions/flip",
       "coverImage": "/assets/list/page-flip-transition.png",
       "videoUrl": "page-flip-transition.mp4",
-      "addedAt": 1780062520265.5156
+      "addedAt": 1780557015329.067
     },
     {
       "name": "pie-rotation-transition",
@@ -840,7 +840,7 @@
       "previewUrl": "/page-transitions/pie-rotation-transition",
       "coverImage": "/assets/list/pie-rotation-transition.png",
       "videoUrl": "pie-rotation-transition.mp4",
-      "addedAt": 1779786600706.0186
+      "addedAt": 1780557015328.8582
     },
     {
       "name": "pixel-transition",
@@ -859,7 +859,7 @@
       "previewUrl": "/page-transitions/pixels",
       "coverImage": "/assets/list/pixel-transition.png",
       "videoUrl": "pixel-transition.mp4",
-      "addedAt": 1779786600706.1218
+      "addedAt": 1780557015329.5928
     },
     {
       "name": "svg-draw-page-transition",
@@ -878,7 +878,7 @@
       "previewUrl": "/page-transitions/brush-strokes",
       "coverImage": "/assets/list/svg-draw-page-transition.png",
       "videoUrl": "svg-draw-page-transition.mp4",
-      "addedAt": 1780062520265.6328
+      "addedAt": 1780557015329.2578
     },
     {
       "name": "blur-text",
@@ -896,7 +896,7 @@
       "previewUrl": "/blur-text-reveal",
       "coverImage": "/assets/list/blur-text.png",
       "videoUrl": "blur-text.mp4",
-      "addedAt": 1779786600705.0886
+      "addedAt": 1780557015328.4001
     },
     {
       "name": "circle-text-reveal",
@@ -914,7 +914,7 @@
       "previewUrl": "/circle-reveal",
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "circle-text-reveal.mp4",
-      "addedAt": 1779786600705.1848
+      "addedAt": 1780557015326.978
     },
     {
       "name": "counter",
@@ -932,7 +932,7 @@
       "previewUrl": "/counter",
       "coverImage": "/assets/list/counter.png",
       "videoUrl": "/counter.mp4",
-      "addedAt": 1780062531146.3494
+      "addedAt": 1780557015327.692
     },
     {
       "name": "glitchy-text",
@@ -950,7 +950,7 @@
       "previewUrl": "/glitchy-text",
       "coverImage": "/assets/list/glitchy-text.png",
       "videoUrl": "glitchy-text.mp4",
-      "addedAt": 1779431290529.135
+      "addedAt": 1780557015326.077
     },
     {
       "name": "mask-text-reveal",
@@ -968,7 +968,7 @@
       "previewUrl": "/mask-text-reveal",
       "coverImage": "/assets/list/mask-text-reveal.png",
       "videoUrl": "mask-text-reveal.mp4",
-      "addedAt": 1779431290529.289
+      "addedAt": 1780557015328.5566
     },
     {
       "name": "overflow-stagger-text",
@@ -986,7 +986,7 @@
       "previewUrl": "/overflow-stagger-text",
       "coverImage": "/assets/list/overflow-stagger-text.png",
       "videoUrl": "overflow-stagger-text.mp4",
-      "addedAt": 1779431290529.4214
+      "addedAt": 1780557015326.466
     },
     {
       "name": "overflow-text-reveal",
@@ -1004,7 +1004,7 @@
       "previewUrl": "/overflow-text-reveal",
       "coverImage": "/assets/list/overflow-text-reveal.png",
       "videoUrl": "overflow-text-reveal.mp4",
-      "addedAt": 1779431290529.5774
+      "addedAt": 1780557015328.0203
     },
     {
       "name": "perspective-text-reveal",
@@ -1022,7 +1022,7 @@
       "previewUrl": "/perspective-text-reveal",
       "coverImage": "/assets/list/perspective-text-reveal.png",
       "videoUrl": "perspective-text-reveal.mp4",
-      "addedAt": 1779431290529.7224
+      "addedAt": 1780557015327.4932
     },
     {
       "name": "rectangular-text-reveal",
@@ -1040,7 +1040,7 @@
       "previewUrl": "/rectangular-text-reveal",
       "coverImage": "/assets/list/rectangular-text-reveal.png",
       "videoUrl": "rectangular-text-reveal.mp4",
-      "addedAt": 1779431290529.939
+      "addedAt": 1780557015328.2305
     },
     {
       "name": "scramble-text",
@@ -1058,7 +1058,7 @@
       "previewUrl": "/scramble-text",
       "coverImage": "/assets/list/scramble-text.png",
       "videoUrl": "scramble-text.mp4",
-      "addedAt": 1779431290530.019
+      "addedAt": 1780557015325.8472
     },
     {
       "name": "slide-text-reveal",
@@ -1076,7 +1076,7 @@
       "previewUrl": "/slide-text-reveal",
       "coverImage": "/assets/list/slide-text-reveal.png",
       "videoUrl": "slide-text-reveal.mp4",
-      "addedAt": 1779431290530.169
+      "addedAt": 1780557015326.2786
     },
     {
       "name": "spotlight-text",
@@ -1092,7 +1092,7 @@
       "previewUrl": "/spotlight-text",
       "coverImage": "/assets/list/spotlight-text.png",
       "videoUrl": "spotlight-text.mp4",
-      "addedAt": 1779431290530.32
+      "addedAt": 1780557015327.3215
     },
     {
       "name": "text-cloning",
@@ -1108,7 +1108,7 @@
       "previewUrl": "/text-cloning",
       "coverImage": "/assets/list/text-cloning.png",
       "videoUrl": "text-cloning.mp4",
-      "addedAt": 1779431290530.4795
+      "addedAt": 1780557015327.138
     },
     {
       "name": "text-fill-animation",
@@ -1126,7 +1126,7 @@
       "previewUrl": "/text-fill-animation",
       "coverImage": "/assets/list/text-fill-animation.png",
       "videoUrl": "text-fill-animation.mp4",
-      "addedAt": 1779431290530.648
+      "addedAt": 1780557015326.6357
     },
     {
       "name": "text-hover-expand",
@@ -1144,7 +1144,7 @@
       "previewUrl": "/text-hover",
       "coverImage": "/assets/list/text-hover-expand.png",
       "videoUrl": "text-hover-expand.mp4",
-      "addedAt": 1779786600705.4387
+      "addedAt": 1780557015326.8074
     },
     {
       "name": "text-stream",
@@ -1162,7 +1162,7 @@
       "previewUrl": "/text-stream",
       "coverImage": "/assets/list/text-stream.png",
       "videoUrl": "text-stream.mp4",
-      "addedAt": 1779431290531.047
+      "addedAt": 1780557015327.8657
     },
     {
       "name": "animated-toggle",
@@ -1178,7 +1178,7 @@
       "previewUrl": "/buttons/animated-toggle",
       "coverImage": "/assets/list/animated-toggle.png",
       "videoUrl": "animated-toggle.mp4",
-      "addedAt": 1779431290513.1965
+      "addedAt": 1780557015307.9895
     },
     {
       "name": "arrow-fill-button",
@@ -1194,7 +1194,7 @@
       "previewUrl": "/buttons/arrow-fill-button",
       "coverImage": "/assets/list/arrow-fill-button.png",
       "videoUrl": "arrow-fill-button.mp4",
-      "addedAt": 1779431290513.3896
+      "addedAt": 1780557015308.8748
     },
     {
       "name": "char-stagger-button",
@@ -1212,7 +1212,7 @@
       "previewUrl": "/buttons/char-stagger-button",
       "coverImage": "/assets/list/char-stagger-button.png",
       "videoUrl": "char-stagger-button.mp4",
-      "addedAt": 1779431290513.587
+      "addedAt": 1780557015308.3577
     },
     {
       "name": "char-stagger-primary-button",
@@ -1228,7 +1228,7 @@
       "previewUrl": "/buttons/char-stagger-primary-button",
       "coverImage": "/assets/list/char-stagger-primary-button.png",
       "videoUrl": "char-stagger-primary-button.mp4",
-      "addedAt": 1779431290513.7544
+      "addedAt": 1780557015307.6606
     },
     {
       "name": "dot-fill-button",
@@ -1244,7 +1244,7 @@
       "previewUrl": "/buttons/dot-fill-button",
       "coverImage": "/assets/list/dot-fill-button.png",
       "videoUrl": "dot-fill-button.mp4",
-      "addedAt": 1779431290513.9255
+      "addedAt": 1780557015307.406
     },
     {
       "name": "link-button",
@@ -1260,7 +1260,7 @@
       "previewUrl": "/buttons/link-button",
       "coverImage": "/assets/list/link-button.png",
       "videoUrl": "link-button.mp4",
-      "addedAt": 1779431290514.118
+      "addedAt": 1780557015309.0496
     },
     {
       "name": "scramble-link-button",
@@ -1276,7 +1276,7 @@
       "previewUrl": "/buttons/scramble-link-button",
       "coverImage": "/assets/list/scramble-link-button.png",
       "videoUrl": "scramble-link-button.mp4",
-      "addedAt": 1779431290514.2192
+      "addedAt": 1780557015308.6921
     },
     {
       "name": "clippath-slider",
@@ -1294,7 +1294,7 @@
       "previewUrl": "/clippath-slider",
       "coverImage": "/assets/list/clippath-slider.png",
       "videoUrl": "clippath-slider.mp4",
-      "addedAt": 1779974729586.569
+      "addedAt": 1780557015307.122
     },
     {
       "name": "infinite-carousel",
@@ -1312,7 +1312,7 @@
       "previewUrl": "/infinite-carousel",
       "coverImage": "/assets/list/infinite-carousel.png",
       "videoUrl": "infinite-carousel.mp4",
-      "addedAt": 1780292718738.1763
+      "addedAt": 1780557015306.207
     },
     {
       "name": "ring-carousel",
@@ -1331,7 +1331,7 @@
       "previewUrl": "/ring-carousel",
       "coverImage": "/assets/list/ring-carousel.png",
       "videoUrl": "ring-carousel.mp4",
-      "addedAt": 1780292718738.3435
+      "addedAt": 1780557015306.4998
     },
     {
       "name": "webgl-slider",
@@ -1351,7 +1351,7 @@
       "previewUrl": "/webgl-slider",
       "coverImage": "/assets/list/webgl-slider.png",
       "videoUrl": "webgl-slider.mp4",
-      "addedAt": 1780292718738.532
+      "addedAt": 1780557015306.793
     },
     {
       "name": "zoom-slider",
@@ -1369,7 +1369,7 @@
       "previewUrl": "/webgl/zoom-slider",
       "coverImage": "/assets/list/zoom-slider.png",
       "videoUrl": "zoom-slider.mp4",
-      "addedAt": 1779431290514.6113
+      "addedAt": 1780557015306.955
     },
     {
       "name": "animated-faq",
@@ -1387,7 +1387,7 @@
       "previewUrl": "/animated-faq",
       "coverImage": "/assets/list/animated-faq.png",
       "videoUrl": "animated-faq.mp4",
-      "addedAt": 1779431290514.95
+      "addedAt": 1780557015325.457
     },
     {
       "name": "custom-video-player",
@@ -1405,7 +1405,7 @@
       "previewUrl": "/video-player",
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "custom-video-player.mp4",
-      "addedAt": 1779786600699.8164
+      "addedAt": 1780557015324.4524
     },
     {
       "name": "depth-card-stack",
@@ -1423,7 +1423,7 @@
       "previewUrl": "/depth-card-stack",
       "coverImage": "/assets/list/depth-card-stack.png",
       "videoUrl": "depth-card-stack.mp4",
-      "addedAt": 1779431290515.4502
+      "addedAt": 1780557015324.1035
     },
     {
       "name": "form",
@@ -1439,7 +1439,7 @@
       "previewUrl": "/form",
       "coverImage": "/assets/list/form.png",
       "videoUrl": "form.mp4",
-      "addedAt": 1779431290515.88
+      "addedAt": 1780557015324.262
     },
     {
       "name": "hover-stack",
@@ -1455,7 +1455,7 @@
       "previewUrl": "/hover-stack",
       "coverImage": "/assets/list/hover-stack.png",
       "videoUrl": "hover-stack.mp4",
-      "addedAt": 1779786600700.2349
+      "addedAt": 1780557015324.9478
     },
     {
       "name": "modal",
@@ -1473,7 +1473,7 @@
       "previewUrl": "/modal",
       "coverImage": "/assets/list/modal.png",
       "videoUrl": "modal.mp4",
-      "addedAt": 1779431290516.9385
+      "addedAt": 1780557015325.1802
     },
     {
       "name": "tabs",
@@ -1491,7 +1491,7 @@
       "previewUrl": "/tabs",
       "coverImage": "/assets/list/tabs.png",
       "videoUrl": "tabs.mp4",
-      "addedAt": 1779431290517.0156
+      "addedAt": 1780557015323.9546
     },
     {
       "name": "testimonial-swiper",
@@ -1511,7 +1511,7 @@
       "previewUrl": "/testimonial",
       "coverImage": "/assets/list/testimonial-swiper.png",
       "videoUrl": "testimonial-swiper.mp4",
-      "addedAt": 1779786600700.3567
+      "addedAt": 1780557015324.72
     },
     {
       "name": "directional-menu",
@@ -1529,7 +1529,25 @@
       "previewUrl": "/navigation/directional-menu",
       "coverImage": "/assets/list/directional-menu.png",
       "videoUrl": "directional-menu.mp4",
-      "addedAt": 1779431290522.2007
+      "addedAt": 1780557015321.809
+    },
+    {
+      "name": "elevate-navbar",
+      "title": "Elevate Navbar",
+      "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
+      "category": "navigation",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [
+        "gsap"
+      ],
+      "exportName": "ElevateNavbar",
+      "exportKind": "named",
+      "previewUrl": "/navigation/elevate-navbar",
+      "coverImage": "/assets/list/elevate-navbar.png",
+      "videoUrl": "elevate-navbar.mp4",
+      "addedAt": 1780557015321.62
     },
     {
       "name": "expanding-navbar",
@@ -1548,7 +1566,7 @@
       "previewUrl": "/expanding-navbar",
       "coverImage": "/assets/list/expanding-navbar.png",
       "videoUrl": "expanding-navbar.mp4",
-      "addedAt": 1779431290522.7493
+      "addedAt": 1780557015321.4333
     },
     {
       "name": "immersive-full-screen-navigation",
@@ -1561,30 +1579,12 @@
       "dependencies": [
         "gsap"
       ],
-      "exportName": "FullScreenNavigation",
+      "exportName": "ImmersiveFullScreenNavigation",
       "exportKind": "named",
       "previewUrl": "/navigation/immersive-full-screen-nav",
       "coverImage": "/assets/list/immersive-full-screen-navigation.png",
       "videoUrl": "immersive-full-screen-navigation.mp4",
-      "addedAt": 1779786600703.4233
-    },
-    {
-      "name": "elevate-navbar",
-      "title": "Elevate Navbar",
-      "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
-      "category": "navigation",
-      "categories": [
-        "navigation"
-      ],
-      "dependencies": [
-        "gsap"
-      ],
-      "exportName": "GlassPillHeader",
-      "exportKind": "named",
-      "previewUrl": "/navigation/elevate-navbar",
-      "coverImage": "/assets/list/elevate-navbar.png",
-      "videoUrl": "elevate-navbar.mp4",
-      "addedAt": 1779692404903.4817
+      "addedAt": 1780557015322.0906
     },
     {
       "name": "lines-loader",
@@ -1602,7 +1602,7 @@
       "previewUrl": "/loaders/lines-loading",
       "coverImage": "/assets/list/lines-loader.png",
       "videoUrl": "lines-loader.mp4",
-      "addedAt": 1779786600703.2788
+      "addedAt": 1780557015330.0095
     },
     {
       "name": "numeric-tunnel",
@@ -1623,7 +1623,7 @@
       "previewUrl": "/loaders/numeric-tunnel",
       "coverImage": "/assets/list/numeric-tunnel.png",
       "videoUrl": "numeric-tunnel.mp4",
-      "addedAt": 1779431290521.7388
+      "addedAt": 1780557015330.324
     },
     {
       "name": "stack-loader",
@@ -1641,7 +1641,7 @@
       "previewUrl": "/loaders/stack-loader",
       "coverImage": "/assets/list/stack-loader.png",
       "videoUrl": "stack-loader.mp4",
-      "addedAt": 1779431290521.8462
+      "addedAt": 1780557015330.1707
     },
     {
       "name": "webgl-portfolio-slider",
@@ -1662,7 +1662,7 @@
       "previewUrl": "/webgl-portfolio-slider",
       "coverImage": "/assets/img/image01.webp",
       "videoUrl": "webgl-portfolio-slider.mp4",
-      "addedAt": 1779431290532.2856
+      "addedAt": 1780557015320.63
     },
     {
       "name": "book-flip",
@@ -1682,7 +1682,7 @@
       "previewUrl": "/book-flip",
       "coverImage": "/assets/list/book-flip.png",
       "videoUrl": "book-flip.mp4",
-      "addedAt": 1780469480260.1152
+      "addedAt": 1780557015320.451
     },
     {
       "name": "colliding-models",
@@ -1707,7 +1707,7 @@
       "previewUrl": "/colliding-models",
       "coverImage": "/assets/list/colliding-models.png",
       "videoUrl": "colliding-models.mp4",
-      "addedAt": 1780469480260.5327
+      "addedAt": 1780557015320.8328
     },
     {
       "name": "curved-plane",
@@ -1726,7 +1726,7 @@
       "previewUrl": "/curved-plane",
       "coverImage": "/assets/list/curved-plane.png",
       "videoUrl": "curved-plane.mp4",
-      "addedAt": 1779431290532.747
+      "addedAt": 1780557015318.4783
     },
     {
       "name": "curved-plane-v2",
@@ -1745,7 +1745,7 @@
       "previewUrl": "/curved-plane/v2",
       "coverImage": "/assets/list/curved-plane-v2.png",
       "videoUrl": "curved-plane-v2.mp4",
-      "addedAt": 1779786600706.4866
+      "addedAt": 1780557015319.0288
     },
     {
       "name": "donut-particles",
@@ -1764,7 +1764,7 @@
       "previewUrl": "/donut-particles",
       "coverImage": "/assets/list/donut-particles.png",
       "videoUrl": "donut-particles.mp4",
-      "addedAt": 1780292718739.3096
+      "addedAt": 1780557015319.7227
     },
     {
       "name": "draggable-canvas",
@@ -1782,7 +1782,7 @@
       "previewUrl": "/webgl/draggable-canvas",
       "coverImage": "/assets/list/draggable-canvas.png",
       "videoUrl": "draggable-canvas.mp4",
-      "addedAt": 1779431290533.0298
+      "addedAt": 1780557015319.2346
     },
     {
       "name": "file-encryption",
@@ -1800,7 +1800,7 @@
       "previewUrl": "/file-encryption",
       "coverImage": "/assets/list/file-encryption.png",
       "videoUrl": "file-encryption.mp4",
-      "addedAt": 1780469480260.9377
+      "addedAt": 1780557015317.6414
     },
     {
       "name": "fractal-glass",
@@ -1818,7 +1818,7 @@
       "previewUrl": "/webgl/fractal-glass",
       "coverImage": "/assets/list/fractal-glass.png",
       "videoUrl": "fractal-glass.mp4",
-      "addedAt": 1779431290533.274
+      "addedAt": 1780557015319.953
     },
     {
       "name": "grid-lift",
@@ -1836,7 +1836,7 @@
       "previewUrl": "/webgl/grid-lift",
       "coverImage": "/assets/list/grid-lift.png",
       "videoUrl": "grid-lift.mp4",
-      "addedAt": 1779431290533.5918
+      "addedAt": 1780557015321.028
     },
     {
       "name": "grid-tunnel",
@@ -1856,7 +1856,7 @@
       "previewUrl": "/grid-tunnel",
       "coverImage": "/assets/list/grid-tunnel.png",
       "videoUrl": "grid-tunnel.mp4",
-      "addedAt": 1779431290533.7988
+      "addedAt": 1780557015317.9763
     },
     {
       "name": "hero-banner-animated",
@@ -1879,7 +1879,7 @@
       "previewUrl": "/hero-banner-animated",
       "coverImage": "/assets/list/hero-banner-animated.png",
       "videoUrl": "hero-banner-animated.mp4",
-      "addedAt": 1779431290534.1414
+      "addedAt": 1780557015317.0774
     },
     {
       "name": "hyperiux-glitter-concept",
@@ -1901,7 +1901,7 @@
       "previewUrl": "/hyperiux-glitter-concept",
       "coverImage": "/assets/list/hyperiux-glitter-concept.png",
       "videoUrl": "/hyperiux-glitter-concept.mp4",
-      "addedAt": 1780469480261.5251
+      "addedAt": 1780557015318.8027
     },
     {
       "name": "infinite-grid-gallery",
@@ -1917,7 +1917,7 @@
       "previewUrl": "/infinite-grid-gallery",
       "coverImage": "/assets/list/infinite-grid-gallery.png",
       "videoUrl": "infinite-grid-gallery.mp4",
-      "addedAt": 1780469480262.2056
+      "addedAt": 1780557015321.2063
     },
     {
       "name": "interactive-blur-reveal",
@@ -1933,7 +1933,7 @@
       "previewUrl": "/webgl/interactive-blur-reveal",
       "coverImage": "/assets/list/interactive-blur-reveal.png",
       "videoUrl": "interactive-blur-reveal.mp4",
-      "addedAt": 1779431290534.558
+      "addedAt": 1780557015320.1404
     },
     {
       "name": "interactive-hover-slider",
@@ -1952,7 +1952,7 @@
       "previewUrl": "/interactive-hover-slider",
       "coverImage": "/assets/list/interactive-hover-slider.png",
       "videoUrl": "interactive-hover-slider.mp4",
-      "addedAt": 1780469480262.5767
+      "addedAt": 1780557015320.297
     },
     {
       "name": "milkyway",
@@ -1976,7 +1976,7 @@
       "previewUrl": "/milkyway",
       "coverImage": "/assets/list/milkyway.png",
       "videoUrl": "milkyway.mp4",
-      "addedAt": 1779431290535.2532
+      "addedAt": 1780557015318.2803
     },
     {
       "name": "mouse-pixelation",
@@ -1997,7 +1997,7 @@
       "previewUrl": "/mouse-pixelation",
       "coverImage": "/assets/list/mouse-pixelation.png",
       "videoUrl": "mouse-pixelation.mp4",
-      "addedAt": 1779786600706.7988
+      "addedAt": 1780557015319.5212
     },
     {
       "name": "strip-slider",
@@ -2017,7 +2017,7 @@
       "previewUrl": "/strip-slider",
       "coverImage": "/assets/list/strip-slider.png",
       "videoUrl": "strip-slider.mp4",
-      "addedAt": 1779431290535.979
+      "addedAt": 1780557015317.3394
     },
     {
       "name": "card-drift",
@@ -2035,7 +2035,7 @@
       "previewUrl": "/card-drift",
       "coverImage": "/assets/list/card-drift.png",
       "videoUrl": "card-drift.mp4",
-      "addedAt": 1779431290523.3735
+      "addedAt": 1780557015323.197
     },
     {
       "name": "gooey-counter",
@@ -2051,7 +2051,7 @@
       "previewUrl": "/gooey-counter",
       "coverImage": "/assets/list/gooey-counter.png",
       "videoUrl": "gooey-counter.mp4",
-      "addedAt": 1780469480258.257
+      "addedAt": 1780557015322.9563
     },
     {
       "name": "interactive-list-preview",
@@ -2069,7 +2069,7 @@
       "previewUrl": "/interactive-list-preview",
       "coverImage": "/assets/list/interactive-list-preview.png",
       "videoUrl": "interactive-list-preview.mp4",
-      "addedAt": 1780469480258.6245
+      "addedAt": 1780557015322.7502
     },
     {
       "name": "portfolio-concept",
@@ -2089,7 +2089,7 @@
       "previewUrl": "/portfolio-concept",
       "coverImage": "/assets/list/portfolio-concept.png",
       "videoUrl": "portfolio-concept.mp4",
-      "addedAt": 1780469480259.1816
+      "addedAt": 1780557015322.392
     }
   ]
 }

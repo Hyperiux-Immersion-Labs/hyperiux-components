@@ -6,5 +6,6 @@
   "category": "buttons",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/buttons/animated-toggle"
+  "previewUrl": "/buttons/animated-toggle",
+  "tier": "pro"
 }
