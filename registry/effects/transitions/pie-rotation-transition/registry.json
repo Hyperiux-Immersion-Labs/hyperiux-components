@@ -6,5 +6,5 @@
   "category": "transitions",
   "dependencies": ["gsap", "next-transition-router"],
   "registryDependencies": [],
-  "previewUrl": "/page-transitions/pie-rotation"
+  "previewUrl": "/page-transitions/pie-rotation-transition"
 }

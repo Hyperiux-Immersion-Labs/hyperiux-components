@@ -1,4 +1,4 @@
-import ImagesAnimation from "@/components/MouseHoverAnim/ImagesAnimation";
+import {ImagesAnimation} from "@/components/MouseHoverAnim/ImagesAnimation";
 import React from "react";
 
 const images = [

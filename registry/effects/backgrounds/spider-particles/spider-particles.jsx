@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+// ─── Constants 
 
 const MOUSE_OFFSCREEN = -9999;
 const MOUSE_THRESHOLD = -9000; // anything above this = mouse is on screen
@@ -11,7 +11,7 @@ const MOUSE_THRESHOLD = -9000; // anything above this = mouse is on screen
 const LERP_SPEED = 0.1;
 const FADE_SPEED = 0.04;
 
-// ─── GLSL Shaders ─────────────────────────────────────────────────────────────
+// ─── GLSL Shaders 
 
 const PARTICLE_VERT = /* glsl */ `
   uniform float uSize;
@@ -65,7 +65,7 @@ const POINT_FRAG = /* glsl */ `
   }
 `;
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// ─── Component 
 
 export function SpiderParticles({
   particleCount = 180,
@@ -278,7 +278,7 @@ export function SpiderParticles({
     const mouseLines = new THREE.LineSegments(mouseLineGeo, mouseLineMat);
     scene.add(mouseLines);
 
-    // ─── Resize ────────────────────────────────────────────────────────────────
+    // ─── Resize 
 
     const onResize = () => {
       width  = mount.clientWidth;
@@ -411,7 +411,7 @@ export function SpiderParticles({
     centerColor,
   ]);
 
-  // ─── UI ───────────────────────────────────────────────────────────────────────
+  // ─── UI ───────
 
   const stats = [
     { label: "Particles", value: particleCount },

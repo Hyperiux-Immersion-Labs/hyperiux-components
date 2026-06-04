@@ -4,7 +4,7 @@ import { TransitionRouter } from "next-transition-router";
 import React, { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+// ─── Constants
 
 const ROWS = 5;
 const COLOR = "#000000";
@@ -20,7 +20,7 @@ const SHIFT_BLUR = "4px";
 const SHIFT_DURATION_OUT = 0.7;
 const SHIFT_DURATION_IN = 0.8;
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// ─── Component
 
 export function BlockTransition({ children, enableContentShift = false }) {
   const wrapperRef = useRef(null);
@@ -94,7 +94,7 @@ export function BlockTransition({ children, enableContentShift = false }) {
     });
   }, []);
 
-  // ─── Render ──────────────────────────────────────────────────────────────────
+  // ─── Render──
 
   return (
     <TransitionRouter

@@ -3,7 +3,7 @@
 import { useEffect, useState } from"react";
 import Link from"next/link";
 
-const ArrowBgFillPrimaryBtn = ({
+export function ArrowBgFillPrimaryBtn({
  btnText,
  className ="",
 
@@ -21,7 +21,7 @@ const ArrowBgFillPrimaryBtn = ({
  hoverArrowColor,
 
  ...props
-}) => {
+}) {
  const [isReady, setIsReady] = useState(false);
 
  useEffect(() => {
@@ -233,6 +233,4 @@ const ArrowBgFillPrimaryBtn = ({
  `}</style>
  </>
  );
-};
-
-export default ArrowBgFillPrimaryBtn;
+}

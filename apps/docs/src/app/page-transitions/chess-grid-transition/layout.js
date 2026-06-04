@@ -1,4 +1,4 @@
-import ChessGridHeader from'@/components/showcase/transitions/ChessGrids/ChessGridHeader'
+import {ChessGridHeader} from'@/components/showcase/transitions/ChessGrids/ChessGridHeader'
 import { ChessGridTransition } from'@/components/showcase/transitions/ChessGrids/ChessGridTransition'
 import React from'react'
 

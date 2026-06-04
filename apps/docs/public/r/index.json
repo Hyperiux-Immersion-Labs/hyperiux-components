@@ -784,9 +784,7 @@
         "gsap",
         "next-transition-router"
       ],
-      "exportName": "BlockTransition",
-      "exportKind": "named",
-      "previewUrl": "/page-transitions/block",
+      "previewUrl": "/page-transitions/block-transition",
       "coverImage": "/assets/list/block-transition.png",
       "videoUrl": "block-transition.mp4",
       "addedAt": 1779786600705.6729
@@ -803,9 +801,7 @@
         "gsap",
         "next-transition-router"
       ],
-      "exportName": "ChessGridTransition",
-      "exportKind": "named",
-      "previewUrl": "/page-transitions/chess-grids",
+      "previewUrl": "/page-transitions/chess-grid-transition",
       "coverImage": "/assets/list/chess-grid-transition.png",
       "videoUrl": "chess-grid-transition.mp4",
       "addedAt": 1780062520265.305
@@ -841,9 +837,7 @@
         "gsap",
         "next-transition-router"
       ],
-      "exportName": "PieRotationTransition",
-      "exportKind": "named",
-      "previewUrl": "/page-transitions/pie-rotation",
+      "previewUrl": "/page-transitions/pie-rotation-transition",
       "coverImage": "/assets/list/pie-rotation-transition.png",
       "videoUrl": "pie-rotation-transition.mp4",
       "addedAt": 1779786600706.0186

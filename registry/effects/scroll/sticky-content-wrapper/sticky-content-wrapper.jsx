@@ -50,6 +50,89 @@ const injectStyles = () => {
       height: 100%;
     }
 
+    .sticky-content-wrapper__content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      color: #000;
+    }
+
+    .sticky-content-wrapper__heading {
+      margin: 0 0 2.5vw;
+      font-size: 4vw;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .sticky-content-wrapper__paragraph {
+      width: 70%;
+      margin: 0 0 1vw;
+      font-size: 1.2vw;
+      line-height: 1.6;
+    }
+
+    .sticky-content-wrapper__list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5vw;
+      margin: 0 0 1vw;
+      padding: 0;
+      list-style: none;
+      font-size: 1.05vw;
+      opacity: 0.8;
+    }
+
+    .sticky-content-wrapper__link {
+      width: fit-content;
+      margin-top: 1vw;
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.2vw;
+      line-height: 1.2;
+      text-decoration: none;
+    }
+
+    .sticky-content-wrapper__link-text {
+      position: relative;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .sticky-content-wrapper__link-text::after {
+      position: absolute;
+      left: 0;
+      bottom: -2%;
+      height: 1.5px;
+      width: 100%;
+      background: currentColor;
+      content: "";
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s cubic-bezier(0.62, 0.05, 0.01, 0.99),
+        transform-origin 0.5s cubic-bezier(0.62, 0.05, 0.01, 0.99);
+    }
+
+    .sticky-content-wrapper__link:hover .sticky-content-wrapper__link-text::after,
+    .sticky-content-wrapper__link:focus-visible .sticky-content-wrapper__link-text::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .sticky-content-wrapper__link-icon {
+      width: 1em;
+      height: 1em;
+      flex: none;
+      transition: transform 0.3s ease;
+    }
+
+    .sticky-content-wrapper__link:hover .sticky-content-wrapper__link-icon,
+    .sticky-content-wrapper__link:focus-visible .sticky-content-wrapper__link-icon {
+      transform: rotate(-45deg);
+    }
+
     .sticky-content-wrapper__image-layer {
       position: absolute;
       inset: 0;
@@ -75,6 +158,28 @@ const injectStyles = () => {
         padding-left: 0%;
       }
 
+      .sticky-content-wrapper__heading {
+        margin-bottom: 4vw;
+        font-size: 5.5vw;
+      }
+
+      .sticky-content-wrapper__paragraph {
+        width: 100%;
+        margin-bottom: 3vw;
+        font-size: 2.8vw;
+      }
+
+      .sticky-content-wrapper__list {
+        gap: 1vw;
+        margin-bottom: 4vw;
+        font-size: 2.5vw;
+      }
+
+      .sticky-content-wrapper__link {
+        margin-top: 3vw;
+        font-size: 2.8vw;
+      }
+
       .sticky-content-wrapper__left {
         height: 44%;
         width: 100%;
@@ -87,8 +192,111 @@ const injectStyles = () => {
         border-radius: 3.5vw;
       }
     }
+
+    @media screen and (max-width: 640px) {
+      .sticky-content-wrapper__panel {
+        padding-top: 10%;
+      }
+
+      .sticky-content-wrapper__heading {
+        font-size: 7.5vw;
+      }
+
+      .sticky-content-wrapper__paragraph {
+        font-size: 4.5vw;
+      }
+
+      .sticky-content-wrapper__list {
+        font-size: 4vw;
+      }
+
+      .sticky-content-wrapper__link {
+        font-size: 4.5vw;
+      }
+    }
   `;
   document.head.appendChild(style);
+};
+
+const getParagraphs = (item) => {
+  if (Array.isArray(item.paragraphs)) return item.paragraphs;
+  if (Array.isArray(item.paragraph)) return item.paragraph;
+  return item.paragraph ? [item.paragraph] : [];
+};
+
+const getListItems = (item) => {
+  if (Array.isArray(item.list)) return item.list;
+  if (Array.isArray(item.listItems)) return item.listItems;
+  return [];
+};
+
+const getLink = (item) => {
+  if (item.link) return item.link;
+  if (item.href) {
+    return {
+      href: item.href,
+      text: item.linkText || item.cta || "Learn more",
+    };
+  }
+  return null;
+};
+
+const renderStickyContent = (item) => {
+  const paragraphs = getParagraphs(item);
+  const listItems = getListItems(item);
+  const link = getLink(item);
+
+  return (
+    <div className="sticky-content-wrapper__content">
+      {item.heading && (
+        <h3 className="sticky-content-wrapper__heading">{item.heading}</h3>
+      )}
+
+      {paragraphs.map((paragraph, paragraphIndex) => (
+        <p
+          key={`paragraph-${paragraphIndex}`}
+          className="sticky-content-wrapper__paragraph"
+        >
+          {paragraph}
+        </p>
+      ))}
+
+      {listItems.length > 0 && (
+        <ul className="sticky-content-wrapper__list">
+          {listItems.map((listItem, listIndex) => (
+            <li key={`list-${listIndex}`}>{listItem}</li>
+          ))}
+        </ul>
+      )}
+
+      {link?.href && (
+        <a
+          href={link.href}
+          className={`sticky-content-wrapper__link ${link.className || ""}`}
+          target={link.target}
+          rel={link.rel || (link.target === "_blank" ? "noreferrer" : undefined)}
+        >
+          <span className="sticky-content-wrapper__link-text">
+            {link.text || link.label || "Learn more"}
+          </span>
+          <svg
+            className="sticky-content-wrapper__link-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 12h14M13 5l7 7-7 7"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </a>
+      )}
+    </div>
+  );
 };
 
 export function StickyContentWrapper({
@@ -115,27 +323,12 @@ export function StickyContentWrapper({
   const imageRefs = useRef([]);
   const hasInjected = useRef(false);
 
-  contentRefs.current = [];
-  imageRefs.current = [];
-
   useEffect(() => {
     if (!hasInjected.current) {
       injectStyles();
       hasInjected.current = true;
     }
   }, []);
-
-  const addContentRef = (el) => {
-    if (el && !contentRefs.current.includes(el)) {
-      contentRefs.current.push(el);
-    }
-  };
-
-  const addImageRef = (el) => {
-    if (el && !imageRefs.current.includes(el)) {
-      imageRefs.current.push(el);
-    }
-  };
 
   useLayoutEffect(() => {
     if (!sectionRef.current || !stickyRef.current || !items.length) return;
@@ -270,17 +463,12 @@ export function StickyContentWrapper({
           {items.map((item, index) => (
             <div
               key={`content-${index}`}
-              ref={addContentRef}
+              ref={(el) => {
+                contentRefs.current[index] = el;
+              }}
               className={`sticky-content-wrapper__panel ${contentClassName}`}
             >
-              {item.renderContent ? (
-                item.renderContent(item, index)
-              ) : (
-                <>
-                  {item.heading && <h3>{item.heading}</h3>}
-                  {item.paragraph && <p>{item.paragraph}</p>}
-                </>
-              )}
+              {renderStickyContent(item)}
             </div>
           ))}
         </div>
@@ -289,18 +477,16 @@ export function StickyContentWrapper({
           {items.map((item, index) => (
             <div
               key={`image-${index}`}
-              ref={addImageRef}
+              ref={(el) => {
+                imageRefs.current[index] = el;
+              }}
               className={`sticky-content-wrapper__image-layer ${imageClassName}`}
             >
-              {item.renderImage ? (
-                item.renderImage(item, index)
-              ) : (
-                <img
-                  src={item.image}
-                  alt={item.alt || `sticky-image-${index + 1}`}
-                  className="sticky-content-wrapper__image"
-                />
-              )}
+              <img
+                src={item.image}
+                alt={item.alt || item.imageAlt || `sticky-image-${index + 1}`}
+                className="sticky-content-wrapper__image"
+              />
             </div>
           ))}
         </div>
@@ -308,4 +494,3 @@ export function StickyContentWrapper({
     </section>
   );
 }
-

@@ -3,12 +3,12 @@
 import { Link } from"next-transition-router";
 import { usePathname } from"next/navigation";
 
-export default function PieChartHeader() {
+export function PieChartHeader() {
  const pathname = usePathname();
 
  const links = [
- { href:"/page-transitions/pie-rotation", label:"Page 1" },
- { href:"/page-transitions/pie-rotation/page2", label:"Page 2" },
+ { href:"/page-transitions/pie-rotation-transition", label:"Page 1" },
+ { href:"/page-transitions/pie-rotation-transition/page2", label:"Page 2" },
  ];
 
  return (

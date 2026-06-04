@@ -59,122 +59,66 @@ export const effectContent = {
 
         {
           title: "Step 3: Prepare the content data",
-          body: "Create an array of sticky items before rendering the component. Each item should contain a renderContent function and an image source. The renderContent function controls the JSX shown in the sticky content area, while the image field controls the visual paired with that step.",
+          body: "Create an array of sticky items before rendering the component. Each item can include heading, paragraph or paragraphs, list, link, and image fields. The component renders the heading, paragraphs, list items, link, and paired image directly so users do not need to write a renderContent function for every step.",
           blocks: [
             {
               type: "code",
               title: "Usage",
               filename: "page.jsx",
               language: "jsx",
-              code: `"use client";
-
-import LinkButton from "@/components/Buttons/LinkButtons/LinkButton/LinkButton";
-import StickyContentWrapper from "@/components/StickyContent/StickyContent";
+              code: `import { StickyContentWrapper } from "@/components/StickyContent/StickyContent";
 import { ReactLenis } from "lenis/react";
 
 const stickyItems = [
   {
-    renderContent: () => (
-      <div className="w-full h-full flex flex-col text-black">
-        <h3 className="font-medium">Designed for Modern Living</h3>
-
-        <p>
-          Thoughtfully crafted residences that seamlessly blend architecture,
-          comfort, and lifestyle-creating spaces where design enhances everyday
-          living.
-        </p>
-
-        <ul className="flex flex-col opacity-80">
-          <li>• Open layouts with natural light</li>
-          <li>• Premium materials and finishes</li>
-          <li>• Smart and sustainable design</li>
-        </ul>
-
-        <LinkButton
-          href="#"
-          text="Explore Residences"
-          className="mt-[1vw] text-[1.2vw]"
-        />
-      </div>
-    ),
+    heading: "Designed for Modern Living",
+    paragraph:
+      "Thoughtfully crafted residences that seamlessly blend architecture, comfort, and lifestyle-creating spaces where design enhances everyday living.",
+    list: [
+      "• Open layouts with natural light",
+      "• Premium materials and finishes",
+      "• Smart and sustainable design",
+    ],
+    link: { href: "#", text: "Explore Residences" },
     image: "/assets/sticky-section/sticky-1-img.png",
   },
 
   {
-    renderContent: () => (
-      <div className="w-full h-full flex flex-col text-black">
-        <h3 className="font-medium">Locations That Matter</h3>
-
-        <p>
-          Strategically located developments offering seamless connectivity to
-          business hubs, education centers, and lifestyle destinations.
-        </p>
-
-        <ul className="flex flex-col opacity-80">
-          <li>• Close to key urban corridors</li>
-          <li>• Excellent transport connectivity</li>
-          <li>• Surrounded by lifestyle hubs</li>
-        </ul>
-
-        <LinkButton
-          href="#"
-          text="View Locations"
-          className="mt-[1vw] text-[1.2vw]"
-        />
-      </div>
-    ),
+    heading: "Locations That Matter",
+    paragraph:
+      "Strategically located developments offering seamless connectivity to business hubs, education centers, and lifestyle destinations.",
+    list: [
+      "• Close to key urban corridors",
+      "• Excellent transport connectivity",
+      "• Surrounded by lifestyle hubs",
+    ],
+    link: { href: "#", text: "View Locations" },
     image: "/assets/sticky-section/sticky-2-img.png",
   },
 
   {
-    renderContent: () => (
-      <div className="w-full h-full flex flex-col text-black">
-        <h3 className="font-medium">Built for Long-Term Value</h3>
-
-        <p>
-          Engineered for durability and appreciation, ensuring your investment
-          continues to grow alongside evolving urban landscapes.
-        </p>
-
-        <ul className="flex flex-col opacity-80">
-          <li>• High-quality construction standards</li>
-          <li>• Future-ready infrastructure</li>
-          <li>• Strong long-term appreciation potential</li>
-        </ul>
-
-        <LinkButton
-          href="#"
-          text="Explore Investment"
-          className="mt-[1vw] text-[1.2vw]"
-        />
-      </div>
-    ),
+    heading: "Built for Long-Term Value",
+    paragraph:
+      "Engineered for durability and appreciation, ensuring your investment continues to grow alongside evolving urban landscapes.",
+    list: [
+      "• High-quality construction standards",
+      "• Future-ready infrastructure",
+      "• Strong long-term appreciation potential",
+    ],
+    link: { href: "#", text: "Explore Investment" },
     image: "/assets/sticky-section/sticky-3-img.png",
   },
 
   {
-    renderContent: () => (
-      <div className="w-full h-full flex flex-col text-black">
-        <h3 className="font-medium">Crafted for Elevated Experiences</h3>
-
-        <p>
-          From curated amenities to refined interiors, every detail is designed
-          to deliver a seamless and elevated lifestyle experience.
-        </p>
-
-        <ul className="flex flex-col opacity-80">
-          <li>• World-class lifestyle amenities</li>
-          <li>• Thoughtfully designed interiors</li>
-          <li>• Community-driven living spaces</li>
-        </ul>
-
-        <LinkButton
-          href="#"
-          text="View Amenities"
-          className="mt-[1vw] text-[1.2vw]"
-        />
-      </div>
-    ),
+    heading: "Crafted for Elevated Experiences",
+    paragraph:
+      "From curated amenities to refined interiors, every detail is designed to deliver a seamless and elevated lifestyle experience.",
+    list: [
+      "• World-class lifestyle amenities",
+      "• Thoughtfully designed interiors",
+      "• Community-driven living spaces",
+    ],
+    link: { href: "#", text: "View Amenities" },
     image: "/assets/sticky-section/sticky-4-img.png",
   },
 ];
@@ -205,7 +149,7 @@ export default function Page() {
             {
               type: "text",
               title: "How the data is passed",
-              body: "The items prop receives an array. Each object represents one sticky step. The renderContent function returns the JSX displayed in the content area, while the image field controls the visual paired with that step. This keeps the component flexible because the layout and animation logic stay inside StickyContentWrapper while the page controls the content model.",
+              body: "The items prop receives an array. Each object represents one sticky step. The heading, paragraph or paragraphs, list, link, and image fields control the content rendered by StickyContentWrapper. This keeps the page data simple while the layout and animation logic stay inside the component.",
             },
           ],
         },
@@ -6199,7 +6143,7 @@ export default function Page() {
         </p>
 
         <Link
-          href="/page-transitions/block/page2"
+          href="/page-transitions/block-transition/page2"
           className="text-sm uppercase rounded-full px-6 py-3 bg-white w-fit block mx-auto hover:bg-primary hover:text-white duration-300 text-black"
         >
           Go to Page 2
@@ -6233,7 +6177,7 @@ export default function Page() {
         </p>
 
         <Link
-          href="/page-transitions/block"
+          href="/page-transitions/block-transition"
           className="text-sm uppercase rounded-full px-6 py-3 bg-white w-fit block mx-auto hover:bg-primary hover:text-white duration-300 text-black"
         >
           Go to Page 1
@@ -6761,7 +6705,7 @@ export default function Page() {
         </p>
 
         <Link
-          href="/page-transitions/chess-grids/page2"
+          href="/page-transitions/chess-grid-transition/page2"
           className="text-sm uppercase rounded-full px-6 py-3 bg-white w-fit block mx-auto hover:bg-primary hover:text-white duration-300 text-black"
         >
           Go to Page 2
@@ -6795,7 +6739,7 @@ export default function Page() {
         </p>
 
         <Link
-          href="/page-transitions/chess-grids/"
+          href="/page-transitions/chess-grid-transition/"
           className="text-sm uppercase rounded-full px-6 py-3 bg-white w-fit block mx-auto hover:bg-primary hover:text-white duration-300 text-black"
         >
           Go to Page 1
@@ -8660,7 +8604,7 @@ li .btn-link-line::after {
           title: "Usage",
           filename: "page.jsx",
           language: "jsx",
-          code: `import ArrowBgFillPrimaryBtn from "@/components/Buttons/PrimaryButtons/ArrowBgFillPrimaryBtn/ArrowBgFillPrimaryBtn";
+          code: `import { ArrowBgFillPrimaryBtn } from "@/components/Buttons/PrimaryButtons/ArrowBgFillPrimaryBtn/ArrowBgFillPrimaryBtn";
 import { ButtonDemoShell } from "@/components/Buttons/ButtonDemoShell";
 
 export default function Page() {

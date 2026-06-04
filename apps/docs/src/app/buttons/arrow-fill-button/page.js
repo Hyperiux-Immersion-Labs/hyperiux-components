@@ -1,4 +1,4 @@
-import ArrowBgFillPrimaryBtn from "@/components/Buttons/PrimaryButtons/ArrowBgFillPrimaryBtn/ArrowBgFillPrimaryBtn";
+import { ArrowBgFillPrimaryBtn } from "@/components/Buttons/PrimaryButtons/ArrowBgFillPrimaryBtn/ArrowBgFillPrimaryBtn";
 import { ButtonDemoShell } from "@/components/Buttons/ButtonDemoShell";
 
 export default function Page() {

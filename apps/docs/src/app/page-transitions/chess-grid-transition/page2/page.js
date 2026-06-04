@@ -6,7 +6,7 @@ export default function page() {
  <section className='h-screen w-full bg-zinc-200 flex items-center justify-center'>
  <div>
  <p className='text-[6vw] text-center font-medium text-zinc-900 tracking-tight leading-[.9] mb-10'>PAGE 2</p>
- <Link href='/page-transitions/block' className='text-sm uppercase rounded-full px-6 py-3 bg-white w-fit block mx-auto hover:bg-primary hover:text-white duration-300 text-black'>
+ <Link href='/page-transitions/chess-grid-transition/' className='text-sm uppercase rounded-full px-6 py-3 bg-white w-fit block mx-auto hover:bg-primary hover:text-white duration-300 text-black'>
  Go to Page 1
  </Link>
  </div>

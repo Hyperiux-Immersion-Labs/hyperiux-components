@@ -12,7 +12,7 @@ const IDLE_DISTANCE_THRESHOLD = 2;
 const TRIGGER_DISTANCE_THRESHOLD = 100;
 const INITIAL_Z_INDEX = 1;
 
-export default function ImagesAnimation({
+export function ImagesAnimation({
   images = [],
   enableRotation = true,
   idleSpawn = true,

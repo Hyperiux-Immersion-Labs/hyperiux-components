@@ -27,7 +27,7 @@ const ROTATION_LERP = 0.12;
 
 const getItemData = (item) => (typeof item === 'string' ? { src: item } : item);
 
-const InfiniteScrollSlider = ({ images = [] }) => {
+export function InfiniteScrollSlider({ images = [] }) {
     const stripRef = useRef(null);
     const settersRef = useRef([]);
     const cardRefs = useRef([]);
@@ -438,6 +438,4 @@ const InfiniteScrollSlider = ({ images = [] }) => {
             </div>
         </div>
     );
-};
-
-export default InfiniteScrollSlider;
+}

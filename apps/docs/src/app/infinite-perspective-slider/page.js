@@ -1,5 +1,5 @@
 import LenisSmoothScroll from"@/components/SmoothScroll/LenisScroll";
-import InfiniteScrollSlider from"@/components/Surf/SurfIndex";
+import { InfiniteScrollSlider } from"@/components/Surf/SurfIndex";
 
 export default function Page() {
  const images = [

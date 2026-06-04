@@ -12,9 +12,7 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
-  "exportName": "PieRotationTransition",
-  "exportKind": "named",
-  "previewUrl": "/page-transitions/pie-rotation",
+  "previewUrl": "/page-transitions/pie-rotation-transition",
   "coverImage": "/assets/list/pie-rotation-transition.png",
   "videoUrl": "pie-rotation-transition.mp4",
   "files": [

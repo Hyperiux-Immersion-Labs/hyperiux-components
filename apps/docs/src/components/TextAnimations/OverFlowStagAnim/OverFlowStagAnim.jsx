@@ -17,7 +17,7 @@ const COPY_WRAPPER_ATTRIBUTE = "data-copy-wrapper";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
-export default function OverFlowStagAnim({
+export function OverFlowStagAnim({
   children,
   animateOnScroll = true,
   delay = 0,

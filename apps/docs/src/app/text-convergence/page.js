@@ -1,5 +1,5 @@
 import React from'react'
-import TextBreak from'@/components/TextBreak/TextBreak'
+import {TextBreak} from'@/components/TextBreak/TextBreak'
 import LenisSmoothScroll from'@/components/SmoothScroll/LenisScroll'
 
 const page = () => {

@@ -7,7 +7,81 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function StickyContentWrapper({
+const getParagraphs = (item) => {
+  if (Array.isArray(item.paragraphs)) return item.paragraphs;
+  if (Array.isArray(item.paragraph)) return item.paragraph;
+  return item.paragraph ? [item.paragraph] : [];
+};
+
+const getListItems = (item) => {
+  if (Array.isArray(item.list)) return item.list;
+  if (Array.isArray(item.listItems)) return item.listItems;
+  return [];
+};
+
+const getLink = (item) => {
+  if (item.link) return item.link;
+  if (item.href) {
+    return {
+      href: item.href,
+      text: item.linkText || item.cta || "Learn more",
+    };
+  }
+  return null;
+};
+
+const renderStickyContent = (item) => {
+  const paragraphs = getParagraphs(item);
+  const listItems = getListItems(item);
+  const link = getLink(item);
+
+  return (
+    <div className="flex h-full w-full flex-col text-black">
+      {item.heading && <h3 className="font-medium">{item.heading}</h3>}
+
+      {paragraphs.map((paragraph, paragraphIndex) => (
+        <p key={`paragraph-${paragraphIndex}`}>{paragraph}</p>
+      ))}
+
+      {listItems.length > 0 && (
+        <ul className="flex flex-col opacity-80">
+          {listItems.map((listItem, listIndex) => (
+            <li key={`list-${listIndex}`}>{listItem}</li>
+          ))}
+        </ul>
+      )}
+
+      {link?.href && (
+        <a
+          href={link.href}
+          className={`group mt-[1vw] inline-flex w-fit items-center gap-2 text-[1.2vw] leading-[1.2] no-underline ${link.className || ""}`}
+          target={link.target}
+          rel={link.rel || (link.target === "_blank" ? "noreferrer" : undefined)}
+        >
+          <span className="relative inline-block w-fit after:absolute after:bottom-[-2%] after:left-0 after:h-[1.5px] after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.62,0.05,0.01,0.99)] after:content-[''] group-hover:after:origin-left group-hover:after:scale-x-100 group-focus-visible:after:origin-left group-focus-visible:after:scale-x-100">
+            {link.text || link.label || "Learn more"}
+          </span>
+          <svg
+            className="h-[1em] w-[1em] flex-none transition-transform duration-300 group-hover:-rotate-45 group-focus-visible:-rotate-45"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 12h14M13 5l7 7-7 7"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </a>
+      )}
+    </div>
+  );
+};
+
+export function StickyContentWrapper({
   items = [],
   className = "",
   leftClassName = "",
@@ -183,22 +257,7 @@ export default function StickyContentWrapper({
               }}
               className={`absolute inset-0 h-full w-full pl-[5vw] pt-[35%] opacity-0 [&_a]:mb-[1vw] [&_a]:text-[1.2vw] [&_h3]:mb-[2.5vw] [&_h3]:text-[4vw] [&_li]:mb-[0.5vw] [&_li]:text-[1.05vw] [&_p]:mb-[1vw] [&_p]:text-[1.2vw] [&_ul]:mb-[1vw] max-md:pl-0 max-md:pt-[7%] max-md:[&_a]:mb-[3vw] max-md:[&_a]:text-[2.8vw] max-md:[&_h3]:mb-[4vw] max-md:[&_h3]:text-[5.5vw] max-md:[&_li]:mb-[1vw] max-md:[&_li]:text-[2.5vw] max-md:[&_p]:mb-[3vw] max-md:[&_p]:text-[2.8vw] max-md:[&_ul]:mb-[4vw] max-sm:pt-[10%] max-sm:[&_a]:text-[4.5vw] max-sm:[&_h3]:text-[7.5vw] max-sm:[&_li]:text-[4vw] max-sm:[&_p]:text-[4.5vw] ${contentClassName}`}
             >
-              {item.renderContent ? (
-                item.renderContent(item, index)
-              ) : (
-                <div className="flex h-full w-full flex-col gap-[2vw] pt-[35%] max-md:gap-[5vw]">
-                  {item.heading && (
-                    <h3 className="text-[3rem] leading-none font-medium">
-                      {item.heading}
-                    </h3>
-                  )}
-                  {item.paragraph && (
-                    <p className="w-[70%] text-[0.92rem] leading-[1.7]">
-                      {item.paragraph}
-                    </p>
-                  )}
-                </div>
-              )}
+              {renderStickyContent(item)}
             </div>
           ))}
         </div>
@@ -214,17 +273,13 @@ export default function StickyContentWrapper({
               }}
               className={`absolute inset-0 h-full w-full opacity-0 ${imageClassName}`}
             >
-              {item.renderImage ? (
-                item.renderImage(item, index)
-              ) : (
-                <Image
-                  src={item.image}
-                  alt={item.alt || `sticky-image-${index + 1}`}
-                  className="h-full w-full object-cover"
-                  width={item.width || 1080}
-                  height={item.height || 1080}
-                />
-              )}
+              <Image
+                src={item.image}
+                alt={item.alt || item.imageAlt || `sticky-image-${index + 1}`}
+                className="h-full w-full object-cover"
+                width={item.width || 1080}
+                height={item.height || 1080}
+              />
             </div>
           ))}
         </div>

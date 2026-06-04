@@ -36,7 +36,7 @@ const getDynamicHeight = (text) => {
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-export default function TextBreak({
+export function TextBreak({
   text = "",
   bgColor = "bg-black",
   textColor = "text-white",
