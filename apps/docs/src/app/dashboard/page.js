@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 function formatDate(value) {
@@ -11,6 +11,16 @@ function formatDate(value) {
     day: "numeric",
     year: "numeric",
   }).format(new Date(value));
+}
+
+function getBillingLabel(value) {
+  const labels = {
+    monthly: "Monthly",
+    quarterly: "Quarterly",
+    yearly: "Yearly",
+  };
+
+  return labels[value] || "Not available";
 }
 
 function StatCard({
@@ -25,7 +35,7 @@ function StatCard({
         {label}
       </p>
 
-      <p className="text-4xl font-semibold leading-none">
+      <p className="text-3xl font-medium leading-none">
         {value}
       </p>
 
@@ -69,6 +79,17 @@ export default function DashboardPage() {
     };
   }, []);
 
+  const daysRemaining = useMemo(() => {
+    if (!data?.planValidUntil) return null;
+
+    const end = new Date(data.planValidUntil).getTime();
+    const now = Date.now();
+
+    if (Number.isNaN(end)) return null;
+
+    return Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)));
+  }, [data?.planValidUntil]);
+
   if (!data) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -80,14 +101,18 @@ export default function DashboardPage() {
   }
 
   const planLabel = data.plan === "pro" ? "Pro" : "Free";
-  const accessLabel =
+  const accessLabel = `${data.totalEffectsAccess}`;
+
+  const proValidityDetail =
     data.plan === "pro"
-      ? `${data.totalEffectsAccess}`
-      : `${data.totalEffectsAccess}`;
+      ? data.planValidUntil
+        ? `${daysRemaining} days remaining`
+        : "Active subscription"
+      : "Upgrade to unlock validity";
 
   return (
     <div className="space-y-8">
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-5">
+      <div className="grid lg:grid-cols-5 md:grid-cols-2 gap-5">
         <StatCard
           label="Saved Effects"
           value={data.savedCount}
@@ -113,6 +138,13 @@ export default function DashboardPage() {
           value={accessLabel}
           detail={`${data.totalEffectsAccess} of ${data.totalEffects} effects available`}
         />
+
+        <StatCard
+          label={data.plan === "pro" ? "Valid Until" : "Plan Validity"}
+          value={data.plan === "pro" ? formatDate(data.planValidUntil) : "Free"}
+          detail={proValidityDetail}
+          href={data.plan === "pro" ? undefined : "/pricing"}
+        />
       </div>
 
       <div className="border border-white/10 rounded-lg p-6 bg-white/5 backdrop-blur-lg">
@@ -122,9 +154,35 @@ export default function DashboardPage() {
               Vault access
             </h2>
 
-            <p className="text-white/75 mt-2">
-              Free accounts include 30 effects. Upgrade to unlock the full vault.
-            </p>
+            {data.plan === "pro" ? (
+              <div className="mt-2 space-y-2 text-white/75">
+                <p>
+                  Your Pro access is active. You have full access to the Hyperiux Vault.
+                </p>
+                <p>
+                  Billing cycle:{" "}
+                  <span className="text-white">
+                    {getBillingLabel(data.billingInterval)}
+                  </span>
+                </p>
+                <p>
+                  Valid until / renews on:{" "}
+                  <span className="text-white">
+                    {formatDate(data.planValidUntil)}
+                  </span>
+                </p>
+                <p>
+                  Status:{" "}
+                  <span className="text-white capitalize">
+                    {data.subscriptionStatus}
+                  </span>
+                </p>
+              </div>
+            ) : (
+              <p className="text-white/75 mt-2">
+                Free accounts include 30 effects. Upgrade to unlock the full vault.
+              </p>
+            )}
           </div>
 
           {data.plan === "free" && (
@@ -133,6 +191,15 @@ export default function DashboardPage() {
               className="inline-flex px-5 py-3 rounded-full bg-white text-black transition duration-300 hover:bg-[#ff5f00] hover:text-white"
             >
               Upgrade
+            </Link>
+          )}
+
+          {data.plan === "pro" && (
+            <Link
+              href="/effects"
+              className="inline-flex px-5 py-3 rounded-full bg-white text-black transition duration-300 hover:bg-[#ff5f00] hover:text-white"
+            >
+              Explore Pro Effects
             </Link>
           )}
         </div>

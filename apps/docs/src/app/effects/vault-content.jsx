@@ -182,7 +182,7 @@ export function VaultContent({
             <HeadAnim>
               <h1
                 className="font-display max-sm:text-4xl text-7xl font-normal text-foreground mb-4"
-                style={{ lineHeight: "1.0" }}
+                style={{ lineHeight: "1.2" }}
               >
                 {categoryFilter === "all" ? (
                   <>

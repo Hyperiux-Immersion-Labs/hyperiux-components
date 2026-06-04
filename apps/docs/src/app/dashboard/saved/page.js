@@ -14,18 +14,26 @@ export default function SavedPage() {
   const [savedEffects, setSavedEffects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [userPlan, setUserPlan] = useState("free");
+
+  const isProUser = userPlan === "pro";
 
   async function loadSavedEffects() {
     try {
-      const res = await fetch("/api/dashboard/saved");
+      const [savedRes, dashboardRes] = await Promise.all([
+        fetch("/api/dashboard/saved"),
+        fetch("/api/dashboard"),
+      ]);
 
-      if (!res.ok) {
+      if (!savedRes.ok) {
         throw new Error("Failed to load saved effects");
       }
 
-      const data = await res.json();
+      const savedData = await savedRes.json();
+      const dashboardData = dashboardRes.ok ? await dashboardRes.json() : null;
 
-      setSavedEffects(data.savedEffects || []);
+      setSavedEffects(savedData.savedEffects || []);
+      setUserPlan(dashboardData?.plan || "free");
     } catch (error) {
       console.error(error);
     } finally {
@@ -82,6 +90,7 @@ export default function SavedPage() {
     const knownCategories = effectCategories.filter(
       (category) => category.id === "all" || savedCategories.has(category.id)
     );
+
     const customCategories = [...savedCategories]
       .filter((category) => !getEffectCategory(category))
       .map((category) => ({
@@ -103,20 +112,15 @@ export default function SavedPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <p className="text-zinc-400">
-          Loading saved effects...
-        </p>
+        <p className="text-zinc-400">Loading saved effects...</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-8">
-      {/* Header */}
       <div>
-        <h1 className="text-4xl font-display text-white">
-          Saved Effects
-        </h1>
+        <h1 className="text-4xl font-display text-white">Saved Effects</h1>
 
         <p className="text-zinc-400 mt-2">
           Your wishlist of saved effects.
@@ -135,9 +139,11 @@ export default function SavedPage() {
                 onClick={() => setActiveCategory(category.id)}
                 className={`
                   px-5 py-2.5 rounded-full border transition
-                  ${active
-                    ? "bg-white text-black border-white"
-                    : "border-white/10 text-white/70 hover:bg-white hover:text-black"}
+                  ${
+                    active
+                      ? "bg-white text-black border-white"
+                      : "border-white/10 text-white/70 hover:bg-white hover:text-black"
+                  }
                 `}
               >
                 {category.name}
@@ -147,20 +153,16 @@ export default function SavedPage() {
         </div>
       )}
 
-      {/* Empty State */}
       {savedEffects.length === 0 ? (
-        <div className="border border-white/10 rounded-lg p-12 text-center bg-white/5 backdrop-blur-lg ">
-          <h3 className="text-xl text-white mb-2">
-            No saved effects yet
-          </h3>
+        <div className="border border-white/10 rounded-lg p-12 text-center bg-white/5 backdrop-blur-lg">
+          <h3 className="text-xl text-white mb-2">No saved effects yet</h3>
 
           <p className="text-zinc-400">
-            Start exploring the vault and save your
-            favourite effects.
+            Start exploring the vault and save your favourite effects.
           </p>
         </div>
       ) : filteredEffects.length === 0 ? (
-        <div className="border border-white/10 rounded-lg p-12 text-center bg-white/5 backdrop-blur-lg ">
+        <div className="border border-white/10 rounded-lg p-12 text-center bg-white/5 backdrop-blur-lg">
           <h3 className="text-xl text-white mb-2">
             No saved effects in this category
           </h3>
@@ -173,10 +175,11 @@ export default function SavedPage() {
         <div className="grid grid-cols-3 gap-6 max-xl:grid-cols-2 max-md:grid-cols-1">
           {filteredEffects.map((effect) => (
             <EffectCard
-              key={effect.id}
+              key={effect.id || effect.name}
               effect={effect}
               isWishlisted={true}
               toggleWishlist={toggleWishlist}
+              isProUser={isProUser}
             />
           ))}
         </div>

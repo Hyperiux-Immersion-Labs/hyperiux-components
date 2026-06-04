@@ -13,10 +13,7 @@ const tabs = [
     label: "Saved Effects",
     href: "/dashboard/saved",
   },
-  {
-    label: "Activity",
-    href: "/dashboard/activity",
-  },
+  
   {
     label: "Settings",
     href: "/dashboard/settings",
