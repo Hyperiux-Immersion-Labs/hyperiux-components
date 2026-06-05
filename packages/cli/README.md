@@ -23,7 +23,7 @@ npx hyperiux add blur-text
 
 ### 3. Use it
 ```jsx
-import { BlurText } from "@/components/hyperiux/blur-text";
+import { BlurText } from "@/components/effects/blur-text";
 
 export default function Page() {
   return <BlurText>Hello, world.</BlurText>;
@@ -110,7 +110,7 @@ Letter-level and line-level reveal animations — blur, scramble, stagger, persp
   },
   "aliases": {
     "components": "@/components",
-    "effects": "@/components/hyperiux",
+    "effects": "@/components/effects",
     "hooks": "@/hooks",
     "lib": "@/lib"
   }
@@ -189,7 +189,7 @@ npm publish --dry-run           # full publish simulation, nothing uploaded
 |---|---|
 | 🌐 Agency | [hyperiux.com](https://hyperiux.com) |
 | 🎨 UI Library | [components.hyperiux.com](https://components.hyperiux.com) |
-| 💻 GitHub | [github.com/hyperiux](https://github.com/hyperiux) |
+| 💻 GitHub | [github.com/Hyperiux-Immersion-Labs](https://github.com/Hyperiux-Immersion-Labs) |
 
 ---
 

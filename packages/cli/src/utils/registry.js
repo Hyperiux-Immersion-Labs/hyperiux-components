@@ -255,15 +255,23 @@ async function fetchRemoteRegistryIndex() {
   return response.json();
 }
 
+const ALLOWED_ASSET_HOSTS = new Set(["components.hyperiux.com"]);
+
 export async function fetchRegistryAsset(source) {
-  const url = source.startsWith("http")
-    ? source
-    : `${new URL(REGISTRY_URL).origin}${source}`;
+  const resolvedUrl = source.startsWith("http")
+    ? new URL(source)
+    : new URL(source, new URL(REGISTRY_URL).origin);
+
+  if (!ALLOWED_ASSET_HOSTS.has(resolvedUrl.hostname)) {
+    throw createRegistryError(
+      `Refusing to fetch asset from untrusted host: ${resolvedUrl.hostname}`
+    );
+  }
 
   let response;
 
   try {
-    response = await fetch(url);
+    response = await fetch(resolvedUrl);
   } catch (error) {
     throw createRegistryError(
       `Failed to fetch asset "${source}": ${error.message}`,

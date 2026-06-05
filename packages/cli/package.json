@@ -1,10 +1,13 @@
 {
   "name": "hyperiux",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "CLI for adding Hyperiux UI effects to your Next.js project. This package is a CLI installer only — it is not an importable JavaScript/TypeScript library.",
   "type": "module",
   "bin": {
     "hyperiux": "./src/index.js"
+  },
+  "exports": {
+    "./package.json": "./package.json"
   },
   "files": [
     "src/commands",
@@ -13,13 +16,14 @@
     "README.md"
   ],
   "scripts": {
-    "build": "echo 'No build step — ESM source is shipped directly'",
+    "build": "node --check src/index.js && node --check src/commands/add.js && node --check src/commands/init.js && node --check src/commands/list.js && node --check src/commands/login.js && node --check src/commands/logout.js && node --check src/commands/whoami.js && node --check src/utils/auth.js && node --check src/utils/config.js && node --check src/utils/package-manager.js && node --check src/utils/registry.js",
     "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "smoke:bin": "node src/index.js --help",
     "pack:dry": "npm pack --dry-run",
-    "prepublishOnly": "npm run lint && npm run test && npm run pack:dry"
+    "prepublishOnly": "npm run lint && npm run test && npm run build && npm run smoke:bin && npm run pack:dry"
   },
   "dependencies": {
     "chalk": "^5.4.1",

@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { execSync } from "child_process";
+import { spawnSync } from "child_process";
 
 export function detectPackageManager(cwd = process.cwd()) {
   // Check for lock files
@@ -21,20 +21,9 @@ export function detectPackageManager(cwd = process.cwd()) {
   return "npm";
 }
 
-export function getInstallCommand(packageManager, packages) {
-  const packagesStr = packages.join(" ");
-
-  switch (packageManager) {
-    case "pnpm":
-      return `pnpm add ${packagesStr}`;
-    case "yarn":
-      return `yarn add ${packagesStr}`;
-    case "bun":
-      return `bun add ${packagesStr}`;
-    case "npm":
-    default:
-      return `npm install ${packagesStr}`;
-  }
+export function getInstallArgs(packageManager, packages) {
+  const verb = packageManager === "npm" ? "install" : "add";
+  return [verb, ...packages];
 }
 
 const VALID_PACKAGE_NAME_REGEX = /^[a-z0-9-@/_.]+$/;
@@ -42,21 +31,29 @@ const VALID_PACKAGE_NAME_REGEX = /^[a-z0-9-@/_.]+$/;
 export function installDependencies(packages, options = {}) {
   const { cwd = process.cwd(), dryRun = false } = options;
 
-  // Sanitize package names to prevent command injection
   const invalidPackages = packages.filter((pkg) => !VALID_PACKAGE_NAME_REGEX.test(pkg));
   if (invalidPackages.length > 0) {
     throw new Error(`Invalid package name(s) detected: ${invalidPackages.join(", ")}`);
   }
 
   const packageManager = detectPackageManager(cwd);
-  const command = getInstallCommand(packageManager, packages);
+  const args = getInstallArgs(packageManager, packages);
 
   if (dryRun) {
-    return { command, packageManager };
+    return { packageManager, args };
   }
 
-  execSync(command, { cwd, stdio: "inherit" });
-  return { command, packageManager };
+  const result = spawnSync(packageManager, args, {
+    cwd,
+    stdio: "inherit",
+    shell: false,
+  });
+
+  if (result.status !== 0) {
+    throw new Error(`${packageManager} ${args.join(" ")} failed with exit code ${result.status}`);
+  }
+
+  return { packageManager, args };
 }
 
 function isPackageInstalled(pkg, cwd) {

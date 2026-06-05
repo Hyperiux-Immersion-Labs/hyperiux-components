@@ -23,7 +23,7 @@ npx hyperiux add blur-text
 
 ### 3. Use it
 ```jsx
-import { BlurText } from "@/components/hyperiux/blur-text";
+import { BlurText } from "@/components/effects/blur-text";
 
 export default function Page() {
   return <BlurText>Hello, world.</BlurText>;
@@ -110,7 +110,7 @@ Letter-level and line-level reveal animations — blur, scramble, stagger, persp
   },
   "aliases": {
     "components": "@/components",
-    "effects": "@/components/hyperiux",
+    "effects": "@/components/effects",
     "hooks": "@/hooks",
     "lib": "@/lib"
   }
@@ -136,7 +136,7 @@ Pro effect source lives in a private repository and is served via a protected AP
 Found a bug or want to contribute a free effect? Pull requests are welcome.
 
 ```bash
-git clone https://github.com/hyperiux/hyperiux-components
+git clone https://github.com/Hyperiux-Immersion-Labs/hyperiux-components
 cd hyperiux-components
 pnpm install
 pnpm dev
@@ -160,7 +160,7 @@ To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-ne
 |---|---|
 | 🌐 Agency | [hyperiux.com](https://hyperiux.com) |
 | 🎨 UI Library | [components.hyperiux.com](https://components.hyperiux.com) |
-| 💻 GitHub | [github.com/hyperiux](https://github.com/hyperiux) |
+| 💻 GitHub | [github.com/Hyperiux-Immersion-Labs](https://github.com/Hyperiux-Immersion-Labs) |
 
 ---
 

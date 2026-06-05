@@ -8,11 +8,12 @@ on:
 
 jobs:
   quality:
-    name: Quality Gates
+    name: Quality Gates (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        node-version: [22]
+        node-version: [18, 20, 22]
 
     steps:
       - uses: actions/checkout@v4
@@ -28,7 +29,16 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm lint
+        run: pnpm --filter hyperiux lint
 
       - name: Test
         run: pnpm --filter hyperiux test
+
+      - name: Build (syntax check + smoke)
+        run: pnpm --filter hyperiux build
+
+      - name: Smoke — bin entrypoint
+        run: pnpm --filter hyperiux smoke:bin
+
+      - name: Pack dry-run
+        run: cd packages/cli && npm pack --dry-run

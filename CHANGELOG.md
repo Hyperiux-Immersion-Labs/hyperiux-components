@@ -16,6 +16,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.4] - 2026-06-05
+
+### Security
+- Registry asset fetches are now restricted to `components.hyperiux.com` — arbitrary remote hosts are rejected
+- Dependency installation replaced `execSync` (shell string) with `spawnSync(..., { shell: false })` — eliminates residual shell injection surface
+
+### Changed
+- `package.json`: added `exports` field (`./package.json` only) — prevents consumers from deep-importing CLI internals
+- `package.json`: `build` script now runs `node --check` on all source files instead of a no-op echo
+- `package.json`: `smoke:bin` script added; `prepublishOnly` now runs lint → test → build → smoke:bin → pack dry-run
+- CI (`ci.yml`): expanded Node matrix from `[22]` to `[18, 20, 22]`; added build, smoke:bin, and pack dry-run steps
+- README: corrected import path from `@/components/hyperiux/` to `@/components/effects/`
+- README: corrected `hyperiux.json` config example `effects` alias to `@/components/effects`
+- README: fixed GitHub links to `github.com/Hyperiux-Immersion-Labs`
+
 ## [1.0.3] - 2026-06-04
 
 ### Security
@@ -27,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `package.json`: corrected repository and bugs URLs to `Hyperiux-Immersion-Labs/hyperiux-components`
 - `package.json`: added `provenance: true` to `publishConfig` for npm attestation
 - `package.json`: `prepublishOnly` script runs lint + tests + pack dry-run before every publish
-- CI: added Node 18/20/22 matrix, `npm pack --dry-run`, and clean-project tarball smoke test
+- CI: added `cli-ci.yml` with Node 18/20/22 matrix, `npm pack --dry-run`, and tarball smoke test
 
 ## [1.0.0] - 2026-06-04
 

@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { installDependencies } from "../utils/package-manager.js";
-import { execSync } from "child_process";
+import { spawnSync } from "child_process";
 
 vi.mock("child_process", () => ({
-  execSync: vi.fn(),
+  spawnSync: vi.fn(() => ({ status: 0 })),
 }));
 
 describe("package manager utilities", () => {
@@ -11,30 +11,34 @@ describe("package manager utilities", () => {
     vi.clearAllMocks();
   });
 
-  it("should allow valid package names and call execSync", () => {
+  it("should allow valid package names and call spawnSync without shell", () => {
     const result = installDependencies(["framer-motion", "gsap", "@types/react"]);
-    
-    expect(result.command).toContain("framer-motion gsap @types/react");
-    expect(execSync).toHaveBeenCalled();
+
+    expect(result.args).toEqual(["install", "framer-motion", "gsap", "@types/react"]);
+    expect(spawnSync).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.arrayContaining(["framer-motion", "gsap", "@types/react"]),
+      expect.objectContaining({ shell: false })
+    );
   });
 
   it("should block package names containing malicious shell script characters", () => {
     expect(() => {
       installDependencies(["framer-motion; echo 'HACKED'"]);
     }).toThrow("Invalid package name(s) detected");
-    
-    expect(execSync).not.toHaveBeenCalled();
+
+    expect(spawnSync).not.toHaveBeenCalled();
   });
 
   it("should block package names containing backticks or shell operators", () => {
     expect(() => {
       installDependencies(["framer-motion && rm -rf /"]);
     }).toThrow("Invalid package name(s) detected");
-    
+
     expect(() => {
       installDependencies(["framer-motion`id`"]);
     }).toThrow("Invalid package name(s) detected");
 
-    expect(execSync).not.toHaveBeenCalled();
+    expect(spawnSync).not.toHaveBeenCalled();
   });
 });
