@@ -79,7 +79,12 @@ export async function logout() {
 }
 
 export function getAuthToken() {
+  if (process.env.HYPERIUX_TOKEN) {
+    return process.env.HYPERIUX_TOKEN.trim();
+  }
+
   if (!fs.existsSync(AUTH_FILE)) return null;
+
   try {
     const { token } = JSON.parse(fs.readFileSync(AUTH_FILE, "utf-8"));
     return token || null;
