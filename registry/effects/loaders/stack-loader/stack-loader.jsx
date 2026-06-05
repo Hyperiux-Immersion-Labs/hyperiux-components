@@ -6,6 +6,16 @@ import { SplitText } from 'gsap/SplitText'
 
 gsap.registerPlugin(SplitText)
 
+const DEFAULT_IMAGE_SOURCES = [
+  '/assets/img/image01.webp',
+  '/assets/img/image07.png',
+  '/assets/img/image04.png',
+  '/assets/img/image05.png',
+  '/assets/img/image10.jpg',
+  '/assets/img/distortion.jpg',
+  '/img/mobile.png',
+]
+
 const injectStyles = () => {
   if (typeof document === 'undefined') return
   if (document.getElementById('cappen-loader-styles')) return
@@ -74,7 +84,8 @@ export function Cappen({
   label1 = 'HUMAN THINKERS',
   label2 = 'DIGITAL MAKERS',
   description = 'A multi-awarded interactive digital studio crafting immersive & interactive experiences for global brands since 2006.',
-  images = [],
+  images = DEFAULT_IMAGE_SOURCES,
+  onComplete,
 }) {
   const rootRef = useRef(null)
   const imagesRef = useRef([])
@@ -101,13 +112,22 @@ export function Cappen({
         transformOrigin: '50% 100%',
         willChange: 'transform',
       })
+      gsap.set(imgs, { opacity: 0 })
 
       const tl = gsap.timeline()
 
       tl.fromTo(
         '#cappen-imgs-wrapper',
-        { yPercent: 500 },
-        { yPercent: 0, duration: 0.5, ease: 'cubic-bezier(0.25,1,0.5,1)' }
+        { yPercent: 500, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 0.5, ease: 'cubic-bezier(0.25,1,0.5,1)' }
+      )
+
+      tl.set([text1Ref.current, text2Ref.current], { opacity: 1 }, '<')
+
+      tl.to(
+        imgs,
+        { opacity: 1, duration: 0.5, ease: 'cubic-bezier(0.25,1,0.5,1)' },
+        '<'
       )
 
       tl.to(
@@ -189,6 +209,7 @@ export function Cappen({
               ease: 'cubic-bezier(0.25,1,0.5,1)',
               onComplete: () => {
                 gsap.set(rootRef.current, { display: 'none' })
+                onComplete?.()
               },
             })
           },
@@ -204,12 +225,12 @@ export function Cappen({
     }, rootRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [onComplete])
 
   return (
     <section ref={rootRef} className="cappen-loader">
       <div className="cappen-loader__row">
-        <p ref={text1Ref} className="cappen-loader__label">{label1}</p>
+        <p ref={text1Ref} className="cappen-loader__label" style={{ opacity: 0 }}>{label1}</p>
 
         <div id="cappen-imgs-wrapper" className="cappen-loader__imgs">
           {images.map((src, i) => (
@@ -217,13 +238,14 @@ export function Cappen({
               key={i}
               ref={(el) => (imagesRef.current[i] = el)}
               className="cappen-loader__img-slot"
+              style={{ opacity: 0 }}
             >
               <img src={src} alt="" />
             </div>
           ))}
         </div>
 
-        <p ref={text2Ref} className="cappen-loader__label">{label2}</p>
+        <p ref={text2Ref} className="cappen-loader__label" style={{ opacity: 0 }}>{label2}</p>
       </div>
 
       <p ref={descriptionTextRef} className="cappen-loader__desc">

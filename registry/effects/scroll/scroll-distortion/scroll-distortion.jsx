@@ -84,7 +84,7 @@ const defaultShaderConfig = {
   transitionEase: 'power3.inOut',
 }
 
-export default function ScrollDistortion({
+export function ScrollDistortion({
   sections = defaultSections,
   shaderConfig = {},
   displacementSrc = '/assets/img/distortion.jpg',

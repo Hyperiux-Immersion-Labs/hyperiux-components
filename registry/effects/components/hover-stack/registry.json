@@ -6,6 +6,6 @@
   "category": "components",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/stack-hovered-cards",
-  "tier": "pro"
+  "previewUrl": "/hover-stack",
+  "tier": "free"
 }

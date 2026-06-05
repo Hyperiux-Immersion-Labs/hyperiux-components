@@ -182,4 +182,3 @@ export function PhantomImageTrail({
   );
 }
 
-export default PhantomImageTrail;

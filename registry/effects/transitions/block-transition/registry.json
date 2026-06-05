@@ -9,6 +9,10 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
+<<<<<<< Updated upstream
+  "previewUrl": "/page-transitions/block-transition"
+=======
   "previewUrl": "/page-transitions/block",
-  "tier": "pro"
+  "tier": "free"
+>>>>>>> Stashed changes
 }

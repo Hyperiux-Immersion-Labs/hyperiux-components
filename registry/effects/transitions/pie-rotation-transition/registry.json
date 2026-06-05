@@ -9,6 +9,6 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
-  "previewUrl": "/page-transitions/pie-rotation",
-  "tier": "pro"
+  "previewUrl": "/page-transitions/pie-rotation-transition",
+  "tier": "free"
 }

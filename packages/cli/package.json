@@ -1,17 +1,20 @@
 {
   "name": "hyperiux",
-  "version": "0.1.0",
+  "version": "1.0.3",
   "description": "CLI for adding Hyperiux Vault effects to your project",
   "type": "module",
-  "bin": {
-    "hyperiux": "./src/index.js"
-  },
+  "bin": "./src/index.js",
   "files": [
-    "src"
+    "src/commands",
+    "src/utils",
+    "src/index.js",
+    "README.md"
   ],
   "scripts": {
     "build": "echo 'No build step required'",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "chalk": "^5.4.1",
@@ -31,20 +34,24 @@
     "three",
     "webgl"
   ],
-  "author": "Hyperiux <hello@hyperiux.com>",
+  "author": "Hyperiux <admin@hyperiux.com>",
   "license": "MIT",
-  "homepage": "https://ui.hyperiux.com",
+  "homepage": "https://components.hyperiux.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hyperiux/hyperiux-ui"
+    "url": "https://github.com/hyperiux/hyperiux-components"
   },
   "bugs": {
-    "url": "https://github.com/hyperiux/hyperiux-ui/issues"
+    "url": "https://github.com/hyperiux/hyperiux-components/issues"
   },
   "engines": {
     "node": ">=18"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "eslint": "^9",
+    "vitest": "^4.1.8"
   }
 }
