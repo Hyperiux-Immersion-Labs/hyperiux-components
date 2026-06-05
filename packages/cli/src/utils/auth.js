@@ -6,27 +6,29 @@ const CONFIG_DIR = path.join(os.homedir(), ".hyperiux");
 const AUTH_FILE = path.join(CONFIG_DIR, "auth.json");
 
 export function saveAuthToken(token) {
-  if (!fs.existsSync(CONFIG_DIR)) {
-    fs.mkdirSync(CONFIG_DIR, { recursive: true });
+  if (!token || typeof token !== "string") {
+    throw new Error("Invalid CLI token.");
   }
+
+  fs.mkdirSync(CONFIG_DIR, { recursive: true });
 
   fs.writeFileSync(
     AUTH_FILE,
     JSON.stringify(
       {
-        token,
+        token: token.trim(),
         savedAt: new Date().toISOString(),
       },
       null,
       2
-    ),
+    ) + "\n",
     "utf-8"
   );
 }
 
 export function getAuthToken() {
   if (process.env.HYPERIUX_TOKEN) {
-    return process.env.HYPERIUX_TOKEN;
+    return process.env.HYPERIUX_TOKEN.trim();
   }
 
   if (!fs.existsSync(AUTH_FILE)) {
@@ -35,7 +37,7 @@ export function getAuthToken() {
 
   try {
     const data = JSON.parse(fs.readFileSync(AUTH_FILE, "utf-8"));
-    return data.token || null;
+    return data.token?.trim() || null;
   } catch {
     return null;
   }
@@ -47,11 +49,14 @@ export function clearAuthToken() {
   }
 }
 
-export function getAuthStatus() {
+export function getAuthFilePath() {
+  return AUTH_FILE;
+}
+
+export function getTokenPreview() {
   const token = getAuthToken();
 
-  return {
-    isLoggedIn: Boolean(token),
-    tokenPreview: token ? `${token.slice(0, 8)}...${token.slice(-6)}` : null,
-  };
+  if (!token) return null;
+
+  return `${token.slice(0, 8)}...${token.slice(-6)}`;
 }

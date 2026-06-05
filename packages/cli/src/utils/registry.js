@@ -12,15 +12,14 @@ const REGISTRY_URL =
 const APP_URL =
   process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
 
-const API_URL =
-  process.env.HYPERIUX_API_URL || APP_URL;
+const API_URL = process.env.HYPERIUX_API_URL || APP_URL;
 
 const LOCAL_REGISTRY_PATH = "public/r";
 
 // Path to local registry in the monorepo for development
 const DEV_REGISTRY_PATH = path.join(
   __dirname,
-  "../../../../apps/docs/public/r"
+  "../../../../apps/docs/public/r",
 );
 
 function isProEffect(item) {
@@ -53,17 +52,15 @@ async function parseJsonResponse(response) {
 export async function fetchRegistry(name, options = {}) {
   const { local = false, cwd = process.cwd(), token = null } = options;
 
+  /*
+    Local mode is only for explicit local registry testing.
+    Normal `hyperiux add` must always go through the protected API.
+  */
   if (local) {
     return fetchLocalRegistry(name, cwd, token);
   }
 
-  const devRegistryFile = path.join(DEV_REGISTRY_PATH, `${name}.json`);
-
-  if (fs.existsSync(devRegistryFile)) {
-    return fetchDevRegistry(name, token);
-  }
-
-  return fetchRemoteRegistry(name, token);
+  return fetchProtectedEffect(name, token);
 }
 
 async function fetchDevRegistry(name, token) {
@@ -121,9 +118,12 @@ async function fetchRemoteRegistry(name, token) {
       });
     }
 
-    throw createRegistryError(`Failed to fetch effect: ${response.statusText}`, {
-      status: response.status,
-    });
+    throw createRegistryError(
+      `Failed to fetch effect: ${response.statusText}`,
+      {
+        status: response.status,
+      },
+    );
   }
 
   const meta = await parseJsonResponse(response);
@@ -146,6 +146,15 @@ async function fetchRemoteRegistry(name, token) {
 async function fetchProtectedEffect(name, token) {
   const url = `${API_URL.replace(/\/$/, "")}/api/cli/effects/${name}`;
 
+  if (process.env.HYPERIUX_DEBUG === "1") {
+    console.log("[Hyperiux CLI] API URL:", url);
+    console.log("[Hyperiux CLI] Token found:", Boolean(token));
+    console.log(
+      "[Hyperiux CLI] Token preview:",
+      token ? `${token.slice(0, 8)}...${token.slice(-6)}` : "NO_TOKEN"
+    );
+  }
+
   let response;
 
   try {
@@ -161,6 +170,11 @@ async function fetchProtectedEffect(name, token) {
   }
 
   const data = await parseJsonResponse(response);
+
+  if (process.env.HYPERIUX_DEBUG === "1") {
+    console.log("[Hyperiux CLI] Response status:", response.status);
+    console.log("[Hyperiux CLI] Response body:", data);
+  }
 
   if (!response.ok) {
     throw createRegistryError(
@@ -178,7 +192,6 @@ async function fetchProtectedEffect(name, token) {
 
   return data;
 }
-
 export async function fetchRegistryIndex(options = {}) {
   const { local = false, cwd = process.cwd() } = options;
 
@@ -222,7 +235,9 @@ async function fetchRemoteRegistryIndex() {
   try {
     response = await fetch(url);
   } catch (error) {
-    throw createRegistryError(`Failed to fetch registry index: ${error.message}`);
+    throw createRegistryError(
+      `Failed to fetch registry index: ${error.message}`,
+    );
   }
 
   if (!response.ok) {
@@ -230,7 +245,7 @@ async function fetchRemoteRegistryIndex() {
       `Failed to fetch registry index: ${response.statusText}`,
       {
         status: response.status,
-      }
+      },
     );
   }
 
@@ -248,7 +263,7 @@ export async function fetchRegistryAsset(source) {
     response = await fetch(url);
   } catch (error) {
     throw createRegistryError(
-      `Failed to fetch asset "${source}": ${error.message}`
+      `Failed to fetch asset "${source}": ${error.message}`,
     );
   }
 
@@ -271,7 +286,7 @@ export function getRegistryItemFiles(item, config, cwd = process.cwd()) {
 
     if (!targetPath) {
       throw createRegistryError(
-        `Invalid registry file in "${item.name}". Missing target path.`
+        `Invalid registry file in "${item.name}". Missing target path.`,
       );
     }
 
@@ -284,16 +299,13 @@ export function getRegistryItemFiles(item, config, cwd = process.cwd()) {
 
       targetPath = targetPath.replace(
         "components/hyperiux/",
-        `${effectsPath}/`
+        `${effectsPath}/`,
       );
     } else if (targetPath.startsWith("components/effects/")) {
       const effectsPath =
         config.aliases?.effects?.replace("@/", "") || "components/effects";
 
-      targetPath = targetPath.replace(
-        "components/effects/",
-        `${effectsPath}/`
-      );
+      targetPath = targetPath.replace("components/effects/", `${effectsPath}/`);
     } else if (targetPath.startsWith("hooks/")) {
       const hooksPath = config.aliases?.hooks?.replace("@/", "") || "hooks";
 

@@ -14,7 +14,7 @@ import {
   installDependencies,
   getMissingDependencies,
 } from "../utils/package-manager.js";
-import { getAuthToken } from "./login.js";
+import { getAuthToken } from "../utils/auth.js";
 
 const APP_URL =
   process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
