@@ -59,23 +59,22 @@ export function installDependencies(packages, options = {}) {
   return { command, packageManager };
 }
 
-export function getInstalledDependencies(cwd = process.cwd()) {
-  const packageJsonPath = path.join(cwd, "package.json");
-
-  if (!fs.existsSync(packageJsonPath)) {
-    return [];
+function isPackageInstalled(pkg, cwd) {
+  // Strip version specifier — handles both "gsap@3" and "@react-three/fiber@8"
+  // Scoped: "@react-three/fiber" → keep as-is; "@react-three/fiber@8" → "@react-three/fiber"
+  let name = pkg;
+  if (pkg.startsWith("@")) {
+    // e.g. "@react-three/fiber@8.0.0" → split after the second "@"
+    const withoutScope = pkg.slice(1); // "react-three/fiber@8.0.0"
+    const versionAt = withoutScope.indexOf("@");
+    name = versionAt === -1 ? pkg : `@${withoutScope.slice(0, versionAt)}`;
+  } else {
+    name = pkg.split("@")[0];
   }
 
-  const content = fs.readFileSync(packageJsonPath, "utf-8");
-  const packageJson = JSON.parse(content);
-
-  return [
-    ...Object.keys(packageJson.dependencies || {}),
-    ...Object.keys(packageJson.devDependencies || {}),
-  ];
+  return fs.existsSync(path.join(cwd, "node_modules", name));
 }
 
 export function getMissingDependencies(required, cwd = process.cwd()) {
-  const installed = getInstalledDependencies(cwd);
-  return required.filter((dep) => !installed.includes(dep));
+  return required.filter((dep) => !isPackageInstalled(dep, cwd));
 }
