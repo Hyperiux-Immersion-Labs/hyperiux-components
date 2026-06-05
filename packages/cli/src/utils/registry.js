@@ -63,21 +63,6 @@ export async function fetchRegistry(name, options = {}) {
   return fetchProtectedEffect(name, token);
 }
 
-async function fetchDevRegistry(name, token) {
-  const registryPath = path.join(DEV_REGISTRY_PATH, `${name}.json`);
-  const meta = JSON.parse(fs.readFileSync(registryPath, "utf-8"));
-
-  /**
-   * Even in development, Pro effects must go through the protected API.
-   * This keeps local CLI behavior identical to production.
-   */
-  if (isProEffect(meta)) {
-    return fetchProtectedEffect(name, token);
-  }
-
-  return meta;
-}
-
 async function fetchLocalRegistry(name, cwd, token) {
   const registryPath = path.join(cwd, LOCAL_REGISTRY_PATH, `${name}.json`);
 
@@ -92,49 +77,6 @@ async function fetchLocalRegistry(name, cwd, token) {
 
   /**
    * If the local registry item is Pro, still enforce token access.
-   */
-  if (isProEffect(meta)) {
-    return fetchProtectedEffect(name, token);
-  }
-
-  return meta;
-}
-
-async function fetchRemoteRegistry(name, token) {
-  const url = `${REGISTRY_URL}/${name}.json`;
-
-  let response;
-
-  try {
-    response = await fetch(url);
-  } catch (error) {
-    throw createRegistryError(`Failed to fetch registry: ${error.message}`);
-  }
-
-  if (!response.ok) {
-    if (response.status === 404) {
-      throw createRegistryError(`Effect "${name}" not found in registry`, {
-        status: 404,
-      });
-    }
-
-    throw createRegistryError(
-      `Failed to fetch effect: ${response.statusText}`,
-      {
-        status: response.status,
-      },
-    );
-  }
-
-  const meta = await parseJsonResponse(response);
-
-  if (!meta) {
-    throw createRegistryError(`Invalid registry response for "${name}"`);
-  }
-
-  /**
-   * Public registry can expose metadata, but Pro files must come only
-   * from the protected API endpoint.
    */
   if (isProEffect(meta)) {
     return fetchProtectedEffect(name, token);
@@ -190,8 +132,38 @@ async function fetchProtectedEffect(name, token) {
     throw createRegistryError(`Invalid protected registry response for "${name}"`);
   }
 
+  validateRegistryPayload(name, data);
+
   return data;
 }
+
+function validateRegistryPayload(name, data) {
+  if (typeof data !== "object" || data === null) {
+    throw createRegistryError(`Registry payload for "${name}" is not an object`);
+  }
+
+  if (typeof data.name !== "string" || !data.name) {
+    throw createRegistryError(`Registry payload for "${name}" is missing "name"`);
+  }
+
+  if (!Array.isArray(data.files)) {
+    throw createRegistryError(`Registry payload for "${name}" is missing "files" array`);
+  }
+
+  // Reject any file path that contains traversal sequences
+  const SAFE_PATH = /^[\w\-./]+$/;
+
+  for (const file of data.files) {
+    const filePath = file.targetPath || file.target || file.path || "";
+
+    if (!filePath || filePath.includes("..") || !SAFE_PATH.test(filePath)) {
+      throw createRegistryError(
+        `Unsafe file path in registry payload for "${name}": "${filePath}"`
+      );
+    }
+  }
+}
+
 export async function fetchRegistryIndex(options = {}) {
   const { local = false, cwd = process.cwd() } = options;
 

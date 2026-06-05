@@ -43,6 +43,5 @@ next-env.d.ts
 .turbo
 IMPLEMENTATION_PLAN.md
 /example
-apps/docs/node_modules
-apps/docs/.next
-apps/docs/.turbo
+node_modules
+package-lock.json

@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Release Process
+
+1. Update version in `packages/cli/package.json`
+2. Add entry to this file under a new `## [x.y.z] - YYYY-MM-DD` heading
+3. Commit: `git commit -m "chore: release x.y.z"`
+4. Run `cd packages/cli && npm run prepublishOnly` — must pass lint, tests, and pack dry-run
+5. Publish: `npm publish --access public`
+6. Tag: `git tag cli-vx.y.z && git push origin --tags`
+
+---
+
+## [1.0.3] - 2026-06-04
+
+### Security
+- Path traversal protection: resolved file paths are now checked to stay within `cwd` before writing
+- Registry payload validation: all file paths from registry responses are validated against a safe-path allowlist before use
+- Secure token file permissions: `~/.hyperiux/` directory created with `0o700`, `auth.json` written with `0o600` (owner read/write only)
+
+### Changed
+- `package.json`: corrected repository and bugs URLs to `Hyperiux-Immersion-Labs/hyperiux-components`
+- `package.json`: added `provenance: true` to `publishConfig` for npm attestation
+- `package.json`: `prepublishOnly` script runs lint + tests + pack dry-run before every publish
+- CI: added Node 18/20/22 matrix, `npm pack --dry-run`, and clean-project tarball smoke test
+
 ## [1.0.0] - 2026-06-04
 
 ### Added

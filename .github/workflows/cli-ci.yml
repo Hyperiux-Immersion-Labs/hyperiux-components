@@ -1,0 +1,58 @@
+name: CLI CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/cli/**"
+      - ".github/workflows/cli-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "packages/cli/**"
+      - ".github/workflows/cli-ci.yml"
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+
+    defaults:
+      run:
+        working-directory: packages/cli
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: packages/cli/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test
+
+      - name: Pack dry-run (verify publishable tarball)
+        run: npm pack --dry-run
+
+      - name: Smoke test — install from tarball into clean project
+        run: |
+          npm pack
+          TARBALL=$(ls hyperiux-*.tgz)
+          mkdir /tmp/smoke-test && cd /tmp/smoke-test
+          npm init -y
+          npm install "$OLDPWD/$TARBALL"
+          ./node_modules/.bin/hyperiux --version
+          ./node_modules/.bin/hyperiux --help

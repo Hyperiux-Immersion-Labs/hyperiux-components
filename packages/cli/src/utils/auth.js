@@ -10,8 +10,10 @@ export function saveAuthToken(token) {
     throw new Error("Invalid CLI token.");
   }
 
-  fs.mkdirSync(CONFIG_DIR, { recursive: true });
+  // 0o700 — only owner can read/write/execute the config directory
+  fs.mkdirSync(CONFIG_DIR, { recursive: true, mode: 0o700 });
 
+  // 0o600 — only owner can read/write the token file
   fs.writeFileSync(
     AUTH_FILE,
     JSON.stringify(
@@ -22,7 +24,7 @@ export function saveAuthToken(token) {
       null,
       2
     ) + "\n",
-    "utf-8"
+    { encoding: "utf-8", mode: 0o600 }
   );
 }
 
