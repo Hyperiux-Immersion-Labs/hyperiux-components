@@ -44,23 +44,54 @@ async function parseJsonResponse(response) {
 /**
  * Main registry fetcher used by `hyperiux add <effect>`.
  *
- * Important:
- * - Free effects can come from public registry JSON.
- * - Pro effects must always come from the protected API route.
- * - The protected API route decides whether the CLI token is valid.
+ * Flow:
+ * 1. Fetch the public registry JSON to check tier.
+ * 2. If free → return it directly (files included in public JSON).
+ * 3. If pro → go through the protected API with the CLI token.
  */
 export async function fetchRegistry(name, options = {}) {
   const { local = false, cwd = process.cwd(), token = null } = options;
 
-  /*
-    Local mode is only for explicit local registry testing.
-    Normal `hyperiux add` must always go through the protected API.
-  */
   if (local) {
     return fetchLocalRegistry(name, cwd, token);
   }
 
+  // First, check what tier this effect is via the public registry index.
+  const publicData = await fetchPublicEffect(name);
+
+  if (!isProEffect(publicData)) {
+    return publicData;
+  }
+
+  // Pro effect — go through the authenticated API.
   return fetchProtectedEffect(name, token);
+}
+
+async function fetchPublicEffect(name) {
+  const url = `${REGISTRY_URL.replace(/\/$/, "")}/${name}.json`;
+
+  let response;
+
+  try {
+    response = await fetch(url);
+  } catch (error) {
+    throw createRegistryError(`Could not reach Hyperiux registry: ${error.message}`);
+  }
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw createRegistryError(`Effect "${name}" not found. Run \`hyperiux list\` to see available effects.`, { status: 404 });
+    }
+    throw createRegistryError(`Failed to fetch effect: ${response.statusText}`, { status: response.status });
+  }
+
+  const data = await parseJsonResponse(response);
+
+  if (!data) {
+    throw createRegistryError(`Invalid registry response for "${name}"`);
+  }
+
+  return data;
 }
 
 async function fetchLocalRegistry(name, cwd, token) {
