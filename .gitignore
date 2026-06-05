@@ -45,7 +45,7 @@ IMPLEMENTATION_PLAN.md
 /example
 node_modules
 package-lock.json
-/packages/cli/node_modules
+/packages/cli/node_modules/
 /packages/cli/package-lock.json
 /packages/cli/*.tgz
 /packages/cli/coverage
