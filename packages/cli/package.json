@@ -13,7 +13,9 @@
     "src/commands",
     "src/utils",
     "src/index.js",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "scripts/smoke-packed-package.mjs"
   ],
   "scripts": {
     "build": "node --check src/index.js && node --check src/commands/add.js && node --check src/commands/init.js && node --check src/commands/list.js && node --check src/commands/login.js && node --check src/commands/logout.js && node --check src/commands/whoami.js && node --check src/utils/auth.js && node --check src/utils/config.js && node --check src/utils/package-manager.js && node --check src/utils/registry.js",
@@ -22,6 +24,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "smoke:bin": "node src/index.js --help",
+    "smoke:pack": "node scripts/smoke-packed-package.mjs",
     "pack:dry": "npm pack --dry-run",
     "prepublishOnly": "npm run lint && npm run test && npm run build && npm run smoke:bin && npm run pack:dry"
   },
@@ -43,12 +46,13 @@
     "three",
     "webgl"
   ],
-  "author": "Hyperiux <admin@hyperiux.com>",
+  "author": "Hyperiux",
   "license": "MIT",
   "homepage": "https://components.hyperiux.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hyperiux-Immersion-Labs/hyperiux-components.git"
+    "url": "git+https://github.com/Hyperiux-Immersion-Labs/hyperiux-components.git",
+    "directory": "packages/cli"
   },
   "bugs": {
     "url": "https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/issues"

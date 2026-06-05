@@ -122,10 +122,6 @@ async function fetchProtectedEffect(name, token) {
   if (process.env.HYPERIUX_DEBUG === "1") {
     console.log("[Hyperiux CLI] API URL:", url);
     console.log("[Hyperiux CLI] Token found:", Boolean(token));
-    console.log(
-      "[Hyperiux CLI] Token preview:",
-      token ? `${token.slice(0, 8)}...${token.slice(-6)}` : "NO_TOKEN"
-    );
   }
 
   let response;

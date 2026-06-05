@@ -10,7 +10,10 @@ export function detectPackageManager(cwd = process.cwd()) {
   if (fs.existsSync(path.join(cwd, "yarn.lock"))) {
     return "yarn";
   }
-  if (fs.existsSync(path.join(cwd, "bun.lockb"))) {
+  if (
+    fs.existsSync(path.join(cwd, "bun.lockb")) ||
+    fs.existsSync(path.join(cwd, "bun.lock"))
+  ) {
     return "bun";
   }
   if (fs.existsSync(path.join(cwd, "package-lock.json"))) {

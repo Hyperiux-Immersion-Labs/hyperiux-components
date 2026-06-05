@@ -119,6 +119,18 @@ Letter-level and line-level reveal animations — blur, scramble, stagger, persp
 
 ---
 
+## Environment Variables
+
+| Variable | Purpose |
+|---|---|
+| `HYPERIUX_TOKEN` | Use a CLI token without saving it locally (useful in CI) |
+| `HYPERIUX_APP_URL` | Override the Hyperiux app URL for self-hosting or testing |
+| `HYPERIUX_API_URL` | Override the API URL independently of the app URL |
+| `HYPERIUX_REGISTRY_URL` | Override the registry URL for local development |
+| `HYPERIUX_DEBUG` | Set to `1` to enable verbose request logs — do not use in shared CI |
+
+---
+
 ## Architecture
 
 This is a pnpm monorepo with Turborepo:
