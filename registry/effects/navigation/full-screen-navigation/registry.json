@@ -7,7 +7,7 @@
   "dependencies": [
     "gsap"
   ],
-  "registryDependencies": [],
+  "registryDependencies": ["char-stagger-button"],
   "previewUrl": "/navigation/immersive-full-screen-nav",
   "tier": "free"
 }

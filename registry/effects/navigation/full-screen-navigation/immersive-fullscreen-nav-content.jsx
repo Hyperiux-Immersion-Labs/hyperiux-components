@@ -4,7 +4,7 @@ import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { CharStaggerButton } from "../../buttons/char-stagger-button/char-stagger-button";
+import { CharStaggerButton } from "./char-stagger-button";
 
 const LINK_Y_OFFSET = 30;
 const IMAGE_INITIAL_SCALE = 0.7;
