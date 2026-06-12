@@ -1,0 +1,28 @@
+{
+  "name": "helix-slider",
+  "type": "registry:component",
+  "title": "Helix Slider",
+  "description": "Cylindrical helical slider with smooth Lenis scrolling and 3D card motion.",
+  "category": "scroll",
+  "dependencies": [
+    "lenis"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/scroll/helix-slider",
+  "tier": "free",
+  "exportName": "HelixSlider",
+  "exportKind": "named",
+  "importPath": "@/components/effects/helix-slider",
+  "target": "src/components/effects/helix-slider",
+  "main": "index.jsx",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/helix-slider/index.jsx"
+    },
+    {
+      "path": "CylindricalScroll.jsx",
+      "target": "src/components/effects/helix-slider/CylindricalScroll.jsx"
+    }
+  ]
+}

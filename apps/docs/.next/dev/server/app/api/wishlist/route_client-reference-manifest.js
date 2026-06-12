@@ -1,0 +1,1 @@
+globalThis.__RSC_MANIFEST=(globalThis.__RSC_MANIFEST||{});globalThis.__RSC_MANIFEST["/api/wishlist/route"]={"moduleLoading":{"prefix":"/_next/"},"ssrModuleMapping":{},"edgeSSRModuleMapping":{},"clientModules":{},"entryCSSFiles":{"/Users/harshgoyal/Documents/GitHub/hyperiux-components/apps/docs/src/app/api/wishlist/route":[]},"rscModuleMapping":{},"edgeRscModuleMapping":{}};

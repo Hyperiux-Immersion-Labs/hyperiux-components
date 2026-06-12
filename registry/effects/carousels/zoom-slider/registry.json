@@ -9,5 +9,18 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/webgl/zoom-slider",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/zoom-slider",
+  "target": "src/components/effects/zoom-slider",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/zoom-slider/index.jsx"
+    },
+    {
+      "path": "ZoomSlider.jsx",
+      "target": "src/components/effects/zoom-slider/ZoomSlider.jsx"
+    }
+  ]
 }

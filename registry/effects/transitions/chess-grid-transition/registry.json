@@ -12,5 +12,14 @@
   "previewUrl": "/page-transitions/chess-grid-transition",
   "coverImage": "/assets/list/chess-grid-transition.png",
   "videoUrl": "chess-grid-transition.mp4",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/chess-grid-transition",
+  "target": "src/components/effects/chess-grid-transition",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/chess-grid-transition/index.jsx"
+    }
+  ]
 }

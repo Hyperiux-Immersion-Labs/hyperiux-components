@@ -1,0 +1,42 @@
+{
+  "name": "book-flip",
+  "type": "registry:component",
+  "title": "Book Flip",
+  "description": "3D book flip viewer with React Three Fiber, page navigation UI, and customizable image page textures.",
+  "category": "webgl",
+  "dependencies": [
+    "three",
+    "@react-three/fiber",
+    "@react-three/drei"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/webgl/book-flip",
+  "tier": "free",
+  "exportName": "BookFlip",
+  "exportKind": "named",
+  "importPath": "@/components/effects/book-flip",
+  "target": "src/components/effects/book-flip",
+  "main": "index.jsx",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/book-flip/index.jsx"
+    },
+    {
+      "path": "Book.jsx",
+      "target": "src/components/effects/book-flip/Book.jsx"
+    },
+    {
+      "path": "Experience.jsx",
+      "target": "src/components/effects/book-flip/Experience.jsx"
+    },
+    {
+      "path": "PageContext.jsx",
+      "target": "src/components/effects/book-flip/PageContext.jsx"
+    },
+    {
+      "path": "UI.jsx",
+      "target": "src/components/effects/book-flip/UI.jsx"
+    }
+  ]
+}

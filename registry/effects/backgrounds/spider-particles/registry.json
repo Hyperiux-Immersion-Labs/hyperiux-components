@@ -2,10 +2,19 @@
   "name": "spider-particles",
   "type": "registry:component",
   "title": "Spider Particles",
-  "description": "Canvas particle network background with connecting lines and mouse-driven repulsion \u2014 pure canvas, zero dependencies",
+  "description": "Canvas particle network background with connecting lines and mouse-driven repulsion — pure canvas, zero dependencies",
   "category": "backgrounds",
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/spider-particles",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/spider-particles",
+  "target": "src/components/effects/spider-particles",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/spider-particles/index.jsx"
+    }
+  ]
 }

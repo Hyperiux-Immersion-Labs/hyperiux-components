@@ -9,5 +9,14 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/loaders/stack-loader",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/stack-loader",
+  "target": "src/components/effects/stack-loader",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/stack-loader/index.jsx"
+    }
+  ]
 }

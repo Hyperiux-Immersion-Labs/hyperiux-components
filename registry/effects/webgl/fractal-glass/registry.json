@@ -1,0 +1,24 @@
+{
+  "name": "fractal-glass",
+  "type": "registry:component",
+  "title": "Fractal Glass",
+  "description": "WebGL glass distortion effect with fractal stripe smoothing, parallax motion, and image/video support.",
+  "category": "webgl",
+  "dependencies": [
+    "three"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/webgl/fractal-glass",
+  "tier": "free",
+  "exportName": "FractalGlass",
+  "exportKind": "default",
+  "importPath": "@/components/effects/fractal-glass",
+  "target": "src/components/effects/fractal-glass",
+  "main": "index.jsx",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/fractal-glass/index.jsx"
+    }
+  ]
+}

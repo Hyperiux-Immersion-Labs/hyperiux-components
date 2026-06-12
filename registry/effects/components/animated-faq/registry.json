@@ -1,0 +1,25 @@
+{
+  "name": "animated-faq",
+  "type": "registry:component",
+  "title": "Animated FAQ",
+  "description": "Animated FAQ accordion with GSAP-powered expand/collapse transitions, grouped behavior, and accessible toggles.",
+  "category": "components",
+  "dependencies": [
+    "gsap",
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/components/animated-faq",
+  "tier": "free",
+  "exportName": "AnimatedFAQ",
+  "exportKind": "default",
+  "importPath": "@/components/effects/animated-faq",
+  "target": "src/components/effects/animated-faq",
+  "main": "index.jsx",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/animated-faq/index.jsx"
+    }
+  ]
+}

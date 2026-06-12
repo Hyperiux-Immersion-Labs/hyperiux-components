@@ -1,0 +1,34 @@
+{
+  "name": "split-canvas",
+  "type": "registry:component",
+  "title": "Split Canvas",
+  "description": "Split canvas scroll effect with a fixed pixel canvas overlay and full-screen scroll sections.",
+  "category": "scroll",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/scroll/split-canvas",
+  "tier": "free",
+  "exportName": "SplitCanvas",
+  "exportKind": "named",
+  "importPath": "@/components/effects/split-canvas",
+  "target": "src/components/effects/split-canvas",
+  "main": "index.jsx",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/split-canvas/index.jsx"
+    },
+    {
+      "path": "PixelScrollCanvas.jsx",
+      "target": "src/components/effects/split-canvas/PixelScrollCanvas.jsx"
+    },
+    {
+      "path": "content.js",
+      "target": "src/components/effects/split-canvas/content.js"
+    },
+    {
+      "path": "shaders/pixelTransition.js",
+      "target": "src/components/effects/split-canvas/shaders/pixelTransition.js"
+    }
+  ]
+}

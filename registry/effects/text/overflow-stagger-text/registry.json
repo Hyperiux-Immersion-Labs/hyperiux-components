@@ -9,5 +9,14 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/overflow-stagger-text",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/overflow-stagger-text",
+  "target": "src/components/effects/overflow-stagger-text",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/overflow-stagger-text/index.jsx"
+    }
+  ]
 }

@@ -12,5 +12,18 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/loaders/numeric-tunnel",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/numeric-tunnel",
+  "target": "src/components/effects/numeric-tunnel",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/numeric-tunnel/index.jsx"
+    },
+    {
+      "path": "NumericTunnel.jsx",
+      "target": "src/components/effects/numeric-tunnel/NumericTunnel.jsx"
+    }
+  ]
 }

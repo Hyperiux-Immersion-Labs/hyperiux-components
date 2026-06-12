@@ -9,5 +9,14 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/mouse-hover-image",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/phantom-image-trail",
+  "target": "src/components/effects/phantom-image-trail",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/phantom-image-trail/index.jsx"
+    }
+  ]
 }

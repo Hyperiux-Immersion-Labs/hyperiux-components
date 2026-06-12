@@ -7,5 +7,14 @@
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/buttons/link-button",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/link-button",
+  "target": "src/components/effects/link-button",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/link-button/index.jsx"
+    }
+  ]
 }

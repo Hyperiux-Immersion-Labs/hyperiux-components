@@ -9,5 +9,18 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/sticky-content-wrapper",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/sticky-content-wrapper",
+  "target": "src/components/effects/sticky-content-wrapper",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/sticky-content-wrapper/index.jsx"
+    },
+    {
+      "path": "StickyContentWrapper.jsx",
+      "target": "src/components/effects/sticky-content-wrapper/StickyContentWrapper.jsx"
+    }
+  ]
 }

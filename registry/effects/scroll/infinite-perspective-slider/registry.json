@@ -9,5 +9,18 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/infinite-perspective-slider",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/infinite-perspective-slider",
+  "target": "src/components/effects/infinite-perspective-slider",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/infinite-perspective-slider/index.jsx"
+    },
+    {
+      "path": "InfiniteScrollSlider.jsx",
+      "target": "src/components/effects/infinite-perspective-slider/InfiniteScrollSlider.jsx"
+    }
+  ]
 }

@@ -7,5 +7,14 @@
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/buttons/arrow-fill-button",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/arrow-fill-button",
+  "target": "src/components/effects/arrow-fill-button",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/arrow-fill-button/index.jsx"
+    }
+  ]
 }

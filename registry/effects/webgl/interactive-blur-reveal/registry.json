@@ -7,5 +7,14 @@
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/webgl/interactive-blur-reveal",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/interactive-blur-reveal",
+  "target": "src/components/effects/interactive-blur-reveal",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/interactive-blur-reveal/index.jsx"
+    }
+  ]
 }

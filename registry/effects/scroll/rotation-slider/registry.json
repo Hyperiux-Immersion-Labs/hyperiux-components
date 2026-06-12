@@ -10,5 +10,18 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/rotation-slider",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/rotation-slider",
+  "target": "src/components/effects/rotation-slider",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/rotation-slider/index.jsx"
+    },
+    {
+      "path": "RotationSliderComp.jsx",
+      "target": "src/components/effects/rotation-slider/RotationSliderComp.jsx"
+    }
+  ]
 }

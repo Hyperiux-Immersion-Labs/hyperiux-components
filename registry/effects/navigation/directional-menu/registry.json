@@ -1,8 +1,8 @@
 {
   "name": "directional-menu",
-  "type": "registry:component",
+  "type": "effect",
   "title": "Directional Menu",
-  "description": "Mega menu with directional content transitions using GSAP",
+  "description": "Mega menu with directional content transitions using GSAP.",
   "category": "navigation",
   "dependencies": [
     "gsap"
@@ -11,5 +11,36 @@
     "chevron-bird"
   ],
   "previewUrl": "/navigation/directional-menu",
-  "tier": "free"
+  "tier": "free",
+  "exportName": "DirectionalMenu",
+  "exportKind": "named",
+  "importPath": "@/components/effects/directional-menu",
+  "target": "src/components/effects/directional-menu",
+  "main": "index.jsx",
+  "files": [
+    {
+      "path": "DirectionalMegaMenu.jsx",
+      "target": "src/components/effects/directional-menu/DirectionalMegaMenu.jsx"
+    },
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/directional-menu/index.jsx"
+    },
+    {
+      "path": "Menu1.jsx",
+      "target": "src/components/effects/directional-menu/Menu1.jsx"
+    },
+    {
+      "path": "Menu2.jsx",
+      "target": "src/components/effects/directional-menu/Menu2.jsx"
+    },
+    {
+      "path": "Menu3.jsx",
+      "target": "src/components/effects/directional-menu/Menu3.jsx"
+    },
+    {
+      "path": "MobileDirectionalMenu.jsx",
+      "target": "src/components/effects/directional-menu/MobileDirectionalMenu.jsx"
+    }
+  ]
 }

@@ -9,5 +9,18 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/interactive-list-preview",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/interactive-list-preview",
+  "target": "src/components/effects/interactive-list-preview",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/interactive-list-preview/index.jsx"
+    },
+    {
+      "path": "ListHover.jsx",
+      "target": "src/components/effects/interactive-list-preview/ListHover.jsx"
+    }
+  ]
 }

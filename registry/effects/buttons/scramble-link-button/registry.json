@@ -7,5 +7,14 @@
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/buttons/scramble-link-button",
-  "tier": "free"
+  "tier": "free",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/scramble-link-button",
+  "target": "src/components/effects/scramble-link-button",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/scramble-link-button/index.jsx"
+    }
+  ]
 }

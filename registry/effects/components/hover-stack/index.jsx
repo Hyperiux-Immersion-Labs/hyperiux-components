@@ -1,0 +1,86 @@
+
+import React from "react";
+import { StackHoveredCards } from "./StackedHoverCards";
+
+const cards = [
+    {
+        id: 1,
+        quote: "A must-have for anyone looking to save time and boost productivity.",
+        tag: "Efficiency",
+        bg: "#E4FF1A",
+        accent: "text-[#1A1A1A]",
+    },
+    {
+        id: 2,
+        quote: "This tech has completely streamlined my daily tasks.",
+        tag: "Workflow",
+        bg: "#DD1155",
+        accent: "text-[#ffffff]",
+    },
+    {
+        id: 3,
+        quote: "Innovative and powerful, yet so easy to use!",
+        tag: "Simplicity",
+        bg: "#FF5714",
+        accent: "text-[#1A1A1A]",
+    },
+    {
+        id: 4,
+        quote: "It made everything smoother. Highly recommend!",
+        tag: "Reliability",
+        bg: "#E980FC",
+        accent: "text-[#1A1A1A]",
+    },
+    {
+        id: 5,
+        quote: "Fast, reliable, and user-friendly. Exactly what I needed.",
+        tag: "Speed",
+        bg: "#67D6A3",
+        accent: "text-[#1A1A1A]",
+    },
+    {
+        id: 6,
+        quote: "I can’t imagine my workflow without it now. Simply amazing!",
+        tag: "Impact",
+        bg: "#3454D1",
+        accent: "text-[#ffffff]",
+    },
+    {
+        id: 7,
+        quote: "Performance is a game changer. So much smoother now.",
+        tag: "Performance",
+        bg: "#B98CFF",
+        accent: "text-[#1A1A1A]",
+    },
+];
+
+const HoverStack = () => {
+    return (
+        <>
+
+
+            <section className="w-full h-fit bg-[#fff9ec] py-[10%] max-sm:py-[20%] overflow-hidden flex flex-col gap-[7vw] justify-center items-center">
+                <div className="flex flex-col w-full justify-center items-center gap-[1vw] max-sm:gap-[3vw] text-center text-[#1a1a1a]">
+                <h1 className=" text-[5.5vw] max-sm:text-[9vw] max-md:text-[7vw]">
+                    Hover Stack Cards
+                </h1>
+                <p className="text-[1.2vw] max-md:hidden">
+                    Hover any card , so they can pop out.
+                </p>
+
+                </div>
+
+                <StackHoveredCards
+                    cards={cards}
+                    cardWidth={280}
+                    cardHeight={360}
+                    overlap={96}
+                    pushDistance={235}
+                    hoverLift={30}
+                />
+            </section>
+        </>
+    );
+};
+
+export default HoverStack;
