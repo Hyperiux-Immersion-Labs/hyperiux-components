@@ -21,8 +21,8 @@
       "target": "src/components/effects/helix-slider/index.jsx"
     },
     {
-      "path": "CylindricalScroll.jsx",
-      "target": "src/components/effects/helix-slider/CylindricalScroll.jsx"
+      "path": "HelixScrollComp.jsx",
+      "target": "src/components/effects/helix-slider/HelixScrollComp.jsx"
     }
   ]
 }

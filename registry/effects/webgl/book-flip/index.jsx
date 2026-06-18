@@ -16,7 +16,7 @@ import { PageProvider } from "./PageContext";
  * - floatConfig: object - Float animation configuration
  * - showUI: boolean - Show page navigation UI
  */
-export const BookFlip = ({ images = [],
+export  const BookFlip = ({ images = [],
     pathPattern = "/assets/nature",
     bgColor = "#000000",
     cameraDistance = { mobile: 9, desktop: 4 },

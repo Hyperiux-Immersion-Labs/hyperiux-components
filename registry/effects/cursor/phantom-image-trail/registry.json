@@ -17,6 +17,10 @@
     {
       "path": "index.jsx",
       "target": "src/components/effects/phantom-image-trail/index.jsx"
+    },
+    {
+      "path": "useMouse.js",
+      "target": "src/components/effects/phantom-image-trail/useMouse.js"
     }
   ]
 }

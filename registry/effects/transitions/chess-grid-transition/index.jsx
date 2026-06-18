@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
 
-export function ChessGridTransition({
+export default function ChessGridTransition({
   children,
   enableContentShift = false,
   bgColor = '#ff5f00',

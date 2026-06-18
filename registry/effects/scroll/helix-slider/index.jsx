@@ -1,4 +1,4 @@
-import { CylindricalScrollCards } from "./CylindricalScroll";
+import HelixScrollComp from "./HelixSliderComp";
 
 const cards = [
  { id: 1, image:"https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-01.jpg", title:"Card 1" },
@@ -9,11 +9,11 @@ const cards = [
  { id: 6, image:"https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-06.jpg", title:"Card 6" },
 ];
 
-export function HelixSlider() {
+export default function HelixSlider() {
  return (
     <>
  <main>
- <CylindricalScrollCards
+ <HelixScrollComp
  items={cards}
  cardWidth={210}
  cardHeight={290}

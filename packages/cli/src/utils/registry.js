@@ -7,10 +7,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const REGISTRY_URL =
-  process.env.HYPERIUX_REGISTRY_URL || "https://components.hyperiux.com/r";
+  process.env.HYPERIUX_REGISTRY_URL || "https://vault.hyperiux.com/r";
 
 const APP_URL =
-  process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
+  process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
 
 const API_URL = process.env.HYPERIUX_API_URL || APP_URL;
 
@@ -396,7 +396,7 @@ async function fetchRemoteRegistryIndex() {
   return response.json();
 }
 
-const ALLOWED_ASSET_HOSTS = new Set(["components.hyperiux.com"]);
+const ALLOWED_ASSET_HOSTS = new Set(["vault.hyperiux.com"]);
 
 export async function fetchRegistryAsset(source) {
   const resolvedUrl = source.startsWith("http")

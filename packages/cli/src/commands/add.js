@@ -17,7 +17,7 @@ import {
 import { getAuthToken } from "../utils/auth.js";
 
 const APP_URL =
-  process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
+  process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
 
 export async function add(effectName, options = {}) {
   const cwd = process.cwd();

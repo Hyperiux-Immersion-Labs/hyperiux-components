@@ -15,7 +15,7 @@ const SLIDER_BOTTOM_OFFSET = 0;
 
 const lerp = (a, b, n) => a + (b - a) * n;
 
-export function ZoomSliderCarousel({
+export function ZoomSliderComp({
   sliderData,
   title,
   subheading,
@@ -372,4 +372,4 @@ export function ZoomSliderCarousel({
   );
 }
 
-export default ZoomSliderCarousel;
+export default ZoomSliderComp;

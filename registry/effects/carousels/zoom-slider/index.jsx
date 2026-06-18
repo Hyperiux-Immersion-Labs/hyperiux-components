@@ -1,9 +1,9 @@
 import React from 'react';
-import ZoomSliderCarousel from './ZoomSlider';
+import ZoomSliderComp from './ZoomSliderComp';
 
 const ZoomSlider = () => {
   return (
-    <ZoomSliderCarousel
+    <ZoomSliderComp
       title="Zoom Slider"
       subheading="Scroll to explore "
       sliderData={DEFAULT_SLIDER_DATA}

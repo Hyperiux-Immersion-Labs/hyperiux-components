@@ -104,7 +104,7 @@ However, a professional npm package must not ship with broken or contradictory r
   "bugs": {
     "url": "https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/issues"
   },
-  "homepage": "https://components.hyperiux.com"
+  "homepage": "https://vault.hyperiux.com"
 }
 ```
 
@@ -211,7 +211,7 @@ Suggested `package.json` metadata:
   ],
   "author": "Hyperiux",
   "license": "MIT",
-  "homepage": "https://components.hyperiux.com",
+  "homepage": "https://vault.hyperiux.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hyperiux-Immersion-Labs/hyperiux-components.git",
@@ -630,7 +630,7 @@ The CLI blocks path traversal before writing files by resolving the target path 
 
 Auth tokens are stored under `~/.hyperiux/auth.json`, with directory mode `0o700` and file mode `0o600`. ([GitHub][10])
 
-Registry asset downloads are restricted to `components.hyperiux.com`. ([GitHub][11])
+Registry asset downloads are restricted to `vault.hyperiux.com`. ([GitHub][11])
 
 Dependency installation uses `spawnSync` with `shell: false` and validates dependency names against a regex. ([GitHub][12])
 
@@ -1222,7 +1222,7 @@ Use this as the corrected `packages/cli/package.json` baseline:
   ],
   "author": "Hyperiux",
   "license": "MIT",
-  "homepage": "https://components.hyperiux.com",
+  "homepage": "https://vault.hyperiux.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hyperiux-Immersion-Labs/hyperiux-components.git",

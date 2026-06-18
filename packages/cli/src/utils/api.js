@@ -1,7 +1,7 @@
 import { getAuthToken } from "./auth.js";
 
 const DEFAULT_API_URL =
-  process.env.HYPERIUX_API_URL || "https://components.hyperiux.com";
+  process.env.HYPERIUX_API_URL || "https://vault.hyperiux.com";
 
 export function getApiUrl() {
   return DEFAULT_API_URL.replace(/\/$/, "");

@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const defaultPropertiesData = [];
 
-export function HorizontalScroll({ propertiesData = defaultPropertiesData }) {
+export default function HorizontalFeatureRevealComp({ propertiesData = defaultPropertiesData }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       if (window.innerWidth <= 1025) return;

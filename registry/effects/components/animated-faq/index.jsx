@@ -16,6 +16,18 @@ import { ChevronDown } from "lucide-react";
 const FAQContext = createContext(null);
 const FAQGroupContext = createContext(null);
 
+const normalizeOpenItems = (items) => {
+  if (Array.isArray(items)) {
+    return items.map(String);
+  }
+
+  if (items === undefined || items === null || items === false) {
+    return [];
+  }
+
+  return [String(items)];
+};
+
 const useFAQContext = () => {
   const context = useContext(FAQContext);
 
@@ -33,23 +45,29 @@ export function FAQGroup({
   value,
   onChange,
 }) {
-  const isControlled = Array.isArray(value);
-  const [internalOpenItems, setInternalOpenItems] = useState(defaultOpenItems);
+  const isControlled = value !== undefined;
+  const normalizedValue = normalizeOpenItems(value);
 
-  const openItems = isControlled ? value : internalOpenItems;
+  const [internalOpenItems, setInternalOpenItems] = useState(() =>
+    normalizeOpenItems(defaultOpenItems)
+  );
+
+  const openItems = isControlled ? normalizedValue : internalOpenItems;
 
   const toggleItem = useCallback(
     (itemId) => {
+      const normalizedItemId = String(itemId);
+
       const next = (() => {
-        const isOpen = openItems.includes(itemId);
+        const isOpen = openItems.includes(normalizedItemId);
 
         if (allowMultiple) {
           return isOpen
-            ? openItems.filter((id) => id !== itemId)
-            : [...openItems, itemId];
+            ? openItems.filter((id) => id !== normalizedItemId)
+            : [...openItems, normalizedItemId];
         }
 
-        return isOpen ? [] : [itemId];
+        return isOpen ? [] : [normalizedItemId];
       })();
 
       if (!isControlled) {
@@ -94,7 +112,7 @@ export function FAQWrapper({
   const group = useContext(FAQGroupContext);
 
   const generatedId = useId();
-  const resolvedItemId = itemId ?? generatedId;
+  const resolvedItemId = String(itemId ?? generatedId);
 
   const isStandaloneControlled = typeof controlledOpen === "boolean";
   const [internalOpen, setInternalOpen] = useState(defaultOpen);

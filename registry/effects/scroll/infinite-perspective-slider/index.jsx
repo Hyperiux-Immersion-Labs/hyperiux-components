@@ -1,5 +1,5 @@
+import { InfinitePerspectiveSliderComp } from "./InfinitePerspectiveSliderComp";
 
-import { InfiniteScrollSlider } from "./InfiniteScrollSlider";
 
 export default function InfinitePerspectiveSlider() {
     const images = [
@@ -67,7 +67,7 @@ export default function InfinitePerspectiveSlider() {
     return (
         <>
             <div className=" bg-white flex flex-col justify-center gap-20">
-                <InfiniteScrollSlider images={images} />
+                <InfinitePerspectiveSliderComp images={images} />
             </div>
         </>
     );

@@ -32,7 +32,7 @@ const getDynamicHeight = (text) => {
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-export function TextBreak({
+export default function TextConvergence({
   text = "Build faster. Animate better. Ship smarter. Hyperiux Vault gives you the tools to create high-performance interfaces that look premium and feel effortless.",
   bgColor = "bg-black",
   textColor = "text-white",

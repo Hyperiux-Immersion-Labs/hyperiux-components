@@ -34,7 +34,7 @@ const TEXT_LEAVE_STAGGER = 0.04;
 
 const getItemData = (item) => (typeof item === "string" ? { src: item } : item);
 
-export function InfiniteScrollSlider({ images = [] }) {
+export function InfinitePerspectiveSliderComp({ images = [] }) {
   const stripRef = useRef(null);
   const settersRef = useRef([]);
   const cardRefs = useRef([]);

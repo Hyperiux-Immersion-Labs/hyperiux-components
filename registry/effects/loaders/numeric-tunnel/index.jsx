@@ -1,8 +1,8 @@
 'use client'
-import { NumericTunnel } from './NumericTunnel'
 import React, { useCallback, useState } from'react'
+import { NumericTunnelLoader } from './NumericTunnelLoader'
 
-export function Tunnel() {
+export default function NumericTunnel() {
  const [isComplete, setIsComplete] = useState(false)
  const [tunnelInstance, setTunnelInstance] = useState(0)
 
@@ -16,7 +16,7 @@ export function Tunnel() {
  }, [])
 
  return (
- <NumericTunnel key={tunnelInstance} onComplete={handleComplete}>
+ <NumericTunnelLoader key={tunnelInstance} onComplete={handleComplete}>
  <div className="h-screen w-full bg-white">
  <h2 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-black text-[4vw] font-bold">HYPERIUX VAULT</h2>
 <button
@@ -38,7 +38,7 @@ export function Tunnel() {
   ↻ Replay
 </button>
  </div>
- </NumericTunnel>
+ </NumericTunnelLoader>
  )
 }
 

@@ -1,4 +1,4 @@
-import { StickyContentWrapper } from "./StickyContentWrapper";
+import { StickyContentComp } from "./StickyContentComp";
 
 const stickyItems = [
  {
@@ -54,10 +54,10 @@ const stickyItems = [
  },
 ];
 
-export function StickyContent() {
+export default function StickyContentWrapper() {
  return (
  <section className="bg-white">
- <StickyContentWrapper
+ <StickyContentComp
  items={stickyItems}
  className=""
  leftClassName="text-black"

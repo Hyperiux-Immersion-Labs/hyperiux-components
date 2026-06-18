@@ -153,6 +153,15 @@
     "target": "src/components/effects/interactive-list-preview"
   },
   {
+    "name": "circular-split-roll",
+    "title": "Circular Split Roll",
+    "category": "scroll",
+    "type": "registry:component",
+    "registryPath": "registry/effects/scroll/circular-split-roll/registry.json",
+    "importPath": "@/components/effects/circular-split-roll",
+    "target": "src/components/effects/circular-split-roll"
+  },
+  {
     "name": "helix-slider",
     "title": "Helix Slider",
     "category": "scroll",
@@ -286,5 +295,14 @@
     "registryPath": "registry/effects/webgl/interactive-blur-reveal/registry.json",
     "importPath": "@/components/effects/interactive-blur-reveal",
     "target": "src/components/effects/interactive-blur-reveal"
+  },
+  {
+    "name": "milkyway",
+    "title": "Milkyway",
+    "category": "webgl",
+    "type": "registry:component",
+    "registryPath": "registry/effects/webgl/milkyway/registry.json",
+    "importPath": "@/components/effects/milkyway",
+    "target": "src/components/effects/milkyway"
   }
 ]

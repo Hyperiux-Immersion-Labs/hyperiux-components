@@ -17,8 +17,8 @@
       "target": "src/components/effects/hover-stack/index.jsx"
     },
     {
-      "path": "StackedHoverCards.jsx",
-      "target": "src/components/effects/hover-stack/StackedHoverCards.jsx"
+      "path": "HoverStackComp.jsx",
+      "target": "src/components/effects/hover-stack/HoverStackComp.jsx"
     }
   ]
 }

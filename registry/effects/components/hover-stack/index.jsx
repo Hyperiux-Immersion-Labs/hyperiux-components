@@ -1,6 +1,6 @@
 
 import React from "react";
-import { StackHoveredCards } from "./StackedHoverCards";
+import { HoverStackComp } from "./HoverStackComp";
 
 const cards = [
     {
@@ -57,8 +57,6 @@ const cards = [
 const HoverStack = () => {
     return (
         <>
-
-
             <section className="w-full h-fit bg-[#fff9ec] py-[10%] max-sm:py-[20%] overflow-hidden flex flex-col gap-[7vw] justify-center items-center">
                 <div className="flex flex-col w-full justify-center items-center gap-[1vw] max-sm:gap-[3vw] text-center text-[#1a1a1a]">
                 <h1 className=" text-[5.5vw] max-sm:text-[9vw] max-md:text-[7vw]">
@@ -70,7 +68,7 @@ const HoverStack = () => {
 
                 </div>
 
-                <StackHoveredCards
+                <HoverStackComp
                     cards={cards}
                     cardWidth={280}
                     cardHeight={360}

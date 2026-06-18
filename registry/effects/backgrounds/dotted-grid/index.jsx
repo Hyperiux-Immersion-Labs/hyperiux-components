@@ -115,7 +115,7 @@ const getRawShapeStrength = (shapeIndex, x, y, time, width, height) => {
 };
 
 
-export function DottedGrid() {
+export default function DottedGrid() {
   const canvasRef = useRef(null);
   const patternRef = useRef({
     currentShapeIndex: 0,

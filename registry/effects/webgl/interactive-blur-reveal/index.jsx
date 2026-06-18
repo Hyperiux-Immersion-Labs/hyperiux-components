@@ -185,20 +185,15 @@ function resolveImageSource(source) {
 function shouldUseCrossOrigin(source) {
   if (typeof source !== "string") return false;
   if (source.startsWith("data:") || source.startsWith("blob:")) return false;
+  if (source.startsWith("/")) return false;
 
   return true;
 }
 
 function loadImage(source) {
   return new Promise((resolve, reject) => {
-    if (source instanceof HTMLImageElement) {
-      if (source.complete) {
-        resolve(source);
-      } else {
-        source.onload = () => resolve(source);
-        source.onerror = reject;
-      }
-
+    if (source instanceof HTMLImageElement || source instanceof HTMLCanvasElement) {
+      resolve(source);
       return;
     }
 
@@ -217,15 +212,124 @@ function loadImage(source) {
     }
 
     image.onload = () => resolve(image);
+
     image.onerror = () => {
       reject(
         new Error(
-          `Unable to load texture image: ${imageSource}. If this is a remote public URL, the server must allow CORS for WebGL textures.`
+          `Unable to load texture image: ${imageSource}. Remote WebGL textures require CORS.`
         )
       );
     };
+
     image.src = imageSource;
   });
+}
+
+function createDefaultBaseCanvas(width = 1600, height = 1000) {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = width;
+  canvas.height = height;
+
+  const gradient = ctx.createLinearGradient(0, 0, width, height);
+  gradient.addColorStop(0, "#111827");
+  gradient.addColorStop(0.24, "#26344f");
+  gradient.addColorStop(0.48, "#8a7dff");
+  gradient.addColorStop(0.7, "#f2994a");
+  gradient.addColorStop(1, "#101828");
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+
+  const radialOne = ctx.createRadialGradient(
+    width * 0.28,
+    height * 0.25,
+    0,
+    width * 0.28,
+    height * 0.25,
+    width * 0.5
+  );
+
+  radialOne.addColorStop(0, "rgba(255,255,255,0.42)");
+  radialOne.addColorStop(0.45, "rgba(255,255,255,0.12)");
+  radialOne.addColorStop(1, "rgba(255,255,255,0)");
+
+  ctx.fillStyle = radialOne;
+  ctx.fillRect(0, 0, width, height);
+
+  const radialTwo = ctx.createRadialGradient(
+    width * 0.75,
+    height * 0.72,
+    0,
+    width * 0.75,
+    height * 0.72,
+    width * 0.45
+  );
+
+  radialTwo.addColorStop(0, "rgba(255,107,0,0.45)");
+  radialTwo.addColorStop(0.5, "rgba(255,107,0,0.14)");
+  radialTwo.addColorStop(1, "rgba(255,107,0,0)");
+
+  ctx.fillStyle = radialTwo;
+  ctx.fillRect(0, 0, width, height);
+
+  for (let i = 0; i < 70; i += 1) {
+    const x = Math.random() * width;
+    const y = Math.random() * height;
+    const radius = 80 + Math.random() * 260;
+
+    const glow = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    glow.addColorStop(0, "rgba(255,255,255,0.08)");
+    glow.addColorStop(1, "rgba(255,255,255,0)");
+
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  return canvas;
+}
+
+function createDefaultNoiseCanvas(size = 512) {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  const imageData = ctx.createImageData(size, size);
+  const data = imageData.data;
+
+  canvas.width = size;
+  canvas.height = size;
+
+  for (let i = 0; i < data.length; i += 4) {
+    const value = Math.floor(Math.random() * 255);
+
+    data[i] = value;
+    data[i + 1] = Math.floor(value * (0.85 + Math.random() * 0.3));
+    data[i + 2] = Math.floor(value * (0.9 + Math.random() * 0.25));
+    data[i + 3] = 255;
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+
+  return canvas;
+}
+
+async function resolveTextureSource(source, fallbackFactory, label) {
+  if (!source) {
+    return fallbackFactory();
+  }
+
+  try {
+    return await loadImage(source);
+  } catch (error) {
+    console.warn(
+      `InteractiveBlurReveal: ${label} texture could not load. Falling back to a generated local texture.`,
+      error?.message || error
+    );
+
+    return fallbackFactory();
+  }
 }
 
 function createImageTexture(gl, image, unit, shouldRepeat = false) {
@@ -315,7 +419,12 @@ function drawTrailStamp(ctx, x, y, radius, softRadius) {
   ctx.fill();
 }
 
-function InteractiveBlurReveal({ iChannel0="https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-01.jpg", iChannel1="https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/interactive-blur-reveal-noise.png", className, style }) {
+export function InteractiveBlurReveal({
+  iChannel0,
+  iChannel1,
+  className = "",
+  style,
+}) {
   const canvasRef = useRef(null);
 
   const pointerRef = useRef({
@@ -381,8 +490,16 @@ function InteractiveBlurReveal({ iChannel0="https://pub-8abee449136941f5b0a1cd2c
       gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
       const [baseImage, noiseImage] = await Promise.all([
-        loadImage(iChannel0),
-        loadImage(iChannel1),
+        resolveTextureSource(
+          iChannel0,
+          createDefaultBaseCanvas,
+          "base image"
+        ),
+        resolveTextureSource(
+          iChannel1,
+          createDefaultNoiseCanvas,
+          "noise image"
+        ),
       ]);
 
       if (isDisposed) {
@@ -406,7 +523,7 @@ function InteractiveBlurReveal({ iChannel0="https://pub-8abee449136941f5b0a1cd2c
       gl.uniform1i(maskLocation, TEXTURE_UNIT_MASK);
 
       function resize() {
-        const devicePixelRatio = window.devicePixelRatio || 1;
+        const devicePixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
         const nextWidth = Math.floor(window.innerWidth * devicePixelRatio);
         const nextHeight = Math.floor(window.innerHeight * devicePixelRatio);
 
@@ -604,7 +721,7 @@ function InteractiveBlurReveal({ iChannel0="https://pub-8abee449136941f5b0a1cd2c
       })
       .catch((error) => {
         console.warn(
-          "InteractiveBlurReveal could not initialize. The provided texture URL must be directly loadable by the browser and must allow CORS for WebGL.",
+          "InteractiveBlurReveal could not initialize.",
           error?.message || error
         );
       });

@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.4] - 2026-06-05
 
 ### Security
-- Registry asset fetches are now restricted to `components.hyperiux.com` — arbitrary remote hosts are rejected
+- Registry asset fetches are now restricted to `vault.hyperiux.com` — arbitrary remote hosts are rejected
 - Dependency installation replaced `execSync` (shell string) with `spawnSync(..., { shell: false })` — eliminates residual shell injection surface
 
 ### Changed
@@ -47,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2026-06-04
 
 ### Added
-- `login` command — authenticates with Hyperiux Pro via CLI token from `components.hyperiux.com/cli-auth`
+- `login` command — authenticates with Hyperiux Pro via CLI token from `vault.hyperiux.com/cli-auth`
 - `logout` command — removes saved credentials from `~/.hyperiux/auth.json`
 - `whoami` command — shows current login status
 - Pro effect gating in `add` — validates CLI token against the API before fetching pro effect source

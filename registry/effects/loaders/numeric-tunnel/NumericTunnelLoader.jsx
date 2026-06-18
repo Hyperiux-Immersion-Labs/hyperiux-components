@@ -324,7 +324,7 @@ function NumericTunnelCanvas({ loaderValue, onComplete }) {
  )
 }
 
-export function NumericTunnel({ children, onComplete }) {
+export function NumericTunnelLoader({ children, onComplete }) {
  const [loaderValue, setLoaderValue] = useState(0)
  const [isComplete, setIsComplete] = useState(false)
 

@@ -22,8 +22,8 @@
       "target": "src/components/effects/numeric-tunnel/index.jsx"
     },
     {
-      "path": "NumericTunnel.jsx",
-      "target": "src/components/effects/numeric-tunnel/NumericTunnel.jsx"
+      "path": "NumericTunnelLoader.jsx",
+      "target": "src/components/effects/numeric-tunnel/NumericTunnelLoader.jsx"
     }
   ]
 }

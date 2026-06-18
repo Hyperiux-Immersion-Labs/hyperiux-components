@@ -85,7 +85,7 @@ function createRevealRect({
   return rect;
 }
 
-export function RectangularTextReveal({
+export default function RectangularTextReveal({
   children,
   as: Tag = DEFAULT_TAG,
   className = "",

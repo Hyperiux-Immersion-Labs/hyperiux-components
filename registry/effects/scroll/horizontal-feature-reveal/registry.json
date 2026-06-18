@@ -15,8 +15,8 @@
   "target": "src/components/effects/horizontal-feature-reveal",
   "files": [
     {
-      "path": "HorizontalFeatureReveal.jsx",
-      "target": "src/components/effects/horizontal-feature-reveal/HorizontalFeatureReveal.jsx"
+      "path": "HorizontalFeatureRevealComp.jsx",
+      "target": "src/components/effects/horizontal-feature-reveal/HorizontalFeatureRevealComp.jsx"
     },
     {
       "path": "index.jsx",

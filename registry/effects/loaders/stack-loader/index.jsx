@@ -264,19 +264,19 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
         }
       }}
       id="loader-wrapper"
-      className="flex h-screen w-full items-center justify-center bg-[#FCFCFC] px-[2.5vw] text-black max-md:px-[5vw] max-sm:px-[6vw]"
+      className="flex h-screen w-full items-center justify-center bg-[#FCFCFC] px-[2.5vw] text-black max-lg:px-[5vw] max-md:px-[6vw]"
     >
-      <div className="flex w-full items-center justify-between max-md:flex-col max-md:justify-center max-md:gap-[33vh] max-sm:gap-[70vw]">
+      <div className="flex w-full items-center justify-between max-lg:flex-col max-lg:justify-center max-lg:gap-[33vh] max-md:gap-[70vw]">
         <p
           ref={text1Ref}
-          className="opacity-0 max-md:text-[2.8vw] max-sm:text-[5vw]"
+          className="opacity-0 max-lg:text-[2.8vw] max-md:text-[5vw]"
         >
           HUMAN THINKERS
         </p>
 
         <div
           id="imgs-wrapper"
-          className="relative size-[6.5vw] max-md:z-99 max-md:size-[13vw] max-sm:size-[18vw]"
+          className="relative size-[6.5vw] max-lg:z-99 max-lg:size-[13vw] max-md:size-[18vw]"
         >
           {images.map((src, index) => (
             <div
@@ -300,7 +300,7 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
 
         <p
           ref={text2Ref}
-          className="opacity-0 max-md:text-[2.8vw] max-sm:text-[4vw]"
+          className="opacity-0 max-lg:text-[2.8vw] max-md:text-[4vw]"
         >
           DIGITAL MAKERS
         </p>
@@ -308,7 +308,7 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
 
       <p
         ref={descriptionTextRef}
-        className="absolute bottom-[3vw] left-1/2 w-[40vw] -translate-x-1/2 text-center leading-[1.1] text-black opacity-0 max-md:bottom-[3vw] max-md:w-[68vw] max-md:text-[2.4vw] max-sm:bottom-[6vw] max-sm:w-[90%] max-sm:text-[3.5vw]"
+        className="absolute bottom-[3vw] left-1/2 w-[40vw] -translate-x-1/2 text-center leading-[1.1] text-black opacity-0 max-lg:bottom-[3vw] max-lg:w-[68vw] max-lg:text-[2.4vw] max-md:bottom-[6vw] max-md:w-[90%] max-md:text-[3.5vw]"
       >
         Hyperiux Vault
       </p>
@@ -316,7 +316,7 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
   );
 });
 
-export function StackLoader({
+export default function StackLoader({
   images = DEFAULT_IMAGE_SOURCES,
 }) {
   const [isLoaderComplete, setIsLoaderComplete] = useState(false);
@@ -338,7 +338,7 @@ export function StackLoader({
       className="relative h-screen w-screen overflow-hidden bg-zinc-900"
     >
       <p
-        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-neutral-300 transition-opacity duration-300 ${
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-neutral-300 transition-opacity duration-300 text-center ${
           isLoaderComplete ? "opacity-100" : "opacity-0"
         }`}
       >

@@ -19,8 +19,8 @@
       "target": "src/components/effects/infinite-perspective-slider/index.jsx"
     },
     {
-      "path": "InfiniteScrollSlider.jsx",
-      "target": "src/components/effects/infinite-perspective-slider/InfiniteScrollSlider.jsx"
+      "path": "InfinitePerspectiveSliderComp.jsx",
+      "target": "src/components/effects/infinite-perspective-slider/InfinitePerspectiveSliderComp.jsx"
     }
   ]
 }

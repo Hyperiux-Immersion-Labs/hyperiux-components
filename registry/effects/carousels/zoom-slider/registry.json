@@ -19,8 +19,8 @@
       "target": "src/components/effects/zoom-slider/index.jsx"
     },
     {
-      "path": "ZoomSlider.jsx",
-      "target": "src/components/effects/zoom-slider/ZoomSlider.jsx"
+      "path": "ZoomSliderComp.jsx",
+      "target": "src/components/effects/zoom-slider/ZoomSliderComp.jsx"
     }
   ]
 }

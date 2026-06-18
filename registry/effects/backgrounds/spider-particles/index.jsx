@@ -67,7 +67,7 @@ const POINT_FRAG = /* glsl */ `
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export function SpiderParticles({
+export default function SpiderParticles({
   particleCount = 180,
   gridGap = 0,
   particleSize = 20.0,
@@ -480,7 +480,7 @@ export function SpiderParticles({
           <div
             className={`transition-opacity duration-700 ${active ? "opacity-0" : "opacity-40"}`}
           >
-            <p className="text-sm text-white/60 tracking-widest uppercase">
+            <p className="text-sm text-white tracking-widest uppercase">
               Move your cursor to explore
             </p>
             <div className="mt-1.5 w-8 h-px bg-white/20" />

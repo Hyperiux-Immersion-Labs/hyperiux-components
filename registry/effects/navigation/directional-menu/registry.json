@@ -7,9 +7,6 @@
   "dependencies": [
     "gsap"
   ],
-  "registryDependencies": [
-    "chevron-bird"
-  ],
   "previewUrl": "/navigation/directional-menu",
   "tier": "free",
   "exportName": "DirectionalMenu",

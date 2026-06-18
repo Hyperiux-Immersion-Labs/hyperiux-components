@@ -19,8 +19,8 @@
       "target": "src/components/effects/sticky-content-wrapper/index.jsx"
     },
     {
-      "path": "StickyContentWrapper.jsx",
-      "target": "src/components/effects/sticky-content-wrapper/StickyContentWrapper.jsx"
+      "path": "StickyContentComp.jsx",
+      "target": "src/components/effects/sticky-content-wrapper/StickyContentComp.jsx"
     }
   ]
 }
