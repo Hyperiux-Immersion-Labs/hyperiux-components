@@ -31,11 +31,13 @@ describe("registry utilities", () => {
         path: "blur-text.jsx",
         type: "registry:component",
         target: "components/hyperiux/blur-text.jsx",
+        content: "export function BlurText() {}",
       },
       {
         path: "use-animation.js",
         type: "registry:component",
         target: "hooks/use-animation.js",
+        content: "export function useAnimation() {}",
       },
       {
         path: "assets/img/image01.webp",
