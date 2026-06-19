@@ -168,6 +168,19 @@ To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-ne
 
 ---
 
+## Community
+
+💬 Questions or effect requests? [Start a Discussion →](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/discussions)
+
+| Category | Purpose |
+|---|---|
+| [Q&A](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/discussions/categories/q-a) | How-to questions about installing and using effects |
+| [Effect Requests](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/discussions/categories/effect-requests) | Suggest new effects for Hyperiux Vault |
+| [Show and Tell](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/discussions/categories/show-and-tell) | Share sites you've built with Vault |
+| [Ideas](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/discussions/categories/ideas) | General feedback and suggestions |
+
+---
+
 ## Connect
 
 | | |
