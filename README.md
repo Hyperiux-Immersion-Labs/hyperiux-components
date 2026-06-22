@@ -137,7 +137,7 @@ Letter-level and line-level reveal animations — blur, scramble, stagger, persp
 
 This is a pnpm monorepo with Turborepo:
 
-- **`apps/docs`** — Next.js documentation site ([components.hyperiux.com](https://vault.hyperiux.com))
+- **`apps/docs`** — Next.js documentation site ([vault.hyperiux.com](https://vault.hyperiux.com))
 - **`packages/cli`** — `npx hyperiux` CLI tool (published to npm as `hyperiux`)
 - **`registry/effects`** — Free effect source, organized by category
 
@@ -186,7 +186,7 @@ To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-ne
 | | |
 |---|---|
 | 🌐 Agency | [hyperiux.com](https://hyperiux.com) |
-| 🎨 UI Library | [components.hyperiux.com](https://vault.hyperiux.com) |
+| 🎨 UI Library | [vault.hyperiux.com](https://vault.hyperiux.com) |
 | 💻 GitHub | [github.com/Hyperiux-Immersion-Labs](https://github.com/Hyperiux-Immersion-Labs) |
 
 ---

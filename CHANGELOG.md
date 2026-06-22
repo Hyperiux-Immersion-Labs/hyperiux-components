@@ -16,6 +16,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.5] - 2026-06-19
+
+### Fixed
+- `immersive-full-screen-navigation`: bundled `char-stagger-button.jsx` directly — no longer requires a separate pro fetch for a free effect dependency
+- `immersive-full-screen-navigation`: fixed broken import path (`../../buttons/...` → `./char-stagger-button`)
+- `animated-faq`: fixed broken import (`../ChevronBird/ChevronBird` → `./chevron-bird`); `chevron-bird.jsx` now ships in the same folder
+- `scroll-shuffled-cards`: fixed broken import (`../Card/Card` → `./card`); `card.jsx` now ships in the same folder
+- Registry test mock items now include `content` field — tests no longer fail `prepublishOnly`
+
+### Added
+- `subfolder` flag in `registry.json` — set `"subfolder": true` to install a multi-file effect into `src/components/hyperiux/<name>/` instead of flat. Enabled for `mouse-pixelation`.
+- CI: security job with dependency audit, license check, TruffleHog secret scan, and dependency review on PRs
+- CI: CodeQL static analysis workflow (push, PR, weekly schedule)
+- GitHub Releases created retroactively for v0.1.0, v1.0.0, v1.0.3, v1.0.4
+
+### Changed
+- README: added CI status and MIT license badges
+- README: added Community section linking to GitHub Discussions (Q&A, Show and Tell, Ideas, Effect Requests)
+- `publishConfig`: removed `provenance: true` — provenance is now passed via CLI flag in CI only, not required for local publishing
+
 ## [1.0.4] - 2026-06-05
 
 ### Security
