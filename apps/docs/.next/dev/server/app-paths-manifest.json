@@ -1,5 +1,0 @@
-{
-  "/api/wishlist/route": "app/api/wishlist/route.js",
-  "/effects/page": "app/effects/page.js",
-  "/effects/[slug]/page": "app/effects/[slug]/page.js"
-}
