@@ -156,7 +156,7 @@ pnpm install
 pnpm dev
 ```
 
-To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-new-effect--checklist) checklist in CLAUDE.md.
+To add a new free effect: create a folder under `registry/effects/<category>/<effect-name>/`, add `<effect-name>.jsx` with a named export, add `registry.json`, then run `pnpm build:registry`.
 
 ---
 
