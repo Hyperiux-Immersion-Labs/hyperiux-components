@@ -139,6 +139,31 @@ export async function fetchRegistry(name, options = {}) {
     }
   }
 
+  /**
+   * HYPERIUX_PRO_REGISTRY_ROOT: path to hyperiux-pro-components/registry.
+   * Enables local end-to-end testing of pro effects without hitting the API.
+   * Usage: HYPERIUX_USE_LOCAL_PRO=1 HYPERIUX_PRO_REGISTRY_ROOT=/path/to/registry
+   */
+  const proRegistryRoot = process.env.HYPERIUX_PRO_REGISTRY_ROOT;
+
+  if (proRegistryRoot) {
+    let proItem = null;
+
+    try {
+      proItem = fetchLocalPackageRegistry(name, proRegistryRoot);
+    } catch (err) {
+      if (err.status !== 404) throw err;
+    }
+
+    if (proItem) {
+      if (process.env.HYPERIUX_USE_LOCAL_PRO === "1") {
+        return proItem;
+      }
+
+      return fetchProtectedEffect(name, token);
+    }
+  }
+
   const publicData = await fetchPublicEffect(name);
 
   if (!isProEffect(publicData)) {
