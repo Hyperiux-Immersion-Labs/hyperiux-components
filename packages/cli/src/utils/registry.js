@@ -113,21 +113,30 @@ export async function fetchRegistry(name, options = {}) {
   const localRegistryRoot = getLocalRegistryRoot();
 
   if (localRegistryRoot) {
-    const localItem = fetchLocalPackageRegistry(name, localRegistryRoot);
+    let localItem = null;
 
-    if (!isProEffect(localItem)) {
-      return localItem;
+    try {
+      localItem = fetchLocalPackageRegistry(name, localRegistryRoot);
+    } catch (err) {
+      // Effect not in the local (free) registry — fall through to remote/API.
+      if (err.status !== 404) throw err;
     }
 
-    /**
-     * For Pro effects, still enforce API/token when running against production.
-     * For local testing with HYPERIUX_USE_LOCAL_PRO=1, allow local Pro registry.
-     */
-    if (process.env.HYPERIUX_USE_LOCAL_PRO === "1") {
-      return localItem;
-    }
+    if (localItem) {
+      if (!isProEffect(localItem)) {
+        return localItem;
+      }
 
-    return fetchProtectedEffect(name, token);
+      /**
+       * For Pro effects, still enforce API/token when running against production.
+       * For local testing with HYPERIUX_USE_LOCAL_PRO=1, allow local Pro registry.
+       */
+      if (process.env.HYPERIUX_USE_LOCAL_PRO === "1") {
+        return localItem;
+      }
+
+      return fetchProtectedEffect(name, token);
+    }
   }
 
   const publicData = await fetchPublicEffect(name);
