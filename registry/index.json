@@ -269,15 +269,7 @@
     "importPath": "@/components/effects/chess-grid-transition",
     "target": "src/components/effects/chess-grid-transition"
   },
-  {
-    "name": "book-flip",
-    "title": "Book Flip",
-    "category": "webgl",
-    "type": "registry:component",
-    "registryPath": "registry/effects/webgl/book-flip/registry.json",
-    "importPath": "@/components/effects/book-flip",
-    "target": "src/components/effects/book-flip"
-  },
+  
   {
     "name": "fractal-glass",
     "title": "Fractal Glass",
