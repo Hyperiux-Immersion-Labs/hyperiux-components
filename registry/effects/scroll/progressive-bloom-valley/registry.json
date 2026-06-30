@@ -1,0 +1,62 @@
+{
+  "name": "progressive-bloom-valley",
+  "type": "registry:component",
+  "title": "Progressive Bloom Valley",
+  "description": "WebGL particle valley flythrough with scroll-driven camera path, proximity bloom, magnetic flower interaction, film grain, and edge blur post-processing",
+  "category": "webgl",
+  "dependencies": [
+    "@react-three/fiber",
+    "@react-three/drei",
+    "@react-three/postprocessing",
+    "three",
+    "postprocessing"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/webgl/progressive-bloom-valley",
+  "tier": "pro",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/progressive-bloom-valley",
+  "target": "src/components/effects/progressive-bloom-valley",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/progressive-bloom-valley/index.jsx"
+    },
+    {
+      "path": "CameraRig.jsx",
+      "target": "src/components/effects/progressive-bloom-valley/CameraRig.jsx"
+    },
+    {
+      "path": "CircularText.jsx",
+      "target": "src/components/effects/progressive-bloom-valley/CircularText.jsx"
+    },
+    {
+      "path": "EdgeBlurEffect.jsx",
+      "target": "src/components/effects/progressive-bloom-valley/EdgeBlurEffect.jsx"
+    },
+    {
+      "path": "Experience.jsx",
+      "target": "src/components/effects/progressive-bloom-valley/Experience.jsx"
+    },
+    {
+      "path": "FilmGrainEffect.jsx",
+      "target": "src/components/effects/progressive-bloom-valley/FilmGrainEffect.jsx"
+    },
+    {
+      "path": "Flowers.jsx",
+      "target": "src/components/effects/progressive-bloom-valley/Flowers.jsx"
+    },
+    {
+      "path": "useInput.js",
+      "target": "src/components/effects/progressive-bloom-valley/useInput.js"
+    },
+    {
+      "path": "useValleyData.js",
+      "target": "src/components/effects/progressive-bloom-valley/useValleyData.js"
+    },
+    {
+      "path": "shaders.js",
+      "target": "src/components/effects/progressive-bloom-valley/shaders.js"
+    }
+  ]
+}

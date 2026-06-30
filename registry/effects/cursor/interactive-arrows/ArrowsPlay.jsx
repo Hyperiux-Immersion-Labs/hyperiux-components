@@ -1,0 +1,175 @@
+import React, { useCallback, useEffect, useRef } from 'react';
+import { Point, lerpAngle } from './utils';
+
+class Arrow {
+  constructor(position) {
+    this.pos = position;
+    this.dx = 0;
+    this.dy = 0;
+    this.angle = 0;
+    this.rotationEase = 0.12;
+  }
+
+  update(mouseX, mouseY) {
+    this.dx = mouseX - this.pos.x;
+    this.dy = mouseY - this.pos.y;
+    const targetAngle = Math.atan2(this.dy, this.dx);
+
+    this.angle = lerpAngle(this.angle, targetAngle, this.rotationEase);
+  }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.translate(this.pos.x, this.pos.y);
+    ctx.rotate(this.angle);
+    ctx.beginPath();
+    ctx.moveTo(30, 0);
+    ctx.lineTo(-30, 0);
+    ctx.moveTo(30, 0);
+    ctx.lineTo(10, -20);
+    ctx.moveTo(30, 0);
+    ctx.lineTo(10, 20);
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = 'white'; 
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+const ArrowsPlay = () => {
+  const canvasRef = useRef(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const arrowsRef = useRef([]);
+  const animationFrameRef = useRef(null);
+  const divRef = useRef(null); // For the center div with text
+
+  const initializeArrows = useCallback((canvas) => {
+    const arrows = [];
+    const spacing = 120;
+    
+    const cols = Math.floor(canvas.width / spacing);
+    const rows = Math.floor(canvas.height / spacing);
+    
+    const xPadding = (canvas.width - (cols * spacing)) / 2;
+    const yPadding = (canvas.height - (rows * spacing)) / 2;
+  
+    // Get div position relative to canvas
+    const divRect = divRef.current.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+    
+    const divLeft = divRect.left - canvasRect.left;
+    const divRight = divRect.right - canvasRect.left;
+    const divTop = divRect.top - canvasRect.top;
+    const divBottom = divRect.bottom - canvasRect.top;
+  
+    for (let y = 0; y <= rows; y++) {
+      for (let x = 0; x <= cols; x++) {
+        const arrowPos = new Point(
+          x * spacing + xPadding,
+          y * spacing + yPadding
+        );
+  
+        
+        if (
+          arrowPos.x >= divLeft && 
+          arrowPos.x <= divRight && 
+          arrowPos.y >= divTop && 
+          arrowPos.y <= divBottom
+        ) {
+          continue; 
+        }
+  
+        arrows.push(new Arrow(arrowPos));
+      }
+    }
+    return arrows;
+  }, []);
+  
+
+  const handleResize = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      arrowsRef.current = initializeArrows(canvas);
+    }
+  }, [initializeArrows]);
+
+  const handleMouseMove = useCallback((e) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();  
+    
+    if (
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom
+    ) {
+      mouseRef.current = {
+        x: e.clientX - rect.left,  
+        y: e.clientY - rect.top, 
+      };
+    }
+  }, []);
+
+  const main = useCallback(function drawFrame() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const arrows = arrowsRef.current;
+    const mouse = mouseRef.current;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    arrows.forEach(arrow => {
+      arrow.update(mouse.x, mouse.y);
+      arrow.draw(ctx);
+    });
+
+    animationFrameRef.current = requestAnimationFrame(drawFrame);
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    mouseRef.current = {
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+    };
+
+    arrowsRef.current = initializeArrows(canvas);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    main();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [handleMouseMove, handleResize, initializeArrows, main]);
+
+  return (
+    <div className="relative w-full h-full ">
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full cursor-pointer"
+      />
+      <div
+        ref={divRef}
+        className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center cursor-pointer h-[25vw] w-[32vw] bg-transparent"
+      >
+        <h1 className='translate-y-[-8vw] translate-x-[-4vw] text-center text-[15vw] leading-none text-white transition-all duration-500 ease'>
+          Play
+        </h1>
+      </div>
+    </div>
+  );
+};
+
+export default ArrowsPlay;

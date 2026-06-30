@@ -21,8 +21,8 @@
       "target": "src/components/effects/helix-slider/index.jsx"
     },
     {
-      "path": "HelixScrollComp.jsx",
-      "target": "src/components/effects/helix-slider/HelixScrollComp.jsx"
+      "path": "HelixSliderComp.jsx",
+      "target": "src/components/effects/helix-slider/HelixSliderComp.jsx"
     }
   ]
 }
