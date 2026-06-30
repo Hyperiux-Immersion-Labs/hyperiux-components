@@ -295,25 +295,5 @@
     "registryPath": "registry/effects/webgl/milkyway/registry.json",
     "importPath": "@/components/effects/milkyway",
     "target": "src/components/effects/milkyway"
-  },
-  {
-    "name": "interactive-arrows",
-    "title": "Interactive Arrows",
-    "category": "cursor",
-    "type": "registry:component",
-    "tier": "pro",
-    "registryPath": "registry/effects/cursor/interactive-arrows/registry.json",
-    "importPath": "@/components/effects/interactive-arrows",
-    "target": "src/components/effects/interactive-arrows"
-  },
-  {
-    "name": "progressive-bloom-valley",
-    "title": "Progressive Bloom Valley",
-    "category": "webgl",
-    "type": "registry:component",
-    "tier": "pro",
-    "registryPath": "registry/effects/scroll/progressive-bloom-valley/registry.json",
-    "importPath": "@/components/effects/progressive-bloom-valley",
-    "target": "src/components/effects/progressive-bloom-valley"
   }
 ]
