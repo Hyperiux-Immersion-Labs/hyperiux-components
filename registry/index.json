@@ -297,16 +297,7 @@
     "importPath": "@/components/effects/milkyway",
     "target": "src/components/effects/milkyway"
   },
-  {
-    "name": "progressive-bloom-valley",
-    "title": "Progressive Bloom Valley",
-    "category": "scroll",
-    "type": "registry:component",
-    "tier": "pro",
-    "registryPath": "registry/effects/scroll/progressive-bloom-valley/registry.json",
-    "importPath": "@/components/effects/progressive-bloom-valley",
-    "target": "src/components/effects/progressive-bloom-valley"
-  },
+  
   {
     "name": "interactive-arrows",
     "title": "Interactive Arrows",
