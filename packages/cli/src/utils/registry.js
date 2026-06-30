@@ -135,7 +135,18 @@ export async function fetchRegistry(name, options = {}) {
         return localItem;
       }
 
-      return fetchProtectedEffect(name, token);
+      /**
+       * Auth via API, but serve files from the local registry.
+       * The API response only includes file metadata (path/target) without content,
+       * so we re-attach __registryDir so getRegistryItemFiles can read files locally.
+       */
+      const apiItem = await fetchProtectedEffect(name, token);
+
+      return {
+        ...apiItem,
+        __registryDir: localItem.__registryDir,
+        __registryJsonPath: localItem.__registryJsonPath,
+      };
     }
   }
 
@@ -160,7 +171,13 @@ export async function fetchRegistry(name, options = {}) {
         return proItem;
       }
 
-      return fetchProtectedEffect(name, token);
+      const apiItem = await fetchProtectedEffect(name, token);
+
+      return {
+        ...apiItem,
+        __registryDir: proItem.__registryDir,
+        __registryJsonPath: proItem.__registryJsonPath,
+      };
     }
   }
 
