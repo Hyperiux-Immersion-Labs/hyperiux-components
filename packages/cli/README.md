@@ -7,30 +7,52 @@
 
 **A collection of high-quality animation effects and interactive components for Next.js — designed by [Hyperiux](https://hyperiux.com).**
 
-32 effects are free and open source. 83 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project — you own what you install.
+32 free effects are open source and install instantly. 83 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI copies source code directly into your project — you own what you install.
 
 ---
 
 ## Quick Start
 
-### 1. Initialize
+### 1. Initialize your project
+
 ```bash
 npx hyperiux init
 ```
 
+This creates a `hyperiux.json` config at your project root that tells the CLI where to install files and how your project is structured.
+
 ### 2. Add a free effect
+
 ```bash
-npx hyperiux add blur-text
+npx hyperiux add overflow-stagger-text
 ```
 
 ### 3. Use it
+
 ```jsx
-import { BlurText } from "@/components/effects/blur-text";
+import OverflowStaggerText from "@/components/effects/overflow-stagger-text";
 
 export default function Page() {
-  return <BlurText>Hello, world.</BlurText>;
+  return (
+    <OverflowStaggerText delay={0.2} stagger={0.03}>
+      Motion-first design, shipped fast.
+    </OverflowStaggerText>
+  );
 }
 ```
+
+**Props**
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `children` | `ReactNode` | — | Text content to animate |
+| `animateOnScroll` | `boolean` | `true` | Trigger on scroll instead of on mount |
+| `delay` | `number` | `0` | Seconds before animation starts |
+| `stagger` | `number` | `0.03` | Delay between each character |
+| `scrub` | `boolean` | `true` | Tie animation progress to scroll position |
+| `start` | `string` | `"top 90%"` | ScrollTrigger start position |
+| `end` | `string` | `"bottom 60%"` | ScrollTrigger end position |
+| `className` | `string` | `""` | Class applied to the wrapper element |
 
 ---
 
@@ -43,65 +65,123 @@ export default function Page() {
 | `npx hyperiux list` | List all available effects |
 | `npx hyperiux login` | Connect your Pro account |
 | `npx hyperiux logout` | Remove saved credentials |
-| `npx hyperiux whoami` | Show login status |
+| `npx hyperiux whoami` | Show current login status |
 
 ### Options for `add`
-- `--overwrite` — overwrite existing files
-- `--yes` — skip confirmation prompts
-- `--dry-run` — preview without writing files
+
+| Flag | Description |
+|---|---|
+| `--overwrite` | Overwrite existing files |
+| `--yes` | Skip confirmation prompts |
+| `--dry-run` | Preview what would be installed without writing files |
 
 ---
 
-## Free vs Pro
+## Free Effects
 
-**32 free effects** — install without any account:
+All 32 free effects install without an account. Browse and preview them at [vault.hyperiux.com/effects](https://vault.hyperiux.com/effects).
+
 ```bash
-npx hyperiux add blur-text
-npx hyperiux add spider-particles
-npx hyperiux add mouse-pixelation
+npx hyperiux add overflow-stagger-text    # scroll-triggered character reveal
+npx hyperiux add spider-particles         # interactive canvas particle web
+npx hyperiux add phantom-image-trail      # cursor-driven image trail
+npx hyperiux add sticky-content-wrapper   # GSAP pinned scroll section
+npx hyperiux add elevate-navbar           # scroll-aware animated navbar
 ```
 
-**83 pro effects** — require a [Pro subscription](https://vault.hyperiux.com/pricing):
+### Free effects by category
+
+**Text** — `overflow-stagger-text` · `text-fill-animation` · `rectangular-text-reveal` · `circular-split-roll`
+
+**Scroll** — `sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `text-convergence` · `scroll-distortion` · `smooth-scroll-animation` · `split-canvas` · `helix-slider`
+
+**Cursor** — `phantom-image-trail` · `pixelated-image-effect` · `interactive-arrows`
+
+**Backgrounds** — `spider-particles` · `dotted-grid`
+
+**Buttons** — `arrow-fill-button` · `link-button` · `scramble-link-button`
+
+**Navigation** — `elevate-navbar` · `directional-menu` · `glass-pill-header` · `immersive-full-screen-navigation` · `osmo-menu`
+
+**Loaders** — `cappen` · `numeric-tunnel` · `stack-loader`
+
+**Components** — `animated-faq` · `file-encryption` · `hover-slider` · `hover-stack` · `interactive-list-preview`
+
+---
+
+## Pro Effects
+
+83 pro effects require a [Hyperiux Vault Pro subscription](https://vault.hyperiux.com/pricing). This covers WebGL shaders, advanced Three.js scenes, GPU particle systems, complex GSAP rigs, and everything else in the full vault.
+
+### Getting started with Pro
+
+**Step 1 — Get a Pro subscription**
+
+Visit [vault.hyperiux.com/pricing](https://vault.hyperiux.com/pricing) and subscribe. Monthly and yearly plans are available.
+
+**Step 2 — Generate a CLI token**
+
+Go to your [dashboard](https://vault.hyperiux.com/dashboard) → **CLI Token** → copy the token.
+
+**Step 3 — Authenticate the CLI**
+
 ```bash
-npx hyperiux login       # authenticate once
+npx hyperiux login
+```
+
+Paste your token when prompted. The CLI saves it locally so you only need to do this once per machine.
+
+**Step 4 — Install pro effects the same way as free**
+
+```bash
 npx hyperiux add milkyway
+npx hyperiux add fractal-glass
+npx hyperiux add draggable-canvas
 ```
 
-[Browse all effects →](https://vault.hyperiux.com/effects)
+### Verify your login
+
+```bash
+npx hyperiux whoami
+# → Logged in as you@example.com (Pro)
+```
+
+### CI / CD environments
+
+If you install effects in a CI pipeline, set the token as an environment variable instead of running `login`:
+
+```bash
+HYPERIUX_TOKEN=your_token npx hyperiux add milkyway
+```
+
+Or add `HYPERIUX_TOKEN` to your CI secrets and the CLI will pick it up automatically.
+
+### Browse Pro effects
+
+All 83 pro effects with live previews and installation names are listed at [vault.hyperiux.com/effects](https://vault.hyperiux.com/effects).
 
 ---
 
-## Effects
+## How It Works
 
-### Scroll
-Scroll-driven animations built on GSAP ScrollTrigger — parallax galleries, pinned sequences, horizontal storytelling, stacking cards, and more.
+The CLI **copies source code** into your project. There is no `hyperiux` import at runtime — the installed files are yours and live in your repo. This means:
 
-`sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `parallax-slider` · `rotation-slider` · `text-convergence` · `scroll-distortion` · [+more](https://vault.hyperiux.com/effects/scroll-effects)
+- No vendor lock-in
+- Customize any component freely after installing
+- Works with any Next.js App Router project
 
-### WebGL
-Three.js and R3F scenes with custom GLSL shaders — image carousels, pixel grids, frosted glass, GPU particle galaxies, and 3D heroes.
+When you run `npx hyperiux add <effect>`, the CLI:
 
-`interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milkyway` · `fractal-glass` · [+more](https://vault.hyperiux.com/effects/webgl)
-
-### Cursor
-Canvas 2D and Three.js cursor effects — image trails, rope followers, liquid glass, character grids.
-
-`phantom-image-trail` · `pixelated-image-effect` · `magnetic-image-trail` · `character-trail` · `rope-cursor` · [+more](https://vault.hyperiux.com/effects/cursor-effects)
-
-### Text
-Letter-level and line-level reveal animations — blur, scramble, stagger, perspective flip, mask wipe.
-
-`blur-text` · `overflow-stagger-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-effects)
-
-### Backgrounds · Page Transitions · Buttons · Components · Navigation · Loaders
-
-[Browse all →](https://vault.hyperiux.com/effects)
+1. Fetches the component source from the registry
+2. Installs it into `src/components/effects/<effect-name>/`
+3. Installs any peer dependencies (`gsap`, `three`, etc.) via your package manager
+4. Leaves the files in your codebase — no ongoing CLI dependency
 
 ---
 
 ## Configuration
 
-`hyperiux.json` is created at your project root by `init`:
+`hyperiux.json` is created by `init` at your project root:
 
 ```json
 {
@@ -119,17 +199,29 @@ Letter-level and line-level reveal animations — blur, scramble, stagger, persp
 }
 ```
 
+Adjust `aliases` to match your project's path aliases.
+
+---
+
+## Requirements
+
+- **Node.js** 18+
+- **Next.js** 14+ (App Router)
+- **Tailwind CSS** v3 or v4
+
+Most effects depend on **GSAP**. The CLI installs it automatically. Note that GSAP's premium plugins (SplitText, ScrollTrigger, etc.) require a GSAP license for commercial use — see [gsap.com/licensing](https://gsap.com/licensing/).
+
 ---
 
 ## Environment Variables
 
 | Variable | Purpose |
 |---|---|
-| `HYPERIUX_TOKEN` | Use a CLI token without saving it locally (useful in CI) |
-| `HYPERIUX_APP_URL` | Override the Hyperiux app URL for self-hosting or testing |
-| `HYPERIUX_API_URL` | Override the API URL independently of the app URL |
+| `HYPERIUX_TOKEN` | Authenticate without running `login` — useful in CI |
+| `HYPERIUX_APP_URL` | Override the app URL for testing |
+| `HYPERIUX_API_URL` | Override the API URL independently |
 | `HYPERIUX_REGISTRY_URL` | Override the registry URL for local development |
-| `HYPERIUX_DEBUG` | Set to `1` to enable verbose request logs — do not use in shared CI |
+| `HYPERIUX_DEBUG` | Set to `1` for verbose request logs |
 
 ---
 
@@ -157,70 +249,6 @@ The default install path is `@/components/effects/<effect-name>`. If you customi
 
 ---
 
-## Architecture
-
-This is a pnpm monorepo with Turborepo:
-
-- **`apps/docs`** — Next.js documentation site ([vault.hyperiux.com](https://vault.hyperiux.com))
-- **`packages/cli`** — `npx hyperiux` CLI tool (published to npm as `hyperiux`)
-- **`registry/effects`** — Free effect source, organized by category
-
-Pro effect source lives in a private repository and is served via a protected API. The registry index (`public/r/index.json`) lists all effects with metadata but pro file contents are not publicly accessible.
-
----
-
-## Contributing
-
-Found a bug or want to contribute a free effect? Pull requests are welcome.
-
-```bash
-git clone https://github.com/hyperiux/hyperiux-components
-cd hyperiux-components
-pnpm install
-pnpm dev
-```
-
-To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-new-effect--checklist) checklist in CLAUDE.md.
-
-### Testing the CLI locally
-
-Before publishing, test the CLI against the live registry without installing from npm:
-
-```bash
-# From the repo root
-cd packages/cli
-npm link
-
-# Now test from any Next.js project directory
-hyperiux --help
-hyperiux list
-hyperiux init
-hyperiux add dotted-grid        # free effect — no login needed
-hyperiux login                  # pro effects — requires token
-hyperiux add milkyway           # pro effect
-
-# Unlink when done
-npm unlink hyperiux
-```
-
-To inspect exactly what will be published to npm:
-
-```bash
-npm pack                        # creates hyperiux-x.x.x.tgz locally
-tar -tzf hyperiux-*.tgz         # list files in the tarball
-npm publish --dry-run           # full publish simulation, nothing uploaded
-```
-
----
-
-## Requirements
-
-- **Node.js** 18+
-- **Next.js** (App Router)
-- **Tailwind CSS**
-
----
-
 ## Connect
 
 | | |
@@ -233,4 +261,4 @@ npm publish --dry-run           # full publish simulation, nothing uploaded
 
 ## License
 
-Free effects are MIT licensed. Pro effects require a subscription and are not redistributable.
+Free effects are MIT licensed. Pro effects require an active subscription and are not redistributable.
