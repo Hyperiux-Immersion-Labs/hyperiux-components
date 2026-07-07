@@ -1,0 +1,22 @@
+{
+  "name": "number-counter",
+  "type": "registry:component",
+  "title": "Number Counter",
+  "description": "Scroll-triggered number counters with digit rolling animations (multiple variants).",
+  "category": "text",
+  "dependencies": ["gsap"],
+  "registryDependencies": [],
+  "previewUrl": "/number-counter",
+  "coverImage": "number-counter",
+  "videoUrl": "/number-counter.mp4",
+  "tier": "pro",
+  "main": "index.jsx",
+  "importPath": "@/components/effects/number-counter",
+  "target": "src/components/effects/number-counter",
+  "files": [
+    { "path": "index.jsx", "target": "src/components/effects/number-counter/index.jsx" },
+    { "path": "NumberCounterOne.jsx", "target": "src/components/effects/number-counter/NumberCounterOne.jsx" },
+    { "path": "NumberCounterTwo.jsx", "target": "src/components/effects/number-counter/NumberCounterTwo.jsx" },
+    { "path": "NumberCounterThree.jsx", "target": "src/components/effects/number-counter/NumberCounterThree.jsx" }
+  ]
+}

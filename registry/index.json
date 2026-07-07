@@ -27,15 +27,6 @@
     "target": "src/components/effects/arrow-fill-button"
   },
   {
-    "name": "animated-toggle",
-    "title": "Animated Toggle",
-    "category": "buttons",
-    "type": "registry:component",
-    "registryPath": "registry/effects/buttons/animated-toggle/registry.json",
-    "importPath": "@/components/effects/animated-toggle",
-    "target": "src/components/effects/animated-toggle"
-  },
-  {
     "name": "link-button",
     "title": "Link Button",
     "category": "buttons",
@@ -170,15 +161,7 @@
     "importPath": "@/components/effects/circular-split-roll",
     "target": "src/components/effects/circular-split-roll"
   },
-  {
-    "name": "helix-slider",
-    "title": "Helix Slider",
-    "category": "scroll",
-    "type": "registry:component",
-    "registryPath": "registry/effects/scroll/helix-slider/registry.json",
-    "importPath": "@/components/effects/helix-slider",
-    "target": "src/components/effects/helix-slider"
-  },
+
   {
     "name": "horizontal-feature-reveal",
     "title": "Horizontal Feature Reveal",
@@ -205,15 +188,6 @@
     "registryPath": "registry/effects/scroll/rotation-slider/registry.json",
     "importPath": "@/components/effects/rotation-slider",
     "target": "src/components/effects/rotation-slider"
-  },
-  {
-    "name": "scroll-distortion",
-    "title": "Scroll Distortion",
-    "category": "scroll",
-    "type": "registry:component",
-    "registryPath": "registry/effects/scroll/scroll-distortion/registry.json",
-    "importPath": "@/components/effects/scroll-distortion",
-    "target": "src/components/effects/scroll-distortion"
   },
   {
     "name": "split-canvas",
@@ -243,6 +217,15 @@
     "target": "src/components/effects/text-convergence"
   },
   {
+    "name": "number-counter",
+    "title": "Number Counter",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/number-counter/registry.json",
+    "importPath": "@/components/effects/number-counter",
+    "target": "src/components/effects/number-counter"
+  },
+  {
     "name": "overflow-stagger-text",
     "title": "Overflow Stagger Text",
     "category": "text",
@@ -259,15 +242,6 @@
     "registryPath": "registry/effects/text/rectangular-text-reveal/registry.json",
     "importPath": "@/components/effects/rectangular-text-reveal",
     "target": "src/components/effects/rectangular-text-reveal"
-  },
-  {
-    "name": "text-fill-animation",
-    "title": "Text Fill Animation",
-    "category": "text",
-    "type": "registry:component",
-    "registryPath": "registry/effects/text/text-fill-animation/registry.json",
-    "importPath": "@/components/effects/text-fill-animation",
-    "target": "src/components/effects/text-fill-animation"
   },
   {
     "name": "chess-grid-transition",
