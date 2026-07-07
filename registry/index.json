@@ -27,6 +27,15 @@
     "target": "src/components/effects/arrow-fill-button"
   },
   {
+    "name": "animated-toggle",
+    "title": "Animated Toggle",
+    "category": "buttons",
+    "type": "registry:component",
+    "registryPath": "registry/effects/buttons/animated-toggle/registry.json",
+    "importPath": "@/components/effects/animated-toggle",
+    "target": "src/components/effects/animated-toggle"
+  },
+  {
     "name": "link-button",
     "title": "Link Button",
     "category": "buttons",
@@ -270,6 +279,15 @@
     "target": "src/components/effects/chess-grid-transition"
   },
   {
+    "name": "block-transition",
+    "title": "Block Transition",
+    "category": "transitions",
+    "type": "registry:component",
+    "registryPath": "registry/effects/transitions/block-transition/registry.json",
+    "importPath": "@/components/effects/block-transition",
+    "target": "src/components/effects/block-transition"
+  },
+  {
     "name": "fractal-glass",
     "title": "Fractal Glass",
     "category": "webgl",
@@ -289,10 +307,10 @@
   },
   {
     "name": "milkyway",
-    "title": "Milkyway",
+    "title": "Milky Way",
     "category": "webgl",
     "type": "registry:component",
-    "registryPath": "registry/effects/webgl/milkyway/registry.json",
+    "registryPath": "registry/effects/webgl/milky-way/registry.json",
     "importPath": "@/components/effects/milkyway",
     "target": "src/components/effects/milkyway"
   }
