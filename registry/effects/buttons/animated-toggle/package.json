@@ -1,0 +1,18 @@
+{
+  "name": "@hyperiux/animated-toggle",
+  "version": "0.0.1",
+  "description": "Pure CSS animated icon components: ChevronBird (chevron/arrow), Cross (plus to X), and Plus (open/close). No animation libraries required.",
+  "main": "index.jsx",
+  "files": [
+    "index.jsx",
+    "ChevronBird.jsx",
+    "Cross.jsx",
+    "Plus.jsx",
+    "registry.json"
+  ],
+  "keywords": [
+    "buttons",
+    "hyperiux"
+  ],
+  "dependencies": {}
+}
