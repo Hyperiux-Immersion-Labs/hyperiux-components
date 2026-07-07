@@ -137,18 +137,18 @@
   {
     "name": "gooey-counter",
     "title": "Gooey Counter",
-    "category": "others",
+    "category": "components",
     "type": "registry:component",
-    "registryPath": "registry/effects/others/gooey-counter/registry.json",
+    "registryPath": "registry/effects/components/gooey-counter/registry.json",
     "importPath": "@/components/effects/gooey-counter",
     "target": "src/components/effects/gooey-counter"
   },
   {
     "name": "interactive-list-preview",
     "title": "Interactive List Preview",
-    "category": "others",
+    "category": "components",
     "type": "registry:component",
-    "registryPath": "registry/effects/others/interactive-list-preview/registry.json",
+    "registryPath": "registry/effects/components/interactive-list-preview/registry.json",
     "importPath": "@/components/effects/interactive-list-preview",
     "target": "src/components/effects/interactive-list-preview"
   },
