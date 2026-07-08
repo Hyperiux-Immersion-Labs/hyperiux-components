@@ -533,7 +533,7 @@ function buildTextures(cfg) {
    return { posTex: mkTex(posArr), dataTex: mkTex(dataArr) }
 }
 
-// Build particle geometry (attributes only — positions on GPU)
+// Build particle geometry (attributes only - positions on GPU)
 function buildGeo(cfg) {
    const { texSize: S, maxRadius, holeRadius, coreRadius, seed } = cfg
    const count = S * S
@@ -648,7 +648,7 @@ function buildSmokeGeo(cfg) {
    return geo
 }
 
-// SmokeFlow — GPGPU-driven flowing nebula layer
+// SmokeFlow - GPGPU-driven flowing nebula layer
 const SmokeFlow = React.memo(function SmokeFlow() {
    const { gl } = useThree()
    const gpuRef = useRef(null)
@@ -713,7 +713,7 @@ const SmokeFlow = React.memo(function SmokeFlow() {
 
 
 const GALAXY_BASE_ROT = [degToRad(110), degToRad(-10), degToRad(0)]
-/** Max euler offset (rad) from mouse at screen edges — keep small for subtle parallax */
+/** Max euler offset (rad) from mouse at screen edges - keep small for subtle parallax */
 const MOUSE_TILT = { x: 0.1, y: 0.12, z: 0.03 }
 /** How fast smoothed mouse catches the cursor (frame-rate independent lerp) */
 const MOUSE_LERP_LAMBDA = 1

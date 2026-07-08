@@ -2,11 +2,7 @@ import { useMemo, useEffect } from"react";
 import { Effect } from"postprocessing";
 import { Uniform, Vector2 } from"three";
 
-/**
- * Both shaders share the same blur logic, but the output differs:
- * - classic: pure blur, no frosted white overlay
- * - frosted: blur + white, semi-transparent veil toward edges
- */
+
 
 const classicBlurFragmentShader = /* glsl */ `
 uniform float uBlurStrength;
