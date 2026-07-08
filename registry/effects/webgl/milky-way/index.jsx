@@ -8,8 +8,8 @@ import { degToRad } from 'three/src/math/MathUtils'
 import { EffectComposer, Vignette } from '@react-three/postprocessing'
 import { ArrowRight, Stars } from 'lucide-react'
 import Link from 'next/link'
-import EdgeBlurEffect from './EdgeBlurEffect'
-import CircularText from './CircularText'
+import EdgeBlurEffect from './edge-blur-effect'
+import CircularText from './circular-text'
 
 
 const CFG = {
