@@ -16,6 +16,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.72] - 2026-07-08
+
+### Added
+- `HYPERIUX_PRO_REGISTRY_ROOT` env var — point the CLI at a local pro registry directory for testing without hitting the remote API
+- `number-counter` effect added to free registry
+
+### Fixed
+- CLI falls through to remote API when an effect is not found in the local registry
+- `interactive-blur-reveal` and `horizontal-feature-reveal` registry entries updated
+- Milkyway effect source updated
+
+### Changed
+- Removed deprecated effects (`animated-toggle`, legacy milkyway)
+- Registry reorganised — stale and duplicate entries cleaned up
+
 ## [1.0.5] - 2026-06-19
 
 ### Fixed
