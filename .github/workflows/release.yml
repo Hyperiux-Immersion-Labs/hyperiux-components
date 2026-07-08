@@ -38,11 +38,17 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create GitHub Release
+      - name: Create or update GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${{ github.ref_name }}" \
-            --title "${{ github.ref_name }}" \
-            --generate-notes \
-            --latest
+          if gh release view "${{ github.ref_name }}" &>/dev/null; then
+            gh release edit "${{ github.ref_name }}" \
+              --title "${{ github.ref_name }}" \
+              --latest
+          else
+            gh release create "${{ github.ref_name }}" \
+              --title "${{ github.ref_name }}" \
+              --generate-notes \
+              --latest
+          fi
