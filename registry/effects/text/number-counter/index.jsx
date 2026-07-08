@@ -17,7 +17,7 @@ export default function NumberCounter() {
  return (
  <>
  <div className="min-h-screen w-screen bg-white flex items-center justify-center p-10">
- <div className="w-full max-w-6xl flex flex-col items-center gap-10">
+ <div className="w-full max-w-6xl max-sm:pt-10 flex flex-col items-center gap-10">
  <h2 className="text-[3vw] max-md:text-[4vw] max-sm:text-[7vw] text-[#111111] text-center">
  Numbers That Speak for Themselves
  </h2>

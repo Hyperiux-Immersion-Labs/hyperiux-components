@@ -9,6 +9,16 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
-  "previewUrl": "/page-transitions/block-transition",
-  "tier": "free"
+  "previewUrl": "/demo/block-transition",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.jsx",
+  "importPath": "@/components/effects/block-transition",
+  "target": "src/components/effects/block-transition",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/block-transition/index.jsx"
+    }
+  ]
 }
