@@ -2,14 +2,13 @@
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import Image from "next/image";
 import { useEffect } from "react";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const defaultPropertiesData = [];
 
-export default function HorizontalFeatureRevealComp({ propertiesData = defaultPropertiesData }) {
+export default function HorizontalScrollComp({ propertiesData = defaultPropertiesData }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       if (window.innerWidth <= 1025) return;
@@ -164,61 +163,7 @@ export default function HorizontalFeatureRevealComp({ propertiesData = defaultPr
       className="w-screen h-[600vh] bg-white text-black relative z-10 max-md:mt-0 max-md:h-fit max-md:py-[15%] max-md:px-[7vw]"
       id="industries"
     >
-       <div className="fixed bottom-8 left-1/2 z-30 -translate-x-1/2  flex flex-col gap-[0.5vw] justify-center items-center ">
-       <p className="text-lg text-black">
-        scroll
-       </p>
-                    
-                    <svg
-                        width="20"
-                        height="28"
-                        className="size-[1.5vw]"
-                        viewBox="0 0 20 28"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <style>{`
-                  .chev1 { animation: fadeDown 1.4s ease-in-out infinite; }
-                  .chev2 { animation: fadeDown 1.4s ease-in-out 0.22s infinite; }
-                  .chev3 { animation: fadeDown 1.4s ease-in-out 0.44s infinite; }
-                  @keyframes fadeDown {
-                    0%   { opacity: 0.08; transform: translateY(-3px); }
-                    50%  { opacity: 0.55; transform: translateY(2px); }
-                    100% { opacity: 0.08; transform: translateY(-3px); }
-                  }
-                `}</style>
-                        <polyline
-                            className="chev1 stroke-current"
-                            points="2,2 10,9 18,2"
-                            stroke="white"
-                            strokeWidth="1.4"
-                            fill="none"
-
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                        <polyline
-                            className="chev2 stroke-current"
-                            points="2,10 10,17 18,10"
-                            stroke="white"
-                            strokeWidth="1.4"
-                            fill="none"
-
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                        <polyline
-                            className="chev3 stroke-current"
-                            points="2,18 10,25 18,18"
-                            stroke="white"
-                            strokeWidth="1.4"
-                            fill="none"
-
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                    </svg>
-                </div>
+      
       <div className="w-screen  overflow-hidden h-screen justify-center items-center sticky top-0 max-md:static max-md:w-full max-md:h-fit max-md:flex max-md:flex-col max-md:items-start">
 
         
@@ -229,7 +174,7 @@ export default function HorizontalFeatureRevealComp({ propertiesData = defaultPr
               className="w-[80vw] h-screen flex gap-[5vw] industry-card max-md:h-fit max-md:flex-col-reverse max-md:w-full"
             >
               <div className="w-[40vw] h-screen overflow-hidden max-sm:h-[110vw] max-md:w-full max-sm:rounded-[4vw] max-md:h-[80vw] max-md:rounded-[2vw]">
-                <Image
+                <img
                   src={property.image}
                   alt={`property-img-${index + 1}`}
                   className={`w-full h-full scale-[1.4] translate-x-[-30%] opacity-0 industry-img industry-${property.imgClass} max-md:translate-x-0 max-md:scale-[1] max-md:object-cover max-md:opacity-100`}
