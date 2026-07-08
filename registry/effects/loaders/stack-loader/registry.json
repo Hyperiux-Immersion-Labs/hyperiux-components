@@ -10,6 +10,7 @@
   "registryDependencies": [],
   "previewUrl": "/loaders/stack-loader",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/stack-loader",
   "target": "src/components/effects/stack-loader",

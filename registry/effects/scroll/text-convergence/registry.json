@@ -10,6 +10,7 @@
   "registryDependencies": [],
   "previewUrl": "/text-convergence",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/text-convergence",
   "target": "src/components/effects/text-convergence",

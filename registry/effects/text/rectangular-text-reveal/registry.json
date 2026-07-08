@@ -10,6 +10,7 @@
   "registryDependencies": [],
   "previewUrl": "/rectangular-text-reveal",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/rectangular-text-reveal",
   "target": "src/components/effects/rectangular-text-reveal",

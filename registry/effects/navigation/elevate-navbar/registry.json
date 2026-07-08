@@ -11,6 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/navigation/elevate-navbar",
   "tier": "free",
+  "subfolder": true,
   "exportName": "ElevateNavbar",
   "exportKind": "named",
   "importPath": "@/components/effects/elevate-navbar",

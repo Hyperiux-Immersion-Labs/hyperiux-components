@@ -9,6 +9,7 @@
   ],
   "previewUrl": "/navigation/directional-menu",
   "tier": "free",
+  "subfolder": true,
   "exportName": "DirectionalMenu",
   "exportKind": "named",
   "importPath": "@/components/effects/directional-menu",

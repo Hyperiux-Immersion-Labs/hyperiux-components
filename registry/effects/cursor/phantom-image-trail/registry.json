@@ -10,6 +10,7 @@
   "registryDependencies": [],
   "previewUrl": "/mouse-hover-image",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/phantom-image-trail",
   "target": "src/components/effects/phantom-image-trail",

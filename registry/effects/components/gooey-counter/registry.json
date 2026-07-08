@@ -8,6 +8,7 @@
   "registryDependencies": [],
   "previewUrl": "/gooey-counter",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/gooey-counter",
   "target": "src/components/effects/gooey-counter",

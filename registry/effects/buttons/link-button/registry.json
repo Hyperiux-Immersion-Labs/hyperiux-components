@@ -8,6 +8,7 @@
   "registryDependencies": [],
   "previewUrl": "/buttons/link-button",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/link-button",
   "target": "src/components/effects/link-button",

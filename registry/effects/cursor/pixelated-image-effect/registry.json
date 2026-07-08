@@ -8,6 +8,7 @@
   "registryDependencies": [],
   "previewUrl": "/pixelated-image-effect",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/pixelated-image-effect",
   "target": "src/components/effects/pixelated-image-effect",

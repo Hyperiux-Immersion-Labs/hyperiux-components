@@ -8,6 +8,7 @@
   "registryDependencies": [],
   "previewUrl": "/hover-stack",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/hover-stack",
   "target": "src/components/effects/hover-stack",

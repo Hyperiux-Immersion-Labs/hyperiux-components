@@ -8,6 +8,7 @@
   "registryDependencies": [],
   "previewUrl": "/buttons/scramble-link-button",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/scramble-link-button",
   "target": "src/components/effects/scramble-link-button",

@@ -8,6 +8,7 @@
   "registryDependencies": [],
   "previewUrl": "/spider-particles",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/spider-particles",
   "target": "src/components/effects/spider-particles",

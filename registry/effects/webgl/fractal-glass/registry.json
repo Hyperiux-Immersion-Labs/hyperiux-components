@@ -10,6 +10,7 @@
   "registryDependencies": [],
   "previewUrl": "/webgl/fractal-glass",
   "tier": "free",
+  "subfolder": true,
   "exportName": "FractalGlass",
   "exportKind": "default",
   "importPath": "@/components/effects/fractal-glass",

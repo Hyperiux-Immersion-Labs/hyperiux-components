@@ -11,6 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/components/animated-faq",
   "tier": "free",
+  "subfolder": true,
   "exportName": "AnimatedFAQ",
   "exportKind": "default",
   "importPath": "@/components/effects/animated-faq",

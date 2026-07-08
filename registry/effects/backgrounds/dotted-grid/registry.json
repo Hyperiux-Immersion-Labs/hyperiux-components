@@ -8,6 +8,7 @@
   "registryDependencies": [],
   "previewUrl": "/dotted-grid",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/dotted-grid",
   "target": "src/components/effects/dotted-grid",

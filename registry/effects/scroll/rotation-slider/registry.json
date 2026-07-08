@@ -11,6 +11,7 @@
   "registryDependencies": [],
   "previewUrl": "/rotation-slider",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/rotation-slider",
   "target": "src/components/effects/rotation-slider",

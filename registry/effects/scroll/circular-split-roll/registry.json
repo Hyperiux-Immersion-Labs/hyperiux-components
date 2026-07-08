@@ -10,6 +10,7 @@
   "registryDependencies": [],
   "previewUrl": "/scroll/circular-split-roll",
   "tier": "free",
+  "subfolder": true,
   "exportName": "CircularSplitRoll",
   "exportKind": "named",
   "importPath": "@/components/effects/circular-split-roll",

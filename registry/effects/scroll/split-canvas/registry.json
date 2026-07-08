@@ -8,6 +8,7 @@
   "registryDependencies": [],
   "previewUrl": "/scroll/split-canvas",
   "tier": "free",
+  "subfolder": true,
   "exportName": "SplitCanvas",
   "exportKind": "named",
   "importPath": "@/components/effects/split-canvas",

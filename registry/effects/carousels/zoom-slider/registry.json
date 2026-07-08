@@ -10,6 +10,7 @@
   "registryDependencies": [],
   "previewUrl": "/webgl/zoom-slider",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/zoom-slider",
   "target": "src/components/effects/zoom-slider",

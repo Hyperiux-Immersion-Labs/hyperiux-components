@@ -10,6 +10,7 @@
   "registryDependencies": [],
   "previewUrl": "/horizontal-feature-reveal",
   "tier": "free",
+  "subfolder": true,
   "main": "index.jsx",
   "importPath": "@/components/effects/horizontal-feature-reveal",
   "target": "src/components/effects/horizontal-feature-reveal",
