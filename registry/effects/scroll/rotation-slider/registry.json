@@ -6,7 +6,8 @@
   "category": "scroll",
   "dependencies": [
     "gsap",
-    "next"
+    "next",
+    "lucide-react"
   ],
   "registryDependencies": [],
   "previewUrl": "/rotation-slider",

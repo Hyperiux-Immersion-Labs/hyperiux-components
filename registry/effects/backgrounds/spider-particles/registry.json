@@ -4,7 +4,7 @@
   "title": "Spider Particles",
   "description": "Canvas particle network background with connecting lines and mouse-driven repulsion — pure canvas, zero dependencies",
   "category": "backgrounds",
-  "dependencies": [],
+  "dependencies": ["three"],
   "registryDependencies": [],
   "previewUrl": "/spider-particles",
   "tier": "free",

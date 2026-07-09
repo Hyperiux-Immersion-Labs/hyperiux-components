@@ -4,7 +4,7 @@
   "title": "Arrow Fill Button",
   "description": "Button with expanding circle fill and animated arrow icon on hover",
   "category": "buttons",
-  "dependencies": [],
+  "dependencies": ["lucide-react"],
   "registryDependencies": [],
   "previewUrl": "/buttons/arrow-fill-button",
   "tier": "free",

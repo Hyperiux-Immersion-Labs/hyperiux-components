@@ -4,7 +4,7 @@
   "title": "Link Button",
   "description": "Minimal link button with animated underline and rotating arrow icon",
   "category": "buttons",
-  "dependencies": [],
+  "dependencies": ["lucide-react"],
   "registryDependencies": [],
   "previewUrl": "/buttons/link-button",
   "tier": "free",
