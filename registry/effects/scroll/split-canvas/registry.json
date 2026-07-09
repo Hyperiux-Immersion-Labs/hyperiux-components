@@ -28,8 +28,8 @@
       "target": "src/components/effects/split-canvas/content.js"
     },
     {
-      "path": "shaders/pixelTransition.js",
-      "target": "src/components/effects/split-canvas/shaders/pixelTransition.js"
+      "path": "pixel-transition.js",
+      "target": "src/components/effects/split-canvas/pixel-transition.js"
     }
   ]
 }

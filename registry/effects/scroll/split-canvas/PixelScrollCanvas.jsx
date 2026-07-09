@@ -4,7 +4,7 @@ import { useEffect, useRef } from'react';
 import * as THREE from'three';
 import gsap from'gsap';
 import { ScrollTrigger } from'gsap/ScrollTrigger';
-import { PixelTransitionFragment, PixelTransitionVertex } from './shaders/pixelTransition';
+import { PixelTransitionFragment, PixelTransitionVertex } from './pixel-transition';
 import { imageSources } from './content';
 
 gsap.registerPlugin(ScrollTrigger);
