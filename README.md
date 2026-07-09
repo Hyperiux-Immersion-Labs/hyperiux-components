@@ -24,19 +24,40 @@ This creates a `hyperiux.json` config at your project root that tells the CLI wh
 ### 2. Add a free effect
 
 ```bash
-npx hyperiux add overflow-stagger-text
+npx hyperiux add phantom-image-trail
 ```
 
 ### 3. Use it
 
 ```jsx
-import OverflowStaggerText from "@/components/effects/overflow-stagger-text";
+import PhantomImageTrail from "@/components/phantom-image-trail";
 
 export default function Page() {
+  const images = [
+    { src: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-11.jpg", alt: "Gradient 1" },
+    { src: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-12.jpg", alt: "Gradient 2" },
+    { src: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-13.jpg", alt: "Gradient 3" },
+    { src: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-14.jpg", alt: "Gradient 4" },
+    { src: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-15.jpg", alt: "Gradient 5" },
+    { src: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-01.jpg", alt: "Gradient 6" },
+    { src: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-02.jpg", alt: "Gradient 7" },
+  ];
   return (
-    <OverflowStaggerText delay={0.2} stagger={0.03}>
-      Motion-first design, shipped fast.
-    </OverflowStaggerText>
+    <div className="relative h-screen w-screen bg-[#f8fdfe]">
+      <PhantomImageTrail
+        images={images}
+        enableRotation={true}
+        idleSpawn={false}
+        idleDelay={300}
+        cursorOffsetX={-12}
+        cursorOffsetY={-12}
+        popOutDuration={0.8}
+        fadeOutDuration={0.5}
+        idlePopOutMultiplier={2.2}
+        idleFadeMultiplier={1.8}
+        imageMultiplier={3}
+      />
+    </div>
   );
 }
 ```
@@ -45,14 +66,36 @@ export default function Page() {
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
-| `children` | `ReactNode` | — | Text content to animate |
-| `animateOnScroll` | `boolean` | `true` | Trigger on scroll instead of on mount |
-| `delay` | `number` | `0` | Seconds before animation starts |
-| `stagger` | `number` | `0.03` | Delay between each character |
-| `scrub` | `boolean` | `true` | Tie animation progress to scroll position |
-| `start` | `string` | `"top 90%"` | ScrollTrigger start position |
-| `end` | `string` | `"bottom 60%"` | ScrollTrigger end position |
-| `className` | `string` | `""` | Class applied to the wrapper element |
+| `images` | `Array<{ src: string; alt?: string }> \| string[]` | default image set | Image list to cycle through |
+| `className` | `string` | `""` | Class applied to the outer wrapper |
+| `imageClassName` | `string` | `""` | Extra classes applied to each image |
+| `imageMultiplier` | `number` | `3` | Multiplies the image set to extend the trail |
+| `enableRotation` | `boolean` | `true` | Enables randomized rotation on spawn and exit |
+| `minStartRotation` | `number` | `-35` | Minimum starting rotation in degrees |
+| `maxStartRotation` | `number` | `35` | Maximum starting rotation in degrees |
+| `minExitRotation` | `number` | `-15` | Minimum exit rotation in degrees |
+| `maxExitRotation` | `number` | `15` | Maximum exit rotation in degrees |
+| `idleSpawn` | `boolean` | `true` | Enables idle image spawns while the pointer rests |
+| `idleDelay` | `number` | `300` | Idle spawn delay in milliseconds |
+| `idleDistanceThreshold` | `number` | `2` | Pointer movement threshold for idle spawning |
+| `triggerDistance` | `number` | `100` | Pointer movement distance required to trigger a new image |
+| `cursorOffsetX` | `number` | `-12` | Horizontal offset applied from the cursor |
+| `cursorOffsetY` | `number` | `-12` | Vertical offset applied from the cursor |
+| `popOutDuration` | `number` | `1` | Duration of the main pop-out animation in seconds |
+| `fadeOutDuration` | `number` | `0.7` | Duration of the fade-out animation in seconds |
+| `idlePopOutMultiplier` | `number` | `1.8` | Multiplier applied to pop-out duration for idle spawns |
+| `idleFadeMultiplier` | `number` | `1.5` | Multiplier applied to fade duration for idle spawns |
+| `startScale` | `number` | `0.2` | Initial scale when an image appears |
+| `endScale` | `number` | `1` | Scale during the main pop-out animation |
+| `exitScale` | `number` | `0` | Scale at the end of the fade-out animation |
+| `smoothMouse` | `boolean` | `true` | Smooths pointer movement before spawning images |
+| `lerpFactor` | `number` | `0.1` | Smoothing factor used when `smoothMouse` is enabled |
+| `disableOnMobile` | `boolean` | `false` | Disables cursor-driven spawning on coarse pointers |
+| `enableMobileTap` | `boolean` | `true` | Allows taps to spawn images on mobile devices |
+| `popEase` | `string \| function` | `Expo.easeOut` | Easing used for the pop-out animation |
+| `idlePopEase` | `string \| function` | `power1.out` | Easing used for idle pop-out animations |
+| `fadeEase` | `string \| function` | `power4.inOut` | Easing used for the fade-out animation |
+| `onImageShow` | `(payload) => void` | — | Callback fired when an image is shown |
 
 ---
 
@@ -82,30 +125,84 @@ export default function Page() {
 All 32 free effects install without an account. Browse and preview them at [vault.hyperiux.com/effects](https://vault.hyperiux.com/effects).
 
 ```bash
-npx hyperiux add overflow-stagger-text    # scroll-triggered character reveal
-npx hyperiux add spider-particles         # interactive canvas particle web
-npx hyperiux add phantom-image-trail      # cursor-driven image trail
-npx hyperiux add sticky-content-wrapper   # GSAP pinned scroll section
-npx hyperiux add elevate-navbar           # scroll-aware animated navbar
+# Backgrounds
+npx hyperiux add spider-particles
+npx hyperiux add dotted-grid
+
+# Buttons
+npx hyperiux add arrow-fill-button
+npx hyperiux add link-button
+npx hyperiux add scramble-link-button
+
+# Carousels
+npx hyperiux add zoom-slider
+
+# Components
+npx hyperiux add animated-faq
+npx hyperiux add gooey-counter
+npx hyperiux add hover-stack
+npx hyperiux add interactive-list-preview
+
+# Cursor
+npx hyperiux add phantom-image-trail
+npx hyperiux add pixelated-image-effect
+
+# Loaders
+npx hyperiux add numeric-tunnel
+npx hyperiux add stack-loader
+
+# Navigation
+npx hyperiux add directional-menu
+npx hyperiux add elevate-navbar
+npx hyperiux add immersive-full-screen-navigation
+
+# Scroll
+npx hyperiux add circular-split-roll
+npx hyperiux add horizontal-feature-reveal
+npx hyperiux add infinite-perspective-slider
+npx hyperiux add rotation-slider
+npx hyperiux add split-canvas
+npx hyperiux add sticky-content-wrapper
+npx hyperiux add text-convergence
+
+# Text
+npx hyperiux add number-counter
+npx hyperiux add overflow-stagger-text
+npx hyperiux add rectangular-text-reveal
+
+# Transitions
+npx hyperiux add block-transition
+npx hyperiux add chess-grid-transition
+
+# WebGL
+npx hyperiux add fractal-glass
+npx hyperiux add interactive-blur-reveal
+npx hyperiux add milky-way
 ```
 
 ### Free effects by category
-
-**Text** — `overflow-stagger-text` · `text-fill-animation` · `rectangular-text-reveal` · `circular-split-roll`
-
-**Scroll** — `sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `text-convergence` · `scroll-distortion` · `smooth-scroll-animation` · `split-canvas` · `helix-slider`
-
-**Cursor** — `phantom-image-trail` · `pixelated-image-effect` · `interactive-arrows`
 
 **Backgrounds** — `spider-particles` · `dotted-grid`
 
 **Buttons** — `arrow-fill-button` · `link-button` · `scramble-link-button`
 
-**Navigation** — `elevate-navbar` · `directional-menu` · `glass-pill-header` · `immersive-full-screen-navigation` · `osmo-menu`
+**Carousels** — `zoom-slider`
 
-**Loaders** — `cappen` · `numeric-tunnel` · `stack-loader`
+**Components** — `animated-faq` · `gooey-counter` · `hover-stack` · `interactive-list-preview`
 
-**Components** — `animated-faq` · `file-encryption` · `hover-slider` · `hover-stack` · `interactive-list-preview`
+**Cursor** — `phantom-image-trail` · `pixelated-image-effect`
+
+**Loaders** — `numeric-tunnel` · `stack-loader`
+
+**Navigation** — `elevate-navbar` · `directional-menu`  · `immersive-full-screen-navigation`
+
+**Scroll** — `circular-split-roll` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `split-canvas` · `sticky-content-wrapper` · `text-convergence`
+
+**Text** — `number-counter` · `overflow-stagger-text` · `rectangular-text-reveal`
+
+**Transitions** — `block-transition` · `chess-grid-transition`
+
+**WebGL** — `fractal-glass` · `interactive-blur-reveal` · `milky-way`
 
 ---
 
@@ -115,15 +212,15 @@ npx hyperiux add elevate-navbar           # scroll-aware animated navbar
 
 ### Getting started with Pro
 
-**Step 1 — Get a Pro subscription**
+**Step 1 - Get a Pro subscription**
 
 Visit [vault.hyperiux.com/pricing](https://vault.hyperiux.com/pricing) and subscribe. Monthly and yearly plans are available.
 
-**Step 2 — Generate a CLI token**
+**Step 2 - Generate a CLI token**
 
 Go to your [dashboard](https://vault.hyperiux.com/dashboard) → **CLI Token** → copy the token.
 
-**Step 3 — Authenticate the CLI**
+**Step 3 - Authenticate the CLI**
 
 ```bash
 npx hyperiux login
@@ -131,11 +228,11 @@ npx hyperiux login
 
 Paste your token when prompted. The CLI saves it locally so you only need to do this once per machine.
 
-**Step 4 — Install pro effects the same way as free**
+**Step 4 - Install pro effects the same way as free**
 
 ```bash
-npx hyperiux add milkyway
-npx hyperiux add fractal-glass
+npx hyperiux add spotlight-text
+npx hyperiux add square-translate
 npx hyperiux add draggable-canvas
 ```
 
@@ -143,7 +240,6 @@ npx hyperiux add draggable-canvas
 
 ```bash
 npx hyperiux whoami
-# → Logged in as hitesh@weareenigma.com (Pro)
 ```
 
 ### CI / CD environments
@@ -151,7 +247,7 @@ npx hyperiux whoami
 If you install effects in a CI pipeline, set the token as an environment variable instead of running `login`:
 
 ```bash
-HYPERIUX_TOKEN=your_token npx hyperiux add milkyway
+HYPERIUX_TOKEN=your_token npx hyperiux add spotlight-text
 ```
 
 Or add `HYPERIUX_TOKEN` to your CI secrets and the CLI will pick it up automatically.
