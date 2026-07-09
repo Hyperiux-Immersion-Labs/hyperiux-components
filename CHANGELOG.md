@@ -16,6 +16,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.8] - 2026-07-09
+
+### Fixed
+- `split-canvas`: shader moved from `shaders/pixelTransition.js` to top-level `pixel-transition.js` — nested subdirectory wasn't scanned by registry build tooling, so the file was never packaged for CLI installs
+- `immersive-full-screen-navigation` renamed to `immersive-full-screen-nav` to match live demo route
+- `spider-particles`: fixed `isDesktop`/breakpoint bug on mobile
+- `milky-way` registry entry corrected (was stale `milkyway` slug in index)
+- `package-manager`: improved detection reliability across more project layouts
+
+### Added
+- `number-counter` and `block-transition` reclassified as free effects
+- Mobile tap support added to `arrow-fill-button`, `link-button`, `scramble-link-button`
+- `fractal-glass`: sensible default prop values added
+- Release workflow: handles existing GitHub Release gracefully (edit instead of fail on re-run)
+
+### Changed
+- README updated with improved install and usage documentation
+
 ## [1.0.72] - 2026-07-08
 
 ### Added
