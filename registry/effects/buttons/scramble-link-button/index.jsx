@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -10,6 +10,7 @@ const DEFAULT_HOVER_COLOR = "#ff6b00";
 const DEFAULT_SCRAMBLE_DURATION = 1000;
 const DEFAULT_STEP_MS = 50;
 const DEFAULT_REVEAL_STAGGER = 1.4;
+const COMPACT_LAYOUT_BREAKPOINT = 1025;
 const GLYPHS = "abcdefghijklmnopqrstuvwxyz0123456789";
 
 function getScrambledText({
@@ -62,10 +63,17 @@ export function ScrambleLinkButton({
 }) {
   const scrambleRef = useRef(null);
   const timeoutRef = useRef(null);
+  const [isCompactLayout, setIsCompactLayout] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+
+  const activeTextStyle =
+    isCompactLayout && isPressed ? { color: hoverColor } : undefined;
+  const activeLineStyle =
+    isCompactLayout && isPressed ? { color: hoverColor } : undefined;
 
   const innerClassName = `relative inline-block ${
     showLine
-      ? `w-fit after:absolute after:left-0 after:bottom-[-4%] after:h-[1.5px] after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-[450ms] after:ease-[cubic-bezier(0.625,0.05,0,1)] after:content-[''] group-hover:after:origin-left group-hover:after:scale-x-100 ${lineClassName}`
+      ? `w-fit after:absolute after:left-0 after:bottom-[-4%] after:h-[1.5px] after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-[450ms] after:ease-[cubic-bezier(0.625,0.05,0,1)] after:content-[''] group-hover:after:origin-left group-hover:after:scale-x-100 group-data-[pressed=true]:after:origin-left group-data-[pressed=true]:after:scale-x-100 ${lineClassName}`
       : ""
   }`;
 
@@ -81,7 +89,29 @@ export function ScrambleLinkButton({
     };
   }, [btnText]);
 
-  const onMouseEnter = () => {
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      `(max-width: ${COMPACT_LAYOUT_BREAKPOINT - 1}px)`
+    );
+
+    const syncCompactLayout = (event) => {
+      const matches = "matches" in event ? event.matches : event.currentTarget.matches;
+      setIsCompactLayout(matches);
+
+      if (!matches) {
+        setIsPressed(false);
+      }
+    };
+
+    syncCompactLayout(mediaQuery);
+    mediaQuery.addEventListener("change", syncCompactLayout);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncCompactLayout);
+    };
+  }, []);
+
+  const runScramble = () => {
     const element = scrambleRef.current;
 
     if (!element || !btnText.length) {
@@ -95,7 +125,7 @@ export function ScrambleLinkButton({
     let iteration = 0;
     const maxIterations = Math.max(1, Math.floor(scrambleDuration / stepMs));
 
-    const runScramble = () => {
+    const updateScramble = () => {
       element.textContent = getScrambledText({
         finalText: btnText,
         iteration,
@@ -109,10 +139,33 @@ export function ScrambleLinkButton({
       }
 
       iteration += 1;
-      timeoutRef.current = setTimeout(runScramble, stepMs);
+      timeoutRef.current = setTimeout(updateScramble, stepMs);
     };
 
+    updateScramble();
+  };
+
+  const onMouseEnter = () => {
     runScramble();
+  };
+
+  const handlePointerDown = (event) => {
+    props.onPointerDown?.(event);
+
+    if (!isCompactLayout || event.pointerType === "mouse") {
+      return;
+    }
+
+    setIsPressed(true);
+    runScramble();
+  };
+
+  const handlePointerUp = (event) => {
+    props.onPointerUp?.(event);
+  };
+
+  const handlePointerCancel = (event) => {
+    props.onPointerCancel?.(event);
   };
 
   return (
@@ -122,12 +175,17 @@ export function ScrambleLinkButton({
       {...props}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
-      className={`group inline-flex cursor-pointer items-center gap-2  text-[1.1vw] text-inherit no-underline transition-colors duration-350 ease-in-out hover:text-(--scramble-hover-color) max-lg:text-[3vw] max-sm:text-[4.2vw] ${className}`}
+      data-pressed={isPressed ? "true" : "false"}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerCancel}
+      className={`group inline-flex cursor-pointer items-center gap-2  text-[1.1vw] text-inherit no-underline transition-colors duration-350 ease-in-out hover:text-(--scramble-hover-color) group-data-[pressed=true]:text-(--scramble-hover-color) max-lg:text-[3vw] max-sm:text-[4.2vw] ${className}`}
       style={{ "--scramble-hover-color": hoverColor }}
     >
-      <span className={innerClassName}>
+      <span className={innerClassName} style={activeLineStyle}>
         <span
           className={`pointer-events-none invisible inline-block select-none whitespace-pre [font-variant-ligatures:none] ${textClassName}`}
+          style={activeTextStyle}
         >
           {btnText}
         </span>
@@ -135,6 +193,7 @@ export function ScrambleLinkButton({
         <span
           ref={scrambleRef}
           className={`absolute inset-0 inline-block whitespace-pre text-left [font-variant-ligatures:none] ${textClassName}`}
+          style={activeTextStyle}
           aria-label={btnText}
         >
           {btnText}
@@ -145,7 +204,7 @@ export function ScrambleLinkButton({
         <span
           className={`inline-flex items-center justify-center ${iconClassName}`}
         >
-          <Icon className="transition-transform duration-300 ease-in-out group-hover:-rotate-45" />
+          <Icon className="transition-transform duration-300 ease-in-out group-hover:-rotate-45 group-data-[pressed=true]:-rotate-45" />
         </span>
       )}
     </Link>

@@ -152,10 +152,10 @@ export default function FractalGlass({
   imageSrc = "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-13.jpg", // ← new prop: path/URL to image file
   videoSrc = null,
   mediaType = "image",
-  stripesFrequency = 8.0,
-  glassStrength = 0.8,
-  glassSmoothness = 0.5,
-  parallaxStrength = 0.6,
+  stripesFrequency = 40,
+  glassStrength = 2.0,
+  glassSmoothness = 0.014,
+  parallaxStrength = 0.15,
   distortionMultiplier = 8.0,
   edgePadding = 0.12,
 }) {

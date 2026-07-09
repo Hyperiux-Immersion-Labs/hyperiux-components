@@ -35,7 +35,7 @@ export default function DirectionalMenu() {
         <div className="max-w-7xl mx-auto max-md:hidden h-19 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-3 cursor-pointer">
+            <Link prefetch={false} href="/" className="flex items-center gap-3 cursor-pointer">
               <Image
                 src="/hyperiux.svg"
                 alt="Hyperiux"
@@ -88,15 +88,15 @@ export default function DirectionalMenu() {
             motion, and details crafted for a more immersive experience.
           </p>
           {/* Buttons */}
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 max-sm:mt-20">
             <button className="px-7 py-3 cursor-pointer rounded-full bg-white text-black font-medium hover:bg-white/90 transition-all duration-300">
-              <Link href={"/effects/navigation/directional-menu"} className="">
+              <Link prefetch={false} href={"/effects/navigation/directional-menu"} className="">
                 Get Started
               </Link>
             </button>
 
             <button className="px-7 py-3 rounded-full border cursor-pointer border-white/10 bg-white/3 hover:bg-white/6 transition-all duration-300 text-white/80">
-              <Link href={"/effects"}>Explore Platform</Link>
+              <Link prefetch={false} href={"/effects"}>Explore Platform</Link>
             </button>
           </div>
         </div>
