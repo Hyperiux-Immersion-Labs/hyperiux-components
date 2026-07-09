@@ -181,7 +181,7 @@ export default function FullscreenNav({
           onTouchStart={onToggleMenu}
           aria-label="Toggle menu"
           aria-expanded={isOpen}
-          className="flex size-10 cursor-pointer flex-col items-center justify-center gap-1.5 max-md:size-14 max-sm:size-10"
+          className="flex size-10 cursor-pointer flex-col items-center justify-center gap-1.5 max-lg:size-14 max-md:size-10"
         >
           <span
             style={{ backgroundColor: isOpen ? headerOpenColor : undefined }}

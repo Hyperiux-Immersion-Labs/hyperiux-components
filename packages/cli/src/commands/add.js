@@ -244,7 +244,14 @@ export async function add(effectName, options = {}) {
     }
 
     if (shouldWriteHyperiuxImageHelper) {
-      writeHyperiuxImageHelper(cwd, config);
+      const helperAbsolutePath = path.resolve(cwd, helperTargetPath);
+
+      // Shared utility, not a per-effect file — only create it once so a
+      // later `hyperiux add` of an unrelated effect doesn't clobber any
+      // customization made to it.
+      if (options.overwrite || !fs.existsSync(helperAbsolutePath)) {
+        writeHyperiuxImageHelper(cwd, config);
+      }
     }
 
     filesSpinner.succeed("Files written successfully");

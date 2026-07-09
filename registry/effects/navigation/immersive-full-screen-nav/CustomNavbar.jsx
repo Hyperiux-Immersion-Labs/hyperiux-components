@@ -160,17 +160,17 @@ export default function CustomNavbar({
   return (
     <div
       style={{ backgroundColor: overlayBg }}
-      className="w-full h-screen flex flex-col justify-between px-28 py-10 pt-28 max-md:px-6 max-md:py-20 text-white"
+      className="w-full h-screen flex flex-col justify-between px-28 py-10 pt-28 max-lg:px-6 max-lg:py-20 text-white"
     >
      
 
-      <div className="flex items-center justify-between gap-10 max-md:flex-col max-md:items-start max-md:gap-18 max-sm:gap-18">
+      <div className="flex items-center justify-between gap-10 max-lg:flex-col max-lg:items-start max-lg:gap-18 max-md:gap-18">
         <div className="flex flex-col gap-0">
           {links.map((link, index) => (
             <div
               key={link.label}
               ref={setLinkRef(index)}
-              className="text-[6vw] max-sm:text-[11vw] max-md:text-[7vw] z-60"
+              className="text-[6vw] max-md:text-[11vw] max-lg:text-[7vw] z-60"
               style={{ opacity: 0, transform: `translateY(${LINK_Y_OFFSET}px)` }}
             >
 
@@ -181,14 +181,14 @@ export default function CustomNavbar({
           ))}
         </div>
 
-        <div className="flex h-full flex-col items-end justify-center gap-40 py-5 max-md:items-start max-md:gap-28 max-sm:w-full max-sm:gap-25 max-sm:py-0">
-          <div className="flex items-end gap-8 max-md:gap-10 max-sm:w-full max-sm:gap-3 max-sm:flex-col max-md:items-start">
+        <div className="flex h-full flex-col items-end justify-center gap-40 py-5 max-lg:items-start max-lg:gap-28 max-md:w-full max-md:gap-25 max-md:py-0">
+          <div className="flex items-end gap-8 max-lg:gap-10 max-md:w-full max-md:gap-3 max-md:flex-col max-lg:items-start">
             {images.slice(0, 4).map((src, index) => (
               <div
                 key={index}
                 ref={setImageRef(index)}
                 style={{ opacity: 0, transform: `scale(${IMAGE_INITIAL_SCALE})` }}
-                className="relative h-[18vw] w-[25vw] overflow-hidden rounded-xl max-md:h-[25vh] max-md:w-[35vw] max-sm:h-[30vw] max-sm:w-[60vw] max-sm:rounded-md"
+                className="relative h-[18vw] w-[25vw] overflow-hidden rounded-xl max-lg:h-[25vh] max-lg:w-[35vw] max-md:h-[30vw] max-md:w-[60vw] max-md:rounded-md"
               >
                 <Image
                   src={src}
@@ -203,7 +203,7 @@ export default function CustomNavbar({
         </div>
       </div>
 
-      <div className="flex gap-6 items-end justify-end max-md:justify-start max-md:pb-10 ">
+      <div className="flex gap-6 items-end justify-end max-lg:justify-start max-lg:pb-10 ">
         {socials.map((social, index) => (
           <Link
             key={index}
@@ -216,7 +216,7 @@ export default function CustomNavbar({
               alt={social.type}
               width={24}
               height={24}
-              className=" max-md:h-7 max-md:w-7 w-5 h-5"
+              className=" max-lg:h-7 max-lg:w-7 w-5 h-5"
             />
           </Link>
         ))}

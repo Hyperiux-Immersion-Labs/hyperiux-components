@@ -1,5 +1,8 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { installDependencies } from "../utils/package-manager.js";
+import fs from "fs";
+import os from "os";
+import path from "path";
+import { installDependencies, getMissingDependencies } from "../utils/package-manager.js";
 import { spawnSync } from "child_process";
 
 vi.mock("child_process", () => ({
@@ -40,5 +43,36 @@ describe("package manager utilities", () => {
     }).toThrow("Invalid package name(s) detected");
 
     expect(spawnSync).not.toHaveBeenCalled();
+  });
+});
+
+describe("getMissingDependencies", () => {
+  function makeProject(pkgJson) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "hyperiux-pm-test-"));
+    fs.writeFileSync(path.join(dir, "package.json"), JSON.stringify(pkgJson));
+    return dir;
+  }
+
+  it("treats a package as missing if it's only in node_modules, not package.json", () => {
+    // Simulates a transitive dependency: physically present but never
+    // declared, which used to be silently skipped instead of installed.
+    const dir = makeProject({ dependencies: {} });
+    fs.mkdirSync(path.join(dir, "node_modules", "lucide-react"), { recursive: true });
+
+    expect(getMissingDependencies(["lucide-react"], dir)).toEqual(["lucide-react"]);
+  });
+
+  it("treats a package as present if it's declared in package.json", () => {
+    const dir = makeProject({ dependencies: { gsap: "^3.0.0" } });
+
+    expect(getMissingDependencies(["gsap"], dir)).toEqual([]);
+  });
+
+  it("falls back to node_modules when package.json is missing", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "hyperiux-pm-test-"));
+    fs.mkdirSync(path.join(dir, "node_modules", "gsap"), { recursive: true });
+
+    expect(getMissingDependencies(["gsap"], dir)).toEqual([]);
+    expect(getMissingDependencies(["lenis"], dir)).toEqual(["lenis"]);
   });
 });

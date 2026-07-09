@@ -160,48 +160,48 @@ export default function HorizontalScrollComp({ propertiesData = defaultPropertie
 
   return (
     <section
-      className="w-screen h-[600vh] bg-white text-black relative z-10 max-md:mt-0 max-md:h-fit max-md:py-[15%] max-md:px-[7vw]"
+      className="w-screen h-[600vh] bg-white text-black relative z-10 max-lg:mt-0 max-lg:h-fit max-lg:py-[15%] max-lg:px-[7vw]"
       id="industries"
     >
       
-      <div className="w-screen  overflow-hidden h-screen justify-center items-center sticky top-0 max-md:static max-md:w-full max-md:h-fit max-md:flex max-md:flex-col max-md:items-start">
+      <div className="w-screen  overflow-hidden h-screen justify-center items-center sticky top-0 max-lg:static max-lg:w-full max-lg:h-fit max-lg:flex max-lg:flex-col max-lg:items-start">
 
         
-        <div className="flex flex-nowrap w-fit industry-container gap-[15vw] max-md:flex-col max-md:gap-[10vw] max-sm:gap-[15vw]">
+        <div className="flex flex-nowrap w-fit industry-container gap-[15vw] max-lg:flex-col max-lg:gap-[10vw] max-md:gap-[15vw]">
           {propertiesData.map((property, index) => (
             <div
               key={index}
-              className="w-[80vw] h-screen flex gap-[5vw] industry-card max-md:h-fit max-md:flex-col-reverse max-md:w-full"
+              className="w-[80vw] h-screen flex gap-[5vw] industry-card max-lg:h-fit max-lg:flex-col-reverse max-lg:w-full"
             >
-              <div className="w-[40vw] h-screen overflow-hidden max-sm:h-[110vw] max-md:w-full max-sm:rounded-[4vw] max-md:h-[80vw] max-md:rounded-[2vw]">
+              <div className="w-[40vw] h-screen overflow-hidden max-md:h-[110vw] max-lg:w-full max-md:rounded-[4vw] max-lg:h-[80vw] max-lg:rounded-[2vw]">
                 <img
                   src={property.image}
                   alt={`property-img-${index + 1}`}
-                  className={`w-full h-full scale-[1.4] translate-x-[-30%] opacity-0 industry-img industry-${property.imgClass} max-md:translate-x-0 max-md:scale-[1] max-md:object-cover max-md:opacity-100`}
+                  className={`w-full h-full scale-[1.4] translate-x-[-30%] opacity-0 industry-img industry-${property.imgClass} max-lg:translate-x-0 max-lg:scale-[1] max-lg:object-cover max-lg:opacity-100`}
                   width={500}
                   height={1080}
                 />
               </div>
 
-              <div className="flex flex-col gap-[5vh] w-[60%] pt-[7%] max-sm:pt-0 max-md:w-full max-md:gap-[4vw] max-sm:gap-[7vw]">
+              <div className="flex flex-col gap-[5vh] w-[60%] pt-[7%] max-md:pt-0 max-lg:w-full max-lg:gap-[4vw] max-md:gap-[7vw]">
                 <p
-                  className={`text-[6em] font-medium font-display text-secondary leading-none opacity-0 industry-no industry-no-${property.no} max-md:text-[10vw] max-md:opacity-100`}
+                  className={`text-[6em] font-medium font-display text-secondary leading-none opacity-0 industry-no industry-no-${property.no} max-lg:text-[10vw] max-lg:opacity-100`}
                 >
                   {property.number}
                 </p>
 
-                <div className="w-full h-fit flex flex-col gap-[4vh] max-sm:gap-[7vw]">
+                <div className="w-full h-fit flex flex-col gap-[4vh] max-md:gap-[7vw]">
                   <h3
-                    className={`text-[4em] opacity-0 industry-title max-sm:text-[9vw] max-md:text-[7.5vw] max-md:opacity-100 leading-[1.3] ${property.titleClass}`}
+                    className={`text-[4em] opacity-0 industry-title max-md:text-[9vw] max-lg:text-[7.5vw] max-lg:opacity-100 leading-[1.3] ${property.titleClass}`}
                   >
                     {property.title}
                   </h3>
 
-                  <div className="space-y-[1.5vw] max-md:text-[2.5vw] max-sm:text-[4.2vw]">
+                  <div className="space-y-[1.5vw] max-lg:text-[2.5vw] max-md:text-[4.2vw]">
                     {property.paragraphs.map((para, pIndex) => (
                       <p
                         key={pIndex}
-                        className={`opacity-0 industry-content max-md:opacity-100 ${property.contentClass}`}
+                        className={`opacity-0 industry-content max-lg:opacity-100 ${property.contentClass}`}
                       >
                         {para}
                       </p>
