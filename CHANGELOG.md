@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.8] - 2026-07-09
+## [1.0.73] - 2026-07-09
 
 ### Fixed
 - `split-canvas`: shader moved from `shaders/pixelTransition.js` to top-level `pixel-transition.js` — nested subdirectory wasn't scanned by registry build tooling, so the file was never packaged for CLI installs

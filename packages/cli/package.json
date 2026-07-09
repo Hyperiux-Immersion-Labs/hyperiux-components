@@ -1,6 +1,6 @@
 {
   "name": "hyperiux",
-  "version": "1.0.8",
+  "version": "1.0.73",
   "description": "CLI for adding Hyperiux UI effects to your Next.js project. This package is a CLI installer only — it is not an importable JavaScript/TypeScript library.",
   "type": "module",
   "bin": {
