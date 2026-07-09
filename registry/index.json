@@ -126,13 +126,13 @@
     "target": "src/components/effects/elevate-navbar"
   },
   {
-    "name": "immersive-full-screen-navigation",
+    "name": "immersive-full-screen-nav",
     "title": "Immersive Full screen Navigation",
     "category": "navigation",
     "type": "registry:component",
-    "registryPath": "registry/effects/navigation/immersive-full-screen-navigation/registry.json",
-    "importPath": "@/components/effects/immersive-full-screen-navigation",
-    "target": "src/components/effects/immersive-full-screen-navigation"
+    "registryPath": "registry/effects/navigation/immersive-full-screen-nav/registry.json",
+    "importPath": "@/components/effects/immersive-full-screen-nav",
+    "target": "src/components/effects/immersive-full-screen-nav"
   },
   {
     "name": "gooey-counter",
@@ -280,12 +280,12 @@
     "target": "src/components/effects/interactive-blur-reveal"
   },
   {
-    "name": "milkyway",
+    "name": "milky-way",
     "title": "Milky Way",
     "category": "webgl",
     "type": "registry:component",
     "registryPath": "registry/effects/webgl/milky-way/registry.json",
-    "importPath": "@/components/effects/milkyway",
-    "target": "src/components/effects/milkyway"
+    "importPath": "@/components/effects/milky-way",
+    "target": "src/components/effects/milky-way"
   }
 ]
