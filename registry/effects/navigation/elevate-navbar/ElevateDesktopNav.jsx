@@ -12,19 +12,19 @@ const DEFAULT_MENU_ITEMS = [
     href: "#",
     isDropdown: true,
     dropdown: [
-      { title: "All Effects", img: "/img/dino2.png", href: "#" },
-      { title: "Components", img: "/img/dino2.png", href: "#" },
-      { title: "WebGL", img: "/img/dino2.png", href: "#" },
+      { title: "All Effects", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-09.jpg", href: "#" },
+      { title: "Components", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-10.jpg", href: "#" },
+      { title: "WebGL", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-11.jpg", href: "#" },
     ],
   },
   {
     name: "Tech",
-    href: "#",
+    href: "/tech",
     isDropdown: true,
     dropdown: [
-      { title: "React Effects", img: "/img/dino2.png", href: "#" },
-      { title: "GSAP Effects", img: "/img/dino2.png", href: "#" },
-      { title: "Three.js Effects", img: "/img/dino2.png", href: "#" },
+      { title: "React Effects", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-01.jpg", href: "#" },
+      { title: "GSAP Effects", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-02.jpg", href: "#" },
+      { title: "Three.js Effects", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-03.jpg", href: "#" },
     ],
   },
   {
@@ -38,9 +38,9 @@ const DEFAULT_MENU_ITEMS = [
     href: "#",
     isDropdown: true,
     dropdown: [
-      { title: "Introduction", img: "/img/dino2.png", href: "#" },
-      { title: "Installation", img: "/img/dino2.png", href: "#" },
-      { title: "CLI", img: "/img/dino2.png", href: "#" },
+      { title: "Introduction", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-05.jpg", href: "#" },
+      { title: "Installation", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-06.jpg", href: "#" },
+      { title: "CLI", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-07.jpg", href: "#" },
     ],
   },
 ];

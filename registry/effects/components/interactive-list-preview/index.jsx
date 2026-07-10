@@ -4,10 +4,10 @@ import { ListHover } from './ListHover';
 const InteractiveListPreview = () => {
   return (
     <>
-      <div className='flex items-center flex-col gap-20 max-sm:gap-20 max-sm:py-[15%] max-md:py-[10%] justify-center h-screen max-md:h-full bg-neutral-900'>
+      <div className='flex items-center flex-col gap-20 max-md:gap-20 max-md:py-[15%] max-xl:py-[10%] justify-center h-screen max-xl:h-full bg-neutral-900'>
 
-        <div className='text-center space-y-[1vw] max-md:space-y-[4vw]'>
-          <h2 className='font-mono text-[4vw] max-md:text-center  max-sm:px-10  text-white max-md:text-5xl max-sm:text-4xl capitalize'>
+        <div className='text-center space-y-[1vw] max-xl:space-y-[4vw]'>
+          <h2 className='font-mono text-[4vw] max-xl:text-center  max-md:px-10  text-white max-xl:text-5xl max-md:text-4xl capitalize'>
             Elevating interaction through motion
           </h2>
           <p>

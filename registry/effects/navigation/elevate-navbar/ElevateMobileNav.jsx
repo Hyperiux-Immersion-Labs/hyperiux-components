@@ -9,30 +9,38 @@ import { ChevronDown, Menu, X } from "lucide-react";
 const DEFAULT_MENU_ITEMS = [
   {
     name: "Effects",
+    href: "#",
+    isDropdown: true,
     dropdown: [
-      { title: "All Effects", img: "/img/dino2.png", href: "/effects" },
-    { title: "Components", img: "/img/dino2.png", href: "/effects/components" },
-      { title: "WebGL", img: "/img/dino2.png", href: "/effects/webgl-effects" },
+      { title: "All Effects", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-09.jpg", href: "#" },
+      { title: "Components", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-10.jpg", href: "#" },
+      { title: "WebGL", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-11.jpg", href: "#" },
     ],
   },
   {
     name: "Tech",
+    href: "/tech",
+    isDropdown: true,
     dropdown: [
-      { title: "React Effects", img: "/img/dino2.png", href: "/tech/react" },
-      { title: "GSAP Effects", img: "/img/dino2.png", href: "/tech/gsap" },
-      { title: "Three.js Effects", img: "/img/dino2.png", href: "/tech/threejs" },
+      { title: "React Effects", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-01.jpg", href: "#" },
+      { title: "GSAP Effects", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-02.jpg", href: "#" },
+      { title: "Three.js Effects", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-03.jpg", href: "#" },
     ],
   },
   {
     name: "Extras",
     href: "#",
+    isDropdown: false,
+    dropdown: null,
   },
   {
     name: "Docs",
+    href: "#",
+    isDropdown: true,
     dropdown: [
-      { title: "Introduction", img: "/img/dino2.png", href: "/docs" },
-      { title: "Installation", img: "/img/dino2.png", href: "/docs/installation" },
-      { title: "CLI", img: "/img/dino2.png", href: "/docs/cli" },
+      { title: "Introduction", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-05.jpg", href: "#" },
+      { title: "Installation", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-06.jpg", href: "#" },
+      { title: "CLI", img: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-07.jpg", href: "#" },
     ],
   },
 ];
@@ -125,14 +133,14 @@ export function ElevateNavbarMobile({
   }, [activeDropdownIndex]);
 
   return (
-    <div className="fixed h-fit left-1/2 top-[40%] -translate-x-1/2 z-999">
+    <div className="fixed h-fit left-1/2 max-md:top-[10%] max-sm:top-[31%] -translate-x-1/2 z-999">
       <div
         ref={backdropRef}
         onClick={() => setIsMenuOpen(false)}
         className="fixed inset-0 "
       />
 
-      <div className="flex items-center justify-between gap-[2vw] rounded-[4vw] border border-white/10 bg-[#2f2f2f]/90 px-[3vw] py-[2vw] backdrop-blur-xl">
+      <div className="flex items-center justify-between gap-[2vw] rounded-[4vw] border border-white/10 bg-[#2f2f2f]/90 px-[3vw] max-md:py-[1vw] max-sm:py-[2vw] backdrop-blur-xl">
         <span className="px-[2vw] text-[3vw] uppercase tracking-wide text-white/80">
           Hyperiux
         </span>
@@ -144,9 +152,9 @@ export function ElevateNavbarMobile({
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
           {isMenuOpen ? (
-            <X className="h-[4.5vw] w-[4.5vw]" />
+            <X className="max-sm:h-[4.5vw] max-sm:w-[4.5vw] max-md:w-[3.5vw] max-md:h-[3.5vw]" />
           ) : (
-            <Menu className="h-[4.5vw] w-[4.5vw]" />
+            <Menu className="max-sm:h-[4.5vw] max-sm:w-[4.5vw] max-md:w-[3.5vw] max-md:h-[3.5vw]" />
           )}
         </button>
       </div>
@@ -170,7 +178,7 @@ export function ElevateNavbarMobile({
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center justify-between rounded-[2.5vw] px-[3vw] py-[2.5vw] text-[3vw] uppercase text-white/85 transition hover:bg-white/10"
+                  className="flex items-center justify-between rounded-[2.5vw] px-[3vw] py-[2.5vw] max-md:text-[2.5vw] max-sm:text-[3vw] uppercase text-white/85 transition hover:bg-white/10"
                 >
                   {item.name}
                 </Link>
@@ -186,7 +194,7 @@ export function ElevateNavbarMobile({
                       currentIndex === index ? null : index
                     )
                   }
-                  className="flex w-full items-center justify-between rounded-[2.5vw] px-[3vw] py-[2.5vw] text-[3vw] uppercase text-white/85 transition hover:bg-white/10"
+                  className="flex w-full items-center justify-between rounded-[2.5vw] px-[3vw] py-[2.5vw] max-md:text-[2.5vw]! max-sm:text-[3vw]! uppercase text-white/85 transition hover:bg-white/10"
                 >
                   {item.name}
 
@@ -213,7 +221,7 @@ export function ElevateNavbarMobile({
                         key={dropdownItem.title}
                         href={dropdownItem.href}
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center gap-[3vw] rounded-[2vw] bg-white/5 p-[2vw] text-[2.8vw] uppercase text-white/80 transition hover:bg-white/10"
+                        className="flex items-center gap-[3vw] rounded-[2vw] bg-white/5 p-[2vw] max-sm:text-[2.8vw] max-md:text-[2vw]  uppercase text-white/80 transition hover:bg-white/10"
                       >
                         <div className="relative h-[10vw] w-[10vw] overflow-hidden rounded-[2vw] bg-white/25">
                           <Image
@@ -222,15 +230,6 @@ export function ElevateNavbarMobile({
                             width={80}
                             height={80}
                             className="h-full w-full object-cover"
-                          />
-
-                          <div
-                            className="absolute inset-0"
-                            style={{
-                              background: "rgba(255, 0, 0, 1)",
-                              mixBlendMode: "multiply",
-                              pointerEvents: "none",
-                            }}
                           />
                         </div>
 
@@ -247,7 +246,7 @@ export function ElevateNavbarMobile({
             <Link
               href={cta.href}
               onClick={() => setIsMenuOpen(false)}
-              className="block w-full rounded-[3vw] bg-white py-[3vw] text-center text-[3vw] font-semibold text-black"
+              className="block w-full max-sm:py-[3vw] rounded-[3vw] bg-white py-[1.5vw] text-center max-sm:text-[3vw] max-md:text-[2.5vw] font-semibold text-black"
             >
               {cta.label}
             </Link>

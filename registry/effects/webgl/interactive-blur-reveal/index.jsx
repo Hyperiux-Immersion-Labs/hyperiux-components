@@ -315,7 +315,7 @@ function drawTrailStamp(ctx, x, y, radius, softRadius) {
   ctx.fill();
 }
 
-function InteractiveBlurReveal({ iChannel0="https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-01.jpg", iChannel1="https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/interactive-blur-reveal-noise.png", className, style }) {
+function InteractiveBlurReveal({ iChannel0="https://picsum.photos/seed/hover7/800/1000", iChannel1="https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/interactive-blur-reveal-noise.png", className, style }) {
   const canvasRef = useRef(null);
 
   const pointerRef = useRef({

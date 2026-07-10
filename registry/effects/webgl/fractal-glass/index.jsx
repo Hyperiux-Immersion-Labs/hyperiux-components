@@ -318,11 +318,11 @@ export default function FractalGlass({
         background: "#000",
       }}
     >
-      {/* Mobile message */}
+      {/* Mobile message */}w
       <div
         className="
         hidden
-        max-md:flex
+        max-xl:flex
         fixed
         bottom-6
         left-1/2
@@ -338,7 +338,7 @@ export default function FractalGlass({
         text-sm
         leading-tight
         pointer-events-none
-        max-sm:px-[7vw] max-sm:py-[4vw]
+        max-md:px-[7vw] max-md:py-[4vw]
       "
       >
         Works best on desktop

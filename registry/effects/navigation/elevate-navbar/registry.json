@@ -1,34 +1,34 @@
 {
   "name": "elevate-navbar",
-  "type": "effect",
+  "type": "registry:component",
   "title": "Elevate Navbar",
-  "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion.",
+  "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
   "category": "navigation",
   "dependencies": [
     "gsap",
     "lucide-react"
   ],
   "registryDependencies": [],
+  "packageName": "@hyperiux/elevate-navbar",
+  "sourcePath": "apps/docs/src/components/elevate-navbar",
   "previewUrl": "/navigation/elevate-navbar",
   "tier": "free",
   "subfolder": true,
-  "exportName": "ElevateNavbar",
-  "exportKind": "named",
+  "main": "index.jsx",
   "importPath": "@/components/effects/elevate-navbar",
   "target": "src/components/effects/elevate-navbar",
-  "main": "index.jsx",
   "files": [
     {
-      "path": "ElevateDesktopNav.jsx",
-      "target": "src/components/effects/elevate-navbar/ElevateDesktopNav.jsx"
+      "path": "index.jsx",
+      "target": "src/components/effects/elevate-navbar/index.jsx"
     },
     {
       "path": "ElevateMobileNav.jsx",
       "target": "src/components/effects/elevate-navbar/ElevateMobileNav.jsx"
     },
     {
-      "path": "index.jsx",
-      "target": "src/components/effects/elevate-navbar/index.jsx"
+      "path": "ElevateDesktopNav.jsx",
+      "target": "src/components/effects/elevate-navbar/ElevateDesktopNav.jsx"
     }
   ]
 }
