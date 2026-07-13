@@ -27,7 +27,7 @@ export function MobileDirectionalMenu({ items = [] }) {
   };
 
   return (
-    <div className="relative hidden max-md:block px-6 py-4">
+    <div className="relative hidden max-xl:block px-6 py-4">
       <div className="flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center  gap-3 cursor-pointer">
           <svg width="35" height="35" viewBox="0 0 58 65" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,19 +64,19 @@ export function MobileDirectionalMenu({ items = [] }) {
           aria-expanded={isMenuOpen}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
-          {isMenuOpen ? <X className="max-sm:h-5 max-sm:w-5 h-10 w-10" /> : <Menu className=" max-sm:h-7 max-sm:w-7 h-10 w-10" />}
+          {isMenuOpen ? <X className="max-md:h-5 max-md:w-5 h-10 w-10" /> : <Menu className=" max-md:h-7 max-md:w-7 h-10 w-10" />}
         </button>
       </div>
 
       <div
         className={`absolute left-6 right-6 top-18 z-50 overflow-hidden rounded-lg bg-white text-black transition-all duration-300 ease-in-out ${
           isMenuOpen
-            ? "max-h-[80vh] overflow-y-scroll p-8 opacity-100 max-sm:max-h-[90vh] max-sm:p-3"
+            ? "max-h-[80vh] overflow-y-scroll p-8 opacity-100 max-md:max-h-[90vh] max-md:p-3"
             : "max-h-0 p-0 opacity-0 pointer-events-none"
         }`}
         aria-hidden={!isMenuOpen}
       >
-          <div className="flex flex-col max-sm:gap-2 gap-5">
+          <div className="flex flex-col max-md:gap-2 gap-5">
             {items.map((item, index) => {
               const isOpen = activeIndex === index;
               const isDropdown = hasDropdownContent(item);
@@ -86,7 +86,7 @@ export function MobileDirectionalMenu({ items = [] }) {
                   <Link
                     key={item.label}
                     href={item.href || "#"}
-                    className="rounded-lg border border-neutral-200 bg-neutral-50/60 px-4 py-4 max-sm:text-sm max-md:text-lg font-semibold uppercase tracking-[0.14em] text-neutral-500 transition-all duration-300 ease-in-out hover:bg-neutral-100 max-md:rounded-none max-md:border-x-0 max-md:border-t-0"
+                    className="rounded-lg border border-neutral-200 bg-neutral-50/60 px-4 py-4 max-md:text-sm max-xl:text-lg font-semibold uppercase tracking-[0.14em] text-neutral-500 transition-all duration-300 ease-in-out hover:bg-neutral-100 max-xl:rounded-none max-xl:border-x-0 max-xl:border-t-0"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.label}
@@ -97,7 +97,7 @@ export function MobileDirectionalMenu({ items = [] }) {
               return (
                 <section
                   key={item.label}
-                  className="rounded-lg border border-neutral-200 bg-neutral-50/60 transition-all duration-300 ease-in-out max-md:rounded-none max-md:border-x-0 max-md:border-t-0"
+                  className="rounded-lg border border-neutral-200 bg-neutral-50/60 transition-all duration-300 ease-in-out max-xl:rounded-none max-xl:border-x-0 max-xl:border-t-0"
                 >
                   <button
                     type="button"
@@ -105,7 +105,7 @@ export function MobileDirectionalMenu({ items = [] }) {
                     className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left transition-all duration-300 ease-in-out"
                     aria-expanded={isOpen}
                   >
-                    <span className="max-sm:text-sm max-md:text-lg font-semibold uppercase tracking-[0.14em] text-neutral-500">
+                    <span className="max-md:text-sm max-xl:text-lg font-semibold uppercase tracking-[0.14em] text-neutral-500">
                       {item.label}
                     </span>
 
@@ -123,7 +123,7 @@ export function MobileDirectionalMenu({ items = [] }) {
                         : "max-h-0 border-t-0 px-4 py-0 opacity-0"
                     }`}
                   >
-                      <div className="max-md:[&_.grid]:grid-cols-2 max-sm:[&_.grid]:grid-cols-1 ">
+                      <div className="max-xl:[&_.grid]:grid-cols-2 max-md:[&_.grid]:grid-cols-1 ">
                         {item.customContent}
                       </div>
                     </div>

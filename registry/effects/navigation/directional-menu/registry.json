@@ -1,29 +1,28 @@
 {
   "name": "directional-menu",
-  "type": "effect",
+  "type": "registry:component",
   "title": "Directional Menu",
-  "description": "Mega menu with directional content transitions using GSAP.",
+  "description": "Mega menu with directional content transitions using GSAP",
   "category": "navigation",
   "dependencies": [
     "gsap",
     "lucide-react"
   ],
+  "registryDependencies": [],
   "previewUrl": "/navigation/directional-menu",
   "tier": "free",
   "subfolder": true,
-  "exportName": "DirectionalMenu",
-  "exportKind": "named",
+  "main": "index.jsx",
   "importPath": "@/components/effects/directional-menu",
   "target": "src/components/effects/directional-menu",
-  "main": "index.jsx",
   "files": [
-    {
-      "path": "DirectionalMegaMenu.jsx",
-      "target": "src/components/effects/directional-menu/DirectionalMegaMenu.jsx"
-    },
     {
       "path": "index.jsx",
       "target": "src/components/effects/directional-menu/index.jsx"
+    },
+    {
+      "path": "DirectionalMegaMenu.jsx",
+      "target": "src/components/effects/directional-menu/DirectionalMegaMenu.jsx"
     },
     {
       "path": "Menu1.jsx",

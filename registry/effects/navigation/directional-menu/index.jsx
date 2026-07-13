@@ -28,10 +28,10 @@ const menuItems = [
 
 export default function DirectionalMenu() {
   return (
-    <div className="relative h-screen overflow-hidden bg-black text-white max-sm:h-full max-sm:overflow-visible max-sm:pb-10">
+    <div className="relative h-screen overflow-hidden bg-black text-white max-md:h-full max-md:overflow-visible max-md:pb-10">
       {/* Navbar */}
       <header className="relative z-50 border-b border-white/10">
-        <div className="max-w-7xl mx-auto max-md:hidden h-19 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto max-xl:hidden h-19 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
             <Link prefetch={false} href="/" className="flex items-center gap-3 cursor-pointer">
@@ -70,8 +70,8 @@ export default function DirectionalMenu() {
           <DirectionalMegaMenu
             items={menuItems}
             closeDelay={80}
-            navClassName="mx-auto w-full  max-w-7xl justify-center px-6 md:px-10 max-md:translate-x-10 max-sm:translate-x-0 "
-            contentWrapperClassName="p-8 bg-white border border-white/10 rounded-3xl max-sm:h-[92vh] max-md:h-[75vh]"
+            navClassName="mx-auto w-full  max-w-7xl justify-center px-6 md:px-10 max-xl:translate-x-10 max-md:translate-x-0 "
+            contentWrapperClassName="p-8 bg-white border border-white/10 rounded-3xl max-md:h-[92vh] max-xl:h-[75vh]"
             animation={{
               duration: 0.35,
               ease: "power2.inOut",
@@ -95,12 +95,12 @@ export default function DirectionalMenu() {
             Directional Menu
           </h1>
 
-          <p className="mt-8 max-w-200 mx-auto text-white/70 max-sm:text-sm text-2xl leading-[1.2]">
+          <p className="mt-8 max-w-200 mx-auto text-white/70 max-md:text-sm text-2xl leading-[1.2]">
             Interact with the navigation above to see smooth transitions,
             motion, and details crafted for a more immersive experience.
           </p>
           {/* Buttons */}
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 max-sm:mt-20">
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 max-md:mt-20">
             <button className="px-7 py-3 cursor-pointer rounded-full bg-white text-black font-medium hover:bg-white/90 transition-all duration-300">
               <Link prefetch={false} href={"/effects/navigation/directional-menu"} className="">
                 Get Started

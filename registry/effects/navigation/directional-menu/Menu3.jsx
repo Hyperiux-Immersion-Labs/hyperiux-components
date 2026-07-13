@@ -31,10 +31,10 @@ const LINK_GROUPS = [
 
 export function Menu3() {
   return (
-    <div className="grid grid-cols-3 gap-10 max-md:grid-cols-2">
+    <div className="grid grid-cols-3 gap-10 max-xl:grid-cols-2">
       {LINK_GROUPS.map((group) => (
         <div key={group.heading} className="flex flex-col gap-4">
-          <h4 className="text-sm font-semibold uppercase tracking-[0.08em] text-neutral-800 max-md:text-2xl max-sm:text-sm">
+          <h4 className="text-sm font-semibold uppercase tracking-[0.08em] text-neutral-800 max-xl:text-2xl max-md:text-sm">
             {group.heading}
           </h4>
 
@@ -43,7 +43,7 @@ export function Menu3() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="block text-sm font-medium text-neutral-600 transition-opacity duration-200 hover:text-black max-md:text-xl max-sm:text-base"
+                className="block text-sm font-medium text-neutral-600 transition-opacity duration-200 hover:text-black max-xl:text-xl max-md:text-base"
               >
                 {link.label}
               </Link>

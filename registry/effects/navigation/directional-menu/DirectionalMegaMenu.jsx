@@ -463,7 +463,7 @@ export function DirectionalMegaMenu({
                 key={item.label || index}
                 type="button"
                 onMouseEnter={() => onItemEnter(index)}
-                className={`relative flex cursor-pointer items-center gap-1 text-sm font-medium text-white transition-colors duration-300 hover:text-white max-md:text-lg max-sm:text-sm ${navItemClassName} ${isActive ? activeClassName : inactiveClassName
+                className={`relative flex cursor-pointer items-center gap-1 text-sm font-medium text-white transition-colors duration-300 hover:text-white max-xl:text-lg max-md:text-sm ${navItemClassName} ${isActive ? activeClassName : inactiveClassName
                   }`}
               >
                 {item.label}
