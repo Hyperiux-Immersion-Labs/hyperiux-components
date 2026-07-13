@@ -133,14 +133,14 @@ export function ElevateNavbarMobile({
   }, [activeDropdownIndex]);
 
   return (
-    <div className="fixed h-fit left-1/2 max-md:top-[10%] max-sm:top-[31%] -translate-x-1/2 z-999">
+    <div className="fixed h-fit left-1/2 max-xl:top-[10%] max-md:top-[31%] -translate-x-1/2 z-999">
       <div
         ref={backdropRef}
         onClick={() => setIsMenuOpen(false)}
         className="fixed inset-0 "
       />
 
-      <div className="flex items-center justify-between gap-[2vw] rounded-[4vw] border border-white/10 bg-[#2f2f2f]/90 px-[3vw] max-md:py-[1vw] max-sm:py-[2vw] backdrop-blur-xl">
+      <div className="flex items-center justify-between gap-[2vw] rounded-[4vw] border border-white/10 bg-[#2f2f2f]/90 px-[3vw] max-xl:py-[1vw] max-md:py-[2vw] backdrop-blur-xl">
         <span className="px-[2vw] text-[3vw] uppercase tracking-wide text-white/80">
           Hyperiux
         </span>
@@ -152,9 +152,9 @@ export function ElevateNavbarMobile({
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
           {isMenuOpen ? (
-            <X className="max-sm:h-[4.5vw] max-sm:w-[4.5vw] max-md:w-[3.5vw] max-md:h-[3.5vw]" />
+            <X className="max-md:h-[4.5vw] max-md:w-[4.5vw] max-xl:w-[3.5vw] max-xl:h-[3.5vw]" />
           ) : (
-            <Menu className="max-sm:h-[4.5vw] max-sm:w-[4.5vw] max-md:w-[3.5vw] max-md:h-[3.5vw]" />
+            <Menu className="max-md:h-[4.5vw] max-md:w-[4.5vw] max-xl:w-[3.5vw] max-xl:h-[3.5vw]" />
           )}
         </button>
       </div>
@@ -178,7 +178,7 @@ export function ElevateNavbarMobile({
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center justify-between rounded-[2.5vw] px-[3vw] py-[2.5vw] max-md:text-[2.5vw] max-sm:text-[3vw] uppercase text-white/85 transition hover:bg-white/10"
+                  className="flex items-center justify-between rounded-[2.5vw] px-[3vw] py-[2.5vw] max-xl:text-[2.5vw] max-md:text-[3vw] uppercase text-white/85 transition hover:bg-white/10"
                 >
                   {item.name}
                 </Link>
@@ -194,7 +194,7 @@ export function ElevateNavbarMobile({
                       currentIndex === index ? null : index
                     )
                   }
-                  className="flex w-full items-center justify-between rounded-[2.5vw] px-[3vw] py-[2.5vw] max-md:text-[2.5vw]! max-sm:text-[3vw]! uppercase text-white/85 transition hover:bg-white/10"
+                  className="flex w-full items-center justify-between rounded-[2.5vw] px-[3vw] py-[2.5vw] max-xl:text-[2.5vw]! max-md:text-[3vw]! uppercase text-white/85 transition hover:bg-white/10"
                 >
                   {item.name}
 
@@ -221,7 +221,7 @@ export function ElevateNavbarMobile({
                         key={dropdownItem.title}
                         href={dropdownItem.href}
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center gap-[3vw] rounded-[2vw] bg-white/5 p-[2vw] max-sm:text-[2.8vw] max-md:text-[2vw]  uppercase text-white/80 transition hover:bg-white/10"
+                        className="flex items-center gap-[3vw] rounded-[2vw] bg-white/5 p-[2vw] max-md:text-[2.8vw] max-xl:text-[2vw]  uppercase text-white/80 transition hover:bg-white/10"
                       >
                         <div className="relative h-[10vw] w-[10vw] overflow-hidden rounded-[2vw] bg-white/25">
                           <Image
@@ -246,7 +246,7 @@ export function ElevateNavbarMobile({
             <Link
               href={cta.href}
               onClick={() => setIsMenuOpen(false)}
-              className="block w-full max-sm:py-[3vw] rounded-[3vw] bg-white py-[1.5vw] text-center max-sm:text-[3vw] max-md:text-[2.5vw] font-semibold text-black"
+              className="block w-full max-md:py-[3vw] rounded-[3vw] bg-white py-[1.5vw] text-center max-md:text-[3vw] max-xl:text-[2.5vw] font-semibold text-black"
             >
               {cta.label}
             </Link>
