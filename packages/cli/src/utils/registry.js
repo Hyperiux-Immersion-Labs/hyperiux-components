@@ -6,12 +6,18 @@ import { Buffer } from "buffer";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const REGISTRY_URL = process.env.HYPERIUX_REGISTRY_URL || "https://components.hyperiux.com/r";
-const APP_URL = process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
+const REGISTRY_URL = process.env.HYPERIUX_REGISTRY_URL || "https://vault.hyperiux.com/r";
+const APP_URL = process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
 const LOCAL_REGISTRY_PATH = "public/r";
 
-// Path to local registry in the monorepo (for development)
-const DEV_REGISTRY_PATH = path.join(__dirname, "../../../../apps/docs/public/r");
+// Path to local registry in the monorepo (for development). Defaults to
+// assuming apps/docs lives inside this same repo; override with
+// HYPERIUX_DEV_REGISTRY_PATH when hyperiux-pro-components is checked out
+// as a sibling directory instead (e.g. local testing outside a true
+// monorepo layout).
+const DEV_REGISTRY_PATH =
+  process.env.HYPERIUX_DEV_REGISTRY_PATH ||
+  path.join(__dirname, "../../../../apps/docs/public/r");
 
 export async function fetchRegistry(name, options = {}) {
   const { local = false, cwd = process.cwd(), token = null } = options;
@@ -81,7 +87,7 @@ async function fetchRemoteRegistry(name, token) {
 }
 
 async function fetchProtectedEffect(name, token) {
-  const url = `${APP_URL}/api/effects/${name}`;
+  const url = `${APP_URL}/api/cli/effects/${name}`;
 
   const response = await fetch(url, {
     headers: { Authorization: `Bearer ${token}` },
@@ -161,13 +167,31 @@ export async function fetchRegistryAsset(source) {
   }
 }
 
+export async function getFileContent(file) {
+  if (file.type === "registry:asset" && file.source && !file.content) {
+    return fetchRegistryAsset(file.source);
+  }
+
+  if (file.encoding === "base64") {
+    return Buffer.from(file.content, "base64");
+  }
+
+  return file.content;
+}
+
 export function getRegistryItemFiles(item, config, cwd = process.cwd()) {
   const usesSrc = fs.existsSync(path.join(cwd, "src"));
   const prefix = usesSrc ? "src/" : "";
 
   return item.files.map((file) => {
     let targetPath = file.target;
-    const shouldPrefixSrc = !targetPath.startsWith("public/");
+
+    // Pro effect registry.json targets already include a "src/" prefix
+    // (hand-authored), while free effects built via build-registry.js
+    // never do (the CLI adds it below) - only prefix if it isn't already
+    // there, otherwise pro installs end up at src/src/....
+    const shouldPrefixSrc =
+      !targetPath.startsWith("public/") && !targetPath.startsWith("src/");
 
     // Replace alias with actual path
     if (targetPath.startsWith("components/hyperiux/")) {

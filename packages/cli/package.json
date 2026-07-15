@@ -1,6 +1,6 @@
 {
   "name": "hyperiux",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "CLI for adding Hyperiux Vault effects to your project",
   "type": "module",
   "bin": "./src/index.js",
@@ -19,6 +19,7 @@
   "dependencies": {
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
+    "diff": "^9.0.0",
     "ora": "^8.1.1",
     "prompts": "^2.4.2"
   },

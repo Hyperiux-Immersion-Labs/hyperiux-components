@@ -4,11 +4,18 @@ import chalk from "chalk";
 import ora from "ora";
 import prompts from "prompts";
 import { readConfig, configExists } from "../utils/config.js";
-import { fetchRegistry, fetchRegistryAsset, getRegistryItemFiles } from "../utils/registry.js";
+import { fetchRegistry, getFileContent, getRegistryItemFiles } from "../utils/registry.js";
 import { installDependencies, getMissingDependencies } from "../utils/package-manager.js";
 import { getAuthToken } from "./login.js";
+import { upsertLockEntry } from "../utils/lockfile.js";
+import {
+  hasNextImageImport,
+  patchNextImageImport,
+  getHyperiuxImageHelperTargetPath,
+  getHyperiuxImageHelperContent,
+} from "../utils/install.js";
 
-const APP_URL = process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
+const APP_URL = process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
 
 export async function add(effectName, options) {
   const cwd = process.cwd();
@@ -92,6 +99,13 @@ export async function add(effectName, options) {
     existingFiles.forEach((f) => {
       console.log(chalk.dim(`  ${f.targetPath}`));
     });
+    console.log();
+    console.log(
+      chalk.red.bold("Warning: ") +
+        chalk.yellow(
+          `overwriting will replace your file(s) completely, including any local edits. Run ${chalk.cyan(`hyperiux diff ${effectName}`)} first to see exactly what would change, then install once you've reviewed it.`
+        )
+    );
 
     if (!options.yes) {
       const { proceed } = await prompts({
@@ -149,6 +163,9 @@ export async function add(effectName, options) {
   // Write files
   const filesSpinner = ora("Writing files...").start();
 
+  const written = {};
+  let shouldWriteHyperiuxImageHelper = false;
+
   try {
     for (const file of files) {
       const targetPath = path.join(cwd, file.targetPath);
@@ -160,8 +177,41 @@ export async function add(effectName, options) {
       }
 
       // Write file
-      const content = await getFileContent(file);
+      let content = await getFileContent(file);
+
+      // Effects that import next/image directly hit CORS/optimization
+      // errors on remote (non-local) image URLs, since Next tries to proxy
+      // them through its image optimizer. Route through the HyperiuxImage
+      // helper instead, which sets unoptimized:true for remote src values.
+      if (typeof content === "string" && hasNextImageImport(content)) {
+        content = patchNextImageImport(content, config);
+        shouldWriteHyperiuxImageHelper = true;
+      }
+
       fs.writeFileSync(targetPath, content);
+      written[file.targetPath] = content;
+    }
+
+    if (shouldWriteHyperiuxImageHelper) {
+      const helperTargetPath = getHyperiuxImageHelperTargetPath(cwd, config);
+      const helperAbsolutePath = path.join(cwd, helperTargetPath);
+
+      // Shared utility, not a per-effect file — only create/overwrite it if
+      // it doesn't already exist (or this install explicitly asked to
+      // overwrite), so installing an unrelated effect never clobbers any
+      // customization made to it.
+      if (options.overwrite || !fs.existsSync(helperAbsolutePath)) {
+        const helperDir = path.dirname(helperAbsolutePath);
+
+        if (!fs.existsSync(helperDir)) {
+          fs.mkdirSync(helperDir, { recursive: true });
+        }
+
+        const helperContent = getHyperiuxImageHelperContent();
+
+        fs.writeFileSync(helperAbsolutePath, helperContent);
+        written[helperTargetPath] = helperContent;
+      }
     }
 
     filesSpinner.succeed("Files written successfully");
@@ -203,18 +253,6 @@ export async function add(effectName, options) {
       : `import { ${exportName} } from "${importPath}";`;
   console.log(chalk.cyan(`  ${importStatement}`));
   console.log();
-}
-
-async function getFileContent(file) {
-  if (file.type === "registry:asset" && file.source && !file.content) {
-    return fetchRegistryAsset(file.source);
-  }
-
-  if (file.encoding === "base64") {
-    return Buffer.from(file.content, "base64");
-  }
-
-  return file.content;
 }
 
 function getImportPath(file, config) {

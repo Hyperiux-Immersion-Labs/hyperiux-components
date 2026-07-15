@@ -8,7 +8,7 @@ import ora from "ora";
 const CONFIG_DIR = path.join(os.homedir(), ".hyperiux");
 const AUTH_FILE = path.join(CONFIG_DIR, "auth.json");
 
-const APP_URL = process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
+const APP_URL = process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
 
 export async function login() {
   console.log();
