@@ -69,7 +69,7 @@ export default function ImmersiveFullscreenNav({
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 max-sm:text-[4.5vw] max-md:text-[3vw]">
             <button className=" rounded-full max-sm:min-w-[45vw] bg-black text-white font-medium ">
               <Link href={"/effects/navigation/immersive-full-screen-nav"} className="px-7 py-3 block w-full">
-              Get Started
+              Read Article
               </Link>
             </button>
 

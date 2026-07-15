@@ -1,7 +1,7 @@
 "use client";
 
 import gsap from "gsap";
-import Image from "next/image";
+import Image from "@/components/effects/_hyperiux/HyperiuxImage";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
@@ -185,17 +185,17 @@ export default function CustomNavbar({
   return (
     <div
       style={{ backgroundColor: overlayBg }}
-      className="w-full h-screen flex flex-col justify-between px-28 py-10 pt-28 max-lg:px-6 max-lg:py-20 text-white"
+      className="w-full h-screen flex flex-col justify-between px-28 py-10 pt-28 max-xl:px-6 max-xl:py-20 text-white"
     >
      
 
-      <div className="flex items-center justify-between gap-10 max-lg:flex-col max-lg:items-start max-lg:gap-18 max-md:gap-18">
+      <div className="flex items-center justify-between gap-10 max-xl:flex-col max-xl:items-start max-xl:gap-18 max-md:gap-18">
         <div className="flex flex-col gap-0">
           {links.map((link, index) => (
             <div
               key={link.label}
               ref={setLinkRef(index)}
-              className="text-[6vw] max-md:text-[11vw] max-lg:text-[7vw] z-60"
+              className="text-[6vw] max-md:text-[11vw] max-xl:text-[7vw] z-60"
               style={{ opacity: 0, transform: `translateY(${LINK_Y_OFFSET}px)` }}
             >
 
@@ -206,14 +206,14 @@ export default function CustomNavbar({
           ))}
         </div>
 
-        <div className="flex h-full flex-col items-end justify-center gap-40 py-5 max-lg:items-start max-lg:gap-28 max-md:w-full max-md:gap-25 max-md:py-0">
-          <div className="flex items-end gap-8 max-lg:gap-10 max-md:w-full max-md:gap-3 max-md:flex-col max-lg:items-start">
+        <div className="flex h-full flex-col items-end justify-center gap-40 py-5 max-xl:items-start max-xl:gap-28 max-md:w-full max-md:gap-25 max-md:py-0">
+          <div className="flex items-end gap-8 max-xl:gap-10 max-md:w-full max-md:gap-3 max-md:flex-col max-xl:items-start">
             {images.slice(0, 4).map((src, index) => (
               <div
                 key={index}
                 ref={setImageRef(index)}
                 style={{ opacity: 0, transform: `scale(${IMAGE_INITIAL_SCALE})` }}
-                className="relative h-[18vw] w-[25vw] overflow-hidden rounded-xl max-lg:h-[25vh] max-lg:w-[35vw] max-md:h-[30vw] max-md:w-[60vw] max-md:rounded-md"
+                className="relative h-[18vw] w-[25vw] overflow-hidden rounded-xl max-xl:h-[25vh] max-xl:w-[35vw] max-md:h-[30vw] max-md:w-[60vw] max-md:rounded-md"
               >
                 <Image
                   src={src}
@@ -228,7 +228,7 @@ export default function CustomNavbar({
         </div>
       </div>
 
-      <div className="flex gap-6 items-end justify-end max-lg:justify-start max-lg:pb-10 ">
+      <div className="flex gap-6 items-end justify-end max-xl:justify-start max-xl:pb-10 ">
         {socials.map((social, index) => (
           <Link
             key={index}

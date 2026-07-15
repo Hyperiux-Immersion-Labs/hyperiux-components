@@ -325,10 +325,10 @@ export function StickyContentComp({
                 </div>
       <div
         ref={stickyRef}
-        className="sticky top-0 flex h-screen w-full justify-between max-lg:h-screen max-lg:flex-col-reverse max-lg:justify-start max-lg:px-[5vw] max-md:px-[6vw]"
+        className="sticky top-0 flex h-screen w-full justify-between max-xl:h-screen max-xl:flex-col-reverse max-xl:justify-start max-xl:px-[5vw] max-md:px-[6vw]"
       >
         <div
-          className={`relative h-full w-[42%] max-lg:h-[55%] max-lg:w-full ${leftClassName}`}
+          className={`relative h-full w-[42%] max-xl:h-[55%] max-xl:w-full ${leftClassName}`}
         >
           {items.map((item, index) => (
             <div
@@ -336,7 +336,7 @@ export function StickyContentComp({
               ref={(element) => {
                 contentRefsRef.current[index] = element;
               }}
-              className={`absolute inset-0 h-full w-full pl-[5vw] pt-[35%] opacity-0 [&_a]:mb-[1vw] [&_a]:text-[1.2vw] [&_h3]:mb-[2.5vw] [&_h3]:text-[4vw] [&_li]:mb-[0.5vw] [&_li]:text-[1.05vw] [&_p]:mb-[1vw] [&_p]:text-[1.2vw] [&_ul]:mb-[1vw] max-lg:pl-0 max-lg:pt-[7%] max-lg:[&_a]:mb-[3vw] max-lg:[&_a]:text-[2.8vw] max-lg:[&_h3]:mb-[4vw] max-lg:[&_h3]:text-[5.5vw] max-lg:[&_li]:mb-[1vw] max-lg:[&_li]:text-[2.5vw] max-lg:[&_p]:mb-[3vw] max-lg:[&_p]:text-[2.8vw] max-lg:[&_ul]:mb-[4vw] max-md:pt-[10%] max-md:[&_a]:text-[4.5vw] max-md:[&_h3]:text-[7.5vw] max-md:[&_li]:text-[4vw] max-md:[&_p]:text-[4.5vw] ${contentClassName}`}
+              className={`absolute inset-0 h-full w-full pl-[5vw] pt-[35%] opacity-0 [&_a]:mb-[1vw] [&_a]:text-[1.2vw] [&_h3]:mb-[2.5vw] [&_h3]:text-[4vw] [&_li]:mb-[0.5vw] [&_li]:text-[1.05vw] [&_p]:mb-[1vw] [&_p]:text-[1.2vw] [&_ul]:mb-[1vw] max-xl:pl-0 max-xl:pt-[7%] max-xl:[&_a]:mb-[3vw] max-xl:[&_a]:text-[2.8vw] max-xl:[&_h3]:mb-[4vw] max-xl:[&_h3]:text-[5.5vw] max-xl:[&_li]:mb-[1vw] max-xl:[&_li]:text-[2.5vw] max-xl:[&_p]:mb-[3vw] max-xl:[&_p]:text-[2.8vw] max-xl:[&_ul]:mb-[4vw] max-md:pt-[10%] max-md:[&_a]:text-[4.5vw] max-md:[&_h3]:text-[7.5vw] max-md:[&_li]:text-[4vw] max-md:[&_p]:text-[4.5vw] ${contentClassName}`}
             >
               {renderStickyContent(item)}
             </div>
@@ -344,7 +344,7 @@ export function StickyContentComp({
         </div>
 
         <div
-          className={`relative h-full w-1/2 overflow-hidden max-lg:mt-[7vh] max-lg:h-[37%] max-lg:w-full max-lg:rounded-[3.5vw] ${rightClassName}`}
+          className={`relative h-full w-1/2 overflow-hidden max-xl:mt-[7vh] max-xl:h-[37%] max-xl:w-full max-xl:rounded-[3.5vw] ${rightClassName}`}
         >
           {items.map((item, index) => (
             <div

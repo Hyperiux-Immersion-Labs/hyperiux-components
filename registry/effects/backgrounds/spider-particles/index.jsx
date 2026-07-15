@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
-// ─── Constants ────────────────────────────────────────────────────────────────
 
 const MOUSE_OFFSCREEN = -9999;
 const MOUSE_THRESHOLD = -9000; // anything above this = mouse is on screen
@@ -11,7 +10,6 @@ const MOUSE_THRESHOLD = -9000; // anything above this = mouse is on screen
 const LERP_SPEED = 0.1;
 const FADE_SPEED = 0.04;
 
-// ─── GLSL Shaders ─────────────────────────────────────────────────────────────
 
 const PARTICLE_VERT = /* glsl */ `
   uniform float uSize;
@@ -40,7 +38,6 @@ const CURSOR_VERT = /* glsl */ `
   }
 `;
 
-// Shared by both particle dots and the cursor dot
 const POINT_FRAG = /* glsl */ `
   uniform vec3  uColor;
   uniform vec3  uGlow;
@@ -65,7 +62,6 @@ const POINT_FRAG = /* glsl */ `
   }
 `;
 
-// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function SpiderParticles({
   particleCount = 180,
@@ -110,7 +106,7 @@ export default function SpiderParticles({
     );
     camera.position.z = 1;
 
-    // ─── Mouse State ───────────────────────────────────────────────────────────
+  
 
     const mouse       = new THREE.Vector2(MOUSE_OFFSCREEN, MOUSE_OFFSCREEN);
     const smoothMouse = new THREE.Vector2(MOUSE_OFFSCREEN, MOUSE_OFFSCREEN);
@@ -177,7 +173,6 @@ export default function SpiderParticles({
     mount.addEventListener("touchmove", onTouch,      { passive: true });
     mount.addEventListener("touchend",  onTouchEnd);
 
-    // ─── Grid Layout ───────────────────────────────────────────────────────────
 
     let cols, rows, actualCount, spacingX, spacingY;
 
@@ -207,7 +202,6 @@ export default function SpiderParticles({
       positions[i * 3 + 2] = 0;
     }
 
-    // ─── Particle Points ───────────────────────────────────────────────────────
 
     const particleGeo = new THREE.BufferGeometry();
     particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
@@ -232,7 +226,7 @@ export default function SpiderParticles({
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // ─── Cursor Dot ────────────────────────────────────────────────────────────
+
 
     const cursorGeo = new THREE.BufferGeometry();
     cursorGeo.setAttribute(
@@ -258,7 +252,6 @@ export default function SpiderParticles({
     const cursorPoint = new THREE.Points(cursorGeo, cursorMat);
     scene.add(cursorPoint);
 
-    // ─── Web Lines ─────────────────────────────────────────────────────────────
 
     const mouseLinePositions = new Float32Array(actualCount * 6);
     const mouseLineColors    = new Float32Array(actualCount * 6);
@@ -278,7 +271,6 @@ export default function SpiderParticles({
     const mouseLines = new THREE.LineSegments(mouseLineGeo, mouseLineMat);
     scene.add(mouseLines);
 
-    // ─── Resize ────────────────────────────────────────────────────────────────
 
     const onResize = () => {
       width  = mount.clientWidth;
@@ -292,7 +284,6 @@ export default function SpiderParticles({
     };
     window.addEventListener("resize", onResize);
 
-    // ─── Animation Loop ────────────────────────────────────────────────────────
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
@@ -429,7 +420,7 @@ export default function SpiderParticles({
         {/* Top row */}
         <div className="flex items-start pt-15 justify-between">
           <div className="flex flex-col gap-1.5">
-            <div className="flex items-center gap-2 max-lg:hidden">
+            <div className="flex items-center gap-2 max-xl:hidden">
               <span
                 className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
                   active ? "bg-emerald-400 shadow-[0_0_8px_#34d399]" : "bg-white/20"
@@ -451,7 +442,7 @@ export default function SpiderParticles({
             </p>
           </div>
 
-          <div className="flex gap-6 max-lg:hidden">
+          <div className="flex gap-6 max-xl:hidden">
             {stats.map(({ label, value }) => (
               <div key={label} className="flex flex-col gap-0.5 text-right">
                 <span className="text-sm uppercase tracking-widest text-white/25">
@@ -466,7 +457,7 @@ export default function SpiderParticles({
         </div>
 
         {/* Mobile overlay — desktop-only effect notice */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3 pointer-events-none select-none z-20 hidden max-lg:flex w-full px-14 text-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3 pointer-events-none select-none z-20 hidden max-xl:flex w-full px-14 text-center">
           <p className="text-white text-3xl font-light tracking-tight">
             Open on desktop
           </p>
@@ -476,7 +467,7 @@ export default function SpiderParticles({
         </div>
 
         {/* Bottom row */}
-        <div className="flex items-end justify-between max-lg:hidden">
+        <div className="flex items-end justify-between max-xl:hidden">
           <div
             className={`transition-opacity duration-700 ${active ? "opacity-0" : "opacity-40"}`}
           >

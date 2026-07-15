@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
-import Image from "next/image";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const DESKTOP_WIDTH = 1200;
@@ -120,6 +119,8 @@ export function CircularSplitRollComp({
         const total = safeItems.length;
 
         if (!total) return;
+
+        gsap.set([...leftNodes, ...rightNodes], { opacity: 1 });
 
         const render = (scrollProgress) => {
           progressRef.current = scrollProgress;
@@ -306,7 +307,7 @@ export function CircularSplitRollComp({
     >
       <div
         ref={stickyRef}
-        className="relative h-screen w-full overflow-hidden max-lg:hidden"
+        className="relative h-screen w-full overflow-hidden max-md:hidden"
       >
         <div className="relative mx-auto flex h-full w-full">
           <div className="relative flex h-full w-[50vw] translate-x-[-60%] items-center justify-center">
@@ -314,7 +315,7 @@ export function CircularSplitRollComp({
               {safeItems.map((item) => (
                 <div
                   key={item.id}
-                  className="circular-scroll-showcase__left-item pointer-events-none absolute left-1/2 top-1/2 w-full origin-center whitespace-nowrap text-center text-(length:--css-title-size,clamp(28px,3vw,56px)) font-medium leading-none tracking-[-0.04em] will-change-[transform,opacity]"
+                  className="circular-scroll-showcase__left-item pointer-events-none absolute left-1/2 top-1/2 w-full origin-center whitespace-nowrap text-center text-(length:--css-title-size,clamp(28px,3vw,56px)) font-medium leading-none tracking-[-0.04em] opacity-0 will-change-[transform,opacity]"
                 >
                   {item.title}
                 </div>
@@ -327,14 +328,13 @@ export function CircularSplitRollComp({
               {safeItems.map((item) => (
                 <div
                   key={item.id}
-                  className="circular-scroll-showcase__right-item absolute left-1/2 top-1/2 ml-[calc(var(--css-card-width,210px)*-0.5)] mt-[calc(var(--css-card-height,210px)*-0.5)] h-(--css-card-height,210px) w-(--css-card-width,210px) origin-center will-change-[transform,opacity]"
+                  className="circular-scroll-showcase__right-item absolute left-1/2 top-1/2 ml-[calc(var(--css-card-width,210px)*-0.5)] mt-[calc(var(--css-card-height,210px)*-0.5)] h-(--css-card-height,210px) w-(--css-card-width,210px) origin-center opacity-0 will-change-[transform,opacity]"
                 >
                   <div className="relative h-full w-full overflow-hidden rounded-[18px] bg-[#f5f2eb] shadow-[0_30px_60px_rgba(0,0,0,0.28),0_8px_20px_rgba(0,0,0,0.16)]">
-                    <Image
+                    <img
                       src={item.image}
                       alt={item.alt}
-                      fill
-                      className="pointer-events-none block h-full w-full select-none object-cover"
+                      className="pointer-events-none block h-full w-full select-none object-cover absolute inset-0"
                       draggable="false"
                     />
                   </div>
@@ -345,27 +345,26 @@ export function CircularSplitRollComp({
         </div>
       </div>
 
-      <div className="hidden w-full px-5 py-10 max-lg:block max-md:px-4 max-md:py-8">
-        <div className="mx-auto grid w-full max-w-5xl grid-cols-3 gap-5 max-md:grid-cols-2 max-md:gap-4">
+      <div className="hidden w-full px-5 py-10 max-md:block max-sm:px-4 max-sm:py-8">
+        <div className="mx-auto grid w-full max-w-5xl grid-cols-3 gap-5 max-sm:grid-cols-2 max-sm:gap-4">
           {safeItems.map((item) => (
             <article
               key={item.id}
               className={`w-full ${gridCardClassName}`}
             >
               <div
-                className={`relative aspect-square w-full overflow-hidden rounded-[18px] bg-[#f5f2eb] shadow-[0_18px_38px_rgba(0,0,0,0.28)] max-md:rounded-[14px] ${gridImageClassName}`}
+                className={`relative aspect-square w-full overflow-hidden rounded-[18px] bg-[#f5f2eb] shadow-[0_18px_38px_rgba(0,0,0,0.28)] max-sm:rounded-[14px] ${gridImageClassName}`}
               >
-                <Image
+                <img
                   src={item.image}
                   alt={item.alt}
-                  fill
-                  className="block h-full w-full object-cover"
+                  className="block h-full w-full object-cover absolute inset-0"
                   draggable="false"
                 />
               </div>
 
               <h3
-                className={`mt-3 text-center text-[clamp(18px,4vw,30px)] font-medium leading-none tracking-[-0.04em] text-white max-md:mt-2 max-md:text-[clamp(16px,5vw,24px)] ${gridTitleClassName}`}
+                className={`mt-3 text-center text-[clamp(18px,4vw,30px)] font-medium leading-none tracking-[-0.04em] text-white max-sm:mt-2 max-sm:text-[clamp(16px,5vw,24px)] ${gridTitleClassName}`}
               >
                 {item.title}
               </h3>

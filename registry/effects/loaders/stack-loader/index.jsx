@@ -264,19 +264,19 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
         }
       }}
       id="loader-wrapper"
-      className="flex h-screen w-full items-center justify-center bg-[#FCFCFC] px-[2.5vw] text-black max-lg:px-[5vw] max-md:px-[6vw]"
+      className="flex h-screen w-full items-center justify-center bg-[#FCFCFC] px-[2.5vw] text-black max-xl:px-[5vw] max-md:px-[6vw]"
     >
-      <div className="flex w-full items-center justify-between max-lg:flex-col max-lg:justify-center max-lg:gap-[33vh] max-md:gap-[70vw]">
+      <div className="flex w-full items-center justify-between max-xl:flex-col max-xl:justify-center max-xl:gap-[33vh] max-md:gap-[70vw]">
         <p
           ref={text1Ref}
-          className="opacity-0 max-lg:text-[2.8vw] max-md:text-[5vw]"
+          className="opacity-0 max-xl:text-[2.8vw] max-md:text-[5vw]"
         >
           HUMAN THINKERS
         </p>
 
         <div
           id="imgs-wrapper"
-          className="relative size-[6.5vw] max-lg:z-99 max-lg:size-[13vw] max-md:size-[18vw]"
+          className="relative size-[6.5vw] max-xl:z-99 max-xl:size-[13vw] max-md:size-[18vw]"
         >
           {images.map((src, index) => (
             <div
@@ -300,7 +300,7 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
 
         <p
           ref={text2Ref}
-          className="opacity-0 max-lg:text-[2.8vw] max-md:text-[4vw]"
+          className="opacity-0 max-xl:text-[2.8vw] max-md:text-[4vw]"
         >
           DIGITAL MAKERS
         </p>
@@ -308,7 +308,7 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
 
       <p
         ref={descriptionTextRef}
-        className="absolute bottom-[3vw] left-1/2 w-[40vw] -translate-x-1/2 text-center leading-[1.1] text-black opacity-0 max-lg:bottom-[3vw] max-lg:w-[68vw] max-lg:text-[2.4vw] max-md:bottom-[6vw] max-md:w-[90%] max-md:text-[3.5vw]"
+        className="absolute bottom-[3vw] left-1/2 w-[40vw] -translate-x-1/2 text-center leading-[1.1] text-black opacity-0 max-xl:bottom-[3vw] max-xl:w-[68vw] max-xl:text-[2.4vw] max-md:bottom-[6vw] max-md:w-[90%] max-md:text-[3.5vw]"
       >
         Hyperiux Vault
       </p>

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
-import Image from 'next/image';
+import Image from "@/components/effects/_hyperiux/HyperiuxImage";
 
 gsap.registerPlugin(SplitText);
 
@@ -283,11 +283,11 @@ export function ZoomSliderComp({
     >
       {title ? (
         <div className="pointer-events-none absolute left-1/2 top-10 z-20 -translate-x-1/2 px-4 text-center">
-          <h2 className="text-4xl text-white max-sm:text-2xl">
+          <h2 className="text-4xl text-white max-md:text-2xl">
             {title}
           </h2>
           {subheading ? (
-            <p className="mt-3 text-sm tracking-[0.08em] text-white/65 max-sm:text-xs">
+            <p className="mt-3 text-sm tracking-[0.08em] text-white/65 max-md:text-xs">
               {subheading}
             </p>
           ) : null}
@@ -355,7 +355,7 @@ export function ZoomSliderComp({
                 fill
                 draggable={false}
                 priority={index < 3}
-                className="pointer-events-none select-none object-cover opacity-0"
+                className="pointer-events-none select-none object-cover opacity-0 w-full h-full"
                 style={{
                   transform: 'none',
                   objectPosition: 'center bottom',
