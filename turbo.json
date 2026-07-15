@@ -3,7 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "outputs": [],
       "env": [
         "CLOUDINARY_API_KEY",
         "CLOUDINARY_API_SECRET",
