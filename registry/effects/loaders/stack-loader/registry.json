@@ -1,5 +1,6 @@
 {
   "name": "stack-loader",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "stack-loader Loader",
   "description": "Stack-to-spread image intro loader with GSAP SplitText word animations and staggered image choreography",

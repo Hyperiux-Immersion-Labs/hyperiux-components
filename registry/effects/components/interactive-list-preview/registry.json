@@ -1,0 +1,28 @@
+{
+  "name": "interactive-list-preview",
+  "version": "1.0.0",
+  "type": "registry:component",
+  "title": "Interactive List Preview",
+  "description": "Hover-driven table list that reveals clipped images with a sliding highlight bar and mix-blend-mode difference inversion effect",
+  "category": "components",
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/interactive-list-preview",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.jsx",
+  "importPath": "@/components/effects/interactive-list-preview",
+  "target": "src/components/effects/interactive-list-preview",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/interactive-list-preview/index.jsx"
+    },
+    {
+      "path": "ListHover.jsx",
+      "target": "src/components/effects/interactive-list-preview/ListHover.jsx"
+    }
+  ]
+}

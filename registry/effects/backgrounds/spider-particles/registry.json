@@ -1,5 +1,6 @@
 {
   "name": "spider-particles",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Spider Particles",
   "description": "Canvas particle network background with connecting lines and mouse-driven repulsion \u2014 pure canvas, zero dependencies",

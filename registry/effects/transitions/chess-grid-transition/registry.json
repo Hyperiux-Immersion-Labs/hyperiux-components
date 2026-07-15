@@ -1,5 +1,6 @@
 {
   "name": "chess-grid-transition",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Chess Grid Transition",
   "description": "Staggered fullscreen grid wipe that sweeps blocks across the viewport during route changes",

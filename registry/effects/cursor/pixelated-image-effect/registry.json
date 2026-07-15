@@ -1,5 +1,6 @@
 {
   "name": "pixelated-image-effect",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Pixelated Image Effect",
   "description": "SVG filter-based image pixelation that reacts to cursor position \u2014 pixel size grows and shrinks as you move across the image",

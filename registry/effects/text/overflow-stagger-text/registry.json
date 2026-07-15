@@ -1,5 +1,6 @@
 {
   "name": "overflow-stagger-text",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Overflow Stagger Text",
   "description": "Characters stagger up from overflow with slight rotation for a dynamic reveal effect",

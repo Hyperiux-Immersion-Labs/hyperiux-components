@@ -1,0 +1,24 @@
+{
+  "name": "fractal-glass",
+  "version": "1.0.0",
+  "type": "registry:component",
+  "title": "Fractal Glass",
+  "description": "WebGL glass-strip refraction effect with fractal distortion, edge blending, and pointer-reactive parallax.",
+  "category": "webgl",
+  "dependencies": [
+    "three"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/webgl/fractal-glass",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.jsx",
+  "importPath": "@/components/effects/fractal-glass",
+  "target": "src/components/effects/fractal-glass",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/fractal-glass/index.jsx"
+    }
+  ]
+}

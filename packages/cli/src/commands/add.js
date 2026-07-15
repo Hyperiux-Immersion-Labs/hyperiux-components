@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import { Buffer } from "buffer";
 import chalk from "chalk";
 import ora from "ora";
 import prompts from "prompts";
@@ -171,6 +170,11 @@ export async function add(effectName, options) {
     console.error(chalk.red(error.message));
     process.exit(1);
   }
+
+  upsertLockEntry(cwd, effectName, {
+    version: registryItem.version || "1.0.0",
+    files: written,
+  });
 
   // Handle registry dependencies (other effects)
   const registryDeps = registryItem.registryDependencies || [];

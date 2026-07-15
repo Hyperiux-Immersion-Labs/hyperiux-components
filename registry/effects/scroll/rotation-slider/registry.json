@@ -1,5 +1,6 @@
 {
   "name": "rotation-slider",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Rotation Slider",
   "description": "Scroll-pinned horizontal slider with 3D card rotation, vertical drift, and SplitText caption reveals.",

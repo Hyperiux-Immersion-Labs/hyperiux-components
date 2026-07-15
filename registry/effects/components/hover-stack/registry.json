@@ -1,5 +1,6 @@
 {
   "name": "hover-stack",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Hover Stack",
   "description": "Overlapping card stack that fans out around the hovered card",

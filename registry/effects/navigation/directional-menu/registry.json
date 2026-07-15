@@ -1,5 +1,6 @@
 {
   "name": "directional-menu",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Directional Menu",
   "description": "Mega menu with directional content transitions using GSAP",

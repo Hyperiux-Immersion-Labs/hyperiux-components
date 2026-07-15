@@ -1,5 +1,6 @@
 {
   "name": "dotted-grid",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Dotted Grid",
   "description": "Canvas 2D fullscreen dot grid that autonomously cycles through five geometric shapes (star, square, circle ring, plus, triangle). Mouse cursor creates a dark shrinking head effect and leaves a glowing blue trail that lingers and fades.",

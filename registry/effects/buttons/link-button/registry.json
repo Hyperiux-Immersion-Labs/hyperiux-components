@@ -1,5 +1,6 @@
 {
   "name": "link-button",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Link Button",
   "description": "Minimal link button with animated underline and rotating arrow icon",

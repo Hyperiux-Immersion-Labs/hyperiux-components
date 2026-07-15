@@ -1,5 +1,6 @@
 {
   "name": "block-transition",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Block Transition",
   "description": "Horizontal split-block route transition with row-based stagger and optional content shift blur using GSAP.",

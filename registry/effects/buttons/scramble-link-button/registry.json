@@ -1,5 +1,6 @@
 {
   "name": "scramble-link-button",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Scramble Link Button",
   "description": "Link button with text scramble effect on hover, optional underline and arrow",

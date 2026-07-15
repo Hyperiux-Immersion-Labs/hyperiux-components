@@ -1,5 +1,6 @@
 {
   "name": "elevate-navbar",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Elevate Navbar",
   "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",

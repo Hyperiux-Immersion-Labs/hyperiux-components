@@ -1,5 +1,6 @@
 {
   "name": "rectangular-text-reveal",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Rectangular Text Reveal",
   "description": "Text reveal animation with colored rectangles sliding across each line",

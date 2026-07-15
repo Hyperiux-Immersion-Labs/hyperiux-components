@@ -1,5 +1,6 @@
 {
   "name": "numeric-tunnel",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Numeric Tunnel",
   "description": "WebGL loader with a 3D numeric tunnel that crossfades into a chromatic aberration warp effect",

@@ -1,5 +1,6 @@
 {
   "name": "phantom-image-trail",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Phantom Image Trail",
   "description": "Cursor-driven image trail that spawns and fades stacked visuals as you move",

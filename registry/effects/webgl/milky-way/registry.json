@@ -1,0 +1,38 @@
+{
+  "name": "milky-way",
+  "version": "1.0.0",
+  "type": "registry:component",
+  "title": "Milky Way",
+  "description": "GPU-accelerated GPGPU particle galaxy with spiral arms, curl-noise nebula smoke, twinkling sparkle stars, background starfield, and post-processing vignette + edge blur.",
+  "category": "webgl",
+  "dependencies": [
+    "@react-three/fiber",
+    "@react-three/drei",
+    "@react-three/postprocessing",
+    "postprocessing",
+    "three",
+    "lucide-react",
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/milky-way",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.jsx",
+  "importPath": "@/components/effects/milky-way",
+  "target": "src/components/effects/milky-way",
+  "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/milky-way/index.jsx"
+    },
+    {
+      "path": "circular-text.jsx",
+      "target": "src/components/effects/milky-way/circular-text.jsx"
+    },
+    {
+      "path": "edge-blur-effect.jsx",
+      "target": "src/components/effects/milky-way/edge-blur-effect.jsx"
+    }
+  ]
+}
