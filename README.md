@@ -154,7 +154,7 @@ npx hyperiux add stack-loader
 # Navigation
 npx hyperiux add directional-menu
 npx hyperiux add elevate-navbar
-npx hyperiux add immersive-full-screen-navigation
+npx hyperiux add immersive-full-screen-nav
 
 # Scroll
 npx hyperiux add circular-split-roll
@@ -194,7 +194,7 @@ npx hyperiux add milky-way
 
 **Loaders** — `numeric-tunnel` · `stack-loader`
 
-**Navigation** — `elevate-navbar` · `directional-menu`  · `immersive-full-screen-navigation`
+**Navigation** — `elevate-navbar` · `directional-menu`  · `immersive-full-screen-nav`
 
 **Scroll** — `circular-split-roll` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `split-canvas` · `sticky-content-wrapper` · `text-convergence`
 
