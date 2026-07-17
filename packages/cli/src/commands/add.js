@@ -124,6 +124,14 @@ export async function add(effectName, options = {}) {
       console.log(chalk.dim(`  ${file.targetPath}`));
     });
 
+    console.log();
+    console.log(
+      chalk.red.bold("Warning: ") +
+        chalk.yellow(
+          `overwriting will replace your file(s) completely, including any local edits. Run ${chalk.cyan(`npx hyperiux diff ${effectName}`)} first to see exactly what would change, then install once you've reviewed it.`
+        )
+    );
+
     if (!options.yes) {
       const { proceed } = await prompts(
         {

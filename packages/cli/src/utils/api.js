@@ -28,11 +28,11 @@ This is a Pro effect.
 
 Login with your Hyperiux Pro CLI token first:
 
-  hyperiux login
+  npx hyperiux login
 
 Then try again:
 
-  hyperiux add ${effectName}
+  npx hyperiux add ${effectName}
 
 Generate your token here:
   ${apiUrl}/cli-auth

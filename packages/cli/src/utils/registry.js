@@ -206,7 +206,7 @@ async function fetchPublicEffect(name) {
   if (!response.ok) {
     if (response.status === 404) {
       throw createRegistryError(
-        `Effect "${name}" not found. Run \`hyperiux list\` to see available effects.`,
+        `Effect "${name}" not found. Run \`npx hyperiux list\` to see available effects.`,
         { status: 404 }
       );
     }

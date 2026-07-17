@@ -119,7 +119,7 @@ export async function outdated() {
     console.log(
       chalk.dim(
         `${outdatedCount} effect${outdatedCount === 1 ? "" : "s"} can be updated. Run `
-      ) + chalk.cyan("hyperiux diff <effect>") + chalk.dim(" to see what changed.")
+      ) + chalk.cyan("npx hyperiux diff <effect>") + chalk.dim(" to see what changed.")
     );
   }
 
