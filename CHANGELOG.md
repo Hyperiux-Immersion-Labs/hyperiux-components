@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.1.0] - 2026-07-17
+## [1.0.75] - 2026-07-17
 
 ### Added
 - Component versioning: `add` now records every installed effect in `hyperiux.lock.json` (version + sha256 file hashes) via `utils/lockfile.js`
