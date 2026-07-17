@@ -9,7 +9,7 @@
     "lucide-react"
   ],
   "registryDependencies": [],
-  "previewUrl": "/components/animated-faq",
+  "previewUrl": "/demo/animated-faq",
   "tier": "free",
   "subfolder": true,
   "exportName": "AnimatedFAQ",

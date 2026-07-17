@@ -8,9 +8,11 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/mouse-hover-image",
+  "previewUrl": "/demo/phantom-image-trail",
   "tier": "free",
   "subfolder": true,
+  "exportName": "PhantomImageTrail",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/phantom-image-trail",
   "target": "src/components/effects/phantom-image-trail",

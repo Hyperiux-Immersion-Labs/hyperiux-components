@@ -8,9 +8,11 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/infinite-perspective-slider",
+  "previewUrl": "/demo/infinite-perspective-slider",
   "tier": "free",
   "subfolder": true,
+  "exportName": "InfinitePerspectiveSlider",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/infinite-perspective-slider",
   "target": "src/components/effects/infinite-perspective-slider",

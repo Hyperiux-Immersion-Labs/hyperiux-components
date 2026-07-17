@@ -8,9 +8,11 @@
     "three"
   ],
   "registryDependencies": [],
-  "previewUrl": "/webgl/fractal-glass",
+  "previewUrl": "/demo/fractal-glass",
   "tier": "free",
   "subfolder": true,
+  "exportName": "FractalGlass",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/fractal-glass",
   "target": "src/components/effects/fractal-glass",

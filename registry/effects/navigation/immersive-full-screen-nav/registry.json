@@ -1,7 +1,7 @@
 {
   "name": "immersive-full-screen-nav",
   "type": "registry:component",
-  "title": "Immersive Full screen Navigation",
+  "title": "Immersive Full Screen Navigation",
   "description": "Clip-path powered full-screen navigation overlay with animated hamburger transitions",
   "category": "navigation",
   "dependencies": [
@@ -10,6 +10,8 @@
   "previewUrl": "/demo/immersive-full-screen-nav",
   "tier": "free",
   "subfolder": true,
+  "exportName": "ImmersiveFullscreenNav",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/immersive-full-screen-nav",
   "target": "src/components/effects/immersive-full-screen-nav",

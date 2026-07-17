@@ -100,7 +100,7 @@
   },
   {
     "name": "stack-loader",
-    "title": "stack-loader Loader",
+    "title": "Stack Loader",
     "category": "loaders",
     "type": "registry:component",
     "registryPath": "registry/effects/loaders/stack-loader/registry.json",
@@ -111,7 +111,7 @@
     "name": "directional-menu",
     "title": "Directional Menu",
     "category": "navigation",
-    "type": "effect",
+    "type": "registry:component",
     "registryPath": "registry/effects/navigation/directional-menu/registry.json",
     "importPath": "@/components/effects/directional-menu",
     "target": "src/components/effects/directional-menu"
@@ -120,14 +120,14 @@
     "name": "elevate-navbar",
     "title": "Elevate Navbar",
     "category": "navigation",
-    "type": "effect",
+    "type": "registry:component",
     "registryPath": "registry/effects/navigation/elevate-navbar/registry.json",
     "importPath": "@/components/effects/elevate-navbar",
     "target": "src/components/effects/elevate-navbar"
   },
   {
     "name": "immersive-full-screen-nav",
-    "title": "Immersive Full screen Navigation",
+    "title": "Immersive Full Screen Navigation",
     "category": "navigation",
     "type": "registry:component",
     "registryPath": "registry/effects/navigation/immersive-full-screen-nav/registry.json",

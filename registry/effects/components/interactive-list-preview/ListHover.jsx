@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import Image from "@/components/effects/_hyperiux/HyperiuxImage";
+import Image from "next/image";
 
 const DEFAULT_IMAGE_Z_INDEX = 10;
 const HIGHLIGHT_ANIMATION_DURATION = 0.4;

@@ -1,16 +1,18 @@
 {
   "name": "stack-loader",
   "type": "registry:component",
-  "title": "stack-loader Loader",
+  "title": "Stack Loader",
   "description": "Stack-to-spread image intro loader with GSAP SplitText word animations and staggered image choreography",
   "category": "loaders",
   "dependencies": [
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/loaders/stack-loader",
+  "previewUrl": "/demo/stack-loader",
   "tier": "free",
   "subfolder": true,
+  "exportName": "StackLoader",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/stack-loader",
   "target": "src/components/effects/stack-loader",

@@ -1,7 +1,7 @@
 "use client";
 
 import gsap from "gsap";
-import Image from "@/components/effects/_hyperiux/HyperiuxImage";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 

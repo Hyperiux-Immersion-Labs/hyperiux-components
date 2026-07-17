@@ -30,7 +30,7 @@ npx hyperiux add phantom-image-trail
 ### 3. Use it
 
 ```jsx
-import PhantomImageTrail from "@/components/phantom-image-trail";
+import PhantomImageTrail from "@/components/effects/phantom-image-trail";
 
 export default function Page() {
   const images = [

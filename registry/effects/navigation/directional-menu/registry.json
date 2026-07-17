@@ -9,9 +9,11 @@
     "lucide-react"
   ],
   "registryDependencies": [],
-  "previewUrl": "/navigation/directional-menu",
+  "previewUrl": "/demo/directional-menu",
   "tier": "free",
   "subfolder": true,
+  "exportName": "DirectionalMenu",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/directional-menu",
   "target": "src/components/effects/directional-menu",

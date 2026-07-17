@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
-import Image from "@/components/effects/_hyperiux/HyperiuxImage";
+import Image from "next/image";
 
 gsap.registerPlugin(SplitText);
 

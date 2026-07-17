@@ -8,7 +8,9 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/webgl/zoom-slider",
+  "previewUrl": "/demo/zoom-slider",
+  "exportName": "ZoomSlider",
+  "exportKind": "default",
   "tier": "free",
   "subfolder": true,
   "main": "index.jsx",

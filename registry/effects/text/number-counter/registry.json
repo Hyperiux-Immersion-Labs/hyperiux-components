@@ -8,7 +8,7 @@
   "registryDependencies": [],
   "previewUrl": "/demo/number-counter",
   "coverImage": "number-counter",
-  "videoUrl": "/number-counter.mp4",
+  "videoUrl": "number-counter.mp4",
   "tier": "free",
   "subfolder": true,
   "main": "index.jsx",

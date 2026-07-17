@@ -8,9 +8,11 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/text-convergence",
+  "previewUrl": "/demo/text-convergence",
   "tier": "free",
   "subfolder": true,
+  "exportName": "TextConvergence",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/text-convergence",
   "target": "src/components/effects/text-convergence",

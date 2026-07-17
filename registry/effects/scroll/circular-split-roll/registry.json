@@ -13,11 +13,11 @@
     "gsap","lenis"
   ],
   "registryDependencies": [],
-  "previewUrl": "/scroll/circular-split-roll",
+  "previewUrl": "/demo/circular-split-roll",
   "tier": "free",
   "subfolder": true,
   "exportName": "CircularSplitRoll",
-  "exportKind": "named",
+  "exportKind": "default",
   "importPath": "@/components/effects/circular-split-roll",
   "target": "src/components/effects/circular-split-roll",
   "main": "index.jsx",

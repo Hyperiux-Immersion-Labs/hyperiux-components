@@ -8,9 +8,11 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/overflow-stagger-text",
+  "previewUrl": "/demo/overflow-stagger-text",
   "tier": "free",
   "subfolder": true,
+  "exportName": "OverflowStaggerText",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/overflow-stagger-text",
   "target": "src/components/effects/overflow-stagger-text",

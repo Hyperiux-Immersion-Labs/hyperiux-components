@@ -8,9 +8,11 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/sticky-content-wrapper",
+  "previewUrl": "/demo/sticky-content-wrapper",
   "tier": "free",
   "subfolder": true,
+  "exportName": "StickyContentWrapper",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/sticky-content-wrapper",
   "target": "src/components/effects/sticky-content-wrapper",

@@ -12,6 +12,8 @@
   "previewUrl": "/demo/block-transition",
   "tier": "free",
   "subfolder": true,
+  "exportName": "BlockTransition",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/block-transition",
   "target": "src/components/effects/block-transition",

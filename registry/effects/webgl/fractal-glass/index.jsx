@@ -318,7 +318,7 @@ export default function FractalGlass({
         background: "#000",
       }}
     >
-      {/* Mobile message */}w
+      {/* Mobile message */}
       <div
         className="
         hidden

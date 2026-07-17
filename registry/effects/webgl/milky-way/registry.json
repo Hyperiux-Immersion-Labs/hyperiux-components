@@ -17,6 +17,8 @@
   "previewUrl": "/demo/milky-way",
   "tier": "free",
   "subfolder": true,
+  "exportName": "MilkyWay",
+  "exportKind": "default",
   "main": "index.jsx",
   "importPath": "@/components/effects/milky-way",
   "target": "src/components/effects/milky-way",
