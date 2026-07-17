@@ -1,5 +1,10 @@
 {
   "name": "circular-split-roll",
+  "version": "1.0.1",
+  "changelog": [
+    { "version": "1.0.1", "date": "2026-07-17", "summary": "Responsiveness fixes", "breaking": false },
+    { "version": "1.0.0", "date": "2026-02-10", "summary": "Initial release", "breaking": false }
+  ],
   "type": "registry:component",
   "title": "Circular Split Roll",
   "description": "Circular split-roll scroller with left/right circular layouts, GSAP-driven motion, and ScrollTrigger pinning.",

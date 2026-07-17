@@ -307,7 +307,7 @@ export function CircularSplitRollComp({
     >
       <div
         ref={stickyRef}
-        className="relative h-screen w-full overflow-hidden max-md:hidden"
+        className="relative h-screen w-full overflow-hidden max-xl:hidden"
       >
         <div className="relative mx-auto flex h-full w-full">
           <div className="relative flex h-full w-[50vw] translate-x-[-60%] items-center justify-center">
@@ -345,15 +345,15 @@ export function CircularSplitRollComp({
         </div>
       </div>
 
-      <div className="hidden w-full px-5 py-10 max-md:block max-sm:px-4 max-sm:py-8">
-        <div className="mx-auto grid w-full max-w-5xl grid-cols-3 gap-5 max-sm:grid-cols-2 max-sm:gap-4">
+      <div className="hidden w-full px-5 py-10 max-xl:block max-md:px-4 max-md:py-8">
+        <div className="mx-auto grid w-full max-w-5xl grid-cols-3 gap-5 max-md:grid-cols-2 max-md:gap-4">
           {safeItems.map((item) => (
             <article
               key={item.id}
               className={`w-full ${gridCardClassName}`}
             >
               <div
-                className={`relative aspect-square w-full overflow-hidden rounded-[18px] bg-[#f5f2eb] shadow-[0_18px_38px_rgba(0,0,0,0.28)] max-sm:rounded-[14px] ${gridImageClassName}`}
+                className={`relative aspect-square w-full overflow-hidden rounded-[18px] bg-[#f5f2eb] shadow-[0_18px_38px_rgba(0,0,0,0.28)] max-md:rounded-[14px] ${gridImageClassName}`}
               >
                 <img
                   src={item.image}
@@ -364,7 +364,7 @@ export function CircularSplitRollComp({
               </div>
 
               <h3
-                className={`mt-3 text-center text-[clamp(18px,4vw,30px)] font-medium leading-none tracking-[-0.04em] text-white max-sm:mt-2 max-sm:text-[clamp(16px,5vw,24px)] ${gridTitleClassName}`}
+                className={`mt-3 text-center text-[clamp(18px,4vw,30px)] font-medium leading-none tracking-[-0.04em] text-white max-md:mt-2 max-md:text-[clamp(16px,5vw,24px)] ${gridTitleClassName}`}
               >
                 {item.title}
               </h3>
