@@ -6,6 +6,9 @@ import { init } from "./commands/init.js";
 import { add } from "./commands/add.js";
 import { list } from "./commands/list.js";
 import { login, logout, whoami } from "./commands/login.js";
+import { outdated } from "./commands/outdated.js";
+import { versions } from "./commands/versions.js";
+import { diff } from "./commands/diff.js";
 
 const require = createRequire(import.meta.url);
 const { version } = require("../package.json");
@@ -36,6 +39,22 @@ program
   .command("list")
   .description("List all available effects")
   .action(list);
+
+program
+  .command("outdated")
+  .description("Check installed effects for available updates")
+  .action(outdated);
+
+program
+  .command("versions")
+  .description("List every installed effect and its version")
+  .action(versions);
+
+program
+  .command("diff")
+  .description("Show what changed upstream for an installed effect")
+  .argument("[effect]", "The effect to diff (all installed effects if omitted)")
+  .action(diff);
 
 program
   .command("login")

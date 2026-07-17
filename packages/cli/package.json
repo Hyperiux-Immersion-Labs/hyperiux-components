@@ -1,6 +1,6 @@
 {
   "name": "hyperiux",
-  "version": "1.0.74",
+  "version": "1.1.0",
   "description": "CLI for adding Hyperiux UI effects to your Next.js project. This package is a CLI installer only — it is not an importable JavaScript/TypeScript library.",
   "type": "module",
   "bin": {
@@ -18,7 +18,7 @@
     "scripts/smoke-packed-package.mjs"
   ],
   "scripts": {
-    "build": "node --check src/index.js && node --check src/commands/add.js && node --check src/commands/init.js && node --check src/commands/list.js && node --check src/commands/login.js && node --check src/utils/auth.js && node --check src/utils/config.js && node --check src/utils/package-manager.js && node --check src/utils/registry.js",
+    "build": "node --check src/index.js && node --check src/commands/add.js && node --check src/commands/init.js && node --check src/commands/list.js && node --check src/commands/login.js && node --check src/commands/outdated.js && node --check src/commands/versions.js && node --check src/commands/diff.js && node --check src/utils/auth.js && node --check src/utils/config.js && node --check src/utils/package-manager.js && node --check src/utils/registry.js && node --check src/utils/lockfile.js && node --check src/utils/semver.js",
     "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -31,6 +31,7 @@
   "dependencies": {
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
+    "diff": "^9.0.0",
     "ora": "^8.1.1",
     "prompts": "^2.4.2"
   },

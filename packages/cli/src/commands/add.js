@@ -1,13 +1,12 @@
 import fs from "fs";
 import path from "path";
-import { Buffer } from "buffer";
 import chalk from "chalk";
 import ora from "ora";
 import prompts from "prompts";
 import { readConfig, configExists } from "../utils/config.js";
 import {
   fetchRegistry,
-  fetchRegistryAsset,
+  getFileContent,
   getRegistryItemFiles,
 } from "../utils/registry.js";
 import {
@@ -15,6 +14,7 @@ import {
   getMissingDependencies,
 } from "../utils/package-manager.js";
 import { getAuthToken } from "../utils/auth.js";
+import { upsertLockEntry } from "../utils/lockfile.js";
 
 const APP_URL =
   process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
@@ -212,6 +212,7 @@ export async function add(effectName, options = {}) {
   const filesSpinner = ora("Writing files...").start();
 
   let shouldWriteHyperiuxImageHelper = false;
+  const written = {};
 
   try {
     for (const file of files) {
@@ -241,6 +242,7 @@ export async function add(effectName, options = {}) {
       }
 
       fs.writeFileSync(targetPath, content);
+      written[file.targetPath] = content;
     }
 
     if (shouldWriteHyperiuxImageHelper) {
@@ -251,6 +253,7 @@ export async function add(effectName, options = {}) {
       // customization made to it.
       if (options.overwrite || !fs.existsSync(helperAbsolutePath)) {
         writeHyperiuxImageHelper(cwd, config);
+        written[helperTargetPath] = getHyperiuxImageHelperContent();
       }
     }
 
@@ -262,6 +265,11 @@ export async function add(effectName, options = {}) {
     console.log();
     process.exit(1);
   }
+
+  upsertLockEntry(cwd, effectName, {
+    version: registryItem.version || "1.0.0",
+    files: written,
+  });
 
   const registryDeps = registryItem.registryDependencies || [];
 
@@ -309,18 +317,6 @@ export async function add(effectName, options = {}) {
 
   console.log(chalk.cyan(`  ${importStatement}`));
   console.log();
-}
-
-async function getFileContent(file) {
-  if (file.type === "registry:asset" && file.source && !file.content) {
-    return fetchRegistryAsset(file.source);
-  }
-
-  if (file.encoding === "base64") {
-    return Buffer.from(file.content, "base64");
-  }
-
-  return file.content || "";
 }
 
 function getPotentialStringContent(file) {

@@ -16,6 +16,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-07-17
+
+### Added
+- Component versioning: `add` now records every installed effect in `hyperiux.lock.json` (version + sha256 file hashes) via `utils/lockfile.js`
+- `outdated` command — checks installed effects against the registry and lists only the ones that are behind, with bump type (patch/minor/major)
+- `versions` command — full listing of every installed effect and its version/status, including up-to-date ones
+- `diff [effect]` command — colored line-by-line diff between an installed effect and the latest registry version, with context trimming for large files
+- Explicit warning above the overwrite confirmation prompt in `add`, pointing to `hyperiux diff` before overwriting local edits
+- `utils/semver.js` — minimal `major.minor.patch` comparison used by `outdated`/`versions`
+
+### Changed
+- `getFileContent` moved from a local helper in `add.js` to a shared export in `utils/registry.js`, reused by `diff`
+
 ## [1.0.74] - 2026-07-17
 
 ### Fixed
