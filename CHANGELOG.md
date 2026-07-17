@@ -16,6 +16,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.74] - 2026-07-17
+
+### Fixed
+- `arrow-fill-button`: switched to named export (default export removed)
+- `directional-menu` and `milky-way`: responsive layout fixes
+- `milky-way`: removed stale `package.json` from effect folder
+- `dotted-grid`, `stack-loader`, `split-canvas` and 10 other effects: source reconciled against demo pages
+- `elevated-navbar`: updated source
+- `hover-stack`, `number-counter`, `fractal-glass`, `interactive-blur-reveal`: component updates; stale `package.json` files removed from effect folders
+- Missing `dependencies` declarations added to several registry.json files
+- Hardcoded asset references (`/hyperiux.svg`, social icons) replaced with inline SVG in `immersive-full-screen-nav` and `directional-menu`
+- README: corrected mismatched effect names
+
+### Changed
+- `turbo.json`: pipeline config updated
+
 ## [1.0.73] - 2026-07-09
 
 ### Fixed
