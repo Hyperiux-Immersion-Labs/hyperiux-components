@@ -27,7 +27,7 @@ export async function outdated() {
 
   if (!names.length) {
     console.log();
-    console.log(chalk.dim("No effects installed yet — nothing to check."));
+    console.log(chalk.dim("No effects installed yet - nothing to check."));
     console.log();
     return;
   }

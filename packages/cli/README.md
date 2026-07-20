@@ -5,9 +5,11 @@
 ![CI](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/actions/workflows/ci.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-**A collection of high-quality animation effects and interactive components for Next.js — designed by [Hyperiux](https://hyperiux.com).**
+**A collection of high-quality animation effects and interactive components for Next.js - designed by [Hyperiux](https://hyperiux.com).**
 
-32 free effects are open source and install instantly. 83 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI copies source code directly into your project — you own what you install.
+32 free effects are open source and install instantly. 83 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI copies source code directly into your project - you own what you install.
+
+> **A note on licensing:** The `MIT` license shown in this npm listing's sidebar covers this CLI tool's own code only. It does not cover the effect content the CLI installs into your project - that's licensed separately. See [License](#license) below.
 
 ---
 
@@ -95,7 +97,7 @@ export default function Page() {
 | `popEase` | `string \| function` | `Expo.easeOut` | Easing used for the pop-out animation |
 | `idlePopEase` | `string \| function` | `power1.out` | Easing used for idle pop-out animations |
 | `fadeEase` | `string \| function` | `power4.inOut` | Easing used for the fade-out animation |
-| `onImageShow` | `(payload) => void` | — | Callback fired when an image is shown |
+| `onImageShow` | `(payload) => void` | - | Callback fired when an image is shown |
 
 ---
 
@@ -182,27 +184,27 @@ npx hyperiux add milky-way
 
 ### Free effects by category
 
-**Backgrounds** — `spider-particles` · `dotted-grid`
+**Backgrounds** - `spider-particles` · `dotted-grid`
 
-**Buttons** — `arrow-fill-button` · `link-button` · `scramble-link-button`
+**Buttons** - `arrow-fill-button` · `link-button` · `scramble-link-button`
 
-**Carousels** — `zoom-slider`
+**Carousels** - `zoom-slider`
 
-**Components** — `animated-faq` · `gooey-counter` · `hover-stack` · `interactive-list-preview`
+**Components** - `animated-faq` · `gooey-counter` · `hover-stack` · `interactive-list-preview`
 
-**Cursor** — `phantom-image-trail` · `pixelated-image-effect`
+**Cursor** - `phantom-image-trail` · `pixelated-image-effect`
 
-**Loaders** — `numeric-tunnel` · `stack-loader`
+**Loaders** - `numeric-tunnel` · `stack-loader`
 
-**Navigation** — `elevate-navbar` · `directional-menu`  · `immersive-full-screen-nav`
+**Navigation** - `elevate-navbar` · `directional-menu`  · `immersive-full-screen-nav`
 
-**Scroll** — `circular-split-roll` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `split-canvas` · `sticky-content-wrapper` · `text-convergence`
+**Scroll** - `circular-split-roll` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `split-canvas` · `sticky-content-wrapper` · `text-convergence`
 
-**Text** — `number-counter` · `overflow-stagger-text` · `rectangular-text-reveal`
+**Text** - `number-counter` · `overflow-stagger-text` · `rectangular-text-reveal`
 
-**Transitions** — `block-transition` · `chess-grid-transition`
+**Transitions** - `block-transition` · `chess-grid-transition`
 
-**WebGL** — `fractal-glass` · `interactive-blur-reveal` · `milky-way`
+**WebGL** - `fractal-glass` · `interactive-blur-reveal` · `milky-way`
 
 ---
 
@@ -260,7 +262,7 @@ All 83 pro effects with live previews, code previews, and installation names are
 
 ## How It Works
 
-The CLI **copies source code** into your project. There is no `hyperiux` import at runtime — the installed files are yours and live in your repo. This means:
+The CLI **copies source code** into your project. There is no `hyperiux` import at runtime - the installed files are yours and live in your repo. This means:
 
 - No vendor lock-in
 - Customize any component freely after installing
@@ -271,7 +273,7 @@ When you run `npx hyperiux add <effect>`, the CLI:
 1. Fetches the component source from the registry
 2. Installs it into `src/components/effects/<effect-name>/`
 3. Installs any peer dependencies (`gsap`, `three`, etc.) via your package manager
-4. Leaves the files in your codebase — no ongoing CLI dependency
+4. Leaves the files in your codebase - no ongoing CLI dependency
 
 ---
 
@@ -305,7 +307,7 @@ Adjust `aliases` to match your project's path aliases.
 - **Next.js** 14+ (App Router)
 - **Tailwind CSS** v3 or v4
 
-Most effects depend on **GSAP**. The CLI installs it automatically. Note that GSAP's premium plugins (SplitText, ScrollTrigger, etc.) require a GSAP license for commercial use — see [gsap.com/licensing](https://gsap.com/licensing/).
+Most effects depend on **GSAP**. The CLI installs it automatically. Note that GSAP's premium plugins (SplitText, ScrollTrigger, etc.) require a GSAP license for commercial use - see [gsap.com/licensing](https://gsap.com/licensing/).
 
 ---
 
@@ -313,7 +315,7 @@ Most effects depend on **GSAP**. The CLI installs it automatically. Note that GS
 
 | Variable | Purpose |
 |---|---|
-| `HYPERIUX_TOKEN` | Authenticate without running `login` — useful in CI |
+| `HYPERIUX_TOKEN` | Authenticate without running `login` - useful in CI |
 | `HYPERIUX_APP_URL` | Override the app URL for testing |
 | `HYPERIUX_API_URL` | Override the API URL independently |
 | `HYPERIUX_REGISTRY_URL` | Override the registry URL for local development |
@@ -325,10 +327,10 @@ Most effects depend on **GSAP**. The CLI installs it automatically. Note that GS
 
 This is a pnpm monorepo with Turborepo:
 
-- **`packages/cli`** — `npx hyperiux` CLI tool, published to npm as `hyperiux`
-- **`registry/effects`** — Free effect source, organized by category
+- **`packages/cli`** - `npx hyperiux` CLI tool, published to npm as `hyperiux`
+- **`registry/effects`** - Free effect source, organized by category
 
-Pro effect source lives in a private repository and is served via a protected API. The registry index (`public/r/index.json`) lists all effects with metadata — pro file contents are not publicly accessible.
+Pro effect source lives in a private repository and is served via a protected API. The registry index (`public/r/index.json`) lists all effects with metadata - pro file contents are not publicly accessible.
 
 ---
 
@@ -372,4 +374,11 @@ To add a new free effect: create a folder under `registry/effects/<category>/<ef
 
 ## License
 
-Free effects are MIT licensed. Pro effects require an active subscription and are not redistributable.
+This package (the `hyperiux` CLI tool itself - the code in `packages/cli`) is MIT licensed. That's what the `License: MIT` badge on this npm listing refers to.
+
+Effect content installed via the CLI is licensed separately from the CLI tool:
+
+- **Free effects** (32) are MIT licensed - use, modify, and redistribute freely.
+- **Pro effects** (83) require an active Hyperiux Vault Pro subscription and are not open source or redistributable.
+
+See the [licensing guide](https://vault.hyperiux.com/docs/license) for the full breakdown.

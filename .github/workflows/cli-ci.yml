@@ -48,7 +48,7 @@ jobs:
       - name: Pack dry-run (verify publishable tarball)
         run: npm pack --dry-run
 
-      - name: Smoke test — install from tarball into clean project
+      - name: Smoke test - install from tarball into clean project
         run: |
           npm pack
           TARBALL=$(ls hyperiux-*.tgz)

@@ -214,7 +214,7 @@ export default function FractalGlass({
       });
 
       videoEl.play().catch(() => {
-        // Autoplay blocked — still renders first frame when available
+        // Autoplay blocked - still renders first frame when available
       });
 
       videoTexture = new THREE.VideoTexture(videoEl);

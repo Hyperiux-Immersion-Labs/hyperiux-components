@@ -271,7 +271,7 @@ export async function add(effectName, options = {}) {
     if (shouldWriteHyperiuxImageHelper) {
       const helperAbsolutePath = path.resolve(cwd, helperTargetPath);
 
-      // Shared utility, not a per-effect file — only create it once so a
+      // Shared utility, not a per-effect file - only create it once so a
       // later `hyperiux add` of an unrelated effect doesn't clobber any
       // customization made to it.
       if (options.overwrite || !fs.existsSync(helperAbsolutePath)) {

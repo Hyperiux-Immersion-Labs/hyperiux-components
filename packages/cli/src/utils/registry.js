@@ -118,7 +118,7 @@ export async function fetchRegistry(name, options = {}) {
     try {
       localItem = fetchLocalPackageRegistry(name, localRegistryRoot);
     } catch (err) {
-      // Effect not in the local (free) registry — fall through to remote/API.
+      // Effect not in the local (free) registry - fall through to remote/API.
       if (err.status !== 404) throw err;
     }
 

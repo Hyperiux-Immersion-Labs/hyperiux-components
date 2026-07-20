@@ -37,7 +37,7 @@ jobs:
       - name: Build (syntax check + smoke)
         run: pnpm --filter hyperiux build
 
-      - name: Smoke — bin entrypoint
+      - name: Smoke - bin entrypoint
         run: pnpm --filter hyperiux smoke:bin
 
       - name: Pack dry-run

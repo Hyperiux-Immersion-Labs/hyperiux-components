@@ -296,7 +296,7 @@ export default function SpiderParticles({
       // Snap smoothMouse on the first frame, lerp every frame after
       if (mousePresent && mouse.x > MOUSE_THRESHOLD) {
         if (mouseJustEntered) {
-          smoothMouse.copy(mouse); // instant snap — avoids lerp drift from previous position
+          smoothMouse.copy(mouse); // instant snap - avoids lerp drift from previous position
           mouseJustEntered = false;
         } else {
           smoothMouse.x += (mouse.x - smoothMouse.x) * LERP_SPEED;
@@ -319,7 +319,7 @@ export default function SpiderParticles({
         cursorPoint.visible = false;
       }
 
-      // Build web lines — one segment per nearby particle
+      // Build web lines - one segment per nearby particle
       let mIdx = 0;
 
       if (smoothMouse.x > MOUSE_THRESHOLD && mouseEntryAlpha > 0) {
@@ -456,7 +456,7 @@ export default function SpiderParticles({
           </div>
         </div>
 
-        {/* Mobile overlay — desktop-only effect notice */}
+        {/* Mobile overlay - desktop-only effect notice */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3 pointer-events-none select-none z-20 hidden max-xl:flex w-full px-14 text-center">
           <p className="text-white text-3xl font-light tracking-tight">
             Open on desktop

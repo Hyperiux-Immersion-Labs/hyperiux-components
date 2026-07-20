@@ -14,7 +14,7 @@ const APP_URL =
 
 export async function login() {
   console.log();
-  console.log(chalk.bold("Hyperiux Pro — CLI Login"));
+  console.log(chalk.bold("Hyperiux Pro - CLI Login"));
   console.log();
   console.log("Open this URL in your browser to generate your CLI token:");
   console.log();

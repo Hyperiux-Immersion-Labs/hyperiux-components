@@ -60,7 +60,7 @@ export function installDependencies(packages, options = {}) {
 }
 
 function parsePackageName(pkg) {
-  // Strip version specifier — handles both "gsap@3" and "@react-three/fiber@8"
+  // Strip version specifier - handles both "gsap@3" and "@react-three/fiber@8"
   // Scoped: "@react-three/fiber" → keep as-is; "@react-three/fiber@8" → "@react-three/fiber"
   if (pkg.startsWith("@")) {
     // e.g. "@react-three/fiber@8.0.0" → split after the second "@"
@@ -76,7 +76,7 @@ function isPackageInstalled(pkg, cwd) {
   const name = parsePackageName(pkg);
 
   // A package only counts as "installed" if it's actually declared in
-  // package.json. node_modules alone isn't enough — a package can be
+  // package.json. node_modules alone isn't enough - a package can be
   // physically present there as a transitive dependency of something
   // else without ever being recorded as a direct dependency, which
   // would silently skip adding it and break on a clean install.
@@ -91,7 +91,7 @@ function isPackageInstalled(pkg, cwd) {
         pkgJson.peerDependencies?.[name]
     );
   } catch {
-    // No package.json or unparsable — fall back to checking node_modules
+    // No package.json or unparsable - fall back to checking node_modules
     // directly, since there's no declared-dependency list to trust.
     return fs.existsSync(path.join(cwd, "node_modules", name));
   }

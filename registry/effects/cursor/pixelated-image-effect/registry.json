@@ -2,7 +2,7 @@
   "name": "pixelated-image-effect",
   "type": "registry:component",
   "title": "Pixelated Image Effect",
-  "description": "SVG filter-based image pixelation that reacts to cursor position — pixel size grows and shrinks as you move across the image",
+  "description": "SVG filter-based image pixelation that reacts to cursor position - pixel size grows and shrinks as you move across the image",
   "category": "cursor",
   "dependencies": [],
   "registryDependencies": [],

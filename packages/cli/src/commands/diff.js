@@ -29,7 +29,7 @@ export async function diff(effectName) {
 
   if (!names.length) {
     console.log();
-    console.log(chalk.dim("No effects installed yet — nothing to diff."));
+    console.log(chalk.dim("No effects installed yet - nothing to diff."));
     console.log();
     return;
   }
@@ -40,7 +40,7 @@ export async function diff(effectName) {
   for (const name of names) {
     if (!lock.components[name]) {
       console.log();
-      console.log(chalk.yellow(`"${name}" is not installed (no lock entry) — skipping.`));
+      console.log(chalk.yellow(`"${name}" is not installed (no lock entry) - skipping.`));
       continue;
     }
 
