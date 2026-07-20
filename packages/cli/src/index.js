@@ -30,8 +30,14 @@ program
   .command("add")
   .description("Add an effect to your project")
   .argument("<effect>", "The effect to add")
-  .option("-o, --overwrite", "Overwrite existing files")
-  .option("-y, --yes", "Skip confirmation prompts")
+  .option(
+    "-o, --overwrite",
+    "Replace existing files (required to overwrite anything already on disk)"
+  )
+  .option(
+    "-y, --yes",
+    "Skip interactive prompts. Does not permit overwriting; existing files are left untouched unless --overwrite is also passed"
+  )
   .option("--dry-run", "Show what would be installed without installing")
   .action(add);
 

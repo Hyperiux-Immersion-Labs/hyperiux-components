@@ -114,9 +114,11 @@ export default function Page() {
 
 | Flag | Description |
 |---|---|
-| `--overwrite` | Overwrite existing files |
-| `--yes` | Skip confirmation prompts |
+| `--overwrite` | Replace existing files. **Required** to overwrite anything already on disk — nothing is overwritten without it |
+| `--yes` | Skip interactive prompts. This does **not** permit overwriting: if files already exist and `--overwrite` was not passed, they are left untouched and the effect is skipped |
 | `--dry-run` | Preview what would be installed without writing files |
+
+> **Note:** `--yes` only skips prompts; it never grants permission to overwrite. To replace a file you have already installed (and possibly customized), pass `--overwrite` explicitly. Run `npx hyperiux diff <effect>` first to preview exactly what would change.
 
 ---
 

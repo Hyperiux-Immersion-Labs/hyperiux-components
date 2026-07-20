@@ -116,7 +116,7 @@ export async function add(effectName, options = {}) {
     fs.existsSync(path.join(cwd, file.targetPath))
   );
 
-  if (existingFiles.length > 0 && !options.overwrite) {
+  if (existingFiles.length > 0 && !options.overwrite && !options.dryRun) {
     console.log();
     console.log(chalk.yellow("The following files already exist:"));
 
@@ -132,29 +132,44 @@ export async function add(effectName, options = {}) {
         )
     );
 
-    if (!options.yes) {
-      const { proceed } = await prompts(
-        {
-          type: "confirm",
-          name: "proceed",
-          message: "Overwrite existing files?",
-          initial: false,
-        },
-        {
-          onCancel: () => {
-            console.log();
-            console.log(chalk.yellow("Installation cancelled."));
-            process.exit(0);
-          },
-        }
+    if (options.yes) {
+      console.log();
+      console.log(
+        chalk.yellow(
+          `Skipped: existing files were left untouched because ${chalk.cyan(
+            "--overwrite"
+          )} was not passed. Re-run with ${chalk.cyan(
+            "--overwrite"
+          )} to replace them, or ${chalk.cyan(
+            `npx hyperiux diff ${effectName}`
+          )} to preview the changes first.`
+        )
       );
+      console.log();
+      return;
+    }
 
-      if (!proceed) {
-        console.log();
-        console.log(chalk.yellow("Installation cancelled."));
-        console.log();
-        process.exit(0);
+    const { proceed } = await prompts(
+      {
+        type: "confirm",
+        name: "proceed",
+        message: "Overwrite existing files?",
+        initial: false,
+      },
+      {
+        onCancel: () => {
+          console.log();
+          console.log(chalk.yellow("Installation cancelled."));
+          process.exit(0);
+        },
       }
+    );
+
+    if (!proceed) {
+      console.log();
+      console.log(chalk.yellow("Installation cancelled."));
+      console.log();
+      process.exit(0);
     }
   }
 

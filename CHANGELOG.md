@@ -16,6 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.76] - 2026-07-20
+
+### Fixed
+- **`add` no longer overwrites existing files when only `--yes` is passed (data-loss safety fix).** Previously, `--yes` (intended to skip interactive prompts) also silently permitted overwriting files already on disk, so re-running `add <effect> --yes` could replace a locally customized effect with the registry version, with no confirmation. `--yes` now *only* skips prompts; replacing existing files requires an explicit `--overwrite`. When files already exist and `--overwrite` is not passed, the existing files are left untouched and the effect is skipped with a clear message pointing at `--overwrite` and `hyperiux diff`.
+
+### Changed
+- **Behavior change for scripts and muscle-memory usage:** any `add … --yes` invocation that relied on the old implicit-overwrite behavior will now skip existing files instead of replacing them. Add `--overwrite` to those commands to keep replacing files.
+- `add --dry-run` now always shows its preview even when target files already exist (it no longer prompts or blocks on the overwrite check, since a dry run writes nothing).
+
 ## [1.0.75] - 2026-07-17
 
 ### Added
