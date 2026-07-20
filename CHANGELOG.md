@@ -11,8 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 2. Add entry to this file under a new `## [x.y.z] - YYYY-MM-DD` heading
 3. Commit: `git commit -m "chore: release x.y.z"`
 4. Run `cd packages/cli && npm run prepublishOnly` - must pass lint, tests, and pack dry-run
-5. Publish: `npm publish --access public`
-6. Tag: `git tag cli-vx.y.z && git push origin --tags`
+5. Tag and push: `git tag vx.y.z && git push origin main --follow-tags`
+
+Pushing the tag triggers `.github/workflows/release.yml`, which publishes to
+npm with provenance and creates (or updates) the matching GitHub Release
+automatically - you shouldn't need to run `npm publish` locally. The tag must
+be named `vx.y.z`, not `cli-vx.y.z` (an earlier version of this doc said
+otherwise) - the release workflow only triggers on tags matching `v*`, so a
+`cli-v` tag would silently skip both the npm publish and the GitHub Release.
+
+If you do publish manually for any reason, still push a `vx.y.z` tag
+afterward so GitHub Releases stays in sync with npm - a tag that was pushed
+without the release workflow catching it (or before the release-creation
+step existed) is what let v1.0.73-v1.0.75 go three versions without a
+GitHub Release entry.
 
 ---
 
