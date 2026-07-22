@@ -9,6 +9,43 @@
 
 32 free effects are open source and install instantly. 83 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI copies source code directly into your project - you own what you install.
 
+<table>
+<tr>
+<td width="50%">
+
+**[Milky Way](https://vault.hyperiux.com/effects/webgl/milky-way)** - WebGL particle field
+<br />
+<img src="media/effects/milky-way.gif" width="100%" alt="Milky Way WebGL particle effect demo" />
+
+</td>
+<td width="50%">
+
+**[Phantom Image Trail](https://vault.hyperiux.com/effects/cursor/phantom-image-trail)** - Cursor-following image trail
+<br />
+<img src="media/effects/phantom-image-trail.gif" width="100%" alt="Phantom Image Trail cursor effect demo" />
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**[Spider Particles](https://vault.hyperiux.com/effects/backgrounds/spider-particles)** - Interactive particle field background
+<br />
+<img src="media/effects/spider-particles.gif" width="100%" alt="Spider Particles interactive background demo" />
+
+</td>
+<td width="50%">
+
+**[Immersive Full-Screen Nav](https://vault.hyperiux.com/effects/navigation/immersive-full-screen-nav)** - Full-screen navigation overlay
+<br />
+<img src="media/effects/immersive-full-screen-nav.gif" width="100%" alt="Immersive Full-Screen Navigation demo" />
+
+</td>
+</tr>
+</table>
+
+All four are free - `npx hyperiux add <effect-name>` installs any of them. Browse the rest at [vault.hyperiux.com/effects](https://vault.hyperiux.com/effects).
+
 ---
 
 ## Quick Start
