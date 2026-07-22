@@ -1,0 +1,97 @@
+name: Bug report
+description: Something in the CLI or a free effect isn't working as expected.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. If your question is "how do I..." rather than "this is broken," please use [Discussions Q&A](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/discussions/categories/q-a) instead.
+
+  - type: input
+    id: effect-or-command
+    attributes:
+      label: Effect name or CLI command
+      description: Which effect (e.g. `dither-canvas`) or command (e.g. `hyperiux add`) is affected?
+      placeholder: "hyperiux add spider-particles"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happened? Paste the full error output if there is one.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: The exact commands or steps that trigger this.
+      placeholder: |
+        1. npx hyperiux init
+        2. npx hyperiux add spider-particles
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: cli-version
+    attributes:
+      label: hyperiux CLI version
+      description: Output of `npx hyperiux --version`
+    validations:
+      required: true
+
+  - type: dropdown
+    id: node-version
+    attributes:
+      label: Node.js version
+      options:
+        - "18.x"
+        - "20.x"
+        - "22.x"
+        - "24.x or newer"
+        - Other (mention in additional context)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: nextjs-version
+    attributes:
+      label: Next.js version
+      options:
+        - "14.x"
+        - "15.x"
+        - "16.x"
+        - Not using Next.js App Router
+        - Other (mention in additional context)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tailwind-version
+    attributes:
+      label: Tailwind CSS version
+      options:
+        - "v3"
+        - "v4"
+        - Not using Tailwind
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else - package manager (npm/pnpm/yarn/bun), OS, monorepo setup, etc.

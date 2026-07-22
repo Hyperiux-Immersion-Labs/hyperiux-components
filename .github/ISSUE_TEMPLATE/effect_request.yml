@@ -1,0 +1,50 @@
+name: Effect request
+description: Suggest a new free effect for the registry.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Free effect requests and votes also live in [Discussions → Effect Requests](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/discussions/categories/effect-requests) - use this form if you want it tracked as a concrete issue someone can pick up.
+
+  - type: input
+    id: name
+    attributes:
+      label: Effect name
+      description: A short, descriptive name (this becomes the CLI slug, e.g. `magnetic-cursor-trail`).
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Backgrounds
+        - Buttons
+        - Carousels
+        - Components
+        - Cursor
+        - Loaders
+        - Navigation
+        - Scroll
+        - Text
+        - Transitions
+        - WebGL
+        - Not sure / new category
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What does it do?
+      description: Describe the interaction/animation. A reference link, video, or site that already does something similar helps a lot.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why does this belong in Free Core?
+      description: What makes this broadly useful rather than a one-off, project-specific effect?
