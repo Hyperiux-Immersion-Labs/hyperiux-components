@@ -301,13 +301,37 @@ Adjust `aliases` to match your project's path aliases.
 
 ---
 
-## Requirements
+## Requirements & Compatibility
 
-- **Node.js** 18+
-- **Next.js** 14+ (App Router)
-- **Tailwind CSS** v3 or v4
+| | Supported |
+|---|---|
+| **Node.js** | 18+ |
+| **Next.js** | 14+, **App Router only** - the Pages Router isn't supported today |
+| **Tailwind CSS** | v3 or v4 |
+| **React** | 18 or 19 |
+| **Package manager** | npm, pnpm, yarn, or bun - auto-detected from your lockfile |
+| **TypeScript** | Effects ship as `.jsx` - drop them into a `.tsx` project as-is, or rename and add types yourself |
 
 Most effects depend on **GSAP**. The CLI installs it automatically. Note that GSAP's premium plugins (SplitText, ScrollTrigger, etc.) require a GSAP license for commercial use - see [gsap.com/licensing](https://gsap.com/licensing/).
+
+---
+
+## Troubleshooting
+
+**Installed effect renders unstyled.** The CLI copies files but doesn't modify your Tailwind config. Make sure your `content`/`source` scanning picks up the install path:
+
+- **Tailwind v3** (`tailwind.config.js`): add the effects directory to `content`, e.g. `"./src/components/effects/**/*.{js,jsx,ts,tsx}"`.
+- **Tailwind v4** (CSS-first config): add `@source "./src/components/effects";` near your `@import "tailwindcss";` line.
+
+**`add` isn't overwriting a file I already installed.** As of v1.0.76, `--yes` only skips confirmation prompts - it no longer implicitly overwrites existing files (a previous version did, which could silently discard local edits). Pass `--overwrite` explicitly, or run `hyperiux diff <effect>` first to see what changed upstream before deciding.
+
+**"This effect requires a Pro subscription" but you have one.** Run `hyperiux whoami` to confirm you're logged in with the right account. If that looks right, your token may be stale - `hyperiux logout` then `hyperiux login` with a fresh token from your [dashboard](https://vault.hyperiux.com/dashboard).
+
+**Wrong package manager detected / installs to the wrong lockfile.** The CLI detects your package manager from the lockfile in the current directory. In a monorepo, run `hyperiux add` from the actual app package (where its own lockfile or `package.json` lives), not the monorepo root.
+
+**Peer dependency warnings for GSAP/Three.js.** Expected if you're already pinning a specific version in your project - the CLI installs whatever version an effect was built against unless you already have a compatible one installed.
+
+**Still stuck?** Search [existing issues](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/issues) or ask in [Discussions Q&A](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/discussions/categories/q-a) - include your `hyperiux --version`, Next.js version, and the exact command you ran.
 
 ---
 
