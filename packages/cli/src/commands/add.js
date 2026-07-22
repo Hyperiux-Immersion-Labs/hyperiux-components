@@ -15,6 +15,7 @@ import {
 } from "../utils/package-manager.js";
 import { getAuthToken } from "../utils/auth.js";
 import { upsertLockEntry } from "../utils/lockfile.js";
+import { hasSeenStarPrompt, markStarPromptSeen } from "../utils/cli-state.js";
 
 const APP_URL =
   process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
@@ -306,6 +307,7 @@ export async function add(effectName, options = {}) {
       await add(dep, {
         ...options,
         yes: true,
+        isDependency: true,
       });
     }
   }
@@ -340,6 +342,18 @@ export async function add(effectName, options = {}) {
 
   console.log(chalk.cyan(`  ${importStatement}`));
   console.log();
+
+  // Non-intrusive, shown once ever (not per effect, not for auto-pulled
+  // registryDependencies) - a passive line, never a blocking prompt.
+  if (!options.isDependency && !hasSeenStarPrompt()) {
+    console.log(
+      chalk.dim(
+        "If Vault saved you some time, a star helps others find it: https://github.com/Hyperiux-Immersion-Labs/hyperiux-components"
+      )
+    );
+    console.log();
+    markStarPromptSeen();
+  }
 }
 
 function getPotentialStringContent(file) {
