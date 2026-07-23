@@ -110,6 +110,44 @@ export async function fetchRegistry(name, options = {}) {
     return fetchLocalPublicRegistry(name, cwd, token);
   }
 
+  /**
+   * HYPERIUX_PRO_REGISTRY_ROOT: path to hyperiux-pro-components/registry.
+   * Enables local end-to-end testing of pro effects without hitting the API.
+   * Usage: HYPERIUX_USE_LOCAL_PRO=1 HYPERIUX_PRO_REGISTRY_ROOT=/path/to/registry
+   *
+   * Checked BEFORE the bundled free registry below: this is an explicit,
+   * deliberate opt-in a developer sets to test against a specific local
+   * checkout, so it must win even for effects that also happen to exist
+   * in the CLI's own bundled (and possibly stale) free registry - otherwise
+   * the env var is silently ignored whenever the requested effect's name
+   * matches one already bundled here.
+   */
+  const proRegistryRoot = process.env.HYPERIUX_PRO_REGISTRY_ROOT;
+
+  if (proRegistryRoot) {
+    let proItem = null;
+
+    try {
+      proItem = fetchLocalPackageRegistry(name, proRegistryRoot);
+    } catch (err) {
+      if (err.status !== 404) throw err;
+    }
+
+    if (proItem) {
+      if (process.env.HYPERIUX_USE_LOCAL_PRO === "1") {
+        return proItem;
+      }
+
+      const apiItem = await fetchProtectedEffect(name, token);
+
+      return {
+        ...apiItem,
+        __registryDir: proItem.__registryDir,
+        __registryJsonPath: proItem.__registryJsonPath,
+      };
+    }
+  }
+
   const localRegistryRoot = getLocalRegistryRoot();
 
   if (localRegistryRoot) {
@@ -146,37 +184,6 @@ export async function fetchRegistry(name, options = {}) {
         ...apiItem,
         __registryDir: localItem.__registryDir,
         __registryJsonPath: localItem.__registryJsonPath,
-      };
-    }
-  }
-
-  /**
-   * HYPERIUX_PRO_REGISTRY_ROOT: path to hyperiux-pro-components/registry.
-   * Enables local end-to-end testing of pro effects without hitting the API.
-   * Usage: HYPERIUX_USE_LOCAL_PRO=1 HYPERIUX_PRO_REGISTRY_ROOT=/path/to/registry
-   */
-  const proRegistryRoot = process.env.HYPERIUX_PRO_REGISTRY_ROOT;
-
-  if (proRegistryRoot) {
-    let proItem = null;
-
-    try {
-      proItem = fetchLocalPackageRegistry(name, proRegistryRoot);
-    } catch (err) {
-      if (err.status !== 404) throw err;
-    }
-
-    if (proItem) {
-      if (process.env.HYPERIUX_USE_LOCAL_PRO === "1") {
-        return proItem;
-      }
-
-      const apiItem = await fetchProtectedEffect(name, token);
-
-      return {
-        ...apiItem,
-        __registryDir: proItem.__registryDir,
-        __registryJsonPath: proItem.__registryJsonPath,
       };
     }
   }
@@ -251,15 +258,20 @@ function fetchLocalPackageRegistry(name, registryRoot) {
     );
   }
 
-  const registryJsonPath = path.join(MONOREPO_ROOT, indexItem.registryPath);
-
-  let finalRegistryJsonPath = registryJsonPath;
+  // Resolve relative to the registryRoot the caller actually passed in -
+  // this must take priority. A caller supplying an explicit registryRoot
+  // (e.g. HYPERIUX_PRO_REGISTRY_ROOT pointing at a different checkout)
+  // expects files to come from THAT root, not from wherever this CLI
+  // package happens to be installed.
+  let finalRegistryJsonPath = path.join(
+    registryRoot,
+    indexItem.registryPath.replace(/^registry\//, "")
+  );
 
   if (!pathExists(finalRegistryJsonPath)) {
-    finalRegistryJsonPath = path.join(
-      registryRoot,
-      indexItem.registryPath.replace(/^registry\//, "")
-    );
+    // Fallback: the CLI's own bundled registry historically stored
+    // registryPath relative to the monorepo root instead of registryRoot.
+    finalRegistryJsonPath = path.join(MONOREPO_ROOT, indexItem.registryPath);
   }
 
   if (!pathExists(finalRegistryJsonPath)) {
