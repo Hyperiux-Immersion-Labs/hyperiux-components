@@ -28,6 +28,29 @@ GitHub Release entry.
 
 ---
 
+## [1.0.77] - 2026-07-24
+
+### Added
+- `list` command now separates output into **Free Effects** and **Pro Effects** sections (grouped by category within each), instead of one flat category list
+- Shared `prefers-reduced-motion` + tab-visibility/offscreen animation suspension (`createSuspendedRaf`) rolled out to `dotted-grid`, `spider-particles`, `phantom-image-trail`, `split-canvas`, `fractal-glass`, `interactive-blur-reveal`, `milky-way`, and `infinite-perspective-slider`
+- Keyboard focus-trap (`useFocusTrap`) added to the three full-screen/overlay navigation effects: `directional-menu`, `elevate-navbar`, `immersive-full-screen-nav`
+- WebGL context-loss recovery for `interactive-blur-reveal` (effects driving a raw WebGL context directly, rather than through Three.js, previously stayed permanently blank after a dropped context - e.g. on mobile GPU memory pressure or laptop sleep/resume)
+- Per-effect `version`/`changelog` metadata added to several free effects that didn't have it yet, so `hyperiux outdated`/`versions`/`diff` can now track them
+- Issue templates (bug report, effect request), a PR template, and `CONTRIBUTING.md`
+- Troubleshooting and compatibility sections in the README (Tailwind content-glob gotcha, the `--yes`/`--overwrite` behavior change, stale CLI token symptoms)
+- One-time, non-intrusive "star this if it helped" line after a successful `add` (shown once ever, never on `--dry-run` or on effects pulled in as a dependency)
+- Hero effect demo GIFs (Milky Way, Phantom Image Trail, Spider Particles, Immersive Full-Screen Nav) in both READMEs
+
+### Fixed
+- `HYPERIUX_PRO_REGISTRY_ROOT` local-testing override was checked *after* the bundled registry lookup, so it was silently ignored whenever the requested effect's name happened to already exist in the CLI's own bundled free registry - now checked first, as the explicit opt-in it's meant to be
+- Trailing slash in a custom `HYPERIUX_REGISTRY_URL` could produce a double-slash in the fetched index URL
+- `link-button`: removed an errant `scale-150` class that rendered the link at 1.5x size
+- `fractal-glass`: stray character left after a JSX comment (cosmetic, no functional change)
+- `animated-faq`: registry copy re-synced with the production component - adds the `iconMode` prop, simpler controlled-mode detection, height-based open/close animation
+- Fixed a duplicate `normalizeRegistryIndex` function declaration left behind by a merge, which broke lint
+
+---
+
 ## [1.0.76] - 2026-07-20
 
 ### Fixed

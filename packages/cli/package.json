@@ -1,6 +1,6 @@
 {
   "name": "hyperiux",
-  "version": "1.0.76",
+  "version": "1.0.77",
   "description": "CLI for adding Hyperiux Vault effects to your Next.js project. This package is a CLI installer only - it is not an importable JavaScript/TypeScript library.",
   "type": "module",
   "bin": {
