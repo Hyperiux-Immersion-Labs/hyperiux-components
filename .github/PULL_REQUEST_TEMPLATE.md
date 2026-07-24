@@ -12,9 +12,9 @@
 
 ## Checklist
 
-- [ ] `pnpm install` at the repo root, then verified locally with `pnpm dev`
+- [ ] `pnpm install` at the repo root
 - [ ] If this touches `packages/cli`: `pnpm --filter hyperiux lint` and `pnpm --filter hyperiux test` both pass
-- [ ] If this adds a new free effect: `pnpm build:registry` runs clean and the effect installs via `node packages/cli/src/index.js add <effect-name>` into a scratch Next.js app
+- [ ] If this adds a new free effect: added to `registry/index.json`, and the effect installs via `node packages/cli/src/index.js add <effect-name>` into a scratch Next.js app
 - [ ] New effect includes a `registry.json` with `tier: "free"` and a working `previewUrl`
 - [ ] No `console.log`/debug code left in
 

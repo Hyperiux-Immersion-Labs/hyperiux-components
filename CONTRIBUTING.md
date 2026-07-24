@@ -13,13 +13,14 @@ Not sure where to start? Check issues labeled [`good first issue`](https://githu
 
 ## Setup
 
-This is a pnpm + Turborepo monorepo.
+This is a pnpm + Turborepo monorepo, but it only contains `packages/cli` and `registry/effects` - there's no dev server to run here (the marketing/docs site that renders effect previews lives in a separate private repo).
 
 ```bash
 git clone https://github.com/Hyperiux-Immersion-Labs/hyperiux-components
 cd hyperiux-components
 pnpm install
-pnpm dev
+cd packages/cli
+pnpm lint && pnpm test
 ```
 
 Requires Node 18+ and pnpm 9+.
@@ -55,7 +56,19 @@ Requires Node 18+ and pnpm 9+.
    - `name` is the CLI install slug (`npx hyperiux add your-effect-slug`) - lowercase, hyphenated, no `tier` ambiguity (this file only ever produces free effects; Pro effects are added through the private registry).
    - `dependencies` are npm packages the CLI installs alongside the effect (GSAP, Three.js, etc.) - only list what's actually imported.
    - If the effect is more than one file, list every file under `files`, each with its own `target`.
-4. Build the registry: `pnpm build:registry` (outputs to `apps/docs/public/r/`).
+4. Add an entry to `registry/index.json` at the repo root (this is what `hyperiux add` scans when run from inside this repo - there's no build step for it, just add the entry by hand, matching the shape of existing entries):
+
+   ```json
+   {
+     "name": "your-effect-slug",
+     "title": "Your Effect Title",
+     "category": "scroll",
+     "type": "registry:component",
+     "registryPath": "registry/effects/scroll/your-effect-slug/registry.json",
+     "importPath": "@/components/effects/your-effect-slug",
+     "target": "src/components/effects/your-effect-slug"
+   }
+   ```
 5. Smoke-test the real install path against a throwaway Next.js app:
 
    ```bash
