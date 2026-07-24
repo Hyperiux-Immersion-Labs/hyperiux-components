@@ -34,7 +34,16 @@ jobs:
           pnpm --filter hyperiux test
 
       - name: Publish with provenance
-        run: pnpm --filter hyperiux publish --provenance --no-git-checks --access public
+        # Plain npm publish, not pnpm publish - pnpm's OIDC trusted-publishing
+        # support is currently broken on GitHub Actions (pnpm/pnpm#11513),
+        # while npm CLI's is GA. Upgrading npm first guarantees the >=11.5.1
+        # CLI version trusted publishing requires, regardless of whatever
+        # version happens to ship with the pinned Node version. NODE_AUTH_TOKEN
+        # stays wired as a fallback in case OIDC isn't picked up for any reason.
+        run: |
+          npm install -g npm@latest
+          cd packages/cli
+          npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
