@@ -14,5 +14,11 @@
   "devDependencies": {
     "turbo": "^2.4.4"
   },
-  "packageManager": "pnpm@9.15.0"
+  "packageManager": "pnpm@9.15.0",
+  "pnpm": {
+    "overrides": {
+      "brace-expansion@<1.1.16": ">=1.1.16",
+      "js-yaml@>=4.0.0 <4.3.0": ">=4.3.0"
+    }
+  }
 }
