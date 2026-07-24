@@ -51,6 +51,10 @@ function isProEffect(item) {
   return tier === "pro" || tier === "paid";
 }
 
+function getRegistryTier(item) {
+  return isProEffect(item) ? "pro" : "free";
+}
+
 function createRegistryError(message, options = {}) {
   const error = new Error(message);
 
@@ -400,21 +404,14 @@ export async function fetchRegistryIndex(options = {}) {
   const { local = false, cwd = process.cwd() } = options;
 
   if (local) {
-    return fetchLocalRegistryIndex(cwd);
+    return normalizeRegistryIndex(await fetchLocalRegistryIndex(cwd));
   }
 
-  const localRegistryRoot = getLocalRegistryRoot();
-
-  if (localRegistryRoot) {
-    const indexPath = path.join(localRegistryRoot, "index.json");
-    return readJsonFile(indexPath);
+  if (fs.existsSync(path.join(DEV_REGISTRY_PATH, "index.json"))) {
+    return normalizeRegistryIndex(await fetchDevRegistryIndex());
   }
 
-  if (pathExists(path.join(DEV_REGISTRY_PATH, "index.json"))) {
-    return fetchDevRegistryIndex();
-  }
-
-  return fetchRemoteRegistryIndex();
+  return normalizeRegistryIndex(await fetchRemoteRegistryIndex());
 }
 
 async function fetchDevRegistryIndex() {
@@ -432,6 +429,50 @@ async function fetchLocalRegistryIndex(cwd) {
   }
 
   return readJsonFile(indexPath);
+}
+
+export function normalizeRegistryIndex(index) {
+  const sourceItems = Array.isArray(index) ? index : index?.items;
+
+  if (!Array.isArray(sourceItems)) {
+    throw createRegistryError("Invalid registry index response");
+  }
+
+  const items = sourceItems.map((item) => ({
+    ...item,
+    tier: getRegistryTier(item),
+  }));
+
+  return {
+    ...(Array.isArray(index) ? {} : index),
+    items,
+    tiers: {
+      free: items.filter((item) => item.tier === "free"),
+      pro: items.filter((item) => item.tier === "pro"),
+    },
+  };
+}
+
+export function normalizeRegistryIndex(index) {
+  const sourceItems = Array.isArray(index) ? index : index?.items;
+
+  if (!Array.isArray(sourceItems)) {
+    throw createRegistryError("Invalid registry index response");
+  }
+
+  const items = sourceItems.map((item) => ({
+    ...item,
+    tier: getRegistryTier(item),
+  }));
+
+  return {
+    ...(Array.isArray(index) ? {} : index),
+    items,
+    tiers: {
+      free: items.filter((item) => item.tier === "free"),
+      pro: items.filter((item) => item.tier === "pro"),
+    },
+  };
 }
 
 async function fetchRemoteRegistryIndex() {

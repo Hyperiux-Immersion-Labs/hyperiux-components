@@ -1,19 +1,32 @@
 {
   "name": "split-canvas",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "summary": "Added prefers-reduced-motion support: the pixel-grid shutter transition becomes a plain crossfade between images",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Split Canvas",
-  "description": "Split canvas scroll effect with a fixed pixel canvas overlay and full-screen scroll sections.",
+  "description": "Scroll-synced canvas transition that reveals images through sliced pixel-grid shutters",
   "category": "scroll",
-  "dependencies": [],
+  "dependencies": [
+    "gsap",
+    "three",
+    "lenis"
+  ],
   "registryDependencies": [],
   "previewUrl": "/demo/split-canvas",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "SplitCanvas",
   "exportKind": "default",
   "importPath": "@/components/effects/split-canvas",
   "target": "src/components/effects/split-canvas",
-  "main": "index.jsx",
   "files": [
     {
       "path": "index.jsx",
@@ -30,6 +43,10 @@
     {
       "path": "pixel-transition.js",
       "target": "src/components/effects/split-canvas/pixel-transition.js"
+    },
+    {
+      "path": "createSuspendedRaf.js",
+      "target": "src/components/effects/split-canvas/createSuspendedRaf.js"
     }
   ]
 }

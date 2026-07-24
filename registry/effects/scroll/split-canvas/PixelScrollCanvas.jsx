@@ -6,8 +6,16 @@ import gsap from'gsap';
 import { ScrollTrigger } from'gsap/ScrollTrigger';
 import { PixelTransitionFragment, PixelTransitionVertex } from './pixel-transition';
 import { imageSources } from './content';
+import { createSuspendedRaf } from './createSuspendedRaf';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// True when the user has asked the OS to minimise animation. Safe to call
+// during render - returns false on the server.
+function prefersReducedMotion() {
+ if (typeof window === 'undefined') return false;
+ return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+}
 
 // Load SVG as image and render to canvas for proper texture
 const loadSvgAsCanvas = (src, size) => {
@@ -49,7 +57,7 @@ export default function PixelScrollCanvas({ wrapperRef }) {
  let renderer, scene, camera, mesh, material;
  let textures = [];
  let isMounted = true;
- let animationId;
+ let loop = null;
 
  const getCanvasSize = () => {
  if (typeof window === 'undefined') return 599;
@@ -60,6 +68,7 @@ export default function PixelScrollCanvas({ wrapperRef }) {
 
  const canvasSize = getCanvasSize();
  const numSlices = 32;
+ const reducedMotion = prefersReducedMotion();
  const init = (canvasTextures) => {
  if (!isMounted || !container) return;
 
@@ -91,6 +100,7 @@ export default function PixelScrollCanvas({ wrapperRef }) {
  u_numSlices: { value: numSlices },
  u_resolution: { value: new THREE.Vector2(canvasSize, canvasSize) },
  u_gridSize: { value: 16.0 }, // Grid cell size in pixels
+ u_reducedMotion: { value: reducedMotion ? 1 : 0 },
  },
  vertexShader: PixelTransitionVertex,
  fragmentShader: PixelTransitionFragment,
@@ -171,13 +181,15 @@ export default function PixelScrollCanvas({ wrapperRef }) {
  },
  });
 
- const render = () => {
+ const loopInstance = createSuspendedRaf({
+ root: container,
+ onFrame: () => {
  if (!isMounted) return;
  renderer.render(scene, camera);
- animationId = requestAnimationFrame(render);
- };
-
- render();
+ },
+ });
+ loop = loopInstance;
+ loop.start();
  };
 
  // Load all SVGs as canvases, then create textures
@@ -206,8 +218,9 @@ export default function PixelScrollCanvas({ wrapperRef }) {
  return () => {
  isMounted = false;
  hasInit.current = false;
- if (animationId) {
- cancelAnimationFrame(animationId);
+ if (loop) {
+ loop.destroy();
+ loop = null;
  }
  ScrollTrigger.getAll().forEach(t => t.kill());
  if (renderer) {
@@ -224,7 +237,7 @@ export default function PixelScrollCanvas({ wrapperRef }) {
  return (
  <div
  ref={containerRef}
- className="h-[599px] w-[599px] max-md:h-[420px] max-md:w-[420px] max-sm:h-[320px] max-sm:w-[320px] max-sm:-translate-y-20 border-r border-t border-black/20"
+ className="h-[599px] w-[599px] max-[1025px]:h-[420px] max-[1025px]:w-[420px] max-md:h-[320px] max-md:w-[320px] max-md:-translate-y-20 border-r border-t border-black/20"
  />
  );
 }

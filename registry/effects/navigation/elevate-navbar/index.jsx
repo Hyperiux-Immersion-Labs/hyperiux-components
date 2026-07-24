@@ -37,7 +37,7 @@ export default function ElevateNavbar() {
       <h1 className="text-[8vw] font-black uppercase">
         Elevate Navbar
       </h1>
-      <p className="mt-4 text-[1.2vw] max-xl:text-[2vw] max-xl:w-[80%] max-xl:mx-auto max-md:text-[3vw]">
+      <p className="mt-4 text-[1.2vw] max-[1025px]:text-[2vw] max-[1025px]:w-[80%] max-[1025px]:mx-auto max-md:text-[3vw]">
         Hover over the navbar to see the effect. Resize the window to see the responsive design in action.
       </p>
 

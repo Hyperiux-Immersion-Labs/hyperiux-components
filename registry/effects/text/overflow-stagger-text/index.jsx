@@ -15,6 +15,7 @@ const INITIAL_ROTATION = 8;
 const ANIMATION_DURATION = 0.5;
 const STAGGER_DELAY = 0.03;
 const ANIMATION_EASE = "power3.out";
+const REDUCED_MOTION_FADE_DURATION = 1;
 
 const COPY_WRAPPER_ATTRIBUTE = "data-copy-wrapper";
 
@@ -50,6 +51,10 @@ export default function OverflowStaggerText({
       ? Array.from(animationTarget.children)
       : [animationTarget];
 
+    const prefersReduced =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     let context;
 
     const initializeAnimation = async () => {
@@ -67,6 +72,34 @@ export default function OverflowStaggerText({
           splitRefs.current.push(split);
           charactersRef.current.push(...split.chars);
         });
+
+        if (prefersReduced) {
+          gsap.set(charactersRef.current, { yPercent: 0, rotate: 0 });
+
+          const fadeProperties = {
+            opacity: 1,
+            duration: REDUCED_MOTION_FADE_DURATION,
+            ease: "power1.out",
+            delay,
+          };
+
+          if (animateOnScroll) {
+            gsap.to(animationTarget, {
+              ...fadeProperties,
+              scrollTrigger: {
+                trigger: animationTarget,
+                start,
+                end,
+                scrub,
+              },
+            });
+
+            return;
+          }
+
+          gsap.to(animationTarget, fadeProperties);
+          return;
+        }
 
         gsap.set(charactersRef.current, {
           yPercent: INITIAL_Y_PERCENT,

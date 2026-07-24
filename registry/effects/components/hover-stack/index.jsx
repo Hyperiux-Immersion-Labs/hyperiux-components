@@ -59,10 +59,10 @@ const HoverStack = () => {
         <>
             <section className="w-full h-fit bg-[#fff9ec] py-[10%] max-md:py-[20%] overflow-hidden flex flex-col gap-[7vw] justify-center items-center">
                 <div className="flex flex-col w-full justify-center items-center gap-[1vw] max-md:gap-[3vw] text-center text-[#1a1a1a]">
-                <h1 className=" text-[5.5vw] max-md:text-[9vw] max-xl:text-[7vw]">
+                <h1 className=" text-[5.5vw] max-md:text-[9vw] max-[1025px]:text-[7vw]">
                     Hover Stack Cards
                 </h1>
-                <p className="text-[1.2vw] max-xl:hidden">
+                <p className="text-[1.2vw] max-[1025px]:hidden">
                     Hover any card , so they can pop out.
                 </p>
 

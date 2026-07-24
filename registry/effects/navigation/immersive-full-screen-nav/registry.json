@@ -1,5 +1,10 @@
 {
   "name": "immersive-full-screen-nav",
+  "version": "1.1.0",
+  "changelog": [
+    { "version": "1.1.0", "date": "2026-07-21", "summary": "Added prefers-reduced-motion support: the open/close clip-path overlay animation is replaced with a reduced-motion-safe fade", "breaking": false },
+    { "version": "1.0.0", "date": "2026-06-04", "summary": "Initial release", "breaking": false }
+  ],
   "type": "registry:component",
   "title": "Immersive Full Screen Navigation",
   "description": "Clip-path powered full-screen navigation overlay with animated hamburger transitions",
@@ -7,15 +12,20 @@
   "dependencies": [
     "gsap"
   ],
+  "registryDependencies": [],
   "previewUrl": "/demo/immersive-full-screen-nav",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "ImmersiveFullscreenNav",
   "exportKind": "default",
-  "main": "index.jsx",
   "importPath": "@/components/effects/immersive-full-screen-nav",
   "target": "src/components/effects/immersive-full-screen-nav",
   "files": [
+    {
+      "path": "index.jsx",
+      "target": "src/components/effects/immersive-full-screen-nav/index.jsx"
+    },
     {
       "path": "CustomNavbar.jsx",
       "target": "src/components/effects/immersive-full-screen-nav/CustomNavbar.jsx"
@@ -25,8 +35,8 @@
       "target": "src/components/effects/immersive-full-screen-nav/FullscreenNav.jsx"
     },
     {
-      "path": "index.jsx",
-      "target": "src/components/effects/immersive-full-screen-nav/index.jsx"
+      "path": "useFocusTrap.js",
+      "target": "src/components/effects/immersive-full-screen-nav/useFocusTrap.js"
     }
   ]
 }

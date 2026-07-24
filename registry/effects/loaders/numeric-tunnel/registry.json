@@ -1,5 +1,6 @@
 {
   "name": "numeric-tunnel",
+  "version": "1.1.0",
   "type": "registry:component",
   "title": "Numeric Tunnel",
   "description": "WebGL loader with a 3D numeric tunnel that crossfades into a chromatic aberration warp effect",
@@ -14,9 +15,9 @@
   "previewUrl": "/demo/numeric-tunnel",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "NumericTunnel",
   "exportKind": "default",
-  "main": "index.jsx",
   "importPath": "@/components/effects/numeric-tunnel",
   "target": "src/components/effects/numeric-tunnel",
   "files": [
@@ -27,6 +28,14 @@
     {
       "path": "NumericTunnelLoader.jsx",
       "target": "src/components/effects/numeric-tunnel/NumericTunnelLoader.jsx"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "summary": "Add prefers-reduced-motion support: ring rotation and the end-of-tunnel warp/distortion effect are both skipped",
+      "breaking": false
     }
   ]
 }

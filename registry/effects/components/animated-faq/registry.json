@@ -1,8 +1,9 @@
 {
   "name": "animated-faq",
+  "version": "1.1.0",
   "type": "registry:component",
   "title": "Animated FAQ",
-  "description": "Animated FAQ accordion with GSAP-powered expand/collapse transitions, grouped behavior, and accessible toggles.",
+  "description": "Accessible accordion-style FAQ component with smooth GSAP animations",
   "category": "components",
   "dependencies": [
     "gsap",
@@ -12,15 +13,23 @@
   "previewUrl": "/demo/animated-faq",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "AnimatedFAQ",
   "exportKind": "default",
   "importPath": "@/components/effects/animated-faq",
   "target": "src/components/effects/animated-faq",
-  "main": "index.jsx",
   "files": [
     {
       "path": "index.jsx",
       "target": "src/components/effects/animated-faq/index.jsx"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-23",
+      "summary": "Registry copy synced with the production component the demo renders: adds the iconMode prop (rotate / rotate-left-down with ChevronRight), simpler array-based controlled-mode detection, and the height-based open/close animation engine.",
+      "breaking": false
     }
   ]
 }

@@ -1,5 +1,10 @@
 {
   "name": "fractal-glass",
+  "version": "1.1.0",
+  "changelog": [
+    { "version": "1.1.0", "date": "2026-07-22", "summary": "Added reduced-motion notice", "breaking": false },
+    { "version": "1.0.1", "date": "2026-07-15", "summary": "Removed a stray character left after a JSX comment (cosmetic, no functional change)", "breaking": false }
+  ],
   "type": "registry:component",
   "title": "Fractal Glass",
   "description": "WebGL glass-strip refraction effect with fractal distortion, edge blending, and pointer-reactive parallax.",
@@ -11,15 +16,19 @@
   "previewUrl": "/demo/fractal-glass",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "FractalGlass",
   "exportKind": "default",
-  "main": "index.jsx",
   "importPath": "@/components/effects/fractal-glass",
   "target": "src/components/effects/fractal-glass",
   "files": [
     {
       "path": "index.jsx",
       "target": "src/components/effects/fractal-glass/index.jsx"
+    },
+    {
+      "path": "createSuspendedRaf.js",
+      "target": "src/components/effects/fractal-glass/createSuspendedRaf.js"
     }
   ]
 }

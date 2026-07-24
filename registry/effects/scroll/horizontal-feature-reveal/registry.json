@@ -1,5 +1,20 @@
 {
   "name": "horizontal-feature-reveal",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-22",
+      "summary": "Added prefers-reduced-motion support: SplitText reveal animations and image parallax are skipped while the horizontal scroll remains usable.",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-02-10",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Horizontal Feature Reveal",
   "description": "Horizontal storytelling section that converts vertical scroll into a panoramic gallery track",
@@ -11,19 +26,19 @@
   "previewUrl": "/demo/horizontal-feature-reveal",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "HorizontalFeatureReveal",
   "exportKind": "default",
-  "main": "index.jsx",
   "importPath": "@/components/effects/horizontal-feature-reveal",
   "target": "src/components/effects/horizontal-feature-reveal",
   "files": [
     {
-      "path": "HorizontalFeatureRevealComp.jsx",
-      "target": "src/components/effects/horizontal-feature-reveal/HorizontalFeatureRevealComp.jsx"
-    },
-    {
       "path": "index.jsx",
       "target": "src/components/effects/horizontal-feature-reveal/index.jsx"
+    },
+    {
+      "path": "HorizontalFeatureRevealComp.jsx",
+      "target": "src/components/effects/horizontal-feature-reveal/HorizontalFeatureRevealComp.jsx"
     }
   ]
 }

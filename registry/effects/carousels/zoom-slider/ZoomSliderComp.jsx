@@ -3,15 +3,25 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
-import Image from "next/image";
 
 gsap.registerPlugin(SplitText);
 
 const SCROLL_PER_PX = 1.0;
 const LERP_FACTOR = 0.08;
+
+const DRAG_LERP_FACTOR = 0.22;
+const MOMENTUM_FRICTION = 0.92;
+const MIN_MOMENTUM = 0.1;
 const MOBILE_BREAKPOINT = 640;
 const TABLET_BREAKPOINT = 1025;
 const SLIDER_BOTTOM_OFFSET = 0;
+
+const REDUCED_MOTION_LERP_FACTOR = 1;
+const REDUCED_MOTION_FADE_DURATION = 0.18;
+
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
 
 const lerp = (a, b, n) => a + (b - a) * n;
 
@@ -29,6 +39,7 @@ export function ZoomSliderComp({
 
   const [viewportWidth, setViewportWidth] = useState(1440);
   const [viewportHeight, setViewportHeight] = useState(900);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
   const isMobile = viewportWidth < MOBILE_BREAKPOINT;
   const isTablet =
@@ -48,7 +59,11 @@ export function ZoomSliderComp({
     raf: null,
     isDragging: false,
     lastX: 0,
+    lastY: 0,
+    velocity: 0,
   });
+  const [activeIndex, setActiveIndex] = useState(0);
+  const announcedIndexRef = useRef(0);
 
   useEffect(() => {
     const onResize = () => {
@@ -60,6 +75,24 @@ export function ZoomSliderComp({
     window.addEventListener('resize', onResize);
 
     return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia?.(
+      '(prefers-reduced-motion: reduce)'
+    );
+
+    const syncReducedMotion = (event) => {
+      setReduceMotion(
+        'matches' in event ? event.matches : prefersReducedMotion()
+      );
+    };
+
+    if (!mediaQuery) return;
+
+    syncReducedMotion(mediaQuery);
+    mediaQuery.addEventListener('change', syncReducedMotion);
+    return () => mediaQuery.removeEventListener('change', syncReducedMotion);
   }, []);
 
   const positionCards = useCallback(
@@ -121,7 +154,27 @@ export function ZoomSliderComp({
     const loopWidth = images.length * cardStep;
 
     const tick = () => {
-      state.current = lerp(state.current, state.target, LERP_FACTOR);
+      // Momentum glide after the finger/pointer is released. Reduced motion
+      // skips the coast entirely so the slider stops as soon as input does.
+      if (
+        !reduceMotion &&
+        !state.isDragging &&
+        Math.abs(state.velocity) > MIN_MOMENTUM
+      ) {
+        state.target += state.velocity;
+        state.velocity *= MOMENTUM_FRICTION;
+      } else if (!state.isDragging) {
+        state.velocity = 0;
+      }
+
+      // Track tightly while actively dragging, glide smoothly otherwise.
+      // Reduced motion collapses this to a direct 1:1 follow (no glide).
+      const lerpFactor = reduceMotion
+        ? REDUCED_MOTION_LERP_FACTOR
+        : state.isDragging
+          ? DRAG_LERP_FACTOR
+          : LERP_FACTOR;
+      state.current = lerp(state.current, state.target, lerpFactor);
 
       if (Math.abs(state.current - state.target) < 0.01) {
         const shift = Math.round(state.current / loopWidth) * loopWidth;
@@ -130,6 +183,19 @@ export function ZoomSliderComp({
       }
 
       positionCards(state.current);
+
+      if (images.length) {
+        const normalizedOffset =
+          ((state.current % loopWidth) + loopWidth) % loopWidth;
+        const nextIndex =
+          Math.floor(normalizedOffset / cardStep) % images.length;
+
+        if (nextIndex !== announcedIndexRef.current) {
+          announcedIndexRef.current = nextIndex;
+          setActiveIndex(nextIndex);
+        }
+      }
+
       state.raf = requestAnimationFrame(tick);
     };
 
@@ -137,37 +203,46 @@ export function ZoomSliderComp({
       state.target -= event.deltaY * SCROLL_PER_PX;
     };
 
-    const onMouseDown = (event) => {
+    const beginDrag = (clientX, clientY) => {
       state.isDragging = true;
-      state.lastX = event.clientX;
+      state.lastX = clientX;
+      state.lastY = clientY;
+      state.velocity = 0;
     };
 
-    const onMouseMove = (event) => {
+    const moveDrag = (clientX, clientY, direction = 1) => {
       if (!state.isDragging) return;
 
-      state.target += -(event.clientX - state.lastX);
-      state.lastX = event.clientX;
+      // Drive by whichever axis the gesture moved most, so a horizontal drag
+      // OR a vertical (scroll-like) swipe advances the slider - in both
+      // directions. `direction` flips the sign so touch matches the natural
+      // mobile scroll feel.
+      const deltaX = clientX - state.lastX;
+      const deltaY = clientY - state.lastY;
+      const rawDelta =
+        Math.abs(deltaX) >= Math.abs(deltaY) ? -deltaX : -deltaY;
+      const delta = rawDelta * direction;
+
+      state.target += delta;
+      // Smooth the recorded velocity so momentum isn't driven by one jumpy frame.
+      state.velocity = lerp(state.velocity, delta, 0.5);
+      state.lastX = clientX;
+      state.lastY = clientY;
     };
 
-    const onMouseUp = () => {
+    const endDrag = () => {
       state.isDragging = false;
     };
 
-    const onTouchStart = (event) => {
-      state.isDragging = true;
-      state.lastX = event.touches[0].clientX;
-    };
+    const onMouseDown = (event) => beginDrag(event.clientX, event.clientY);
+    const onMouseMove = (event) => moveDrag(event.clientX, event.clientY);
+    const onMouseUp = endDrag;
 
-    const onTouchMove = (event) => {
-      if (!state.isDragging) return;
-
-      state.target += -(event.touches[0].clientX - state.lastX);
-      state.lastX = event.touches[0].clientX;
-    };
-
-    const onTouchEnd = () => {
-      state.isDragging = false;
-    };
+    const onTouchStart = (event) =>
+      beginDrag(event.touches[0].clientX, event.touches[0].clientY);
+    const onTouchMove = (event) =>
+      moveDrag(event.touches[0].clientX, event.touches[0].clientY, -1);
+    const onTouchEnd = endDrag;
 
     window.addEventListener('wheel', onWheel, { passive: true });
     window.addEventListener('mousedown', onMouseDown);
@@ -176,6 +251,7 @@ export function ZoomSliderComp({
     window.addEventListener('touchstart', onTouchStart, { passive: true });
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchend', onTouchEnd);
+    window.addEventListener('touchcancel', onTouchEnd);
 
     state.raf = requestAnimationFrame(tick);
 
@@ -188,8 +264,9 @@ export function ZoomSliderComp({
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('touchcancel', onTouchEnd);
     };
-  }, [cardStep, images, positionCards]);
+  }, [cardStep, images, positionCards, reduceMotion]);
 
   useEffect(() => {
     if (!images.length) return;
@@ -226,6 +303,17 @@ export function ZoomSliderComp({
       }
 
       const onEnter = () => {
+        if (reduceMotion) {
+          gsap.killTweensOf([textElement, split.lines]);
+          gsap.set(split.lines, { yPercent: 0 });
+          gsap.to(textElement, {
+            autoAlpha: 1,
+            duration: REDUCED_MOTION_FADE_DURATION,
+            ease: 'power2.out',
+          });
+          return;
+        }
+
         gsap
           .timeline()
           .set(textElement, { autoAlpha: 1 })
@@ -246,6 +334,17 @@ export function ZoomSliderComp({
       };
 
       const onLeave = () => {
+        if (reduceMotion) {
+          gsap.killTweensOf([textElement, split.lines]);
+          gsap.to(textElement, {
+            autoAlpha: 0,
+            duration: REDUCED_MOTION_FADE_DURATION,
+            ease: 'power2.out',
+            onComplete: () => gsap.set(split.lines, { yPercent: 100 }),
+          });
+          return;
+        }
+
         gsap.to(split.lines, {
           yPercent: 100,
           duration: 0.28,
@@ -274,13 +373,23 @@ export function ZoomSliderComp({
     });
 
     return () => cleanups.forEach((cleanup) => cleanup());
-  }, [images]);
+  }, [images, reduceMotion]);
+
+  const activeItem = images[activeIndex];
+  const slideAnnouncement = images.length
+    ? activeItem?.title
+      ? `${activeItem.title}, slide ${activeIndex + 1} of ${images.length}`
+      : `Slide ${activeIndex + 1} of ${images.length}`
+    : '';
 
   return (
     <div
       className="relative w-screen overflow-hidden bg-black"
-      style={{ height: '100svh' }}
+      style={{ height: '100svh', touchAction: 'none' }}
     >
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        {slideAnnouncement}
+      </div>
       {title ? (
         <div className="pointer-events-none absolute left-1/2 top-10 z-20 -translate-x-1/2 px-4 text-center">
           <h2 className="text-4xl text-white max-md:text-2xl">
@@ -349,20 +458,17 @@ export function ZoomSliderComp({
                 willChange: 'width, height',
               }}
             >
-              <Image
+              <img
                 src={item.src}
                 alt={item.title}
-                fill
                 draggable={false}
-                priority={index < 3}
-                className="pointer-events-none select-none object-cover opacity-0 w-full h-full"
+                className="pointer-events-none absolute inset-0 select-none object-cover opacity-0 w-full h-full"
                 style={{
                   transform: 'none',
                   objectPosition: 'center bottom',
                   transition: 'none',
                   willChange: 'auto',
                 }}
-                sizes="(max-width: 640px) 260px, (max-width: 1024px) 500px, 680px"
               />
             </div>
           </div>

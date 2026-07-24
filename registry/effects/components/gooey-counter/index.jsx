@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 
 const COLS = 22;
 const ROWS = 13;
@@ -175,6 +175,7 @@ function drawCapsule(ctx, x1, y1, x2, y2, r) {
 export default function GooeyCounter() {
  const canvasRef = useRef(null);
  const stateRef = useRef(null);
+ const gooeyFilterId = `gooey-${useId().replace(/:/g, "")}`;
 
  useEffect(() => {
   // Canvas setup
@@ -182,6 +183,17 @@ export default function GooeyCounter() {
   const ctx = canvas.getContext("2d");
   let offscreen = new OffscreenCanvas(1, 1);
   let offCtx = offscreen.getContext("2d");
+  const filterUrl = `url(#${gooeyFilterId})`;
+
+  let reduceMotion =
+   window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+  const reduceMotionMq = window.matchMedia?.(
+   "(prefers-reduced-motion: reduce)"
+  );
+  const onReduceMotionChange = (event) => {
+   reduceMotion = event.matches;
+  };
+  reduceMotionMq?.addEventListener?.("change", onReduceMotionChange);
 
   // Simulation state
   const sim = {
@@ -191,9 +203,18 @@ export default function GooeyCounter() {
   };
   stateRef.current = sim;
 
+  const transitionMs = () => (reduceMotion ? 0 : TRANSITION_MS);
+
   // Animation helpers
   function beginTransition(dur, onDone) {
    for (const b of sim.blocks) { b.sr = b.cr; b.sc = b.cc; }
+   // Duration 0 under reduced motion → snap to targets (no morph lerp).
+   if (dur <= 0) {
+    for (const b of sim.blocks) { b.cr = b.tr; b.cc = b.tc; }
+    sim.transition = null;
+    onDone?.();
+    return;
+   }
    sim.transition = { start: performance.now(), duration: dur, onDone };
   }
 
@@ -204,17 +225,26 @@ export default function GooeyCounter() {
     sim.blocks.push({ cr: p[0], cc: p[1], tr: p[0], tc: p[1], sr: p[0], sc: p[1], idle: true });
    }
    assignTargets(sim.blocks, targets);
-   beginTransition(TRANSITION_MS, onDone);
+   beginTransition(transitionMs(), onDone);
   }
 
   function goToRandom(onDone) {
    const targets = randomLayout(sim.maxBlocks, sim.activeRows);
    sim.blocks.forEach((b, i) => { b.tr = targets[i][0]; b.tc = targets[i][1]; b.idle = false; });
-   beginTransition(TRANSITION_MS, onDone);
+   beginTransition(transitionMs(), onDone);
   }
 
   function loop() {
    clearTimeout(sim.timer);
+   // Reduced-motion: skip random scatter — step number → number with snaps.
+   if (reduceMotion) {
+    sim.timer = setTimeout(() => {
+     const n = sim.nextNumber;
+     sim.nextNumber = n >= RANGE_MAX ? RANGE_MIN : n + 1;
+     goToNumber(n, loop);
+    }, NUMBER_DWELL_MS);
+    return;
+   }
    sim.timer = setTimeout(() => {
     goToRandom(() => {
      sim.timer = setTimeout(() => {
@@ -229,8 +259,20 @@ export default function GooeyCounter() {
   function start() {
    clearTimeout(sim.timer);
    sim.blocks = []; sim.nextNumber = RANGE_MIN + 1; sim.transition = null;
-   const rpos = randomLayout(sim.maxBlocks, sim.activeRows);
    const firstTargets = getNumberCells(RANGE_MIN, sim.activeRows, sim.viewportWidth);
+   if (reduceMotion) {
+    // Land on 0 immediately — no opening scatter morph.
+    sim.blocks = firstTargets.map(([r, c]) => ({
+     cr: r, cc: c, tr: r, tc: c, sr: r, sc: c, idle: false,
+    }));
+    while (sim.blocks.length < sim.maxBlocks) {
+     const p = firstTargets[Math.floor(Math.random() * firstTargets.length)];
+     sim.blocks.push({ cr: p[0], cc: p[1], tr: p[0], tc: p[1], sr: p[0], sc: p[1], idle: true });
+    }
+    beginTransition(0, loop);
+    return;
+   }
+   const rpos = randomLayout(sim.maxBlocks, sim.activeRows);
    sim.blocks = rpos.map(p => ({ cr: p[0], cc: p[1], tr: p[0], tc: p[1], sr: p[0], sc: p[1], idle: false }));
    assignTargets(sim.blocks, firstTargets);
    beginTransition(TRANSITION_MS, loop);
@@ -239,7 +281,7 @@ export default function GooeyCounter() {
 
   // Layout
   function resize() {
-   const dpr = window.devicePixelRatio || 1;
+   const dpr = Math.min(window.devicePixelRatio || 1, 2);
    const vw = window.innerWidth, vh = window.innerHeight;
    const newRows = getRowsForWidth(vw);
    const widthChanged = vw !== sim.viewportWidth;
@@ -321,7 +363,7 @@ export default function GooeyCounter() {
    }
 
    ctx.save();
-   ctx.filter = "url(#gooey)";
+   ctx.filter = filterUrl;
    ctx.drawImage(offscreen, 0, 0, vw, vh);
    ctx.restore();
 
@@ -347,22 +389,23 @@ export default function GooeyCounter() {
    cancelAnimationFrame(sim.raf);
    clearTimeout(sim.timer);
    window.removeEventListener("resize", resize);
+   reduceMotionMq?.removeEventListener?.("change", onReduceMotionChange);
   };
- }, []);
+ }, [gooeyFilterId]);
 
  return (
   <div style={{ position: "fixed", inset: 0, background: BG }}>
-    <div className="w-full h-fit gap-[0.5vw]  text-black relative z-4 flex flex-col items-center justify-center max-md:text-center max-md:px-[7vw] max-md:gap-[3vw] pt-19 max-md:pt-20 max-sm:pt-22 ">
-      <h1 className="text-[4vw] max-sm:text-[9vw] max-md:text-[7vw]">
+    <div className="w-full h-fit gap-[0.5vw]  text-black relative z-4 flex flex-col items-center justify-center max-[1025px]:text-center max-[1025px]:px-[7vw] max-[1025px]:gap-[3vw] pt-19 max-[1025px]:pt-20 max-md:pt-22 ">
+      <h1 className="text-[4vw] max-md:text-[9vw] max-[1025px]:text-[7vw]">
         Gooey Counter
       </h1>
-      <p className="text-sm max-md:text-lg max-sm:text-sm max-md:w-[80%] mx-auto">
+      <p className="text-sm max-[1025px]:text-lg max-md:text-sm max-[1025px]:w-[80%] mx-auto">
         Gooey Counter is a morphing counter which counts from 0 to 10
       </p>
     </div>
    <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: "absolute" }}>
     <defs>
-     <filter id="gooey" x="-50%" y="-50%" width="200%" height="200%" colorInterpolationFilters="sRGB">
+     <filter id={gooeyFilterId} x="-50%" y="-50%" width="200%" height="200%" colorInterpolationFilters="sRGB">
       <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
       <feColorMatrix in="blur" mode="matrix"
        values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18 -7" result="goo"/>
@@ -370,10 +413,10 @@ export default function GooeyCounter() {
      </filter>
     </defs>
    </svg>
-   <canvas ref={canvasRef} className=" h-[75%]! w-[80%]!  max-sm:h-full! max-md:w-[80%]! max-md:h-[60%]! top-[53%] max-sm:top-[62%] left-1/2 -translate-y-1/2 absolute -translate-x-1/2  "  />
+   <canvas ref={canvasRef} className=" h-[75%]! w-[80%]!  max-md:h-full! max-[1025px]:w-[80%]! max-[1025px]:h-[60%]! top-[53%] max-md:top-[62%] left-1/2 -translate-y-1/2 absolute -translate-x-1/2  "  />
    <button
     onClick={() => stateRef.current?.start?.()}
-    className="absolute bottom-8 cursor-pointer left-1/2 -translate-x-1/2 py-[0.7vw] px-[1.5vw] text-black bg-white rounded-[0.4vw] max-md:px-[5vw] max-md:py-[1.5vw] max-md:rounded-[1.5vw] max-md:bottom-24 max-sm:bottom-15 max-sm:text-[4.5vw] max-md:text-[3vw]"
+    className="absolute bottom-8 cursor-pointer left-1/2 -translate-x-1/2 py-[0.7vw] px-[1.5vw] text-black bg-white rounded-[0.4vw] max-[1025px]:px-[5vw] max-[1025px]:py-[1.5vw] max-[1025px]:rounded-[1.5vw] max-[1025px]:bottom-24 max-md:bottom-15 max-md:text-[4.5vw] max-[1025px]:text-[3vw]"
     
    >
     Reset

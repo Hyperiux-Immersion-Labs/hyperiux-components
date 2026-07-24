@@ -6,27 +6,20 @@ import React, {
   useContext,
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+
 import gsap from "gsap";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 const FAQContext = createContext(null);
 const FAQGroupContext = createContext(null);
-
-const normalizeOpenItems = (items) => {
-  if (Array.isArray(items)) {
-    return items.map(String);
-  }
-
-  if (items === undefined || items === null || items === false) {
-    return [];
-  }
-
-  return [String(items)];
-};
 
 const useFAQContext = () => {
   const context = useContext(FAQContext);
@@ -45,29 +38,23 @@ export function FAQGroup({
   value,
   onChange,
 }) {
-  const isControlled = value !== undefined;
-  const normalizedValue = normalizeOpenItems(value);
+  const isControlled = Array.isArray(value);
+  const [internalOpenItems, setInternalOpenItems] = useState(defaultOpenItems);
 
-  const [internalOpenItems, setInternalOpenItems] = useState(() =>
-    normalizeOpenItems(defaultOpenItems)
-  );
-
-  const openItems = isControlled ? normalizedValue : internalOpenItems;
+  const openItems = isControlled ? value : internalOpenItems;
 
   const toggleItem = useCallback(
     (itemId) => {
-      const normalizedItemId = String(itemId);
-
       const next = (() => {
-        const isOpen = openItems.includes(normalizedItemId);
+        const isOpen = openItems.includes(itemId);
 
         if (allowMultiple) {
           return isOpen
-            ? openItems.filter((id) => id !== normalizedItemId)
-            : [...openItems, normalizedItemId];
+            ? openItems.filter((id) => id !== itemId)
+            : [...openItems, itemId];
         }
 
-        return isOpen ? [] : [normalizedItemId];
+        return isOpen ? [] : [itemId];
       })();
 
       if (!isControlled) {
@@ -112,7 +99,7 @@ export function FAQWrapper({
   const group = useContext(FAQGroupContext);
 
   const generatedId = useId();
-  const resolvedItemId = String(itemId ?? generatedId);
+  const resolvedItemId = itemId ?? generatedId;
 
   const isStandaloneControlled = typeof controlledOpen === "boolean";
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
@@ -125,9 +112,25 @@ export function FAQWrapper({
 
   const contentOuterRef = useRef(null);
   const contentInnerRef = useRef(null);
+  const openHeightRef = useRef(0);
+  const reduceMotionRef = useRef(
+    typeof window !== "undefined" &&
+      (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false)
+  );
 
   const contentId = useId();
   const buttonId = useId();
+
+  useEffect(() => {
+    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mq) return;
+    const onChange = (event) => {
+      reduceMotionRef.current = event.matches;
+    };
+    reduceMotionRef.current = mq.matches;
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
 
   const handleToggle = () => {
     if (group) {
@@ -165,7 +168,7 @@ export function FAQWrapper({
     }
   };
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!contentOuterRef.current || !contentInnerRef.current) return;
 
     const outer = contentOuterRef.current;
@@ -173,18 +176,24 @@ export function FAQWrapper({
 
     gsap.killTweensOf([outer, inner]);
 
+    const tweenDuration = reduceMotionRef.current ? 0 : duration;
+
     if (isOpen) {
       gsap.set(outer, {
-        display: "block",
         overflow: "hidden",
+        height: "auto",
       });
+
+      const targetHeight = outer.scrollHeight;
+      openHeightRef.current = targetHeight;
+      gsap.set(outer, { height: 0 });
 
       gsap.fromTo(
         outer,
         { height: 0 },
         {
-          height: inner.offsetHeight,
-          duration,
+          height: targetHeight,
+          duration: tweenDuration,
           ease: "power3.out",
           onComplete: () => {
             gsap.set(outer, {
@@ -195,20 +204,17 @@ export function FAQWrapper({
         }
       );
     } else {
-      gsap.set(outer, {
-        overflow: "hidden",
-      });
+      gsap.set(outer, { overflow: "hidden" });
 
-      gsap.to(outer, {
-        height: 0,
-        duration,
-        ease: "power3.out",
-        onComplete: () => {
-          gsap.set(outer, {
-            display: "none",
-          });
-        },
-      });
+      gsap.fromTo(
+        outer,
+        { height: openHeightRef.current },
+        {
+          height: 0,
+          duration: tweenDuration,
+          ease: "power3.out",
+        }
+      );
     }
   }, [isOpen, duration]);
 
@@ -248,6 +254,7 @@ export function FAQTitle({
   className = "",
   showIcon = true,
   iconPosition = "right",
+  iconMode = "rotate",
 }) {
   const {
     isOpen,
@@ -259,20 +266,31 @@ export function FAQTitle({
 
   const icon = showIcon ? (
     <div className={`shrink-0 ${iconClassName}`}>
-      <ChevronDown
-        size={iconSize}
-        strokeWidth={iconStrokeWidth}
-        className={`transition-transform duration-300 ease-out ${
-          isOpen ? "rotate-180" : "rotate-0"
-        }`}
-        aria-hidden="true"
-      />
+      {iconMode === "rotate-left-down" ? (
+        <ChevronRight
+          size={iconSize}
+          strokeWidth={iconStrokeWidth}
+          className={`transition-transform duration-300 ease-out motion-reduce:transition-none ${
+            isOpen ? "rotate-90" : "rotate-0"
+          }`}
+          aria-hidden="true"
+        />
+      ) : (
+        <ChevronDown
+          size={iconSize}
+          strokeWidth={iconStrokeWidth}
+          className={`transition-transform duration-300 ease-out motion-reduce:transition-none ${
+            isOpen ? "rotate-180" : "rotate-0"
+          }`}
+          aria-hidden="true"
+        />
+      )}
     </div>
   ) : null;
 
   return (
     <div
-      className={`flex w-full items-start justify-between gap-6 ${titleClassName} ${className}`}
+      className={`flex w-full items-center justify-between gap-6 ${titleClassName} ${className}`}
     >
       {iconPosition === "left" ? (
         <>
@@ -295,6 +313,7 @@ export function FAQContent({
   innerClassName = "",
 }) {
   const {
+    isOpen,
     contentOuterRef,
     contentInnerRef,
     contentId,
@@ -309,9 +328,8 @@ export function FAQContent({
       role="region"
       aria-labelledby={buttonId}
       style={{
-        height: 0,
-        display: "none",
-        overflow: "hidden",
+        height: isOpen ? "auto" : 0,
+        overflow: isOpen ? "visible" : "hidden",
       }}
       className={contentClassName}
     >

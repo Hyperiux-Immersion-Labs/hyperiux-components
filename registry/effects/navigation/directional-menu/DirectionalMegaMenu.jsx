@@ -31,6 +31,12 @@ const getPaneHeight = (element) => {
   return element.offsetHeight || element.scrollHeight || 0;
 };
 
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
+
+const REDUCED_MOTION_FADE_DURATION = 0.16;
+
 export function DirectionalMegaMenu({
   items = [],
   className = "",
@@ -135,6 +141,21 @@ export function DirectionalMegaMenu({
     }
 
     killPanelTweens();
+
+    if (prefersReducedMotion()) {
+      gsap.to(menuPanelRef.current, {
+        opacity: 0,
+        duration: REDUCED_MOTION_FADE_DURATION,
+        ease: "power2.out",
+        onComplete: () => {
+          gsap.set(menuPanelRef.current, {
+            height: 0,
+          });
+          resetMenuState();
+        },
+      });
+      return;
+    }
 
     gsap.to(menuPanelRef.current, {
       opacity: 0,
@@ -267,6 +288,28 @@ export function DirectionalMegaMenu({
     const contentHeight = getPaneHeight(currentPaneRef.current);
 
     if (!hasOpenedOnceRef.current) {
+      if (prefersReducedMotion()) {
+        gsap.set(menuPanelRef.current, {
+          height: "auto",
+          opacity: 0,
+        });
+
+        gsap.set(viewportRef.current, {
+          height: contentHeight,
+          opacity: 1,
+        });
+
+        gsap.to(menuPanelRef.current, {
+          opacity: 1,
+          duration: REDUCED_MOTION_FADE_DURATION,
+          ease: "power2.out",
+          onComplete: () => {
+            hasOpenedOnceRef.current = true;
+          },
+        });
+        return;
+      }
+
       gsap.set(menuPanelRef.current, {
         height: 0,
         opacity: 1,
@@ -354,6 +397,49 @@ export function DirectionalMegaMenu({
     isAnimatingRef.current = true;
 
     gsap.killTweensOf([currentElement, nextElement, viewportRef.current]);
+
+    if (prefersReducedMotion()) {
+      gsap.set(currentElement, {
+        position: "absolute",
+        inset: 0,
+        x: 0,
+        opacity: 0,
+        zIndex: 1,
+        pointerEvents: "none",
+      });
+
+      gsap.set(nextElement, {
+        position: "absolute",
+        inset: 0,
+        x: 0,
+        opacity: 1,
+        zIndex: 2,
+        pointerEvents: "none",
+      });
+
+      gsap.set(viewportRef.current, {
+        height: nextHeight,
+      });
+
+      setCurrentIndex(targetIndex);
+      setNextIndex(NO_INDEX);
+      isAnimatingRef.current = false;
+      visualIndexRef.current = targetIndex;
+
+      const queuedIndex = queuedIndexRef.current;
+      queuedIndexRef.current = NO_INDEX;
+
+      if (
+        queuedIndex !== NO_INDEX &&
+        queuedIndex !== targetIndex &&
+        items[queuedIndex] &&
+        hasDropdownContent(items[queuedIndex])
+      ) {
+        requestSwitch(queuedIndex);
+      }
+
+      return;
+    }
 
     gsap.set(currentElement, {
       position: "absolute",
@@ -463,14 +549,14 @@ export function DirectionalMegaMenu({
                 key={item.label || index}
                 type="button"
                 onMouseEnter={() => onItemEnter(index)}
-                className={`relative flex cursor-pointer items-center gap-1 text-sm font-medium text-white transition-colors duration-300 hover:text-white max-xl:text-lg max-md:text-sm ${navItemClassName} ${isActive ? activeClassName : inactiveClassName
+                className={`relative flex cursor-pointer items-center gap-1 text-sm font-medium text-white transition-colors duration-300 hover:text-white motion-reduce:text-white motion-reduce:transition-none max-[1025px]:text-lg max-md:text-sm ${navItemClassName} ${isActive ? activeClassName : inactiveClassName
                   }`}
               >
                 {item.label}
 
                 {hasDropdownContent(item) && (
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform duration-300 ${isActive ? "-rotate-180" : "rotate-0"
+                    className={`h-4 w-4 transition-transform duration-300 motion-reduce:rotate-0 motion-reduce:transition-none ${isActive ? "-rotate-180" : "rotate-0"
                       }`}
                   />
                 )}

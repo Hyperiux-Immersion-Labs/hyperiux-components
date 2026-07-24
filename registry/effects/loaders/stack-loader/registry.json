@@ -1,5 +1,6 @@
 {
   "name": "stack-loader",
+  "version": "1.1.0",
   "type": "registry:component",
   "title": "Stack Loader",
   "description": "Stack-to-spread image intro loader with GSAP SplitText word animations and staggered image choreography",
@@ -11,15 +12,23 @@
   "previewUrl": "/demo/stack-loader",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "StackLoader",
   "exportKind": "default",
-  "main": "index.jsx",
   "importPath": "@/components/effects/stack-loader",
   "target": "src/components/effects/stack-loader",
   "files": [
     {
       "path": "index.jsx",
       "target": "src/components/effects/stack-loader/index.jsx"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "summary": "Add prefers-reduced-motion support",
+      "breaking": false
     }
   ]
 }

@@ -1,26 +1,43 @@
 {
   "name": "circular-split-roll",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "changelog": [
-    { "version": "1.0.1", "date": "2026-07-17", "summary": "Responsiveness fixes", "breaking": false },
-    { "version": "1.0.0", "date": "2026-02-10", "summary": "Initial release", "breaking": false }
+    {
+      "version": "1.1.0",
+      "date": "2026-07-24",
+      "summary": "Added prefers-reduced-motion support (ported from the docs copy): notice explaining the continuous scroll-driven rotation cannot be reduced to a static fade.",
+      "breaking": false
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-07-17",
+      "summary": "Responsiveness fixes",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-02-10",
+      "summary": "Initial release",
+      "breaking": false
+    }
   ],
   "type": "registry:component",
   "title": "Circular Split Roll",
-  "description": "Circular split-roll scroller with left/right circular layouts, GSAP-driven motion, and ScrollTrigger pinning.",
+  "description": "Split circular slider with orbiting titles on one side and image cards on the other",
   "category": "scroll",
   "dependencies": [
-    "gsap","lenis"
+    "gsap",
+    "lenis"
   ],
   "registryDependencies": [],
   "previewUrl": "/demo/circular-split-roll",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "CircularSplitRoll",
   "exportKind": "default",
   "importPath": "@/components/effects/circular-split-roll",
   "target": "src/components/effects/circular-split-roll",
-  "main": "index.jsx",
   "files": [
     {
       "path": "index.jsx",

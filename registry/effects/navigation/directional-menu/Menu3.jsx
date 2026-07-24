@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 const LINK_GROUPS = [
   {
     heading: "Documentation",
@@ -31,22 +29,22 @@ const LINK_GROUPS = [
 
 export function Menu3() {
   return (
-    <div className="grid grid-cols-3 gap-10 max-xl:grid-cols-2">
+    <div className="grid grid-cols-3 gap-10 max-[1025px]:grid-cols-2">
       {LINK_GROUPS.map((group) => (
         <div key={group.heading} className="flex flex-col gap-4">
-          <h4 className="text-sm font-semibold uppercase tracking-[0.08em] text-neutral-800 max-xl:text-2xl max-md:text-sm">
+          <h4 className="text-sm font-semibold uppercase tracking-[0.08em] text-neutral-800 max-[1025px]:text-2xl max-md:text-sm">
             {group.heading}
           </h4>
 
           <div className="flex flex-col gap-3">
             {group.links.map((link) => (
-              <Link
+              <a
                 key={link.label}
                 href={link.href}
-                className="block text-sm font-medium text-neutral-600 transition-opacity duration-200 hover:text-black max-xl:text-xl max-md:text-base"
+                className="block text-sm font-medium text-neutral-600 transition-opacity duration-200 hover:text-black max-[1025px]:text-xl max-md:text-base motion-reduce:text-neutral-600 motion-reduce:transition-none"
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </div>
         </div>

@@ -7,9 +7,9 @@ import * as THREE from 'three'
 import { degToRad } from 'three/src/math/MathUtils'
 import { EffectComposer, Vignette } from '@react-three/postprocessing'
 import { ArrowRight, Stars } from 'lucide-react'
-import Link from 'next/link'
 import EdgeBlurEffect from './edge-blur-effect'
 import CircularText from './circular-text'
+import { createVisibilityGate } from './createSuspendedRaf'
 
 
 const CFG = {
@@ -654,6 +654,10 @@ const SmokeFlow = React.memo(function SmokeFlow() {
    const gpuRef = useRef(null)
    const matRef = useRef(null)
    const dataRef = useRef(null)
+   const reduceMotionRef = useRef(
+      typeof window !== 'undefined' &&
+         window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+   )
    const { geo, posTex, dataTex } = useMemo(() => {
       const { posTex, dataTex } = buildSmokeTextures(SMOKE_CFG)
       const geo = buildSmokeGeo(SMOKE_CFG)
@@ -674,6 +678,17 @@ const SmokeFlow = React.memo(function SmokeFlow() {
    }), [posTex])
 
    useEffect(() => {
+      const mq = window.matchMedia?.('(prefers-reduced-motion: reduce)')
+      if (!mq) return
+      const onChange = (event) => {
+         reduceMotionRef.current = event.matches
+      }
+      reduceMotionRef.current = mq.matches
+      mq.addEventListener?.('change', onChange)
+      return () => mq.removeEventListener?.('change', onChange)
+   }, [])
+
+   useEffect(() => {
       const gpu = new GPUCompute(SMOKE_CFG.texSize, SMOKE_CFG.texSize, gl)
       gpu.addVar('smokePos', SMOKE_SIM_FRAG, posTex)
       gpuRef.current = gpu
@@ -691,6 +706,8 @@ const SmokeFlow = React.memo(function SmokeFlow() {
    }, [gl]) // eslint-disable-line react-hooks/exhaustive-deps
 
    useFrame((state, rawDelta) => {
+      if (reduceMotionRef.current) return
+
       const gpu = gpuRef.current
       const material = matRef.current
       if (!gpu || !material) return
@@ -722,9 +739,36 @@ function GalaxyMouseGroup({ children }) {
    const groupRef = useRef(null)
    const mouseRef = useRef({ x: 0, y: 0 })
    const smoothRef = useRef({ x: 0, y: 0 })
+   const reduceMotionRef = useRef(
+      typeof window !== 'undefined' &&
+         window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+   )
+
+   useEffect(() => {
+      const mq = window.matchMedia?.('(prefers-reduced-motion: reduce)')
+      if (!mq) return
+
+      const onChange = (event) => {
+         reduceMotionRef.current = event.matches
+         if (event.matches && groupRef.current) {
+            groupRef.current.rotation.set(
+               GALAXY_BASE_ROT[0],
+               GALAXY_BASE_ROT[1],
+               GALAXY_BASE_ROT[2]
+            )
+            smoothRef.current.x = 0
+            smoothRef.current.y = 0
+         }
+      }
+
+      reduceMotionRef.current = mq.matches
+      mq.addEventListener?.('change', onChange)
+      return () => mq.removeEventListener?.('change', onChange)
+   }, [])
 
    useEffect(() => {
       const onMove = (e) => {
+         if (reduceMotionRef.current) return
          const w = window.innerWidth || 1
          const h = window.innerHeight || 1
          mouseRef.current.x = (e.clientX / w) * 2 - 1
@@ -737,6 +781,16 @@ function GalaxyMouseGroup({ children }) {
    useFrame((_, dt) => {
       const g = groupRef.current
       if (!g) return
+
+      if (reduceMotionRef.current) {
+         g.rotation.set(
+            GALAXY_BASE_ROT[0],
+            GALAXY_BASE_ROT[1],
+            GALAXY_BASE_ROT[2]
+         )
+         return
+      }
+
       const m = mouseRef.current
       const s = smoothRef.current
       const t = 1 - Math.exp(-MOUSE_LERP_LAMBDA * dt)
@@ -761,6 +815,10 @@ const MilkyWayGPGPU = React.memo(function MilkyWayGPGPU() {
    const gpuRef = useRef(null)
    const matRef = useRef(null)
    const dataRef = useRef(null)
+   const reduceMotionRef = useRef(
+      typeof window !== 'undefined' &&
+         window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+   )
    const { geo, posTex, dataTex } = useMemo(() => {
       const { posTex, dataTex } = buildTextures(CFG)
       const geo = buildGeo(CFG)
@@ -780,6 +838,17 @@ const MilkyWayGPGPU = React.memo(function MilkyWayGPGPU() {
    }), [posTex])
 
    useEffect(() => {
+      const mq = window.matchMedia?.('(prefers-reduced-motion: reduce)')
+      if (!mq) return
+      const onChange = (event) => {
+         reduceMotionRef.current = event.matches
+      }
+      reduceMotionRef.current = mq.matches
+      mq.addEventListener?.('change', onChange)
+      return () => mq.removeEventListener?.('change', onChange)
+   }, [])
+
+   useEffect(() => {
       const gpu = new GPUCompute(CFG.texSize, CFG.texSize, gl)
       gpu.addVar('pos', SIM_FRAG, posTex)
       gpuRef.current = gpu
@@ -797,6 +866,8 @@ const MilkyWayGPGPU = React.memo(function MilkyWayGPGPU() {
    }, [gl]) // eslint-disable-line react-hooks/exhaustive-deps
 
    useFrame((state, rawDelta) => {
+      if (reduceMotionRef.current) return
+
       const gpu = gpuRef.current
       const material = matRef.current
       if (!gpu || !material) return
@@ -861,9 +932,20 @@ function SceneReady({ onReady }) {
 }
 
 export default function MilkyWay() {
+   const rootRef = useRef(null)
+   const [frameloop, setFrameloop] = useState('always')
    const [isPageLoaded, setIsPageLoaded] = useState(false)
    const [viewport, setViewport] = useState(null)
    const [isSceneReady, setIsSceneReady] = useState(false)
+
+   useEffect(() => {
+      const gate = createVisibilityGate({
+         root: rootRef,
+         onChange: (active) => setFrameloop(active ? 'always' : 'never'),
+      })
+      setFrameloop(gate.isActive ? 'always' : 'never')
+      return () => gate.destroy()
+   }, [])
 
    useLayoutEffect(() => {
       const markLoaded = () => {
@@ -912,15 +994,17 @@ export default function MilkyWay() {
    const showMobileContent = showMobileFallback
 
    return (
-      <section style={{ width: '100%', height: '100vh', background: '#000' }}>
+      <section ref={rootRef} style={{ width: '100%', height: '100vh', background: '#000' }}>
 
 
          {showDesktopScene ? (
             <Canvas
+               aria-hidden="true"
                dpr={viewport.dpr}
                gl={{ antialias: false, powerPreference: 'high-performance' }}
                camera={{ position: [-1, -1.8, 4], fov: 45, near: 0.01, far: 200 }}
                style={{ opacity: isSceneReady ? 1 : 0 }}
+               frameloop={frameloop}
             >
                <SceneReady onReady={() => setIsSceneReady(true)} />
                <BackgroundStars />
@@ -946,15 +1030,15 @@ export default function MilkyWay() {
             <>
             <div className='absolute inset-0 flex items-center justify-center px-6 text-center text-white'>
                <div className='flex flex-col items-center gap-6'>
-                  <p className='rounded-full bg-white/10 px-5 py-3 w-full max-w-[60vw] max-xl:max-w-[70vw] max-md:max-w-full text-2xl max-md:text-base backdrop-blur-sm'>
+                  <p className='rounded-full bg-white/10 px-5 py-3 w-full max-w-[60vw] max-[1025px]:max-w-[70vw] max-md:max-w-full text-2xl max-md:text-base backdrop-blur-sm'>
                      Open in desktop to experience this effect.
                   </p>
-                  <Link
+                  <a
                      href={"/effects"}
                      className='rounded-full  bg-primary  px-6 py-3 max-md:text-sm font-medium text-base text-white'
                   >
                      Explore effects
-                  </Link>
+                  </a>
                </div>
             </div>
             </>
@@ -962,16 +1046,16 @@ export default function MilkyWay() {
 
          {(showDesktopContent || showMobileContent ) && (
             
-            <div className=" h-screen w-full absolute left-0 top-0 max-xl:top-5 z-99 flex items-center justify-center max-xl:hidden">
+            <div className=" h-screen w-full absolute left-0 top-0 max-[1025px]:top-5 z-99 flex items-center justify-center max-[1025px]:hidden">
                <div className='h-full w-full relative'>
-                  <div className='absolute top-0 left-[70%] pt-[10vw] px-[2vw] flex items-center max-xl:flex-col max-xl:gap-5 justify-between h-fit'>
+                  <div className='absolute top-0 left-[70%] pt-[10vw] px-[2vw] flex items-center max-[1025px]:flex-col max-[1025px]:gap-5 justify-between h-fit'>
                         <p className='leading-[1.2] '>
                            Move your cursor around and watch the scene respond.
                         </p>
                   </div>
-                  <div className="absolute bottom-[4vw] max-xl:bottom-[12vw] left-[4vw] max-w-[70vw]">
-                     <p className='flex items-center bg-white/20  max-xl:text-sm backdrop-blur-sm rounded-full text-xs px-[1vw] py-[.5vw] w-fit gap-2'><Stars size={12} />Data Driven And Creative</p>
-                     <h1 className="text-[7vw] mt-[1vw] max-xl:mt-[3vw] font leading-[1.1] text-white drop-shadow-[0_0_32px_rgba(100,96,255,0.17)]">
+                  <div className="absolute bottom-[4vw] max-[1025px]:bottom-[12vw] left-[4vw] max-w-[70vw]">
+                     <p className='flex items-center bg-white/20  max-[1025px]:text-sm backdrop-blur-sm rounded-full text-xs px-[1vw] py-[.5vw] w-fit gap-2'><Stars size={12} />Data Driven And Creative</p>
+                     <h1 className="text-[7vw] mt-[1vw] max-[1025px]:mt-[3vw] font leading-[1.1] text-white drop-shadow-[0_0_32px_rgba(100,96,255,0.17)]">
                         Particles Galaxy
 
                      </h1>

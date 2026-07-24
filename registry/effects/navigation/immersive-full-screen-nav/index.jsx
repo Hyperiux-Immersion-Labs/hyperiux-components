@@ -1,5 +1,4 @@
 "use client"
-import Link from "next/link";
 import CustomNavbar from "./CustomNavbar";
 import FullscreenNav from "./FullscreenNav";
 
@@ -50,33 +49,33 @@ export default function ImmersiveFullscreenNav({
         )}
       </FullscreenNav>
 
-      <main className="flex h-screen items-center justify-center bg-white max-sm:px-[7vw] text-center">
+      <main className="flex h-screen items-center justify-center bg-white max-md:px-[7vw] text-center">
         <div className="max-w-5xl mx-auto text-center text-black">
 
 
 
           {/* Heading */}
-          <h1 className="text-[7vw] max-sm:text-[9vw]">
+          <h1 className="text-[7vw] max-md:text-[9vw]">
             Immersive Full Screen Navigation
           </h1>
 
           {/* Subtext */}
-          <p className="mt-8 text-[1.4vw] max-sm:text-[4.5vw] max-md:text-[3vw]">
+          <p className="mt-8 text-[1.4vw] max-md:text-[4.5vw] max-[1025px]:text-[3vw]">
             Click on the hamburger to open the navigation
           </p>
 
           {/* Buttons */}
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 max-sm:text-[4.5vw] max-md:text-[3vw]">
-            <button className=" rounded-full max-sm:min-w-[45vw] bg-black text-white font-medium ">
-              <Link href={"/effects/navigation/immersive-full-screen-nav"} className="px-7 py-3 block w-full">
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 max-md:text-[4.5vw] max-[1025px]:text-[3vw]">
+            <button className=" rounded-full max-md:min-w-[45vw] bg-black text-white font-medium ">
+              <a href={"/effects/navigation/immersive-full-screen-nav"} className="px-7 py-3 block w-full">
               Read Article
-              </Link>
+              </a>
             </button>
 
-            <button className=" rounded-full max-sm:min-w-[45vw] border border-black ">
-             <Link href={"/effects"} className="px-7 py-3 block w-full">
+            <button className=" rounded-full max-md:min-w-[45vw] border border-black ">
+             <a href={"/effects"} className="px-7 py-3 block w-full">
               Explore Platform
-             </Link>
+             </a>
             </button>
           </div>
 

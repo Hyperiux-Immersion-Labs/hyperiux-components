@@ -14,6 +14,7 @@ export const PixelTransitionFragment = `
  uniform float u_numSlices;
  uniform vec2 u_resolution;
  uniform float u_gridSize;
+ uniform float u_reducedMotion;
 
  varying vec2 vUv;
 
@@ -49,6 +50,14 @@ export const PixelTransitionFragment = `
  float gridLine = drawGridLines(uv, u_resolution, u_gridSize);
  vec4 gridColor = vec4(0.0, 0.0, 0.0, gridLine * 0.15); // Semi-transparent black lines
 
+ vec4 texColor;
+
+ if (u_reducedMotion > 0.5) {
+ // Reduced motion: plain crossfade, no pixelation/slice-blind motion.
+ vec4 tex1 = texture2D(u_texture1, uv);
+ vec4 tex2 = texture2D(u_texture2, uv);
+ texColor = mix(tex1, tex2, u_progress);
+ } else {
  // Number of horizontal slices (blinds)
  float slices = u_numSlices;
  float sliceIndex = floor(uv.y * slices);
@@ -65,8 +74,6 @@ export const PixelTransitionFragment = `
  float visibleThreshold = 1.0 - blindScale;
 
  // Determine which texture to show based on blind position
- vec4 texColor;
-
  if (posInSlice < visibleThreshold) {
  // Collapsed part - show texture2
  texColor = texture2D(u_texture2, pixelatedUv);
@@ -76,6 +83,7 @@ export const PixelTransitionFragment = `
  float slideOffset = visibleThreshold * sliceHeight;
  adjustedUV.y = clamp(uv.y - slideOffset, 0.0, 1.0);
  texColor = texture2D(u_texture1, getPixelatedUv(adjustedUV, u_resolution, u_gridSize));
+ }
  }
 
  // Composite: transparent background + grid lines + image

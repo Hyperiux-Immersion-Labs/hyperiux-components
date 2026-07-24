@@ -1,6 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import fs from "fs";
-import { getRegistryItemFiles } from "../utils/registry.js";
+import {
+  getRegistryItemFiles,
+  normalizeRegistryIndex,
+} from "../utils/registry.js";
 
 vi.mock("fs", async (importOriginal) => {
   const actual = await importOriginal();
@@ -47,6 +50,40 @@ describe("registry utilities", () => {
       },
     ],
   };
+
+  describe("normalizeRegistryIndex", () => {
+    it("should normalize local array indexes and default missing tiers to free", () => {
+      const index = normalizeRegistryIndex([
+        { name: "dotted-grid", category: "backgrounds" },
+        { name: "spotlight-text", category: "text", tier: "pro" },
+      ]);
+
+      expect(index.items).toEqual([
+        { name: "dotted-grid", category: "backgrounds", tier: "free" },
+        { name: "spotlight-text", category: "text", tier: "pro" },
+      ]);
+      expect(index.tiers.free.map((item) => item.name)).toEqual([
+        "dotted-grid",
+      ]);
+      expect(index.tiers.pro.map((item) => item.name)).toEqual([
+        "spotlight-text",
+      ]);
+    });
+
+    it("should normalize remote object indexes and treat paid as pro", () => {
+      const index = normalizeRegistryIndex({
+        items: [
+          { name: "phantom-image-trail", tier: "free" },
+          { name: "fluid-ripple", tier: "paid" },
+        ],
+      });
+
+      expect(index.items[1].tier).toBe("pro");
+      expect(index.tiers.pro.map((item) => item.name)).toEqual([
+        "fluid-ripple",
+      ]);
+    });
+  });
 
   afterEach(() => {
     vi.restoreAllMocks();

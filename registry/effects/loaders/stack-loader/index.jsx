@@ -1,10 +1,9 @@
 "use client";
-
-import Image from "next/image";
 import {
   forwardRef,
   useCallback,
   useEffect,
+  useId,
   useLayoutEffect,
   useRef,
   useState,
@@ -40,6 +39,9 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
   { images = DEFAULT_IMAGE_SOURCES, onComplete },
   ref
 ) {
+  const uid = useId().replace(/:/g, "");
+  const loaderWrapperId = `loader-wrapper-${uid}`;
+  const imgsWrapperId = `imgs-wrapper-${uid}`;
   const rootRef = useRef(null);
   const imagesRef = useRef([]);
   const text1Ref = useRef(null);
@@ -52,6 +54,77 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
   }, [onComplete]);
 
   useLayoutEffect(() => {
+    const reduceMotion =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ??
+      false;
+
+    // Reduced-motion: images already in a vertical line — smooth opacity only.
+    if (reduceMotion) {
+      const ctx = gsap.context(() => {
+        const imageElements = imagesRef.current.filter(Boolean);
+        const sideText = [text1Ref.current, text2Ref.current].filter(Boolean);
+        const description = descriptionTextRef.current;
+        const totalImages = imageElements.length;
+        const totalSpread =
+          totalImages > 1 ? SPREAD_Y_PERCENT_STEP * (totalImages - 1) : 0;
+
+        gsap.set(`#${imgsWrapperId}`, { yPercent: 0, opacity: 1 });
+        gsap.set(imageElements, {
+          opacity: 0,
+          scale: 1,
+          zIndex: (index) => index,
+          yPercent: (index) =>
+            totalImages === 1
+              ? 0
+              : -totalSpread / 2 + index * SPREAD_Y_PERCENT_STEP,
+        });
+        gsap.set(sideText, { opacity: 0, rotateX: 0 });
+        if (description) gsap.set(description, { opacity: 0, rotateX: 0 });
+
+        const tl = gsap.timeline({
+          defaults: { ease: "power2.inOut" },
+          onComplete: () => {
+            gsap.set(rootRef.current, { display: "none" });
+            onCompleteRef.current?.();
+          },
+        });
+
+        // Smooth opacity in (already laid out vertically).
+        tl.to(imageElements, {
+          opacity: 1,
+          duration: 0.7,
+          stagger: { each: 0.06, from: "center" },
+        });
+
+        tl.to(
+          sideText,
+          { opacity: 1, duration: 0.55 },
+          "-=0.35"
+        );
+        if (description) {
+          tl.to(description, { opacity: 1, duration: 0.55 }, "<");
+        }
+
+        tl.to(
+          [...sideText, description].filter(Boolean),
+          { opacity: 0, duration: 0.5 },
+          "+=0.55"
+        );
+        tl.to(
+          imageElements,
+          {
+            opacity: 0,
+            duration: 0.55,
+            stagger: { each: 0.04, from: "edges" },
+          },
+          "-=0.15"
+        );
+        tl.to(rootRef.current, { opacity: 0, duration: 0.4 }, "-=0.2");
+      }, rootRef);
+
+      return () => ctx.revert();
+    }
+
     const ctx = gsap.context(() => {
       const imageElements = imagesRef.current.filter(Boolean);
 
@@ -92,7 +165,7 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
       const tl = gsap.timeline();
 
       tl.fromTo(
-        "#imgs-wrapper",
+        `#${imgsWrapperId}`,
         {
           yPercent: IMAGE_ENTRY_Y_PERCENT,
           opacity: 0,
@@ -198,7 +271,7 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
 
 
       tl.to(
-        "#imgs-wrapper",
+        `#${imgsWrapperId}`,
         {
           yPercent: 0,
           ease: INTRO_EASE,
@@ -250,7 +323,7 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
     }, rootRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [imgsWrapperId]);
 
   return (
     <section
@@ -263,20 +336,20 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
           ref.current = element;
         }
       }}
-      id="loader-wrapper"
-      className="flex h-screen w-full items-center justify-center bg-[#FCFCFC] px-[2.5vw] text-black max-xl:px-[5vw] max-md:px-[6vw]"
+      id={loaderWrapperId}
+      className="flex h-screen w-full items-center justify-center bg-[#FCFCFC] px-[2.5vw] text-black max-[1025px]:px-[5vw] max-md:px-[6vw]"
     >
-      <div className="flex w-full items-center justify-between max-xl:flex-col max-xl:justify-center max-xl:gap-[33vh] max-md:gap-[70vw]">
+      <div className="flex w-full items-center justify-between max-[1025px]:flex-col max-[1025px]:justify-center max-[1025px]:gap-[33vh] max-md:gap-[70vw]">
         <p
           ref={text1Ref}
-          className="opacity-0 max-xl:text-[2.8vw] max-md:text-[5vw]"
+          className="opacity-0 max-[1025px]:text-[2.8vw] max-md:text-[5vw]"
         >
           HUMAN THINKERS
         </p>
 
         <div
-          id="imgs-wrapper"
-          className="relative size-[6.5vw] max-xl:z-99 max-xl:size-[13vw] max-md:size-[18vw]"
+          id={imgsWrapperId}
+          className="relative size-[6.5vw] max-[1025px]:z-99 max-[1025px]:size-[13vw] max-md:size-[18vw]"
         >
           {images.map((src, index) => (
             <div
@@ -286,13 +359,12 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
               }}
               className="absolute top-0 left-0 size-full overflow-hidden rounded-sm opacity-0"
             >
-              <Image
+              <img
                 src={src}
                 width={1000}
                 height={1000}
                 className="h-full w-full object-cover"
-                alt=""
-                priority={index === 0}
+                alt="loader-img"
               />
             </div>
           ))}
@@ -300,7 +372,7 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
 
         <p
           ref={text2Ref}
-          className="opacity-0 max-xl:text-[2.8vw] max-md:text-[4vw]"
+          className="opacity-0 max-[1025px]:text-[2.8vw] max-md:text-[4vw]"
         >
           DIGITAL MAKERS
         </p>
@@ -308,7 +380,7 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
 
       <p
         ref={descriptionTextRef}
-        className="absolute bottom-[3vw] left-1/2 w-[40vw] -translate-x-1/2 text-center leading-[1.1] text-black opacity-0 max-xl:bottom-[3vw] max-xl:w-[68vw] max-xl:text-[2.4vw] max-md:bottom-[6vw] max-md:w-[90%] max-md:text-[3.5vw]"
+        className="absolute bottom-[3vw] left-1/2 w-[40vw] -translate-x-1/2 text-center leading-[1.1] text-black opacity-0 max-[1025px]:bottom-[3vw] max-[1025px]:w-[68vw] max-[1025px]:text-[2.4vw] max-md:bottom-[6vw] max-md:w-[90%] max-md:text-[3.5vw]"
       >
         Hyperiux Vault
       </p>
@@ -319,6 +391,8 @@ const StackToSpreadIntro = forwardRef(function StackToSpreadIntro(
 export default function StackLoader({
   images = DEFAULT_IMAGE_SOURCES,
 }) {
+  const uid = useId().replace(/:/g, "");
+  const demoUiId = `demo-ui-${uid}`;
   const [isLoaderComplete, setIsLoaderComplete] = useState(false);
   const [introInstance, setIntroInstance] = useState(0);
   const stackToSpreadIntroRef = useRef(null);
@@ -334,7 +408,7 @@ export default function StackLoader({
 
   return (
     <div
-      id="DEMO UI"
+      id={demoUiId}
       className="relative h-screen w-screen overflow-hidden bg-zinc-900"
     >
       <p

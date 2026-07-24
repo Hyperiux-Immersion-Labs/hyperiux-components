@@ -1,9 +1,8 @@
 "use client";
 
 import gsap from "gsap";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useFocusTrap } from "./useFocusTrap";
 
 const CLIPS = {
   bottom: {
@@ -28,6 +27,8 @@ const CLIPS = {
   },
 };
 
+const REDUCED_MOTION_FADE_DURATION = 0.2;
+
 export default function FullscreenNav({
   links,
   brand = "Hyperiux",
@@ -51,10 +52,16 @@ export default function FullscreenNav({
   const linksWrapperRef = useRef(null);
   const timelineRef = useRef(null);
   const isAnimatingRef = useRef(false);
+  const rootRef = useRef(null);
+  const toggleButtonRef = useRef(null);
+  const reduceMotion = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
 
   // Derived values
   const { closedInitial, open: openClipPath, closedFinal } =
     CLIPS[clipOrigin] ?? CLIPS.bottom;
+  const isReducedMotion = reduceMotion();
 
   const onOpenMenu = () => {
     setIsOpen(true);
@@ -62,6 +69,27 @@ export default function FullscreenNav({
 
     gsap.set(overlayRef.current, { clipPath: closedInitial });
     gsap.set(linksWrapperRef.current, { opacity: 1, scale: 1 });
+
+    if (isReducedMotion) {
+      gsap.set(overlayRef.current, {
+        clipPath: openClipPath,
+        autoAlpha: 0,
+      });
+
+      timelineRef.current = gsap.to(overlayRef.current, {
+        autoAlpha: 1,
+        duration: REDUCED_MOTION_FADE_DURATION,
+        ease: "power2.out",
+        onStart: () => {
+          isAnimatingRef.current = true;
+        },
+        onComplete: () => {
+          isAnimatingRef.current = false;
+          onOpen?.();
+        },
+      });
+      return;
+    }
 
     const timeline = gsap.timeline({
       onStart: () => {
@@ -86,6 +114,34 @@ export default function FullscreenNav({
   const onCloseMenu = () => {
     setIsOpen(false);
     timelineRef.current?.kill();
+
+    if (isReducedMotion) {
+      gsap.set(linksWrapperRef.current, {
+        scale: 1,
+        opacity: 1,
+      });
+
+      timelineRef.current = gsap.to(overlayRef.current, {
+        autoAlpha: 0,
+        duration: REDUCED_MOTION_FADE_DURATION,
+        ease: "power2.out",
+        onStart: () => {
+          isAnimatingRef.current = true;
+        },
+        onComplete: () => {
+          isAnimatingRef.current = false;
+          gsap.set(overlayRef.current, {
+            clipPath: closedFinal,
+          });
+          onClose?.();
+        },
+      });
+
+      gsap.set(overlayRef.current, {
+        clipPath: closedFinal,
+      });
+      return;
+    }
 
     const timeline = gsap.timeline({
       onStart: () => {
@@ -148,15 +204,23 @@ export default function FullscreenNav({
     };
   }, [isOpen]);
 
+  // Trap focus inside the overlay while open, restore it to the toggle on close.
+  useFocusTrap({
+    active: isOpen,
+    containerRef: rootRef,
+    initialFocusRef: toggleButtonRef,
+    onEscape: onCloseMenu,
+  });
+
   // Return
   return (
-    <>
+    <div ref={rootRef}>
       <header
         className={`fixed top-0 left-0 right-0 z-70 flex h-20 items-center justify-between px-8 ${headerClassName}`}
       >
         <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3 cursor-pointer">
-          <svg width="30" height="30" viewBox="0 0 58 65" fill="none" xmlns="http://www.w3.org/2000/svg" className={` transition-all duration-300 ${isOpen ? "brightness-100  delay-700" : "brightness-0  delay-700"}`}>
+          <a href="/" className="flex items-center gap-3 cursor-pointer">
+          <svg width="30" height="30" viewBox="0 0 58 65" fill="none" xmlns="http://www.w3.org/2000/svg" className={` transition-all duration-300 motion-reduce:transition-none ${isOpen ? "brightness-100  delay-700" : "brightness-0  delay-700"}`}>
             <path d="M0 0H9.02977V28.5943H0V0Z" fill="#ffffff"/>
             <path d="M57.1895 64.7134H48.1597V36.1192H57.1895V64.7134Z" fill="#ffffff"/>
             <path d="M0.0195312 36.1192V64.7135H9.0493V42.139L21.5405 37.4737V28.7449L0.0195312 36.1192Z" fill="#ffffff"/>
@@ -165,7 +229,7 @@ export default function FullscreenNav({
           </svg>
 
           <div className="flex  items-center gap-2">
-            <svg width="156" height="45" viewBox="0 0 351 43" fill="none" xmlns="http://www.w3.org/2000/svg" className={`transition-all duration-300 ${isOpen ? "brightness-100  delay-700" : "brightness-0  delay-700"}`}>
+            <svg width="156" height="45" viewBox="0 0 351 43" fill="none" xmlns="http://www.w3.org/2000/svg" className={`transition-all duration-300 motion-reduce:transition-none ${isOpen ? "brightness-100  delay-700" : "brightness-0  delay-700"}`}>
               <path d="M315.441 6.10352e-05H306.862L320.055 15.9603L324.019 21.0695L306.862 42.139H315.591L332.597 21.0695L328.555 15.9603L315.441 6.10352e-05Z" fill="white"/>
               <path d="M350.055 6.10352e-05H341.326L332.598 10.6853L336.962 15.9527L350.055 6.10352e-05Z" fill="white"/>
               <path d="M349.905 42.139L341.176 42.139L332.598 31.7548L336.962 26.3369L349.905 42.139Z" fill="white"/>
@@ -184,29 +248,41 @@ export default function FullscreenNav({
               <rect x="6.62305" y="17.7585" width="28.8953" height="6.62183" fill="white"/>
             </svg>
           </div>
-          </Link>
+          </a>
         </div>
 
         <button
+          ref={toggleButtonRef}
           onClick={onToggleMenu}
-          onTouchStart={onToggleMenu}
           aria-label="Toggle menu"
           aria-expanded={isOpen}
-          className="flex size-10 cursor-pointer flex-col items-center justify-center gap-1.5 max-xl:size-14 max-md:size-10"
+          className="flex size-10 cursor-pointer flex-col items-center justify-center gap-1.5 max-[1025px]:size-14 max-md:size-10"
         >
           <span
             style={{ backgroundColor: isOpen ? headerOpenColor : undefined }}
-            className={`block h-[2px] w-full transition-all duration-700 ease-in-out delay-300 ${isOpen ? "translate-y-1.75 rotate-45" : "bg-black"
+            className={`block h-0.5 w-full transition-all duration-700 ease-in-out delay-300 motion-reduce:transition-none ${isOpen
+              ? "translate-y-1.75 rotate-45"
+              : isReducedMotion
+                ? "translate-y-0 rotate-0 bg-black"
+                : "bg-black"
               }`}
           />
           <span
             style={{ backgroundColor: isOpen ? headerOpenColor : undefined }}
-            className={`block h-[2px] w-full transition-all duration-500 delay-300 ${isOpen ? "scale-x-0 opacity-0" : "bg-black"
+            className={`block h-0.5 w-full transition-all duration-500 delay-300 motion-reduce:transition-none ${isOpen
+              ? "scale-x-0 opacity-0"
+              : isReducedMotion
+                ? "scale-x-100 opacity-100 bg-black"
+                : "bg-black"
               }`}
           />
           <span
             style={{ backgroundColor: isOpen ? headerOpenColor : undefined }}
-            className={`block h-[2px] w-full transition-all duration-700 ease-in-out delay-300 ${isOpen ? "-translate-y-2.25 -rotate-45" : "bg-black"
+            className={`block h-0.5 w-full transition-all duration-700 ease-in-out delay-300 motion-reduce:transition-none ${isOpen
+              ? "-translate-y-2.25 -rotate-45"
+              : isReducedMotion
+                ? "translate-y-0 rotate-0 bg-black"
+                : "bg-black"
               }`}
           />
         </button>
@@ -222,12 +298,12 @@ export default function FullscreenNav({
       >
         <div
           ref={linksWrapperRef}
-          className="flex h-screen w-screen flex-col items-center justify-center"
+          className="flex h-screen w-screen flex-col items-center justify-center motion-reduce:opacity-100"
         >
           {children
             ? children(isOpen)
             : links.map(({ label, href }) => (
-              <Link
+              <a
                 key={label}
                 href={href}
                 onClick={isOpen ? onCloseMenu : undefined}
@@ -235,13 +311,13 @@ export default function FullscreenNav({
                 style={{ color: linkColor }}
                 onMouseEnter={onLinkMouseEnter}
                 onMouseLeave={onLinkMouseLeave}
-                className={`${linkSizeClass} font-normal tracking-tight transition-colors`}
+                className={`${linkSizeClass} font-normal tracking-tight transition-colors motion-reduce:transition-none`}
               >
                 {label}
-              </Link>
+              </a>
             ))}
         </div>
       </nav>
-    </>
+    </div>
   );
 }

@@ -1,17 +1,20 @@
 {
   "name": "scramble-link-button",
+  "version": "1.0.0",
   "type": "registry:component",
   "title": "Scramble Link Button",
   "description": "Link button with text scramble effect on hover, optional underline and arrow",
   "category": "buttons",
-  "dependencies": ["lucide-react"],
+  "dependencies": [
+    "lucide-react"
+  ],
   "registryDependencies": [],
   "previewUrl": "/demo/scramble-link-button",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "ScrambleLinkButton",
   "exportKind": "default",
-  "main": "index.jsx",
   "importPath": "@/components/effects/scramble-link-button",
   "target": "src/components/effects/scramble-link-button",
   "files": [

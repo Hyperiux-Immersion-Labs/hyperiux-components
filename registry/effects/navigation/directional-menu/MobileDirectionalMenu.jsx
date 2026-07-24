@@ -1,14 +1,30 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
+import { useFocusTrap } from "./useFocusTrap";
 
 const hasDropdownContent = (item) => Boolean(item?.customContent);
 
 export function MobileDirectionalMenu({ items = [] }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
+
+  const containerRef = useRef(null);
+  const toggleButtonRef = useRef(null);
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    setActiveIndex(null);
+  };
+
+  // Trap focus across the toggle + panel while open, restore it on close.
+  useFocusTrap({
+    active: isMenuOpen,
+    containerRef,
+    initialFocusRef: toggleButtonRef,
+    onEscape: closeMenu,
+  });
 
   const onToggleMenu = () => {
     setIsMenuOpen((currentValue) => {
@@ -27,9 +43,9 @@ export function MobileDirectionalMenu({ items = [] }) {
   };
 
   return (
-    <div className="relative hidden max-xl:block px-6 py-4">
+    <div ref={containerRef} className="relative hidden max-[1025px]:block px-6 py-4">
       <div className="flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-center  gap-3 cursor-pointer">
+        <a href="/" className="flex items-center  gap-3 cursor-pointer">
           <svg width="35" height="35" viewBox="0 0 58 65" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0H9.02977V28.5943H0V0Z" fill="#ffffff"/>
             <path d="M57.1895 64.7134H48.1597V36.1192H57.1895V64.7134Z" fill="#ffffff"/>
@@ -55,12 +71,13 @@ export function MobileDirectionalMenu({ items = [] }) {
             <rect x="35.5166" width="6.62183" height="42.1389" fill="white"/>
             <rect x="6.62305" y="17.7585" width="28.8953" height="6.62183" fill="white"/>
           </svg>
-        </Link>
+        </a>
 
         <button
+          ref={toggleButtonRef}
           type="button"
           onClick={onToggleMenu}
-          className="flex h-11 w-11 items-center justify-center rounded-full  text-white transition-colors duration-200 hover:bg-white/10"
+          className="flex h-11 w-11 items-center justify-center rounded-full  text-white transition-colors duration-200 hover:bg-white/10 motion-reduce:bg-transparent motion-reduce:transition-none"
           aria-expanded={isMenuOpen}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
@@ -69,7 +86,7 @@ export function MobileDirectionalMenu({ items = [] }) {
       </div>
 
       <div
-        className={`absolute left-6 right-6 top-18 z-50 overflow-hidden rounded-lg bg-white text-black transition-all duration-300 ease-in-out ${
+        className={`absolute left-6 right-6 top-18 z-50 overflow-hidden rounded-lg bg-white text-black transition-all duration-300 ease-in-out motion-reduce:transition-none ${
           isMenuOpen
             ? "max-h-[80vh] overflow-y-scroll p-8 opacity-100 max-md:max-h-[90vh] max-md:p-3"
             : "max-h-0 p-0 opacity-0 pointer-events-none"
@@ -83,47 +100,47 @@ export function MobileDirectionalMenu({ items = [] }) {
 
               if (!isDropdown) {
                 return (
-                  <Link
+                  <a
                     key={item.label}
                     href={item.href || "#"}
-                    className="rounded-lg border border-neutral-200 bg-neutral-50/60 px-4 py-4 max-md:text-sm max-xl:text-lg font-semibold uppercase tracking-[0.14em] text-neutral-500 transition-all duration-300 ease-in-out hover:bg-neutral-100 max-xl:rounded-none max-xl:border-x-0 max-xl:border-t-0"
+                    className="rounded-lg border border-neutral-200 bg-neutral-50/60 px-4 py-4 max-md:text-sm max-[1025px]:text-lg font-semibold uppercase tracking-[0.14em] text-neutral-500 transition-all duration-300 ease-in-out hover:bg-neutral-100 motion-reduce:bg-neutral-50/60 motion-reduce:transition-none max-[1025px]:rounded-none max-[1025px]:border-x-0 max-[1025px]:border-t-0"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.label}
-                  </Link>
+                  </a>
                 );
               }
 
               return (
                 <section
                   key={item.label}
-                  className="rounded-lg border border-neutral-200 bg-neutral-50/60 transition-all duration-300 ease-in-out max-xl:rounded-none max-xl:border-x-0 max-xl:border-t-0"
+                  className="rounded-lg border border-neutral-200 bg-neutral-50/60 transition-all duration-300 ease-in-out motion-reduce:transition-none max-[1025px]:rounded-none max-[1025px]:border-x-0 max-[1025px]:border-t-0"
                 >
                   <button
                     type="button"
                     onClick={() => onToggleSection(index)}
-                    className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left transition-all duration-300 ease-in-out"
+                    className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left transition-all duration-300 ease-in-out motion-reduce:transition-none"
                     aria-expanded={isOpen}
                   >
-                    <span className="max-md:text-sm max-xl:text-lg font-semibold uppercase tracking-[0.14em] text-neutral-500">
+                    <span className="max-md:text-sm max-[1025px]:text-lg font-semibold uppercase tracking-[0.14em] text-neutral-500">
                       {item.label}
                     </span>
 
                     <ChevronDown
-                      className={`h-4 w-4 text-neutral-500 transition-transform duration-300 ease-in-out ${
+                      className={`h-4 w-4 text-neutral-500 transition-transform duration-300 ease-in-out motion-reduce:rotate-0 motion-reduce:transition-none ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
 
                   <div
-                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    className={`overflow-hidden transition-all duration-300 ease-in-out motion-reduce:transition-none ${
                       isOpen
                         ? "max-h-[60rem]  px-4 py-4 opacity-100"
                         : "max-h-0 border-t-0 px-4 py-0 opacity-0"
                     }`}
                   >
-                      <div className="max-xl:[&_.grid]:grid-cols-2 max-md:[&_.grid]:grid-cols-1 ">
+                      <div className="max-[1025px]:[&_.grid]:grid-cols-2 max-md:[&_.grid]:grid-cols-1 ">
                         {item.customContent}
                       </div>
                     </div>

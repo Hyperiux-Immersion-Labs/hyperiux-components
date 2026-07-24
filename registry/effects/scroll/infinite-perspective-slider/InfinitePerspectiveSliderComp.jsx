@@ -1,11 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useCallback, useState } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
+import { createSuspendedRaf } from "./createSuspendedRaf";
 
 gsap.registerPlugin(SplitText);
+
+// True when the user has asked the OS to minimise animation. Safe to call
+// during render - returns false on the server.
+function prefersReducedMotion() {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
 
 const SCROLL_PER_PX = 1.0;
 const LERP = 0.1;
@@ -80,7 +87,6 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
   const stateRef = useRef({
     current: 0,
     target: 0,
-    raf: null,
     velocity: 0,
     smoothVelocity: 0,
     rotationVelocity: 0,
@@ -191,34 +197,46 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
 
     const state = stateRef.current;
     const loopWidth = images.length * cardStep;
+    const reducedMotion = prefersReducedMotion();
 
     initSetters();
 
     const tick = () => {
-      state.current = lerp(state.current, state.target, LERP);
-      state.velocity = state.target - state.current;
+      // Reduced motion: snap straight to the target (no lerp smoothing) and
+      // never build up rotation velocity, so cards never tilt while
+      // scrolling or dragging - they just track the pointer/wheel directly.
+      if (reducedMotion) {
+        state.current = state.target;
+        state.velocity = 0;
+        state.smoothVelocity = 0;
+        state.rotationVelocity = 0;
+        state.currentRotation = 0;
+      } else {
+        state.current = lerp(state.current, state.target, LERP);
+        state.velocity = state.target - state.current;
 
-      state.smoothVelocity = lerp(
-        state.smoothVelocity,
-        state.velocity,
-        VELOCITY_LERP
-      );
+        state.smoothVelocity = lerp(
+          state.smoothVelocity,
+          state.velocity,
+          VELOCITY_LERP
+        );
 
-      state.rotationVelocity = lerp(
-        state.rotationVelocity,
-        state.velocity,
-        ROTATION_DAMP
-      );
+        state.rotationVelocity = lerp(
+          state.rotationVelocity,
+          state.velocity,
+          ROTATION_DAMP
+        );
 
-      const absVel = Math.abs(state.rotationVelocity);
-      const sign = Math.sign(state.rotationVelocity);
-      const targetRotation = sign * absVel * ROTATION_SENSITIVITY;
+        const absVel = Math.abs(state.rotationVelocity);
+        const sign = Math.sign(state.rotationVelocity);
+        const targetRotation = sign * absVel * ROTATION_SENSITIVITY;
 
-      state.currentRotation = lerp(
-        state.currentRotation,
-        targetRotation,
-        ROTATION_LERP
-      );
+        state.currentRotation = lerp(
+          state.currentRotation,
+          targetRotation,
+          ROTATION_LERP
+        );
+      }
 
       const finalRotation = clamp(state.currentRotation, -80, 80);
 
@@ -230,8 +248,6 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
       }
 
       positionCards(state.current, finalRotation);
-
-      state.raf = requestAnimationFrame(tick);
     };
 
     const onWheel = (event) => {
@@ -297,7 +313,11 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
     positionCards(0, 0);
     gsap.set(cardRefs.current, { opacity: 1 });
 
-    state.raf = requestAnimationFrame(tick);
+    const loop = createSuspendedRaf({
+      root: stripRef,
+      onFrame: tick,
+    });
+    loop.start();
 
     window.addEventListener("wheel", onWheel, { passive: true });
     window.addEventListener("resize", onResize);
@@ -311,7 +331,7 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
     window.addEventListener("touchend", handleTouchEnd);
 
     return () => {
-      cancelAnimationFrame(state.raf);
+      loop.destroy();
 
       if (scrollStopTimerRef.current) {
         window.clearTimeout(scrollStopTimerRef.current);
@@ -521,7 +541,7 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
 
   return (
     <div className="h-screen w-screen overflow-hidden">
-      <div className="pointer-events-none relative flex h-full items-center overflow-hidden perspective-[2200px] max-md:items-center ">
+      <div className="pointer-events-none relative flex h-full items-center overflow-hidden perspective-[2200px] max-[1025px]:items-center ">
         <div
           ref={stripRef}
           className="transform-3d relative w-full"
@@ -548,7 +568,7 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
                   ref={(element) => {
                     numberRefs.current[index] = element;
                   }}
-                  className="mb-2 text-2xl leading-none tracking-tight text-black opacity-0 max-md:text-xl max-sm:mb-1 max-sm:text-lg"
+                  className="mb-2 text-2xl leading-none tracking-tight text-black opacity-0 max-[1025px]:text-xl max-md:mb-1 max-md:text-lg"
                 >
                   {number}
                 </div>
@@ -557,15 +577,12 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
                   ref={(element) => {
                     imageRefs.current[index] = element;
                   }}
-                  className="relative h-[50vh] w-full overflow-hidden bg-white max-md:h-[45vh] max-sm:h-[40vh]"
+                  className="relative h-[50vh] w-full overflow-hidden bg-white max-[1025px]:h-[45vh] max-md:h-[40vh]"
                 >
-                  <Image
+                  <img
                     src={src}
                     alt={`slide-${index}`}
-                    fill
-                    sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, 320px"
-                    unoptimized
-                    className="object-cover"
+                    className="absolute inset-0 h-full w-full object-cover"
                     draggable={false}
                   />
                 </div>
@@ -575,7 +592,7 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
                     ref={(element) => {
                       titleRefs.current[index] = element;
                     }}
-                    className="text-xl uppercase leading-none tracking-[0.04em] text-black opacity-0 max-md:text-lg max-sm:text-base"
+                    className="text-xl uppercase leading-none tracking-[0.04em] text-black opacity-0 max-[1025px]:text-lg max-md:text-base"
                   >
                     {title}
                   </div>
@@ -584,7 +601,7 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
                     ref={(element) => {
                       descriptionRefs.current[index] = element;
                     }}
-                    className="text-sm leading-none text-black/70 opacity-0 max-md:text-xs max-sm:text-xs"
+                    className="text-sm leading-none text-black/70 opacity-0 max-[1025px]:text-xs max-md:text-xs"
                   >
                     {desc || description || ""}
                   </div>
@@ -601,7 +618,7 @@ export function InfinitePerspectiveSliderComp({ images = [] }) {
         <svg
           width="20"
           height="28"
-          className="size-[1.5vw] max-md:size-[3vw] max-sm:size-[4vw]"
+          className="size-[1.5vw] max-[1025px]:size-[3vw] max-md:size-[4vw]"
           viewBox="0 0 20 28"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { attachWebGLContextRecovery } from "./webgl-context-recovery";
+import { createSuspendedRaf } from "./createSuspendedRaf";
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setPrefersReducedMotion(mediaQuery.matches);
+    update();
+    mediaQuery.addEventListener("change", update);
+    return () => mediaQuery.removeEventListener("change", update);
+  }, []);
+
+  return prefersReducedMotion;
+}
 
 const FULLSCREEN_TRIANGLE_VERTICES = new Float32Array([
   -1, -1,
@@ -317,6 +333,7 @@ function drawTrailStamp(ctx, x, y, radius, softRadius) {
 
 function InteractiveBlurReveal({ iChannel0="https://picsum.photos/seed/hover7/800/1000", iChannel1="https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/interactive-blur-reveal-noise.png", className, style }) {
   const canvasRef = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const pointerRef = useRef({
     isInside: false,
@@ -333,7 +350,7 @@ function InteractiveBlurReveal({ iChannel0="https://picsum.photos/seed/hover7/80
 
   useEffect(() => {
     let isDisposed = false;
-    let animationFrameId = 0;
+    let loop = null;
     let cleanupWebgl;
 
     async function init() {
@@ -406,7 +423,7 @@ function InteractiveBlurReveal({ iChannel0="https://picsum.photos/seed/hover7/80
       gl.uniform1i(maskLocation, TEXTURE_UNIT_MASK);
 
       function resize() {
-        const devicePixelRatio = window.devicePixelRatio || 1;
+        const devicePixelRatio = Math.min(window.devicePixelRatio || 1, 2);
         const nextWidth = Math.floor(window.innerWidth * devicePixelRatio);
         const nextHeight = Math.floor(window.innerHeight * devicePixelRatio);
 
@@ -574,8 +591,6 @@ function InteractiveBlurReveal({ iChannel0="https://picsum.photos/seed/hover7/80
         gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
         gl.uniform1f(timeLocation, now / 1000);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-        animationFrameId = requestAnimationFrame(render);
       }
 
       window.addEventListener("pointermove", onWindowPointerMove, {
@@ -583,13 +598,18 @@ function InteractiveBlurReveal({ iChannel0="https://picsum.photos/seed/hover7/80
       });
       window.addEventListener("mouseout", onWindowPointerLeave);
 
-      render();
+      loop = createSuspendedRaf({
+        root: canvas,
+        onFrame: render,
+      });
+      loop.start();
 
       return () => {
         window.removeEventListener("pointermove", onWindowPointerMove);
         window.removeEventListener("mouseout", onWindowPointerLeave);
 
-        cancelAnimationFrame(animationFrameId);
+        loop?.destroy();
+        loop = null;
         gl.deleteTexture(baseTexture);
         gl.deleteTexture(noiseTexture);
         gl.deleteTexture(maskTexture);
@@ -598,23 +618,53 @@ function InteractiveBlurReveal({ iChannel0="https://picsum.photos/seed/hover7/80
       };
     }
 
-    init()
-      .then((cleanup) => {
-        cleanupWebgl = cleanup;
-      })
-      .catch((error) => {
-        console.warn(
-          "InteractiveBlurReveal could not initialize. The provided texture URL must be directly loadable by the browser and must allow CORS for WebGL.",
-          error?.message || error
-        );
-      });
+    const boot = () => {
+      init()
+        .then((cleanup) => {
+          // If the effect unmounted while init was still loading, discard it.
+          if (isDisposed) {
+            if (cleanup) cleanup();
+            return;
+          }
+          cleanupWebgl = cleanup;
+        })
+        .catch((error) => {
+          console.warn(
+            "InteractiveBlurReveal could not initialize. The provided texture URL must be directly loadable by the browser and must allow CORS for WebGL.",
+            error?.message || error
+          );
+        });
+    };
+
+    // A raw WebGL2 context gets no automatic recovery (unlike THREE.WebGLRenderer).
+    // On loss, stop the loop and drop the invalidated program/buffers/textures;
+    // on restore, rebuild them by re-running init().
+    const detachRecovery = attachWebGLContextRecovery(canvasRef.current, {
+      onLost: () => {
+        if (cleanupWebgl) {
+          cleanupWebgl();
+          cleanupWebgl = undefined;
+        } else {
+          loop?.destroy();
+          loop = null;
+        }
+      },
+      onRestored: () => {
+        if (!isDisposed) boot();
+      },
+    });
+
+    boot();
 
     return () => {
       isDisposed = true;
-      cancelAnimationFrame(animationFrameId);
+      detachRecovery();
 
       if (cleanupWebgl) {
         cleanupWebgl();
+      } else {
+        loop?.destroy();
+        loop = null;
       }
     };
   }, [iChannel0, iChannel1]);
@@ -650,21 +700,41 @@ function InteractiveBlurReveal({ iChannel0="https://picsum.photos/seed/hover7/80
   }
 
   return (
-    <canvas
-      ref={canvasRef}
-      onPointerEnter={onPointerEnter}
-      onPointerMove={onPointerMove}
-      onPointerLeave={onPointerLeave}
-      className={className}
-      style={{
-        position: "fixed",
-        inset: 0,
-        width: "100vw",
-        height: "100vh",
-        display: "block",
-        ...style,
-      }}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        onPointerEnter={onPointerEnter}
+        onPointerMove={onPointerMove}
+        onPointerLeave={onPointerLeave}
+        className={className}
+        style={{
+          position: "fixed",
+          inset: 0,
+          width: "100vw",
+          height: "100vh",
+          display: "block",
+          ...style,
+        }}
+      />
+
+      {prefersReducedMotion && (
+        <div
+          aria-live="polite"
+          className="pointer-events-none fixed top-26 right-4 z-40 w-fit max-w-65 rounded-md border border-white/15 bg-white/5 p-3 text-center backdrop-blur-sm max-md:hidden"
+        >
+          <h2 className="text-sm leading-none text-white">
+            The reveal keeps trailing.
+          </h2>
+          <p className="mt-2 text-xs leading-5 text-white/65">
+            Interactive Blur Reveal clears the blur only where your cursor
+            has recently moved, redrawing continuously. Since the reveal is
+            driven entirely by motion, reduced motion can&apos;t be applied
+            here.
+          </p>
+        </div>
+      )}
+    </>
   );
 }
 

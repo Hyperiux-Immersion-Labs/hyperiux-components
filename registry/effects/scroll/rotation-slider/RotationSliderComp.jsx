@@ -3,8 +3,19 @@
 import React, { forwardRef, useEffect, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
 import { Mouse } from "lucide-react";
+
+// True when the user has asked the OS to minimise animation. Safe to call
+// during render - returns false on the server.
+function prefersReducedMotion() {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
+
+// Reduced motion: a much larger perspective distance flattens the 3D card
+// rotation (less depth distortion) instead of removing it outright.
+const PERSPECTIVE = "1200px";
+const REDUCED_PERSPECTIVE = "4800px";
 
 const MOBILE_BREAKPOINT = 640;
 const TABLET_BREAKPOINT = 1025;
@@ -24,6 +35,11 @@ const DESKTOP_ROTATE_OUT = 80;
 const ROTATE_X_NEGATIVE = 5;
 const ROTATE_X_POSITIVE = -5;
 
+// Reduced motion: cut the card rotation down a lot (not just the perspective
+// flattening above) - "reduce a lot", so a stronger cut than the 25% factor
+// used elsewhere.
+const ROTATION_REDUCTION_FACTOR = 0.15;
+
 const useIsomorphicLayoutEffect =
     typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -34,6 +50,7 @@ export function RotationSliderComp({ images }) {
     const trackRef = useRef(null);
     const cardsRef = useRef([]);
     const wrappersRef = useRef([]);
+    const reducedMotion = prefersReducedMotion();
 
     useEffect(() => {
         const outer = outerRef.current;
@@ -78,7 +95,10 @@ export function RotationSliderComp({ images }) {
                     trigger: outer,
                     start: "top top",
                     end: () => `+=${track.scrollWidth - window.innerWidth}`,
-                    scrub: 1,
+                    // Reduced motion: scrub:true tracks scroll position
+                    // directly (no smoothing lag) instead of the ~1s
+                    // catch-up delay - the "lerp" here is that scrub value.
+                    scrub: reducedMotion ? true : 1,
                     invalidateOnRefresh: true,
                 },
             });
@@ -105,8 +125,24 @@ export function RotationSliderComp({ images }) {
                     offset = (index - mid + 1) * step;
                 }
 
+                const rotationScale = reducedMotion ? ROTATION_REDUCTION_FACTOR : 1;
+
                 const rotateXValue =
-                    offset < 0 ? ROTATE_X_NEGATIVE : ROTATE_X_POSITIVE;
+                    (offset < 0 ? ROTATE_X_NEGATIVE : ROTATE_X_POSITIVE) * rotationScale;
+
+                const rotateInValue =
+                    (isMobile
+                        ? MOBILE_ROTATE_IN
+                        : isTablet
+                            ? TABLET_ROTATE_IN
+                            : DESKTOP_ROTATE_IN) * rotationScale;
+
+                const rotateOutValue =
+                    (isMobile
+                        ? MOBILE_ROTATE_OUT
+                        : isTablet
+                            ? TABLET_ROTATE_OUT
+                            : DESKTOP_ROTATE_OUT) * rotationScale;
 
                 const tl = gsap.timeline({
                     scrollTrigger: {
@@ -122,11 +158,7 @@ export function RotationSliderComp({ images }) {
                 tl.fromTo(
                     card,
                     {
-                        rotateY: isMobile
-                            ? MOBILE_ROTATE_IN
-                            : isTablet
-                                ? TABLET_ROTATE_IN
-                                : DESKTOP_ROTATE_IN,
+                        rotateY: rotateInValue,
                         rotateX: rotateXValue,
                         opacity: 0.8,
                         y: `${offset}vh`,
@@ -139,11 +171,7 @@ export function RotationSliderComp({ images }) {
                         ease: "none",
                     }
                 ).to(card, {
-                    rotateY: isMobile
-                        ? MOBILE_ROTATE_OUT
-                        : isTablet
-                            ? TABLET_ROTATE_OUT
-                            : DESKTOP_ROTATE_OUT,
+                    rotateY: rotateOutValue,
                     opacity: 0.9,
                     y: `${-offset}vh`,
                     ease: "none",
@@ -160,16 +188,16 @@ export function RotationSliderComp({ images }) {
         <div ref={outerRef} className="relative bg-white">
             <div
                 className="sticky top-0 flex h-screen items-center overflow-hidden"
-                style={{ perspective: "1200px" }}
+                style={{ perspective: reducedMotion ? REDUCED_PERSPECTIVE : PERSPECTIVE }}
             >
                 <div
                     ref={trackRef}
                     className="
             flex h-full items-center will-change-transform
-            gap-[5vw] max-md:gap-[8vw] max-sm:gap-[12vw]
+            gap-[5vw] max-[1025px]:gap-[8vw] max-md:gap-[12vw]
             pl-[31vw] pr-[31vw]
-            max-md:pl-[22vw] max-md:pr-[22vw]
-            max-sm:pl-[12vw] max-sm:pr-[12.5vw]
+            max-[1025px]:pl-[22vw] max-[1025px]:pr-[22vw]
+            max-md:pl-[12vw] max-md:pr-[12.5vw]
           "
                     style={{ transformStyle: "preserve-3d" }}
                 >
@@ -181,10 +209,10 @@ export function RotationSliderComp({ images }) {
                             }}
                             className="
                 relative flex h-[45vh] w-[38vw] shrink-0 items-center justify-center
-                max-md:h-[40vh] max-md:w-[55vw]
-                max-sm:h-[35vh] max-sm:w-[75vw]
-                max-md:[&>div]:h-[40vh] max-md:[&>div]:w-[50vw]
-                max-sm:[&>div]:h-[35vh] max-sm:[&>div]:w-[75vw]
+                max-[1025px]:h-[40vh] max-[1025px]:w-[55vw]
+                max-md:h-[35vh] max-md:w-[75vw]
+                max-[1025px]:[&>div]:h-[40vh] max-[1025px]:[&>div]:w-[50vw]
+                max-md:[&>div]:h-[35vh] max-md:[&>div]:w-[75vw]
               "
                             style={{ transformStyle: "preserve-3d" }}
                         >
@@ -210,7 +238,7 @@ const RotationCard = forwardRef(({ src, index, total, text }, ref) => {
     return (
         <div
             ref={ref}
-            className="absolute h-[45vh] w-[38vw] origin-right overflow-hidden opacity-0 max-sm:h-[35vh] max-sm:w-[75vw]"
+            className="absolute h-[45vh] w-[38vw] origin-right overflow-hidden opacity-0 max-md:h-[35vh] max-md:w-[75vw]"
             style={{
                 transformStyle: "preserve-3d",
                 zIndex: total - index,
@@ -222,18 +250,16 @@ const RotationCard = forwardRef(({ src, index, total, text }, ref) => {
                     transformStyle: "preserve-3d",
                 }}
             >
-                <Image
+                <img
                     src={src}
                     alt="slider"
-                    fill
-                    className="object-cover"
-                    priority
+                    className="absolute inset-0 h-full w-full object-cover"
                 />
             </div>
 
             {text && (
                 <div
-                    className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center text-[1.4vw] font-medium text-white max-md:text-[2.4vw] max-sm:text-[4vw]"
+                    className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center text-[1.4vw] font-medium text-white max-[1025px]:text-[2.4vw] max-md:text-[4vw]"
                     style={{
                         textShadow:
                             "0 0.15vw 0.35vw rgba(0,0,0,0.35), 0 0.45vw 1.2vw rgba(0,0,0,0.35)",

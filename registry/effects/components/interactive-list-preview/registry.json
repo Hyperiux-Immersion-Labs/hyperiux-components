@@ -1,5 +1,6 @@
 {
   "name": "interactive-list-preview",
+  "version": "1.1.1",
   "type": "registry:component",
   "title": "Interactive List Preview",
   "description": "Hover-driven table list that reveals clipped images with a sliding highlight bar and mix-blend-mode difference inversion effect",
@@ -11,9 +12,9 @@
   "previewUrl": "/demo/interactive-list-preview",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "InteractiveListPreview",
   "exportKind": "default",
-  "main": "index.jsx",
   "importPath": "@/components/effects/interactive-list-preview",
   "target": "src/components/effects/interactive-list-preview",
   "files": [
@@ -22,8 +23,22 @@
       "target": "src/components/effects/interactive-list-preview/index.jsx"
     },
     {
-      "path": "ListHover.jsx",
-      "target": "src/components/effects/interactive-list-preview/ListHover.jsx"
+      "path": "InteractiveListPreviewComp.jsx",
+      "target": "src/components/effects/interactive-list-preview/InteractiveListPreviewComp.jsx"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.1.1",
+      "date": "2026-07-23",
+      "summary": "Renamed helper ListHover.jsx to InteractiveListPreviewComp.jsx (default export) to match the production naming convention and eliminate registry/docs mirror drift.",
+      "breaking": false
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "summary": "Under reduced motion, single-image opacity fade and no cursor parallax",
+      "breaking": false
     }
   ]
 }

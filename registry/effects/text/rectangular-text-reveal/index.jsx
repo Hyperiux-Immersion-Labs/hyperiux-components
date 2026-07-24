@@ -22,6 +22,9 @@ const DEFAULT_TRIGGER_START = "top bottom";
 const DEFAULT_DIRECTION = "left";
 const DEFAULT_DELAY = 0;
 const DEFAULT_TOGGLE_ACTIONS = "play none none reset";
+const REDUCED_MOTION_Y_OFFSET = 32;
+const REDUCED_MOTION_DURATION = 0.9;
+const REDUCED_MOTION_STAGGER = 0.12;
 const REVEAL_EASE = "hyperEase";
 const SCALE_X_ZERO = "scaleX(0)";
 const SCALE_Y_ZERO = "scaleY(0)";
@@ -112,6 +115,10 @@ export default function RectangularTextReveal({
       return;
     }
 
+    const prefersReduced =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const { enterOrigin, exitOrigin, axis } = getOrigins(direction);
 
     CustomEase.create(REVEAL_EASE, "0.4,0,0.2,1");
@@ -121,13 +128,54 @@ export default function RectangularTextReveal({
       linesClass: LINE_CLASS_NAME,
     });
 
-    const wrappers = [];
-    const baseRects = [];
-    const overlayRects = [];
     const lines = split.lines;
 
     // Line setup
     gsap.set(elementRef.current, { opacity: 1 });
+
+    if (prefersReduced) {
+      gsap.set(lines, {
+        opacity: 0,
+        y: REDUCED_MOTION_Y_OFFSET,
+        willChange: "transform, opacity",
+      });
+
+      const timeline = gsap.timeline({ paused: true, delay });
+
+      timeline.to(lines, {
+        opacity: 1,
+        y: 0,
+        duration: REDUCED_MOTION_DURATION,
+        ease: "power3.out",
+        stagger: REDUCED_MOTION_STAGGER,
+      });
+
+      const scrollTrigger = ScrollTrigger.create({
+        trigger: elementRef.current,
+        start: triggerStart,
+        once,
+        animation: timeline,
+        toggleActions: once ? "play none none none" : toggleActions,
+        ...(once
+          ? {}
+          : {
+              onLeaveBack: () => {
+                timeline.pause(0);
+                gsap.set(lines, { opacity: 0, y: REDUCED_MOTION_Y_OFFSET });
+              },
+            }),
+      });
+
+      return () => {
+        timeline.kill();
+        scrollTrigger.kill();
+        split.revert();
+      };
+    }
+
+    const wrappers = [];
+    const baseRects = [];
+    const overlayRects = [];
 
     lines.forEach((line) => {
       const wrapper = document.createElement("div");

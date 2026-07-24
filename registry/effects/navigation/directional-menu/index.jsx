@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { DirectionalMegaMenu } from "./DirectionalMegaMenu";
 import { Menu1 } from "./Menu1";
 import { Menu2 } from "./Menu2";
@@ -31,10 +30,10 @@ export default function DirectionalMenu() {
     <div className="relative h-screen overflow-hidden bg-black text-white max-md:h-full max-md:overflow-visible max-md:pb-10">
       {/* Navbar */}
       <header className="relative z-50 border-b border-white/10">
-        <div className="max-w-7xl mx-auto max-xl:hidden h-19 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto max-[1025px]:hidden h-19 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <Link prefetch={false} href="/" className="flex items-center gap-3 cursor-pointer">
+            <a href="/" className="flex items-center gap-3 cursor-pointer">
               <svg width="30" height="30" viewBox="0 0 58 65" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 0H9.02977V28.5943H0V0Z" fill="#ffffff"/>
                 <path d="M57.1895 64.7134H48.1597V36.1192H57.1895V64.7134Z" fill="#ffffff"/>
@@ -63,15 +62,15 @@ export default function DirectionalMenu() {
                   <rect x="6.62305" y="17.7585" width="28.8953" height="6.62183" fill="white"/>
                 </svg>
               </div>
-            </Link>
+            </a>
           </div>
 
           {/* Menu */}
           <DirectionalMegaMenu
             items={menuItems}
             closeDelay={80}
-            navClassName="mx-auto w-full  max-w-7xl justify-center px-6 md:px-10 max-xl:translate-x-10 max-md:translate-x-0 "
-            contentWrapperClassName="p-8 bg-white border border-white/10 rounded-3xl max-md:h-[92vh] max-xl:h-[75vh]"
+            navClassName="mx-auto w-full  max-w-7xl justify-center px-6 md:px-10 max-[1025px]:translate-x-10 max-md:translate-x-0 "
+            contentWrapperClassName="p-8 bg-white border border-white/10 rounded-3xl max-md:h-[92vh] max-[1025px]:h-[75vh]"
             animation={{
               duration: 0.35,
               ease: "power2.inOut",
@@ -102,13 +101,13 @@ export default function DirectionalMenu() {
           {/* Buttons */}
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 max-md:mt-20">
             <button className="px-7 py-3 cursor-pointer rounded-full bg-white text-black font-medium hover:bg-white/90 transition-all duration-300">
-              <Link prefetch={false} href={"/effects/navigation/directional-menu"} className="">
+              <a href={"/effects/navigation/directional-menu"}>
                 Get Started
-              </Link>
+              </a>
             </button>
 
             <button className="px-7 py-3 rounded-full border cursor-pointer border-white/10 bg-white/3 hover:bg-white/6 transition-all duration-300 text-white/80">
-              <Link prefetch={false} href={"/effects"}>Explore Platform</Link>
+              <a href={"/effects"}>Explore Platform</a>
             </button>
           </div>
         </div>

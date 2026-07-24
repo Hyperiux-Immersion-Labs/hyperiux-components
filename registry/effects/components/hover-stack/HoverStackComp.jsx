@@ -18,6 +18,11 @@ const HoverStackComp = ({
   const [activeIndex, setActiveIndex] = useState(null);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false)
+  );
 
   useEffect(() => {
     const checkWidth = () => {
@@ -32,6 +37,20 @@ const HoverStackComp = ({
     return () => {
       window.removeEventListener("resize", checkWidth);
     };
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mq) return;
+
+    const onChange = (event) => {
+      setReduceMotion(event.matches);
+      if (event.matches) setActiveIndex(null);
+    };
+
+    setReduceMotion(mq.matches);
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
   }, []);
 
   const preparedCards = useMemo(() => {
@@ -60,6 +79,20 @@ const HoverStackComp = ({
     let rotate = card._rotation;
     let zIndex = card._baseZ;
     let scale = 1;
+
+    if (reduceMotion) {
+      // No lift / push / rotate snap — only raise z-index so the card is readable.
+      if (isActive) zIndex = 999;
+
+      return {
+        "--card-width": `${cardWidth}px`,
+        "--card-height": `${cardHeight}px`,
+        transform: `translate3d(${x}px, ${y}px, 0) rotate(${rotate}deg) scale(1)`,
+        zIndex,
+        transition: "none",
+        background: card.bg,
+      };
+    }
 
     if (hasActive) {
       if (index < activeIndex) {
@@ -149,7 +182,7 @@ const HoverStackComp = ({
           className="relative mx-auto"
           style={{
             "--stack-width": `${totalWidth}px`,
-            "--stack-height": `${cardHeight + hoverLift + 24}px`,
+            "--stack-height": `${cardHeight + (reduceMotion ? 0 : hoverLift) + 24}px`,
             width: "var(--stack-width)",
             height: "var(--stack-height)",
           }}

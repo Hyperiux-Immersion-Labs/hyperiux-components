@@ -1,8 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-
 const PRODUCT_LINKS = [
   { label: "Overview", href: "#" },
   { label: "Pricing", href: "#" },
@@ -13,52 +10,52 @@ const PRODUCT_LINKS = [
 const PREVIEW_IMAGES = [
   {
     alt: "Dashboard preview",
-    heightClassName: "h-54 max-xl:h-60 max-md:h-40",
+    heightClassName: "h-54 max-[1025px]:h-60 max-md:h-40",
     src: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-09.jpg",
   },
   {
     alt: "Product showcase",
-    heightClassName: "h-54 max-xl:h-60 max-md:h-40",
+    heightClassName: "h-54 max-[1025px]:h-60 max-md:h-40",
     src: "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/h-07.jpg",
   },
 ];
 
 export function Menu1() {
   return (
-    <div className="flex justify-between gap-8 max-xl:flex-wrap max-md:flex-col">
-      <div className="flex w-[65%] flex-col gap-6 max-xl:w-[70%] max-md:w-full">
-        <div className="flex flex-col gap-2 max-xl:gap-3 max-md:gap-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-800 max-xl:text-base max-md:text-xs">
+    <div className="flex justify-between gap-8 max-[1025px]:flex-wrap max-md:flex-col">
+      <div className="flex w-[65%] flex-col gap-6 max-[1025px]:w-[70%] max-md:w-full">
+        <div className="flex flex-col gap-2 max-[1025px]:gap-3 max-md:gap-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-800 max-[1025px]:text-base max-md:text-xs">
             Product Navigation
           </p>
-          <h3 className="text-2xl text-neutral-800 font-semibold max-xl:text-4xl max-md:text-2xl">
+          <h3 className="text-2xl text-neutral-800 font-semibold max-[1025px]:text-4xl max-md:text-2xl">
             Explore the product suite
           </h3>
         </div>
 
         <div className="flex flex-col max-md:flex-wrap gap-4">
           {PRODUCT_LINKS.map((item) => (
-            <Link
+            <a
               key={item.label}
               href={item.href}
-              className="flex flex-col gap-1 rounded-lg border border-neutral-200 p-4 transition-colors duration-200 hover:bg-neutral-100"
+              className="flex flex-col gap-1 rounded-lg border border-neutral-200 p-4 transition-colors duration-200 hover:bg-neutral-100 motion-reduce:bg-transparent motion-reduce:transition-none"
             >
-              <div className="text-lg font-medium text-neutral-700 max-xl:text-2xl max-md:text-xl">{item.label}</div>
-              <div className="text-sm text-neutral-600 max-xl:text-lg max-md:text-base">
+              <div className="text-lg font-medium text-neutral-700 max-[1025px]:text-2xl max-md:text-xl">{item.label}</div>
+              <div className="text-sm text-neutral-600 max-[1025px]:text-lg max-md:text-base">
                 Learn more about {item.label.toLowerCase()}.
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>
 
-      <div className="flex w-[30%] max-xl:hidden flex-col justify-end gap-4  max-xl:w-full max-xl:grid-cols-2 max-xl:gap-4  ">
+      <div className="flex w-[30%] max-[1025px]:hidden flex-col justify-end gap-4  max-[1025px]:w-full max-[1025px]:grid-cols-2 max-[1025px]:gap-4  ">
         {PREVIEW_IMAGES.map((image) => (
           <div
             key={image.src}
             className={`${image.heightClassName} overflow-hidden rounded-lg `}
           >
-            <Image
+            <img
               src={image.src}
               alt={image.alt}
               width={600}

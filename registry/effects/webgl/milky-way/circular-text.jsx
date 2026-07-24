@@ -21,6 +21,13 @@ const CircularText = ({
 
  tweenRef.current?.kill()
 
+ // Reduced-motion: keep the ring static — no continuous spin.
+ if (
+ window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+ ) {
+ return
+ }
+
  tweenRef.current = gsap.to(containerRef.current, {
  rotation: 360,
  duration: spinDuration,
@@ -32,6 +39,11 @@ const CircularText = ({
  return () => tweenRef.current?.kill()
  }, [spinDuration, text])
  const handleEnter = () => {
+ if (
+ window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+ ) {
+ return
+ }
  if (!tweenRef.current) return
 
  switch (onHover) {
@@ -56,6 +68,11 @@ const CircularText = ({
  }
 
  const handleLeave = () => {
+ if (
+ window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+ ) {
+ return
+ }
  if (!tweenRef.current) return
 
  tweenRef.current.resume()

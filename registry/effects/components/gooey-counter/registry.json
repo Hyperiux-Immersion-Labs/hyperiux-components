@@ -1,23 +1,32 @@
 {
   "name": "gooey-counter",
+  "version": "1.1.0",
   "type": "registry:component",
   "title": "Gooey Counter",
-  "description": "Canvas-based animated counter that morphs pixel-grid blocks between numbers 0–10 using an SVG gooey filter. Blocks scatter to a random layout between each number with eased transitions.",
+  "description": "Canvas-based animated counter that morphs pixel-grid blocks between numbers 0\u201310 using an SVG gooey filter. Blocks scatter to a random layout between each number with eased transitions.",
   "category": "components",
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/demo/gooey-counter",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "GooeyCounter",
   "exportKind": "default",
-  "main": "index.jsx",
   "importPath": "@/components/effects/gooey-counter",
   "target": "src/components/effects/gooey-counter",
   "files": [
     {
       "path": "index.jsx",
       "target": "src/components/effects/gooey-counter/index.jsx"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "summary": "Snap digits and skip scatter morph under reduced motion",
+      "breaking": false
     }
   ]
 }

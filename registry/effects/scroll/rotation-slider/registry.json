@@ -1,21 +1,29 @@
 {
   "name": "rotation-slider",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "summary": "Added prefers-reduced-motion support: perspective is flattened, the main scroll tracking loses its smoothing lag, and card rotation is cut to 15% strength",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Rotation Slider",
   "description": "Scroll-pinned horizontal slider with 3D card rotation, vertical drift, and SplitText caption reveals.",
   "category": "scroll",
   "dependencies": [
     "gsap",
-    "next",
     "lucide-react"
   ],
   "registryDependencies": [],
   "previewUrl": "/demo/rotation-slider",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "RotationSlider",
   "exportKind": "default",
-  "main": "index.jsx",
   "importPath": "@/components/effects/rotation-slider",
   "target": "src/components/effects/rotation-slider",
   "files": [

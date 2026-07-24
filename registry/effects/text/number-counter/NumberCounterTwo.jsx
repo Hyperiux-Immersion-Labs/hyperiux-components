@@ -15,10 +15,11 @@ const FONT_WEIGHTS = {
  bold:'font-bold',
 };
 
-const DigitScroller = memo(({ digit, index, triggerRef }) => {
+const DigitScroller = memo(({ digit, index, triggerRef, reducedMotion = false }) => {
  const digitRef = useRef(null);
 
  useEffect(() => {
+ if (reducedMotion || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) return;
  if (!digitRef.current || !triggerRef.current) return;
 
  const digitIndex = parseInt(digit, 10);
@@ -36,7 +37,15 @@ const DigitScroller = memo(({ digit, index, triggerRef }) => {
  }, triggerRef);
 
  return () => ctx.revert();
- }, [digit, index, triggerRef]);
+ }, [digit, index, reducedMotion, triggerRef]);
+
+ if (reducedMotion) {
+ return (
+ <span className="inline-flex h-[1em] w-[0.64em] items-center justify-center leading-none">
+ {digit}
+ </span>
+ );
+ }
 
  return (
  <div className="relative inline-flex h-[1em] w-[0.64em] overflow-hidden align-baseline leading-none">
@@ -58,14 +67,15 @@ DigitScroller.displayName ='DigitScroller';
 
 const NumberCounterTwo = ({
  value ='0',
- textSize ='text-[8vw] max-md:text-[7vw] max-sm:text-[12vw]',
+ textSize ='text-[8vw] max-[1025px]:text-[7vw] max-md:text-[12vw]',
  color ='#111111',
- fontWeight ='normal', }) => {
+ fontWeight ='normal',
+ reducedMotion = false, }) => {
  const containerRef = useRef(null);
  const cleanValue = value.replace('+','');
 
  return (
- <div ref={containerRef} className="flex items-end gap-[2vw] w-fit max-md:gap-0">
+ <div ref={containerRef} className="flex items-end gap-[2vw] w-fit max-[1025px]:gap-0">
  <div
  className={`flex items-end font-display leading-none ${textSize} ${FONT_WEIGHTS[fontWeight] ||'font-normal'}`}
  style={{ color }}
@@ -76,6 +86,7 @@ const NumberCounterTwo = ({
  digit={digit}
  index={index}
  triggerRef={containerRef}
+ reducedMotion={reducedMotion}
  />
  ))}
 

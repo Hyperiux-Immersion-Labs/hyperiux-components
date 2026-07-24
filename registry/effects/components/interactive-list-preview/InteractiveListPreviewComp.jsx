@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import Image from "next/image";
 
 const DEFAULT_IMAGE_Z_INDEX = 10;
 const HIGHLIGHT_ANIMATION_DURATION = 0.4;
@@ -22,7 +21,7 @@ const ITEM_LABEL_START_CODE = 97;
 const getItemLabel = (index) =>
   `(${String.fromCharCode(ITEM_LABEL_START_CODE + index)}.)`;
 
-export function ListHover({ items }) {
+export default function InteractiveListPreviewComp({ items }) {
   const imageRefs = useRef([]);
   const imageContainerRef = useRef(null);
   const tableRef = useRef(null);
@@ -32,15 +31,48 @@ export function ListHover({ items }) {
   const tweenGenerationRef = useRef({});
   const activeIndexRef = useRef(null);
   const zIndexRef = useRef(DEFAULT_IMAGE_Z_INDEX);
+  const reduceMotionRef = useRef(
+    typeof window !== "undefined" &&
+      (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false)
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mq) return;
+
+    const onChange = (event) => {
+      reduceMotionRef.current = event.matches;
+      if (event.matches && imageContainerRef.current) {
+        gsap.killTweensOf(imageContainerRef.current);
+        gsap.set(imageContainerRef.current, { x: 0, y: 0 });
+      }
+    };
+
+    reduceMotionRef.current = mq.matches;
+    if (mq.matches && imageContainerRef.current) {
+      gsap.set(imageContainerRef.current, { x: 0, y: 0 });
+    }
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
 
   useEffect(() => {
     imageRefs.current.forEach((imageElement) => {
       if (!imageElement) return;
 
-      gsap.set(imageElement, {
-        clipPath: IMAGE_HIDDEN_CLIP_PATH,
-        visibility: IMAGE_VISIBILITY_HIDDEN,
-      });
+      if (reduceMotionRef.current) {
+        // Reduced-motion: opacity only — keep full clip, start hidden.
+        gsap.set(imageElement, {
+          clipPath: IMAGE_VISIBLE_CLIP_PATH,
+          opacity: 0,
+          visibility: IMAGE_VISIBILITY_HIDDEN,
+        });
+      } else {
+        gsap.set(imageElement, {
+          clipPath: IMAGE_HIDDEN_CLIP_PATH,
+          visibility: IMAGE_VISIBILITY_HIDDEN,
+        });
+      }
     });
 
     if (!highlightRef.current) return;
@@ -101,14 +133,16 @@ export function ListHover({ items }) {
     if (!imageElement) return;
 
     const tweenGeneration = getNextTweenGeneration(index);
+    const reduceMotion = reduceMotionRef.current;
 
     gsap.killTweensOf(imageElement);
 
     gsap.to(imageElement, {
-      clipPath: IMAGE_HIDDEN_CLIP_PATH,
-      opacity: 0,
-      duration: IMAGE_HIDE_DURATION,
-      ease: "power3.inOut",
+      ...(reduceMotion
+        ? { opacity: 0 }
+        : { clipPath: IMAGE_HIDDEN_CLIP_PATH, opacity: 0 }),
+      duration: reduceMotion ? HIGHLIGHT_FADE_DURATION : IMAGE_HIDE_DURATION,
+      ease: reduceMotion ? "power2.out" : "power3.inOut",
       onComplete: () => {
         if (tweenGenerationRef.current[index] !== tweenGeneration) return;
 
@@ -124,37 +158,69 @@ export function ListHover({ items }) {
 
     if (!imageElement) return;
 
+    const reduceMotion = reduceMotionRef.current;
+    const previousIndex = activeIndexRef.current;
+
     pendingLeaveRef.current[index] = false;
     rowRefs.current[index] = rowElement;
+
+    // Reduced-motion: only one image at a time — fade the previous out first.
+    if (reduceMotion && previousIndex !== null && previousIndex !== index) {
+      pendingLeaveRef.current[previousIndex] = false;
+      animateImageOut(previousIndex);
+    }
+
     zIndexRef.current += 1;
 
     const tweenGeneration = getNextTweenGeneration(index);
 
     gsap.killTweensOf(imageElement);
 
-    gsap.set(imageElement, {
-      zIndex: zIndexRef.current,
-      visibility: IMAGE_VISIBILITY_VISIBLE,
-      clipPath: IMAGE_HIDDEN_CLIP_PATH,
-      opacity: 1,
-    });
+    if (reduceMotion) {
+      gsap.set(imageElement, {
+        zIndex: zIndexRef.current,
+        visibility: IMAGE_VISIBILITY_VISIBLE,
+        clipPath: IMAGE_VISIBLE_CLIP_PATH,
+        opacity: 0,
+      });
 
-    gsap.to(imageElement, {
-      clipPath: IMAGE_VISIBLE_CLIP_PATH,
-      opacity: 1,
-      duration: IMAGE_REVEAL_DURATION,
-      ease: "power2.inOut",
-      onComplete: () => {
-        if (tweenGenerationRef.current[index] !== tweenGeneration) return;
-        if (!pendingLeaveRef.current[index]) return;
+      gsap.to(imageElement, {
+        opacity: 1,
+        duration: HIGHLIGHT_FADE_DURATION,
+        ease: "power2.out",
+        onComplete: () => {
+          if (tweenGenerationRef.current[index] !== tweenGeneration) return;
+          if (!pendingLeaveRef.current[index]) return;
 
-        pendingLeaveRef.current[index] = false;
-        animateImageOut(index);
-      },
-    });
+          pendingLeaveRef.current[index] = false;
+          animateImageOut(index);
+        },
+      });
+    } else {
+      gsap.set(imageElement, {
+        zIndex: zIndexRef.current,
+        visibility: IMAGE_VISIBILITY_VISIBLE,
+        clipPath: IMAGE_HIDDEN_CLIP_PATH,
+        opacity: 1,
+      });
 
-    if (activeIndexRef.current !== null && activeIndexRef.current !== index) {
-      setRowTextColor(activeIndexRef.current, INACTIVE_ROW_TEXT_COLOR);
+      gsap.to(imageElement, {
+        clipPath: IMAGE_VISIBLE_CLIP_PATH,
+        opacity: 1,
+        duration: IMAGE_REVEAL_DURATION,
+        ease: "power2.inOut",
+        onComplete: () => {
+          if (tweenGenerationRef.current[index] !== tweenGeneration) return;
+          if (!pendingLeaveRef.current[index]) return;
+
+          pendingLeaveRef.current[index] = false;
+          animateImageOut(index);
+        },
+      });
+    }
+
+    if (previousIndex !== null && previousIndex !== index) {
+      setRowTextColor(previousIndex, INACTIVE_ROW_TEXT_COLOR);
     }
 
     activeIndexRef.current = index;
@@ -193,6 +259,8 @@ export function ListHover({ items }) {
   };
 
   const onMouseMove = (event) => {
+    // Reduced-motion: no cursor parallax on the preview images.
+    if (reduceMotionRef.current) return;
     if (!imageContainerRef.current) return;
 
     const bounds = event.currentTarget.getBoundingClientRect();
@@ -210,7 +278,7 @@ export function ListHover({ items }) {
   return (
     <>
       <div
-        className="relative min-h-[50vh] w-full overflow-hidden bg-neutral-900 font-mono text-white max-xl:hidden"
+        className="relative min-h-[50vh] w-full overflow-hidden bg-neutral-900 font-mono text-white max-[1025px]:hidden"
         onMouseMove={onMouseMove}
       >
         <div
@@ -233,7 +301,7 @@ export function ListHover({ items }) {
                 zIndex: DEFAULT_IMAGE_Z_INDEX,
               }}
             >
-              <Image src={item.img} alt="" fill className="object-cover" />
+              <img src={item.img} alt="hover-item-image" className="absolute inset-0 h-full w-full object-cover" />
             </div>
           ))}
         </div>
@@ -259,7 +327,6 @@ export function ListHover({ items }) {
                     onRowEnter(event.currentTarget, index)
                   }
                   onMouseLeave={() => onRowLeave(index)}
-                  className=""
                 >
                   <td className="whitespace-nowrap px-6 py-3 text-xs uppercase tracking-widest">
                     {item.client}
@@ -287,22 +354,22 @@ export function ListHover({ items }) {
         </div>
       </div>
 
-      <div className="hidden w-full bg-neutral-900 font-mono text-white max-xl:block">
+      <div className="hidden w-full bg-neutral-900 font-mono text-white max-[1025px]:block">
         {items.map((item, index) => (
           <div key={`${item.client}-${index}`} className="flex border-b border-white/10">
             <div className="flex w-1/2 flex-col justify-between gap-3 p-4">
               <div className="flex flex-col gap-1">
-                <p className="font-bold uppercase tracking-widest max-md:text-sm max-xl:text-xl">
+                <p className="font-bold uppercase tracking-widest max-md:text-sm max-[1025px]:text-xl">
                   {item.client}
                 </p>
 
                 {item.platform && (
-                  <p className="uppercase tracking-widest text-white/60 max-md:text-xs max-xl:text-lg">
+                  <p className="uppercase tracking-widest text-white/60 max-md:text-xs max-[1025px]:text-lg">
                     {item.platform}
                   </p>
                 )}
 
-                <p className="leading-relaxed text-white/50 max-md:text-xs max-xl:text-base">
+                <p className="leading-relaxed text-white/50 max-md:text-xs max-[1025px]:text-base">
                   {item.services}
                 </p>
               </div>
@@ -310,12 +377,11 @@ export function ListHover({ items }) {
              
             </div>
 
-            <div className="relative aspect-3/4 h-full w-1/2 max-xl:h-[30vh]">
-              <Image
+            <div className="relative aspect-3/4 h-full w-1/2 max-[1025px]:h-[30vh]">
+              <img
                 src={item.img}
                 alt={item.client}
-                fill
-                className="object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
           </div>

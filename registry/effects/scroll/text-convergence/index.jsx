@@ -17,6 +17,18 @@ const CHARACTER_ROTATION_MIN = -20;
 const CHARACTER_ROTATION_MAX = 20;
 const CHARACTER_EASE = "elastic.out(1,0.8)";
 
+// True when the user has asked the OS to minimise animation. Safe to call
+// during render - returns false on the server.
+function prefersReducedMotion() {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
+
+// Reduced motion: keep the per-character assembly, just far weaker - the
+// main horizontal scroll (xPercent:-100) is left alone, it's the functional
+// scroll-through mechanism, not decorative per-char movement.
+const REDUCED_MOTION_FACTOR = 0.25;
+
 const getDynamicHeight = (text) => {
   const trimmedText = text.trim();
   const words = trimmedText ? trimmedText.split(/\s+/).length : 0;
@@ -91,6 +103,9 @@ export default function TextConvergence({
         type: CHARACTER_SPLIT_TYPE,
       });
 
+      const reducedMotion = prefersReducedMotion();
+      const charScale = reducedMotion ? REDUCED_MOTION_FACTOR : 1;
+
       const scrollTween = gsap.to(textElement, {
         xPercent: -100,
         ease: "linear",
@@ -107,14 +122,12 @@ export default function TextConvergence({
 
       split.chars.forEach((character) => {
         gsap.from(character, {
-          yPercent: gsap.utils.random(
-            CHARACTER_Y_PERCENT_MIN,
-            CHARACTER_Y_PERCENT_MAX
-          ),
-          rotation: gsap.utils.random(
-            CHARACTER_ROTATION_MIN,
-            CHARACTER_ROTATION_MAX
-          ),
+          yPercent:
+            gsap.utils.random(CHARACTER_Y_PERCENT_MIN, CHARACTER_Y_PERCENT_MAX) *
+            charScale,
+          rotation:
+            gsap.utils.random(CHARACTER_ROTATION_MIN, CHARACTER_ROTATION_MAX) *
+            charScale,
           ease: CHARACTER_EASE,
           scrollTrigger: {
             trigger: character,
@@ -188,7 +201,7 @@ export default function TextConvergence({
             <p
               className="m-0 font-mono text-xs uppercase tracking-[0.3vw] text-gray-400"
             >
-              - kinetic typography —
+              — kinetic typography —
             </p>
 
             <h2
@@ -210,7 +223,7 @@ export default function TextConvergence({
             </p>
 
             <div className="flex flex-col items-center gap-[2vw]">
-  <span className="">
+  <span>
   <p className="font-mono text-xs uppercase tracking-[0.25vw] text-white/80">
 
                 scroll

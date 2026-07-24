@@ -59,7 +59,6 @@ export default function StickyContentWrapper() {
  <section className="bg-white">
  <StickyContentComp
  items={stickyItems}
- className=""
  leftClassName="text-black"
  contentEnterYPercent={2}
  contentExitYPercent={-2}

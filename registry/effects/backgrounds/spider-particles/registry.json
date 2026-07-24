@@ -4,20 +4,35 @@
   "title": "Spider Particles",
   "description": "Canvas particle network background with connecting lines and mouse-driven repulsion.",
   "category": "backgrounds",
-  "dependencies": ["three"],
+  "dependencies": [
+    "three"
+  ],
   "registryDependencies": [],
   "previewUrl": "/demo/spider-particles",
   "tier": "free",
   "subfolder": true,
+  "main": "index.jsx",
   "exportName": "SpiderParticles",
   "exportKind": "default",
-  "main": "index.jsx",
   "importPath": "@/components/effects/spider-particles",
   "target": "src/components/effects/spider-particles",
   "files": [
     {
       "path": "index.jsx",
       "target": "src/components/effects/spider-particles/index.jsx"
+    },
+    {
+      "path": "createSuspendedRaf.js",
+      "target": "src/components/effects/spider-particles/createSuspendedRaf.js"
+    }
+  ],
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "summary": "Add prefers-reduced-motion support",
+      "breaking": false
     }
   ]
 }
