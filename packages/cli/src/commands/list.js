@@ -13,33 +13,8 @@ export async function list() {
     const index = await fetchRegistryIndex();
     spinner.stop();
 
-    // Group by category
-    const categories = {};
-    for (const item of index.items) {
-      const category = item.category || "other";
-      if (!categories[category]) {
-        categories[category] = [];
-      }
-      categories[category].push(item);
-    }
-
-    // Display by category
-    for (const [category, items] of Object.entries(categories)) {
-      console.log(chalk.cyan.bold(capitalize(category)));
-      console.log();
-
-      for (const item of items) {
-        const deps = item.dependencies?.length
-          ? chalk.dim(` (${item.dependencies.join(", ")})`)
-          : "";
-        console.log(`  ${chalk.green(item.name)}${deps}`);
-        if (item.description) {
-          console.log(`    ${chalk.dim(item.description)}`);
-        }
-      }
-
-      console.log();
-    }
+    displayTier("Free Effects", index.tiers.free, chalk.green);
+    displayTier("Pro Effects", index.tiers.pro, chalk.magenta);
 
     console.log(chalk.dim("Add an effect with:"));
     console.log(chalk.cyan("  npx hyperiux add <effect-name>"));
@@ -53,4 +28,44 @@ export async function list() {
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function displayTier(title, items, nameColor) {
+  if (!items.length) return;
+
+  console.log(chalk.bold(title));
+  console.log();
+
+  const categories = groupByCategory(items);
+
+  for (const [category, categoryItems] of Object.entries(categories)) {
+    console.log(chalk.cyan.bold(capitalize(category)));
+    console.log();
+
+    for (const item of categoryItems) {
+      const deps = item.dependencies?.length
+        ? chalk.dim(` (${item.dependencies.join(", ")})`)
+        : "";
+      console.log(`  ${nameColor(item.name)}${deps}`);
+      if (item.description) {
+        console.log(`    ${chalk.dim(item.description)}`);
+      }
+    }
+
+    console.log();
+  }
+}
+
+function groupByCategory(items) {
+  const categories = {};
+
+  for (const item of items) {
+    const category = item.category || "other";
+    if (!categories[category]) {
+      categories[category] = [];
+    }
+    categories[category].push(item);
+  }
+
+  return categories;
 }

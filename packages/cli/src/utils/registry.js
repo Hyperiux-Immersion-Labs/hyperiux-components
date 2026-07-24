@@ -28,6 +28,10 @@ function isProEffect(item) {
   return tier === "pro" || tier === "paid";
 }
 
+function getRegistryTier(item) {
+  return isProEffect(item) ? "pro" : "free";
+}
+
 function createRegistryError(message, options = {}) {
   const error = new Error(message);
 
@@ -195,14 +199,14 @@ export async function fetchRegistryIndex(options = {}) {
   const { local = false, cwd = process.cwd() } = options;
 
   if (local) {
-    return fetchLocalRegistryIndex(cwd);
+    return normalizeRegistryIndex(await fetchLocalRegistryIndex(cwd));
   }
 
   if (fs.existsSync(path.join(DEV_REGISTRY_PATH, "index.json"))) {
-    return fetchDevRegistryIndex();
+    return normalizeRegistryIndex(await fetchDevRegistryIndex());
   }
 
-  return fetchRemoteRegistryIndex();
+  return normalizeRegistryIndex(await fetchRemoteRegistryIndex());
 }
 
 async function fetchDevRegistryIndex() {
@@ -226,8 +230,30 @@ async function fetchLocalRegistryIndex(cwd) {
   return JSON.parse(content);
 }
 
+export function normalizeRegistryIndex(index) {
+  const sourceItems = Array.isArray(index) ? index : index?.items;
+
+  if (!Array.isArray(sourceItems)) {
+    throw createRegistryError("Invalid registry index response");
+  }
+
+  const items = sourceItems.map((item) => ({
+    ...item,
+    tier: getRegistryTier(item),
+  }));
+
+  return {
+    ...(Array.isArray(index) ? {} : index),
+    items,
+    tiers: {
+      free: items.filter((item) => item.tier === "free"),
+      pro: items.filter((item) => item.tier === "pro"),
+    },
+  };
+}
+
 async function fetchRemoteRegistryIndex() {
-  const url = `${REGISTRY_URL}/index.json`;
+  const url = `${REGISTRY_URL.replace(/\/$/, "")}/index.json`;
 
   let response;
 
