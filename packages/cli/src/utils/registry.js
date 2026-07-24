@@ -453,28 +453,6 @@ export function normalizeRegistryIndex(index) {
   };
 }
 
-export function normalizeRegistryIndex(index) {
-  const sourceItems = Array.isArray(index) ? index : index?.items;
-
-  if (!Array.isArray(sourceItems)) {
-    throw createRegistryError("Invalid registry index response");
-  }
-
-  const items = sourceItems.map((item) => ({
-    ...item,
-    tier: getRegistryTier(item),
-  }));
-
-  return {
-    ...(Array.isArray(index) ? {} : index),
-    items,
-    tiers: {
-      free: items.filter((item) => item.tier === "free"),
-      pro: items.filter((item) => item.tier === "pro"),
-    },
-  };
-}
-
 async function fetchRemoteRegistryIndex() {
   const url = `${REGISTRY_URL.replace(/\/$/, "")}/index.json`;
 
