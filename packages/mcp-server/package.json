@@ -1,0 +1,60 @@
+{
+  "name": "hyperiux-mcp-server",
+  "version": "0.1.0",
+  "description": "MCP server for browsing and installing Hyperiux Vault effects - lets AI clients search the catalog, inspect an effect's props/dependencies/changelog, and fetch installable source.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "hyperiux-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "lint": "eslint src",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "hyperiux",
+    "mcp",
+    "model-context-protocol",
+    "effects",
+    "ui",
+    "registry"
+  ],
+  "author": "Hyperiux",
+  "license": "MIT",
+  "homepage": "https://vault.hyperiux.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hyperiux-Immersion-Labs/hyperiux-components.git",
+    "directory": "packages/mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "eslint": "^9",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8",
+    "vitest": "^4.1.8"
+  }
+}

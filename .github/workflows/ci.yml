@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, phase-2-dev]
   pull_request:
-    branches: [main]
+    branches: [main, phase-2-dev]
 
 jobs:
   quality:
@@ -28,20 +28,39 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
+      - name: Lint (CLI)
         run: pnpm --filter hyperiux lint
 
-      - name: Test
+      - name: Test (CLI)
         run: pnpm --filter hyperiux test
 
-      - name: Build (syntax check + smoke)
+      - name: Build (CLI, syntax check + smoke)
         run: pnpm --filter hyperiux build
 
-      - name: Smoke - bin entrypoint
+      - name: Smoke - CLI bin entrypoint
         run: pnpm --filter hyperiux smoke:bin
 
-      - name: Pack dry-run
+      - name: Pack dry-run (CLI)
         run: cd packages/cli && npm pack --dry-run
+
+      - name: Lint (MCP server)
+        run: pnpm --filter hyperiux-mcp-server lint
+
+      - name: Test (MCP server)
+        run: pnpm --filter hyperiux-mcp-server test
+
+      - name: Build (MCP server)
+        run: pnpm --filter hyperiux-mcp-server build
+
+      - name: Smoke - MCP server starts
+        run: |
+          # Closed stdin makes the stdio transport hit EOF and exit cleanly
+          # on its own - this just confirms the server boots without error.
+          node packages/mcp-server/dist/index.js < /dev/null 2>&1 | tee /tmp/mcp-smoke.log
+          grep -q "Hyperiux MCP server running via stdio" /tmp/mcp-smoke.log
+
+      - name: Pack dry-run (MCP server)
+        run: cd packages/mcp-server && npm pack --dry-run
 
   security:
     name: Security & Compliance
