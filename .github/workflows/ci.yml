@@ -54,10 +54,10 @@ jobs:
 
       - name: Smoke - MCP server starts
         run: |
-          node packages/mcp-server/dist/index.js &
-          pid=$!
-          sleep 1
-          kill "$pid"
+          # Closed stdin makes the stdio transport hit EOF and exit cleanly
+          # on its own - this just confirms the server boots without error.
+          node packages/mcp-server/dist/index.js < /dev/null 2>&1 | tee /tmp/mcp-smoke.log
+          grep -q "Hyperiux MCP server running via stdio" /tmp/mcp-smoke.log
 
       - name: Pack dry-run (MCP server)
         run: cd packages/mcp-server && npm pack --dry-run
