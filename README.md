@@ -348,7 +348,7 @@ Adjust `aliases` to match your project's path aliases.
 - **Next.js** 14+ (App Router)
 - **Tailwind CSS** v3 or v4
 
-Most effects depend on **GSAP**. The CLI installs it automatically. Note that GSAP's premium plugins (SplitText, ScrollTrigger, etc.) require a GSAP license for commercial use - see [gsap.com/licensing](https://gsap.com/licensing/).
+Most effects depend on **GSAP**. The CLI installs it automatically.
 
 ---
 
