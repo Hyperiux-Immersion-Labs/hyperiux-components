@@ -8,6 +8,7 @@
   "registryDependencies": [],
   "previewUrl": "/buttons/animated-toggle",
   "tier": "pro",
+  "license": "proprietary",
   "main": "index.jsx",
   "importPath": "@/components/effects/animated-toggle",
   "target": "src/components/effects/animated-toggle",

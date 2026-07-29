@@ -13,5 +13,6 @@
   "previewUrl": "/scroll-distortion",
   "coverImage": "/assets/list/scroll-distortion.png",
   "videoUrl": "scroll-distortion.mp4",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

@@ -12,5 +12,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/mouse-pixelation",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

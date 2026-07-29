@@ -9,5 +9,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/mouse-hover-image",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

@@ -9,5 +9,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/rectangular-text-reveal",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

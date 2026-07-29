@@ -12,5 +12,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/loaders/numeric-tunnel",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

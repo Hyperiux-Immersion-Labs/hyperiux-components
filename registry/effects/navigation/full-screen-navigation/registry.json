@@ -7,7 +7,10 @@
   "dependencies": [
     "gsap"
   ],
-  "registryDependencies": ["char-stagger-button"],
+  "registryDependencies": [
+    "char-stagger-button"
+  ],
   "previewUrl": "/navigation/immersive-full-screen-nav",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

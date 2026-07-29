@@ -9,5 +9,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/navigation/elevate-navbar",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

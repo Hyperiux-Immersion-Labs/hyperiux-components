@@ -9,5 +9,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/sticky-content-wrapper",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

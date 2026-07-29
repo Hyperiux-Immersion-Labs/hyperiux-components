@@ -9,5 +9,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/webgl/zoom-slider",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

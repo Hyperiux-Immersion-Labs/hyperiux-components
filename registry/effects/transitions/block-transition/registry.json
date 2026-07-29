@@ -10,5 +10,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/page-transitions/block-transition",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

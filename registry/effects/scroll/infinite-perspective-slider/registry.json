@@ -9,5 +9,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/infinite-perspective-slider",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

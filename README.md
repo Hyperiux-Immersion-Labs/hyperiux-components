@@ -178,4 +178,4 @@ To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-ne
 
 ## License
 
-Free effects are MIT licensed. Pro effects require a subscription and are not redistributable.
+The CLI and free effects are licensed under the [Mozilla Public License 2.0](./LICENSE) (MPL-2.0). Pro effects require an active Hyperiux Pro subscription and are proprietary — not open source, not redistributable.

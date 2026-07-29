@@ -7,5 +7,6 @@
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/buttons/link-button",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

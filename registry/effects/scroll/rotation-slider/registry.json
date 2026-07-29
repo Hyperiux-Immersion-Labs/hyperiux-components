@@ -10,5 +10,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/rotation-slider",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

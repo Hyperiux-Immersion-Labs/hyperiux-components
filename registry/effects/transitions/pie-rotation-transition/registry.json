@@ -10,5 +10,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/page-transitions/pie-rotation-transition",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

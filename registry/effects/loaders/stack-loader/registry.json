@@ -9,5 +9,6 @@
   ],
   "registryDependencies": [],
   "previewUrl": "/loaders/stack-loader",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

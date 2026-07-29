@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Changed
+- Project license changed from MIT to the Mozilla Public License 2.0 (MPL-2.0) for the CLI (`packages/cli`) and all free registry effects (`registry/effects`). Pro effects remain proprietary and are unaffected.
+
 ## [1.0.4] - 2026-06-05
 
 ### Security

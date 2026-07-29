@@ -7,5 +7,6 @@
   "dependencies": [],
   "registryDependencies": [],
   "previewUrl": "/buttons/scramble-link-button",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

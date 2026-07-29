@@ -11,5 +11,6 @@
     "chevron-bird"
   ],
   "previewUrl": "/navigation/directional-menu",
-  "tier": "free"
+  "tier": "free",
+  "license": "MPL-2.0"
 }

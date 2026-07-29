@@ -1,3 +1,8 @@
+/* Copyright (c) 2026 Hyperiux. All rights reserved.
+ * This file is part of a Hyperiux Pro effect and is not covered by this
+ * repository's Mozilla Public License. Licensed only to active Hyperiux
+ * Pro subscribers; not for redistribution. */
+
 "use client"
 
 const Cross = ({
