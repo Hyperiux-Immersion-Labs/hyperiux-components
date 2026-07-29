@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { fetchEffect } from "../registry-client.js";
 import { CHARACTER_LIMIT } from "../constants.js";
-import { RegistryError } from "../types.js";
+import { RegistryError, type RegistryEffect } from "../types.js";
 
 const GetEffectInputSchema = z
   .object({
@@ -32,9 +32,10 @@ Args:
   - name (string): exact effect slug
   - include_source (boolean, default false): also return component source. Free effects: always available. Pro effects: only if authenticated (see below).
 
-Returns JSON: { name, title, description, tier, version, dependencies, changelog, install_command, files: [{ path, content? }] }
+Returns JSON: { name, title, description, tier, version, dependencies, changelog, install_command, preview_url, import_path, target, main, import_statement, files: [{ path, content? }] }
   - changelog: array of { version, date, summary, breaking }, newest first
   - files[].content is omitted unless include_source=true AND the effect is accessible (free, or Pro with a valid token)
+  - import_statement is the exact import line to use after installing (e.g. \`import { DottedGrid } from "@/components/effects/dotted-grid";\`), built from exportKind/exportName/import_path the same way the CLI's own \`hyperiux add\` output does - omitted if the registry entry has no import_path
 
 Pro effects without a token: the response still includes metadata (description, dependencies, changelog) but files have no content, and a note explains the effect requires a Hyperiux Pro account - don't treat this as an error, it's expected for unauthenticated Pro lookups.
 
@@ -72,6 +73,8 @@ Error Handling:
         const hasSource = effect.files.some((f) => typeof f.content === "string");
         const sourceLocked = isPro && !hasSource;
 
+        const importStatement = buildImportStatement(effect);
+
         const output = {
           name: effect.name,
           title: effect.title || effect.name,
@@ -81,6 +84,11 @@ Error Handling:
           dependencies: effect.dependencies,
           changelog: effect.changelog,
           install_command: `npx hyperiux add ${effect.name}`,
+          ...(effect.previewUrl ? { preview_url: effect.previewUrl } : {}),
+          ...(effect.importPath ? { import_path: effect.importPath } : {}),
+          ...(effect.target ? { target: effect.target } : {}),
+          ...(effect.main ? { main: effect.main } : {}),
+          ...(importStatement ? { import_statement: importStatement } : {}),
           files: effect.files.map((file) => ({
             path: file.path,
             ...(params.include_source && typeof file.content === "string"
@@ -112,6 +120,16 @@ Error Handling:
       }
     }
   );
+}
+
+// Mirrors packages/cli/src/commands/add.js's own import-statement construction,
+// so an agent's suggested import always matches what `hyperiux add` prints.
+function buildImportStatement(effect: RegistryEffect): string | null {
+  if (!effect.importPath || !effect.exportName) return null;
+
+  return effect.exportKind === "default"
+    ? `import ${effect.exportName} from "${effect.importPath}";`
+    : `import { ${effect.exportName} } from "${effect.importPath}";`;
 }
 
 function formatError(error: unknown): string {

@@ -41,6 +41,10 @@ export interface RegistryEffect {
   version: string;
   changelog: ChangelogEntry[];
   files: EffectFile[];
+  previewUrl?: string;
+  importPath?: string;
+  target?: string;
+  main?: string;
 }
 
 export class RegistryError extends Error {
