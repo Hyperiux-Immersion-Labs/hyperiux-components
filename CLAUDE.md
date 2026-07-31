@@ -46,9 +46,9 @@ The registry is the core distribution mechanism (shadcn-style). Source lives in 
 The CLI resolves the registry in priority order:
 1. Auto-detected local path (`apps/docs/public/r/`) — active when running from inside the monorepo (existence check, not env var)
 2. `HYPERIUX_REGISTRY_URL` env var override
-3. Production: `https://components.hyperiux.com/r`
+3. Production: `https://vault.hyperiux.com/r`
 
-The docs site is deployed at `https://hyperiux-ui.vercel.app`. The CLI registry uses a separate domain (`components.hyperiux.com`). When migrating, update `REGISTRY_URL` in `packages/cli/src/utils/registry.js` and `$schema` in `packages/cli/src/utils/config.js`.
+The docs site is deployed at `https://hyperiux-ui.vercel.app`. The CLI registry uses a separate domain (`vault.hyperiux.com`). When migrating, update `REGISTRY_URL` in `packages/cli/src/utils/registry.js` and `$schema` in `packages/cli/src/utils/config.js`.
 
 **Every registry effect folder must have:**
 - `<name>.jsx` — component with `"use client"` and a **named export** (not default). Multi-file entries use relative imports between files in the same folder.
@@ -132,7 +132,7 @@ The registry effect itself should export just the primary variant — the versio
 - `add` flow: fetch registry JSON → check existing files → install missing npm deps → write files with path alias resolution
 - Path aliases (`@/`) are resolved to `src/` using `hyperiux.json` config; supported alias keys: `components`, `effects`, `hooks`, `lib`
 - Package manager is auto-detected from lock files (pnpm > yarn > bun > npm)
-- To publish: `cd packages/cli && npm publish` (requires `components.hyperiux.com` to be live as the registry host)
+- To publish: `cd packages/cli && npm publish` (requires `vault.hyperiux.com` to be live as the registry host)
 
 ### Sentry
 

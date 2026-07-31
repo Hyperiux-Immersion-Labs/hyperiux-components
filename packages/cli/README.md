@@ -5,7 +5,7 @@
 
 **A collection of high-quality animation effects and interactive components for Next.js — designed by [Hyperiux](https://hyperiux.com).**
 
-32 effects are free and open source. 83 pro effects are available with a [Pro subscription](https://components.hyperiux.com/pricing). The CLI installs source code directly into your project — you own what you install.
+32 effects are free and open source. 83 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project — you own what you install.
 
 ---
 
@@ -59,13 +59,13 @@ npx hyperiux add spider-particles
 npx hyperiux add mouse-pixelation
 ```
 
-**83 pro effects** — require a [Pro subscription](https://components.hyperiux.com/pricing):
+**83 pro effects** — require a [Pro subscription](https://vault.hyperiux.com/pricing):
 ```bash
 npx hyperiux login       # authenticate once
 npx hyperiux add milkyway
 ```
 
-[Browse all effects →](https://components.hyperiux.com/effects)
+[Browse all effects →](https://vault.hyperiux.com/effects)
 
 ---
 
@@ -74,26 +74,26 @@ npx hyperiux add milkyway
 ### Scroll
 Scroll-driven animations built on GSAP ScrollTrigger — parallax galleries, pinned sequences, horizontal storytelling, stacking cards, and more.
 
-`sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `parallax-slider` · `rotation-slider` · `text-convergence` · `scroll-distortion` · [+more](https://components.hyperiux.com/effects/scroll-effects)
+`sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `parallax-slider` · `rotation-slider` · `text-convergence` · `scroll-distortion` · [+more](https://vault.hyperiux.com/effects/scroll-effects)
 
 ### WebGL
 Three.js and R3F scenes with custom GLSL shaders — image carousels, pixel grids, frosted glass, GPU particle galaxies, and 3D heroes.
 
-`interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milkyway` · `fractal-glass` · [+more](https://components.hyperiux.com/effects/webgl)
+`interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milkyway` · `fractal-glass` · [+more](https://vault.hyperiux.com/effects/webgl)
 
 ### Cursor
 Canvas 2D and Three.js cursor effects — image trails, rope followers, liquid glass, character grids.
 
-`phantom-image-trail` · `pixelated-image-effect` · `magnetic-image-trail` · `character-trail` · `rope-cursor` · [+more](https://components.hyperiux.com/effects/cursor-effects)
+`phantom-image-trail` · `pixelated-image-effect` · `magnetic-image-trail` · `character-trail` · `rope-cursor` · [+more](https://vault.hyperiux.com/effects/cursor-effects)
 
 ### Text
 Letter-level and line-level reveal animations — blur, scramble, stagger, perspective flip, mask wipe.
 
-`blur-text` · `overflow-stagger-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://components.hyperiux.com/effects/text-effects)
+`blur-text` · `overflow-stagger-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-effects)
 
 ### Backgrounds · Page Transitions · Buttons · Components · Navigation · Loaders
 
-[Browse all →](https://components.hyperiux.com/effects)
+[Browse all →](https://vault.hyperiux.com/effects)
 
 ---
 
@@ -103,7 +103,7 @@ Letter-level and line-level reveal animations — blur, scramble, stagger, persp
 
 ```json
 {
-  "$schema": "https://components.hyperiux.com/schema.json",
+  "$schema": "https://vault.hyperiux.com/schema.json",
   "tailwind": {
     "config": "tailwind.config.js",
     "css": "src/app/globals.css"
@@ -159,7 +159,7 @@ The default install path is `@/components/effects/<effect-name>`. If you customi
 
 This is a pnpm monorepo with Turborepo:
 
-- **`apps/docs`** — Next.js documentation site ([components.hyperiux.com](https://components.hyperiux.com))
+- **`apps/docs`** — Next.js documentation site ([vault.hyperiux.com](https://vault.hyperiux.com))
 - **`packages/cli`** — `npx hyperiux` CLI tool (published to npm as `hyperiux`)
 - **`registry/effects`** — Free effect source, organized by category
 
@@ -224,7 +224,7 @@ npm publish --dry-run           # full publish simulation, nothing uploaded
 | | |
 |---|---|
 | 🌐 Agency | [hyperiux.com](https://hyperiux.com) |
-| 🎨 UI Library | [components.hyperiux.com](https://components.hyperiux.com) |
+| 🎨 UI Library | [vault.hyperiux.com](https://vault.hyperiux.com) |
 | 💻 GitHub | [github.com/Hyperiux-Immersion-Labs](https://github.com/Hyperiux-Immersion-Labs) |
 
 ---

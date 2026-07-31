@@ -8,7 +8,14 @@ import { Buffer } from "buffer";
 import chalk from "chalk";
 import ora from "ora";
 import prompts from "prompts";
-import { readConfig, configExists } from "../utils/config.js";
+import {
+  readConfig,
+  writeConfig,
+  configExists,
+  detectProjectEnvironment,
+  detectNextRouter,
+  hasTailwindInstalled,
+} from "../utils/config.js";
 import {
   fetchRegistry,
   fetchRegistryAsset,
@@ -17,11 +24,13 @@ import {
 import {
   installDependencies,
   getMissingDependencies,
+  detectPackageManager,
 } from "../utils/package-manager.js";
 import { getAuthToken } from "../utils/auth.js";
+import { trackCliEvent } from "../utils/telemetry.js";
 
 const APP_URL =
-  process.env.HYPERIUX_APP_URL || "https://components.hyperiux.com";
+  process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
 
 export async function add(effectName, options = {}) {
   const cwd = process.cwd();
@@ -46,6 +55,9 @@ export async function add(effectName, options = {}) {
   }
 
   const config = readConfig(cwd);
+  const framework = config.framework || detectProjectEnvironment(cwd);
+  const router =
+    config.router ?? (framework === "next" ? detectNextRouter(cwd) : null);
 
   console.log();
   console.log(chalk.bold(`Adding ${effectName}...`));
@@ -235,6 +247,8 @@ export async function add(effectName, options = {}) {
     process.exit(1);
   }
 
+  recordLocalInstall(effectName, cwd);
+
   // Handle registry dependencies recursively
   const registryDeps = registryItem.registryDependencies || [];
 
@@ -248,6 +262,7 @@ export async function add(effectName, options = {}) {
       await add(dep, {
         ...options,
         yes: true,
+        _isDependency: true,
       });
     }
   }
@@ -255,6 +270,34 @@ export async function add(effectName, options = {}) {
   console.log();
   console.log(chalk.green(`Successfully added ${chalk.bold(effectName)}!`));
   console.log();
+
+  if (!options._isDependency && !hasTailwindInstalled(cwd)) {
+    console.log(
+      chalk.yellow(
+        "Warning: Tailwind CSS was not detected in this project."
+      )
+    );
+    console.log(
+      chalk.dim(
+        "  This effect relies on Tailwind utility classes and may not render as intended."
+      )
+    );
+    console.log(
+      chalk.dim("  Install it with: https://tailwindcss.com/docs/installation")
+    );
+    console.log();
+  }
+
+  await trackCliEvent("add", {
+    effect: effectName,
+    framework,
+    router,
+    cssPath: config.tailwind?.css,
+    packageManager: detectPackageManager(cwd),
+    dependenciesInstalled: missingDeps,
+    fileCount: files.length,
+    hasSrcDir: fs.existsSync(path.join(cwd, "src")),
+  });
 
   console.log(chalk.dim("Import it in your component:"));
   console.log();
@@ -270,6 +313,21 @@ export async function add(effectName, options = {}) {
 
   console.log(chalk.cyan(`  ${importStatement}`));
   console.log();
+}
+
+function recordLocalInstall(effectName, cwd) {
+  const currentConfig = readConfig(cwd);
+
+  if (!currentConfig) {
+    return;
+  }
+
+  currentConfig.installedEffects = currentConfig.installedEffects || {};
+  currentConfig.installedEffects[effectName] = {
+    installedAt: new Date().toISOString(),
+  };
+
+  writeConfig(currentConfig, cwd);
 }
 
 async function getFileContent(file) {

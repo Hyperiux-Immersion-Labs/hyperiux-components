@@ -101,10 +101,27 @@ describe("registry utilities", () => {
 
     it("should resolve components/hyperiux/ to custom effects alias and prepend src/", () => {
       const files = getRegistryItemFiles(mockItem, mockConfig);
-      
+
       expect(files[0].targetPath).toBe("src/components/effects/blur-text.jsx");
       expect(files[1].targetPath).toBe("src/hooks/use-animation.js");
       expect(files[2].targetPath).toBe("public/assets/img/image01.webp");
+    });
+
+    it("should not double-prefix src/ when the registry target path is already src/-rooted", () => {
+      const itemWithSrcPrefixedPaths = {
+        name: "spider-particles",
+        files: [
+          {
+            path: "spider-particles.jsx",
+            type: "registry:component",
+            target: "src/components/effects/spider-particles.jsx",
+          },
+        ],
+      };
+
+      const files = getRegistryItemFiles(itemWithSrcPrefixedPaths, mockConfig);
+
+      expect(files[0].targetPath).toBe("src/components/effects/spider-particles.jsx");
     });
   });
 
