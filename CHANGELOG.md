@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Project license changed from MIT to the Mozilla Public License 2.0 (MPL-2.0) for the CLI (`packages/cli`) and all free registry effects (`registry/effects`). Pro effects remain proprietary and are unaffected.
 
+### Fixed
+- **Critical:** every CLI invocation (`--version`, `--help`, `add`, `init`, etc.) crashed at startup with `SyntaxError: The requested module '../utils/registry.js' does not provide an export named 'getFileContent'` — `diff.js` imported an export that `registry.js` no longer provided. Restored `getFileContent` as a shared export in `registry.js`; `add.js` now uses it instead of keeping its own private duplicate.
+- `add --yes` (without `--overwrite`) on a project with existing, customized effect files silently overwrote them instead of skipping — the interactive confirmation prompt was correctly bypassed for `--yes`, but nothing took its place to block the write. Now exits cleanly and points the user at `--overwrite`.
+- `diff.js`'s use of the `diff` package (`diffLines`) was never declared in `packages/cli/package.json`'s dependencies — it only resolved locally because of a stale `pnpm-lock.yaml` entry left over from an earlier state. A real `npm install hyperiux` would have been missing this dependency entirely. Also added the three command files (`diff.js`, `outdated.js`, `versions.js`) that were missing from the `build` script's `node --check` coverage.
+
 ## [1.0.4] - 2026-06-05
 
 ### Security
