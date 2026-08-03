@@ -32,6 +32,10 @@ vi.mock("prompts", () => ({ default: (...args) => promptsMock(...args) }));
 vi.mock("../utils/config.js", () => ({
   configExists: () => true,
   readConfig: () => ({ aliases: { effects: "@/components/effects" } }),
+  writeConfig: () => {},
+  detectProjectEnvironment: () => "react",
+  detectNextRouter: () => null,
+  hasTailwindInstalled: () => true,
 }));
 
 vi.mock("../utils/auth.js", () => ({
@@ -41,6 +45,7 @@ vi.mock("../utils/auth.js", () => ({
 vi.mock("../utils/package-manager.js", () => ({
   getMissingDependencies: () => [],
   installDependencies: () => {},
+  detectPackageManager: () => "npm",
 }));
 
 vi.mock("../utils/lockfile.js", () => ({

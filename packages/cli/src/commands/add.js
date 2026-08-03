@@ -4,7 +4,6 @@
 
 import fs from "fs";
 import path from "path";
-import { Buffer } from "buffer";
 import chalk from "chalk";
 import ora from "ora";
 import prompts from "prompts";
@@ -18,7 +17,7 @@ import {
 } from "../utils/config.js";
 import {
   fetchRegistry,
-  fetchRegistryAsset,
+  getFileContent,
   getRegistryItemFiles,
 } from "../utils/registry.js";
 import {
@@ -132,29 +131,38 @@ export async function add(effectName, options = {}) {
       console.log(chalk.dim(`  ${file.targetPath}`));
     });
 
-    if (!options.yes) {
-      const { proceed } = await prompts(
-        {
-          type: "confirm",
-          name: "proceed",
-          message: "Overwrite existing files?",
-          initial: false,
-        },
-        {
-          onCancel: () => {
-            console.log();
-            console.log(chalk.yellow("Installation cancelled."));
-            process.exit(0);
-          },
-        }
+    if (options.yes) {
+      console.log();
+      console.log(
+        chalk.yellow(
+          "Skipping — re-run with --overwrite to replace existing files."
+        )
       );
+      console.log();
+      return;
+    }
 
-      if (!proceed) {
-        console.log();
-        console.log(chalk.yellow("Installation cancelled."));
-        console.log();
-        process.exit(0);
+    const { proceed } = await prompts(
+      {
+        type: "confirm",
+        name: "proceed",
+        message: "Overwrite existing files?",
+        initial: false,
+      },
+      {
+        onCancel: () => {
+          console.log();
+          console.log(chalk.yellow("Installation cancelled."));
+          process.exit(0);
+        },
       }
+    );
+
+    if (!proceed) {
+      console.log();
+      console.log(chalk.yellow("Installation cancelled."));
+      console.log();
+      process.exit(0);
     }
   }
 
@@ -328,18 +336,6 @@ function recordLocalInstall(effectName, cwd) {
   };
 
   writeConfig(currentConfig, cwd);
-}
-
-async function getFileContent(file) {
-  if (file.type === "registry:asset" && file.source && !file.content) {
-    return fetchRegistryAsset(file.source);
-  }
-
-  if (file.encoding === "base64") {
-    return Buffer.from(file.content, "base64");
-  }
-
-  return file.content || "";
 }
 
 function getImportPath(file, config) {
