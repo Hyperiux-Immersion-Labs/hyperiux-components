@@ -313,6 +313,18 @@ export async function fetchRegistryAsset(source) {
   return Buffer.from(await response.arrayBuffer());
 }
 
+export async function getFileContent(file) {
+  if (file.type === "registry:asset" && file.source && !file.content) {
+    return fetchRegistryAsset(file.source);
+  }
+
+  if (file.encoding === "base64") {
+    return Buffer.from(file.content, "base64");
+  }
+
+  return file.content || "";
+}
+
 export function getRegistryItemFiles(item, config, cwd = process.cwd()) {
   const usesSrc = fs.existsSync(path.join(cwd, "src"));
   const prefix = usesSrc ? "src/" : "";
