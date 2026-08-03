@@ -86,28 +86,63 @@ pnpm --filter hyperiux-mcp-server build
 ```
 This compiles `packages/mcp-server/src` into `packages/mcp-server/dist/index.js`. Do this again any time the source changes.
 
-### 2. Find your Node path
-```bash
-which node
-```
-Copy this — you'll paste the same absolute path into both client configs below.
+### 2. Generate your real config block — don't hand-type it
 
-### 3a. Connect it to Claude Code (per-project)
-In the project where you want to use it, create a `.mcp.json` file at its root:
-```json
+This is the step people get tripped up on, so read this one carefully: **the config needs your machine's actual, real file paths — not placeholder text.** If you ever see a path like `/absolute/path/to/node` or `/absolute/path/to/hyperiux-components/...` sitting in one of your config files, that is *literally not a real path* and the server will never start — it's example text meant to be replaced, not pasted as-is.
+
+To avoid that mistake entirely, don't hand-edit the paths — run this **from inside the `hyperiux-components` repo root** and let your terminal fill them in for you:
+```bash
+cat <<EOF
 {
   "mcpServers": {
     "hyperiux": {
-      "command": "/absolute/path/to/node",
-      "args": ["/absolute/path/to/hyperiux-components/packages/mcp-server/dist/index.js"]
+      "command": "$(which node)",
+      "args": ["$(pwd)/packages/mcp-server/dist/index.js"]
     }
   }
 }
+EOF
 ```
+This prints out a ready-to-copy block with your real Node path and your real repo path already filled in.
+
+**Important — do not copy any example JSON from this guide, including from other sections of this same doc.** The only text you should ever paste into a config file is what *your own terminal* just printed when you ran the command above. If you're about to paste something and it contains the literal words `you`, `your-username`, `path/to`, or anything else that obviously isn't your own computer's real folder structure, stop — that's illustration text, not something to use. This exact mistake has happened twice already while testing this server (once with `/absolute/path/to/node`, once with an example `/Users/you/...` path) — both times the fix was realizing an example had been copied instead of a real command's output.
+
+You'll paste whatever *your terminal* printed into both places below.
+
+### 3a. Connect it to Claude Code (per-project — do this for every new test project)
+In the project where you want to test it, create a `.mcp.json` file at its root and paste in the block from step 2.
+
 Open that project fresh in Claude Code (or start a new chat if it's already open) — you'll get a one-time prompt to approve the project's MCP server. Approve it.
 
-### 3b. Connect it to Claude Desktop (applies everywhere)
-Open (or create) `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) and add:
+### 3b. Connect it to Claude Desktop (applies everywhere, do this once)
+Open (or create) `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) and paste the same block in. If the file already has other keys/servers, just add the `hyperiux` entry inside the existing `mcpServers` object — don't replace the whole file. Fully quit and reopen Claude Desktop afterward (it only reads this file at launch).
+
+### Testing in a brand-new project? Quick recap
+You only need to redo **step 3a** for each new project — steps 1 and 2 don't change (the server build and your config block are the same no matter which project you're testing from). Claude Desktop (3b) is global, so you never need to redo that part either.
+
+### Symptom → cause cheat sheet
+- **`hyperiux` doesn't show up at all** in `/mcp` or the "MCP servers" panel → two possible causes, check both:
+  1. Your `.mcp.json`'s `mcpServers` object is empty or missing the `hyperiux` key entirely — check the file actually has the block from step 2 inside it.
+  2. **`.mcp.json` is in the wrong folder.** It has to sit at the exact root of whatever folder your editor/client actually opened as the project — not one level down. If you opened a folder called `my-app` that contains your real project in a subfolder like `my-app/frontend`, `.mcp.json` needs to be at `my-app/.mcp.json`, not `my-app/frontend/.mcp.json`. If in doubt, check where the project's `.git` folder lives — that's the real root.
+- **`hyperiux` shows up but "not connected"** → the `command`/`args` paths are wrong — most commonly, placeholder text that never got replaced (see step 2), or a stale build (rerun step 1). Open the `.mcp.json` file and check the paths are real, existing files on disk.
+- **It was working, then stopped after you edited the config** → start a completely fresh chat/session. A session that was already open when you edited the file can hang onto old, stale server state.
+
+### A real example — "still not visible," walked through step by step
+
+This actually happened while testing this exact server, so here's the whole thing, spelled out in full, so you recognize it instantly if it happens to you.
+
+**The setup:** a brand-new test project called `Vite-test`, with the actual Vite app living inside a subfolder called `vite-project` — so on disk it looked like this:
+```
+Vite-test/            <- this is the real project root (has the .git folder in it)
+  .git/
+  vite-project/       <- the actual app lives one level DOWN from the root
+    src/
+    package.json
+    ...
+```
+
+**Step 1 — the first mistake: placeholder text left in the file.**
+A `.mcp.json` was created at `Vite-test/vite-project/.mcp.json` by copying the example block straight out of this guide:
 ```json
 {
   "mcpServers": {
@@ -118,7 +153,23 @@ Open (or create) `~/Library/Application Support/Claude/claude_desktop_config.jso
   }
 }
 ```
-If the file already has other keys/servers, just add `hyperiux` inside the existing `mcpServers` object — don't replace the whole file. Fully quit and reopen Claude Desktop afterward (it only reads this file at launch).
+Look closely at that `command` and `args` line: `/absolute/path/to/node` isn't a real file on anyone's computer. It's example text meaning "put your real path here" — but it got pasted in exactly as written, placeholder and all. Claude Code tried to run a program at a path that doesn't exist, so the server obviously never started.
+
+*How this was caught:* reading the actual file on disk with a file-reading tool and simply looking at what was literally inside it — the placeholder text was sitting there unchanged, plain to see once someone actually opened the file.
+
+*How it was fixed:* the placeholder text was replaced with the two real values for this machine — the real result of running `which node` (`/usr/local/bin/node`), and the real, full path to the built server file (`/Users/.../hyperiux-components/packages/mcp-server/dist/index.js`).
+
+**Step 2 — the second mistake (the one that actually mattered): the file was in the wrong folder.**
+Even after fixing the paths inside the file, `hyperiux` *still* didn't show up. Here's why: Claude Code only looks for `.mcp.json` at the exact root of the folder you opened as your project — it does not go searching inside subfolders for it. But the fixed `.mcp.json` was sitting at `Vite-test/vite-project/.mcp.json` — one level *inside* the subfolder, not at `Vite-test/.mcp.json`, the actual root.
+
+*How this was caught:* checking which folder actually contained the `.git` directory (the real, unambiguous project root is always wherever `.git` lives) — and it turned out to be `Vite-test`, not `Vite-test/vite-project`. That mismatch was the entire problem.
+
+*How it was fixed:* the same, already-corrected `.mcp.json` content was placed at `Vite-test/.mcp.json` — the true root — in addition to the copy already sitting in the subfolder (harmless to leave both; only the one at the real root actually gets read).
+
+**Step 3 — confirming it actually worked.**
+A brand-new chat session was started in Claude Code inside that project (an already-open session won't notice a config file that changed underneath it), then `/mcp` was run — and `hyperiux` showed up connected.
+
+**The lesson, in one sentence:** if a locally-run MCP server "isn't visible," check two things in this order — (1) does the config file actually have real paths in it, not example placeholder text, and (2) is the config file sitting at the *true* root of your project (where `.git` lives), not inside a subfolder.
 
 ### 4. Verify the connection
 
