@@ -1,19 +1,20 @@
 # Contributing to Hyperiux Vault
 
-Thanks for considering a contribution. This covers the free, open-source side of the repo - `packages/cli` (the `hyperiux` CLI) and `registry/effects` (the 32 free effects). Pro effect source lives in a private repository and isn't part of this repo.
+Thanks for considering a contribution. This covers the free, open-source side of the repo - `packages/cli` (the `hyperiux` CLI), `packages/mcp-server` (the `hyperiux-mcp-server` MCP server), and `registry/effects` (the 32 free effects). Pro effect source lives in a private repository and isn't part of this repo.
 
 ## Ways to contribute
 
 - **Add a free effect** - see below.
-- **Fix a bug** in the CLI or an existing free effect.
+- **Fix a bug** in the CLI, the MCP server, or an existing free effect.
 - **Improve the CLI** - `packages/cli/src/commands/`.
+- **Improve the MCP server** - `packages/mcp-server/src/tools/`.
 - **Improve docs** - README, this file, or the [docs site](https://vault.hyperiux.com/docs).
 
 Not sure where to start? Check issues labeled [`good first issue`](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/labels/good%20first%20issue), or ask in [Discussions](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/discussions) first if you want to validate an idea before writing code.
 
 ## Setup
 
-This is a pnpm + Turborepo monorepo, but it only contains `packages/cli` and `registry/effects` - there's no dev server to run here (the marketing/docs site that renders effect previews lives in a separate private repo).
+This is a pnpm + Turborepo monorepo containing `packages/cli`, `packages/mcp-server`, and `registry/effects` - there's no dev server to run here (the marketing/docs site that renders effect previews lives in a separate private repo).
 
 ```bash
 git clone https://github.com/Hyperiux-Immersion-Labs/hyperiux-components
@@ -92,11 +93,24 @@ pnpm run pack:dry     # verifies what would actually get published
 
 `prepublishOnly` (lint + test + build + smoke:bin + pack:dry) is what actually gates a real release - if that passes, your change is in good shape.
 
+## Working on the MCP server
+
+```bash
+cd packages/mcp-server
+pnpm lint
+pnpm test
+pnpm build          # tsc -> dist/
+node dist/index.js  # smoke-test locally; closed stdin exits cleanly once it prints "running via stdio"
+```
+
+Not published to npm yet - see the root README's "Running the MCP server locally" section for how to point an MCP client at a local build.
+
 ## Pull requests
 
 - Keep PRs scoped to one effect or one fix - easier to review, easier to revert if something's off.
 - Fill out the PR template; the checklist mirrors what CI actually runs.
 - If your PR touches `packages/cli`, CI (`cli-ci.yml`) will lint, test, and do a real tarball-install smoke test automatically.
+- If your PR touches `packages/mcp-server`, CI (`ci.yml`) lints, tests, builds, and smoke-boots it automatically.
 - Link the issue you're addressing if there is one.
 
 ## Questions
