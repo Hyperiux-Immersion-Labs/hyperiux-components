@@ -394,6 +394,153 @@ export function hasTailwindInstalled(cwd = process.cwd()) {
   return hasTailwindDirectiveInCss(cwd);
 }
 
+const POSTCSS_CONFIG_CANDIDATES = [
+  "postcss.config.mjs",
+  "postcss.config.js",
+  "postcss.config.cjs",
+];
+
+const VITE_CONFIG_CANDIDATES = [
+  "vite.config.ts",
+  "vite.config.js",
+  "vite.config.mjs",
+  "vite.config.cjs",
+];
+
+/**
+ * Tailwind v4 requires `@tailwindcss/postcss` to be registered in a PostCSS
+ * config file — without it, `@import "tailwindcss"` in the CSS is never
+ * processed and ships as inert literal CSS. Next.js has no default PostCSS
+ * pipeline that does this automatically.
+ */
+export function hasPostcssTailwindConfigured(cwd = process.cwd()) {
+  for (const file of POSTCSS_CONFIG_CANDIDATES) {
+    const filePath = path.join(cwd, file);
+    if (!fs.existsSync(filePath)) {
+      continue;
+    }
+
+    try {
+      const content = fs.readFileSync(filePath, "utf-8");
+      if (/@tailwindcss\/postcss/.test(content)) {
+        return true;
+      }
+    } catch {
+      // Unreadable — treat as not configured
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Tailwind v4 + Vite requires the `@tailwindcss/vite` plugin to be
+ * registered in `plugins: [...]` — without it, Vite/PostCSS never processes
+ * `@import "tailwindcss"` and Tailwind classes silently do nothing.
+ */
+export function hasViteTailwindPluginConfigured(cwd = process.cwd()) {
+  const existingViteConfig = VITE_CONFIG_CANDIDATES.find((file) =>
+    fs.existsSync(path.join(cwd, file))
+  );
+
+  if (!existingViteConfig) {
+    return false;
+  }
+
+  const content = fs.readFileSync(path.join(cwd, existingViteConfig), "utf-8");
+  return /@tailwindcss\/vite/.test(content) && /tailwindcss\s*\(\s*\)/.test(content);
+}
+
+/**
+ * Auto-fixes the missing Tailwind v4 wiring step described above, per
+ * framework:
+ *  - Next.js (app or pages router): creates postcss.config.mjs registering
+ *    `@tailwindcss/postcss`.
+ *  - React/Vite: registers the `@tailwindcss/vite` plugin in vite.config.*.
+ */
+export function autoConfigureTailwindWiring(cwd = process.cwd(), framework) {
+  const result = {
+    fixed: false,
+    configFile: null,
+    configFileCreated: false,
+    manualSteps: [],
+  };
+
+  if (framework === "next") {
+    const existing = POSTCSS_CONFIG_CANDIDATES.find((file) =>
+      fs.existsSync(path.join(cwd, file))
+    );
+
+    if (existing) {
+      result.manualSteps.push(
+        `${existing} already exists but doesn't register "@tailwindcss/postcss" — add it to the plugins object manually:\n` +
+          `  export default { plugins: { "@tailwindcss/postcss": {} } };`
+      );
+      return result;
+    }
+
+    const configPath = path.join(cwd, "postcss.config.mjs");
+    fs.writeFileSync(
+      configPath,
+      'export default {\n  plugins: {\n    "@tailwindcss/postcss": {},\n  },\n};\n'
+    );
+
+    result.fixed = true;
+    result.configFile = "postcss.config.mjs";
+    result.configFileCreated = true;
+    return result;
+  }
+
+  if (framework === "react") {
+    const existingViteConfig = VITE_CONFIG_CANDIDATES.find((file) =>
+      fs.existsSync(path.join(cwd, file))
+    );
+
+    if (!existingViteConfig) {
+      result.manualSteps.push(
+        "No vite.config.* file found — create one registering the @tailwindcss/vite plugin:\n" +
+          '  import { defineConfig } from "vite";\n' +
+          '  import react from "@vitejs/plugin-react";\n' +
+          '  import tailwindcss from "@tailwindcss/vite";\n\n' +
+          "  export default defineConfig({\n" +
+          "    plugins: [react(), tailwindcss()],\n" +
+          "  });"
+      );
+      return result;
+    }
+
+    const viteConfigPath = path.join(cwd, existingViteConfig);
+    let content = fs.readFileSync(viteConfigPath, "utf-8");
+
+    if (/@tailwindcss\/vite/.test(content)) {
+      result.manualSteps.push(
+        `${existingViteConfig} imports "@tailwindcss/vite" but doesn't call tailwindcss() inside plugins: [...] — add it manually.`
+      );
+      return result;
+    }
+
+    if (!/plugins\s*:\s*\[/.test(content)) {
+      result.manualSteps.push(
+        `Could not automatically patch ${existingViteConfig} — add:\n` +
+          '  import tailwindcss from "@tailwindcss/vite";\n' +
+          "  // then inside defineConfig({ plugins: [ ...existing, tailwindcss() ] })"
+      );
+      return result;
+    }
+
+    content = `import tailwindcss from "@tailwindcss/vite";\n${content}`;
+    content = content.replace(/plugins\s*:\s*\[/, "plugins: [tailwindcss(), ");
+
+    fs.writeFileSync(viteConfigPath, content);
+
+    result.fixed = true;
+    result.configFile = existingViteConfig;
+    return result;
+  }
+
+  return result;
+}
+
 function readPackageJson(cwd) {
   const packageJsonPath = path.join(cwd, "package.json");
 

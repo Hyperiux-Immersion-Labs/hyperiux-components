@@ -19,6 +19,9 @@ import {
   hasTailwindDependencyOrConfig,
   hasImportAliasConfigured,
   autoConfigureImportAlias,
+  hasPostcssTailwindConfigured,
+  hasViteTailwindPluginConfigured,
+  autoConfigureTailwindWiring,
 } from "../utils/config.js";
 import { detectPackageManager } from "../utils/package-manager.js";
 import { trackCliEvent } from "../utils/telemetry.js";
@@ -71,6 +74,100 @@ export async function init(options) {
     console.log(chalk.dim(`  Guide: ${getTailwindGuideUrl(framework)}`));
     console.log();
     process.exit(1);
+  }
+
+  const wiringOk =
+    framework === "next"
+      ? hasPostcssTailwindConfigured(cwd)
+      : framework === "react"
+        ? hasViteTailwindPluginConfigured(cwd)
+        : true;
+
+  if (!wiringOk) {
+    console.log(chalk.yellow("⚠ Validating Tailwind CSS wiring."));
+    console.log();
+
+    if (framework === "next") {
+      console.log(
+        chalk.yellow(
+          'Tailwind is imported in your CSS, but no PostCSS config registers "@tailwindcss/postcss".'
+        )
+      );
+      console.log(
+        chalk.dim(
+          "Tailwind v4 requires this file — without it @import \"tailwindcss\" ships as inert CSS."
+        )
+      );
+    } else {
+      console.log(
+        chalk.yellow(
+          'Tailwind is imported in your CSS, but vite.config.* never registers the "@tailwindcss/vite" plugin.'
+        )
+      );
+      console.log(
+        chalk.dim("Without it, Vite never processes the Tailwind import — classes silently do nothing.")
+      );
+    }
+    console.log();
+
+    let shouldFixWiring = Boolean(options.yes);
+
+    if (!options.yes) {
+      const { fix } = await prompts({
+        type: "confirm",
+        name: "fix",
+        message:
+          framework === "next"
+            ? "Create postcss.config.mjs now?"
+            : "Register the @tailwindcss/vite plugin now?",
+        initial: true,
+      });
+      shouldFixWiring = fix;
+    }
+
+    if (!shouldFixWiring) {
+      if (framework === "next") {
+        console.log(
+          chalk.dim(
+            'Create postcss.config.mjs manually:\n  export default { plugins: { "@tailwindcss/postcss": {} } };'
+          )
+        );
+      } else {
+        console.log(
+          chalk.dim(
+            'Add manually: import tailwindcss from "@tailwindcss/vite"; then plugins: [tailwindcss()]'
+          )
+        );
+      }
+      console.log();
+      process.exit(1);
+    }
+
+    const wiringResult = autoConfigureTailwindWiring(cwd, framework);
+
+    if (wiringResult.fixed) {
+      console.log(
+        chalk.green(
+          `✔ ${wiringResult.configFileCreated ? "Created" : "Updated"} ${wiringResult.configFile}.`
+        )
+      );
+    }
+
+    for (const step of wiringResult.manualSteps) {
+      console.log(chalk.yellow(`⚠ ${step}`));
+    }
+
+    console.log();
+
+    if (!wiringResult.fixed) {
+      process.exit(1);
+    }
+
+    const depToInstall = framework === "next" ? "@tailwindcss/postcss" : "@tailwindcss/vite";
+    console.log(
+      chalk.dim(`  Make sure it's installed: ${getInstallCommand(cwd, depToInstall)}`)
+    );
+    console.log();
   }
 
   if (framework === "react" && !hasImportAliasConfigured(cwd)) {
@@ -243,6 +340,12 @@ export async function init(options) {
     console.error(chalk.red(error.message));
     process.exit(1);
   }
+}
+
+function getInstallCommand(cwd, pkg) {
+  const packageManager = detectPackageManager(cwd);
+  const verb = packageManager === "npm" ? "install" : "add";
+  return `${packageManager} ${verb} -D ${pkg}`;
 }
 
 function getTailwindInstallCommand(framework) {
