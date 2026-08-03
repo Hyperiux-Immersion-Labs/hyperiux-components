@@ -135,11 +135,34 @@ Letter-level and line-level reveal animations — blur, scramble, stagger, persp
 
 This is a pnpm monorepo with Turborepo:
 
-- **`apps/docs`** — Next.js documentation site ([vault.hyperiux.com](https://vault.hyperiux.com))
-- **`packages/cli`** — `npx hyperiux` CLI tool (published to npm as `hyperiux`)
-- **`registry/effects`** — Free effect source, organized by category
+- **`packages/cli`** - `npx hyperiux` CLI tool, published to npm as `hyperiux`
+- **`packages/mcp-server`** - MCP (Model Context Protocol) server that lets AI clients (Claude, Cursor, etc.) browse and install Vault effects; published as `hyperiux-mcp-server` (not yet published to npm as of this writing - see [packages/mcp-server](packages/mcp-server) for local usage)
+- **`registry/effects`** - Free effect source, organized by category
 
-Pro effect source lives in a private repository and is served via a protected API. The registry index (`public/r/index.json`) lists all effects with metadata but pro file contents are not publicly accessible.
+Pro effect source lives in a private repository and is served via a protected API. The registry index (`public/r/index.json`) lists all effects with metadata - pro file contents are not publicly accessible.
+
+### Running the MCP server locally
+
+`packages/mcp-server` isn't on npm yet, so point your MCP client at a local build instead of `npx`:
+
+```bash
+pnpm --filter hyperiux-mcp-server build
+```
+
+Then add it to your client's MCP config using an absolute path to the built entrypoint:
+
+```json
+{
+  "mcpServers": {
+    "hyperiux": {
+      "command": "node",
+      "args": ["/absolute/path/to/hyperiux-components/packages/mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+See [packages/mcp-server/README.md](packages/mcp-server/README.md) for the full tool list and Pro-effect auth behavior. npm publishing is future work, not the current install path.
 
 ---
 

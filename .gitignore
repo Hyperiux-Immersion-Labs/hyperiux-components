@@ -49,3 +49,4 @@ package-lock.json
 /packages/cli/package-lock.json
 /packages/cli/*.tgz
 /packages/cli/coverage
+packages/*/dist/
