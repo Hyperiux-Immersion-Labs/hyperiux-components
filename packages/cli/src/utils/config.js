@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
 import fs from "fs";
 import path from "path";
 
@@ -5,6 +9,8 @@ const CONFIG_FILE = "hyperiux.json";
 
 const DEFAULT_CONFIG = {
   $schema: "https://vault.hyperiux.com/schema.json",
+  framework: "next",
+  router: null,
   tailwind: {
     config: "tailwind.config.js",
     css: "src/app/globals.css",
@@ -15,6 +21,7 @@ const DEFAULT_CONFIG = {
     hooks: "@/hooks",
     lib: "@/lib",
   },
+  installedEffects: {},
 };
 
 export function getConfigPath(cwd = process.cwd()) {
@@ -40,7 +47,369 @@ export function writeConfig(config, cwd = process.cwd()) {
 }
 
 export function getDefaultConfig() {
-  return { ...DEFAULT_CONFIG };
+  return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+}
+
+export function detectProjectEnvironment(cwd = process.cwd()) {
+  const packageJson = readPackageJson(cwd);
+  const dependencies = {
+    ...(packageJson?.dependencies || {}),
+    ...(packageJson?.devDependencies || {}),
+  };
+
+  const hasNextConfig = hasAnyPath(cwd, [
+    "next.config.js",
+    "next.config.mjs",
+    "next.config.ts",
+    "next.config.cjs",
+  ]);
+
+  if (dependencies.next || hasNextConfig) {
+    return "next";
+  }
+
+  const hasViteConfig = hasAnyPath(cwd, [
+    "vite.config.js",
+    "vite.config.mjs",
+    "vite.config.ts",
+    "vite.config.cjs",
+  ]);
+
+  if (
+    dependencies.react ||
+    dependencies["@vitejs/plugin-react"] ||
+    dependencies.vite ||
+    hasViteConfig ||
+    hasAnyPath(cwd, ["src/main.jsx", "src/main.tsx", "src/App.jsx", "src/App.tsx"])
+  ) {
+    return "react";
+  }
+
+  return "unknown";
+}
+
+export function detectNextRouter(cwd = process.cwd()) {
+  if (hasAnyPath(cwd, ["src/app", "app"])) {
+    return "app";
+  }
+  if (hasAnyPath(cwd, ["src/pages", "pages"])) {
+    return "pages";
+  }
+  return null;
+}
+
+export function detectCssPath(
+  cwd = process.cwd(),
+  framework = detectProjectEnvironment(cwd),
+  router = framework === "next" ? detectNextRouter(cwd) : null
+) {
+  const reactPaths = [
+    "src/index.css",
+    "src/main.css",
+    "src/App.css",
+    "src/styles.css",
+    "src/styles/globals.css",
+    "styles/globals.css",
+  ];
+
+  const nextAppPaths = ["src/app/globals.css", "app/globals.css"];
+
+  const nextPagesPaths = ["src/styles/globals.css", "styles/globals.css"];
+
+  let candidates;
+  if (framework === "react") {
+    candidates = reactPaths;
+  } else if (framework === "next" && router === "pages") {
+    candidates = nextPagesPaths;
+  } else if (framework === "next") {
+    candidates = nextAppPaths;
+  } else {
+    candidates = [...reactPaths, ...nextAppPaths, ...nextPagesPaths];
+  }
+
+  for (const cssPath of candidates) {
+    if (fs.existsSync(path.join(cwd, cssPath))) {
+      return cssPath;
+    }
+  }
+
+  const usesSrc = fs.existsSync(path.join(cwd, "src"));
+
+  if (framework === "react") {
+    return usesSrc ? "src/index.css" : "styles/globals.css";
+  }
+
+  if (framework === "next" && router === "pages") {
+    return usesSrc ? "src/styles/globals.css" : "styles/globals.css";
+  }
+
+  if (framework === "next") {
+    return usesSrc ? "src/app/globals.css" : "app/globals.css";
+  }
+
+  return usesSrc ? "src/styles.css" : "styles/globals.css";
+}
+
+export function detectTailwindConfig(cwd = process.cwd()) {
+  const possibleConfigs = [
+    "tailwind.config.js",
+    "tailwind.config.ts",
+    "tailwind.config.mjs",
+    "tailwind.config.cjs",
+  ];
+
+  for (const config of possibleConfigs) {
+    if (fs.existsSync(path.join(cwd, config))) {
+      return config;
+    }
+  }
+
+  return "tailwind.config.js";
+}
+
+export function hasImportAliasConfigured(cwd = process.cwd()) {
+  const jsonConfigs = ["tsconfig.json", "jsconfig.json"];
+
+  for (const file of jsonConfigs) {
+    const filePath = path.join(cwd, file);
+
+    if (!fs.existsSync(filePath)) {
+      continue;
+    }
+
+    try {
+      const raw = fs.readFileSync(filePath, "utf-8");
+      const stripped = raw
+        .replace(/\/\*[\s\S]*?\*\//g, "")
+        .replace(/\/\/.*$/gm, "");
+      const parsed = JSON.parse(stripped);
+      const paths = parsed?.compilerOptions?.paths || {};
+
+      if (Object.keys(paths).some((key) => key.startsWith("@/"))) {
+        return true;
+      }
+    } catch {
+      // Malformed config — treat as not configured
+    }
+  }
+
+  const viteConfigs = [
+    "vite.config.js",
+    "vite.config.ts",
+    "vite.config.mjs",
+    "vite.config.cjs",
+  ];
+
+  for (const file of viteConfigs) {
+    const filePath = path.join(cwd, file);
+
+    if (!fs.existsSync(filePath)) {
+      continue;
+    }
+
+    const content = fs.readFileSync(filePath, "utf-8");
+
+    if (/["'`]@["'`]\s*:/.test(content)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+export function autoConfigureImportAlias(cwd = process.cwd()) {
+  const result = {
+    configFile: null,
+    configFileCreated: false,
+    viteConfigFile: null,
+    viteConfigUpdated: false,
+    manualSteps: [],
+  };
+
+  const packageJson = readPackageJson(cwd);
+  const dependencies = {
+    ...(packageJson?.dependencies || {}),
+    ...(packageJson?.devDependencies || {}),
+  };
+  const isTypeScript =
+    Boolean(dependencies.typescript) || fs.existsSync(path.join(cwd, "tsconfig.json"));
+  const usesSrc = fs.existsSync(path.join(cwd, "src"));
+  const aliasTarget = usesSrc ? "./src/*" : "./*";
+
+  const jsonConfigName = fs.existsSync(path.join(cwd, "tsconfig.json"))
+    ? "tsconfig.json"
+    : fs.existsSync(path.join(cwd, "jsconfig.json"))
+      ? "jsconfig.json"
+      : isTypeScript
+        ? "tsconfig.json"
+        : "jsconfig.json";
+
+  const jsonConfigPath = path.join(cwd, jsonConfigName);
+  let jsonConfig = {};
+  let existed = false;
+
+  if (fs.existsSync(jsonConfigPath)) {
+    existed = true;
+    try {
+      const raw = fs.readFileSync(jsonConfigPath, "utf-8");
+      const stripped = raw
+        .replace(/\/\*[\s\S]*?\*\//g, "")
+        .replace(/\/\/.*$/gm, "");
+      jsonConfig = JSON.parse(stripped);
+    } catch {
+      jsonConfig = {};
+    }
+  }
+
+  jsonConfig.compilerOptions = jsonConfig.compilerOptions || {};
+  jsonConfig.compilerOptions.baseUrl = jsonConfig.compilerOptions.baseUrl || ".";
+  jsonConfig.compilerOptions.paths = jsonConfig.compilerOptions.paths || {};
+  jsonConfig.compilerOptions.paths["@/*"] = [aliasTarget];
+
+  fs.writeFileSync(jsonConfigPath, JSON.stringify(jsonConfig, null, 2) + "\n");
+
+  result.configFile = jsonConfigName;
+  result.configFileCreated = !existed;
+
+  const viteConfigCandidates = [
+    "vite.config.ts",
+    "vite.config.js",
+    "vite.config.mjs",
+    "vite.config.cjs",
+  ];
+  const existingViteConfig = viteConfigCandidates.find((file) =>
+    fs.existsSync(path.join(cwd, file))
+  );
+
+  if (existingViteConfig) {
+    const viteConfigPath = path.join(cwd, existingViteConfig);
+    const content = fs.readFileSync(viteConfigPath, "utf-8");
+
+    if (/alias\s*:/.test(content)) {
+      result.manualSteps.push(
+        `${existingViteConfig} already has a "resolve.alias" block — verify it maps "@" to your ${usesSrc ? "src" : "project"} directory.`
+      );
+    } else if (/defineConfig\(\s*\{/.test(content)) {
+      const injected = content.replace(
+        /defineConfig\(\s*\{/,
+        `defineConfig({\n  resolve: {\n    alias: {\n      "@": new URL("${usesSrc ? "./src" : "."}", import.meta.url).pathname,\n    },\n  },`
+      );
+      fs.writeFileSync(viteConfigPath, injected);
+      result.viteConfigFile = existingViteConfig;
+      result.viteConfigUpdated = true;
+    } else {
+      result.manualSteps.push(
+        `Could not automatically patch ${existingViteConfig} — add "resolve: { alias: { '@': '${usesSrc ? "./src" : "."}' } }" manually.`
+      );
+    }
+  } else {
+    result.manualSteps.push(
+      `No vite.config.* file found — if you use Vite, add "resolve: { alias: { '@': '${usesSrc ? "./src" : "."}' } }" to it manually.`
+    );
+  }
+
+  return result;
+}
+
+const TAILWIND_DIRECTIVE_PATTERN =
+  /@import\s+["']tailwindcss["']|@tailwind\s+base/;
+
+const WALK_SKIP_DIRS = new Set([
+  "node_modules",
+  ".git",
+  "dist",
+  "build",
+  ".next",
+  ".turbo",
+  ".vercel",
+]);
+
+function hasTailwindDirectiveInCss(dir, remainingDepth = 4) {
+  if (remainingDepth < 0) {
+    return false;
+  }
+
+  let entries;
+
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return false;
+  }
+
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      if (WALK_SKIP_DIRS.has(entry.name)) {
+        continue;
+      }
+
+      if (hasTailwindDirectiveInCss(path.join(dir, entry.name), remainingDepth - 1)) {
+        return true;
+      }
+    } else if (/\.(css|scss)$/.test(entry.name)) {
+      try {
+        const content = fs.readFileSync(path.join(dir, entry.name), "utf-8");
+
+        if (TAILWIND_DIRECTIVE_PATTERN.test(content)) {
+          return true;
+        }
+      } catch {
+        // Unreadable file — skip
+      }
+    }
+  }
+
+  return false;
+}
+
+export function hasTailwindDependencyOrConfig(cwd = process.cwd()) {
+  const packageJson = readPackageJson(cwd);
+  const dependencies = {
+    ...(packageJson?.dependencies || {}),
+    ...(packageJson?.devDependencies || {}),
+  };
+
+  return (
+    Boolean(dependencies.tailwindcss) ||
+    hasAnyPath(cwd, [
+      "tailwind.config.js",
+      "tailwind.config.ts",
+      "tailwind.config.mjs",
+      "tailwind.config.cjs",
+    ])
+  );
+}
+
+/**
+ * A `tailwindcss` dependency or config file alone doesn't mean Tailwind is
+ * actually wired up — it also needs `@import "tailwindcss"`/`@tailwind base`
+ * in a CSS file (and, for Vite, the plugin registered). We only check the
+ * CSS-directive signal here since that's what actually makes styles apply.
+ */
+export function hasTailwindInstalled(cwd = process.cwd()) {
+  if (!hasTailwindDependencyOrConfig(cwd)) {
+    return false;
+  }
+
+  return hasTailwindDirectiveInCss(cwd);
+}
+
+function readPackageJson(cwd) {
+  const packageJsonPath = path.join(cwd, "package.json");
+
+  if (!fs.existsSync(packageJsonPath)) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+  } catch {
+    return null;
+  }
+}
+
+function hasAnyPath(cwd, paths) {
+  return paths.some((itemPath) => fs.existsSync(path.join(cwd, itemPath)));
 }
 
 export function resolveAlias(alias, config, cwd = process.cwd()) {

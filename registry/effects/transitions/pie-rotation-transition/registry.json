@@ -1,0 +1,15 @@
+{
+  "name": "pie-rotation-transition",
+  "type": "registry:component",
+  "title": "Pie Rotation Transition",
+  "description": "Conic-gradient page transition that sweeps a pie-slice mask across the viewport using GSAP, revealing and hiding pages with a smooth rotational wipe",
+  "category": "transitions",
+  "dependencies": [
+    "gsap",
+    "next-transition-router"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/page-transitions/pie-rotation-transition",
+  "tier": "free",
+  "license": "MPL-2.0"
+}

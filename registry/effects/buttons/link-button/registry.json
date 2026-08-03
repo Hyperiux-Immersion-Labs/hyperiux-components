@@ -1,29 +1,12 @@
 {
   "name": "link-button",
-  "version": "1.0.1",
-  "changelog": [
-    { "version": "1.0.1", "date": "2026-07-15", "summary": "Removed an errant scale-150 class that rendered the link at 1.5x size", "breaking": false }
-  ],
   "type": "registry:component",
   "title": "Link Button",
   "description": "Minimal link button with animated underline and rotating arrow icon",
   "category": "buttons",
-  "dependencies": [
-    "lucide-react"
-  ],
+  "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/demo/link-button",
+  "previewUrl": "/buttons/link-button",
   "tier": "free",
-  "subfolder": true,
-  "main": "index.jsx",
-  "exportName": "LinkButton",
-  "exportKind": "default",
-  "importPath": "@/components/effects/link-button",
-  "target": "src/components/effects/link-button",
-  "files": [
-    {
-      "path": "index.jsx",
-      "target": "src/components/effects/link-button/index.jsx"
-    }
-  ]
+  "license": "MPL-2.0"
 }

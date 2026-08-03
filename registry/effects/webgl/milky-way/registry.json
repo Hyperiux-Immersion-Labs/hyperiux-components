@@ -1,6 +1,5 @@
 {
-  "name": "milky-way",
-  "version": "1.1.0",
+  "name": "milkyway",
   "type": "registry:component",
   "title": "Milky Way",
   "description": "GPU-accelerated GPGPU particle galaxy with spiral arms, curl-noise nebula smoke, twinkling sparkle stars, background starfield, and post-processing vignette + edge blur.",
@@ -15,38 +14,24 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/demo/milky-way",
+  "previewUrl": "/milkyway",
   "tier": "free",
-  "subfolder": true,
+  "license": "MPL-2.0",
   "main": "index.jsx",
-  "exportName": "MilkyWay",
-  "exportKind": "default",
-  "importPath": "@/components/effects/milky-way",
-  "target": "src/components/effects/milky-way",
+  "importPath": "@/components/effects/milkyway",
+  "target": "src/components/effects/milkyway",
   "files": [
     {
       "path": "index.jsx",
-      "target": "src/components/effects/milky-way/index.jsx"
+      "target": "src/components/effects/milkyway/index.jsx"
     },
     {
       "path": "circular-text.jsx",
-      "target": "src/components/effects/milky-way/circular-text.jsx"
+      "target": "src/components/effects/milkyway/circular-text.jsx"
     },
     {
       "path": "edge-blur-effect.jsx",
-      "target": "src/components/effects/milky-way/edge-blur-effect.jsx"
-    },
-    {
-      "path": "createSuspendedRaf.js",
-      "target": "src/components/effects/milky-way/createSuspendedRaf.js"
-    }
-  ],
-  "changelog": [
-    {
-      "version": "1.1.0",
-      "date": "2026-07-21",
-      "summary": "Add prefers-reduced-motion support",
-      "breaking": false
+      "target": "src/components/effects/milkyway/edge-blur-effect.jsx"
     }
   ]
 }

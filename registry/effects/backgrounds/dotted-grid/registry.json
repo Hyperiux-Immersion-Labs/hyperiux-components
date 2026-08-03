@@ -1,48 +1,12 @@
 {
   "name": "dotted-grid",
-  "version": "1.1.1",
-  "changelog": [
-    {
-      "version": "1.1.1",
-      "date": "2026-07-22",
-      "summary": "Added a reduced-motion notice alongside the existing static canvas fallback.",
-      "breaking": false
-    },
-    {
-      "version": "1.1.0",
-      "date": "2026-07-22",
-      "summary": "Added prefers-reduced-motion support with a static canvas fallback.",
-      "breaking": false
-    },
-    {
-      "version": "1.0.0",
-      "date": "2026-02-10",
-      "summary": "Initial release",
-      "breaking": false
-    }
-  ],
   "type": "registry:component",
   "title": "Dotted Grid",
   "description": "Canvas 2D fullscreen dot grid that autonomously cycles through five geometric shapes (star, square, circle ring, plus, triangle). Mouse cursor creates a dark shrinking head effect and leaves a glowing blue trail that lingers and fades.",
   "category": "backgrounds",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/demo/dotted-grid",
+  "previewUrl": "/dotted-grid",
   "tier": "free",
-  "subfolder": true,
-  "main": "index.jsx",
-  "exportName": "DottedGrid",
-  "exportKind": "named",
-  "importPath": "@/components/effects/dotted-grid",
-  "target": "src/components/effects/dotted-grid",
-  "files": [
-    {
-      "path": "index.jsx",
-      "target": "src/components/effects/dotted-grid/index.jsx"
-    },
-    {
-      "path": "createSuspendedRaf.js",
-      "target": "src/components/effects/dotted-grid/createSuspendedRaf.js"
-    }
-  ]
+  "license": "MPL-2.0"
 }

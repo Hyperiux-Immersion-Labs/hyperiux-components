@@ -1,39 +1,14 @@
 {
   "name": "sticky-content-wrapper",
-  "version": "1.1.0",
-  "changelog": [
-    {
-      "version": "1.1.0",
-      "date": "2026-07-21",
-      "summary": "Added prefers-reduced-motion support: images crossfade instead of clip-path wiping and scaling; content transition is unaffected",
-      "breaking": false
-    }
-  ],
   "type": "registry:component",
   "title": "Sticky Content Wrapper",
   "description": "Split-screen sticky scroll with content on one side and images on the other, revealing on scroll",
   "category": "scroll",
   "dependencies": [
-    "gsap",
-    "lenis"
+    "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/demo/sticky-content-wrapper",
+  "previewUrl": "/sticky-content-wrapper",
   "tier": "free",
-  "subfolder": true,
-  "main": "index.jsx",
-  "exportName": "StickyContentWrapper",
-  "exportKind": "default",
-  "importPath": "@/components/effects/sticky-content-wrapper",
-  "target": "src/components/effects/sticky-content-wrapper",
-  "files": [
-    {
-      "path": "index.jsx",
-      "target": "src/components/effects/sticky-content-wrapper/index.jsx"
-    },
-    {
-      "path": "StickyContentComp.jsx",
-      "target": "src/components/effects/sticky-content-wrapper/StickyContentComp.jsx"
-    }
-  ]
+  "license": "MPL-2.0"
 }

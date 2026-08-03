@@ -1,7 +1,7 @@
 {
   "name": "hyperiux",
-  "version": "1.0.77",
-  "description": "CLI for adding Hyperiux Vault effects to your Next.js project. This package is a CLI installer only - it is not an importable JavaScript/TypeScript library.",
+  "version": "1.0.4",
+  "description": "CLI for adding Hyperiux UI effects to your Next.js project. This package is a CLI installer only — it is not an importable JavaScript/TypeScript library.",
   "type": "module",
   "bin": {
     "hyperiux": "./src/index.js"
@@ -18,7 +18,7 @@
     "scripts/smoke-packed-package.mjs"
   ],
   "scripts": {
-    "build": "node --check src/index.js && node --check src/commands/add.js && node --check src/commands/init.js && node --check src/commands/list.js && node --check src/commands/login.js && node --check src/commands/outdated.js && node --check src/commands/versions.js && node --check src/commands/diff.js && node --check src/utils/auth.js && node --check src/utils/config.js && node --check src/utils/package-manager.js && node --check src/utils/registry.js && node --check src/utils/lockfile.js && node --check src/utils/semver.js",
+    "build": "node --check src/index.js && node --check src/commands/add.js && node --check src/commands/init.js && node --check src/commands/list.js && node --check src/commands/login.js && node --check src/commands/logout.js && node --check src/commands/whoami.js && node --check src/utils/auth.js && node --check src/utils/config.js && node --check src/utils/package-manager.js && node --check src/utils/registry.js && node --check src/utils/telemetry.js",
     "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -31,7 +31,6 @@
   "dependencies": {
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
-    "diff": "^9.0.0",
     "ora": "^8.1.1",
     "prompts": "^2.4.2"
   },
@@ -48,7 +47,7 @@
     "webgl"
   ],
   "author": "Hyperiux",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "homepage": "https://vault.hyperiux.com",
   "repository": {
     "type": "git",
@@ -62,7 +61,8 @@
     "node": ">=18"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "devDependencies": {
     "eslint": "^9",

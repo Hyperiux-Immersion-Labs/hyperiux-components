@@ -1,14 +1,5 @@
 {
   "name": "infinite-perspective-slider",
-  "version": "1.1.0",
-  "changelog": [
-    {
-      "version": "1.1.0",
-      "date": "2026-07-21",
-      "summary": "Added prefers-reduced-motion support: position tracking snaps directly to target (no lerp) and card tilt is disabled while scrolling or dragging",
-      "breaking": false
-    }
-  ],
   "type": "registry:component",
   "title": "Infinite Perspective Slider",
   "description": "Looping perspective gallery with wheel and drag input plus split-text hover reveals",
@@ -17,27 +8,7 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "coverImage": "infinite-perspective-slider",
-  "previewUrl": "/demo/infinite-perspective-slider",
+  "previewUrl": "/infinite-perspective-slider",
   "tier": "free",
-  "subfolder": true,
-  "main": "index.jsx",
-  "exportName": "InfinitePerspectiveSlider",
-  "exportKind": "default",
-  "importPath": "@/components/effects/infinite-perspective-slider",
-  "target": "src/components/effects/infinite-perspective-slider",
-  "files": [
-    {
-      "path": "index.jsx",
-      "target": "src/components/effects/infinite-perspective-slider/index.jsx"
-    },
-    {
-      "path": "InfinitePerspectiveSliderComp.jsx",
-      "target": "src/components/effects/infinite-perspective-slider/InfinitePerspectiveSliderComp.jsx"
-    },
-    {
-      "path": "createSuspendedRaf.js",
-      "target": "src/components/effects/infinite-perspective-slider/createSuspendedRaf.js"
-    }
-  ]
+  "license": "MPL-2.0"
 }

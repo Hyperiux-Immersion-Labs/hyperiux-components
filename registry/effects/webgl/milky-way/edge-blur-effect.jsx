@@ -1,7 +1,16 @@
-import { useMemo, useEffect } from "react";
-import { Effect } from "postprocessing";
-import { Uniform, Vector2 } from "three";
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+import { useMemo, useEffect } from"react";
+import { Effect } from"postprocessing";
+import { Uniform, Vector2 } from"three";
+
+/**
+ * Both shaders share the same blur logic, but the output differs:
+ * - classic: pure blur, no frosted white overlay
+ * - frosted: blur + white, semi-transparent veil toward edges
+ */
 
 const classicBlurFragmentShader = /* glsl */ `
 uniform float uBlurStrength;

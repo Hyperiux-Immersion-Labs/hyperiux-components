@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import fs from "fs";
 import {
@@ -99,10 +103,27 @@ describe("registry utilities", () => {
 
     it("should resolve components/hyperiux/ to custom effects alias and prepend src/", () => {
       const files = getRegistryItemFiles(mockItem, mockConfig);
-      
+
       expect(files[0].targetPath).toBe("src/components/effects/blur-text.jsx");
       expect(files[1].targetPath).toBe("src/hooks/use-animation.js");
       expect(files[2].targetPath).toBe("public/assets/img/image01.webp");
+    });
+
+    it("should not double-prefix src/ when the registry target path is already src/-rooted", () => {
+      const itemWithSrcPrefixedPaths = {
+        name: "spider-particles",
+        files: [
+          {
+            path: "spider-particles.jsx",
+            type: "registry:component",
+            target: "src/components/effects/spider-particles.jsx",
+          },
+        ],
+      };
+
+      const files = getRegistryItemFiles(itemWithSrcPrefixedPaths, mockConfig);
+
+      expect(files[0].targetPath).toBe("src/components/effects/spider-particles.jsx");
     });
   });
 

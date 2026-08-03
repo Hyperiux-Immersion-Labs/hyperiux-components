@@ -1,20 +1,5 @@
 {
   "name": "overflow-stagger-text",
-  "version": "1.1.0",
-  "changelog": [
-    {
-      "version": "1.1.0",
-      "date": "2026-07-21",
-      "summary": "Added reduced-motion support for accessible lower-motion stagger reveal.",
-      "breaking": false
-    },
-    {
-      "version": "1.0.0",
-      "date": "2026-02-10",
-      "summary": "Initial release",
-      "breaking": false
-    }
-  ],
   "type": "registry:component",
   "title": "Overflow Stagger Text",
   "description": "Characters stagger up from overflow with slight rotation for a dynamic reveal effect",
@@ -23,16 +8,7 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/demo/overflow-stagger-text",
+  "previewUrl": "/overflow-stagger-text",
   "tier": "free",
-  "exportName": "OverflowStaggerText",
-  "exportKind": "default",
-  "main": "index.jsx",
-  "files": [
-    {
-      "path": "index.jsx",
-      "type": "registry:component",
-      "target": "src/components/effects/overflow-stagger-text/index.jsx"
-    }
-  ]
+  "license": "MPL-2.0"
 }

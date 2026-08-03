@@ -1,0 +1,131 @@
+Hyperiux Effects License
+Version 1.0
+
+Copyright (c) 2026 Hyperiux
+
+This license governs the source code files distributed under the
+"Hyperiux Effects" product line — the individual animation effects and
+UI components made available through the Hyperiux registry, whether
+installed via the `hyperiux` CLI (`npx hyperiux add <effect>`), copied
+directly from the Hyperiux documentation site, or obtained through any
+other Hyperiux-provided channel (collectively, the "Effects"). It does
+not govern the `hyperiux` CLI tool itself, which is licensed separately
+under the Mozilla Public License 2.0 (see LICENSE).
+
+Effects are made available in two tiers:
+
+  - "Free Effects" — available without a paid subscription.
+  - "Pro Effects" — available only to accounts with an active Hyperiux
+    Pro subscription.
+
+Both tiers are governed by the same terms below unless stated otherwise.
+
+1. Definitions
+---------------
+
+1.1 "Hyperiux" means Hyperiux and its licensors.
+
+1.2 "You" means the individual or legal entity exercising rights under
+    this license.
+
+1.3 "Effect" means a single component or file (or set of files
+    distributed together as one named effect) provided by Hyperiux
+    under this license, in either unmodified or modified form.
+
+1.4 "Your Project" means a software application, website, or product
+    that You are developing, whether for personal use, internal use,
+    a client, or commercial distribution.
+
+2. License Grant
+-----------------
+
+Subject to Your compliance with this license (and, for Pro Effects,
+subject to maintaining an active Hyperiux Pro subscription at the time
+of installation), Hyperiux grants You a non-exclusive, non-transferable,
+worldwide license to:
+
+  (a) install, use, and modify the Effects within Your Project(s); and
+
+  (b) distribute Your Project — including the Effects as incorporated
+      into it — to Your own end users or clients as part of the
+      finished application or product.
+
+This grant covers unlimited personal and commercial projects. No
+attribution is required.
+
+3. Restrictions
+----------------
+
+You may not, under this license:
+
+  (a) redistribute, publish, sell, sublicense, or otherwise make
+      available any Effect — in unmodified or modified form — as a
+      standalone file, snippet, template, boilerplate, starter kit, or
+      component library, separately from Your Project, such that a
+      third party could obtain and install the Effect independent of
+      Your Project;
+
+  (b) publish or upload any Effect to a public or private package
+      registry, code-sharing site, template marketplace, or similar
+      distribution channel in a way that exposes the Effect's source
+      on its own;
+
+  (c) use the Effects to create a product or service that competes
+      with Hyperiux's component registry or CLI; or
+
+  (d) remove or alter the copyright and license notice embedded in an
+      Effect's source file, except to correct factual inaccuracies.
+
+For the avoidance of doubt: shipping Your Project (per Section 2(b))
+is not a restricted redistribution, even though the Effect's compiled
+or source code travels with it as part of the larger application.
+
+4. Pro Effects
+---------------
+
+Access to Pro Effects requires an active Hyperiux Pro subscription at
+the time of installation. Effects already installed into Your Project
+before a subscription lapses may continue to be used under this
+license; a lapsed subscription does not retroactively revoke rights
+already granted under Section 2, but does end Your ability to install
+additional Pro Effects or receive updates to previously installed ones
+until the subscription is renewed.
+
+5. Ownership
+-------------
+
+Hyperiux retains all right, title, and interest in and to the Effects,
+including all intellectual property rights therein. This license is a
+grant of limited rights to use the Effects; it is not a sale or
+transfer of ownership.
+
+6. Termination
+---------------
+
+This license terminates automatically if You breach any of its terms.
+Upon termination, You must stop distributing new copies of the
+Effects outside of already-shipped versions of Your Project, and must
+cease any further installation or use of the Effects. Sections 5, 6,
+and 7 survive termination.
+
+7. Disclaimer of Warranty and Limitation of Liability
+--------------------------------------------------------
+
+THE EFFECTS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+NON-INFRINGEMENT. IN NO EVENT SHALL HYPERIUX BE LIABLE FOR ANY CLAIM,
+DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR
+OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE EFFECTS OR
+THE USE OR OTHER DEALINGS IN THE EFFECTS.
+
+8. Miscellaneous
+------------------
+
+This license represents the complete agreement concerning the Effects
+between You and Hyperiux. If any provision of this license is held
+unenforceable, that provision shall be reformed only to the extent
+necessary to make it enforceable, and the remainder of the license
+shall remain in full effect. Hyperiux may publish revised versions of
+this license; revisions apply only to Effects installed after the
+revised version is published.

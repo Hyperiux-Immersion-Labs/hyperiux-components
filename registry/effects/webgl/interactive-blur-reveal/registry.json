@@ -1,36 +1,12 @@
 {
   "name": "interactive-blur-reveal",
-  "version": "1.1.0",
-  "changelog": [
-    { "version": "1.1.0", "date": "2026-07-22", "summary": "Added reduced-motion notice", "breaking": false },
-    { "version": "1.0.0", "date": "2026-06-04", "summary": "Initial release", "breaking": false }
-  ],
   "type": "registry:component",
   "title": "Interactive Blur Reveal",
   "description": "WebGL2 fullscreen shader that keeps the image frosted/blurred by default and reveals a sharp, clear version wherever the cursor trails. Uses a fluid mouse-trail mask with multi-octave noise distortion, animated film grain, and a subtle vignette.",
   "category": "webgl",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/demo/interactive-blur-reveal",
+  "previewUrl": "/webgl/interactive-blur-reveal",
   "tier": "free",
-  "subfolder": true,
-  "main": "index.jsx",
-  "exportName": "InteractiveBlurReveal",
-  "exportKind": "default",
-  "importPath": "@/components/effects/interactive-blur-reveal",
-  "target": "src/components/effects/interactive-blur-reveal",
-  "files": [
-    {
-      "path": "index.jsx",
-      "target": "src/components/effects/interactive-blur-reveal/index.jsx"
-    },
-    {
-      "path": "webgl-context-recovery.js",
-      "target": "src/components/effects/interactive-blur-reveal/webgl-context-recovery.js"
-    },
-    {
-      "path": "createSuspendedRaf.js",
-      "target": "src/components/effects/interactive-blur-reveal/createSuspendedRaf.js"
-    }
-  ]
+  "license": "MPL-2.0"
 }

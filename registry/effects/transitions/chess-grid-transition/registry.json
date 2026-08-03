@@ -1,20 +1,5 @@
 {
   "name": "chess-grid-transition",
-  "version": "1.1.0",
-  "changelog": [
-    {
-      "version": "1.1.0",
-      "date": "2026-07-21",
-      "summary": "Added reduced-motion route fallback with short opacity fades.",
-      "breaking": false
-    },
-    {
-      "version": "1.0.0",
-      "date": "2026-02-10",
-      "summary": "Initial release",
-      "breaking": false
-    }
-  ],
   "type": "registry:component",
   "title": "Chess Grid Transition",
   "description": "Staggered fullscreen grid wipe that sweeps blocks across the viewport during route changes",
@@ -24,20 +9,9 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
-  "previewUrl": "/demo/chess-grid-transition",
-  "coverImage": "chess-grid-transition",
+  "previewUrl": "/page-transitions/chess-grid-transition",
+  "coverImage": "/assets/list/chess-grid-transition.png",
   "videoUrl": "chess-grid-transition.mp4",
   "tier": "free",
-  "subfolder": true,
-  "main": "index.jsx",
-  "exportName": "ChessGridTransition",
-  "exportKind": "default",
-  "importPath": "@/components/effects/chess-grid-transition",
-  "target": "src/components/effects/chess-grid-transition",
-  "files": [
-    {
-      "path": "index.jsx",
-      "target": "src/components/effects/chess-grid-transition/index.jsx"
-    }
-  ]
+  "license": "MPL-2.0"
 }

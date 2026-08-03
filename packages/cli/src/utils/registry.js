@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
 import fs from "fs";
 import path from "path";
 import { fileURLToPath, URL } from "url";
@@ -16,34 +20,11 @@ const API_URL = process.env.HYPERIUX_API_URL || APP_URL;
 
 const LOCAL_REGISTRY_PATH = "public/r";
 
-/**
- * packages/cli/src/utils/registry.js
- *
- * __dirname = packages/cli/src/utils
- */
-const CLI_PACKAGE_ROOT = path.resolve(__dirname, "../..");
-const PACKAGES_DIR = path.resolve(__dirname, "../../..");
-const MONOREPO_ROOT = path.resolve(__dirname, "../../../..");
-
-/**
- * Possible local registry locations.
- *
- * During local npm link:
- * hyperiux-components/registry
- *
- * During published package:
- * packages/cli/registry
- *
- * During docs development:
- * apps/docs/public/r
- */
-const LOCAL_REGISTRY_CANDIDATES = [
-  path.join(CLI_PACKAGE_ROOT, "registry"),
-  path.join(MONOREPO_ROOT, "registry"),
-  path.join(PACKAGES_DIR, "registry"),
-];
-
-const DEV_REGISTRY_PATH = path.join(MONOREPO_ROOT, "apps/docs/public/r");
+// Path to local registry in the monorepo for development
+const DEV_REGISTRY_PATH = path.join(
+  __dirname,
+  "../../../../apps/docs/public/r",
+);
 
 function isProEffect(item) {
   const tier = item?.tier || "free";
@@ -68,136 +49,29 @@ async function parseJsonResponse(response) {
   return response.json().catch(() => null);
 }
 
-function normalizePath(value = "") {
-  return value.replaceAll("\\", "/");
-}
-
-function pathExists(filePath) {
-  return fs.existsSync(filePath);
-}
-
-function readJsonFile(filePath) {
-  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
-}
-
-function getLocalRegistryRoot() {
-  for (const candidate of LOCAL_REGISTRY_CANDIDATES) {
-    const indexPath = path.join(candidate, "index.json");
-
-    if (pathExists(indexPath)) {
-      return candidate;
-    }
-  }
-
-  return null;
-}
-
-function findRegistryItemInIndex(index, name) {
-  if (!Array.isArray(index)) return null;
-
-  return index.find((item) => item.name === name) || null;
-}
-
 /**
  * Main registry fetcher used by `hyperiux add <effect>`.
  *
- * Local development priority:
- * 1. If repo/package registry exists, read from local registry/index.json.
- * 2. If local flag is true, read from public/r in current cwd.
- * 3. Otherwise fetch public remote registry.
- * 4. If item is Pro, fetch protected API with token.
+ * Flow:
+ * 1. Fetch the public registry JSON to check tier.
+ * 2. If free → return it directly (files included in public JSON).
+ * 3. If pro → go through the protected API with the CLI token.
  */
 export async function fetchRegistry(name, options = {}) {
   const { local = false, cwd = process.cwd(), token = null } = options;
 
   if (local) {
-    return fetchLocalPublicRegistry(name, cwd, token);
+    return fetchLocalRegistry(name, cwd, token);
   }
 
-  /**
-   * HYPERIUX_PRO_REGISTRY_ROOT: path to hyperiux-pro-components/registry.
-   * Enables local end-to-end testing of pro effects without hitting the API.
-   * Usage: HYPERIUX_USE_LOCAL_PRO=1 HYPERIUX_PRO_REGISTRY_ROOT=/path/to/registry
-   *
-   * Checked BEFORE the bundled free registry below: this is an explicit,
-   * deliberate opt-in a developer sets to test against a specific local
-   * checkout, so it must win even for effects that also happen to exist
-   * in the CLI's own bundled (and possibly stale) free registry - otherwise
-   * the env var is silently ignored whenever the requested effect's name
-   * matches one already bundled here.
-   */
-  const proRegistryRoot = process.env.HYPERIUX_PRO_REGISTRY_ROOT;
-
-  if (proRegistryRoot) {
-    let proItem = null;
-
-    try {
-      proItem = fetchLocalPackageRegistry(name, proRegistryRoot);
-    } catch (err) {
-      if (err.status !== 404) throw err;
-    }
-
-    if (proItem) {
-      if (process.env.HYPERIUX_USE_LOCAL_PRO === "1") {
-        return proItem;
-      }
-
-      const apiItem = await fetchProtectedEffect(name, token);
-
-      return {
-        ...apiItem,
-        __registryDir: proItem.__registryDir,
-        __registryJsonPath: proItem.__registryJsonPath,
-      };
-    }
-  }
-
-  const localRegistryRoot = getLocalRegistryRoot();
-
-  if (localRegistryRoot) {
-    let localItem = null;
-
-    try {
-      localItem = fetchLocalPackageRegistry(name, localRegistryRoot);
-    } catch (err) {
-      // Effect not in the local (free) registry - fall through to remote/API.
-      if (err.status !== 404) throw err;
-    }
-
-    if (localItem) {
-      if (!isProEffect(localItem)) {
-        return localItem;
-      }
-
-      /**
-       * For Pro effects, still enforce API/token when running against production.
-       * For local testing with HYPERIUX_USE_LOCAL_PRO=1, allow local Pro registry.
-       */
-      if (process.env.HYPERIUX_USE_LOCAL_PRO === "1") {
-        return localItem;
-      }
-
-      /**
-       * Auth via API, but serve files from the local registry.
-       * The API response only includes file metadata (path/target) without content,
-       * so we re-attach __registryDir so getRegistryItemFiles can read files locally.
-       */
-      const apiItem = await fetchProtectedEffect(name, token);
-
-      return {
-        ...apiItem,
-        __registryDir: localItem.__registryDir,
-        __registryJsonPath: localItem.__registryJsonPath,
-      };
-    }
-  }
-
+  // First, check what tier this effect is via the public registry index.
   const publicData = await fetchPublicEffect(name);
 
   if (!isProEffect(publicData)) {
     return publicData;
   }
 
+  // Pro effect — go through the authenticated API.
   return fetchProtectedEffect(name, token);
 }
 
@@ -209,22 +83,14 @@ async function fetchPublicEffect(name) {
   try {
     response = await fetch(url);
   } catch (error) {
-    throw createRegistryError(
-      `Could not reach Hyperiux registry: ${error.message}`
-    );
+    throw createRegistryError(`Could not reach Hyperiux registry: ${error.message}`);
   }
 
   if (!response.ok) {
     if (response.status === 404) {
-      throw createRegistryError(
-        `Effect "${name}" not found. Run \`npx hyperiux list\` to see available effects.`,
-        { status: 404 }
-      );
+      throw createRegistryError(`Effect "${name}" not found. Run \`hyperiux list\` to see available effects.`, { status: 404 });
     }
-
-    throw createRegistryError(`Failed to fetch effect: ${response.statusText}`, {
-      status: response.status,
-    });
+    throw createRegistryError(`Failed to fetch effect: ${response.statusText}`, { status: response.status });
   }
 
   const data = await parseJsonResponse(response);
@@ -233,95 +99,29 @@ async function fetchPublicEffect(name) {
     throw createRegistryError(`Invalid registry response for "${name}"`);
   }
 
-  validateRegistryPayload(name, data);
-
   return data;
 }
 
-function fetchLocalPackageRegistry(name, registryRoot) {
-  const indexPath = path.join(registryRoot, "index.json");
-
-  if (!pathExists(indexPath)) {
-    throw createRegistryError(`Registry index not found at ${indexPath}`, {
-      status: 404,
-    });
-  }
-
-  const index = readJsonFile(indexPath);
-  const indexItem = findRegistryItemInIndex(index, name);
-
-  if (!indexItem) {
-    throw createRegistryError(`Effect "${name}" not found in local registry`, {
-      status: 404,
-    });
-  }
-
-  if (!indexItem.registryPath) {
-    throw createRegistryError(
-      `Registry index item "${name}" is missing "registryPath"`
-    );
-  }
-
-  // Resolve relative to the registryRoot the caller actually passed in -
-  // this must take priority. A caller supplying an explicit registryRoot
-  // (e.g. HYPERIUX_PRO_REGISTRY_ROOT pointing at a different checkout)
-  // expects files to come from THAT root, not from wherever this CLI
-  // package happens to be installed.
-  let finalRegistryJsonPath = path.join(
-    registryRoot,
-    indexItem.registryPath.replace(/^registry\//, "")
-  );
-
-  if (!pathExists(finalRegistryJsonPath)) {
-    // Fallback: the CLI's own bundled registry historically stored
-    // registryPath relative to the monorepo root instead of registryRoot.
-    finalRegistryJsonPath = path.join(MONOREPO_ROOT, indexItem.registryPath);
-  }
-
-  if (!pathExists(finalRegistryJsonPath)) {
-    throw createRegistryError(
-      `Registry file not found for "${name}": ${finalRegistryJsonPath}`,
-      { status: 404 }
-    );
-  }
-
-  const registryItem = readJsonFile(finalRegistryJsonPath);
-
-  validateRegistryPayload(name, registryItem);
-
-  return {
-    ...indexItem,
-    ...registryItem,
-    registryPath: normalizePath(
-      path.relative(MONOREPO_ROOT, finalRegistryJsonPath)
-    ),
-    __registryJsonPath: finalRegistryJsonPath,
-    __registryDir: path.dirname(finalRegistryJsonPath),
-  };
-}
-
-async function fetchLocalPublicRegistry(name, cwd, token) {
+async function fetchLocalRegistry(name, cwd, token) {
   const registryPath = path.join(cwd, LOCAL_REGISTRY_PATH, `${name}.json`);
 
-  if (!pathExists(registryPath)) {
+  if (!fs.existsSync(registryPath)) {
     throw createRegistryError(`Effect "${name}" not found in local registry`, {
       status: 404,
     });
   }
 
-  const meta = readJsonFile(registryPath);
+  const content = fs.readFileSync(registryPath, "utf-8");
+  const meta = JSON.parse(content);
 
+  /**
+   * If the local registry item is Pro, still enforce token access.
+   */
   if (isProEffect(meta)) {
     return fetchProtectedEffect(name, token);
   }
 
-  validateRegistryPayload(name, meta);
-
-  return {
-    ...meta,
-    __registryJsonPath: registryPath,
-    __registryDir: path.dirname(registryPath),
-  };
+  return meta;
 }
 
 async function fetchProtectedEffect(name, token) {
@@ -382,12 +182,11 @@ function validateRegistryPayload(name, data) {
   }
 
   if (!Array.isArray(data.files)) {
-    throw createRegistryError(
-      `Registry payload for "${name}" is missing "files" array`
-    );
+    throw createRegistryError(`Registry payload for "${name}" is missing "files" array`);
   }
 
-  const SAFE_PATH = /^[\w\-./@]+$/;
+  // Reject any file path that contains traversal sequences
+  const SAFE_PATH = /^[\w\-./]+$/;
 
   for (const file of data.files) {
     const filePath = file.targetPath || file.target || file.path || "";
@@ -416,19 +215,23 @@ export async function fetchRegistryIndex(options = {}) {
 
 async function fetchDevRegistryIndex() {
   const indexPath = path.join(DEV_REGISTRY_PATH, "index.json");
-  return readJsonFile(indexPath);
+  const content = fs.readFileSync(indexPath, "utf-8");
+
+  return JSON.parse(content);
 }
 
 async function fetchLocalRegistryIndex(cwd) {
   const indexPath = path.join(cwd, LOCAL_REGISTRY_PATH, "index.json");
 
-  if (!pathExists(indexPath)) {
+  if (!fs.existsSync(indexPath)) {
     throw createRegistryError("Registry index not found locally", {
       status: 404,
     });
   }
 
-  return readJsonFile(indexPath);
+  const content = fs.readFileSync(indexPath, "utf-8");
+
+  return JSON.parse(content);
 }
 
 export function normalizeRegistryIndex(index) {
@@ -462,7 +265,7 @@ async function fetchRemoteRegistryIndex() {
     response = await fetch(url);
   } catch (error) {
     throw createRegistryError(
-      `Failed to fetch registry index: ${error.message}`
+      `Failed to fetch registry index: ${error.message}`,
     );
   }
 
@@ -471,7 +274,7 @@ async function fetchRemoteRegistryIndex() {
       `Failed to fetch registry index: ${response.statusText}`,
       {
         status: response.status,
-      }
+      },
     );
   }
 
@@ -497,7 +300,7 @@ export async function fetchRegistryAsset(source) {
     response = await fetch(resolvedUrl);
   } catch (error) {
     throw createRegistryError(
-      `Failed to fetch asset "${source}": ${error.message}`
+      `Failed to fetch asset "${source}": ${error.message}`,
     );
   }
 
@@ -510,196 +313,50 @@ export async function fetchRegistryAsset(source) {
   return Buffer.from(await response.arrayBuffer());
 }
 
-export async function getFileContent(file) {
-  if (file.type === "registry:asset" && file.source && !file.content) {
-    return fetchRegistryAsset(file.source);
-  }
-
-  if (file.encoding === "base64") {
-    return Buffer.from(file.content, "base64");
-  }
-
-  return file.content || "";
-}
-
 export function getRegistryItemFiles(item, config, cwd = process.cwd()) {
+  const usesSrc = fs.existsSync(path.join(cwd, "src"));
+  const prefix = usesSrc ? "src/" : "";
   const files = item.files || [];
 
-  if (!files.length) {
-    return [];
-  }
-
   return files.map((file) => {
-    const targetPath = resolveTargetPath(file, item, config, cwd);
+    let targetPath = file.targetPath || file.target || file.path;
 
-    /**
-     * If content already exists, this is probably coming from the API/public JSON.
-     */
-    if (typeof file.content === "string" || file.encoding === "base64") {
-      return {
-        ...file,
-        targetPath,
-      };
-    }
-
-    /**
-     * If source exists, add.js will fetch it through fetchRegistryAsset().
-     */
-    if (file.source) {
-      return {
-        ...file,
-        targetPath,
-        type: file.type || "registry:asset",
-      };
-    }
-
-    /**
-     * Local folder registry mode.
-     * Example:
-     * registry/effects/navigation/elevate-navbar/index.jsx
-     */
-    const registryDir = getRegistryItemDir(item);
-
-    if (registryDir) {
-      const sourcePath = path.join(registryDir, file.path);
-
-      if (!pathExists(sourcePath)) {
-        throw createRegistryError(
-          `Registry source file missing for "${item.name}": ${sourcePath}`
-        );
-      }
-
-      return {
-        ...file,
-        targetPath,
-        content: fs.readFileSync(sourcePath, "utf-8"),
-      };
-    }
-
-    /**
-     * If there is no local registry dir and no content/source, this payload is incomplete.
-     */
-    throw createRegistryError(
-      `Registry file "${file.path}" for "${item.name}" has no content, source, or local registry directory.`
-    );
-  });
-}
-
-function getRegistryItemDir(item) {
-  if (item.__registryDir) {
-    return item.__registryDir;
-  }
-
-  if (item.__registryJsonPath) {
-    return path.dirname(item.__registryJsonPath);
-  }
-
-  if (item.registryPath) {
-    const fromMonorepoRoot = path.join(MONOREPO_ROOT, item.registryPath);
-
-    if (pathExists(fromMonorepoRoot)) {
-      return path.dirname(fromMonorepoRoot);
-    }
-
-    const localRegistryRoot = getLocalRegistryRoot();
-
-    if (localRegistryRoot) {
-      const fromLocalRoot = path.join(
-        localRegistryRoot,
-        item.registryPath.replace(/^registry\//, "")
+    if (!targetPath) {
+      throw createRegistryError(
+        `Invalid registry file in "${item.name}". Missing target path.`,
       );
-
-      if (pathExists(fromLocalRoot)) {
-        return path.dirname(fromLocalRoot);
-      }
     }
-  }
 
-  return null;
-}
+    const shouldPrefixSrc =
+      !targetPath.startsWith("public/") && !targetPath.startsWith("src/");
 
-function resolveTargetPath(file, item, config, cwd) {
-  let targetPath = file.targetPath || file.target;
+    // Replace Hyperiux default paths with user's configured aliases
+    if (targetPath.startsWith("components/hyperiux/")) {
+      const effectsPath =
+        config.aliases?.effects?.replace("@/", "") || "components/effects";
 
-  /**
-   * Folder-based registry:
-   * If registry item has target and file has path,
-   * install to target/path.
-   */
-  if (!targetPath && item.target && file.path) {
-    targetPath = path.join(item.target, file.path);
-  }
+      targetPath = targetPath.replace(
+        "components/hyperiux/",
+        `${effectsPath}/`,
+      );
+    } else if (targetPath.startsWith("components/effects/")) {
+      const effectsPath =
+        config.aliases?.effects?.replace("@/", "") || "components/effects";
 
-  /**
-   * Legacy registry:
-   * If no target is provided, use file.path.
-   */
-  if (!targetPath) {
-    targetPath = file.path;
-  }
+      targetPath = targetPath.replace("components/effects/", `${effectsPath}/`);
+    } else if (targetPath.startsWith("hooks/")) {
+      const hooksPath = config.aliases?.hooks?.replace("@/", "") || "hooks";
 
-  if (!targetPath) {
-    throw createRegistryError(
-      `Invalid registry file in "${item.name}". Missing target path.`
-    );
-  }
+      targetPath = targetPath.replace("hooks/", `${hooksPath}/`);
+    } else if (targetPath.startsWith("lib/")) {
+      const libPath = config.aliases?.lib?.replace("@/", "") || "lib";
 
-  targetPath = normalizePath(targetPath);
+      targetPath = targetPath.replace("lib/", `${libPath}/`);
+    }
 
-  const shouldPrefixSrc =
-    pathExists(path.join(cwd, "src")) &&
-    !targetPath.startsWith("src/") &&
-    !targetPath.startsWith("public/") &&
-    !targetPath.startsWith("app/") &&
-    !targetPath.startsWith("pages/");
-
-  targetPath = applyAliases(targetPath, config);
-
-  if (shouldPrefixSrc) {
-    targetPath = `src/${targetPath}`;
-  }
-
-  return normalizePath(targetPath);
-}
-
-function applyAliases(targetPath, config) {
-  let nextPath = normalizePath(targetPath);
-
-  const effectsPath =
-    config.aliases?.effects?.replace("@/", "") || "components/effects";
-
-  const hooksPath = config.aliases?.hooks?.replace("@/", "") || "hooks";
-  const libPath = config.aliases?.lib?.replace("@/", "") || "lib";
-
-  if (nextPath.startsWith("src/components/hyperiux/")) {
-    nextPath = nextPath.replace(
-      "src/components/hyperiux/",
-      `src/${effectsPath}/`
-    );
-  } else if (nextPath.startsWith("components/hyperiux/")) {
-    nextPath = nextPath.replace("components/hyperiux/", `${effectsPath}/`);
-  }
-
-  if (nextPath.startsWith("src/components/effects/")) {
-    nextPath = nextPath.replace(
-      "src/components/effects/",
-      `src/${effectsPath}/`
-    );
-  } else if (nextPath.startsWith("components/effects/")) {
-    nextPath = nextPath.replace("components/effects/", `${effectsPath}/`);
-  }
-
-  if (nextPath.startsWith("src/hooks/")) {
-    nextPath = nextPath.replace("src/hooks/", `src/${hooksPath}/`);
-  } else if (nextPath.startsWith("hooks/")) {
-    nextPath = nextPath.replace("hooks/", `${hooksPath}/`);
-  }
-
-  if (nextPath.startsWith("src/lib/")) {
-    nextPath = nextPath.replace("src/lib/", `src/${libPath}/`);
-  } else if (nextPath.startsWith("lib/")) {
-    nextPath = nextPath.replace("lib/", `${libPath}/`);
-  }
-
-  return normalizePath(nextPath);
+    return {
+      ...file,
+      targetPath: `${shouldPrefixSrc ? prefix : ""}${targetPath}`,
+    };
+  });
 }

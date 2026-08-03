@@ -1,45 +1,14 @@
 {
   "name": "elevate-navbar",
-  "version": "1.1.0",
-  "changelog": [
-    { "version": "1.1.0", "date": "2026-07-21", "summary": "Added prefers-reduced-motion support: dropdown and hover color transitions are set instantly instead of tweened when the user has reduced motion enabled", "breaking": false },
-    { "version": "1.0.0", "date": "2026-06-04", "summary": "Initial release", "breaking": false }
-  ],
   "type": "registry:component",
   "title": "Elevate Navbar",
   "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
   "category": "navigation",
   "dependencies": [
-    "gsap",
-    "lucide-react"
+    "gsap"
   ],
   "registryDependencies": [],
-  "packageName": "@hyperiux/elevate-navbar",
-  "sourcePath": "apps/docs/src/components/elevate-navbar",
-  "previewUrl": "/demo/elevate-navbar",
+  "previewUrl": "/navigation/elevate-navbar",
   "tier": "free",
-  "subfolder": true,
-  "main": "index.jsx",
-  "exportName": "ElevateNavbar",
-  "exportKind": "default",
-  "importPath": "@/components/effects/elevate-navbar",
-  "target": "src/components/effects/elevate-navbar",
-  "files": [
-    {
-      "path": "index.jsx",
-      "target": "src/components/effects/elevate-navbar/index.jsx"
-    },
-    {
-      "path": "ElevateMobileNav.jsx",
-      "target": "src/components/effects/elevate-navbar/ElevateMobileNav.jsx"
-    },
-    {
-      "path": "ElevateDesktopNav.jsx",
-      "target": "src/components/effects/elevate-navbar/ElevateDesktopNav.jsx"
-    },
-    {
-      "path": "useFocusTrap.js",
-      "target": "src/components/effects/elevate-navbar/useFocusTrap.js"
-    }
-  ]
+  "license": "MPL-2.0"
 }

@@ -1,36 +1,12 @@
 {
   "name": "hover-stack",
-  "version": "1.1.0",
   "type": "registry:component",
   "title": "Hover Stack",
   "description": "Overlapping card stack that fans out around the hovered card",
   "category": "components",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/demo/hover-stack",
+  "previewUrl": "/hover-stack",
   "tier": "free",
-  "subfolder": true,
-  "main": "index.jsx",
-  "exportName": "HoverStack",
-  "exportKind": "default",
-  "importPath": "@/components/effects/hover-stack",
-  "target": "src/components/effects/hover-stack",
-  "files": [
-    {
-      "path": "index.jsx",
-      "target": "src/components/effects/hover-stack/index.jsx"
-    },
-    {
-      "path": "HoverStackComp.jsx",
-      "target": "src/components/effects/hover-stack/HoverStackComp.jsx"
-    }
-  ],
-  "changelog": [
-    {
-      "version": "1.1.0",
-      "date": "2026-07-21",
-      "summary": "Disable hover lift/push transforms under reduced motion; keep z-index focus",
-      "breaking": false
-    }
-  ]
+  "license": "MPL-2.0"
 }

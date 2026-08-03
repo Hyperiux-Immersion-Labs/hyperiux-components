@@ -1,55 +1,16 @@
 {
   "name": "directional-menu",
-  "version": "1.1.0",
-  "changelog": [
-    { "version": "1.1.0", "date": "2026-07-21", "summary": "Added prefers-reduced-motion support: mega menu open/close panel animations use a reduced-motion-safe fade instead of the full height/slide tween", "breaking": false },
-    { "version": "1.0.0", "date": "2026-06-04", "summary": "Initial release", "breaking": false }
-  ],
   "type": "registry:component",
   "title": "Directional Menu",
   "description": "Mega menu with directional content transitions using GSAP",
   "category": "navigation",
   "dependencies": [
-    "gsap",
-    "lucide-react"
+    "gsap"
   ],
-  "registryDependencies": [],
-  "previewUrl": "/demo/directional-menu",
+  "registryDependencies": [
+    "chevron-bird"
+  ],
+  "previewUrl": "/navigation/directional-menu",
   "tier": "free",
-  "subfolder": true,
-  "main": "index.jsx",
-  "exportName": "DirectionalMenu",
-  "exportKind": "default",
-  "importPath": "@/components/effects/directional-menu",
-  "target": "src/components/effects/directional-menu",
-  "files": [
-    {
-      "path": "index.jsx",
-      "target": "src/components/effects/directional-menu/index.jsx"
-    },
-    {
-      "path": "DirectionalMegaMenu.jsx",
-      "target": "src/components/effects/directional-menu/DirectionalMegaMenu.jsx"
-    },
-    {
-      "path": "Menu1.jsx",
-      "target": "src/components/effects/directional-menu/Menu1.jsx"
-    },
-    {
-      "path": "Menu2.jsx",
-      "target": "src/components/effects/directional-menu/Menu2.jsx"
-    },
-    {
-      "path": "Menu3.jsx",
-      "target": "src/components/effects/directional-menu/Menu3.jsx"
-    },
-    {
-      "path": "MobileDirectionalMenu.jsx",
-      "target": "src/components/effects/directional-menu/MobileDirectionalMenu.jsx"
-    },
-    {
-      "path": "useFocusTrap.js",
-      "target": "src/components/effects/directional-menu/useFocusTrap.js"
-    }
-  ]
+  "license": "MPL-2.0"
 }
