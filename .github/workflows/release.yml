@@ -33,7 +33,7 @@ jobs:
           pnpm lint
           pnpm --filter hyperiux test
 
-      - name: Publish with provenance
+      - name: Publish CLI with provenance
         # Plain npm publish, not pnpm publish - pnpm's OIDC trusted-publishing
         # support is currently broken on GitHub Actions (pnpm/pnpm#11513),
         # while npm CLI's is GA. Upgrading npm first guarantees the >=11.5.1
@@ -43,6 +43,27 @@ jobs:
         run: |
           npm install -g npm@latest
           cd packages/cli
+          npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Run quality gates (MCP server)
+        run: |
+          pnpm --filter hyperiux-mcp-server lint
+          pnpm --filter hyperiux-mcp-server test
+
+      - name: Build MCP server
+        run: pnpm --filter hyperiux-mcp-server build
+
+      - name: Publish MCP server with provenance
+        # Same reasoning as the CLI publish step above - npm CLI's OIDC
+        # trusted publishing, NODE_AUTH_TOKEN as fallback. This is this
+        # package's first-ever publish, so trusted publishing likely isn't
+        # configured yet on npmjs.com (it can usually only be set up for a
+        # package that already exists) - NODE_AUTH_TOKEN doing the real work
+        # for this first release is expected, not a sign something's wrong.
+        run: |
+          cd packages/mcp-server
           npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
