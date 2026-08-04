@@ -285,6 +285,10 @@ export function autoConfigureImportAlias(cwd = process.cwd()) {
     const viteConfigPath = path.join(cwd, existingViteConfig);
     const content = fs.readFileSync(viteConfigPath, "utf-8");
 
+    const aliasPathExpr = isEsmViteConfig(cwd, existingViteConfig)
+      ? `new URL("${usesSrc ? "./src" : "."}", import.meta.url).pathname`
+      : `require("path").resolve(__dirname, "${usesSrc ? "./src" : "."}")`;
+
     if (/alias\s*:/.test(content)) {
       result.manualSteps.push(
         `${existingViteConfig} already has a "resolve.alias" block — verify it maps "@" to your ${usesSrc ? "src" : "project"} directory.`
@@ -292,7 +296,7 @@ export function autoConfigureImportAlias(cwd = process.cwd()) {
     } else if (/defineConfig\(\s*\{/.test(content)) {
       const injected = content.replace(
         /defineConfig\(\s*\{/,
-        `defineConfig({\n  resolve: {\n    alias: {\n      "@": new URL("${usesSrc ? "./src" : "."}", import.meta.url).pathname,\n    },\n  },`
+        `defineConfig({\n  resolve: {\n    alias: {\n      "@": ${aliasPathExpr},\n    },\n  },`
       );
       fs.writeFileSync(viteConfigPath, injected);
       result.viteConfigFile = existingViteConfig;
@@ -528,7 +532,11 @@ export function autoConfigureTailwindWiring(cwd = process.cwd(), framework) {
       return result;
     }
 
-    content = `import tailwindcss from "@tailwindcss/vite";\n${content}`;
+    const pluginImport = isEsmViteConfig(cwd, existingViteConfig)
+      ? 'import tailwindcss from "@tailwindcss/vite";\n'
+      : 'const tailwindcss = require("@tailwindcss/vite");\n';
+
+    content = `${pluginImport}${content}`;
     content = content.replace(/plugins\s*:\s*\[/, "plugins: [tailwindcss(), ");
 
     fs.writeFileSync(viteConfigPath, content);
@@ -557,6 +565,23 @@ function readPackageJson(cwd) {
 
 function hasAnyPath(cwd, paths) {
   return paths.some((itemPath) => fs.existsSync(path.join(cwd, itemPath)));
+}
+
+/**
+ * Whether a vite.config.* file can safely receive an injected top-level
+ * `import` statement. `.ts` and `.mjs` always can (TS source conventionally
+ * uses import/export regardless of compiled target; .mjs is unambiguous).
+ * `.cjs` never can. Plain `.js` depends on the nearest package.json's
+ * "type" field - defaulting to CJS (Node's own default) when absent, since
+ * assuming ESM here would silently break a require()/module.exports file:
+ * Node's mixed-syntax detection takes over and module.exports becomes a
+ * no-op, producing an empty config with no error at all.
+ */
+function isEsmViteConfig(cwd, fileName) {
+  if (fileName.endsWith(".ts") || fileName.endsWith(".mjs")) return true;
+  if (fileName.endsWith(".cjs")) return false;
+  const packageJson = readPackageJson(cwd);
+  return packageJson?.type === "module";
 }
 
 export function resolveAlias(alias, config, cwd = process.cwd()) {
