@@ -27,7 +27,9 @@ describe("CLI entrypoint", () => {
     const output = execFileSync("node", [CLI_BIN, "--version"], {
       encoding: "utf8",
     });
-    expect(output.trim()).toMatch(/^\d+\.\d+\.\d+$/);
+    // Allows an optional semver pre-release suffix (e.g. "1.1.0-beta.0"),
+    // not just plain "x.y.z" releases.
+    expect(output.trim()).toMatch(/^\d+\.\d+\.\d+(-[0-9A-Za-z-.]+)?$/);
   });
 });
 
