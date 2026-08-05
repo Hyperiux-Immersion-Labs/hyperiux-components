@@ -31,7 +31,10 @@ vi.mock("prompts", () => ({ default: (...args) => promptsMock(...args) }));
 
 vi.mock("../utils/config.js", () => ({
   configExists: () => true,
-  readConfig: () => ({ aliases: { effects: "@/components/effects" } }),
+  readConfig: () => ({
+    aliases: { effects: "@/components/effects" },
+    tailwind: { css: "src/app/globals.css" },
+  }),
   writeConfig: () => {},
   detectProjectEnvironment: () => "react",
   detectNextRouter: () => null,
@@ -50,6 +53,10 @@ vi.mock("../utils/package-manager.js", () => ({
 
 vi.mock("../utils/lockfile.js", () => ({
   upsertLockEntry: () => {},
+}));
+
+vi.mock("../utils/cli-state.js", () => ({
+  recordLocalInstallStat: () => {},
 }));
 
 vi.mock("../utils/registry.js", () => ({
@@ -136,5 +143,27 @@ describe("add — overwrite safety of --yes", () => {
     const target = path.join(tmpDir, TARGET_REL);
     expect(fs.existsSync(target)).toBe(true);
     expect(fs.readFileSync(target, "utf8")).toBe(REGISTRY_CONTENT);
+  });
+
+  it("stamps README and resets global CSS after a successful install", async () => {
+    const add = await importAdd();
+    const readmePath = path.join(tmpDir, "README.md");
+    const cssPath = path.join(tmpDir, "src/app/globals.css");
+    fs.mkdirSync(path.dirname(cssPath), { recursive: true });
+    fs.writeFileSync(readmePath, "# Demo\n");
+    fs.writeFileSync(cssPath, '@import "tailwindcss";\n.custom { color: red; }\n');
+
+    await add("foo", { yes: true });
+
+    expect(fs.readFileSync(readmePath, "utf8")).toBe(
+      "// Built using Hyperiux Vault: [https://vault.hyperiux.com](https://vault.hyperiux.com)\n// Installed Effect:foo\n\n# Demo\n"
+    );
+    expect(fs.readFileSync(cssPath, "utf8")).toBe('@import "tailwindcss";\n');
+
+    await add("foo", { yes: true, overwrite: true });
+
+    expect(fs.readFileSync(readmePath, "utf8")).toBe(
+      "// Built using Hyperiux Vault: [https://vault.hyperiux.com](https://vault.hyperiux.com)\n// Installed Effect:foo\n\n# Demo\n"
+    );
   });
 });

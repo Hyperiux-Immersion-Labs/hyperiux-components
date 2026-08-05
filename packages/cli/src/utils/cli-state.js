@@ -29,3 +29,27 @@ export function hasSeenStarPrompt() {
 export function markStarPromptSeen() {
   writeState({ ...readState(), seenStarPrompt: true });
 }
+
+export function recordLocalInstallStat(effectName, installedAt = new Date()) {
+  const state = readState();
+  const installStats = state.installStats || {};
+  const effects = installStats.effects || {};
+  const current = effects[effectName] || {};
+  const timestamp = installedAt.toISOString();
+
+  effects[effectName] = {
+    count: (current.count || 0) + 1,
+    firstInstalledAt: current.firstInstalledAt || timestamp,
+    lastInstalledAt: timestamp,
+  };
+
+  writeState({
+    ...state,
+    installStats: {
+      ...installStats,
+      total: (installStats.total || 0) + 1,
+      effects,
+      updatedAt: timestamp,
+    },
+  });
+}

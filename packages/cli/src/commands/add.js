@@ -27,6 +27,7 @@ import {
 } from "../utils/package-manager.js";
 import { getAuthToken } from "../utils/auth.js";
 import { trackCliEvent } from "../utils/telemetry.js";
+import { recordLocalInstallStat } from "../utils/cli-state.js";
 
 const APP_URL =
   process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
@@ -105,6 +106,43 @@ export async function add(effectName, options = {}) {
     }
 
     console.log();
+    process.exit(1);
+  }
+
+  const requiresNextAppRouter = (registryItem.dependencies || []).includes(
+    "next-transition-router"
+  );
+  const isNextAppRouter = framework === "next" && router === "app";
+
+  if (requiresNextAppRouter && !isNextAppRouter) {
+    console.log();
+    console.log(
+      chalk.red(`"${effectName}" only works in a Next.js App Router project.`)
+    );
+    console.log();
+
+    if (framework === "react") {
+      console.log(chalk.dim("  Detected: React (Vite) project."));
+    } else if (framework === "next" && router === "pages") {
+      console.log(chalk.dim("  Detected: Next.js Pages Router project."));
+    } else {
+      console.log(chalk.dim(`  Detected: ${framework || "unknown"} project.`));
+    }
+
+    console.log(
+      chalk.dim(
+        '  This effect depends on "next-transition-router", which requires the Next.js App Router (an "app/" directory).'
+      )
+    );
+    console.log();
+
+    await trackCliEvent("add_blocked", {
+      effect: effectName,
+      reason: "requires_next_app_router",
+      framework,
+      router,
+    });
+
     process.exit(1);
   }
 
@@ -256,6 +294,9 @@ export async function add(effectName, options = {}) {
   }
 
   recordLocalInstall(effectName, cwd);
+  recordLocalInstallStat(effectName);
+  stampProjectReadme(cwd, effectName);
+  resetGlobalCss(config, cwd);
 
   // Handle registry dependencies recursively
   const registryDeps = registryItem.registryDependencies || [];
@@ -336,6 +377,48 @@ function recordLocalInstall(effectName, cwd) {
   };
 
   writeConfig(currentConfig, cwd);
+}
+
+function stampProjectReadme(cwd, effectName) {
+  const readmePath = path.join(cwd, "README.md");
+  const stamp =
+    "// Built using Hyperiux Vault: [https://vault.hyperiux.com](https://vault.hyperiux.com)";
+  const effectStamp = `// Installed Effect:${effectName}`;
+  const existing = fs.existsSync(readmePath)
+    ? fs.readFileSync(readmePath, "utf-8")
+    : "";
+  const hasStamp = existing.includes(stamp);
+  const hasEffectStamp = existing.includes(effectStamp);
+
+  if (hasStamp && hasEffectStamp) {
+    return;
+  }
+
+  if (hasStamp) {
+    fs.writeFileSync(
+      readmePath,
+      hasEffectStamp
+        ? existing
+        : existing.replace(stamp, `${stamp}\n${effectStamp}`),
+      "utf-8"
+    );
+    return;
+  }
+
+  const prefix = `${stamp}\n${effectStamp}`;
+  fs.writeFileSync(readmePath, existing ? `${prefix}\n\n${existing}` : `${prefix}\n`, "utf-8");
+}
+
+function resetGlobalCss(config, cwd) {
+  const cssPath = config.tailwind?.css || "src/app/globals.css";
+  const absoluteCssPath = path.resolve(cwd, cssPath);
+
+  if (!absoluteCssPath.startsWith(path.resolve(cwd) + path.sep)) {
+    throw new Error(`Unsafe CSS path detected and blocked: "${cssPath}"`);
+  }
+
+  fs.mkdirSync(path.dirname(absoluteCssPath), { recursive: true });
+  fs.writeFileSync(absoluteCssPath, '@import "tailwindcss";\n', "utf-8");
 }
 
 function getImportPath(file, config) {

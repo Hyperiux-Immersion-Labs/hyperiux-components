@@ -18,7 +18,7 @@
     "scripts/smoke-packed-package.mjs"
   ],
   "scripts": {
-    "build": "node --check src/index.js && node --check src/commands/add.js && node --check src/commands/init.js && node --check src/commands/list.js && node --check src/commands/login.js && node --check src/commands/logout.js && node --check src/commands/whoami.js && node --check src/commands/diff.js && node --check src/commands/outdated.js && node --check src/commands/versions.js && node --check src/utils/auth.js && node --check src/utils/config.js && node --check src/utils/package-manager.js && node --check src/utils/registry.js && node --check src/utils/telemetry.js",
+    "build": "node --check src/index.js && node --check src/commands/add.js && node --check src/commands/init.js && node --check src/commands/list.js && node --check src/commands/login.js && node --check src/commands/logout.js && node --check src/commands/whoami.js && node --check src/commands/diff.js && node --check src/commands/outdated.js && node --check src/commands/versions.js && node --check src/utils/auth.js && node --check src/utils/cli-state.js && node --check src/utils/config.js && node --check src/utils/package-manager.js && node --check src/utils/registry.js && node --check src/utils/telemetry.js",
     "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
