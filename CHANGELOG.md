@@ -18,13 +18,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0-beta.1] - 2026-08-07
+
+### Added
+- Anonymous CLI telemetry (`src/utils/telemetry.js`): tracks `init` and `add`/`add_blocked` events (CLI version, platform, Node version, an anonymized per-project ID — a truncated SHA-256 hash of the project path and hostname, not the path itself) to help prioritize framework/registry support. Non-blocking (1.5s timeout, silently no-ops on failure) and off by default in respect of privacy — opt out anytime with `HYPERIUX_TELEMETRY_DISABLED=1` or the standard `DO_NOT_TRACK=1`.
+- `whoami` and `logout` commands, alongside the existing `login`.
+- Framework and router detection, plus Tailwind/alias preflight checks, during `init` — surfaces mismatches before they turn into broken installs instead of after.
+- Local install counter and registry domain migration support.
+
 ### Changed
 - Project license changed from MIT to the Mozilla Public License 2.0 (MPL-2.0) for the CLI (`packages/cli`) and all free registry effects (`registry/effects`). Pro effects remain proprietary and are unaffected.
+- CI release publish steps are now idempotent on already-published versions — re-running the release workflow no longer fails if a version was already pushed to npm.
 
 ### Fixed
 - **Critical:** every CLI invocation (`--version`, `--help`, `add`, `init`, etc.) crashed at startup with `SyntaxError: The requested module '../utils/registry.js' does not provide an export named 'getFileContent'` — `diff.js` imported an export that `registry.js` no longer provided. Restored `getFileContent` as a shared export in `registry.js`; `add.js` now uses it instead of keeping its own private duplicate.
 - `add --yes` (without `--overwrite`) on a project with existing, customized effect files silently overwrote them instead of skipping — the interactive confirmation prompt was correctly bypassed for `--yes`, but nothing took its place to block the write. Now exits cleanly and points the user at `--overwrite`.
 - `diff.js`'s use of the `diff` package (`diffLines`) was never declared in `packages/cli/package.json`'s dependencies — it only resolved locally because of a stale `pnpm-lock.yaml` entry left over from an earlier state. A real `npm install hyperiux` would have been missing this dependency entirely. Also added the three command files (`diff.js`, `outdated.js`, `versions.js`) that were missing from the `build` script's `node --check` coverage.
+- `vite.config.js` auto-fixers silently broke CommonJS configs during `init`.
+- 2 high-severity dependency vulnerabilities.
 
 ## [1.0.4] - 2026-06-05
 
