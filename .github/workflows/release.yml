@@ -44,10 +44,16 @@ jobs:
           npm install -g npm@latest
           cd packages/cli
           PKG_VERSION=$(node -p "require('./package.json').version")
+          # npm refuses to publish a prerelease (e.g. 1.1.0-beta.1) without an
+          # explicit --tag - it won't guess and risk landing it on "latest".
+          # Derive the dist-tag from the prerelease identifier itself (beta,
+          # rc, etc.); a plain version (no hyphen) falls through to "latest".
+          NPM_TAG=$(echo "$PKG_VERSION" | sed -n 's/^[^-]*-\([a-zA-Z]*\).*/\1/p')
+          NPM_TAG=${NPM_TAG:-latest}
           if npm view "hyperiux@$PKG_VERSION" version &>/dev/null; then
             echo "hyperiux@$PKG_VERSION is already published, skipping."
           else
-            npm publish --provenance --access public
+            npm publish --provenance --access public --tag "$NPM_TAG"
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -70,10 +76,12 @@ jobs:
         run: |
           cd packages/mcp-server
           PKG_VERSION=$(node -p "require('./package.json').version")
+          NPM_TAG=$(echo "$PKG_VERSION" | sed -n 's/^[^-]*-\([a-zA-Z]*\).*/\1/p')
+          NPM_TAG=${NPM_TAG:-latest}
           if npm view "hyperiux-mcp-server@$PKG_VERSION" version &>/dev/null; then
             echo "hyperiux-mcp-server@$PKG_VERSION is already published, skipping."
           else
-            npm publish --provenance --access public
+            npm publish --provenance --access public --tag "$NPM_TAG"
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
