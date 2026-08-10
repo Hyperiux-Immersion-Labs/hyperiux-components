@@ -167,6 +167,41 @@ export function detectTailwindConfig(cwd = process.cwd()) {
   return "tailwind.config.js";
 }
 
+export function addTailwindImportToCss(cwd = process.cwd(), cssPath) {
+  const resolvedCssPath = cssPath || detectCssPath(cwd);
+  const absoluteCssPath = path.join(cwd, resolvedCssPath);
+  const cssDir = path.dirname(absoluteCssPath);
+  let content = "";
+  let existed = false;
+
+  if (fs.existsSync(absoluteCssPath)) {
+    existed = true;
+    content = fs.readFileSync(absoluteCssPath, "utf-8");
+
+    if (TAILWIND_DIRECTIVE_PATTERN.test(content)) {
+      return {
+        cssPath: resolvedCssPath,
+        created: false,
+        updated: false,
+      };
+    }
+  } else if (!fs.existsSync(cssDir)) {
+    fs.mkdirSync(cssDir, { recursive: true });
+  }
+
+  const nextContent = content
+    ? `@import "tailwindcss";\n${content}`
+    : '@import "tailwindcss";\n';
+
+  fs.writeFileSync(absoluteCssPath, nextContent, "utf-8");
+
+  return {
+    cssPath: resolvedCssPath,
+    created: !existed,
+    updated: existed,
+  };
+}
+
 export function hasImportAliasConfigured(cwd = process.cwd()) {
   const jsonConfigs = ["tsconfig.json", "jsconfig.json"];
 

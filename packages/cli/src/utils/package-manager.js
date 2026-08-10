@@ -28,15 +28,15 @@ export function detectPackageManager(cwd = process.cwd()) {
   return "npm";
 }
 
-export function getInstallArgs(packageManager, packages) {
+export function getInstallArgs(packageManager, packages, options = {}) {
   const verb = packageManager === "npm" ? "install" : "add";
-  return [verb, ...packages];
+  return options.dev ? [verb, "-D", ...packages] : [verb, ...packages];
 }
 
 const VALID_PACKAGE_NAME_REGEX = /^[a-z0-9-@/_.]+$/;
 
 export function installDependencies(packages, options = {}) {
-  const { cwd = process.cwd(), dryRun = false } = options;
+  const { cwd = process.cwd(), dryRun = false, dev = false } = options;
 
   const invalidPackages = packages.filter((pkg) => !VALID_PACKAGE_NAME_REGEX.test(pkg));
   if (invalidPackages.length > 0) {
@@ -44,7 +44,7 @@ export function installDependencies(packages, options = {}) {
   }
 
   const packageManager = detectPackageManager(cwd);
-  const args = getInstallArgs(packageManager, packages);
+  const args = getInstallArgs(packageManager, packages, { dev });
 
   if (dryRun) {
     return { packageManager, args };

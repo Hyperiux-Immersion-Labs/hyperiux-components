@@ -29,6 +29,19 @@ describe("package manager utilities", () => {
     );
   });
 
+  it("should install dev dependencies with the package manager dev flag", () => {
+    const result = installDependencies(["tailwindcss", "@tailwindcss/vite"], {
+      dev: true,
+    });
+
+    expect(result.args).toEqual(["install", "-D", "tailwindcss", "@tailwindcss/vite"]);
+    expect(spawnSync).toHaveBeenCalledWith(
+      expect.any(String),
+      ["install", "-D", "tailwindcss", "@tailwindcss/vite"],
+      expect.objectContaining({ shell: false })
+    );
+  });
+
   it("should block package names containing malicious shell script characters", () => {
     expect(() => {
       installDependencies(["framer-motion; echo 'HACKED'"]);

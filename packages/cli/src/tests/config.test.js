@@ -12,6 +12,7 @@ import {
   detectProjectEnvironment,
   detectNextRouter,
   detectCssPath,
+  addTailwindImportToCss,
   hasTailwindInstalled,
   hasImportAliasConfigured,
   autoConfigureImportAlias,
@@ -238,6 +239,71 @@ describe("config utilities", () => {
       vi.spyOn(fs, "readFileSync").mockReturnValue(JSON.stringify({}));
 
       expect(hasTailwindInstalled("/project")).toBe(false);
+    });
+  });
+
+  describe("adding the Tailwind import", () => {
+    it("prepends the Tailwind import to an existing CSS file", () => {
+      vi.mocked(fs.existsSync).mockImplementation((p) =>
+        p.endsWith("src/index.css")
+      );
+      vi.spyOn(fs, "readFileSync").mockReturnValue("body { margin: 0; }\n");
+      const writeSpy = vi.spyOn(fs, "writeFileSync").mockImplementation(() => {});
+
+      const result = addTailwindImportToCss("/project", "src/index.css");
+
+      expect(result).toEqual({
+        cssPath: "src/index.css",
+        created: false,
+        updated: true,
+      });
+      expect(writeSpy).toHaveBeenCalledWith(
+        "/project/src/index.css",
+        '@import "tailwindcss";\nbody { margin: 0; }\n',
+        "utf-8"
+      );
+    });
+
+    it("creates a detected framework CSS file with the Tailwind import", () => {
+      vi.mocked(fs.existsSync).mockImplementation((p) => p.endsWith("src"));
+      const mkdirSpy = vi.spyOn(fs, "mkdirSync").mockImplementation(() => {});
+      const writeSpy = vi.spyOn(fs, "writeFileSync").mockImplementation(() => {});
+
+      const result = addTailwindImportToCss(
+        "/project",
+        detectCssPath("/project", "next", "app")
+      );
+
+      expect(result).toEqual({
+        cssPath: "src/app/globals.css",
+        created: true,
+        updated: false,
+      });
+      expect(mkdirSpy).toHaveBeenCalledWith("/project/src/app", {
+        recursive: true,
+      });
+      expect(writeSpy).toHaveBeenCalledWith(
+        "/project/src/app/globals.css",
+        '@import "tailwindcss";\n',
+        "utf-8"
+      );
+    });
+
+    it("does not rewrite CSS that already imports Tailwind", () => {
+      vi.mocked(fs.existsSync).mockImplementation((p) =>
+        p.endsWith("styles/globals.css")
+      );
+      vi.spyOn(fs, "readFileSync").mockReturnValue('@import "tailwindcss";\n');
+      const writeSpy = vi.spyOn(fs, "writeFileSync").mockImplementation(() => {});
+
+      const result = addTailwindImportToCss("/project", "styles/globals.css");
+
+      expect(result).toEqual({
+        cssPath: "styles/globals.css",
+        created: false,
+        updated: false,
+      });
+      expect(writeSpy).not.toHaveBeenCalled();
     });
   });
 

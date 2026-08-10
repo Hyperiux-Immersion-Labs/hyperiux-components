@@ -17,13 +17,18 @@ import {
   detectTailwindConfig,
   hasTailwindInstalled,
   hasTailwindDependencyOrConfig,
+  addTailwindImportToCss,
   hasImportAliasConfigured,
   autoConfigureImportAlias,
   hasPostcssTailwindConfigured,
   hasViteTailwindPluginConfigured,
   autoConfigureTailwindWiring,
 } from "../utils/config.js";
-import { detectPackageManager } from "../utils/package-manager.js";
+import {
+  detectPackageManager,
+  getMissingDependencies,
+  installDependencies,
+} from "../utils/package-manager.js";
 import { trackCliEvent } from "../utils/telemetry.js";
 
 export async function init(options) {
@@ -34,12 +39,66 @@ export async function init(options) {
   console.log();
 
   const framework = detectProjectEnvironment(cwd);
+  const router = framework === "next" ? detectNextRouter(cwd) : null;
+  const requiredTailwindDeps = getTailwindDependencies(framework);
+  const missingTailwindDeps = getMissingDependencies(requiredTailwindDeps, cwd);
+
+  if (missingTailwindDeps.length > 0) {
+    console.log(chalk.yellow("⚠ Validating Tailwind CSS dependencies."));
+    console.log();
+    console.log(
+      chalk.yellow(
+        `Missing Tailwind package${missingTailwindDeps.length === 1 ? "" : "s"}: ${missingTailwindDeps.join(", ")}`
+      )
+    );
+    console.log(
+      chalk.dim(`  ${getTailwindInstallCommand(cwd, framework, missingTailwindDeps)}`)
+    );
+    console.log();
+
+    let shouldInstallTailwind = Boolean(options.yes);
+
+    if (!options.yes) {
+      const { install } = await prompts({
+        type: "confirm",
+        name: "install",
+        message: "Install Tailwind CSS dependencies now?",
+        initial: true,
+      });
+      shouldInstallTailwind = install;
+    }
+
+    if (!shouldInstallTailwind) {
+      console.log(chalk.yellow("Skipped. Install Tailwind CSS, then run init again."));
+      console.log(chalk.dim(`  Guide: ${getTailwindGuideUrl(framework)}`));
+      console.log();
+      process.exit(1);
+    }
+
+    const depsSpinner = ora(
+      `Installing Tailwind dependencies: ${missingTailwindDeps.join(", ")}...`
+    ).start();
+
+    try {
+      installDependencies(missingTailwindDeps, { cwd, dev: true });
+      depsSpinner.succeed("Tailwind dependencies installed.");
+    } catch (error) {
+      depsSpinner.fail("Failed to install Tailwind dependencies");
+      console.log();
+      console.error(chalk.red(error.message));
+      console.log();
+      process.exit(1);
+    }
+
+    console.log();
+  }
 
   if (!hasTailwindInstalled(cwd)) {
     console.log(chalk.red("✖ Validating Tailwind CSS."));
     console.log();
 
     if (hasTailwindDependencyOrConfig(cwd)) {
+      const cssPath = detectCssPath(cwd, framework, router);
       console.log(
         chalk.red(
           `Tailwind CSS is installed, but no CSS file at ${cwd} imports it.`
@@ -47,7 +106,7 @@ export async function init(options) {
       );
       console.log(
         chalk.yellow(
-          'Add this to your global CSS file (e.g. src/index.css), then try again:'
+          `Add this to your global CSS file (${cssPath}):`
         )
       );
       console.log(chalk.cyan('  @import "tailwindcss";'));
@@ -58,6 +117,37 @@ export async function init(options) {
           )
         );
       }
+
+      let shouldAddTailwindImport = Boolean(options.yes);
+
+      if (!options.yes) {
+        const { add } = await prompts({
+          type: "confirm",
+          name: "add",
+          message: "Add Tailwind in your global CSS file?",
+          initial: true,
+        });
+        shouldAddTailwindImport = add;
+      }
+
+      if (!shouldAddTailwindImport) {
+        console.log(
+          chalk.yellow(
+            `Skipped. Add @import "tailwindcss"; to ${cssPath}, then run init again.`
+          )
+        );
+        console.log(chalk.dim(`  Guide: ${getTailwindGuideUrl(framework)}`));
+        console.log();
+        process.exit(1);
+      }
+
+      const cssResult = addTailwindImportToCss(cwd, cssPath);
+      console.log(
+        chalk.green(
+          `✔ ${cssResult.created ? "Created" : "Updated"} ${cssResult.cssPath} with Tailwind.`
+        )
+      );
+      console.log();
     } else {
       console.log(
         chalk.red(`No Tailwind CSS configuration found at ${cwd}.`)
@@ -68,12 +158,11 @@ export async function init(options) {
         )
       );
       console.log(chalk.yellow("Install Tailwind CSS then try again:"));
-      console.log(chalk.cyan(`  ${getTailwindInstallCommand(framework)}`));
+      console.log(chalk.cyan(`  ${getTailwindInstallCommand(cwd, framework)}`));
+      console.log(chalk.dim(`  Guide: ${getTailwindGuideUrl(framework)}`));
+      console.log();
+      process.exit(1);
     }
-
-    console.log(chalk.dim(`  Guide: ${getTailwindGuideUrl(framework)}`));
-    console.log();
-    process.exit(1);
   }
 
   const wiringOk =
@@ -163,11 +252,17 @@ export async function init(options) {
       process.exit(1);
     }
 
-    const depToInstall = framework === "next" ? "@tailwindcss/postcss" : "@tailwindcss/vite";
-    console.log(
-      chalk.dim(`  Make sure it's installed: ${getInstallCommand(cwd, depToInstall)}`)
+    const missingWiringDeps = getMissingDependencies(
+      framework === "next" ? ["@tailwindcss/postcss"] : ["@tailwindcss/vite"],
+      cwd
     );
-    console.log();
+
+    if (missingWiringDeps.length > 0) {
+      console.log(
+        chalk.dim(`  Make sure it's installed: ${getTailwindInstallCommand(cwd, framework, missingWiringDeps)}`)
+      );
+      console.log();
+    }
   }
 
   if (framework === "react" && !hasImportAliasConfigured(cwd)) {
@@ -246,7 +341,6 @@ export async function init(options) {
     }
   }
 
-  const router = framework === "next" ? detectNextRouter(cwd) : null;
   let config = getDefaultConfig();
 
   config.framework = framework;
@@ -342,22 +436,27 @@ export async function init(options) {
   }
 }
 
-function getInstallCommand(cwd, pkg) {
+function getInstallCommand(cwd, packages, options = {}) {
   const packageManager = detectPackageManager(cwd);
   const verb = packageManager === "npm" ? "install" : "add";
-  return `${packageManager} ${verb} -D ${pkg}`;
+  const flags = options.dev ? " -D" : "";
+  return `${packageManager} ${verb}${flags} ${packages.join(" ")}`;
 }
 
-function getTailwindInstallCommand(framework) {
+function getTailwindDependencies(framework) {
   if (framework === "next") {
-    return "npm install tailwindcss @tailwindcss/postcss postcss --save-dev";
+    return ["tailwindcss", "@tailwindcss/postcss", "postcss"];
   }
 
   if (framework === "react") {
-    return "npm install tailwindcss @tailwindcss/vite --save-dev";
+    return ["tailwindcss", "@tailwindcss/vite"];
   }
 
-  return "npm install tailwindcss --save-dev";
+  return ["tailwindcss"];
+}
+
+function getTailwindInstallCommand(cwd, framework, packages = getTailwindDependencies(framework)) {
+  return getInstallCommand(cwd, packages, { dev: true });
 }
 
 function getTailwindGuideUrl(framework) {
