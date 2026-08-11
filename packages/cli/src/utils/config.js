@@ -88,6 +88,33 @@ export function detectProjectEnvironment(cwd = process.cwd()) {
   return "unknown";
 }
 
+export function detectProjectLanguage(cwd = process.cwd()) {
+  const packageJson = readPackageJson(cwd);
+  const dependencies = {
+    ...(packageJson?.dependencies || {}),
+    ...(packageJson?.devDependencies || {}),
+  };
+
+  if (
+    dependencies.typescript ||
+    hasAnyPath(cwd, [
+      "tsconfig.json",
+      "next.config.ts",
+      "vite.config.ts",
+      "src/main.tsx",
+      "src/App.tsx",
+      "src/app/page.tsx",
+      "app/page.tsx",
+      "src/pages/_app.tsx",
+      "pages/_app.tsx",
+    ])
+  ) {
+    return "tsx";
+  }
+
+  return "jsx";
+}
+
 export function detectNextRouter(cwd = process.cwd()) {
   if (hasAnyPath(cwd, ["src/app", "app"])) {
     return "app";

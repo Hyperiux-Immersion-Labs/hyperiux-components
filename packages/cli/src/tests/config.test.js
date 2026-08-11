@@ -10,6 +10,7 @@ import {
   getHooksPath,
   getLibPath,
   detectProjectEnvironment,
+  detectProjectLanguage,
   detectNextRouter,
   detectCssPath,
   addTailwindImportToCss,
@@ -115,6 +116,20 @@ describe("config utilities", () => {
       );
 
       expect(detectProjectEnvironment("/project")).toBe("react");
+    });
+
+    it("detects TSX projects from TypeScript config", () => {
+      vi.mocked(fs.existsSync).mockImplementation((p) =>
+        p.endsWith("tsconfig.json")
+      );
+
+      expect(detectProjectLanguage("/project")).toBe("tsx");
+    });
+
+    it("defaults to JSX projects when TypeScript signals are absent", () => {
+      vi.mocked(fs.existsSync).mockReturnValue(false);
+
+      expect(detectProjectLanguage("/project")).toBe("jsx");
     });
 
     it("prefers a React CSS file in React projects", () => {

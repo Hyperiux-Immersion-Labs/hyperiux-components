@@ -427,14 +427,13 @@ function getImportPath(file, config) {
   const effectsPath = effectsAlias.replace("@/", "");
 
   if (targetPath.includes(effectsPath)) {
-    const fileName = path.basename(targetPath, ".jsx").replace(".js", "");
+    const fileName = path.basename(targetPath).replace(/\.(jsx|tsx|js|ts)$/, "");
     return `${effectsAlias}/${fileName}`;
   }
 
   return `@/${targetPath
     .replace(/^src\//, "")
-    .replace(/\.jsx$/, "")
-    .replace(/\.js$/, "")}`;
+    .replace(/\.(jsx|tsx|js|ts)$/, "")}`;
 }
 
 function getComponentName(effectName) {

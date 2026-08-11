@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath, URL } from "url";
 import { Buffer } from "buffer";
+import { detectProjectLanguage } from "./config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -329,6 +330,7 @@ export function getRegistryItemFiles(item, config, cwd = process.cwd()) {
   const usesSrc = fs.existsSync(path.join(cwd, "src"));
   const prefix = usesSrc ? "src/" : "";
   const files = item.files || [];
+  const shouldInstallAsJsx = detectProjectLanguage(cwd) === "jsx";
 
   return files.map((file) => {
     let targetPath = file.targetPath || file.target || file.path;
@@ -366,9 +368,194 @@ export function getRegistryItemFiles(item, config, cwd = process.cwd()) {
       targetPath = targetPath.replace("lib/", `${libPath}/`);
     }
 
+    if (shouldInstallAsJsx) {
+      targetPath = toJsxTargetPath(targetPath);
+    }
+
     return {
       ...file,
       targetPath: `${shouldPrefixSrc ? prefix : ""}${targetPath}`,
+      content:
+        shouldInstallAsJsx && typeof file.content === "string"
+          ? stripTypeScriptFromReactSource(file.content)
+          : file.content,
     };
   });
+}
+
+function toJsxTargetPath(targetPath) {
+  return targetPath.replace(/\.tsx$/, ".jsx").replace(/\.ts$/, ".js");
+}
+
+export function stripTypeScriptFromReactSource(source) {
+  let output = source;
+
+  output = output.replace(/^\s*import\s+type\s+[^;]+;\s*$/gm, "");
+  output = output.replace(/^\s*export\s+type\s+\w+[^=]*=\s*\{[\s\S]*?^};?\s*$/gm, "");
+  output = output.replace(/^\s*type\s+\w+[^=]*=\s*\{[\s\S]*?^};?\s*$/gm, "");
+  output = output.replace(/^\s*export\s+type\s+[\s\S]*?;\s*$/gm, "");
+  output = output.replace(/^\s*type\s+\w+[\s\S]*?;\s*$/gm, "");
+  output = output.replace(/^\s*export\s+interface\s+\w+[\s\S]*?^}\s*$/gm, "");
+  output = output.replace(/^\s*interface\s+\w+[\s\S]*?^}\s*$/gm, "");
+
+  output = output.replace(
+    /\b(useRef|useState|useReducer|useMemo|useCallback|createRef)<[^>\n]+>\s*\(/g,
+    "$1("
+  );
+  output = output.replace(/:\s*(React\.)?(FC|FunctionComponent)<[^>\n]+>\s*=/g, " =");
+  output = output.replace(/\b(React\.)?(FC|FunctionComponent)<[^>\n]+>/g, "");
+
+  output = stripFunctionTypeAnnotations(output);
+  output = output.replace(/(\b(?:const|let|var)\s+[A-Za-z_$][\w$]*)\s*:\s*[\w$.<>,\s|&[\]?]+\s*(?==)/g, "$1 ");
+
+  output = output.replace(/\s+as\s+const\b/g, "");
+  output = output.replace(/\s+as\s+[\w$.<>,\s|&[\]?]+(?=[,);\]}])/g, "");
+  output = output.replace(/([A-Za-z_$][\w$]*)!\./g, "$1.");
+  output = output.replace(/([A-Za-z_$][\w$]*)!\[/g, "$1[");
+
+  return output.replace(/\n{3,}/g, "\n\n");
+}
+
+function stripFunctionTypeAnnotations(source) {
+  let output = source;
+
+  output = output.replace(
+    /function(\s+[A-Za-z_$][\w$]*)?\s*\(([^)]*)\)(\s*:\s*[\w$.<>,\s|&[\]?]+)?\s*\{/g,
+    (_match, name = "", params) => `function${name}(${stripParameterTypes(params)}) {`
+  );
+
+  output = output.replace(
+    /\(([^()]*:[^()]*)\)(\s*:\s*[\w$.<>,\s|&[\]?]+)?\s*=>/g,
+    (_match, params) => `(${stripParameterTypes(params)}) =>`
+  );
+
+  return output;
+}
+
+function stripParameterTypes(params) {
+  return splitTopLevel(params, ",")
+    .map((param) => stripSingleParameterType(param))
+    .join(",");
+}
+
+function stripSingleParameterType(param) {
+  const colonIndex = findTopLevelColon(param);
+
+  if (colonIndex === -1) {
+    return param;
+  }
+
+  const equalsIndex = findTopLevelChar(param, "=");
+  const suffix = equalsIndex === -1 ? "" : param.slice(equalsIndex);
+  const left = param.slice(0, colonIndex).replace(/\?(\s*)$/, "$1");
+
+  return `${left}${suffix}`;
+}
+
+function splitTopLevel(value, separator) {
+  const parts = [];
+  let start = 0;
+  let angleDepth = 0;
+  let braceDepth = 0;
+  let bracketDepth = 0;
+  let parenDepth = 0;
+  let quote = null;
+
+  for (let index = 0; index < value.length; index += 1) {
+    const char = value[index];
+    const previous = value[index - 1];
+
+    if (quote) {
+      if (char === quote && previous !== "\\") {
+        quote = null;
+      }
+      continue;
+    }
+
+    if (char === '"' || char === "'" || char === "`") {
+      quote = char;
+    } else if (char === "<") {
+      angleDepth += 1;
+    } else if (char === ">") {
+      angleDepth = Math.max(0, angleDepth - 1);
+    } else if (char === "{") {
+      braceDepth += 1;
+    } else if (char === "}") {
+      braceDepth = Math.max(0, braceDepth - 1);
+    } else if (char === "[") {
+      bracketDepth += 1;
+    } else if (char === "]") {
+      bracketDepth = Math.max(0, bracketDepth - 1);
+    } else if (char === "(") {
+      parenDepth += 1;
+    } else if (char === ")") {
+      parenDepth = Math.max(0, parenDepth - 1);
+    } else if (
+      char === separator &&
+      angleDepth === 0 &&
+      braceDepth === 0 &&
+      bracketDepth === 0 &&
+      parenDepth === 0
+    ) {
+      parts.push(value.slice(start, index));
+      start = index + 1;
+    }
+  }
+
+  parts.push(value.slice(start));
+  return parts;
+}
+
+function findTopLevelColon(value) {
+  return findTopLevelChar(value, ":");
+}
+
+function findTopLevelChar(value, target) {
+  let angleDepth = 0;
+  let braceDepth = 0;
+  let bracketDepth = 0;
+  let parenDepth = 0;
+  let quote = null;
+
+  for (let index = 0; index < value.length; index += 1) {
+    const char = value[index];
+    const previous = value[index - 1];
+
+    if (quote) {
+      if (char === quote && previous !== "\\") {
+        quote = null;
+      }
+      continue;
+    }
+
+    if (char === '"' || char === "'" || char === "`") {
+      quote = char;
+    } else if (char === "<") {
+      angleDepth += 1;
+    } else if (char === ">") {
+      angleDepth = Math.max(0, angleDepth - 1);
+    } else if (char === "{") {
+      braceDepth += 1;
+    } else if (char === "}") {
+      braceDepth = Math.max(0, braceDepth - 1);
+    } else if (char === "[") {
+      bracketDepth += 1;
+    } else if (char === "]") {
+      bracketDepth = Math.max(0, bracketDepth - 1);
+    } else if (char === "(") {
+      parenDepth += 1;
+    } else if (char === ")") {
+      parenDepth = Math.max(0, parenDepth - 1);
+    } else if (
+      char === target &&
+      angleDepth === 0 &&
+      braceDepth === 0 &&
+      bracketDepth === 0 &&
+      parenDepth === 0
+    ) {
+      return index;
+    }
+  }
+
+  return -1;
 }
