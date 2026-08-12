@@ -18,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0-beta.3] - 2026-08-12
+
+### Added
+- `add` now detects whether the target project is TypeScript or plain JavaScript (`detectProjectLanguage`). When installing into a JavaScript project, it strips TypeScript syntax from the registry source (`stripTypeScriptFromReactSource`: type-only imports/exports, interfaces, type aliases, generic type arguments on hooks, `React.FC` annotations, parameter/variable type annotations, `as` casts, non-null assertions) and rewrites the target file extension (`.tsx` → `.jsx`, `.ts` → `.js`). Needed now that the registry itself is fully TypeScript — without this, a JS project would receive raw `.tsx` source with no way to consume it.
+- `init` now detects missing Tailwind CSS dependencies for the project's framework and offers to install them as devDependencies before continuing. Dependency set is framework-aware: Next.js needs `tailwindcss` + `@tailwindcss/postcss` + `postcss`, Vite needs `tailwindcss` + `@tailwindcss/vite`.
+- `installDependencies`/`getInstallArgs` (`src/utils/package-manager.js`) gained a `dev` option to install packages as devDependencies (`-D`/`--save-dev`), used by the new Tailwind preflight above.
+
 ## [1.1.0-beta.2] - 2026-08-07
 
 ### Added
