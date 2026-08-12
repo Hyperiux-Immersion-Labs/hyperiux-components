@@ -90,13 +90,23 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # A tag like v1.1.0-beta.3 carries a prerelease identifier (the
+          # part after the first "-", same signal the npm dist-tag steps
+          # above use); a plain tag like v1.0.77 doesn't. Prereleases are
+          # marked as such rather than promoted to "Latest".
+          if [[ "${{ github.ref_name }}" == *-* ]]; then
+            RELEASE_FLAG="--prerelease"
+          else
+            RELEASE_FLAG="--latest"
+          fi
+
           if gh release view "${{ github.ref_name }}" &>/dev/null; then
             gh release edit "${{ github.ref_name }}" \
               --title "${{ github.ref_name }}" \
-              --latest
+              $RELEASE_FLAG
           else
             gh release create "${{ github.ref_name }}" \
               --title "${{ github.ref_name }}" \
               --generate-notes \
-              --latest
+              $RELEASE_FLAG
           fi
