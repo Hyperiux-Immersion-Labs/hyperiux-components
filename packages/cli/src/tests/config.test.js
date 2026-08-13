@@ -12,6 +12,7 @@ import {
   detectProjectEnvironment,
   detectProjectLanguage,
   detectNextRouter,
+  detectTailwindConfig,
   detectCssPath,
   addTailwindImportToCss,
   hasTailwindInstalled,
@@ -477,6 +478,20 @@ describe("config utilities", () => {
         'import tailwindcss from "@tailwindcss/vite";\n'
       )).toBe(true);
       expect(writtenContent).not.toContain("require(");
+    });
+  });
+
+  describe("detectTailwindConfig", () => {
+    it("returns null for Tailwind v4 CSS-first projects (no config file)", () => {
+      vi.mocked(fs.existsSync).mockReturnValue(false);
+      expect(detectTailwindConfig("/project")).toBe(null);
+    });
+
+    it("returns the real filename when a config file exists", () => {
+      vi.mocked(fs.existsSync).mockImplementation((p) =>
+        String(p).endsWith("tailwind.config.ts")
+      );
+      expect(detectTailwindConfig("/project")).toBe("tailwind.config.ts");
     });
   });
 });

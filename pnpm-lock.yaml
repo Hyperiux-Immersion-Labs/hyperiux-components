@@ -35,6 +35,9 @@ importers:
       prompts:
         specifier: ^2.4.2
         version: 2.4.2
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
     devDependencies:
       eslint:
         specifier: ^9

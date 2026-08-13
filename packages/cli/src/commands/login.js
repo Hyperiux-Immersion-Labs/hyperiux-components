@@ -102,7 +102,7 @@ export async function logout() {
   console.log(chalk.green("Logged out."));
 }
 
-export function whoami() {
+export async function whoami() {
   const token = getAuthToken();
 
   if (!token) {
@@ -110,7 +110,31 @@ export function whoami() {
     return;
   }
 
-  console.log(chalk.green("Logged in with a saved CLI token."));
+  const spinner = ora("Checking token…").start();
+
+  try {
+    const res = await fetch(`${APP_URL}/api/cli/validate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token }),
+    });
+
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok || !data?.valid) {
+      spinner.fail(
+        chalk.red(`Saved token is no longer valid: ${data?.reason || "unknown error"}`)
+      );
+      console.log(chalk.dim("Run `npx hyperiux login` to log in again."));
+      return;
+    }
+
+    spinner.succeed("Logged in with a valid CLI token.");
+  } catch (err) {
+    spinner.fail(chalk.red(`Could not reach Hyperiux: ${err.message}`));
+    return;
+  }
+
   console.log(chalk.dim("Token file: " + getAuthFilePath()));
   console.log(chalk.dim("Token: " + getTokenPreview()));
 }

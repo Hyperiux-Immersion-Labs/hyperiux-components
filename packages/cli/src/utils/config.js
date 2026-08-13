@@ -191,7 +191,9 @@ export function detectTailwindConfig(cwd = process.cwd()) {
     }
   }
 
-  return "tailwind.config.js";
+  // Tailwind v4 is CSS-first (`@import "tailwindcss"`) and has no config
+  // file at all - don't claim one exists.
+  return null;
 }
 
 export function addTailwindImportToCss(cwd = process.cwd(), cssPath) {

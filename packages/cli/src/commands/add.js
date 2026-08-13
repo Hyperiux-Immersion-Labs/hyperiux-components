@@ -28,6 +28,7 @@ import {
 import { getAuthToken } from "../utils/auth.js";
 import { trackCliEvent } from "../utils/telemetry.js";
 import { recordLocalInstallStat } from "../utils/cli-state.js";
+import { upsertLockEntry } from "../utils/lockfile.js";
 
 const APP_URL =
   process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
@@ -262,6 +263,8 @@ export async function add(effectName, options = {}) {
   // Write files
   const filesSpinner = ora("Writing files...").start();
 
+  const writtenFiles = {};
+
   try {
     for (const file of files) {
       const targetPath = path.resolve(cwd, file.targetPath);
@@ -282,6 +285,7 @@ export async function add(effectName, options = {}) {
       const content = await getFileContent(file);
 
       fs.writeFileSync(targetPath, content);
+      writtenFiles[file.targetPath] = content;
     }
 
     filesSpinner.succeed("Files written successfully");
@@ -293,6 +297,10 @@ export async function add(effectName, options = {}) {
     process.exit(1);
   }
 
+  upsertLockEntry(cwd, effectName, {
+    version: registryItem.version || "1.0.0",
+    files: writtenFiles,
+  });
   recordLocalInstall(effectName, cwd);
   recordLocalInstallStat(effectName);
   stampProjectReadme(cwd, effectName);
@@ -421,14 +429,17 @@ function resetGlobalCss(config, cwd) {
   fs.writeFileSync(absoluteCssPath, '@import "tailwindcss";\n', "utf-8");
 }
 
-function getImportPath(file, config) {
+export function getImportPath(file, config) {
   const targetPath = file.targetPath;
   const effectsAlias = config.aliases?.effects || "@/components/effects";
   const effectsPath = effectsAlias.replace("@/", "");
 
   if (targetPath.includes(effectsPath)) {
-    const fileName = path.basename(targetPath).replace(/\.(jsx|tsx|js|ts)$/, "");
-    return `${effectsAlias}/${fileName}`;
+    const rest = targetPath
+      .slice(targetPath.indexOf(effectsPath) + effectsPath.length)
+      .replace(/\.(jsx|tsx|js|ts)$/, "")
+      .replace(/\/index$/, "");
+    return `${effectsAlias}${rest}`;
   }
 
   return `@/${targetPath

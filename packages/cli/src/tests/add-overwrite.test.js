@@ -167,3 +167,24 @@ describe("add — overwrite safety of --yes", () => {
     );
   });
 });
+
+describe("getImportPath", () => {
+  it("points at the effect's own folder, not the bare filename", async () => {
+    const mod = await import("../commands/add.js");
+    const config = { aliases: { effects: "@/components/effects" } };
+
+    expect(
+      mod.getImportPath(
+        { targetPath: "src/components/effects/phantom-image-trail/index.tsx" },
+        config
+      )
+    ).toBe("@/components/effects/phantom-image-trail");
+
+    expect(
+      mod.getImportPath(
+        { targetPath: "src/components/effects/phantom-image-trail/useMouse.ts" },
+        config
+      )
+    ).toBe("@/components/effects/phantom-image-trail/useMouse");
+  });
+});
