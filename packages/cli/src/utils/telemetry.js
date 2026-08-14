@@ -5,6 +5,7 @@
 import { createHash } from "crypto";
 import { createRequire } from "module";
 import os from "os";
+import { getAuthToken } from "./auth.js";
 
 const require = createRequire(import.meta.url);
 const { version } = require("../../package.json");
@@ -29,11 +30,18 @@ export async function trackCliEvent(eventName, properties = {}) {
     TELEMETRY_TIMEOUT_MS,
   );
 
+  // Best-effort attribution: a signed-in Pro user's saved token lets the
+  // server credit installs to their account instead of only the anonymous
+  // per-project ID. Never required - trackCliEvent must work the same for
+  // anonymous free users, who simply have no token to attach.
+  const token = getAuthToken();
+
   try {
     await globalThis.fetch(TELEMETRY_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       body: JSON.stringify({
         event: eventName,

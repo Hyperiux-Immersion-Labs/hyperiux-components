@@ -65,6 +65,11 @@ npx hyperiux login       # authenticate once
 npx hyperiux add milkyway
 ```
 
+`npx hyperiux login` isn't Pro-only — any Hyperiux account can generate a token.
+Logging in raises your shared daily install limit (website + CLI + MCP combined)
+from 1/day anonymous to 3/day; Pro raises it further to 10/day and unlocks Pro
+effect source.
+
 [Browse all effects →](https://vault.hyperiux.com/effects)
 
 ---
@@ -89,7 +94,7 @@ Canvas 2D and Three.js cursor effects — image trails, rope followers, liquid g
 ### Text
 Letter-level and line-level reveal animations — blur, scramble, stagger, perspective flip, mask wipe.
 
-`blur-text` · `overflow-stagger-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-effects)
+`blur-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-effects)
 
 ### Backgrounds · Page Transitions · Buttons · Components · Navigation · Loaders
 

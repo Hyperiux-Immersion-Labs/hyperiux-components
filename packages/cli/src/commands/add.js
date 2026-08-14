@@ -33,6 +33,15 @@ import { upsertLockEntry } from "../utils/lockfile.js";
 const APP_URL =
   process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
 
+function formatRetryAfter(seconds) {
+  if (!seconds || seconds < 60) return "a few minutes";
+
+  const hours = Math.ceil(seconds / 3600);
+  if (hours < 1) return `${Math.ceil(seconds / 60)}m`;
+
+  return `${hours}h`;
+}
+
 export async function add(effectName, options = {}) {
   const cwd = process.cwd();
 
@@ -83,6 +92,7 @@ export async function add(effectName, options = {}) {
   try {
     registryItem = await fetchRegistry(effectName, {
       token: authToken,
+      isDependency: Boolean(options._isDependency),
     });
 
     spinner.succeed(`Found ${chalk.cyan(registryItem.title || effectName)}`);
@@ -91,10 +101,20 @@ export async function add(effectName, options = {}) {
 
     console.log();
 
-    if (error.requiresPro) {
+    if (error.rateLimited) {
+      const limitText = error.limit ? ` (${error.limit}/day)` : "";
+      console.log(chalk.red(`Daily install limit reached${limitText}.`));
+      console.log();
+      console.log(
+        chalk.yellow(`Try again in ${formatRetryAfter(error.retryAfter)}, or upgrade for a higher limit:`)
+      );
+      console.log(chalk.cyan(`  ${APP_URL}/pricing`));
+      console.log();
+      console.log(chalk.dim("Effects you've already installed today are still free to reinstall."));
+    } else if (error.requiresPro) {
       console.log(chalk.red(`"${effectName}" is a Pro effect.`));
       console.log();
-      console.log(chalk.yellow("Login with your Hyperiux Pro CLI token first:"));
+      console.log(chalk.yellow("A Pro subscription is required. Login first:"));
       console.log(chalk.cyan("  npx hyperiux login"));
       console.log();
       console.log(chalk.dim(`Generate your CLI token here:`));
@@ -326,6 +346,16 @@ export async function add(effectName, options = {}) {
 
   console.log();
   console.log(chalk.green(`Successfully added ${chalk.bold(effectName)}!`));
+
+  // installLimit is null for admins and dependency fetches (neither consumes
+  // a slot) - nothing meaningful to report in either case.
+  if (!options._isDependency && typeof registryItem.installLimit === "number") {
+    const remaining = registryItem.installRemaining ?? 0;
+    console.log(
+      chalk.dim(`  ${remaining} of ${registryItem.installLimit} daily installs left today.`)
+    );
+  }
+
   console.log();
 
   if (!options._isDependency && !hasTailwindInstalled(cwd)) {

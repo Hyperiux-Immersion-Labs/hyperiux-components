@@ -6,11 +6,15 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath, URL } from "url";
 import { Buffer } from "buffer";
+import { createRequire } from "module";
 import ts from "typescript";
 import { detectProjectLanguage } from "./config.js";
+import { getOrCreateDeviceId } from "./cli-state.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const require = createRequire(import.meta.url);
+const { version: CLI_VERSION } = require("../../package.json");
 
 const REGISTRY_URL =
   process.env.HYPERIUX_REGISTRY_URL || "https://vault.hyperiux.com/r";
@@ -43,6 +47,9 @@ function createRegistryError(message, options = {}) {
 
   error.status = options.status;
   error.requiresPro = Boolean(options.requiresPro);
+  error.rateLimited = Boolean(options.rateLimited);
+  error.retryAfter = options.retryAfter;
+  error.limit = options.limit;
 
   return error;
 }
@@ -56,11 +63,15 @@ async function parseJsonResponse(response) {
  *
  * Flow:
  * 1. Fetch the public registry JSON to check tier.
- * 2. If free → return it directly (files included in public JSON).
- * 3. If pro → go through the protected API with the CLI token.
+ * 2. If free → route through the metered API too (Installation-SyncUp.md
+ *    §2: this used to bypass all server code, which meant free installs
+ *    could never be tracked or limited), falling back to the public JSON's
+ *    own embedded content if that call fails so an API hiccup never blocks
+ *    a free install.
+ * 3. If pro → go through the protected API with the CLI token (unchanged).
  */
 export async function fetchRegistry(name, options = {}) {
-  const { local = false, cwd = process.cwd(), token = null } = options;
+  const { local = false, cwd = process.cwd(), token = null, isDependency = false } = options;
 
   if (local) {
     return fetchLocalRegistry(name, cwd, token);
@@ -70,11 +81,28 @@ export async function fetchRegistry(name, options = {}) {
   const publicData = await fetchPublicEffect(name);
 
   if (!isProEffect(publicData)) {
-    return publicData;
+    try {
+      return await fetchProtectedEffect(name, token, { isDependency });
+    } catch (error) {
+      // A genuine rate-limit denial must not be swallowed by the
+      // resilience fallback below - falling back to the public JSON here
+      // would silently bypass Stage 3 enforcement for every free effect.
+      // Only connectivity/server issues (no rateLimited flag) fall back.
+      if (error.rateLimited) throw error;
+
+      if (process.env.HYPERIUX_DEBUG === "1") {
+        console.log(
+          "[Hyperiux CLI] Metered fetch failed for free effect, falling back to public JSON:",
+          error.message,
+        );
+      }
+
+      return publicData;
+    }
   }
 
   // Pro effect — go through the authenticated API.
-  return fetchProtectedEffect(name, token);
+  return fetchProtectedEffect(name, token, { isDependency });
 }
 
 async function fetchPublicEffect(name) {
@@ -126,23 +154,27 @@ async function fetchLocalRegistry(name, cwd, token) {
   return meta;
 }
 
-async function fetchProtectedEffect(name, token) {
-  const url = `${API_URL.replace(/\/$/, "")}/api/cli/effects/${name}`;
+async function fetchProtectedEffect(name, token, options = {}) {
+  const { isDependency = false } = options;
+  const baseUrl = `${API_URL.replace(/\/$/, "")}/api/cli/effects/${name}`;
+  const url = isDependency ? `${baseUrl}?dependency=1` : baseUrl;
+  const deviceId = getOrCreateDeviceId();
 
   if (process.env.HYPERIUX_DEBUG === "1") {
     console.log("[Hyperiux CLI] API URL:", url);
     console.log("[Hyperiux CLI] Token found:", Boolean(token));
+    console.log("[Hyperiux CLI] Device ID:", deviceId);
   }
 
   let response;
 
   try {
     response = await fetch(url, {
-      headers: token
-        ? {
-            Authorization: `Bearer ${token}`,
-          }
-        : {},
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        "x-hyperiux-device-id": deviceId,
+        "x-hyperiux-cli-version": CLI_VERSION,
+      },
     });
   } catch (error) {
     throw createRegistryError(`Could not reach Hyperiux API: ${error.message}`);
@@ -161,6 +193,9 @@ async function fetchProtectedEffect(name, token) {
       {
         status: response.status,
         requiresPro: Boolean(data?.requiresPro),
+        rateLimited: Boolean(data?.rateLimited),
+        retryAfter: data?.retryAfter,
+        limit: data?.limit,
       }
     );
   }

@@ -161,7 +161,6 @@
     "importPath": "@/components/effects/circular-split-roll",
     "target": "src/components/effects/circular-split-roll"
   },
-
   {
     "name": "horizontal-feature-reveal",
     "title": "Horizontal Feature Reveal",
@@ -224,15 +223,6 @@
     "registryPath": "registry/effects/text/number-counter/registry.json",
     "importPath": "@/components/effects/number-counter",
     "target": "src/components/effects/number-counter"
-  },
-  {
-    "name": "overflow-stagger-text",
-    "title": "Overflow Stagger Text",
-    "category": "text",
-    "type": "registry:component",
-    "registryPath": "registry/effects/text/overflow-stagger-text/registry.json",
-    "importPath": "@/components/effects/overflow-stagger-text",
-    "target": "src/components/effects/overflow-stagger-text"
   },
   {
     "name": "rectangular-text-reveal",

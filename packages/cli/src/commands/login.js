@@ -18,7 +18,7 @@ const APP_URL =
 
 export async function login() {
   console.log();
-  console.log(chalk.bold("Hyperiux Pro - CLI Login"));
+  console.log(chalk.bold("Hyperiux - CLI Login"));
   console.log();
   console.log("Open this URL in your browser to generate your CLI token:");
   console.log();
@@ -82,9 +82,10 @@ export async function login() {
   saveAuthToken(normalizedToken);
 
   console.log();
+  console.log(chalk.green("✓ Logged in."));
   console.log(
-    chalk.green(
-      "✓ Logged in. You can now install pro effects with `npx hyperiux add <effect>`."
+    chalk.dim(
+      "This raises your shared daily install limit. Pro accounts can also install pro effects with `npx hyperiux add <effect>`."
     )
   );
   console.log();

@@ -26,6 +26,12 @@ Pro effect source is only returned if a Hyperiux Pro token is available. This se
 
 Without a token, Pro effect lookups still return full metadata (description, dependencies, changelog) - just no source, with a clear note explaining why.
 
+A token isn't Pro-only, though - any signed-in Hyperiux account (free or Pro) can
+generate one at `/cli-auth`. Without a token, `hyperiux_get_effect` calls are
+tracked as anonymous (1 effect/day, device+IP based); with a free account's
+token they count against that account's real 3/day limit instead, shared with
+its website and CLI usage. Pro raises it to 10/day and unlocks Pro source.
+
 ## Tools
 
 - **`hyperiux_list_effects`** - browse/search the catalog by name substring and/or category, paginated. Does not include tier (free/pro) - the catalog index doesn't carry that field.

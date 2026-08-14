@@ -89,7 +89,7 @@ Canvas 2D and Three.js cursor effects — image trails, rope followers, liquid g
 ### Text
 Letter-level and line-level reveal animations — blur, scramble, stagger, perspective flip, mask wipe.
 
-`blur-text` · `overflow-stagger-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-effects)
+`blur-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-effects)
 
 ### Backgrounds · Page Transitions · Buttons · Components · Navigation · Loaders
 
