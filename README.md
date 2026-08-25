@@ -5,7 +5,7 @@
 
 **A collection of high-quality animation effects and interactive components for Next.js — designed by [Hyperiux](https://hyperiux.com).**
 
-32 effects are free and open source. 83 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project — you own what you install.
+47 effects are free and open source. 91 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project — you own what you install.
 
 ---
 
@@ -18,15 +18,15 @@ npx hyperiux init
 
 ### 2. Add a free effect
 ```bash
-npx hyperiux add blur-text
+npx hyperiux add rectangular-text-reveal
 ```
 
 ### 3. Use it
 ```jsx
-import { BlurText } from "@/components/effects/blur-text";
+import RectangularTextReveal from "@/components/effects/rectangular-text-reveal";
 
 export default function Page() {
-  return <BlurText>Hello, world.</BlurText>;
+  return <RectangularTextReveal>Hello, world.</RectangularTextReveal>;
 }
 ```
 
@@ -52,17 +52,17 @@ export default function Page() {
 
 ## Free vs Pro
 
-**32 free effects** — install without any account:
+**47 free effects** — install without any account:
 ```bash
-npx hyperiux add blur-text
+npx hyperiux add rotation-slider
 npx hyperiux add spider-particles
-npx hyperiux add mouse-pixelation
+npx hyperiux add phantom-image-trail
 ```
 
-**83 pro effects** — require a [Pro subscription](https://vault.hyperiux.com/pricing):
+**91 pro effects** — require a [Pro subscription](https://vault.hyperiux.com/pricing):
 ```bash
 npx hyperiux login       # authenticate once
-npx hyperiux add milkyway
+npx hyperiux add grid-tunnel
 ```
 
 [Browse all effects →](https://vault.hyperiux.com/effects)
@@ -79,7 +79,7 @@ Scroll-driven animations built on GSAP ScrollTrigger — parallax galleries, pin
 ### WebGL
 Three.js and R3F scenes with custom GLSL shaders — image carousels, pixel grids, frosted glass, GPU particle galaxies, and 3D heroes.
 
-`interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milkyway` · `fractal-glass` · [+more](https://vault.hyperiux.com/effects/webgl)
+`interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milky-way` · `fractal-glass` · [+more](https://vault.hyperiux.com/effects/webgl)
 
 ### Cursor
 Canvas 2D and Three.js cursor effects — image trails, rope followers, liquid glass, character grids.
