@@ -7,16 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Release Process
 
+Publishing is CI-driven (`.github/workflows/release.yml`), not manual - it
+triggers on a pushed `v*` tag (plain `v`, not `cli-v`) and runs lint, tests,
+build, then `npm publish --provenance` for both `packages/cli` and
+`packages/mcp-server` via OIDC trusted publishing (`NPM_TOKEN` as fallback).
+
 1. Update version in `packages/cli/package.json`
 2. Add entry to this file under a new `## [x.y.z] - YYYY-MM-DD` heading
 3. Commit: `git commit -m "chore: release x.y.z"`
-4. Run `cd packages/cli && npm run prepublishOnly` — must pass lint, tests, and pack dry-run
-5. Publish: `npm publish --access public`
-6. Tag: `git tag cli-vx.y.z && git push origin --tags`
+4. Push to `main`
+5. Tag and push: `git tag vx.y.z && git push origin vx.y.z` - this is what
+   actually triggers the publish, not a local `npm publish`
 
 ---
 
 ## [Unreleased]
+
+## [1.1.2] - 2026-08-25
+
+### Fixed
+- Root and CLI-package `README.md`: effect counts were stale (32 free / 83
+  pro, actually 47 / 91); the Quick Start's `blur-text` example is Pro now
+  (and used the wrong import syntax - default export, not named); the free
+  effects example listed `mouse-pixelation`, also Pro now; the "pro effect"
+  example (`milkyway`) was both the wrong slug (`milky-way`) and actually
+  free, not pro. CLI-package README's Architecture section also incorrectly
+  claimed `apps/docs` lives in this repo (it's in the separate private
+  `hyperiux-pro-components` repo), and its clone URL pointed at the wrong
+  GitHub org.
 
 ## [1.1.0-beta.3] - 2026-08-12
 
