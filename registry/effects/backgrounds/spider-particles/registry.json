@@ -2,11 +2,192 @@
   "name": "spider-particles",
   "type": "registry:component",
   "title": "Spider Particles",
-  "description": "Canvas particle network background with connecting lines and mouse-driven repulsion — pure canvas, zero dependencies",
+  "description": "Canvas particle network background with connecting lines and mouse-driven repulsion.",
   "category": "backgrounds",
-  "dependencies": [],
+  "dependencies": [
+    "three"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/spider-particles",
+  "previewUrl": "/demo/spider-particles",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "SpiderParticles",
+  "exportKind": "default",
+  "importPath": "@/components/effects/spider-particles",
+  "target": "src/components/effects/spider-particles",
+  "props": [
+    {
+      "name": "particleCount",
+      "type": "number",
+      "default": 180,
+      "description": "Controls how many particles are drawn.",
+      "remixer": {
+        "control": "range",
+        "group": "density",
+        "groupTitle": "Density",
+        "min": 20,
+        "max": 1200,
+        "step": 1
+      }
+    },
+    {
+      "name": "gridGap",
+      "type": "number",
+      "default": 0,
+      "description": "Switches to a spaced lattice when above zero.",
+      "remixer": {
+        "control": "range",
+        "group": "density",
+        "groupTitle": "Density",
+        "min": 0,
+        "max": 80,
+        "step": 1
+      }
+    },
+    {
+      "name": "particleSize",
+      "type": "number",
+      "default": 20,
+      "description": "Makes each dot larger or smaller.",
+      "remixer": {
+        "control": "range",
+        "group": "density",
+        "groupTitle": "Density",
+        "min": 1,
+        "max": 60,
+        "step": 0.5
+      }
+    },
+    {
+      "name": "mouseConnectDist",
+      "type": "number",
+      "default": 160,
+      "description": "Sets the web connection radius around the cursor.",
+      "remixer": {
+        "control": "range",
+        "group": "interaction",
+        "groupTitle": "Interactions",
+        "min": 10,
+        "max": 500,
+        "step": 1
+      }
+    },
+    {
+      "name": "spotlightRadius",
+      "type": "number",
+      "default": 300,
+      "description": "Controls the cursor spotlight falloff.",
+      "remixer": {
+        "control": "range",
+        "group": "interaction",
+        "groupTitle": "Interactions",
+        "min": 20,
+        "max": 700,
+        "step": 1
+      }
+    },
+    {
+      "name": "particleColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Colors the particles.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "webColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Colors the cursor connection lines.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "centerColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Colors the cursor center point.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "showWeb",
+      "type": "boolean",
+      "default": true,
+      "description": "Turns the connection lines on or off.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "particlesGlow",
+      "type": "boolean",
+      "default": false,
+      "description": "Enables glow rendering for particles and cursor points.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "glowColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Glow color used when particle glow is enabled.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "density",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/spider-particles/index.tsx"
+    },
+    {
+      "path": "createSuspendedRaf.ts",
+      "target": "src/components/effects/spider-particles/createSuspendedRaf.ts"
+    }
+  ],
+  "version": "1.0.1",
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-07-21",
+      "summary": "Add prefers-reduced-motion support",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-07-20",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ]
 }

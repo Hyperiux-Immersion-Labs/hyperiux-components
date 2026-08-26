@@ -1,0 +1,542 @@
+{
+  "name": "orbit-flip-slider",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-20",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Orbit Flip Slider",
+  "description": "GSAP Flip-driven gallery that morphs one ring of images between four camera views — a flat circle, a zoomed-in upper arc, a tilted 3D ring, and a coverflow band — with a bouncy 3D hover tilt on every card.",
+  "category": "carousels",
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/orbit-flip-slider",
+  "coverImage": "orbit-flip-slider",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "OrbitFlipSlider",
+  "exportKind": "default",
+  "importPath": "@/components/effects/orbit-flip-slider",
+  "target": "src/components/effects/orbit-flip-slider",
+  "props": [
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#e9e9ea",
+      "description": "Background color behind the ring.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "imageWidth",
+      "type": "number",
+      "default": 90,
+      "description": "Width of each image card in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "general",
+        "groupTitle": "General",
+        "min": 80,
+        "max": 320,
+        "step": 4
+      }
+    },
+    {
+      "name": "imageHeight",
+      "type": "number",
+      "default": 140,
+      "description": "Height of each image card in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "general",
+        "groupTitle": "General",
+        "min": 120,
+        "max": 420,
+        "step": 4
+      }
+    },
+    {
+      "name": "imageGap",
+      "type": "number",
+      "default": 0,
+      "description": "Extra spacing between image cards in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "general",
+        "groupTitle": "General",
+        "min": 0,
+        "max": 120,
+        "step": 2
+      }
+    },
+    {
+      "name": "rounded",
+      "type": "string",
+      "default": "rounded-none",
+      "description": "Tailwind border-radius class applied to each image card.",
+      "remixer": {
+        "control": "select",
+        "group": "general",
+        "groupTitle": "General",
+        "options": [
+          "rounded-none",
+          "rounded-sm",
+          "rounded-md",
+          "rounded-lg",
+          "rounded-xl",
+          "rounded-2xl",
+          "rounded-3xl",
+          "rounded-full"
+        ]
+      }
+    },
+    {
+      "name": "enableHoverMovement",
+      "type": "boolean",
+      "default": true,
+      "description": "Enables the hover lift and perspective tilt on image cards.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "general",
+        "groupTitle": "General"
+      }
+    },
+    {
+      "name": "hoverMoveY",
+      "type": "number",
+      "default": -8,
+      "description": "Vertical movement applied to the image card on hover, in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "general",
+        "groupTitle": "General",
+        "min": -80,
+        "max": 80,
+        "step": 1
+      }
+    },
+    {
+      "name": "perspectiveRotateValue",
+      "type": "number",
+      "default": 75,
+      "description": "How far each card rotates on hover, in degrees.",
+      "remixer": {
+        "control": "range",
+        "group": "general",
+        "groupTitle": "General",
+        "min": 0,
+        "max": 180,
+        "step": 1
+      }
+    },
+    {
+      "name": "perspectiveRotateDirection",
+      "type": "string",
+      "default": "right",
+      "description": "Direction each card rotates on hover.",
+      "remixer": {
+        "control": "select",
+        "group": "general",
+        "groupTitle": "General",
+        "options": [
+          "left",
+          "right"
+        ]
+      }
+    },
+    {
+      "name": "rotate",
+      "type": "boolean",
+      "default": true,
+      "description": "Continuously and slowly rotates the ring of cards.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "general",
+        "groupTitle": "General"
+      }
+    },
+    {
+      "name": "rotateSpeed",
+      "type": "number",
+      "default": 4,
+      "description": "Speed of the automatic rotation, in degrees per second.",
+      "remixer": {
+        "control": "range",
+        "group": "general",
+        "groupTitle": "General",
+        "min": 0.5,
+        "max": 30,
+        "step": 0.5
+      }
+    },
+    {
+      "name": "stopRotationOnHover",
+      "type": "boolean",
+      "default": true,
+      "description": "Pauses the automatic rotation while the pointer is hovering the slider.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "general",
+        "groupTitle": "General"
+      }
+    },
+    {
+      "name": "flatRadiusX",
+      "type": "number",
+      "default": 1.6,
+      "description": "Horizontal stretch of the flat circle, as a multiplier of its base radius.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "flat",
+        "groupTitle": "Flat",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "flatRadiusY",
+      "type": "number",
+      "default": 1.2,
+      "description": "Vertical stretch of the flat circle, as a multiplier of its base radius.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "flat",
+        "groupTitle": "Flat",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "flatScale",
+      "type": "number",
+      "default": 1,
+      "description": "Uniform zoom on the flat circle as a whole — position spread and card size together.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "flat",
+        "groupTitle": "Flat",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "ringRotateX",
+      "type": "number",
+      "default": 31,
+      "description": "Rotates the ring's plane on the x axis, in degrees. Swings the near/far cards vertically apart.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "ring",
+        "groupTitle": "Ring",
+        "min": -90,
+        "max": 90,
+        "step": 1
+      }
+    },
+    {
+      "name": "ringRotateY",
+      "type": "number",
+      "default": 56,
+      "description": "Rotates the ring on the y axis, in degrees. Spins which card faces the camera.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "ring",
+        "groupTitle": "Ring",
+        "min": -180,
+        "max": 180,
+        "step": 1
+      }
+    },
+    {
+      "name": "ringRotateZ",
+      "type": "number",
+      "default": -25,
+      "description": "Rotates the whole projected ring on the z axis, in degrees. Spins the composition in place, like a wheel face.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "ring",
+        "groupTitle": "Ring",
+        "min": -180,
+        "max": 180,
+        "step": 1
+      }
+    },
+    {
+      "name": "ringRadiusX",
+      "type": "number",
+      "default": 1.5,
+      "description": "Horizontal stretch of the ring, as a multiplier of its base radius.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "ring",
+        "groupTitle": "Ring",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "ringRadiusY",
+      "type": "number",
+      "default": 1.2,
+      "description": "Vertical stretch of the ring, as a multiplier of its base radius.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "ring",
+        "groupTitle": "Ring",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "ringScale",
+      "type": "number",
+      "default": 1,
+      "description": "Uniform zoom on the ring as a whole — position spread and card size together, like moving the camera closer or further on the z axis.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "ring",
+        "groupTitle": "Ring",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "tiltRotateX",
+      "type": "number",
+      "default": 70,
+      "description": "Rotates the tilt view's ring on the x axis, in degrees.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "tilt",
+        "groupTitle": "Tilt",
+        "min": -90,
+        "max": 90,
+        "step": 1
+      }
+    },
+    {
+      "name": "tiltRotateY",
+      "type": "number",
+      "default": 0,
+      "description": "Rotates the tilt view's ring on the y axis, in degrees. Shifts which part of the upper arc is centered.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "tilt",
+        "groupTitle": "Tilt",
+        "min": -180,
+        "max": 180,
+        "step": 1
+      }
+    },
+    {
+      "name": "tiltRotateZ",
+      "type": "number",
+      "default": 0,
+      "description": "Rotates the whole projected tilt composition on the z axis, in degrees.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "tilt",
+        "groupTitle": "Tilt",
+        "min": -180,
+        "max": 180,
+        "step": 1
+      }
+    },
+    {
+      "name": "tiltRadiusX",
+      "type": "number",
+      "default": 1.9,
+      "description": "Horizontal stretch of the tilt view, as a multiplier of its base radius.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "tilt",
+        "groupTitle": "Tilt",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "tiltRadiusY",
+      "type": "number",
+      "default": 1.5,
+      "description": "Vertical stretch of the tilt view, as a multiplier of its base radius.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "tilt",
+        "groupTitle": "Tilt",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "tiltScale",
+      "type": "number",
+      "default": 1.2,
+      "description": "Uniform zoom on the tilt view as a whole.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "tilt",
+        "groupTitle": "Tilt",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "tiltMoveY",
+      "type": "number",
+      "default": 300,
+      "description": "Pans the tilt view up or down, in pixels, without affecting its rotation, stretch or zoom.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "tilt",
+        "groupTitle": "Tilt",
+        "min": -400,
+        "max": 400,
+        "step": 5
+      }
+    },
+    {
+      "name": "galleryRotateX",
+      "type": "number",
+      "default": 0,
+      "description": "Rotates the gallery coverflow's ring on the x axis, in degrees.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "gallery",
+        "groupTitle": "Gallery",
+        "min": -90,
+        "max": 90,
+        "step": 1
+      }
+    },
+    {
+      "name": "galleryRotateY",
+      "type": "number",
+      "default": 0,
+      "description": "Rotates the gallery coverflow on the y axis, in degrees. Spins which card faces the camera.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "gallery",
+        "groupTitle": "Gallery",
+        "min": -180,
+        "max": 180,
+        "step": 1
+      }
+    },
+    {
+      "name": "galleryRotateZ",
+      "type": "number",
+      "default": 0,
+      "description": "Rotates the whole projected gallery composition on the z axis, in degrees.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "gallery",
+        "groupTitle": "Gallery",
+        "min": -180,
+        "max": 180,
+        "step": 1
+      }
+    },
+    {
+      "name": "galleryRadiusX",
+      "type": "number",
+      "default": 1.3,
+      "description": "Horizontal stretch of the gallery coverflow, as a multiplier of its base radius.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "gallery",
+        "groupTitle": "Gallery",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "galleryRadiusY",
+      "type": "number",
+      "default": 1.5,
+      "description": "Vertical stretch of the gallery coverflow, as a multiplier of its base radius.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "gallery",
+        "groupTitle": "Gallery",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "galleryScale",
+      "type": "number",
+      "default": 1.2,
+      "description": "Uniform zoom on the gallery coverflow as a whole.",
+      "remixer": {
+        "enabled": false,
+        "control": "range",
+        "group": "gallery",
+        "groupTitle": "Gallery",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "general",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/orbit-flip-slider/index.tsx"
+    },
+    {
+      "path": "OrbitFlipSliderComp.tsx",
+      "target": "src/components/effects/orbit-flip-slider/OrbitFlipSliderComp.tsx"
+    }
+  ]
+}

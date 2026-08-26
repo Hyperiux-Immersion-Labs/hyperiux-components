@@ -1,5 +1,20 @@
 {
   "name": "infinite-perspective-slider",
+  "version": "1.0.1",
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-07-21",
+      "summary": "Added prefers-reduced-motion support: position tracking snaps directly to target (no lerp) and card tilt is disabled while scrolling or dragging",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-07-20",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Infinite Perspective Slider",
   "description": "Looping perspective gallery with wheel and drag input plus split-text hover reveals",
@@ -8,7 +23,124 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/infinite-perspective-slider",
+  "coverImage": "infinite-perspective-slider",
+  "previewUrl": "/demo/infinite-perspective-slider",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "InfinitePerspectiveSlider",
+  "exportKind": "default",
+  "importPath": "@/components/effects/infinite-perspective-slider",
+  "target": "src/components/effects/infinite-perspective-slider",
+  "props": [
+    {
+      "name": "cardWidth",
+      "type": "number",
+      "default": 320,
+      "description": "Desktop card width.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 160,
+        "max": 560,
+        "step": 1
+      }
+    },
+    {
+      "name": "cardGap",
+      "type": "number",
+      "default": 24,
+      "description": "Spacing between cards.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 0,
+        "max": 160,
+        "step": 1
+      }
+    },
+    {
+      "name": "perspective",
+      "type": "number",
+      "default": 2200,
+      "description": "3D perspective depth.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 600,
+        "max": 5000,
+        "step": 50
+      }
+    },
+    {
+      "name": "scrollSpeed",
+      "type": "number",
+      "default": 1,
+      "description": "Scroll and drag movement multiplier.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.1,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "scrollLerp",
+      "type": "number",
+      "default": 0.1,
+      "description": "How quickly the slider catches its target.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.02,
+        "max": 0.4,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "maxRotation",
+      "type": "number",
+      "default": 80,
+      "description": "Maximum card tilt angle.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 89,
+        "step": 1
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "layout",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/infinite-perspective-slider/index.tsx"
+    },
+    {
+      "path": "InfinitePerspectiveSliderComp.tsx",
+      "target": "src/components/effects/infinite-perspective-slider/InfinitePerspectiveSliderComp.tsx"
+    },
+    {
+      "path": "createSuspendedRaf.ts",
+      "target": "src/components/effects/infinite-perspective-slider/createSuspendedRaf.ts"
+    }
+  ]
 }

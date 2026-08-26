@@ -1,9 +1,19 @@
 {
   "name": "fractal-glass",
-  "version": "1.1.0",
+  "version": "1.0.1",
   "changelog": [
-    { "version": "1.1.0", "date": "2026-07-22", "summary": "Added reduced-motion notice", "breaking": false },
-    { "version": "1.0.1", "date": "2026-07-15", "summary": "Removed a stray character left after a JSX comment (cosmetic, no functional change)", "breaking": false }
+    {
+      "version": "1.0.1",
+      "date": "2026-07-22",
+      "summary": "Added a reduced-motion notice and removed a stray character left after a JSX comment.",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-07-14",
+      "summary": "Initial release",
+      "breaking": false
+    }
   ],
   "type": "registry:component",
   "title": "Fractal Glass",
@@ -16,19 +26,123 @@
   "previewUrl": "/demo/fractal-glass",
   "tier": "free",
   "subfolder": true,
-  "main": "index.jsx",
+  "main": "index.tsx",
   "exportName": "FractalGlass",
   "exportKind": "default",
   "importPath": "@/components/effects/fractal-glass",
   "target": "src/components/effects/fractal-glass",
-  "files": [
+  "props": [
     {
-      "path": "index.jsx",
-      "target": "src/components/effects/fractal-glass/index.jsx"
+      "name": "stripesFrequency",
+      "type": "number",
+      "default": 40,
+      "description": "Controls how many refractive glass strips are rendered."
     },
     {
-      "path": "createSuspendedRaf.js",
-      "target": "src/components/effects/fractal-glass/createSuspendedRaf.js"
+      "name": "glassStrength",
+      "type": "number",
+      "default": 2,
+      "description": "Controls the intensity of the strip refraction."
+    },
+    {
+      "name": "glassSmoothness",
+      "type": "number",
+      "default": 0.014,
+      "description": "Controls how smoothly neighboring refraction samples blend."
+    },
+    {
+      "name": "parallaxStrength",
+      "type": "number",
+      "default": 0.15,
+      "description": "Controls pointer-reactive horizontal parallax."
+    },
+    {
+      "name": "distortionMultiplier",
+      "type": "number",
+      "default": 8,
+      "description": "Amplifies parallax around distorted stripe regions."
+    },
+    {
+      "name": "edgePadding",
+      "type": "number",
+      "default": 0.12,
+      "description": "Softens distortion near the media edges."
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "controlsButtonClassName": "right-4! top-25!"
+    },
+    "panel": {
+      "className": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "controls": [
+      {
+        "name": "stripesFrequency",
+        "label": "Stripes",
+        "type": "range",
+        "group": "motion",
+        "min": 10,
+        "max": 100,
+        "step": 1
+      },
+      {
+        "name": "glassStrength",
+        "label": "Glass Strength",
+        "type": "range",
+        "group": "motion",
+        "min": 0,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "name": "glassSmoothness",
+        "label": "Smoothness",
+        "type": "range",
+        "group": "motion",
+        "min": 0.001,
+        "max": 0.05,
+        "step": 0.001
+      },
+      {
+        "name": "parallaxStrength",
+        "label": "Parallax",
+        "type": "range",
+        "group": "motion",
+        "min": 0,
+        "max": 0.5,
+        "step": 0.01
+      },
+      {
+        "name": "distortionMultiplier",
+        "label": "Distortion",
+        "type": "range",
+        "group": "motion",
+        "min": 0,
+        "max": 20,
+        "step": 0.1
+      },
+      {
+        "name": "edgePadding",
+        "label": "Edge Padding",
+        "type": "range",
+        "group": "motion",
+        "min": 0,
+        "max": 0.4,
+        "step": 0.01
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/fractal-glass/index.tsx"
+    },
+    {
+      "path": "createSuspendedRaf.ts",
+      "target": "src/components/effects/fractal-glass/createSuspendedRaf.ts"
     }
   ]
 }

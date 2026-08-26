@@ -1,0 +1,212 @@
+{
+  "name": "focus-text",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-17",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Focus Text",
+  "description": "Character-by-character text reveal that scales and sharpens into focus with replayable motion.",
+  "category": "text",
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/focus-text",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "FocusText",
+  "exportKind": "default",
+  "importPath": "@/components/effects/focus-text",
+  "target": "src/components/effects/focus-text",
+  "props": [
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#000000",
+      "description": "Background color.",
+      "remixer": {
+        "control": "color",
+        "enabled":false,
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Text color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "fontSize",
+      "type": "number",
+      "default": 4.5,
+      "description": "Text size in vw units.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 2,
+        "max": 8,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "characterStagger",
+      "type": "number",
+      "default": 0.05,
+      "description": "Delay between each character reveal.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.01,
+        "max": 0.12,
+        "step": 0.005
+      }
+    },
+    {
+      "name": "revealDuration",
+      "type": "number",
+      "default": 3.2,
+      "description": "Duration of each character reveal.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.2,
+        "max": 1.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "startScale",
+      "type": "number",
+      "default": 0.4,
+      "description": "Starting scale before characters settle.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.2,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "blurAmount",
+      "type": "number",
+      "default": 18,
+      "description": "Initial blur amount in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 30,
+        "step": 1
+      }
+    },
+    {
+      "name": "holdDuration",
+      "type": "number",
+      "default": 1.2,
+      "description": "Pause duration after the full reveal completes.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 3,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "loop",
+      "type": "boolean",
+      "default": false,
+      "description": "Automatically replay the animation on a loop.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "behavior",
+        "groupTitle": "Behavior"
+      }
+    },
+    {
+      "name": "scrub",
+      "type": "boolean",
+      "default": false,
+      "description": "Links the reveal to scroll progress instead of playing on mount. Disables looping and the replay button.",
+      "remixer": {
+        "enabled": false,
+        "control": "checkbox",
+        "group": "behavior",
+        "groupTitle": "Behavior"
+      }
+    },
+    {
+      "name": "scrollStart",
+      "type": "string",
+      "default": "top 80%",
+      "description": "ScrollTrigger start value used when scrub is enabled.",
+      "remixer": {
+        "enabled": false,
+        "control": "text",
+        "group": "behavior",
+        "groupTitle": "Behavior"
+      }
+    },
+    {
+      "name": "scrollEnd",
+      "type": "string",
+      "default": "bottom 20%",
+      "description": "ScrollTrigger end value used when scrub is enabled.",
+      "remixer": {
+        "enabled": false,
+        "control": "text",
+        "group": "behavior",
+        "groupTitle": "Behavior"
+      }
+    },
+    {
+      "name": "showReplayButton",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows the built-in replay button inside the component.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "behavior",
+        "groupTitle": "Behavior"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/focus-text/index.tsx"
+    }
+  ]
+}

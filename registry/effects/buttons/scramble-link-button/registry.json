@@ -1,12 +1,139 @@
 {
   "name": "scramble-link-button",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-28",
+      "summary": "Reduce motion added to scramble effect, and pointer events added for mobile devices.",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-07-09",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Scramble Link Button",
   "description": "Link button with text scramble effect on hover, optional underline and arrow",
   "category": "buttons",
-  "dependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/buttons/scramble-link-button",
+  "previewUrl": "/demo/scramble-link-button",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "ScrambleLinkButton",
+  "exportKind": "default",
+  "importPath": "@/components/effects/scramble-link-button",
+  "target": "src/components/effects/scramble-link-button",
+  "props": [
+    {
+      "name": "btnText",
+      "type": "string",
+      "default": "Hover me",
+      "description": "Button label text.",
+      "remixer": {
+        "control": "text",
+        "group": "content",
+        "groupTitle": "Content"
+      }
+    },
+    {
+      "name": "hoverColor",
+      "type": "color",
+      "default": "#ff6b00",
+      "description": "Text color while hovered or pressed.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "showLine",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows the animated underline.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "showArrow",
+      "type": "boolean",
+      "default": false,
+      "description": "Shows the optional arrow icon.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "scrambleDuration",
+      "type": "number",
+      "default": 1000,
+      "description": "Total scramble duration in milliseconds.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 200,
+        "max": 2400,
+        "step": 50
+      }
+    },
+    {
+      "name": "stepMs",
+      "type": "number",
+      "default": 50,
+      "description": "Delay between scramble frames.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 16,
+        "max": 140,
+        "step": 1
+      }
+    },
+    {
+      "name": "revealStagger",
+      "type": "number",
+      "default": 1.4,
+      "description": "Controls how characters resolve across the word.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.5,
+        "max": 3,
+        "step": 0.1
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "content",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/scramble-link-button/index.tsx"
+    }
+  ]
 }

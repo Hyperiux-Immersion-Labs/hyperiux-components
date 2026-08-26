@@ -1,14 +1,106 @@
 {
   "name": "stack-loader",
+  "version": "1.0.1",
   "type": "registry:component",
-  "title": "stack-loader Loader",
+  "title": "Stack Loader",
   "description": "Stack-to-spread image intro loader with GSAP SplitText word animations and staggered image choreography",
   "category": "loaders",
   "dependencies": [
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/loaders/stack-loader",
+  "previewUrl": "/demo/stack-loader",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "StackLoader",
+  "exportKind": "default",
+  "importPath": "@/components/effects/stack-loader",
+  "target": "src/components/effects/stack-loader",
+  "props": [
+    {
+      "name": "imageSize",
+      "type": "number",
+      "default": 1,
+      "description": "Scale multiplier for the loader image stack.",
+      "remixer": {
+        "control": "range",
+        "group": "controls",
+        "groupTitle": "Controls",
+        "min": 0.5,
+        "max": 2.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": 1,
+      "description": "Global duration multiplier for the loader animation.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.25,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "fadeOutDuration",
+      "type": "number",
+      "default": 0.8,
+      "description": "Duration of the final image and loader fade-out.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.1,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#fcfcfc",
+      "description": "Loader background color.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "controls",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/stack-loader/index.tsx"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-07-21",
+      "summary": "Add prefers-reduced-motion support",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-07-20",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ]
 }

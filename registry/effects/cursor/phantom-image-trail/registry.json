@@ -1,5 +1,20 @@
 {
   "name": "phantom-image-trail",
+  "version": "1.0.1",
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-07-24",
+      "summary": "Added reduced-motion support, restyled the reduced-motion notice, and removed per-frame setState calls from the mouse tracker to cut wasted re-renders.",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-06-04",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Phantom Image Trail",
   "description": "Cursor-driven image trail that spawns and fades stacked visuals as you move",
@@ -8,7 +23,243 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/mouse-hover-image",
+  "previewUrl": "/demo/phantom-image-trail",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "PhantomImageTrail",
+  "exportKind": "default",
+  "importPath": "@/components/effects/phantom-image-trail",
+  "target": "src/components/effects/phantom-image-trail",
+  "props": [
+    {
+      "name": "imageMultiplier",
+      "type": "number",
+      "default": 3,
+      "description": "Sets how many copies of the image set can be in flight.",
+      "remixer": {
+        "control": "range",
+        "group": "trail",
+        "groupTitle": "Trail",
+        "min": 1,
+        "max": 8,
+        "step": 1
+      }
+    },
+    {
+      "name": "triggerDistance",
+      "type": "number",
+      "default": 100,
+      "description": "Distance the cursor must move before spawning a new image.",
+      "remixer": {
+        "control": "range",
+        "group": "trail",
+        "groupTitle": "Trail",
+        "min": 10,
+        "max": 400,
+        "step": 1
+      }
+    },
+    {
+      "name": "lerpFactor",
+      "type": "number",
+      "default": 0.1,
+      "description": "Cursor smoothing factor.",
+      "remixer": {
+        "control": "range",
+        "group": "trail",
+        "groupTitle": "Trail",
+        "min": 0.02,
+        "max": 0.5,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "popOutDuration",
+      "type": "number",
+      "default": 0.8,
+      "description": "Image pop-in duration.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0.1,
+        "max": 2.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "fadeOutDuration",
+      "type": "number",
+      "default": 0.5,
+      "description": "Image fade-out duration.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0.1,
+        "max": 2.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "startScale",
+      "type": "number",
+      "default": 0.2,
+      "description": "Image starting scale.",
+      "remixer": {
+        "control": "range",
+        "group": "scale",
+        "groupTitle": "Scale",
+        "min": 0,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "endScale",
+      "type": "number",
+      "default": 1,
+      "description": "Image settled scale.",
+      "remixer": {
+        "control": "range",
+        "group": "scale",
+        "groupTitle": "Scale",
+        "min": 0.2,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "exitScale",
+      "type": "number",
+      "default": 0,
+      "description": "Image exit scale.",
+      "remixer": {
+        "control": "range",
+        "group": "scale",
+        "groupTitle": "Scale",
+        "min": 0,
+        "max": 1.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "enableRotation",
+      "type": "boolean",
+      "default": true,
+      "description": "Enables random image tilt.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "rotation",
+        "groupTitle": "Rotation"
+      }
+    },
+    {
+      "name": "maxStartRotation",
+      "type": "number",
+      "default": 35,
+      "description": "Maximum starting tilt.",
+      "remixer": {
+        "control": "range",
+        "group": "rotation",
+        "groupTitle": "Rotation",
+        "min": 0,
+        "max": 90,
+        "step": 1
+      }
+    },
+    {
+      "name": "maxExitRotation",
+      "type": "number",
+      "default": 15,
+      "description": "Maximum exit tilt.",
+      "remixer": {
+        "control": "range",
+        "group": "rotation",
+        "groupTitle": "Rotation",
+        "min": 0,
+        "max": 90,
+        "step": 1
+      }
+    },
+    {
+      "name": "idleSpawn",
+      "type": "boolean",
+      "default": false,
+      "description": "Spawns images while the cursor rests.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "idle",
+        "groupTitle": "Idle"
+      }
+    },
+    {
+      "name": "idleDelay",
+      "type": "number",
+      "default": 300,
+      "description": "Delay before idle spawning starts.",
+      "remixer": {
+        "control": "range",
+        "group": "idle",
+        "groupTitle": "Idle",
+        "min": 0,
+        "max": 2000,
+        "step": 10
+      }
+    },
+    {
+      "name": "idlePopOutMultiplier",
+      "type": "number",
+      "default": 2.2,
+      "description": "Multiplier for idle pop-in timing.",
+      "remixer": {
+        "control": "range",
+        "group": "idle",
+        "groupTitle": "Idle",
+        "min": 0.5,
+        "max": 4,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "idleFadeMultiplier",
+      "type": "number",
+      "default": 1.8,
+      "description": "Multiplier for idle fade-out timing.",
+      "remixer": {
+        "control": "range",
+        "group": "idle",
+        "groupTitle": "Idle",
+        "min": 0.5,
+        "max": 4,
+        "step": 0.1
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "trail",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/phantom-image-trail/index.tsx"
+    },
+    {
+      "path": "useMouse.ts",
+      "target": "src/components/effects/phantom-image-trail/useMouse.ts"
+    },
+    {
+      "path": "createSuspendedRaf.ts",
+      "target": "src/components/effects/phantom-image-trail/createSuspendedRaf.ts"
+    }
+  ]
 }

@@ -1,0 +1,188 @@
+{
+  "name": "depth-flip-text",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-17",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Depth Flip Text",
+  "description": "Vault-themed perspective text flip with staggered character motion and optional crossfade.",
+  "category": "text",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/depth-flip-text",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "DepthFlipText",
+  "exportKind": "default",
+  "importPath": "@/components/effects/depth-flip-text",
+  "target": "src/components/effects/depth-flip-text",
+  "props": [
+    {
+      "name": "phrases",
+      "type": "string[]",
+      "default": [
+        "Hyperiux Vault ships faster",
+        "Premium UI for modern teams",
+        "Built to launch beautifully"
+      ],
+      "description": "Phrases that cycle through the perspective flip.",
+      "copyable": true,
+      "remixer": {
+        "control": "json/list",
+        "enabled": false,
+        "group": "content",
+        "groupTitle": "Content"
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#f6f5f2",
+      "description": "Background color behind the effect.",
+      "remixer": {
+        "control": "color",
+        "enabled":false,
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Text color for both the current and incoming phrase.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "loop",
+      "type": "boolean",
+      "default": false,
+      "description": "Restarts the phrase sequence after the last entry.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "motion",
+        "groupTitle": "Motion"
+      }
+    },
+    {
+      "name": "holdDuration",
+      "type": "number",
+      "default": 0.4,
+      "description": "Delay before each phrase begins its flip transition.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "transitionDuration",
+      "type": "number",
+      "default": 1.4,
+      "description": "Duration of the flip animation.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.1,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "charStagger",
+      "type": "number",
+      "default": 0.02,
+      "description": "Delay between each character beginning its motion.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 0.12,
+        "step": 0.005
+      }
+    },
+    {
+      "name": "useOpacityTransition",
+      "type": "boolean",
+      "default": false,
+      "description": "Fades outgoing and incoming characters during the flip.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "motion",
+        "groupTitle": "Motion"
+      }
+    },
+    {
+      "name": "scrub",
+      "type": "boolean",
+      "default": false,
+      "description": "Links the first flip transition to scroll progress instead of autoplay.",
+      "remixer": {
+        "enabled": false,
+        "control": "checkbox",
+        "group": "motion",
+        "groupTitle": "Motion"
+      }
+    },
+    {
+      "name": "scrollStart",
+      "type": "string",
+      "default": "top 80%",
+      "description": "ScrollTrigger start value used when scrub is enabled.",
+      "remixer": {
+        "enabled": false,
+        "control": "text",
+        "group": "motion",
+        "groupTitle": "Motion"
+      }
+    },
+    {
+      "name": "scrollEnd",
+      "type": "string",
+      "default": "bottom 20%",
+      "description": "ScrollTrigger end value used when scrub is enabled.",
+      "remixer": {
+        "enabled": false,
+        "control": "text",
+        "group": "motion",
+        "groupTitle": "Motion"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/depth-flip-text/index.tsx"
+    }
+  ]
+}

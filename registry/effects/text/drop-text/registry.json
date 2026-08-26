@@ -1,0 +1,376 @@
+{
+  "name": "drop-text",
+  "version": "2.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-14",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Drop Text",
+  "description": "Text that drops into place with configurable stagger origins and character, word, or line splitting.",
+  "category": "text",
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/drop-text",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "DropText",
+  "exportKind": "default",
+  "importPath": "@/components/effects/drop-text",
+  "target": "src/components/effects/drop-text",
+  "props": [
+    {
+      "name": "variant",
+      "type": "string",
+      "default": "drop",
+      "description": "Animation style used for the text entrance.",
+      "remixer": {
+        "control": "select",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "options": [
+          {
+            "value": "drop",
+            "label": "Drop"
+          },
+          {
+            "value": "perspective",
+            "label": "Perspective"
+          }
+        ]
+      }
+    },
+    {
+      "name": "splitBy",
+      "type": "string",
+      "default": "characters",
+      "description": "Text unit used for the drop animation.",
+      "remixer": {
+        "control": "select",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "options": [
+          {
+            "value": "characters",
+            "label": "Characters"
+          },
+          {
+            "value": "words",
+            "label": "Words"
+          },
+          {
+            "value": "lines",
+            "label": "Lines"
+          }
+        ]
+      }
+    },
+    {
+      "name": "staggerFrom",
+      "type": "string",
+      "default": "random",
+      "description": "Origin used for the staggered drop sequence.",
+      "remixer": {
+        "control": "select",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "random",
+            "label": "Random"
+          }
+        ]
+      }
+    },
+    {
+      "name": "yOffset",
+      "type": "number",
+      "default": -30,
+      "description": "Starting vertical offset in pixels. Negative values rise from above, positive values drop from below.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": -240,
+        "max": 240,
+        "step": 1
+      }
+    },
+    {
+      "name": "xOffset",
+      "type": "number",
+      "default": 0,
+      "description": "Starting horizontal offset in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": -240,
+        "max": 240,
+        "step": 1
+      }
+    },
+    {
+      "name": "rotate",
+      "type": "number",
+      "default": 0,
+      "description": "Starting rotation in degrees.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": -90,
+        "max": 90,
+        "step": 1
+      }
+    },
+    {
+      "name": "blur",
+      "type": "number",
+      "default": 0,
+      "description": "Starting blur in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 24,
+        "step": 0.5
+      }
+    },
+    {
+      "name": "scaleFrom",
+      "type": "number",
+      "default": 1,
+      "description": "Starting scale before the text settles into place.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.2,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "startOpacity",
+      "type": "number",
+      "default": 0,
+      "description": "Starting opacity before the text animates in.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 1,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": 0.4,
+      "description": "Animation duration in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.1,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "stagger",
+      "type": "number",
+      "default": 0.02,
+      "description": "Delay between each animated text unit.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 0.2,
+        "step": 0.005
+      }
+    },
+    {
+      "name": "ease",
+      "type": "string",
+      "default": "power2.out",
+      "description": "GSAP easing used by the drop animation.",
+      "remixer": {
+        "control": "select",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "options": [
+          {
+            "value": "linear",
+            "label": "Linear"
+          },
+          {
+            "value": "power2.out",
+            "label": "Ease Out"
+          },
+          {
+            "value": "power2.in",
+            "label": "Ease In"
+          },
+          {
+            "value": "power2.inOut",
+            "label": "Ease In Out"
+          },
+          {
+            "value": "back.out(1.7)",
+            "label": "Back"
+          },
+          {
+            "value": "circ.out",
+            "label": "Circular"
+          },
+          {
+            "value": "expo.out",
+            "label": "Expo"
+          }
+        ]
+      }
+    },
+    {
+      "name": "animateOnScroll",
+      "type": "boolean",
+      "default": false,
+      "description": "Runs the animation when the component enters the viewport.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "behavior",
+        "groupTitle": "Behavior"
+      }
+    },
+    {
+      "name": "fontSize",
+      "type": "number",
+      "default": 6,
+      "description": "Font size in vw units.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 4,
+        "max": 18,
+        "step": 0.25
+      }
+    },
+    {
+      "name": "fontColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Text color.",
+      "remixer": {
+        "control": "color",
+        "group": "type",
+        "groupTitle": "Type"
+      }
+    },
+    {
+      "name": "textAlign",
+      "type": "string",
+      "default": "center",
+      "description": "Text alignment.",
+      "remixer": {
+        "control": "select",
+        "group": "type",
+        "groupTitle": "Type",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      }
+    },
+    {
+      "name": "lineHeight",
+      "type": "number",
+      "default": 1,
+      "description": "Text line height.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 0.75,
+        "max": 1.5,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "letterSpacing",
+      "type": "number",
+      "default": 0,
+      "description": "Letter spacing in em units.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": -0.1,
+        "max": 0.4,
+        "step": 0.005
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#101113",
+      "description": "Background color behind the text.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "enabled":false,
+        "groupTitle": "Colors"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/drop-text/index.tsx"
+    }
+  ]
+}

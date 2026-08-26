@@ -1,0 +1,183 @@
+{
+  "name": "dot-transition",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-20",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Dot Transition",
+  "description": "Canvas 2D dot grid that grows into a silhouette mask, holds, then shrinks away before cycling to the next image. Click advances the cycle early; respects prefers-reduced-motion.",
+  "category": "backgrounds",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/demo/dot-transition",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "DotTransition",
+  "exportKind": "default",
+  "importPath": "@/components/effects/dot-transition",
+  "target": "src/components/effects/dot-transition",
+  "props": [
+    {
+      "name": "spacing",
+      "type": "number",
+      "default": 26,
+      "description": "Distance between grid cells, in px.",
+      "remixer": {
+        "control": "range",
+        "group": "grid",
+        "groupTitle": "Grid",
+        "min": 10,
+        "max": 60,
+        "step": 1
+      }
+    },
+    {
+      "name": "dotSize",
+      "type": "number",
+      "default": 2.4,
+      "description": "Resting dot size, in px.",
+      "remixer": {
+        "control": "range",
+        "group": "grid",
+        "groupTitle": "Grid",
+        "min": 1,
+        "max": 8,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "maxDotSize",
+      "type": "number",
+      "default": 10,
+      "description": "Fully \"on\" dot size, in px.",
+      "remixer": {
+        "control": "range",
+        "group": "grid",
+        "groupTitle": "Grid",
+        "min": 4,
+        "max": 24,
+        "step": 0.5
+      }
+    },
+    {
+      "name": "growDuration",
+      "type": "number",
+      "default": 1.8,
+      "description": "Seconds for a shape to grow in from the resting grid.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0.2,
+        "max": 4,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "holdDuration",
+      "type": "number",
+      "default": 0.05,
+      "description": "Seconds a fully formed shape holds before shrinking away.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "shrinkDuration",
+      "type": "number",
+      "default": 1.8,
+      "description": "Seconds for a shape to shrink back down to the resting grid.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0.2,
+        "max": 4,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "gapDuration",
+      "type": "number",
+      "default": 0.2,
+      "description": "Seconds of plain resting grid between shrink and the next grow.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "revealAnchor",
+      "type": "number",
+      "default": 0.5,
+      "description": "Where shapes grow from / collapse into, as a fraction of height (0 = top, 1 = bottom).",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 0,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "dotColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Hex color used for the dots.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#000000",
+      "description": "Background color behind the dot grid.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "grid",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/dot-transition/index.tsx"
+    },
+    {
+      "path": "createSuspendedRaf.ts",
+      "target": "src/components/effects/dot-transition/createSuspendedRaf.ts"
+    }
+  ]
+}

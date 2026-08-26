@@ -1,5 +1,20 @@
 {
   "name": "chess-grid-transition",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "summary": "Added reduced-motion route fallback with short opacity fades.",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-02-10",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Chess Grid Transition",
   "description": "Staggered fullscreen grid wipe that sweeps blocks across the viewport during route changes",
@@ -9,9 +24,26 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
-  "previewUrl": "/page-transitions/chess-grid-transition",
-  "coverImage": "/assets/list/chess-grid-transition.png",
+  "previewUrl": "/demo/chess-grid-transition",
+  "coverImage": "chess-grid-transition",
   "videoUrl": "chess-grid-transition.mp4",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "ChessGridTransition",
+  "exportKind": "default",
+  "importPath": "@/components/effects/chess-grid-transition",
+  "target": "src/components/effects/chess-grid-transition",
+  "props": [
+    { "name": "duration", "type": "number", "default": 1, "description": "Duration multiplier for the chess grid sweep.", "remixer": { "control": "range", "group": "motion", "groupTitle": "Motion", "min": 0.25, "max": 3, "step": 0.05 } },
+    { "name": "gridSize", "type": "number", "default": 8, "description": "Grid density used to derive transition columns and responsive rows.", "remixer": { "control": "range", "group": "grid", "groupTitle": "Grid", "min": 4, "max": 16, "step": 1 } },
+    { "name": "color", "type": "string", "default": "#ff5f00", "description": "Chess grid block color.", "remixer": { "control": "color", "group": "surface", "groupTitle": "Surface" } }
+  ],
+  "remixer": { "enabled": true, "defaultOpenGroupId": "motion", "layout": { "buttonClassName": "right-4! top-25!", "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!" }, "copyCode": { "includeOnlyPublicProps": true } },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/chess-grid-transition/index.tsx"
+    }
+  ]
 }

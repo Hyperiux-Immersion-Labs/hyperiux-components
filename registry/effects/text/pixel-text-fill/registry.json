@@ -1,0 +1,264 @@
+{
+  "name": "pixel-text-fill",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-14",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Pixel Text Fill",
+  "description": "Scroll-scrubbed pixel text fill with an ordered-dither color edge.",
+  "category": "text",
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/pixel-text-fill",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "PixelTextFill",
+  "exportKind": "default",
+  "importPath": "@/components/effects/pixel-text-fill",
+  "target": "src/components/effects/pixel-text-fill",
+  "props": [
+    {
+      "name": "direction",
+      "type": "string",
+      "default": "up",
+      "description": "Fill direction.",
+      "remixer": {
+        "control": "select",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "options": [
+          {
+            "value": "up",
+            "label": "Up"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pixelSize",
+      "type": "number",
+      "default": 3,
+      "description": "Pixel cell size used by the dither edge.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 1,
+        "max": 12,
+        "step": 1
+      }
+    },
+    {
+      "name": "stagger",
+      "type": "number",
+      "default": 32,
+      "description": "Character stagger window for the fill head.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 2,
+        "max": 32,
+        "step": 1
+      }
+    },
+    {
+      "name": "bandFraction",
+      "type": "number",
+      "default": 1.15,
+      "description": "Soft pixel band width as a fraction of each glyph.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.35,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "effectWidth",
+      "type": "number",
+      "default": 1.4,
+      "description": "Pixelated fill band width multiplier.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.5,
+        "max": 4,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "settleBlend",
+      "type": "number",
+      "default": 0.45,
+      "description": "How early the final text color blends in behind the pixel edge.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 1,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Final text color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "primaryColor",
+      "type": "string",
+      "default": "#ff5f00",
+      "description": "Pixel dither edge color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "dimColor",
+      "type": "string",
+      "default": "#272727",
+      "description": "Initial dim text color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#101113",
+      "description": "Section background color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "fontSize",
+      "type": "number",
+      "default": 3.2,
+      "description": "Font size in vw units.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 3,
+        "max": 12,
+        "step": 0.25
+      }
+    },
+    {
+      "name": "fontWeight",
+      "type": "number",
+      "default": 500,
+      "description": "Font weight.",
+      "remixer": {
+        "control": "range",
+        "enabled": false,
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 100,
+        "max": 900,
+        "step": 100
+      }
+    },
+    {
+      "name": "lineHeight",
+      "type": "number",
+      "default": 1.18,
+      "description": "Text line height.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 0.9,
+        "max": 1.6,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "textAlign",
+      "type": "string",
+      "default": "center",
+      "description": "Text alignment.",
+      "remixer": {
+        "control": "select",
+        "group": "type",
+        "groupTitle": "Type",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      }
+    },
+    {
+      "name": "maxWidth",
+      "type": "number",
+      "default": 80,
+      "description": "Text wrapper width as a percentage of the section.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 40,
+        "max": 100,
+        "step": 1
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/pixel-text-fill/index.tsx"
+    }
+  ]
+}

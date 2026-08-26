@@ -26,19 +26,51 @@
   "previewUrl": "/demo/horizontal-feature-reveal",
   "tier": "free",
   "subfolder": true,
-  "main": "index.jsx",
+  "main": "index.tsx",
   "exportName": "HorizontalFeatureReveal",
   "exportKind": "default",
   "importPath": "@/components/effects/horizontal-feature-reveal",
   "target": "src/components/effects/horizontal-feature-reveal",
   "files": [
     {
-      "path": "index.jsx",
-      "target": "src/components/effects/horizontal-feature-reveal/index.jsx"
+      "path": "index.tsx",
+      "target": "src/components/effects/horizontal-feature-reveal/index.tsx"
     },
     {
-      "path": "HorizontalFeatureRevealComp.jsx",
-      "target": "src/components/effects/horizontal-feature-reveal/HorizontalFeatureRevealComp.jsx"
+      "path": "HorizontalFeatureRevealComp.tsx",
+      "target": "src/components/effects/horizontal-feature-reveal/HorizontalFeatureRevealComp.tsx"
     }
-  ]
+  ],
+  "props": [
+    {
+      "name": "bgColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Background color of the section.",
+      "remixer": { "control": "color", "group": "style", "groupTitle": "Style" }
+    },
+    {
+      "name": "imageParallaxRange",
+      "type": "number",
+      "default": 30,
+      "description": "Symmetric parallax shift range (%) each image travels as it scrolls past.",
+      "remixer": { "control": "range", "group": "motion", "groupTitle": "Motion", "min": 0, "max": 60, "step": 1 }
+    },
+    {
+      "name": "cardGap",
+      "type": "number",
+      "default": 15,
+      "description": "Gap between industry cards, in vw.",
+      "remixer": { "control": "range", "group": "style", "groupTitle": "Style", "min": 0, "max": 30, "step": 1 }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": { "includeOnlyPublicProps": true }
+  }
 }

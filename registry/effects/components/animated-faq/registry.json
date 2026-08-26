@@ -1,6 +1,6 @@
 {
   "name": "animated-faq",
-  "version": "1.1.1",
+  "version": "1.0.1",
   "type": "registry:component",
   "title": "Animated FAQ",
   "description": "Accessible accordion-style FAQ component with smooth GSAP animations",
@@ -13,32 +13,123 @@
   "previewUrl": "/demo/animated-faq",
   "tier": "free",
   "subfolder": true,
-  "main": "index.jsx",
+  "main": "index.tsx",
   "exportName": "AnimatedFaq",
   "exportKind": "default",
   "importPath": "@/components/effects/animated-faq",
   "target": "src/components/effects/animated-faq",
-  "files": [
+  "props": [
     {
-      "path": "index.jsx",
-      "target": "src/components/effects/animated-faq/index.jsx"
+      "name": "allowMultiple",
+      "type": "boolean",
+      "default": false,
+      "description": "Lets more than one FAQ answer stay open at once.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "behavior",
+        "groupTitle": "Behavior"
+      }
     },
     {
-      "path": "AnimatedFaqComp.jsx",
-      "target": "src/components/effects/animated-faq/AnimatedFaqComp.jsx"
+      "name": "duration",
+      "type": "number",
+      "default": 0.5,
+      "description": "Open and close animation duration.",
+      "remixer": {
+        "control": "range",
+        "group": "behavior",
+        "groupTitle": "Behavior",
+        "min": 0.1,
+        "max": 1.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "showIcon",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows or hides the FAQ trigger icon.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "icon",
+        "groupTitle": "Icon"
+      }
+    },
+    {
+      "name": "iconPosition",
+      "type": "string",
+      "default": "right",
+      "description": "Side where the trigger icon is rendered.",
+      "remixer": {
+        "control": "select",
+        "group": "icon",
+        "groupTitle": "Icon",
+        "options": [
+          {
+            "value": "right",
+            "label": "Right"
+          },
+          {
+            "value": "left",
+            "label": "Left"
+          }
+        ]
+      }
+    },
+    {
+      "name": "iconMode",
+      "type": "string",
+      "default": "rotate",
+      "description": "Chevron rotation style used by the trigger icon.",
+      "remixer": {
+        "control": "select",
+        "group": "icon",
+        "groupTitle": "Icon",
+        "options": [
+          {
+            "value": "rotate",
+            "label": "Rotate Down"
+          },
+          {
+            "value": "rotate-left-down",
+            "label": "Rotate Right"
+          }
+        ]
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "behavior",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/animated-faq/index.tsx"
+    },
+    {
+      "path": "AnimatedFaqComp.tsx",
+      "target": "src/components/effects/animated-faq/AnimatedFaqComp.tsx"
     }
   ],
   "changelog": [
     {
-      "version": "1.1.1",
-      "date": "2026-07-29",
-      "summary": "Latest Sync",
+      "version": "1.0.1",
+      "date": "2026-07-28",
+      "summary": "Synced the registry copy with production (iconMode prop, array-based controlled-mode detection, height-based open/close animation) and documented its existing reduced-motion behavior.",
       "breaking": false
     },
     {
-      "version": "1.1.0",
-      "date": "2026-07-23",
-      "summary": "Registry copy synced with the production component the demo renders: adds the iconMode prop (rotate / rotate-left-down with ChevronRight), simpler array-based controlled-mode detection, and the height-based open/close animation engine.",
+      "version": "1.0.0",
+      "date": "2026-07-22",
+      "summary": "Initial release",
       "breaking": false
     }
   ]

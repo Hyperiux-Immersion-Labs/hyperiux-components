@@ -1,0 +1,217 @@
+{
+  "name": "flickering-text",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-18",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Flickering Text",
+  "description": "Deterministic per-character text flicker with adjustable correlation and optional glow bloom.",
+  "category": "text",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/flickering-text",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "FlickeringText",
+  "exportKind": "default",
+  "importPath": "@/components/effects/flickering-text",
+  "target": "src/components/effects/flickering-text",
+  "props": [
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#111844",
+      "description": "Background color behind the text.",
+      "remixer": {
+        "control": "color",
+        "enabled": false,
+        "group": "colors"
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Text color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "glowColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Glow color when bloom is enabled.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "wigglesPerSecond",
+      "type": "number",
+      "default": 2,
+      "description": "Noise samples per second that drive the flicker.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.2,
+        "max": 8,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "correlation",
+      "type": "number",
+      "default": 0.5,
+      "description": "How much each character follows the shared flicker lane.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "minOpacity",
+      "type": "number",
+      "default": 0,
+      "description": "Lowest opacity characters can dip to.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "minAmount",
+      "type": "number",
+      "default": -1,
+      "description": "Lower bound of the flicker selector.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": -1,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "maxAmount",
+      "type": "number",
+      "default": 1,
+      "description": "Upper bound of the flicker selector.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": -1,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "glowIntensity",
+      "type": "number",
+      "default": 1,
+      "description": "Glow strength when bloom is enabled.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "glowRadius",
+      "type": "number",
+      "default": 1,
+      "description": "Glow spread multiplier.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.25,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "fontSize",
+      "type": "number | string",
+      "default": "12vw",
+      "description": "Font size for the text.",
+      "remixer": {
+        "control": "text",
+        "enabled": false,
+        "group": "type",
+        "groupTitle": "Type"
+      }
+    },
+    {
+      "name": "fontWeight",
+      "type": "number | string",
+      "default": 600,
+      "description": "Font weight for the text.",
+      "remixer": {
+        "control": "range",
+        "enabled": false,
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 100,
+        "max": 900,
+        "step": 100
+      }
+    },
+    {
+      "name": "glow",
+      "type": "boolean",
+      "default": true,
+      "description": "Turns the extra glow effect on or off.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "motion",
+        "groupTitle": "Motion"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/flickering-text/index.tsx"
+    }
+  ]
+}

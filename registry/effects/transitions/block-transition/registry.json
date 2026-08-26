@@ -1,5 +1,20 @@
 {
   "name": "block-transition",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "summary": "Added reduced-motion route fallback with short opacity fades.",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-02-10",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Block Transition",
   "description": "Horizontal split-block route transition with row-based stagger and optional content shift blur using GSAP.",
@@ -9,7 +24,24 @@
     "next-transition-router"
   ],
   "registryDependencies": [],
-  "previewUrl": "/page-transitions/block-transition",
+  "previewUrl": "/demo/block-transition",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "exportName": "BlockTransition",
+  "exportKind": "default",
+  "main": "index.tsx",
+  "props": [
+    { "name": "enableContentShift", "type": "boolean", "default": false, "description": "Adds content scale/blur during the transition.", "remixer": { "control": "checkbox", "group": "behavior", "groupTitle": "Behavior" } },
+    { "name": "rows", "type": "number", "default": 5, "description": "Number of block rows.", "remixer": { "control": "range", "group": "grid", "groupTitle": "Grid", "min": 2, "max": 12, "step": 1 } },
+    { "name": "color", "type": "string", "default": "#000000", "description": "Transition block color.", "remixer": { "control": "color", "group": "surface", "groupTitle": "Surface" } },
+    { "name": "duration", "type": "number", "default": 1, "description": "Duration multiplier for the cover and reveal block animations.", "remixer": { "control": "range", "group": "motion", "groupTitle": "Motion", "min": 0.25, "max": 3, "step": 0.05 } }
+  ],
+  "remixer": { "enabled": true, "defaultOpenGroupId": "behavior", "layout": { "buttonClassName": "right-4! top-25!", "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!" }, "copyCode": { "includeOnlyPublicProps": true } },
+  "files": [
+    {
+      "path": "index.tsx",
+      "type": "registry:component",
+      "target": "src/components/effects/block-transition/index.tsx"
+    }
+  ]
 }

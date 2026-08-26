@@ -1,17 +1,11 @@
 {
   "name": "circular-split-roll",
-  "version": "1.1.0",
+  "version": "1.0.1",
   "changelog": [
     {
-      "version": "1.1.0",
-      "date": "2026-07-24",
-      "summary": "Added prefers-reduced-motion support (ported from the docs copy): notice explaining the continuous scroll-driven rotation cannot be reduced to a static fade.",
-      "breaking": false
-    },
-    {
       "version": "1.0.1",
-      "date": "2026-07-17",
-      "summary": "Responsiveness fixes",
+      "date": "2026-07-24",
+      "summary": "Fixed responsiveness issues and added a reduced-motion notice explaining the continuous scroll-driven rotation.",
       "breaking": false
     },
     {
@@ -33,19 +27,88 @@
   "previewUrl": "/demo/circular-split-roll",
   "tier": "free",
   "subfolder": true,
-  "main": "index.jsx",
+  "main": "index.tsx",
   "exportName": "CircularSplitRoll",
   "exportKind": "default",
   "importPath": "@/components/effects/circular-split-roll",
   "target": "src/components/effects/circular-split-roll",
-  "files": [
+  "props": [
     {
-      "path": "index.jsx",
-      "target": "src/components/effects/circular-split-roll/index.jsx"
+      "name": "radius",
+      "type": "number",
+      "default": 500,
+      "description": "Radius of both rotating rings.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 100,
+        "max": 900,
+        "step": 10
+      }
     },
     {
-      "path": "CircularSplitRollComp.jsx",
-      "target": "src/components/effects/circular-split-roll/CircularSplitRollComp.jsx"
+      "name": "cardSize",
+      "type": "number",
+      "default": 205,
+      "description": "Size of the right-rail image cards.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 80,
+        "max": 420,
+        "step": 1
+      }
+    },
+    {
+      "name": "textSideScale",
+      "type": "number",
+      "default": 0.68,
+      "description": "Title scale away from the center.",
+      "remixer": {
+        "control": "range",
+        "group": "text",
+        "groupTitle": "Text",
+        "min": 0.1,
+        "max": 1.5,
+        "step": 0.02
+      }
+    },
+    {
+      "name": "textSideOpacity",
+      "type": "number",
+      "default": 0.18,
+      "description": "Title opacity away from the center.",
+      "remixer": {
+        "control": "range",
+        "group": "text",
+        "groupTitle": "Text",
+        "min": 0,
+        "max": 1,
+        "step": 0.02
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "layout",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/circular-split-roll/index.tsx"
+    },
+    {
+      "path": "CircularSplitRollComp.tsx",
+      "target": "src/components/effects/circular-split-roll/CircularSplitRollComp.tsx"
     }
   ]
 }

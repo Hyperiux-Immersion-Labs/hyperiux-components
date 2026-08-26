@@ -1,0 +1,127 @@
+{
+  "name": "rolling-text",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-18",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Rolling Text",
+  "description": "Slot-machine style text reveal where each character spins up a vertical reel of itself before landing.",
+  "category": "text",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/rolling-text",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "RollingText",
+  "exportKind": "default",
+  "importPath": "@/components/effects/rolling-text",
+  "target": "src/components/effects/rolling-text",
+  "props": [
+    {
+      "name": "text",
+      "type": "string",
+      "default": "HYPERIUX",
+      "description": "The word rendered by the reel.",
+      "remixer": {
+        "control": "text",
+        "enabled": false,
+        "group": "content",
+        "groupTitle": "Content"
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Letter color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "minCycles",
+      "type": "number",
+      "default": 3,
+      "description": "Minimum whole letter-heights a character travels before landing.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 1,
+        "max": 8,
+        "step": 1
+      }
+    },
+    {
+      "name": "cycleVariance",
+      "type": "number",
+      "default": 3,
+      "description": "Extra random cycles added on top of minCycles.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 8,
+        "step": 1
+      }
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": 2.4,
+      "description": "Base spin duration in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.5,
+        "max": 5,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "durationVariance",
+      "type": "number",
+      "default": 1.2,
+      "description": "Extra random duration added per character, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 3,
+        "step": 0.1
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/rolling-text/index.tsx"
+    }
+  ]
+}

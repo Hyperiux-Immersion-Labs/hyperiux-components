@@ -1,0 +1,223 @@
+{
+  "name": "arc-flow-carousel",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-20",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Arc Flow Carousel",
+  "description": "Draggable image carousel where cards ride a wheel arc, with flick momentum, idle drift, and reduced-motion support.",
+  "category": "carousels",
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/arc-flow-carousel",
+  "tier": "free",
+  "main": "index.tsx",
+  "exportName": "ArcFlowCarousel",
+  "exportKind": "default",
+  "importPath": "@/components/effects/arc-flow-carousel",
+  "target": "src/components/effects/arc-flow-carousel",
+  "props": [
+    {
+      "name": "smoothing",
+      "type": "number",
+      "default": 5.5,
+      "description": "How fast the fan catches up to the pointer. Higher feels snappier.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 1,
+        "max": 12,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "momentum",
+      "type": "number",
+      "default": 1,
+      "description": "Flick distance multiplier after release.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "dragSensitivity",
+      "type": "number",
+      "default": 1.2,
+      "description": "How far the fan travels per pixel dragged or scrolled.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.2,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "autoRotateSpeed",
+      "type": "number",
+      "default": 0,
+      "description": "Constant idle drift in rad/s. Positive drifts new cards in from the left.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": -1,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "pauseOnHover",
+      "type": "boolean",
+      "default": true,
+      "description": "Pauses the idle drift while a pointer hovers the carousel.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "motion",
+        "groupTitle": "Motion"
+      }
+    },
+    {
+      "name": "snap",
+      "type": "boolean",
+      "default": false,
+      "description": "Snaps to the nearest card once a flick or wheel input settles.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "motion",
+        "groupTitle": "Motion"
+      }
+    },
+    {
+      "name": "radiusRatio",
+      "type": "number",
+      "default": 0.85,
+      "description": "Circle radius as a multiple of the container width. Bigger is a flatter arc.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 0.4,
+        "max": 1.6,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "cardRatio",
+      "type": "number",
+      "default": 0.21,
+      "description": "Card width as a fraction of the container width, clamped by min/max card width.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 0.1,
+        "max": 0.4,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "maxCardWidth",
+      "type": "number",
+      "default": 320,
+      "description": "Upper bound on card width, in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 200,
+        "max": 560,
+        "step": 1
+      }
+    },
+    {
+      "name": "cardAspect",
+      "type": "number",
+      "default": 0.62,
+      "description": "Card width divided by height.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 0.3,
+        "max": 1.2,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "overlap",
+      "type": "number",
+      "default": -0.04,
+      "description": "0 = cards touch edge to edge, 0.3 = overlap by 30%, negative = a gap between them.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": -0.5,
+        "max": 0.85,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "arcOffset",
+      "type": "number",
+      "default": 0.5,
+      "description": "Vertical position of the leading card's centre, as a fraction of height.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 0,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "surfaceColor",
+      "type": "string",
+      "default": "#000000",
+      "description": "Shared hex color for the carousel background and wheel surface.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/arc-flow-carousel/index.tsx"
+    },
+    {
+      "path": "ArcFlowCarouselComp.tsx",
+      "target": "src/components/effects/arc-flow-carousel/ArcFlowCarouselComp.tsx"
+    }
+  ]
+}

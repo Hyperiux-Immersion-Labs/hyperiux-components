@@ -53,6 +53,7 @@ export default function Page() {
 ## Free vs Pro
 
 **47 free effects** — install without any account:
+**47 free effects** — install without any account:
 ```bash
 npx hyperiux add rotation-slider
 npx hyperiux add spider-particles
@@ -82,16 +83,39 @@ Three.js and R3F scenes with custom GLSL shaders — image carousels, pixel grid
 `interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milky-way` · `fractal-glass` · [+more](https://vault.hyperiux.com/effects/webgl)
 
 ### Cursor
-Canvas 2D and Three.js cursor effects — image trails, rope followers, liquid glass, character grids.
+Pointer-following image and pixel effects for expressive cursor interactions.
 
-`phantom-image-trail` · `pixelated-image-effect` · `magnetic-image-trail` · `character-trail` · `rope-cursor` · [+more](https://vault.hyperiux.com/effects/cursor-effects)
+`phantom-image-trail` · `pixelated-image-effect`
+
+### Loaders
+Animated loading indicators for numeric, stacked, and motion-heavy states.
+
+`numeric-tunnel` · `stack-loader`
+
+### Navigation
+Menus and navbars with desktop and mobile interaction patterns.
+
+`directional-menu` · `elevate-navbar` · `immersive-full-screen-nav`
+
+### Scroll
+Scroll-driven animations built on GSAP ScrollTrigger — pinned sequences, perspective sliders, split canvases, and content reveals.
+
+`circular-split-roll` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `split-canvas` · `sticky-content-wrapper` · `text-convergence`
 
 ### Text
 Letter-level and line-level reveal animations — blur, scramble, stagger, perspective flip, mask wipe.
 
 `blur-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-effects)
 
-### Backgrounds · Page Transitions · Buttons · Components · Navigation · Loaders
+### Transitions
+Page and section transitions built from animated grids and block-based motion.
+
+`block-transition` · `chess-grid-transition`
+
+### WebGL
+Three.js, R3F, and shader-driven effects for frosted glass, image reveal, and particle galaxies.
+
+`fractal-glass` · `interactive-blur-reveal` · `milky-way`
 
 [Browse all →](https://vault.hyperiux.com/effects)
 

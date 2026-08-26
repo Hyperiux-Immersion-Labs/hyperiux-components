@@ -1,14 +1,139 @@
 {
   "name": "sticky-content-wrapper",
+  "version": "1.0.1",
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-07-30",
+      "summary": "Added reduced-motion support, fixed an uncolored gap between content and image panes, and exposed image-scale props; removed the unused stepGap prop.",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-07-21",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Sticky Content Wrapper",
   "description": "Split-screen sticky scroll with content on one side and images on the other, revealing on scroll",
   "category": "scroll",
   "dependencies": [
-    "gsap"
+    "gsap",
+    "lenis"
   ],
   "registryDependencies": [],
-  "previewUrl": "/sticky-content-wrapper",
+  "previewUrl": "/demo/sticky-content-wrapper",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "StickyContentWrapper",
+  "exportKind": "default",
+  "importPath": "@/components/effects/sticky-content-wrapper",
+  "target": "src/components/effects/sticky-content-wrapper",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/sticky-content-wrapper/index.tsx"
+    },
+    {
+      "path": "StickyContentComp.tsx",
+      "target": "src/components/effects/sticky-content-wrapper/StickyContentComp.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "bgColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Background color of the sticky section, including the gap between the content and image panes.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "contentEnterYPercent",
+      "type": "number",
+      "default": 2,
+      "description": "Vertical offset (% of content height) each content block starts from before sliding into place.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 60,
+        "step": 1
+      }
+    },
+    {
+      "name": "contentTransitionDuration",
+      "type": "number",
+      "default": 0.9,
+      "description": "Duration of each content block's enter/exit transition on the scroll timeline.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.1,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "initialImageScale",
+      "type": "number",
+      "default": 1.5,
+      "description": "Scale of an image before it becomes the active image.",
+      "remixer": {
+        "control": "range",
+        "group": "image",
+        "groupTitle": "Image",
+        "min": 1,
+        "max": 2.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "activeImageScale",
+      "type": "number",
+      "default": 1.2,
+      "description": "Scale of the image while it is active on screen.",
+      "remixer": {
+        "control": "range",
+        "group": "image",
+        "groupTitle": "Image",
+        "min": 1,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "exitImageScale",
+      "type": "number",
+      "default": 1,
+      "description": "Scale of an image after it has exited.",
+      "remixer": {
+        "control": "range",
+        "group": "image",
+        "groupTitle": "Image",
+        "min": 0.5,
+        "max": 1.5,
+        "step": 0.05
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
 }

@@ -1,11 +1,17 @@
 {
   "name": "split-canvas",
-  "version": "1.1.0",
+  "version": "1.0.1",
   "changelog": [
     {
-      "version": "1.1.0",
+      "version": "1.0.1",
       "date": "2026-07-21",
       "summary": "Added prefers-reduced-motion support: the pixel-grid shutter transition becomes a plain crossfade between images",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-07-20",
+      "summary": "Initial release",
       "breaking": false
     }
   ],
@@ -22,31 +28,97 @@
   "previewUrl": "/demo/split-canvas",
   "tier": "free",
   "subfolder": true,
-  "main": "index.jsx",
+  "main": "index.tsx",
   "exportName": "SplitCanvas",
   "exportKind": "default",
   "importPath": "@/components/effects/split-canvas",
   "target": "src/components/effects/split-canvas",
   "files": [
     {
-      "path": "index.jsx",
-      "target": "src/components/effects/split-canvas/index.jsx"
+      "path": "index.tsx",
+      "target": "src/components/effects/split-canvas/index.tsx"
     },
     {
-      "path": "PixelScrollCanvas.jsx",
-      "target": "src/components/effects/split-canvas/PixelScrollCanvas.jsx"
+      "path": "PixelScrollCanvas.tsx",
+      "target": "src/components/effects/split-canvas/PixelScrollCanvas.tsx"
     },
     {
-      "path": "content.js",
-      "target": "src/components/effects/split-canvas/content.js"
+      "path": "content.ts",
+      "target": "src/components/effects/split-canvas/content.ts"
     },
     {
-      "path": "pixel-transition.js",
-      "target": "src/components/effects/split-canvas/pixel-transition.js"
+      "path": "pixel-transition.ts",
+      "target": "src/components/effects/split-canvas/pixel-transition.ts"
     },
     {
-      "path": "createSuspendedRaf.js",
-      "target": "src/components/effects/split-canvas/createSuspendedRaf.js"
+      "path": "createSuspendedRaf.ts",
+      "target": "src/components/effects/split-canvas/createSuspendedRaf.ts"
     }
-  ]
+  ],
+  "props": [
+    {
+      "name": "bgColor",
+      "type": "color",
+      "default": "#F5F5F0",
+      "description": "Page background color.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "gridSize",
+      "type": "number",
+      "default": 16,
+      "description": "Pixel-dissolve shader's grid cell size, in px.",
+      "remixer": {
+        "control": "range",
+        "group": "shader",
+        "groupTitle": "Shader",
+        "min": 2,
+        "max": 64,
+        "step": 1
+      }
+    },
+    {
+      "name": "numSlices",
+      "type": "number",
+      "default": 32,
+      "description": "Number of horizontal slices the pixel-wipe transition is split into.",
+      "remixer": {
+        "control": "range",
+        "group": "shader",
+        "groupTitle": "Shader",
+        "min": 2,
+        "max": 128,
+        "step": 1
+      }
+    },
+    {
+      "name": "canvasSize",
+      "type": "number",
+      "default": 599,
+      "description": "Size (px) of the central transitioning canvas panel on desktop \u2014 mobile/tablet sizes scale proportionally.",
+      "remixer": {
+        "control": "range",
+        "group": "shader",
+        "groupTitle": "Shader",
+        "min": 200,
+        "max": 900,
+        "step": 1
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "shader",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
 }

@@ -1,0 +1,177 @@
+{
+  "name": "glowing-text",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-14",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Glowing Text",
+  "description": "Terminal-style typewriter text where the active line types in bold glow and settles to a dim, regular weight once complete.",
+  "category": "text",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/demo/glowing-text",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "GlowingText",
+  "exportKind": "default",
+  "importPath": "@/components/effects/glowing-text",
+  "target": "src/components/effects/glowing-text",
+  "props": [
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "#d8d8d8",
+      "description": "Base text color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "glowColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Glow and scan color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#0b0d0e",
+      "description": "Background color.",
+      "remixer": {
+        "control": "color",
+        "enabled":false,
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "fontSize",
+      "type": "number",
+      "default": 2.2,
+      "description": "Body text size in vw units.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 1.2,
+        "max": 5,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "letterSpacing",
+      "type": "number",
+      "default": 0.08,
+      "description": "Letter spacing in em units.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 0,
+        "max": 0.28,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "lineHeight",
+      "type": "number",
+      "default": 1.55,
+      "description": "Body line height.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 1,
+        "max": 2.2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "glowIntensity",
+      "type": "number",
+      "default": 0.7,
+      "description": "Glow strength.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.1,
+        "max": 1.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "characterStagger",
+      "type": "number",
+      "default": 0.045,
+      "description": "Delay between each character starting its reveal.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.01,
+        "max": 0.12,
+        "step": 0.005
+      }
+    },
+    {
+      "name": "revealDuration",
+      "type": "number",
+      "default": 0.5,
+      "description": "How long each character takes to fade in and settle.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.15,
+        "max": 1.2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "lineGap",
+      "type": "number",
+      "default": 0.15,
+      "description": "Extra pause after a line's last word before the next line starts.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 1,
+        "step": 0.05
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/glowing-text/index.tsx"
+    }
+  ]
+}

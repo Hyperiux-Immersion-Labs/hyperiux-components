@@ -1,0 +1,389 @@
+{
+  "name": "typing-text",
+  "version": "1.1.3",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-14",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Typing Text",
+  "description": "Vault-themed typewriter text with sequential, cascade, looping, and shape-shifting cursor variants.",
+  "category": "text",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/demo/typing-text",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "TypingText",
+  "exportKind": "default",
+  "importPath": "@/components/effects/typing-text",
+  "target": "src/components/effects/typing-text",
+  "props": [
+    {
+      "name": "variant",
+      "type": "string",
+      "default": "sequential",
+      "description": "Typing sequence variant.",
+      "remixer": {
+        "control": "select",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "options": [
+          {
+            "value": "sequential",
+            "label": "Sequential"
+          },
+          {
+            "value": "cascade",
+            "label": "Cascade"
+          },
+          {
+            "value": "loop",
+            "label": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "#d8d8d8",
+      "description": "Typed text color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "cursorColor",
+      "type": "string",
+      "default": "#f59e0b",
+      "description": "Cursor color.",
+      "remixer": {
+        "control": "color",
+        "group": "cursor",
+        "groupTitle": "Cursor"
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#121212",
+      "description": "Background color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "fontSize",
+      "type": "number",
+      "default": 2.4,
+      "description": "Text size in vw units.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 1,
+        "max": 5,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "fontWeight",
+      "type": "number",
+      "default": 500,
+      "description": "Font weight.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 100,
+        "max": 900,
+        "step": 100
+      }
+    },
+    {
+      "name": "lineHeight",
+      "type": "number",
+      "default": 1.55,
+      "description": "Line height.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 1,
+        "max": 2.2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "letterSpacing",
+      "type": "number",
+      "default": 0,
+      "description": "Letter spacing in em units.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 0,
+        "max": 0.18,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "textAlign",
+      "type": "string",
+      "default": "left",
+      "description": "Text alignment.",
+      "remixer": {
+        "control": "select",
+        "group": "type",
+        "groupTitle": "Type",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      }
+    },
+    {
+      "name": "maxWidth",
+      "type": "number",
+      "default": 80,
+      "description": "Maximum text block width in vw units.",
+      "remixer": {
+        "control": "range",
+        "group": "type",
+        "groupTitle": "Type",
+        "min": 42,
+        "max": 96,
+        "step": 1
+      }
+    },
+    {
+      "name": "charactersPerSecond",
+      "type": "number",
+      "default": 18,
+      "description": "Typing speed.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 6,
+        "max": 42,
+        "step": 1
+      }
+    },
+    {
+      "name": "animationDuration",
+      "type": "number",
+      "default": 1,
+      "description": "Multiplier applied to each line typing duration.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.2,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "lineDelay",
+      "type": "number",
+      "default": 0.5,
+      "description": "Delay between line starts.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "holdDuration",
+      "type": "number",
+      "default": 1.4,
+      "description": "Hold time before loop reset.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.2,
+        "max": 4,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "typingDirection",
+      "type": "string",
+      "default": "left-to-right",
+      "description": "Direction the text types from.",
+      "remixer": {
+        "control": "select",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "options": [
+          {
+            "value": "left-to-right",
+            "label": "Left To Right"
+          },
+          {
+            "value": "right-to-left",
+            "label": "Right To Left"
+          }
+        ]
+      }
+    },
+    {
+      "name": "blur",
+      "type": "number",
+      "default": 0,
+      "description": "Starting blur in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "appearance",
+        "groupTitle": "Appearance",
+        "min": 0,
+        "max": 20,
+        "step": 0.5
+      }
+    },
+    {
+      "name": "rotate",
+      "type": "number",
+      "default": 0,
+      "description": "Starting X rotation in degrees.",
+      "remixer": {
+        "control": "range",
+        "group": "appearance",
+        "groupTitle": "Appearance",
+        "min": -90,
+        "max": 90,
+        "step": 1
+      }
+    },
+    {
+      "name": "scale",
+      "type": "number",
+      "default": 1,
+      "description": "Starting scale before the line settles.",
+      "remixer": {
+        "control": "range",
+        "group": "appearance",
+        "groupTitle": "Appearance",
+        "min": 0.2,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "perspective",
+      "type": "number",
+      "default": 800,
+      "description": "Perspective depth for rotated typing.",
+      "remixer": {
+        "control": "range",
+        "group": "appearance",
+        "groupTitle": "Appearance",
+        "min": 120,
+        "max": 2000,
+        "step": 20
+      }
+    },
+    {
+      "name": "cursorStyle",
+      "type": "string",
+      "default": "bar",
+      "description": "Cursor visual style.",
+      "remixer": {
+        "control": "select",
+        "group": "cursor",
+        "groupTitle": "Cursor",
+        "options": [
+          {
+            "value": "bar",
+            "label": "Bar"
+          },
+          {
+            "value": "square",
+            "label": "Square"
+          },
+          {
+            "value": "triangle",
+            "label": "Triangle"
+          },
+          {
+            "value": "underscore",
+            "label": "Underscore"
+          },
+          {
+            "value": "dot",
+            "label": "Dot"
+          }
+        ]
+      }
+    },
+    {
+      "name": "cursorWidth",
+      "type": "number",
+      "default": 3,
+      "description": "Cursor thickness in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "cursor",
+        "groupTitle": "Cursor",
+        "min": 1,
+        "max": 10,
+        "step": 1
+      }
+    },
+    {
+      "name": "showCursor",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows the animated cursor.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "cursor",
+        "groupTitle": "Cursor"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/typing-text/index.tsx"
+    }
+  ]
+}

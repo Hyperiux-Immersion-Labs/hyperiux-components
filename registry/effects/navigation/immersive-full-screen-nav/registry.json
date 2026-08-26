@@ -16,27 +16,49 @@
   "previewUrl": "/demo/immersive-full-screen-nav",
   "tier": "free",
   "subfolder": true,
-  "main": "index.jsx",
+  "main": "index.tsx",
   "exportName": "ImmersiveFullscreenNav",
   "exportKind": "default",
   "importPath": "@/components/effects/immersive-full-screen-nav",
   "target": "src/components/effects/immersive-full-screen-nav",
+  "props": [
+    { "name": "overlayBg", "type": "string", "default": "#ff5f00", "description": "Fullscreen overlay background color.", "remixer": { "control": "color", "group": "overlay", "groupTitle": "Overlay" } },
+    { "name": "headerOpenColor", "type": "string", "default": "#ffffff", "description": "Hamburger bar color while open.", "remixer": { "control": "color", "group": "overlay", "groupTitle": "Overlay" } },
+    { "name": "linkColor", "type": "string", "default": "#ffffff", "description": "Navigation link color.", "remixer": { "control": "color", "group": "links", "groupTitle": "Links" } },
+    { "name": "linkHoverColor", "type": "string", "default": "#a3a3a3", "description": "Navigation link hover color.", "remixer": { "control": "color", "group": "links", "groupTitle": "Links" } },
+    { "name": "clipOrigin", "type": "string", "default": "bottom", "description": "Edge where the overlay reveals from.", "remixer": { "control": "select", "group": "overlay", "groupTitle": "Overlay", "options": [ { "value": "bottom", "label": "Bottom" }, { "value": "top", "label": "Top" }, { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ] } },
+    { "name": "openDuration", "type": "number", "default": 1.2, "description": "Overlay open duration.", "remixer": { "control": "range", "group": "timing", "groupTitle": "Timing", "min": 0.2, "max": 3, "step": 0.05 } },
+    { "name": "closeDuration", "type": "number", "default": 1.2, "description": "Overlay close duration.", "remixer": { "control": "range", "group": "timing", "groupTitle": "Timing", "min": 0.2, "max": 3, "step": 0.05 } },
+    { "name": "ease", "type": "string", "default": "power4.inOut", "description": "Overlay reveal easing.", "remixer": { "control": "select", "group": "timing", "groupTitle": "Timing", "options": [ { "value": "power4.inOut", "label": "Power 4 In Out" }, { "value": "power2.out", "label": "Power 2 Out" }, { "value": "power3.out", "label": "Power 3 Out" }, { "value": "expo.inOut", "label": "Expo In Out" } ] } },
+    { "name": "linkStagger", "type": "number", "default": 0.07, "description": "Delay between nav links.", "remixer": { "control": "range", "group": "links", "groupTitle": "Links", "min": 0, "max": 0.4, "step": 0.01 } },
+    { "name": "imageStagger", "type": "number", "default": 0.02, "description": "Delay between overlay images.", "remixer": { "control": "range", "group": "media", "groupTitle": "Images", "min": 0, "max": 0.4, "step": 0.01 } },
+    { "name": "socialStagger", "type": "number", "default": 0.06, "description": "Delay between social links.", "remixer": { "control": "range", "group": "socials", "groupTitle": "Socials", "min": 0, "max": 0.4, "step": 0.01 } }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "overlay",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": { "includeOnlyPublicProps": true }
+  },
   "files": [
     {
-      "path": "index.jsx",
-      "target": "src/components/effects/immersive-full-screen-nav/index.jsx"
+      "path": "index.tsx",
+      "target": "src/components/effects/immersive-full-screen-nav/index.tsx"
     },
     {
-      "path": "CustomNavbar.jsx",
-      "target": "src/components/effects/immersive-full-screen-nav/CustomNavbar.jsx"
+      "path": "CustomNavbar.tsx",
+      "target": "src/components/effects/immersive-full-screen-nav/CustomNavbar.tsx"
     },
     {
-      "path": "FullscreenNav.jsx",
-      "target": "src/components/effects/immersive-full-screen-nav/FullscreenNav.jsx"
+      "path": "FullscreenNav.tsx",
+      "target": "src/components/effects/immersive-full-screen-nav/FullscreenNav.tsx"
     },
     {
-      "path": "useFocusTrap.js",
-      "target": "src/components/effects/immersive-full-screen-nav/useFocusTrap.js"
+      "path": "useFocusTrap.ts",
+      "target": "src/components/effects/immersive-full-screen-nav/useFocusTrap.ts"
     }
   ]
 }

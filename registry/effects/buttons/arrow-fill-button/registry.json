@@ -1,12 +1,141 @@
 {
   "name": "arrow-fill-button",
+  "version": "1.1.0",
+  "changelog": [
+    { "version": "1.1.0", "date": "2026-07-21", "summary": "Added prefers-reduced-motion support: fill/clip-path/arrow hover transitions are disabled or shown in their end state instead of animating", "breaking": false },
+    { "version": "1.0.0", "date": "2026-06-04", "summary": "Initial release", "breaking": false }
+  ],
   "type": "registry:component",
   "title": "Arrow Fill Button",
   "description": "Button with expanding circle fill and animated arrow icon on hover",
   "category": "buttons",
-  "dependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
   "registryDependencies": [],
-  "previewUrl": "/buttons/arrow-fill-button",
+  "previewUrl": "/demo/arrow-fill-button",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "ArrowFillButton",
+  "exportKind": "default",
+  "importPath": "@/components/effects/arrow-fill-button",
+  "target": "src/components/effects/arrow-fill-button",
+  "props": [
+    {
+      "name": "btnText",
+      "type": "string",
+      "default": "Hover Me",
+      "demoDefault": "Hover me",
+      "description": "Button label text.",
+      "remixer": {
+        "control": "text",
+        "group": "content",
+        "groupTitle": "Content"
+      }
+    },
+    {
+      "name": "bgColor",
+      "type": "color",
+      "default": "#ff5f00",
+      "description": "Resting button background color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Resting label color.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "fillBgColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Circle fill color before hover.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "fillTextColor",
+      "type": "color",
+      "default": "#ff5f00",
+      "description": "Label color inside the fill before hover.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "hoverFillBgColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Expanded fill color on hover.",
+      "remixer": {
+        "control": "color",
+        "group": "hover",
+        "groupTitle": "Hover"
+      }
+    },
+    {
+      "name": "hoverFillTextColor",
+      "type": "color",
+      "default": "#ff5f00",
+      "description": "Label color inside the expanded fill on hover.",
+      "remixer": {
+        "control": "color",
+        "group": "hover",
+        "groupTitle": "Hover"
+      }
+    },
+    {
+      "name": "arrowColor",
+      "type": "color",
+      "description": "Arrow color before hover. Falls back to fillTextColor when unset.",
+      "remixer": {
+        "control": "color",
+        "group": "hover",
+        "groupTitle": "Hover"
+      }
+    },
+    {
+      "name": "hoverArrowColor",
+      "type": "color",
+      "description": "Arrow color after hover. Falls back to hoverFillTextColor when unset.",
+      "remixer": {
+        "control": "color",
+        "group": "hover",
+        "groupTitle": "Hover"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "colors",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/arrow-fill-button/index.tsx"
+    }
+  ]
 }

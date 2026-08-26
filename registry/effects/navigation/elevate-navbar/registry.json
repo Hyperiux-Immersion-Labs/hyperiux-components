@@ -1,14 +1,165 @@
 {
   "name": "elevate-navbar",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "summary": "Added prefers-reduced-motion support: dropdown and hover color transitions are set instantly instead of tweened when the user has reduced motion enabled",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-06-04",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Elevate Navbar",
   "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
   "category": "navigation",
   "dependencies": [
-    "gsap"
+    "gsap",
+    "lucide-react"
   ],
   "registryDependencies": [],
-  "previewUrl": "/navigation/elevate-navbar",
+  "packageName": "@hyperiux/elevate-navbar",
+  "sourcePath": "apps/docs/src/components/elevate-navbar",
+  "previewUrl": "/demo/elevate-navbar",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "ElevateNavbar",
+  "exportKind": "default",
+  "importPath": "@/components/effects/elevate-navbar",
+  "target": "src/components/effects/elevate-navbar",
+  "props": [
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#d8b4fe",
+      "description": "Page background behind the navbar.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "ctaBackground",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "CTA button background color.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "ctaHoverBackground",
+      "type": "string",
+      "default": "#000000",
+      "description": "CTA button hover background color.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "activeColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Active and focused nav link color.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "inactiveColor",
+      "type": "string",
+      "default": "rgba(255,255,255,0.5)",
+      "description": "Dimmed nav link color while another item is active.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
+      }
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": 0.35,
+      "description": "Nav, dropdown, and mobile accordion animation duration.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.1,
+        "max": 1.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "ease",
+      "type": "string",
+      "default": "power2.out",
+      "description": "GSAP easing used for nav and dropdown transitions.",
+      "remixer": {
+        "control": "select",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "options": [
+          { "value": "power2.out", "label": "Power 2 Out" },
+          { "value": "power3.out", "label": "Power 3 Out" },
+          { "value": "power4.out", "label": "Power 4 Out" },
+          { "value": "expo.out", "label": "Expo Out" }
+        ]
+      }
+    },
+    {
+      "name": "staggerItems",
+      "type": "boolean",
+      "default": true,
+      "description": "Reveals dropdown items one by one.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "dropdown",
+        "groupTitle": "Dropdown"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "appearance",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/elevate-navbar/index.tsx"
+    },
+    {
+      "path": "ElevateMobileNav.tsx",
+      "target": "src/components/effects/elevate-navbar/ElevateMobileNav.tsx"
+    },
+    {
+      "path": "ElevateDesktopNav.tsx",
+      "target": "src/components/effects/elevate-navbar/ElevateDesktopNav.tsx"
+    },
+    {
+      "path": "useFocusTrap.ts",
+      "target": "src/components/effects/elevate-navbar/useFocusTrap.ts"
+    }
+  ]
 }

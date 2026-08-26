@@ -1,5 +1,6 @@
 {
   "name": "numeric-tunnel",
+  "version": "1.0.1",
   "type": "registry:component",
   "title": "Numeric Tunnel",
   "description": "WebGL loader with a 3D numeric tunnel that crossfades into a chromatic aberration warp effect",
@@ -11,7 +12,130 @@
     "three"
   ],
   "registryDependencies": [],
-  "previewUrl": "/loaders/numeric-tunnel",
+  "previewUrl": "/demo/numeric-tunnel",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "NumericTunnel",
+  "exportKind": "default",
+  "importPath": "@/components/effects/numeric-tunnel",
+  "target": "src/components/effects/numeric-tunnel",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/numeric-tunnel/index.tsx"
+    },
+    {
+      "path": "NumericTunnelLoader.tsx",
+      "target": "src/components/effects/numeric-tunnel/NumericTunnelLoader.tsx"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-07-21",
+      "summary": "Add prefers-reduced-motion support: ring rotation and the end-of-tunnel warp/distortion effect are both skipped",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-07-20",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "props": [
+    {
+      "name": "digitCount",
+      "type": "number",
+      "default": 50,
+      "description": "Number of digits rendered in the tunnel.",
+      "suggested": true
+    },
+    {
+      "name": "speed",
+      "type": "number",
+      "default": 1,
+      "description": "Forward motion speed.",
+      "suggested": true
+    },
+    {
+      "name": "depth",
+      "type": "number",
+      "default": 900,
+      "description": "Visual tunnel depth.",
+      "suggested": true
+    },
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Digit color.",
+      "suggested": true
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "default": "#000000",
+      "description": "Tunnel background color.",
+      "suggested": true
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "suggested": true,
+    "defaultOpenGroupId": "controls",
+    "layout": {
+      "controlsButtonClassName": "right-4! top-25!"
+    },
+    "panel": {
+      "className": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "controls": [
+      {
+        "name": "digitCount",
+        "label": "Digit Count",
+        "type": "range",
+        "group": "controls",
+        "copyable": true,
+        "min": 0.1,
+        "max": 540,
+        "step": 0.1
+      },
+      {
+        "name": "speed",
+        "label": "Speed",
+        "type": "range",
+        "group": "motion",
+        "copyable": true,
+        "min": 0,
+        "max": 5,
+        "step": 0.05
+      },
+      {
+        "name": "depth",
+        "label": "Depth",
+        "type": "range",
+        "group": "controls",
+        "copyable": true,
+        "min": 0,
+        "max": 2700,
+        "step": 0.1
+      },
+      {
+        "name": "textColor",
+        "label": "Text Color",
+        "type": "color",
+        "group": "style",
+        "copyable": true
+      },
+      {
+        "name": "backgroundColor",
+        "label": "Background Color",
+        "type": "color",
+        "group": "style",
+        "copyable": true
+      }
+    ]
+  }
 }

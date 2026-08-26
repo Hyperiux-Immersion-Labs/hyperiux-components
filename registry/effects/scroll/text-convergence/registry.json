@@ -1,5 +1,20 @@
 {
   "name": "text-convergence",
+  "version": "1.0.1",
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-07-21",
+      "summary": "Added prefers-reduced-motion support: per-character fly-in yPercent/rotation range is reduced to 25% strength; the main horizontal scroll is unaffected",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-07-20",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Text Convergence",
   "description": "Horizontal scroll-driven text marquee where characters fly in from random positions and converge into place as you scroll",
@@ -8,7 +23,56 @@
     "gsap"
   ],
   "registryDependencies": [],
-  "previewUrl": "/text-convergence",
+  "previewUrl": "/demo/text-convergence",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "TextConvergence",
+  "exportKind": "default",
+  "importPath": "@/components/effects/text-convergence",
+  "target": "src/components/effects/text-convergence",
+  "props": [
+    {
+      "name": "bgColor",
+      "type": "color",
+      "default": "#111111",
+      "description": "Background color of the section.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "charRotation",
+      "type": "number",
+      "default": 20,
+      "description": "Max random rotation (degrees, plus or minus) each character starts from before flying into place.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 90,
+        "step": 1
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/text-convergence/index.tsx"
+    }
+  ]
 }

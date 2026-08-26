@@ -1,12 +1,102 @@
 {
   "name": "interactive-blur-reveal",
+  "version": "1.0.1",
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-07-31",
+      "summary": "Added a reduced-motion notice and reworked the remixer panel (removed the image-texture control, changed mouse interaction to a checkbox).",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-06-04",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Interactive Blur Reveal",
-  "description": "WebGL2 fullscreen shader that keeps the image frosted/blurred by default and reveals a sharp, clear version wherever the cursor trails. Uses a fluid mouse-trail mask with multi-octave noise distortion, animated film grain, and a subtle vignette.",
+  "description": "WebGL2 fullscreen shader that keeps the image frosted/blurred by default and reveals a sharp, clear version wherever the cursor trails. Uses a fluid mouse-trail mask with animated film grain and a subtle vignette.",
   "category": "webgl",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/webgl/interactive-blur-reveal",
+  "previewUrl": "/demo/interactive-blur-reveal",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "InteractiveBlurReveal",
+  "exportKind": "default",
+  "importPath": "@/components/effects/interactive-blur-reveal",
+  "target": "src/components/effects/interactive-blur-reveal",
+  "props": [
+    {
+      "name": "mouseRadius",
+      "type": "number",
+      "default": 180,
+      "description": "Radius of the cursor reveal mask in canvas pixels."
+    },
+    {
+      "name": "mouseInteraction",
+      "type": "boolean",
+      "default": true,
+      "description": "Enables pointer-driven reveal drawing."
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": 0.3,
+      "description": "Trail persistence and fade duration in seconds."
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "interaction",
+    "layout": {
+      "controlsButtonClassName": "right-4! top-25!"
+    },
+    "panel": {
+      "className": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "controls": [
+      {
+        "name": "mouseRadius",
+        "label": "Mouse Radius",
+        "type": "range",
+        "group": "interaction",
+        "min": 40,
+        "max": 420,
+        "step": 5
+      },
+      {
+        "name": "mouseInteraction",
+        "label": "Mouse Interaction",
+        "type": "checkbox",
+        "group": "interaction"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "type": "range",
+        "group": "motion",
+        "min": 0.08,
+        "max": 1.5,
+        "step": 0.01
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/interactive-blur-reveal/index.tsx"
+    },
+    {
+      "path": "webgl-context-recovery.ts",
+      "target": "src/components/effects/interactive-blur-reveal/webgl-context-recovery.ts"
+    },
+    {
+      "path": "createSuspendedRaf.ts",
+      "target": "src/components/effects/interactive-blur-reveal/createSuspendedRaf.ts"
+    }
+  ]
 }

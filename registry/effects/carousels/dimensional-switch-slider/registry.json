@@ -1,0 +1,181 @@
+{
+  "name": "dimensional-switch-slider",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-20",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Dimensional Switch Slider",
+  "description": "A 3D card-flip carousel with directional text transitions, configurable horizontal/vertical flip axis, custom easing, and pagination.",
+  "category": "carousels",
+  "dependencies": [
+    "gsap",
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/dimensional-switch-slider",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "DimensionalSwitchSlider",
+  "exportKind": "default",
+  "importPath": "@/components/effects/dimensional-switch-slider",
+  "target": "src/components/effects/dimensional-switch-slider",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/dimensional-switch-slider/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "infinite",
+      "type": "boolean",
+      "default": true,
+      "description": "Wraps from the last item back to the first (and vice versa) instead of clamping and disabling the prev/next buttons at the ends.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "behavior",
+        "groupTitle": "Behavior"
+      }
+    },
+    {
+      "name": "direction",
+      "type": "string",
+      "default": "horizontal",
+      "description": "Axis the card flips around - horizontal flips on Y with text sliding/tilting left-right, vertical flips on X with text sliding/tilting up-down.",
+      "remixer": {
+        "control": "select",
+        "group": "behavior",
+        "groupTitle": "Behavior",
+        "options": [
+          {
+            "label": "Horizontal",
+            "value": "horizontal"
+          },
+          {
+            "label": "Vertical",
+            "value": "vertical"
+          }
+        ]
+      }
+    },
+    {
+      "name": "autoplay",
+      "type": "boolean",
+      "default": true,
+      "description": "Automatically advances to the next slide on a timer.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "behavior",
+        "groupTitle": "Behavior"
+      }
+    },
+    {
+      "name": "autoplayDelay",
+      "type": "number",
+      "default": 2600,
+      "description": "Time between automatic slide changes in milliseconds.",
+      "remixer": {
+        "control": "range",
+        "group": "behavior",
+        "groupTitle": "Behavior",
+        "min": 1200,
+        "max": 6000,
+        "step": 100
+      }
+    },
+    {
+      "name": "ease",
+      "type": "string",
+      "default": "cubic-bezier(1, -0.001, 0.159, 0.838)",
+      "description": "CSS cubic-bezier(...) string or a plain GSAP ease name - drives the card flip and both text tweens."
+    },
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Color applied to the slide text.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "textSize",
+      "type": "number | string",
+      "default": 84,
+      "description": "Font size of the slide text. Numbers are treated as pixels; strings can use any CSS length.",
+      "remixer": {
+        "control": "range",
+        "group": "style",
+        "groupTitle": "Style",
+        "min": 32,
+        "max": 160,
+        "step": 1
+      }
+    },
+    {
+      "name": "cardWidth",
+      "type": "number | string",
+      "default": 680,
+      "description": "Width of the card. Numbers are treated as pixels; strings can use any CSS length.",
+      "remixer": {
+        "control": "range",
+        "group": "style",
+        "groupTitle": "Style",
+        "min": 280,
+        "max": 1000,
+        "step": 10
+      }
+    },
+    {
+      "name": "cardHeight",
+      "type": "number | string",
+      "default": 460,
+      "description": "Height of the card. Numbers are treated as pixels; strings can use any CSS length.",
+      "remixer": {
+        "control": "range",
+        "group": "style",
+        "groupTitle": "Style",
+        "min": 220,
+        "max": 720,
+        "step": 10
+      }
+    },
+    {
+      "name": "cardBorderRadius",
+      "type": "number | string",
+      "default": 16,
+      "description": "Border radius applied to both card faces. Numbers are treated as pixels; strings can use any CSS length.",
+      "remixer": {
+        "control": "range",
+        "group": "style",
+        "groupTitle": "Style",
+        "min": 0,
+        "max": 80,
+        "step": 1
+      }
+    },
+    {
+      "name": "cardClassName",
+      "type": "string",
+      "default": "max-md:w-[85vw]! max-md:h-[75vw]! max-[1024px]:w-[85vw]! max-[1024px]:h-[55vw]!",
+      "description": "Extra classes appended to the card's own wrapper div."
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "behavior",
+    "layout": "panel",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}

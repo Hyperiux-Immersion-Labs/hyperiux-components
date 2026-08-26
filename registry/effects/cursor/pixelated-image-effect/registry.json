@@ -1,12 +1,76 @@
 {
   "name": "pixelated-image-effect",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-22",
+      "summary": "reduce-motion applied",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-06-04",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
   "type": "registry:component",
   "title": "Pixelated Image Effect",
-  "description": "SVG filter-based image pixelation that reacts to cursor position — pixel size grows and shrinks as you move across the image",
+  "description": "SVG filter-based image pixelation that reacts to cursor position - pixel size grows and shrinks as you move across the image",
   "category": "cursor",
   "dependencies": [],
   "registryDependencies": [],
-  "previewUrl": "/pixelated-image-effect",
+  "previewUrl": "/demo/pixelated-image-effect",
   "tier": "free",
-  "license": "MPL-2.0"
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "PixelatedImageEffect",
+  "exportKind": "default",
+  "importPath": "@/components/effects/pixelated-image-effect",
+  "target": "src/components/effects/pixelated-image-effect",
+  "props": [
+    {
+      "name": "src",
+      "type": "string",
+      "default": "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-02.jpg",
+      "description": "Image source URL."
+    },
+    {
+      "name": "pixelSize",
+      "type": "number",
+      "default": 16,
+      "description": "Baseline pixel size for the SVG pixelation filter.",
+      "remixer": { "control": "range", "group": "controls", "groupTitle": "Controls", "min": 1, "max": 64, "step": 1 }
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": 0.25,
+      "description": "Smoothing duration for pixel-size changes.",
+      "remixer": { "control": "range", "group": "motion", "groupTitle": "Motion", "min": 0, "max": 2, "step": 0.05 }
+    },
+    {
+      "name": "mouseReactivity",
+      "type": "number",
+      "default": 1,
+      "description": "Strength of cursor-driven pixelation changes.",
+      "remixer": { "control": "range", "group": "controls", "groupTitle": "Controls", "min": 0, "max": 2, "step": 0.05 }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "controls",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": { "includeOnlyPublicProps": true }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/pixelated-image-effect/index.tsx"
+    }
+  ]
 }

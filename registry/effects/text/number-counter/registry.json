@@ -1,11 +1,11 @@
 {
   "name": "number-counter",
-  "version": "1.1.0",
+  "version": "1.0.1",
   "changelog": [
     {
-      "version": "1.1.0",
-      "date": "2026-07-21",
-      "summary": "Added reduced-motion support with static counter rendering and disabled rolling controls.",
+      "version": "1.0.1",
+      "date": "2026-07-30",
+      "summary": "Added reduced-motion support and reworked the props API to working duration/stagger controls across all counter variants.",
       "breaking": false
     },
     {
@@ -28,27 +28,79 @@
   "videoUrl": "/number-counter.mp4",
   "tier": "free",
   "subfolder": true,
-  "main": "index.jsx",
+  "main": "index.tsx",
   "exportName": "NumberCounter",
   "exportKind": "default",
   "importPath": "@/components/effects/number-counter",
   "target": "src/components/effects/number-counter",
   "files": [
     {
-      "path": "index.jsx",
-      "target": "src/components/effects/number-counter/index.jsx"
+      "path": "index.tsx",
+      "target": "src/components/effects/number-counter/index.tsx"
     },
     {
-      "path": "NumberCounterOne.jsx",
-      "target": "src/components/effects/number-counter/NumberCounterOne.jsx"
+      "path": "NumberCounterOne.tsx",
+      "target": "src/components/effects/number-counter/NumberCounterOne.tsx"
     },
     {
-      "path": "NumberCounterTwo.jsx",
-      "target": "src/components/effects/number-counter/NumberCounterTwo.jsx"
+      "path": "NumberCounterTwo.tsx",
+      "target": "src/components/effects/number-counter/NumberCounterTwo.tsx"
     },
     {
-      "path": "NumberCounterThree.jsx",
-      "target": "src/components/effects/number-counter/NumberCounterThree.jsx"
+      "path": "NumberCounterThree.tsx",
+      "target": "src/components/effects/number-counter/NumberCounterThree.tsx"
     }
-  ]
+  ],
+  "props": [
+    {
+      "name": "duration",
+      "type": "number",
+      "default": 1.5,
+      "description": "Digit roll duration in seconds for all three counters.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.2,
+        "max": 4,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "stagger",
+      "type": "number",
+      "default": 0.1,
+      "description": "Delay between digit columns in seconds for all three counters.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 0.5,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "#021A54",
+      "description": "Counter text color for all three counters.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
 }
