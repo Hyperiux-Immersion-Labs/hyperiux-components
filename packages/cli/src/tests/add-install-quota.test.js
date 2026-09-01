@@ -99,7 +99,7 @@ afterEach(() => {
   fs.rmSync(tmpDir, { recursive: true, force: true });
 });
 
-describe("add — prints remaining daily quota on success", () => {
+describe("add - prints remaining daily quota on success", () => {
   it("prints 'N of M daily installs left today' when the response carries installLimit/installRemaining", async () => {
     fetchRegistryImpl = async () => baseRegistryItem({ installLimit: 3, installRemaining: 1 });
 

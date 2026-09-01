@@ -101,7 +101,7 @@ export async function fetchRegistry(name, options = {}) {
     }
   }
 
-  // Pro effect — go through the authenticated API.
+  // Pro effect - go through the authenticated API.
   return fetchProtectedEffect(name, token, { isDependency });
 }
 

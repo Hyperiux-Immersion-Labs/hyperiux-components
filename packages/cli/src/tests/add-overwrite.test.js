@@ -111,10 +111,10 @@ afterEach(() => {
 
 // ─── The two paths the safety fix must guarantee ────────────────────────────────
 
-describe("add — overwrite safety of --yes", () => {
+describe("add - overwrite safety of --yes", () => {
   it("--yes alone does NOT overwrite an existing (customized) file", async () => {
     const add = await importAdd();
-    const CUSTOM = "// MY LOCAL EDITS — do not clobber\n";
+    const CUSTOM = "// MY LOCAL EDITS - do not clobber\n";
     const target = writeExistingCustomizedFile(CUSTOM);
 
     await add("foo", { yes: true });

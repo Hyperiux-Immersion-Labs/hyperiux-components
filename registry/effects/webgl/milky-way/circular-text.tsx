@@ -29,7 +29,7 @@ const CircularText = ({
 
  tweenRef.current?.kill()
 
- // Reduced-motion: keep the ring static — no continuous spin.
+ // Reduced-motion: keep the ring static - no continuous spin.
  if (
  window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
  ) {

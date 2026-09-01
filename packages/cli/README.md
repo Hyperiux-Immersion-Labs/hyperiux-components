@@ -3,9 +3,9 @@
 [![npm version](https://img.shields.io/npm/v/hyperiux.svg?style=flat-square&color=ff5f00)](https://www.npmjs.com/package/hyperiux)
 [![npm downloads](https://img.shields.io/npm/dm/hyperiux.svg?style=flat-square&color=777777)](https://www.npmjs.com/package/hyperiux)
 
-**A collection of high-quality animation effects and interactive components for Next.js — designed by [Hyperiux](https://hyperiux.com).**
+**A collection of high-quality animation effects and interactive components for Next.js - designed by [Hyperiux](https://hyperiux.com).**
 
-47 effects are free and open source. 91 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project — you own what you install.
+47 effects are free and open source. 91 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project - you own what you install.
 
 ---
 
@@ -44,28 +44,28 @@ export default function Page() {
 | `npx hyperiux whoami` | Show login status |
 
 ### Options for `add`
-- `--overwrite` — overwrite existing files
-- `--yes` — skip confirmation prompts
-- `--dry-run` — preview without writing files
+- `--overwrite` - overwrite existing files
+- `--yes` - skip confirmation prompts
+- `--dry-run` - preview without writing files
 
 ---
 
 ## Free vs Pro
 
-**47 free effects** — install without any account:
+**47 free effects** - install without any account:
 ```bash
 npx hyperiux add rotation-slider
 npx hyperiux add spider-particles
 npx hyperiux add phantom-image-trail
 ```
 
-**91 pro effects** — require a [Pro subscription](https://vault.hyperiux.com/pricing):
+**91 pro effects** - require a [Pro subscription](https://vault.hyperiux.com/pricing):
 ```bash
 npx hyperiux login       # authenticate once
 npx hyperiux add grid-tunnel
 ```
 
-`npx hyperiux login` isn't Pro-only — any Hyperiux account can generate a token.
+`npx hyperiux login` isn't Pro-only - any Hyperiux account can generate a token.
 Logging in raises your shared daily install limit (website + CLI + MCP combined)
 from 1/day anonymous to 3/day; Pro raises it further to 10/day and unlocks Pro
 effect source.
@@ -77,22 +77,22 @@ effect source.
 ## Effects
 
 ### Scroll
-Scroll-driven animations built on GSAP ScrollTrigger — parallax galleries, pinned sequences, horizontal storytelling, stacking cards, and more.
+Scroll-driven animations built on GSAP ScrollTrigger - parallax galleries, pinned sequences, horizontal storytelling, stacking cards, and more.
 
 `sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `parallax-slider` · `rotation-slider` · `text-convergence` · `scroll-distortion` · [+more](https://vault.hyperiux.com/effects/scroll-effects)
 
 ### WebGL
-Three.js and R3F scenes with custom GLSL shaders — image carousels, pixel grids, frosted glass, GPU particle galaxies, and 3D heroes.
+Three.js and R3F scenes with custom GLSL shaders - image carousels, pixel grids, frosted glass, GPU particle galaxies, and 3D heroes.
 
 `interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milky-way` · `fractal-glass` · [+more](https://vault.hyperiux.com/effects/webgl)
 
 ### Cursor
-Canvas 2D and Three.js cursor effects — image trails, rope followers, liquid glass, character grids.
+Canvas 2D and Three.js cursor effects - image trails, rope followers, liquid glass, character grids.
 
 `phantom-image-trail` · `pixelated-image-effect` · `magnetic-image-trail` · `character-trail` · `rope-cursor` · [+more](https://vault.hyperiux.com/effects/cursor-effects)
 
 ### Text
-Letter-level and line-level reveal animations — blur, scramble, stagger, perspective flip, mask wipe.
+Letter-level and line-level reveal animations - blur, scramble, stagger, perspective flip, mask wipe.
 
 `blur-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-effects)
 
@@ -132,7 +132,7 @@ Letter-level and line-level reveal animations — blur, scramble, stagger, persp
 | `HYPERIUX_APP_URL` | Override the Hyperiux app URL for self-hosting or testing |
 | `HYPERIUX_API_URL` | Override the API URL independently of the app URL |
 | `HYPERIUX_REGISTRY_URL` | Override the registry URL for local development |
-| `HYPERIUX_DEBUG` | Set to `1` to enable verbose request logs — do not use in shared CI |
+| `HYPERIUX_DEBUG` | Set to `1` to enable verbose request logs - do not use in shared CI |
 
 ---
 
@@ -164,11 +164,11 @@ The default install path is `@/components/effects/<effect-name>`. If you customi
 
 This is a pnpm monorepo with Turborepo:
 
-- **`packages/cli`** — `npx hyperiux` CLI tool, published to npm as `hyperiux`
-- **`packages/mcp-server`** — MCP (Model Context Protocol) server that lets AI clients (Claude, Cursor, etc.) browse and install Vault effects; published as `hyperiux-mcp-server`
-- **`registry/effects`** — Free effect source, organized by category
+- **`packages/cli`** - `npx hyperiux` CLI tool, published to npm as `hyperiux`
+- **`packages/mcp-server`** - MCP (Model Context Protocol) server that lets AI clients (Claude, Cursor, etc.) browse and install Vault effects; published as `hyperiux-mcp-server`
+- **`registry/effects`** - Free effect source, organized by category
 
-The documentation site ([vault.hyperiux.com](https://vault.hyperiux.com)) and Pro effect source live in a separate, private repository and are served via a protected API. The registry index (`public/r/index.json`) lists all effects with metadata — pro file contents are not publicly accessible.
+The documentation site ([vault.hyperiux.com](https://vault.hyperiux.com)) and Pro effect source live in a separate, private repository and are served via a protected API. The registry index (`public/r/index.json`) lists all effects with metadata - pro file contents are not publicly accessible.
 
 ---
 
@@ -198,8 +198,8 @@ npm link
 hyperiux --help
 hyperiux list
 hyperiux init
-hyperiux add dotted-grid        # free effect — no login needed
-hyperiux login                  # pro effects — requires token
+hyperiux add dotted-grid        # free effect - no login needed
+hyperiux login                  # pro effects - requires token
 hyperiux add grid-tunnel        # pro effect
 
 # Unlink when done
@@ -236,4 +236,4 @@ npm publish --dry-run           # full publish simulation, nothing uploaded
 
 ## License
 
-The CLI and free effects are licensed under the [Mozilla Public License 2.0](./LICENSE) (MPL-2.0). Pro effects require an active Hyperiux Pro subscription and are proprietary — not open source, not redistributable.
+The CLI and free effects are licensed under the [Mozilla Public License 2.0](./LICENSE) (MPL-2.0). Pro effects require an active Hyperiux Pro subscription and are proprietary - not open source, not redistributable.

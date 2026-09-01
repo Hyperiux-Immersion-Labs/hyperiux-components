@@ -3,7 +3,7 @@
 /**
  * Shared WebGL context-loss recovery helper.
  *
- * A WebGL context can be dropped by the browser at any time — commonly on
+ * A WebGL context can be dropped by the browser at any time - commonly on
  * mobile under GPU memory pressure, or after a laptop sleeps and resumes. When
  * that happens the canvas fires `webglcontextlost`; unless the handler calls
  * `event.preventDefault()`, the browser will NEVER fire `webglcontextrestored`,
@@ -17,7 +17,7 @@
  *                                GPU resources (programs, buffers, textures)
  *                                and resumes rendering.
  *
- * Returns a detach function — call it from your effect cleanup.
+ * Returns a detach function - call it from your effect cleanup.
  *
  * NOTE: `THREE.WebGLRenderer` already performs this internally (it calls
  * preventDefault on loss and re-initializes the GL context on restore), so

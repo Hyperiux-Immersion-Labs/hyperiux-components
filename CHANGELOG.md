@@ -39,40 +39,40 @@ build, then `npm publish --provenance` for both `packages/cli` and
 ## [1.1.0-beta.3] - 2026-08-12
 
 ### Added
-- `add` now detects whether the target project is TypeScript or plain JavaScript (`detectProjectLanguage`). When installing into a JavaScript project, it strips TypeScript syntax from the registry source (`stripTypeScriptFromReactSource`: type-only imports/exports, interfaces, type aliases, generic type arguments on hooks, `React.FC` annotations, parameter/variable type annotations, `as` casts, non-null assertions) and rewrites the target file extension (`.tsx` → `.jsx`, `.ts` → `.js`). Needed now that the registry itself is fully TypeScript — without this, a JS project would receive raw `.tsx` source with no way to consume it.
+- `add` now detects whether the target project is TypeScript or plain JavaScript (`detectProjectLanguage`). When installing into a JavaScript project, it strips TypeScript syntax from the registry source (`stripTypeScriptFromReactSource`: type-only imports/exports, interfaces, type aliases, generic type arguments on hooks, `React.FC` annotations, parameter/variable type annotations, `as` casts, non-null assertions) and rewrites the target file extension (`.tsx` → `.jsx`, `.ts` → `.js`). Needed now that the registry itself is fully TypeScript - without this, a JS project would receive raw `.tsx` source with no way to consume it.
 - `init` now detects missing Tailwind CSS dependencies for the project's framework and offers to install them as devDependencies before continuing. Dependency set is framework-aware: Next.js needs `tailwindcss` + `@tailwindcss/postcss` + `postcss`, Vite needs `tailwindcss` + `@tailwindcss/vite`.
 - `installDependencies`/`getInstallArgs` (`src/utils/package-manager.js`) gained a `dev` option to install packages as devDependencies (`-D`/`--save-dev`), used by the new Tailwind preflight above.
 
 ## [1.1.0-beta.2] - 2026-08-07
 
 ### Added
-- Anonymous CLI telemetry (`src/utils/telemetry.js`): tracks `init` and `add`/`add_blocked` events (CLI version, platform, Node version, an anonymized per-project ID — a truncated SHA-256 hash of the project path and hostname, not the path itself) to help prioritize framework/registry support. Non-blocking (1.5s timeout, silently no-ops on failure) and off by default in respect of privacy — opt out anytime with `HYPERIUX_TELEMETRY_DISABLED=1` or the standard `DO_NOT_TRACK=1`.
+- Anonymous CLI telemetry (`src/utils/telemetry.js`): tracks `init` and `add`/`add_blocked` events (CLI version, platform, Node version, an anonymized per-project ID - a truncated SHA-256 hash of the project path and hostname, not the path itself) to help prioritize framework/registry support. Non-blocking (1.5s timeout, silently no-ops on failure) and off by default in respect of privacy - opt out anytime with `HYPERIUX_TELEMETRY_DISABLED=1` or the standard `DO_NOT_TRACK=1`.
 - `whoami` and `logout` commands, alongside the existing `login`.
-- Framework and router detection, plus Tailwind/alias preflight checks, during `init` — surfaces mismatches before they turn into broken installs instead of after.
+- Framework and router detection, plus Tailwind/alias preflight checks, during `init` - surfaces mismatches before they turn into broken installs instead of after.
 - Local install counter and registry domain migration support.
 
 ### Changed
 - Project license changed from MIT to the Mozilla Public License 2.0 (MPL-2.0) for the CLI (`packages/cli`) and all free registry effects (`registry/effects`). Pro effects remain proprietary and are unaffected.
-- CI release publish steps are now idempotent on already-published versions — re-running the release workflow no longer fails if a version was already pushed to npm.
+- CI release publish steps are now idempotent on already-published versions - re-running the release workflow no longer fails if a version was already pushed to npm.
 
 ### Fixed
-- Release workflow: `npm publish` had no `--tag` flag, which newer npm CLI versions reject outright for prerelease versions (`npm error You must specify a tag using --tag when publishing a prerelease version.`) — every prerelease publish attempt failed before this. Now derives the npm dist-tag from the version's prerelease identifier (`beta`, `rc`, etc.), falling back to `latest` for a plain version.
-- `packages/cli/package.json`'s `bin` field used a leading `./` (`"./src/index.js"`), which npm's publish-time validator silently stripped ("`bin[hyperiux]` script name ... was invalid and removed") — a published package built this way would have shipped with no working `hyperiux` executable at all. Removed the leading `./`.
-- `1.1.0-beta.1` was tagged and pushed but never actually published to npm (blocked by the issue above) — superseded by this version; no `1.1.0-beta.1` exists on the registry.
-- **Critical:** every CLI invocation (`--version`, `--help`, `add`, `init`, etc.) crashed at startup with `SyntaxError: The requested module '../utils/registry.js' does not provide an export named 'getFileContent'` — `diff.js` imported an export that `registry.js` no longer provided. Restored `getFileContent` as a shared export in `registry.js`; `add.js` now uses it instead of keeping its own private duplicate.
-- `add --yes` (without `--overwrite`) on a project with existing, customized effect files silently overwrote them instead of skipping — the interactive confirmation prompt was correctly bypassed for `--yes`, but nothing took its place to block the write. Now exits cleanly and points the user at `--overwrite`.
-- `diff.js`'s use of the `diff` package (`diffLines`) was never declared in `packages/cli/package.json`'s dependencies — it only resolved locally because of a stale `pnpm-lock.yaml` entry left over from an earlier state. A real `npm install hyperiux` would have been missing this dependency entirely. Also added the three command files (`diff.js`, `outdated.js`, `versions.js`) that were missing from the `build` script's `node --check` coverage.
+- Release workflow: `npm publish` had no `--tag` flag, which newer npm CLI versions reject outright for prerelease versions (`npm error You must specify a tag using --tag when publishing a prerelease version.`) - every prerelease publish attempt failed before this. Now derives the npm dist-tag from the version's prerelease identifier (`beta`, `rc`, etc.), falling back to `latest` for a plain version.
+- `packages/cli/package.json`'s `bin` field used a leading `./` (`"./src/index.js"`), which npm's publish-time validator silently stripped ("`bin[hyperiux]` script name ... was invalid and removed") - a published package built this way would have shipped with no working `hyperiux` executable at all. Removed the leading `./`.
+- `1.1.0-beta.1` was tagged and pushed but never actually published to npm (blocked by the issue above) - superseded by this version; no `1.1.0-beta.1` exists on the registry.
+- **Critical:** every CLI invocation (`--version`, `--help`, `add`, `init`, etc.) crashed at startup with `SyntaxError: The requested module '../utils/registry.js' does not provide an export named 'getFileContent'` - `diff.js` imported an export that `registry.js` no longer provided. Restored `getFileContent` as a shared export in `registry.js`; `add.js` now uses it instead of keeping its own private duplicate.
+- `add --yes` (without `--overwrite`) on a project with existing, customized effect files silently overwrote them instead of skipping - the interactive confirmation prompt was correctly bypassed for `--yes`, but nothing took its place to block the write. Now exits cleanly and points the user at `--overwrite`.
+- `diff.js`'s use of the `diff` package (`diffLines`) was never declared in `packages/cli/package.json`'s dependencies - it only resolved locally because of a stale `pnpm-lock.yaml` entry left over from an earlier state. A real `npm install hyperiux` would have been missing this dependency entirely. Also added the three command files (`diff.js`, `outdated.js`, `versions.js`) that were missing from the `build` script's `node --check` coverage.
 - `vite.config.js` auto-fixers silently broke CommonJS configs during `init`.
 - 2 high-severity dependency vulnerabilities.
 
 ## [1.0.4] - 2026-06-05
 
 ### Security
-- Registry asset fetches are now restricted to `vault.hyperiux.com` — arbitrary remote hosts are rejected
-- Dependency installation replaced `execSync` (shell string) with `spawnSync(..., { shell: false })` — eliminates residual shell injection surface
+- Registry asset fetches are now restricted to `vault.hyperiux.com` - arbitrary remote hosts are rejected
+- Dependency installation replaced `execSync` (shell string) with `spawnSync(..., { shell: false })` - eliminates residual shell injection surface
 
 ### Changed
-- `package.json`: added `exports` field (`./package.json` only) — prevents consumers from deep-importing CLI internals
+- `package.json`: added `exports` field (`./package.json` only) - prevents consumers from deep-importing CLI internals
 - `package.json`: `build` script now runs `node --check` on all source files instead of a no-op echo
 - `package.json`: `smoke:bin` script added; `prepublishOnly` now runs lint → test → build → smoke:bin → pack dry-run
 - CI (`ci.yml`): expanded Node matrix from `[22]` to `[18, 20, 22]`; added build, smoke:bin, and pack dry-run steps
@@ -96,10 +96,10 @@ build, then `npm publish --provenance` for both `packages/cli` and
 ## [1.0.0] - 2026-06-04
 
 ### Added
-- `login` command — authenticates with Hyperiux Pro via CLI token from `vault.hyperiux.com/cli-auth`
-- `logout` command — removes saved credentials from `~/.hyperiux/auth.json`
-- `whoami` command — shows current login status
-- Pro effect gating in `add` — validates CLI token against the API before fetching pro effect source
+- `login` command - authenticates with Hyperiux Pro via CLI token from `vault.hyperiux.com/cli-auth`
+- `logout` command - removes saved credentials from `~/.hyperiux/auth.json`
+- `whoami` command - shows current login status
+- Pro effect gating in `add` - validates CLI token against the API before fetching pro effect source
 - Token stored as SHA-256 hash in Supabase; plaintext only lives in `~/.hyperiux/auth.json`
 - Shell command injection guard on dependency names (`/^[a-z0-9-@/_.]+$/`)
 - Unit tests for configuration, registry mapping, and package manager utilities (Vitest)
@@ -111,9 +111,9 @@ build, then `npm publish --provenance` for both `packages/cli` and
 - Pro effect file contents stripped from public registry JSON; served only via authenticated API
 
 ### Fixed
-- Hardcoded `src/` path alias — CLI now detects layout directory structure at runtime
-- Target path prefix mismatch — registry matching aligned with registry builder output
-- Dynamic `cssPath` resolution — fallback depends on whether `src/` directory exists
+- Hardcoded `src/` path alias - CLI now detects layout directory structure at runtime
+- Target path prefix mismatch - registry matching aligned with registry builder output
+- Dynamic `cssPath` resolution - fallback depends on whether `src/` directory exists
 
 ## [0.1.0] - 2026-06-01
 

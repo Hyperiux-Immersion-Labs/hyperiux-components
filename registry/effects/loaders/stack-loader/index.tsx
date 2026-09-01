@@ -89,7 +89,7 @@ const StackToSpreadIntro = forwardRef<HTMLElement, StackToSpreadIntroProps>(
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ??
       false;
 
-    // Reduced-motion: images already in a vertical line — smooth opacity only.
+    // Reduced-motion: images already in a vertical line - smooth opacity only.
     if (reduceMotion) {
       const ctx = gsap.context(() => {
         const imageElements = imagesRef.current.filter(Boolean);

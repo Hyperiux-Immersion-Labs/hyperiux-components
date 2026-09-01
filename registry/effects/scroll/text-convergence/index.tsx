@@ -212,7 +212,7 @@ export default function TextConvergence({
             <p
               className="m-0 font-mono text-xs uppercase tracking-[0.3vw] text-gray-400"
             >
-              — kinetic typography —
+              - kinetic typography -
             </p>
 
             <h2

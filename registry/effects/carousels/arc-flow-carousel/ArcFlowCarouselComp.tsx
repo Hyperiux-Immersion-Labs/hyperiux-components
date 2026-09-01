@@ -111,7 +111,7 @@ export default function ArcFlowCarouselComp({
   // Wheel position in radians. `current` chases `target` every frame.
   const currentRef = useRef(0);
   const targetRef = useRef(0);
-  // Each card's own eased position — chases `current`, not `target`, so
+  // Each card's own eased position - chases `current`, not `target`, so
   // motion ripples outward from the active card instead of moving as one.
   const slotOffsetsRef = useRef<number[]>([]);
   const draggingRef = useRef(false);
@@ -208,7 +208,7 @@ export default function ArcFlowCarouselComp({
           slotOffsets[i] = currentRef.current;
         } else {
           // Rank this card's distance from the active one using its own last
-          // position — continuous enough to pick a follow rate from.
+          // position - continuous enough to pick a follow rate from.
           let rankAngle = (i * step - slotOffsets[i]) % span;
           if (rankAngle < -half) rankAngle += span;
           else if (rankAngle >= half) rankAngle -= span;
@@ -242,7 +242,7 @@ export default function ArcFlowCarouselComp({
         card.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${baseAngle}rad)`;
         card.style.width = `${cardWidth}px`;
         card.style.height = `${cardHeight}px`;
-        // Right always stacks over left, no exception for the active card —
+        // Right always stacks over left, no exception for the active card -
         // a plain fanned hand of cards, ordered purely by position.
         card.style.zIndex = `${Math.round((baseAngle + half) * 1000)}`;
 
@@ -278,7 +278,7 @@ export default function ArcFlowCarouselComp({
         revealRef.current = Math.min(1, (now - revealStartRef.current) / 1100);
       }
 
-      // A slow constant drift, like the wheel is idling — paused mid-flick,
+      // A slow constant drift, like the wheel is idling - paused mid-flick,
       // mid-hover, or once reduced motion asks for stillness.
       if (
         autoRotateSpeed &&
@@ -352,7 +352,7 @@ export default function ArcFlowCarouselComp({
 
         if (dt > 0.008) {
           // Velocity in rad/s. Handing the lerp `v / rate` keeps the card
-          // speed continuous through the release — no jolt, no dead stop.
+          // speed continuous through the release - no jolt, no dead stop.
           const velocity = (last.value - first.value) / dt;
           const throw_ = gsap.utils.clamp(-MAX_FLICK, MAX_FLICK, velocity / smoothing) * momentum;
           projected = targetRef.current + throw_;

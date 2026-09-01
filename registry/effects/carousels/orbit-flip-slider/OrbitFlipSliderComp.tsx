@@ -100,7 +100,7 @@ const MODES: { key: OrbitFlipSliderMode; label: string }[] = [
 
 const degToRad = (deg: number) => (deg * Math.PI) / 180;
 
-// Mirrors Tailwind's `max-md:` breakpoint (max-width: 767px) — below this,
+// Mirrors Tailwind's `max-md:` breakpoint (max-width: 767px) - below this,
 // the ring is pulled in so it doesn't overflow narrow viewports.
 const MOBILE_BREAKPOINT = 768;
 const MOBILE_FLAT_RADIUS_X_SCALE = 0.55;
@@ -131,7 +131,7 @@ const getBaseOrbitRadius = (
 
 // Distributes every card fully around a ring lying almost flat. Every card
 // stays flat and forward-facing (billboarded) no matter where it sits on the
-// ring — only its position and depth-driven scale/z-index change. Zoomed in
+// ring - only its position and depth-driven scale/z-index change. Zoomed in
 // close, only the near slice reads as full-size cards; the rest recede
 // smaller into the depth, with the frontmost cards naturally stacking above
 // the ones behind them.
@@ -169,7 +169,7 @@ const buildCoverflowLayout = (
   });
 };
 
-// Spins the whole projected composition around its own screen anchor — the
+// Spins the whole projected composition around its own screen anchor - the
 // z axis of the screen itself, on top of the 3D x/y tilt baked into the
 // projection.
 const applyZRotation = (boxes: CardBox[], cx: number, cy: number, zDeg: number): CardBox[] => {
@@ -190,7 +190,7 @@ const applyZRotation = (boxes: CardBox[], cx: number, cy: number, zDeg: number):
 
 // Stretches the composition horizontally/vertically around its anchor,
 // independent of the 3D depth math (scale/z-index stay driven by the true
-// circular radius) — lets it read wider or taller without changing how
+// circular radius) - lets it read wider or taller without changing how
 // near/far cards foreshorten.
 const applyRadiusScale = (
   boxes: CardBox[],
@@ -210,8 +210,8 @@ const applyRadiusScale = (
   }));
 };
 
-// Zooms the whole composition uniformly — position spread and card size
-// together — around its anchor, like moving the camera closer or further.
+// Zooms the whole composition uniformly - position spread and card size
+// together - around its anchor, like moving the camera closer or further.
 const applyUniformScale = (boxes: CardBox[], cx: number, cy: number, scale: number): CardBox[] => {
   if (scale === 1) return boxes;
   return boxes.map((box) => ({
@@ -264,7 +264,7 @@ const buildLayout = (
   const cardHeight = sizes[0]?.h ?? 200;
   const baseRadius = getBaseOrbitRadius(count, cardWidth, cardHeight, imageGap);
 
-  // Every mode is the same ring of cards, always flat and forward-facing —
+  // Every mode is the same ring of cards, always flat and forward-facing -
   // only the camera's zoom, tilt and framing differ. Flat is the ring seen
   // straight-on, evenly spaced, from far enough back that it reads as a
   // plain circle.
@@ -285,7 +285,7 @@ const buildLayout = (
     return applyUniformScale(boxes, cx, cy, f.scale);
   }
 
-  // Tilt, ring and gallery are the same coverflow ring — only how it's
+  // Tilt, ring and gallery are the same coverflow ring - only how it's
   // rotated, stretched and zoomed differs between them.
   const t = transforms[mode];
   const radius = mode === "gallery" ? baseRadius * 1.55 : baseRadius * 1.12;
@@ -538,7 +538,7 @@ const OrbitFlipSliderComp = ({
   };
 
   // Continuously nudges the ring's rotation offset and re-commits positions
-  // directly (no Flip) each frame — paused while a Flip mode-transition is
+  // directly (no Flip) each frame - paused while a Flip mode-transition is
   // in flight, or while hovered when stopRotationOnHover is on.
   useEffect(() => {
     if (!rotate || reducedMotion) return;
@@ -560,7 +560,7 @@ const OrbitFlipSliderComp = ({
     return () => cancelAnimationFrame(rafId);
   }, [rotate, rotateSpeed, stopRotationOnHover, reducedMotion, applyLayout]);
 
-  // Every card stays flat and forward-facing at rest — hover just pops it
+  // Every card stays flat and forward-facing at rest - hover just pops it
   // toward the viewer with a bouncy tilt, without touching z-index.
   const handleCardEnter = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {

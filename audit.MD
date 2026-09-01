@@ -989,7 +989,7 @@ Pro effects require an active Hyperiux Pro subscription. Pro effect source may b
 
 # Step-by-Step Remediation Plan
 
-## Priority 0 — Critical blockers
+## Priority 0 - Critical blockers
 
 ### Issue: CI references missing script
 
@@ -1039,7 +1039,7 @@ grep -n "1.0.4" CHANGELOG.md
 
 ---
 
-## Priority 1 — High-value fixes
+## Priority 1 - High-value fixes
 
 ### Issue: No package export boundary
 
@@ -1094,7 +1094,7 @@ export default function Page() {
 
 ---
 
-## Priority 2 — Quality improvements
+## Priority 2 - Quality improvements
 
 ### Issue: Weak type safety
 
@@ -1141,7 +1141,7 @@ HYPERIUX_DEBUG
 
 ---
 
-## Priority 3 — Nice-to-have improvements
+## Priority 3 - Nice-to-have improvements
 
 ### Issue: CLI implementation is hard to unit test because commands call `process.exit`
 

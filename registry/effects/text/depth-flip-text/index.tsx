@@ -103,7 +103,7 @@ const DepthFlipText = ({
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
-      // The crossfade rides on the characters, never on the paragraph — an
+      // The crossfade rides on the characters, never on the paragraph - an
       // opacity below 1 on the paragraph would flatten its 3D children.
       gsap.set([currentEl, nextEl], { opacity: 1 });
 

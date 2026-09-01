@@ -222,7 +222,7 @@ describe("config utilities", () => {
         if (String(p).endsWith("package.json")) {
           return JSON.stringify({ devDependencies: { tailwindcss: "^4.0.0" } });
         }
-        return ""; // empty CSS file — package installed, never imported
+        return ""; // empty CSS file - package installed, never imported
       });
 
       expect(hasTailwindInstalled("/project")).toBe(false);

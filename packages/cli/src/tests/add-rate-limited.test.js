@@ -104,7 +104,7 @@ afterEach(() => {
   fs.rmSync(tmpDir, { recursive: true, force: true });
 });
 
-describe("add — Stage 3 rate-limited branch", () => {
+describe("add - Stage 3 rate-limited branch", () => {
   it("exits 1 and prints the rate-limit message, not the generic error message", async () => {
     fetchRegistryImpl = async () => {
       throw makeRateLimitedError({ limit: 3, retryAfter: 3600 * 5 });

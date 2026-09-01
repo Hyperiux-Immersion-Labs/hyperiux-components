@@ -399,7 +399,7 @@ export default function GooeyCounter({
 
   function loop() {
    if (sim.timer !== null) clearTimeout(sim.timer);
-   // Reduced-motion: skip random scatter — step number → number with snaps.
+   // Reduced-motion: skip random scatter - step number → number with snaps.
    if (reduceMotion) {
     sim.timer = setTimeout(() => {
      const n = sim.nextNumber;
@@ -424,7 +424,7 @@ export default function GooeyCounter({
    sim.blocks = []; sim.nextNumber = RANGE_MIN + 1; sim.transition = null;
    const firstTargets = getNumberCells(RANGE_MIN, sim.activeRows, sim.activeCols, sim.viewportWidth);
    if (reduceMotion) {
-    // Land on 0 immediately — no opening scatter morph.
+    // Land on 0 immediately - no opening scatter morph.
     sim.blocks = firstTargets.map(([r, c]) => ({
      cr: r, cc: c, tr: r, tc: c, sr: r, sc: c, idle: false,
     }));

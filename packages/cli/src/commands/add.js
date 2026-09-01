@@ -194,7 +194,7 @@ export async function add(effectName, options = {}) {
       console.log();
       console.log(
         chalk.yellow(
-          "Skipping — re-run with --overwrite to replace existing files."
+          "Skipping - re-run with --overwrite to replace existing files."
         )
       );
       console.log();
@@ -289,7 +289,7 @@ export async function add(effectName, options = {}) {
     for (const file of files) {
       const targetPath = path.resolve(cwd, file.targetPath);
 
-      // Guard against path traversal — resolved path must stay inside cwd
+      // Guard against path traversal - resolved path must stay inside cwd
       if (!targetPath.startsWith(path.resolve(cwd) + path.sep)) {
         throw new Error(
           `Unsafe file path detected and blocked: "${file.targetPath}"`

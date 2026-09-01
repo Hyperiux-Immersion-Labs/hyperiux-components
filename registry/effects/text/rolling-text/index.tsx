@@ -111,7 +111,7 @@ const RollingText = ({
         globals.css has an UNLAYERED `h1,h2,h3,h4 { font-weight: 400;
         line-height: 1.2 }` rule. Unlayered CSS always beats anything in
         Tailwind's `@layer utilities`, so font-weight/leading need `!` here
-        to actually apply — every other class on this h3 is safe without it.
+        to actually apply - every other class on this h3 is safe without it.
         font-family is set inline instead, which wins regardless of layers.
       */}
       <h3

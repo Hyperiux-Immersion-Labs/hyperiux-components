@@ -117,7 +117,7 @@ const HoverStackComp = ({
     let scale = 1;
 
     if (reduceMotion) {
-      // No lift / push / rotate snap — only raise z-index so the card is readable.
+      // No lift / push / rotate snap - only raise z-index so the card is readable.
       if (isActive) zIndex = 999;
 
       return {

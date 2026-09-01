@@ -3,9 +3,9 @@
 [![npm version](https://img.shields.io/npm/v/hyperiux.svg?style=flat-square&color=ff5f00)](https://www.npmjs.com/package/hyperiux)
 [![npm downloads](https://img.shields.io/npm/dm/hyperiux.svg?style=flat-square&color=777777)](https://www.npmjs.com/package/hyperiux)
 
-**A collection of high-quality animation effects and interactive components for Next.js — designed by [Hyperiux](https://hyperiux.com).**
+**A collection of high-quality animation effects and interactive components for Next.js - designed by [Hyperiux](https://hyperiux.com).**
 
-47 effects are free and open source. 91 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project — you own what you install.
+47 effects are free and open source. 91 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project - you own what you install.
 
 ---
 
@@ -44,23 +44,23 @@ export default function Page() {
 | `npx hyperiux whoami` | Show login status |
 
 ### Options for `add`
-- `--overwrite` — overwrite existing files
-- `--yes` — skip confirmation prompts
-- `--dry-run` — preview without writing files
+- `--overwrite` - overwrite existing files
+- `--yes` - skip confirmation prompts
+- `--dry-run` - preview without writing files
 
 ---
 
 ## Free vs Pro
 
-**47 free effects** — install without any account:
-**47 free effects** — install without any account:
+**47 free effects** - install without any account:
+**47 free effects** - install without any account:
 ```bash
 npx hyperiux add rotation-slider
 npx hyperiux add spider-particles
 npx hyperiux add phantom-image-trail
 ```
 
-**91 pro effects** — require a [Pro subscription](https://vault.hyperiux.com/pricing):
+**91 pro effects** - require a [Pro subscription](https://vault.hyperiux.com/pricing):
 ```bash
 npx hyperiux login       # authenticate once
 npx hyperiux add grid-tunnel
@@ -73,12 +73,12 @@ npx hyperiux add grid-tunnel
 ## Effects
 
 ### Scroll
-Scroll-driven animations built on GSAP ScrollTrigger — parallax galleries, pinned sequences, horizontal storytelling, stacking cards, and more.
+Scroll-driven animations built on GSAP ScrollTrigger - parallax galleries, pinned sequences, horizontal storytelling, stacking cards, and more.
 
 `sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `parallax-slider` · `rotation-slider` · `text-convergence` · `scroll-distortion` · [+more](https://vault.hyperiux.com/effects/scroll-effects)
 
 ### WebGL
-Three.js and R3F scenes with custom GLSL shaders — image carousels, pixel grids, frosted glass, GPU particle galaxies, and 3D heroes.
+Three.js and R3F scenes with custom GLSL shaders - image carousels, pixel grids, frosted glass, GPU particle galaxies, and 3D heroes.
 
 `interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milky-way` · `fractal-glass` · [+more](https://vault.hyperiux.com/effects/webgl)
 
@@ -98,12 +98,12 @@ Menus and navbars with desktop and mobile interaction patterns.
 `directional-menu` · `elevate-navbar` · `immersive-full-screen-nav`
 
 ### Scroll
-Scroll-driven animations built on GSAP ScrollTrigger — pinned sequences, perspective sliders, split canvases, and content reveals.
+Scroll-driven animations built on GSAP ScrollTrigger - pinned sequences, perspective sliders, split canvases, and content reveals.
 
 `circular-split-roll` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `split-canvas` · `sticky-content-wrapper` · `text-convergence`
 
 ### Text
-Letter-level and line-level reveal animations — blur, scramble, stagger, perspective flip, mask wipe.
+Letter-level and line-level reveal animations - blur, scramble, stagger, perspective flip, mask wipe.
 
 `blur-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-effects)
 
@@ -151,7 +151,7 @@ Three.js, R3F, and shader-driven effects for frosted glass, image reveal, and pa
 | `HYPERIUX_APP_URL` | Override the Hyperiux app URL for self-hosting or testing |
 | `HYPERIUX_API_URL` | Override the API URL independently of the app URL |
 | `HYPERIUX_REGISTRY_URL` | Override the registry URL for local development |
-| `HYPERIUX_DEBUG` | Set to `1` to enable verbose request logs — do not use in shared CI |
+| `HYPERIUX_DEBUG` | Set to `1` to enable verbose request logs - do not use in shared CI |
 
 ---
 
@@ -225,4 +225,4 @@ To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-ne
 
 ## License
 
-The CLI and free effects are licensed under the [Mozilla Public License 2.0](./LICENSE) (MPL-2.0). Pro effects require an active Hyperiux Pro subscription and are proprietary — not open source, not redistributable.
+The CLI and free effects are licensed under the [Mozilla Public License 2.0](./LICENSE) (MPL-2.0). Pro effects require an active Hyperiux Pro subscription and are proprietary - not open source, not redistributable.

@@ -11,7 +11,7 @@
   ],
   "type": "registry:component",
   "title": "Orbit Flip Slider",
-  "description": "GSAP Flip-driven gallery that morphs one ring of images between four camera views — a flat circle, a zoomed-in upper arc, a tilted 3D ring, and a coverflow band — with a bouncy 3D hover tilt on every card.",
+  "description": "GSAP Flip-driven gallery that morphs one ring of images between four camera views - a flat circle, a zoomed-in upper arc, a tilted 3D ring, and a coverflow band - with a bouncy 3D hover tilt on every card.",
   "category": "carousels",
   "dependencies": [
     "gsap"
@@ -225,7 +225,7 @@
       "name": "flatScale",
       "type": "number",
       "default": 1,
-      "description": "Uniform zoom on the flat circle as a whole — position spread and card size together.",
+      "description": "Uniform zoom on the flat circle as a whole - position spread and card size together.",
       "remixer": {
         "enabled": false,
         "control": "range",
@@ -315,7 +315,7 @@
       "name": "ringScale",
       "type": "number",
       "default": 1,
-      "description": "Uniform zoom on the ring as a whole — position spread and card size together, like moving the camera closer or further on the z axis.",
+      "description": "Uniform zoom on the ring as a whole - position spread and card size together, like moving the camera closer or further on the z axis.",
       "remixer": {
         "enabled": false,
         "control": "range",

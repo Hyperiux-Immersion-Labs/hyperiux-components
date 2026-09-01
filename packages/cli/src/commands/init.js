@@ -184,7 +184,7 @@ export async function init(options) {
       );
       console.log(
         chalk.dim(
-          "Tailwind v4 requires this file — without it @import \"tailwindcss\" ships as inert CSS."
+          "Tailwind v4 requires this file - without it @import \"tailwindcss\" ships as inert CSS."
         )
       );
     } else {
@@ -194,7 +194,7 @@ export async function init(options) {
         )
       );
       console.log(
-        chalk.dim("Without it, Vite never processes the Tailwind import — classes silently do nothing.")
+        chalk.dim("Without it, Vite never processes the Tailwind import - classes silently do nothing.")
       );
     }
     console.log();
@@ -479,11 +479,11 @@ function ensureDir(dir) {
 
 function describeDetection(framework, router) {
   if (framework === "next" && router === "app") {
-    return "Detected Next.js (App Router) project — global CSS is typically imported in app/layout.js.";
+    return "Detected Next.js (App Router) project - global CSS is typically imported in app/layout.js.";
   }
 
   if (framework === "next" && router === "pages") {
-    return "Detected Next.js (Pages Router) project — global CSS is typically imported in pages/_app.js.";
+    return "Detected Next.js (Pages Router) project - global CSS is typically imported in pages/_app.js.";
   }
 
   if (framework === "next") {
@@ -491,7 +491,7 @@ function describeDetection(framework, router) {
   }
 
   if (framework === "react") {
-    return "Detected React project — global CSS is typically imported in main.jsx/main.tsx.";
+    return "Detected React project - global CSS is typically imported in main.jsx/main.tsx.";
   }
 
   return "Couldn't confidently detect your framework. Double-check hyperiux.json's tailwind.css path before adding effects.";

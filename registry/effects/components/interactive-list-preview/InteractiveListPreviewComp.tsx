@@ -114,7 +114,7 @@ export default function InteractiveListPreviewComp({
       if (!imageElement) return;
 
       if (reduceMotionRef.current) {
-        // Reduced-motion: opacity only — keep full clip, start hidden.
+        // Reduced-motion: opacity only - keep full clip, start hidden.
         gsap.set(imageElement, {
           clipPath: IMAGE_VISIBLE_CLIP_PATH,
           opacity: 0,
@@ -232,7 +232,7 @@ export default function InteractiveListPreviewComp({
     pendingLeaveRef.current[index] = false;
     rowRefs.current[index] = rowElement;
 
-    // Reduced-motion: only one image at a time — fade the previous out first.
+    // Reduced-motion: only one image at a time - fade the previous out first.
     if (reduceMotion && previousIndex !== null && previousIndex !== index) {
       pendingLeaveRef.current[previousIndex] = false;
       animateImageOut(previousIndex);
