@@ -23,12 +23,27 @@ build, then `npm publish --provenance` for both `packages/cli` and
 
 ## [Unreleased]
 
+## [1.1.3] - 2026-09-08
+
 ### Changed
 - Project license changed back from the Mozilla Public License 2.0 (MPL-2.0)
   to the MIT License for the CLI (`packages/cli`) and the MCP server
   (`packages/mcp-server`). Free registry effects continue under the separate
   Hyperiux Effects License (`LICENSE_EFFECTS`); Pro effects remain proprietary
   and are unaffected.
+- Docs: effect counts updated to 50+ free / 100+ pro across the README, CLI
+  README, CONTRIBUTING, and MCP-OVERVIEW; added a preview GIF grid to the README.
+
+### Fixed
+- CI: dropped EOL Node 20 from the `ci.yml` and `cli-ci.yml` test matrices
+  (now 22 / 24) - `camera-controls@3.1.2` requires Node >=22 and was failing
+  `pnpm install` before any test ran.
+- CI: license-checker allowlist now includes `Zlib` (`postprocessing`) and
+  `MIT*` (`@gsap/react`), and excludes `gsap@3.15.0` (non-SPDX license string).
+
+### Security
+- Pinned `hono` >=4.12.34 and `qs` >=6.16.0 via pnpm overrides, clearing the
+  open Dependabot advisories (`pnpm audit` now reports no known vulnerabilities).
 
 ## [1.1.2] - 2026-08-25
 
