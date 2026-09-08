@@ -5,7 +5,18 @@
 
 **A collection of high-quality animation effects and interactive components for Next.js - designed by [Hyperiux](https://hyperiux.com).**
 
-47 effects are free and open source. 91 pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project - you own what you install.
+50+ effects are free and open source. 100+ pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project - you own what you install.
+
+<table>
+  <tr>
+    <td width="50%"><img src="https://raw.githubusercontent.com/Hyperiux-Immersion-Labs/hyperiux-components/main/media/effects/phantom-image-trail.gif" alt="phantom-image-trail" width="100%" /><br /><sub><code>npx hyperiux add phantom-image-trail</code></sub></td>
+    <td width="50%"><img src="https://raw.githubusercontent.com/Hyperiux-Immersion-Labs/hyperiux-components/main/media/effects/milky-way.gif" alt="milky-way" width="100%" /><br /><sub><code>npx hyperiux add milky-way</code></sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="https://raw.githubusercontent.com/Hyperiux-Immersion-Labs/hyperiux-components/main/media/effects/spider-particles.gif" alt="spider-particles" width="100%" /><br /><sub><code>npx hyperiux add spider-particles</code></sub></td>
+    <td width="50%"><img src="https://raw.githubusercontent.com/Hyperiux-Immersion-Labs/hyperiux-components/main/media/effects/immersive-full-screen-nav.gif" alt="immersive-full-screen-nav" width="100%" /><br /><sub><code>npx hyperiux add immersive-full-screen-nav</code></sub></td>
+  </tr>
+</table>
 
 ---
 
@@ -52,15 +63,14 @@ export default function Page() {
 
 ## Free vs Pro
 
-**47 free effects** - install without any account:
-**47 free effects** - install without any account:
+**50+ free effects** - install without any account:
 ```bash
 npx hyperiux add rotation-slider
 npx hyperiux add spider-particles
 npx hyperiux add phantom-image-trail
 ```
 
-**91 pro effects** - require a [Pro subscription](https://vault.hyperiux.com/pricing):
+**100+ pro effects** - require a [Pro subscription](https://vault.hyperiux.com/pricing):
 ```bash
 npx hyperiux login       # authenticate once
 npx hyperiux add grid-tunnel
@@ -225,4 +235,4 @@ To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-ne
 
 ## License
 
-The CLI and free effects are licensed under the [Mozilla Public License 2.0](./LICENSE) (MPL-2.0). Pro effects require an active Hyperiux Pro subscription and are proprietary - not open source, not redistributable.
+The `hyperiux` CLI and the `hyperiux-mcp-server` are licensed under the [MIT License](./LICENSE). Free effects installed through the CLI are provided under the [Hyperiux Effects License](./LICENSE_EFFECTS). Pro effects require an active Hyperiux Pro subscription and are proprietary - not open source, not redistributable.

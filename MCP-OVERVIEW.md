@@ -46,7 +46,7 @@ Just as important as what it does:
 - **It does not install anything.** It never writes a file. Installing is still the `hyperiux` CLI's job (`npx hyperiux add <effect>`) - this server just makes sure whoever (or whatever) is calling that command knows the right slug, dependencies, and import path first.
 - **It does not leak Pro source.** If an effect requires a Hyperiux Pro subscription and no valid token is available, it says so plainly instead of returning fake or partial code.
 - **It does not run arbitrary code or touch your filesystem.** It only ever reads from the public Hyperiux registry over HTTPS and, optionally, a saved auth token from a `hyperiux login` session.
-- **It does not require an account to use for free effects.** Anyone can query metadata and source for all 32 free effects with zero setup beyond connecting the server.
+- **It does not require an account to use for free effects.** Anyone can query metadata and source for all 50+ free effects with zero setup beyond connecting the server.
 
 ## Why an MCP server instead of just... docs?
 
@@ -75,7 +75,7 @@ Documentation is for humans reading linearly. An MCP server is for an AI agent t
      commands              on your behalf
 ```
 
-Both the CLI and the MCP server are *clients* of the same registry - neither one hosts or owns the actual effect source (except the 32 free effects, which are public in this repo). Pro effect source lives in a private repository and is only ever served through an authenticated API call, whether the caller is the CLI or this MCP server.
+Both the CLI and the MCP server are *clients* of the same registry - neither one hosts or owns the actual effect source (except the 50+ free effects, which are public in this repo). Pro effect source lives in a private repository and is only ever served through an authenticated API call, whether the caller is the CLI or this MCP server.
 
 ## Where it lives, and why
 

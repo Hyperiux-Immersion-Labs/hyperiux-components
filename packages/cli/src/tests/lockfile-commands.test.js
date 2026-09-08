@@ -1,6 +1,4 @@
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+/* SPDX-License-Identifier: MIT */
 
 // outdated/versions/diff all read hyperiux.lock.json. Previously nothing
 // wrote to it (add() never called upsertLockEntry), so these three

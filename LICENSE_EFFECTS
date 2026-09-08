@@ -10,7 +10,7 @@ installed via the `hyperiux` CLI (`npx hyperiux add <effect>`), copied
 directly from the Hyperiux documentation site, or obtained through any
 other Hyperiux-provided channel (collectively, the "Effects"). It does
 not govern the `hyperiux` CLI tool itself, which is licensed separately
-under the Mozilla Public License 2.0 (see LICENSE).
+under the MIT License (see LICENSE).
 
 Effects are made available in two tiers:
 

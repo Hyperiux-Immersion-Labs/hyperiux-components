@@ -23,6 +23,13 @@ build, then `npm publish --provenance` for both `packages/cli` and
 
 ## [Unreleased]
 
+### Changed
+- Project license changed back from the Mozilla Public License 2.0 (MPL-2.0)
+  to the MIT License for the CLI (`packages/cli`) and the MCP server
+  (`packages/mcp-server`). Free registry effects continue under the separate
+  Hyperiux Effects License (`LICENSE_EFFECTS`); Pro effects remain proprietary
+  and are unaffected.
+
 ## [1.1.2] - 2026-08-25
 
 ### Fixed

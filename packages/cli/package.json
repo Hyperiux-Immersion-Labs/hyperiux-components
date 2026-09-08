@@ -49,7 +49,7 @@
     "webgl"
   ],
   "author": "Hyperiux",
-  "license": "MPL-2.0",
+  "license": "MIT",
   "homepage": "https://vault.hyperiux.com",
   "repository": {
     "type": "git",

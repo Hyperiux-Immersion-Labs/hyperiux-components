@@ -1,6 +1,4 @@
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+/* SPDX-License-Identifier: MIT */
 
 // login.js had zero test coverage before this. whoami previously reported
 // "logged in" from local file presence alone, with no server check - it
