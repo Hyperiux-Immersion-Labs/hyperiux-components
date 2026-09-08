@@ -116,8 +116,8 @@ export default function LinkButton({
         </div>
       </a>
 
-      <style jsx>{`
-        li :global(.btn-link-line)::after {
+      <style>{`
+        li .btn-link-line::after {
           bottom: -20%;
         }
       `}</style>

@@ -1,8 +1,10 @@
+// Built using Hyperiux Vault: https://vault.hyperiux.com
+
 'use client'
 
-import { useEffect, useRef } from'react'
-import gsap from'gsap'
-import {  Stars } from'lucide-react'
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import {  Stars } from 'lucide-react'
 
 interface CircularTextProps {
  text?: string

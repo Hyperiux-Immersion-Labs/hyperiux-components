@@ -1,3 +1,5 @@
+// Built using Hyperiux Vault: https://vault.hyperiux.com
+
 'use client';
 import { useEffect, useId, useRef, memo } from "react";
 import gsap from "gsap";

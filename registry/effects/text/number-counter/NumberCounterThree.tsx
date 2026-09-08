@@ -1,3 +1,5 @@
+// Built using Hyperiux Vault: https://vault.hyperiux.com
+
 'use client';
 
 import React, { useEffect, useRef, memo } from'react';
