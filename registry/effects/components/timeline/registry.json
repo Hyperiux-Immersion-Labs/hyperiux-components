@@ -1,0 +1,107 @@
+{
+  "name": "timeline",
+  "version": "1.0.0",
+  "type": "registry:component",
+  "title": "Timeline",
+  "description": "Horizontal scroll timeline with Lenis smoothing, GSAP milestone reveals, and reduced-motion support.",
+  "category": "components",
+  "dependencies": [
+    "@gsap/react",
+    "gsap",
+    "lenis"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/timeline",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "Timeline",
+  "exportKind": "default",
+  "importPath": "@/components/effects/timeline",
+  "target": "src/components/effects/timeline",
+  "props": [
+    {
+      "name": "textColor",
+      "type": "color",
+      "default": "#000000",
+      "description": "Text color used for the timeline title, dates, and milestone descriptions.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "mutedTextColor",
+      "type": "color",
+      "default": "#3f3f46",
+      "description": "Secondary text color for descriptions and the period label.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "activeColor",
+      "type": "color",
+      "default": "#ff5f00",
+      "description": "Accent color shared by the active timeline line, dots, and milestone stems.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Background color of the timeline section.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": 1.2,
+      "description": "Reveal animation and Lenis smoothing duration in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "scroll",
+        "groupTitle": "Scroll",
+        "min": 0.4,
+        "max": 3,
+        "step": 0.1
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "style",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/timeline/index.tsx"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-21",
+      "summary": "Initial timeline registry release with configurable colors, Lenis scroll tuning, and reduced-motion support.",
+      "breaking": false
+    }
+  ]
+}

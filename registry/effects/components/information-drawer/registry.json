@@ -1,0 +1,150 @@
+{
+  "name": "information-drawer",
+  "version": "1.0.0",
+  "type": "registry:component",
+  "title": "Information Drawer",
+  "description": "Team profile grid with an animated information drawer and editable panel styling",
+  "category": "components",
+  "dependencies": [
+    "gsap",
+    "lenis"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/information-drawer",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "InformationDrawer",
+  "exportKind": "default",
+  "importPath": "@/components/effects/information-drawer",
+  "target": "src/components/effects/information-drawer",
+  "props": [
+    {
+      "name": "duration",
+      "type": "number",
+      "default": 0.9,
+      "description": "Open and close animation duration in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0.1,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "ease",
+      "type": "string",
+      "default": "power2.inOut",
+      "description": "GSAP easing used by the drawer panel and overlay.",
+      "remixer": {
+        "control": "select",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "options": [
+          "power1.out",
+          "power2.out",
+          "power2.in",
+          "power2.inOut",
+          "power3.inOut",
+          "expo.out",
+          "linear"
+        ]
+      }
+    },
+    {
+      "name": "delay",
+      "type": "number",
+      "default": 0,
+      "description": "Delay before the drawer animation starts, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0,
+        "max": 1,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Background color of the drawer panel.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "color",
+      "default": "#111111",
+      "description": "Text and icon color inside the drawer panel.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "sidebarWidth",
+      "type": "number | string",
+      "default": 60,
+      "description": "Desktop drawer width. Numbers are treated as viewport-width percentages.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 40,
+        "max": 90,
+        "step": 1
+      }
+    },
+    {
+      "name": "overlayOpacity",
+      "type": "number",
+      "default": 0.2,
+      "description": "Backdrop opacity while the drawer is open.",
+      "remixer": {
+        "control": "range",
+        "group": "style",
+        "groupTitle": "Style",
+        "min": 0,
+        "max": 0.8,
+        "step": 0.01
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "style",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/information-drawer/index.tsx"
+    },
+    {
+      "path": "InformationDrawerComp.tsx",
+      "target": "src/components/effects/information-drawer/InformationDrawerComp.tsx"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-21",
+      "summary": "Initial registry release with working drawer motion, panel color, text color, width, and overlay controls.",
+      "breaking": false
+    }
+  ]
+}

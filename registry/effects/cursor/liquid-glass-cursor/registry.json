@@ -1,0 +1,150 @@
+{
+  "name": "liquid-glass-cursor",
+  "version": "1.1.0",
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-08-26",
+      "summary": "Rebuilt as a magnifying glass-lens wrapper with chromatic-aberration SVG refraction over live wrapped content, replacing the previous GSAP hover-morph cursor API",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-06-04",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Liquid Glass Cursor",
+  "description": "Magnifying glass-lens cursor with chromatic-aberration SVG refraction over live wrapped content, hover shape morphing, and spring-smoothed tracking.",
+  "category": "cursor",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/liquid-glass-cursor",
+  "tier": "free",
+  "main": "index.tsx",
+  "exportName": "LiquidGlassCursor",
+  "exportKind": "default",
+  "importPath": "@/components/effects/liquid-glass-cursor",
+  "target": "src/components/effects/liquid-glass-cursor",
+  "props": [
+    {
+      "name": "size",
+      "type": "number",
+      "default": 150,
+      "description": "Diameter of the lens in pixels.",
+      "remixer": {
+        "control": "range",
+        "group": "size",
+        "groupTitle": "Size",
+        "min": 60,
+        "max": 320,
+        "step": 1
+      }
+    },
+    {
+      "name": "magnification",
+      "type": "number",
+      "default": 1.15,
+      "description": "Zoom level applied to the content copy under the lens.",
+      "remixer": {
+        "control": "range",
+        "group": "size",
+        "groupTitle": "Size",
+        "min": 1,
+        "max": 2,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "textHoverSize",
+      "type": "number",
+      "default": 130,
+      "description": "Lens diameter when hovering a data-cursor=\"text\" target.",
+      "remixer": {
+        "control": "range",
+        "group": "size",
+        "groupTitle": "Size",
+        "min": 60,
+        "max": 260,
+        "step": 1
+      }
+    },
+    {
+      "name": "maxButtonWidth",
+      "type": "number",
+      "default": 260,
+      "description": "Lens width when hovering a data-cursor=\"button\" target.",
+      "remixer": {
+        "control": "range",
+        "group": "button",
+        "groupTitle": "Button Hover",
+        "min": 80,
+        "max": 420,
+        "step": 1
+      }
+    },
+    {
+      "name": "maxButtonHeight",
+      "type": "number",
+      "default": 110,
+      "description": "Lens height when hovering a data-cursor=\"button\" target.",
+      "remixer": {
+        "control": "range",
+        "group": "button",
+        "groupTitle": "Button Hover",
+        "min": 40,
+        "max": 240,
+        "step": 1
+      }
+    },
+    {
+      "name": "distortion",
+      "type": "number",
+      "default": 60,
+      "description": "SVG displacement strength for the glass refraction.",
+      "remixer": {
+        "control": "range",
+        "group": "filter",
+        "groupTitle": "Filter",
+        "min": 0,
+        "max": 150,
+        "step": 1
+      }
+    },
+    {
+      "name": "aberration",
+      "type": "number",
+      "default": 1,
+      "description": "Chromatic aberration amount — how far the R/G/B channels split at the rim.",
+      "remixer": {
+        "control": "range",
+        "group": "filter",
+        "groupTitle": "Filter",
+        "min": 0,
+        "max": 2,
+        "step": 0.05
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "size",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/liquid-glass-cursor/index.tsx"
+    }
+  ]
+}

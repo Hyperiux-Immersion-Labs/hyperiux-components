@@ -18,6 +18,15 @@
     "target": "src/components/effects/spider-particles"
   },
   {
+    "name": "dot-transition",
+    "title": "Dot Transition",
+    "category": "backgrounds",
+    "type": "registry:component",
+    "registryPath": "registry/effects/backgrounds/dot-transition/registry.json",
+    "importPath": "@/components/effects/dot-transition",
+    "target": "src/components/effects/dot-transition"
+  },
+  {
     "name": "arrow-fill-button",
     "title": "Arrow Fill Button",
     "category": "buttons",
@@ -54,6 +63,51 @@
     "target": "src/components/effects/zoom-slider"
   },
   {
+    "name": "parallax-strip-slider",
+    "title": "Parallax Strip Slider",
+    "category": "carousels",
+    "type": "registry:component",
+    "registryPath": "registry/effects/carousels/parallax-strip-slider/registry.json",
+    "importPath": "@/components/effects/parallax-strip-slider",
+    "target": "src/components/effects/parallax-strip-slider"
+  },
+  {
+    "name": "arc-flow-carousel",
+    "title": "Arc Flow Carousel",
+    "category": "carousels",
+    "type": "registry:component",
+    "registryPath": "registry/effects/carousels/arc-flow-carousel/registry.json",
+    "importPath": "@/components/effects/arc-flow-carousel",
+    "target": "src/components/effects/arc-flow-carousel"
+  },
+  {
+    "name": "dimensional-switch-slider",
+    "title": "Dimensional Switch Slider",
+    "category": "carousels",
+    "type": "registry:component",
+    "registryPath": "registry/effects/carousels/dimensional-switch-slider/registry.json",
+    "importPath": "@/components/effects/dimensional-switch-slider",
+    "target": "src/components/effects/dimensional-switch-slider"
+  },
+  {
+    "name": "ellipse-carousel",
+    "title": "Ellipse Carousel",
+    "category": "carousels",
+    "type": "registry:component",
+    "registryPath": "registry/effects/carousels/ellipse-carousel/registry.json",
+    "importPath": "@/components/effects/ellipse-carousel",
+    "target": "src/components/effects/ellipse-carousel"
+  },
+  {
+    "name": "orbit-flip-slider",
+    "title": "Orbit Flip Slider",
+    "category": "carousels",
+    "type": "registry:component",
+    "registryPath": "registry/effects/carousels/orbit-flip-slider/registry.json",
+    "importPath": "@/components/effects/orbit-flip-slider",
+    "target": "src/components/effects/orbit-flip-slider"
+  },
+  {
     "name": "animated-faq",
     "title": "Animated FAQ",
     "category": "components",
@@ -72,6 +126,33 @@
     "target": "src/components/effects/hover-stack"
   },
   {
+    "name": "information-drawer",
+    "title": "Information Drawer",
+    "category": "components",
+    "type": "registry:component",
+    "registryPath": "registry/effects/components/information-drawer/registry.json",
+    "importPath": "@/components/effects/information-drawer",
+    "target": "src/components/effects/information-drawer"
+  },
+  {
+    "name": "timeline",
+    "title": "Timeline",
+    "category": "components",
+    "type": "registry:component",
+    "registryPath": "registry/effects/components/timeline/registry.json",
+    "importPath": "@/components/effects/timeline",
+    "target": "src/components/effects/timeline"
+  },
+  {
+    "name": "border-beam",
+    "title": "Border Beam",
+    "category": "components",
+    "type": "registry:component",
+    "registryPath": "registry/effects/components/border-beam/registry.json",
+    "importPath": "@/components/effects/border-beam",
+    "target": "src/components/effects/border-beam"
+  },
+  {
     "name": "phantom-image-trail",
     "title": "Phantom Image Trail",
     "category": "cursor",
@@ -88,6 +169,15 @@
     "registryPath": "registry/effects/cursor/pixelated-image-effect/registry.json",
     "importPath": "@/components/effects/pixelated-image-effect",
     "target": "src/components/effects/pixelated-image-effect"
+  },
+  {
+    "name": "liquid-glass-cursor",
+    "title": "Liquid Glass Cursor",
+    "category": "cursor",
+    "type": "registry:component",
+    "registryPath": "registry/effects/cursor/liquid-glass-cursor/registry.json",
+    "importPath": "@/components/effects/liquid-glass-cursor",
+    "target": "src/components/effects/liquid-glass-cursor"
   },
   {
     "name": "numeric-tunnel",
@@ -198,6 +288,15 @@
     "target": "src/components/effects/split-canvas"
   },
   {
+    "name": "stack-spread",
+    "title": "Stack Spread",
+    "category": "scroll",
+    "type": "registry:component",
+    "registryPath": "registry/effects/scroll/stack-spread/registry.json",
+    "importPath": "@/components/effects/stack-spread",
+    "target": "src/components/effects/stack-spread"
+  },
+  {
     "name": "sticky-content-wrapper",
     "title": "Sticky Content Wrapper",
     "category": "scroll",
@@ -232,6 +331,96 @@
     "registryPath": "registry/effects/text/rectangular-text-reveal/registry.json",
     "importPath": "@/components/effects/rectangular-text-reveal",
     "target": "src/components/effects/rectangular-text-reveal"
+  },
+  {
+    "name": "chromatic-text",
+    "title": "Chromatic Text",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/chromatic-text/registry.json",
+    "importPath": "@/components/effects/chromatic-text",
+    "target": "src/components/effects/chromatic-text"
+  },
+  {
+    "name": "depth-flip-text",
+    "title": "Depth Flip Text",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/depth-flip-text/registry.json",
+    "importPath": "@/components/effects/depth-flip-text",
+    "target": "src/components/effects/depth-flip-text"
+  },
+  {
+    "name": "drop-text",
+    "title": "Drop Text",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/drop-text/registry.json",
+    "importPath": "@/components/effects/drop-text",
+    "target": "src/components/effects/drop-text"
+  },
+  {
+    "name": "flickering-text",
+    "title": "Flickering Text",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/flickering-text/registry.json",
+    "importPath": "@/components/effects/flickering-text",
+    "target": "src/components/effects/flickering-text"
+  },
+  {
+    "name": "focus-text",
+    "title": "Focus Text",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/focus-text/registry.json",
+    "importPath": "@/components/effects/focus-text",
+    "target": "src/components/effects/focus-text"
+  },
+  {
+    "name": "glowing-text",
+    "title": "Glowing Text",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/glowing-text/registry.json",
+    "importPath": "@/components/effects/glowing-text",
+    "target": "src/components/effects/glowing-text"
+  },
+  {
+    "name": "pixel-text-fill",
+    "title": "Pixel Text Fill",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/pixel-text-fill/registry.json",
+    "importPath": "@/components/effects/pixel-text-fill",
+    "target": "src/components/effects/pixel-text-fill"
+  },
+  {
+    "name": "rolling-text",
+    "title": "Rolling Text",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/rolling-text/registry.json",
+    "importPath": "@/components/effects/rolling-text",
+    "target": "src/components/effects/rolling-text"
+  },
+  {
+    "name": "typing-text",
+    "title": "Typing Text",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/typing-text/registry.json",
+    "importPath": "@/components/effects/typing-text",
+    "target": "src/components/effects/typing-text"
+  },
+  {
+    "name": "variable-text-proximity",
+    "title": "Variable Hover",
+    "category": "text",
+    "type": "registry:component",
+    "registryPath": "registry/effects/text/variable-text-proximity/registry.json",
+    "importPath": "@/components/effects/variable-text-proximity",
+    "target": "src/components/effects/variable-text-proximity"
   },
   {
     "name": "chess-grid-transition",

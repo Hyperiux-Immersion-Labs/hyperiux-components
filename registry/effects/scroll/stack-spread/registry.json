@@ -1,0 +1,127 @@
+{
+  "name": "stack-spread",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-09-04",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Stack Spread",
+  "description": "A clustered stack of images that spreads into a full-bleed composition on scroll while centre text fades in behind it",
+  "category": "scroll",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/stack-spread",
+  "tier": "free",
+  "main": "index.tsx",
+  "exportName": "StackSpread",
+  "exportKind": "default",
+  "importPath": "@/components/effects/stack-spread",
+  "target": "src/components/effects/stack-spread",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/stack-spread/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "scrollLength",
+      "type": "number",
+      "default": 350,
+      "description": "Total scroll distance the spread plays out over, in vh. Sets the section height.",
+      "docsOnly": true,
+      "remixer": {
+        "enabled": false
+      }
+    },
+    {
+      "name": "clusterRotation",
+      "type": "boolean",
+      "default": true,
+      "description": "Fan the clustered stack with each card's own angle, or start every card flat.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "motion",
+        "groupTitle": "Motion"
+      }
+    },
+    {
+      "name": "stackScale",
+      "type": "number",
+      "default": 0.82,
+      "description": "Scale of the cards while clustered, before they spread out to full size.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.5,
+        "max": 1,
+        "step": 0.02
+      }
+    },
+    {
+      "name": "cardRadius",
+      "type": "number",
+      "default": 8,
+      "description": "Corner radius on each card, in px (desktop only — tablet/mobile keep their responsive radius).",
+      "remixer": {
+        "control": "range",
+        "group": "style",
+        "groupTitle": "Style",
+        "min": 0,
+        "max": 40,
+        "step": 1
+      }
+    },
+    {
+      "name": "bgColor",
+      "type": "color",
+      "default": "#ececeb",
+      "description": "Background color of the section behind the cards.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "color",
+      "default": "#141414",
+      "description": "Color of the centre headline and subtitle.",
+      "remixer": {
+        "control": "color",
+        "group": "text",
+        "groupTitle": "Text"
+      }
+    },
+    {
+      "name": "textFadeStart",
+      "type": "number",
+      "default": 0.3,
+      "description": "Scroll progress (0-1) where the centre text starts fading in.",
+      "remixer": {
+        "control": "range",
+        "group": "text",
+        "groupTitle": "Text",
+        "min": 0,
+        "max": 0.6,
+        "step": 0.05
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "motion",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}

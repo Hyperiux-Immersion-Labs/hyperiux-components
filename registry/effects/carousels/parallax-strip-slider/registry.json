@@ -1,0 +1,179 @@
+{
+  "name": "parallax-strip-slider",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-09-04",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Parallax Strip Slider",
+  "description": "Fullscreen image slider that reveals each slide through staggered vertical strips with a Ken-Burns zoom and a GSAP SplitText title reveal",
+  "category": "carousels",
+  "dependencies": [
+    "@gsap/react",
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/parallax-strip-slider",
+  "tier": "free",
+  "main": "index.tsx",
+  "exportName": "ParallaxStripSlider",
+  "exportKind": "default",
+  "importPath": "@/components/effects/parallax-strip-slider",
+  "target": "src/components/effects/parallax-strip-slider",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/parallax-strip-slider/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "stripCount",
+      "type": "number",
+      "default": 12,
+      "description": "Number of vertical strips the incoming slide is revealed through.",
+      "remixer": {
+        "control": "range",
+        "group": "strips",
+        "groupTitle": "Strips",
+        "min": 4,
+        "max": 24,
+        "step": 1
+      }
+    },
+    {
+      "name": "revealDuration",
+      "type": "number",
+      "default": 0.5,
+      "description": "Duration of each strip's clip-path wipe, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "strips",
+        "groupTitle": "Strips",
+        "min": 0.2,
+        "max": 1.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "stripStagger",
+      "type": "number",
+      "default": 0.04,
+      "description": "Delay between consecutive strips as they wipe in, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "strips",
+        "groupTitle": "Strips",
+        "min": 0,
+        "max": 0.15,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "zoomFrom",
+      "type": "number",
+      "default": 1.2,
+      "description": "Starting scale of the incoming image before it settles to 1 (Ken-Burns zoom).",
+      "remixer": {
+        "control": "range",
+        "group": "image",
+        "groupTitle": "Image",
+        "min": 1,
+        "max": 1.6,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "zoomDuration",
+      "type": "number",
+      "default": 0.9,
+      "description": "Duration of the image zoom settle, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "image",
+        "groupTitle": "Image",
+        "min": 0.3,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "autoplay",
+      "type": "boolean",
+      "default": false,
+      "description": "Auto-advance slides on a 5s timer. Paused while a transition is running and under reduced motion.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "playback",
+        "groupTitle": "Playback"
+      }
+    },
+    {
+      "name": "showProgressBar",
+      "type": "boolean",
+      "default": true,
+      "description": "Show the thin progress bar across the top of the slider.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "ui",
+        "groupTitle": "UI"
+      }
+    },
+    {
+      "name": "showCounter",
+      "type": "boolean",
+      "default": true,
+      "description": "Show the numeric slide counter in the bottom-right.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "ui",
+        "groupTitle": "UI"
+      }
+    },
+    {
+      "name": "showControls",
+      "type": "boolean",
+      "default": true,
+      "description": "Enable the click-to-navigate overlay and its circular cursor (left half = previous, right half = next).",
+      "remixer": {
+        "control": "checkbox",
+        "group": "ui",
+        "groupTitle": "UI"
+      }
+    },
+    {
+      "name": "showClue",
+      "type": "boolean",
+      "default": true,
+      "description": "Show the hint pill telling the viewer to click either side to navigate.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "ui",
+        "groupTitle": "UI"
+      }
+    },
+    {
+      "name": "accentColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Color of the slide title, progress bar fill, caption text, counter, and control borders.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "strips",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}
