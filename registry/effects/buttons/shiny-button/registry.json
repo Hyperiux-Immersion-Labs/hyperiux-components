@@ -1,0 +1,192 @@
+{
+  "name": "shiny-button",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-09-15",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Shiny Button",
+  "description": "Button with a rotating conic-gradient border, masked dot pattern, and inner shimmer that intensifies on hover",
+  "category": "buttons",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/demo/shiny-button",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "ShinyButton",
+  "exportKind": "default",
+  "importPath": "@/components/effects/shiny-button",
+  "target": "src/components/effects/shiny-button",
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "default": "Get Started",
+      "description": "Button label text.",
+      "remixer": {
+        "control": "text",
+        "group": "content",
+        "groupTitle": "Content"
+      }
+    },
+    {
+      "name": "fillColor",
+      "type": "color",
+      "default": "#000000",
+      "description": "Button fill colour inside the animated border.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "labelColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Label colour.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "accentColor",
+      "type": "color",
+      "default": "#ff5f00",
+      "description": "Colour of the rotating border arc, inner shimmer, and hover glow.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "accentSoftColor",
+      "type": "color",
+      "default": "#ff9253",
+      "description": "Shine colour the border eases into while hovered.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "sweepDuration",
+      "type": "number",
+      "default": 3,
+      "description": "Seconds for one full rotation of the border gradient.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.5,
+        "max": 10,
+        "step": 0.5
+      }
+    },
+    {
+      "name": "easeDuration",
+      "type": "number",
+      "default": 0.8,
+      "description": "Seconds for the hover ease into the wider, brighter border.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.1,
+        "max": 2,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "arcWidth",
+      "type": "number",
+      "default": 5,
+      "description": "Resting width of the bright border arc, as a percentage.",
+      "remixer": {
+        "control": "range",
+        "group": "border",
+        "groupTitle": "Border",
+        "min": 1,
+        "max": 30,
+        "step": 1
+      }
+    },
+    {
+      "name": "cornerRadius",
+      "type": "number",
+      "default": 32,
+      "description": "Corner radius in pixels; 32 and above render as a full pill at the default height.",
+      "remixer": {
+        "control": "range",
+        "group": "border",
+        "groupTitle": "Border",
+        "min": 0,
+        "max": 32,
+        "step": 1
+      }
+    },
+    {
+      "name": "showSpeckle",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows the masked dot pattern layer.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "effects",
+        "groupTitle": "Effects"
+      }
+    },
+    {
+      "name": "showSheen",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows the rotating inner sheen.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "effects",
+        "groupTitle": "Effects"
+      }
+    },
+    {
+      "name": "speckleOpacity",
+      "type": "number",
+      "default": 0.4,
+      "description": "Strength of the dot pattern layer.",
+      "remixer": {
+        "control": "range",
+        "group": "effects",
+        "groupTitle": "Effects",
+        "min": 0,
+        "max": 1,
+        "step": 0.05
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "colors",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/shiny-button/index.tsx"
+    }
+  ]
+}

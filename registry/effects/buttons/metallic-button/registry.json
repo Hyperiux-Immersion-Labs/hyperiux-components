@@ -1,0 +1,221 @@
+{
+  "name": "metallic-button",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-09-15",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Metallic Button",
+  "description": "Button with a WebGL metallic shader rim, hover and press speed ramps, and a click ripple",
+  "category": "buttons",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/metallic-button",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "MetallicButton",
+  "exportKind": "default",
+  "importPath": "@/components/effects/metallic-button",
+  "target": "src/components/effects/metallic-button",
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "default": "Get Started",
+      "description": "Button label text."
+    },
+    {
+      "name": "viewMode",
+      "type": "string",
+      "default": "text",
+      "description": "Renders the label or a single sparkle icon."
+    },
+    {
+      "name": "baseColor",
+      "type": "color",
+      "default": "#000000",
+      "description": "Dark base the metal sits on.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "sheenColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Overlay tint; sets how warm or cold the chrome reads.",
+      "remixer": {
+        "control": "color",
+        "group": "colors",
+        "groupTitle": "Colors"
+      }
+    },
+    {
+      "name": "bandCount",
+      "type": "number",
+      "default": 4,
+      "description": "Density of the stripe bands.",
+      "remixer": {
+        "control": "range",
+        "group": "metal",
+        "groupTitle": "Metal",
+        "min": 1,
+        "max": 10,
+        "step": 0.5
+      }
+    },
+    {
+      "name": "edgeBlur",
+      "type": "number",
+      "default": 0.5,
+      "description": "Colour transition sharpness: 0 is a hard edge, 1 a smooth gradient.",
+      "remixer": {
+        "control": "range",
+        "group": "metal",
+        "groupTitle": "Metal",
+        "min": 0,
+        "max": 1,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "flowAngle",
+      "type": "number",
+      "default": 45,
+      "description": "Direction the pattern flows, in degrees.",
+      "remixer": {
+        "control": "range",
+        "group": "metal",
+        "groupTitle": "Metal",
+        "min": 0,
+        "max": 360,
+        "step": 5
+      }
+    },
+    {
+      "name": "zoom",
+      "type": "number",
+      "default": 8,
+      "description": "Zoom into the pattern; higher reads as brighter chrome.",
+      "remixer": {
+        "control": "range",
+        "group": "metal",
+        "groupTitle": "Metal",
+        "min": 1,
+        "max": 12,
+        "step": 0.5
+      }
+    },
+    {
+      "name": "warp",
+      "type": "number",
+      "default": 0,
+      "description": "Noise warp over the stripe pattern.",
+      "remixer": {
+        "control": "range",
+        "group": "metal",
+        "groupTitle": "Metal",
+        "min": 0,
+        "max": 1,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "redFringe",
+      "type": "number",
+      "default": 0.3,
+      "description": "Red-channel dispersion; drives the warm edge fringing.",
+      "remixer": {
+        "control": "range",
+        "group": "chromatic",
+        "groupTitle": "Chromatic",
+        "min": -1,
+        "max": 1,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "blueFringe",
+      "type": "number",
+      "default": 0.3,
+      "description": "Blue-channel dispersion; drives the cool edge fringing.",
+      "remixer": {
+        "control": "range",
+        "group": "chromatic",
+        "groupTitle": "Chromatic",
+        "min": -1,
+        "max": 1,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "idleSpeed",
+      "type": "number",
+      "default": 0.6,
+      "description": "Sweep speed at rest.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 3,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "hoverSpeed",
+      "type": "number",
+      "default": 1,
+      "description": "Sweep speed while hovered.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 4,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "clickSpeed",
+      "type": "number",
+      "default": 2.4,
+      "description": "Sweep speed kicked on click, before settling back.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 6,
+        "step": 0.1
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "metal",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/metallic-button/index.tsx"
+    }
+  ]
+}
