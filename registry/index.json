@@ -54,6 +54,24 @@
     "target": "src/components/effects/scramble-link-button"
   },
   {
+    "name": "metallic-button",
+    "title": "Metallic Button",
+    "category": "buttons",
+    "type": "registry:component",
+    "registryPath": "registry/effects/buttons/metallic-button/registry.json",
+    "importPath": "@/components/effects/metallic-button",
+    "target": "src/components/effects/metallic-button"
+  },
+  {
+    "name": "shiny-button",
+    "title": "Shiny Button",
+    "category": "buttons",
+    "type": "registry:component",
+    "registryPath": "registry/effects/buttons/shiny-button/registry.json",
+    "importPath": "@/components/effects/shiny-button",
+    "target": "src/components/effects/shiny-button"
+  },
+  {
     "name": "zoom-slider",
     "title": "Zoom Slider",
     "category": "carousels",
@@ -151,6 +169,15 @@
     "registryPath": "registry/effects/components/border-beam/registry.json",
     "importPath": "@/components/effects/border-beam",
     "target": "src/components/effects/border-beam"
+  },
+  {
+    "name": "gsap-flip-card",
+    "title": "GSAP Flip Card",
+    "category": "components",
+    "type": "registry:component",
+    "registryPath": "registry/effects/components/gsap-flip-card/registry.json",
+    "importPath": "@/components/effects/gsap-flip-card",
+    "target": "src/components/effects/gsap-flip-card"
   },
   {
     "name": "phantom-image-trail",
