@@ -103,10 +103,22 @@ export async function add(effectName, options = {}) {
       const limitText = error.limit ? ` (${error.limit}/day)` : "";
       console.log(chalk.red(`Daily install limit reached${limitText}.`));
       console.log();
-      console.log(
-        chalk.yellow(`Try again in ${formatRetryAfter(error.retryAfter)}, or upgrade for a higher limit:`)
-      );
-      console.log(chalk.cyan(`  ${APP_URL}/pricing`));
+
+      if (!authToken) {
+        console.log(chalk.yellow("Login to raise your daily install limit:"));
+        console.log(chalk.cyan("  npx hyperiux login"));
+        console.log();
+        console.log(chalk.dim(`Generate your CLI token here:`));
+        console.log(chalk.dim(`  ${APP_URL}/cli-auth`));
+        console.log();
+        console.log(chalk.yellow(`Or try again in ${formatRetryAfter(error.retryAfter)}.`));
+      } else {
+        console.log(
+          chalk.yellow(`Try again in ${formatRetryAfter(error.retryAfter)}, or upgrade for a higher limit:`)
+        );
+        console.log(chalk.cyan(`  ${APP_URL}/pricing`));
+      }
+
       console.log();
       console.log(chalk.dim("Effects you've already installed today are still free to reinstall."));
     } else if (error.requiresPro) {

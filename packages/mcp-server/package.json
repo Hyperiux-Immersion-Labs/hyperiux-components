@@ -1,6 +1,6 @@
 {
   "name": "hyperiux-mcp-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MCP server for browsing and installing Hyperiux Vault effects - lets AI clients search the catalog, inspect an effect's props/dependencies/changelog, and fetch installable source.",
   "type": "module",
   "main": "dist/index.js",

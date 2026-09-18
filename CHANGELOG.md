@@ -23,6 +23,23 @@ build, then `npm publish --provenance` for both `packages/cli` and
 
 ## [Unreleased]
 
+## [mcp-server 0.2.0] - 2026-09-18
+
+### Fixed
+- MCP server was never actually republished after the "Support metered
+  registry, rate-limits, device-id" change (`bafca0c`, 2026-08-14) started
+  sending `x-hyperiux-device-id`/`x-hyperiux-mcp-version` headers on every
+  registry API call - that commit never bumped `packages/mcp-server`'s own
+  `package.json` version past its initial `0.1.0`, so every release CI run
+  since then found `hyperiux-mcp-server@0.1.0` already on npm and silently
+  skipped the publish step. `npx -y hyperiux-mcp-server` had been running
+  header-less code for over a month; effect fetches made through it (e.g.
+  `hyperiux_get_effect`) were tagged as CLI installs in the admin activity
+  log instead of MCP installs, since the server-side route only attributes
+  a request to `source: "mcp"` when that version header is present. No code
+  change needed in this release - only the version bump, so CI actually
+  publishes the fix that already exists in `main`.
+
 ## [1.1.3] - 2026-09-08
 
 ### Changed
