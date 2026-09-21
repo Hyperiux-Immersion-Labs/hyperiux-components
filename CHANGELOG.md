@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Release Process
 
-Publishing is CI-driven (`.github/workflows/release.yml`), not manual - it
-triggers on a pushed `v*` tag (plain `v`, not `cli-v`) and runs lint, tests,
-build, then `npm publish --provenance` for both `packages/cli` and
-`packages/mcp-server` via OIDC trusted publishing (`NPM_TOKEN` as fallback).
+**CLI (`packages/cli`) is CI-driven** (`.github/workflows/release.yml`), not
+manual - it triggers on a pushed `v*` tag (plain `v`, not `cli-v`) and runs
+lint, tests, build, then `npm publish --provenance` via OIDC trusted
+publishing (`NPM_TOKEN` as fallback).
 
 1. Update version in `packages/cli/package.json`
 2. Add entry to this file under a new `## [x.y.z] - YYYY-MM-DD` heading
@@ -19,9 +19,40 @@ build, then `npm publish --provenance` for both `packages/cli` and
 5. Tag and push: `git tag vx.y.z && git push origin vx.y.z` - this is what
    actually triggers the publish, not a local `npm publish`
 
+**`packages/mcp-server` is published by hand**, not by this workflow - it
+changes rarely, and riding along on every CLI tag meant an unrelated CLI
+test failure (or an npm permissions gap specific to that package - both
+have happened) could block a CLI release neither problem had anything to
+do with. To cut an mcp-server release: bump `packages/mcp-server/package.json`,
+add a `## [mcp-server x.y.z]` entry below, then `cd packages/mcp-server &&
+npm publish --provenance --access public`.
+
 ---
 
 ## [Unreleased]
+
+## [1.1.4] - 2026-09-21
+
+### Changed
+- `add.js`: better guidance when a logged-out caller hits the daily install
+  limit - points at `npx hyperiux login` (raises the free limit) instead of
+  going straight to `/pricing`, which now only shows once someone's already
+  authenticated.
+- Release workflow (`release.yml`) no longer builds/publishes
+  `packages/mcp-server` - see "Release Process" above for why, and how to
+  publish it by hand instead.
+- Docs: effect counts corrected to 150+ total / 50+ free (heading toward
+  100+ pro); the README/CLI-README "Effects" showcase had duplicate Scroll
+  and WebGL sections and was missing Backgrounds, Buttons, Carousels, and
+  Components entirely - rebuilt against the real registry; `packages/cli/README.md`
+  now mirrors the root README exactly instead of drifting independently;
+  fixed docs across README/MCP-GUIDE/CONTRIBUTING/MCP-PUBLISH-GUIDE that
+  still claimed `hyperiux-mcp-server` wasn't published to npm.
+
+### Fixed
+- `add-rate-limited.test.js` asserted the old (pre-`add.js` change) logged-out
+  rate-limit message, which broke release CI's quality-gate step for both
+  packages even though only the CLI's messaging had changed.
 
 ## [mcp-server 0.2.0] - 2026-09-18
 

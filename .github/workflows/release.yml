@@ -5,6 +5,14 @@ on:
     tags:
       - "v*"
 
+# CLI-only. packages/mcp-server is intentionally NOT built/published here -
+# it changes rarely and is published by hand when it actually needs a new
+# version (`cd packages/mcp-server && npm publish`), rather than riding
+# along on every CLI version tag. This used to also gate/publish mcp-server,
+# which meant an unrelated CLI test failure (or an npm permissions gap on
+# hyperiux-mcp-server specifically - both hit in practice) could block a
+# CLI release that had nothing to do with either problem.
+
 jobs:
   release:
     name: Publish & Release
@@ -52,34 +60,6 @@ jobs:
           NPM_TAG=${NPM_TAG:-latest}
           if npm view "hyperiux@$PKG_VERSION" version &>/dev/null; then
             echo "hyperiux@$PKG_VERSION is already published, skipping."
-          else
-            npm publish --provenance --access public --tag "$NPM_TAG"
-          fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Run quality gates (MCP server)
-        run: |
-          pnpm --filter hyperiux-mcp-server lint
-          pnpm --filter hyperiux-mcp-server test
-
-      - name: Build MCP server
-        run: pnpm --filter hyperiux-mcp-server build
-
-      - name: Publish MCP server with provenance
-        # Same reasoning as the CLI publish step above - npm CLI's OIDC
-        # trusted publishing, NODE_AUTH_TOKEN as fallback. This is this
-        # package's first-ever publish, so trusted publishing likely isn't
-        # configured yet on npmjs.com (it can usually only be set up for a
-        # package that already exists) - NODE_AUTH_TOKEN doing the real work
-        # for this first release is expected, not a sign something's wrong.
-        run: |
-          cd packages/mcp-server
-          PKG_VERSION=$(node -p "require('./package.json').version")
-          NPM_TAG=$(echo "$PKG_VERSION" | sed -n 's/^[^-]*-\([a-zA-Z]*\).*/\1/p')
-          NPM_TAG=${NPM_TAG:-latest}
-          if npm view "hyperiux-mcp-server@$PKG_VERSION" version &>/dev/null; then
-            echo "hyperiux-mcp-server@$PKG_VERSION is already published, skipping."
           else
             npm publish --provenance --access public --tag "$NPM_TAG"
           fi
