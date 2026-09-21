@@ -1,0 +1,116 @@
+{
+  "author": "Hyperiux",
+  "description": "MCP server for browsing and installing Hyperiux Vault effects - lets AI clients search the catalog, inspect an effect's props/dependencies/changelog, and fetch installable source.",
+  "homepage": "https://vault.hyperiux.com",
+  "identifier": "hyperiux-immersion-labs-hyperiux-components",
+  "name": "Hyperiux Vault",
+  "prompts": [],
+  "resources": [],
+  "tags": [
+    "hyperiux",
+    "mcp",
+    "model-context-protocol",
+    "effects",
+    "ui",
+    "registry"
+  ],
+  "tools": [
+    {
+      "name": "hyperiux_list_effects",
+      "title": "List Hyperiux Vault Effects",
+      "description": "Browse or search the Hyperiux Vault catalog of React/Next.js interaction effects (scroll systems, cursor trails, WebGL scenes, animated buttons, page transitions, etc).\n\nDoes NOT return which effects are Pro vs Free - the catalog index this reads from doesn't carry that field today. Use hyperiux_get_effect on a specific slug to check its tier before assuming it's installable without a Hyperiux Pro account.\n\nArgs:\n  - query (string, optional): substring match against effect name\n  - category (string, optional): filter to one category slug\n  - limit (number, default 30, max 100)\n  - offset (number, default 0)\n\nReturns JSON: { total, count, offset, effects: [{ name, category, categories, dependencies, version }], has_more, next_offset? }\n\nExamples:\n  - \"What cursor effects are available?\" -> category=\"cursor\"\n  - \"Is there anything with 'particles' in the name?\" -> query=\"particles\"\n  - Don't use when: you need one effect's full description/props/tier - use hyperiux_get_effect instead.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Case-insensitive substring match against effect name (e.g. 'cursor', 'text-reveal'). Omit to list all."
+          },
+          "category": {
+            "type": "string",
+            "description": "Filter to one category, e.g. 'text', 'cursor', 'webgl', 'buttons', 'carousels', 'components', 'navigation', 'backgrounds', 'loaders', 'transitions'. Use hyperiux_list_categories to see all valid values with counts."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 30,
+            "description": "Maximum results to return."
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0,
+            "description": "Number of results to skip for pagination."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "hyperiux_get_effect",
+      "title": "Get Hyperiux Effect Details",
+      "description": "Get full details for one Hyperiux Vault effect by its exact slug - description, tier (free/pro), npm dependencies, version, changelog, and install instructions. Optionally includes full source code.\n\nArgs:\n  - name (string): exact effect slug\n  - include_source (boolean, default false): also return component source. Free effects: always available. Pro effects: only if authenticated (see below).\n\nReturns JSON: { name, title, description, tier, version, dependencies, changelog, install_command, preview_url, import_path, target, main, import_statement, files: [{ path, content? }] }\n  - changelog: array of { version, date, summary, breaking }, newest first\n  - files[].content is omitted unless include_source=true AND the effect is accessible (free, or Pro with a valid token)\n  - import_statement is the exact import line to use after installing (e.g. `import { DottedGrid } from \"@/components/effects/dotted-grid\";`), built from exportKind/exportName/import_path the same way the CLI's own `hyperiux add` output does - omitted if the registry entry has no import_path\n  - install_limit/install_remaining: present on a normal (non-rate-limited) lookup, telling you how many more distinct effects this identity can fetch today - mention this to the user when remaining is low, same as the website's copy toast and the CLI's own \"N of M daily installs left\" line\n\nPro effects without a token: the response still includes metadata (description, dependencies, changelog) but files have no content, and a note explains the effect requires a Hyperiux Pro account - don't treat this as an error, it's expected for unauthenticated Pro lookups.\n\nFree effects past the caller's daily install cap: the response still includes metadata but files have no content, and rate_limited/rate_limit_reason explain the daily limit and when to retry - also not an error, it's expected once the cap is hit.\n\nExamples:\n  - \"What does the dotted-grid effect need?\" -> name=\"dotted-grid\" (dependencies field)\n  - \"Show me the code for circle-text-reveal\" -> name=\"circle-text-reveal\", include_source=true\n  - Don't use when: you don't have an exact slug yet - use hyperiux_list_effects first.\n\nError Handling:\n  - Returns \"Effect '<name>' not found\" if the slug doesn't exist - check hyperiux_list_effects for the correct spelling.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact effect slug, e.g. 'dotted-grid', 'circle-text-reveal'. Get this from hyperiux_list_effects."
+          },
+          "include_source": {
+            "type": "boolean",
+            "default": false,
+            "description": "Include full component source in the response. Free-tier effects always include it; Pro-tier effects only include it if a Hyperiux token is available (HYPERIUX_TOKEN env var, or a saved `hyperiux login` session)."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "hyperiux_list_categories",
+      "title": "List Hyperiux Effect Categories",
+      "description": "List every effect category in the Hyperiux Vault catalog with how many effects are in each - useful before calling hyperiux_list_effects with a category filter, to confirm the exact category slug and see relative size.\n\nReturns JSON: { categories: [{ category, count }] }, sorted by count descending.\n\nExamples:\n  - \"What kinds of effects does Hyperiux have?\" -> call with no args\n  - Don't use when: you already know the category slug and just want its effects - call hyperiux_list_effects directly.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    }
+  ],
+  "version": "0.2.1"
+}
