@@ -114,8 +114,14 @@ describe("add - Stage 3 rate-limited branch", () => {
 
     const loggedLines = logSpy.mock.calls.map((call) => call.join(" "));
     expect(loggedLines.some((line) => line.includes("Daily install limit reached (3/day)"))).toBe(true);
-    expect(loggedLines.some((line) => line.includes("Try again in 5h"))).toBe(true);
-    expect(loggedLines.some((line) => line.includes("/pricing"))).toBe(true);
+    // Logged-out branch (getAuthToken mocked to null above): points at
+    // `login` to raise the free limit, not straight at `/pricing` - that
+    // upsell only shows for an already-authenticated caller (the `else`
+    // branch in add.js), which this test doesn't exercise.
+    expect(loggedLines.some((line) => line.includes("Login to raise your daily install limit"))).toBe(true);
+    expect(loggedLines.some((line) => line.includes("npx hyperiux login"))).toBe(true);
+    expect(loggedLines.some((line) => line.includes("/cli-auth"))).toBe(true);
+    expect(loggedLines.some((line) => line.includes("Or try again in 5h"))).toBe(true);
     expect(loggedLines.some((line) => line.includes("already installed today are still free"))).toBe(true);
   });
 
