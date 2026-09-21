@@ -5,7 +5,7 @@
 
 **A collection of high-quality animation effects and interactive components for Next.js - designed by [Hyperiux](https://hyperiux.com).**
 
-50+ effects are free and open source. 100+ pro effects are available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project - you own what you install.
+150+ effects in total - 50+ free and open source, 100+ pro effects available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project - you own what you install.
 
 <table>
   <tr>
@@ -82,50 +82,60 @@ npx hyperiux add grid-tunnel
 
 ## Effects
 
+### Text
+Letter-level and line-level reveal animations - blur, scramble, stagger, perspective flip, mask wipe.
+
+`rectangular-text-reveal` · `blur-text` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-animations)
+
+### Backgrounds
+Ambient canvas and particle backgrounds that sit behind content without competing for attention.
+
+`dot-transition` · `dotted-grid` · `spider-particles`
+
+### Buttons
+Interactive button treatments - fill sweeps, metallic sheens, shiny highlights, and scramble-on-hover text.
+
+`arrow-fill-button` · `link-button` · `metallic-button` · `scramble-link-button` · `shiny-button`
+
+### Carousels
+Slider and carousel patterns beyond a plain swipe - arc paths, 3D flips, parallax strips, and zoom transitions.
+
+`arc-flow-carousel` · `dimensional-switch-slider` · `ellipse-carousel` · `orbit-flip-slider` · [+more](https://vault.hyperiux.com/effects/carousels)
+
 ### Scroll
-Scroll-driven animations built on GSAP ScrollTrigger - parallax galleries, pinned sequences, horizontal storytelling, stacking cards, and more.
+Scroll-driven animations built on GSAP ScrollTrigger - parallax galleries, pinned sequences, horizontal storytelling, and stacking cards.
 
-`sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `parallax-slider` · `rotation-slider` · `text-convergence` · `scroll-distortion` · [+more](https://vault.hyperiux.com/effects/scroll-effects)
+`sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `circular-split-roll` · `split-canvas` · [+more](https://vault.hyperiux.com/effects/scroll-effects)
 
-### WebGL
-Three.js and R3F scenes with custom GLSL shaders - image carousels, pixel grids, frosted glass, GPU particle galaxies, and 3D heroes.
+### Components
+Small, self-contained UI pieces - accordions, counters, timelines, and hover-driven lists.
 
-`interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milky-way` · `fractal-glass` · [+more](https://vault.hyperiux.com/effects/webgl)
-
-### Cursor
-Pointer-following image and pixel effects for expressive cursor interactions.
-
-`phantom-image-trail` · `pixelated-image-effect`
-
-### Loaders
-Animated loading indicators for numeric, stacked, and motion-heavy states.
-
-`numeric-tunnel` · `stack-loader`
+`animated-faq` · `border-beam` · `gooey-counter` · `gsap-flip-card` · [+more](https://vault.hyperiux.com/effects/components)
 
 ### Navigation
 Menus and navbars with desktop and mobile interaction patterns.
 
 `directional-menu` · `elevate-navbar` · `immersive-full-screen-nav`
 
-### Scroll
-Scroll-driven animations built on GSAP ScrollTrigger - pinned sequences, perspective sliders, split canvases, and content reveals.
+### Cursor
+Canvas 2D and Three.js cursor effects - image trails, rope followers, liquid glass, character grids.
 
-`circular-split-roll` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `split-canvas` · `sticky-content-wrapper` · `text-convergence`
-
-### Text
-Letter-level and line-level reveal animations - blur, scramble, stagger, perspective flip, mask wipe.
-
-`blur-text` · `rectangular-text-reveal` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-effects)
+`phantom-image-trail` · `pixelated-image-effect` · `liquid-glass-cursor` · `magnetic-image-trail` · `character-trail` · `rope-cursor` · [+more](https://vault.hyperiux.com/effects/cursor-effects)
 
 ### Transitions
 Page and section transitions built from animated grids and block-based motion.
 
 `block-transition` · `chess-grid-transition`
 
-### WebGL
-Three.js, R3F, and shader-driven effects for frosted glass, image reveal, and particle galaxies.
+### Loaders
+Animated loading indicators for numeric, stacked, and motion-heavy states.
 
-`fractal-glass` · `interactive-blur-reveal` · `milky-way`
+`numeric-tunnel` · `stack-loader`
+
+### WebGL
+Three.js and R3F scenes with custom GLSL shaders - image carousels, pixel grids, frosted glass, GPU particle galaxies, and 3D heroes.
+
+`interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milky-way` · `fractal-glass`
 
 [Browse all →](https://vault.hyperiux.com/effects)
 
@@ -170,33 +180,29 @@ Three.js, R3F, and shader-driven effects for frosted glass, image reveal, and pa
 This is a pnpm monorepo with Turborepo:
 
 - **`packages/cli`** - `npx hyperiux` CLI tool, published to npm as `hyperiux`
-- **`packages/mcp-server`** - MCP (Model Context Protocol) server that lets AI clients (Claude, Cursor, etc.) browse and install Vault effects; published as `hyperiux-mcp-server` (not yet published to npm as of this writing - see [packages/mcp-server](packages/mcp-server) for local usage)
+- **`packages/mcp-server`** - MCP (Model Context Protocol) server that lets AI clients (Claude, Cursor, etc.) browse and install Vault effects; published to npm as `hyperiux-mcp-server`
 - **`registry/effects`** - Free effect source, organized by category
 
-Pro effect source lives in a private repository and is served via a protected API. The registry index (`public/r/index.json`) lists all effects with metadata - pro file contents are not publicly accessible.
+Pro effect source lives in a private repository and is served via a protected API. The registry index (`registry/index.json`) lists all effects with metadata - pro file contents are not publicly accessible.
 
-### Running the MCP server locally
+### Running the MCP server
 
-`packages/mcp-server` isn't on npm yet, so point your MCP client at a local build instead of `npx`:
-
-```bash
-pnpm --filter hyperiux-mcp-server build
-```
-
-Then add it to your client's MCP config using an absolute path to the built entrypoint:
+Add it to your client's MCP config via `npx`:
 
 ```json
 {
   "mcpServers": {
     "hyperiux": {
-      "command": "node",
-      "args": ["/absolute/path/to/hyperiux-components/packages/mcp-server/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "hyperiux-mcp-server"]
     }
   }
 }
 ```
 
-See [packages/mcp-server/README.md](packages/mcp-server/README.md) for the full tool list and Pro-effect auth behavior. npm publishing is future work, not the current install path.
+Contributing to the server itself? Point your MCP client at a local build instead - see [packages/mcp-server](packages/mcp-server).
+
+See [packages/mcp-server/README.md](packages/mcp-server/README.md) for the full tool list and Pro-effect auth behavior.
 
 ---
 

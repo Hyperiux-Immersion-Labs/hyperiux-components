@@ -2,21 +2,21 @@
 
 This is the companion to [MCP-GUIDE.md](MCP-GUIDE.md), which covers running the server **locally** (a local build, an absolute path in your config). This doc covers what changes once you make it installable by **anyone**, anywhere, via `npx hyperiux-mcp-server` - no local clone, no local build, no absolute paths.
 
-**Nothing here has been done yet.** This is a how-to for when you're ready, not a record of something already run. Publishing is a real, public, hard-to-reverse action - read it through before doing it for the first time.
+**`hyperiux-mcp-server@0.1.0` is already live on npm** - published manually (`npm publish` run by hand from `packages/mcp-server`), not through CI. `npx hyperiux-mcp-server` works today. What's still true from this doc's original checklist: `.github/workflows/release.yml` only publishes `packages/cli` on a `v*` tag, so every mcp-server release still has to be pushed by hand until the wiring below is added - and `package.json` has since moved on to `0.2.0` locally without a matching publish, so npm is currently one version behind. Publishing is a real, public, hard-to-reverse action - read the rest of this doc through before running a new one.
 
 ---
 
-## Why `npx hyperiux-mcp-server` doesn't work right now
+## Why versions can drift (and how to close the gap)
 
-The package (`hyperiux-mcp-server`, in `packages/mcp-server`) is fully built, tested, and CI-checked - but it has never actually been pushed to the npm registry. `.github/workflows/release.yml` (the workflow that runs on every `v*` tag push) currently only publishes `packages/cli`. Until that changes, the only way to run this server is a local build pointed at by an absolute path - exactly what `MCP-GUIDE.md` walks through.
+The package (`hyperiux-mcp-server`, in `packages/mcp-server`) is fully built, tested, and CI-checked on every push - but nothing publishes it automatically. The one release that's gone out so far was a manual `npm publish` from a local checkout. Until the CI wiring below exists, every future release needs the same manual step, and it's easy for local `package.json` version bumps to outrun what's actually on npm (as has already happened: local is `0.2.0`, published is `0.1.0`).
 
-## What actually changes once it's published
+## Published vs. a local build
 
-| | Local (today) | Published (after) |
+| | Local build | Published (`npx`) |
 |---|---|---|
 | Client config | `"command": "/path/to/node", "args": ["/path/to/dist/index.js"]` | `"command": "npx", "args": ["-y", "hyperiux-mcp-server"]` |
 | Setup needed | Clone this repo, `pnpm --filter hyperiux-mcp-server build` | Nothing - `npx` fetches it on first use |
-| Updating | `git pull` + rebuild | New version auto-fetched next time (with `-y`) or on demand |
+| Updating | `git pull` + rebuild | New version auto-fetched next time (with `-y`) or on demand - but only once that version has actually been published, see above |
 | Who can use it | Only people with this repo cloned | Anyone, anywhere |
 
 The tools, their inputs/outputs, and the auth/Pro behavior are **identical** either way - publishing changes *distribution*, not *functionality*. See the tools list at the bottom of this doc (same as `MCP-GUIDE.md`'s).
@@ -29,7 +29,7 @@ The tools, their inputs/outputs, and the auth/Pro behavior are **identical** eit
 2. **`NPM_TOKEN` already exists** as a GitHub Actions secret (it's used by `packages/cli`'s publish step today) - the mcp-server publish step can reuse it.
 3. **Package metadata is already correct** - checked in `packages/mcp-server/package.json`: `name: "hyperiux-mcp-server"`, `bin: { "hyperiux-mcp": "dist/index.js" }`, `files: ["dist", "README.md", "LICENSE"]`, `publishConfig.access: "public"`. Nothing to change here.
 4. **CI is green** - lint, test, and build for `packages/mcp-server` already run automatically in `ci.yml` on every push/PR.
-5. **Pick a version.** It's currently `0.1.0`. First publish can go out as-is, or you can bump it - your call, just make sure `package.json`'s `version` matches what you intend to tag.
+5. **Pick a version.** `0.1.0` is already published; local `package.json` is at `0.2.0` and unpublished. Publish `0.2.0` as-is, or bump further - just make sure `package.json`'s `version` matches what you intend to tag, and isn't a version that's already on npm (`npm view hyperiux-mcp-server versions` to check).
 
 ---
 

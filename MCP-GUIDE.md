@@ -55,10 +55,26 @@ Good to know so you don't expect the wrong thing:
 - **It can't recommend effects** based on a vibe like "I want something eye-catching for a hero section." There's no recommendation tool yet.
 - **It can't validate** whether the props you're about to pass to a component are correct - no schema exists to check against.
 - **The list-level tools can't tell you tier (free vs Pro).** Only `get_effect` on one exact slug can - a known, pre-existing gap in the underlying registry data itself, not something we can fix from inside this server alone.
-- **It only runs locally via stdio right now.** No hosted/remote version - every AI client needs Node installed and a local path to `dist/index.js`.
-- **It's not published to npm yet.** So `npx hyperiux-mcp-server` doesn't work for anyone - only a local build does, which is exactly what this guide sets up.
+- **It only runs locally via stdio right now.** No hosted/remote version - every AI client needs Node installed, but doesn't need this repo cloned: `npx hyperiux-mcp-server` (published to npm) works out of the box. Building from source is only needed to test local changes to the server itself.
 
 ---
+
+## Quick start (just want to use it?)
+
+Add this to your MCP client's config - no clone, no build:
+
+```json
+{
+  "mcpServers": {
+    "hyperiux": {
+      "command": "npx",
+      "args": ["-y", "hyperiux-mcp-server"]
+    }
+  }
+}
+```
+
+That's it. The rest of this guide (building from source, wiring up an absolute path to `dist/index.js`) is only for testing local changes to the server itself - skip to [Do's and Don'ts](#dos-and-donts) otherwise.
 
 ## Do's and Don'ts
 
@@ -77,7 +93,7 @@ Good to know so you don't expect the wrong thing:
 
 ---
 
-## Setting it up locally, step by step
+## Setting it up locally, step by step (for testing changes to the server itself)
 
 ### 1. Build it
 From the `hyperiux-components` repo root:

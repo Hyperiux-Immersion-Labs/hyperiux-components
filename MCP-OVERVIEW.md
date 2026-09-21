@@ -8,7 +8,7 @@ For hands-on setup, see [MCP-GUIDE.md](MCP-GUIDE.md) (local) and [MCP-PUBLISH-GU
 
 ## What it is, in one sentence
 
-**`hyperiux-mcp-server` is an MCP (Model Context Protocol) server that teaches AI coding assistants what's actually in the Hyperiux Vault effect catalog, so they can help you find, understand, and install the right effect without guessing.**
+**`hyperiux-mcp-server` is an MCP (Model Context Protocol) server that teaches AI coding assistants what's actually in the Hyperiux Vault effect catalog - 150+ effects, 50+ free - so they can help you find, understand, and install the right effect without guessing.**
 
 ## Why it exists
 

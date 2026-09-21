@@ -103,7 +103,7 @@ pnpm build          # tsc -> dist/
 node dist/index.js  # smoke-test locally; closed stdin exits cleanly once it prints "running via stdio"
 ```
 
-Not published to npm yet - see the root README's "Running the MCP server locally" section for how to point an MCP client at a local build.
+Published to npm as `hyperiux-mcp-server` - see the root README's "Running the MCP server" section. To test local changes before they're published, point your MCP client at your own `dist/index.js` build instead of the npm one.
 
 ## Pull requests
 
