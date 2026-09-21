@@ -1,0 +1,24 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.Hyperiux-Immersion-Labs/hyperiux-mcp-server",
+  "title": "Hyperiux Vault",
+  "description": "Browse, inspect, and retrieve installable React and Next.js interaction effects from Hyperiux Vault.",
+  "version": "0.2.1",
+  "websiteUrl": "https://vault.hyperiux.com",
+  "repository": {
+    "url": "https://github.com/Hyperiux-Immersion-Labs/hyperiux-components.git",
+    "source": "github",
+    "subfolder": "packages/mcp-server"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "hyperiux-mcp-server",
+      "version": "0.2.1",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

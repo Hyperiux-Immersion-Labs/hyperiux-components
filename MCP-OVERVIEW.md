@@ -2,7 +2,7 @@
 
 One page that explains everything: what this is, why it exists, who it's for, and how it works - written so it makes sense whether you're the person maintaining it or someone landing on it for the first time via npm/GitHub.
 
-For hands-on setup, see [MCP-GUIDE.md](MCP-GUIDE.md) (local) and [MCP-PUBLISH-GUIDE.md](MCP-PUBLISH-GUIDE.md) (publishing).
+For setup, tool reference, and client-specific configuration, see [MCP-DOCUMENTATION.md](MCP-DOCUMENTATION.md). Package-level installation and authentication details live in [packages/mcp-server/README.md](packages/mcp-server/README.md).
 
 ---
 
@@ -37,7 +37,7 @@ Three tools, all read-only:
 | `hyperiux_get_effect` | "Tell me everything about effect X" - description, tier, dependencies, changelog, install command, import statement, and (if allowed) full source |
 | `hyperiux_list_categories` | "What categories are there, and how big is each?" |
 
-Full input/output schemas for each are in [MCP-GUIDE.md](MCP-GUIDE.md#the-3-tools-one-by-one).
+Full input/output schemas for each are in [MCP-DOCUMENTATION.md](MCP-DOCUMENTATION.md).
 
 ## What it deliberately does NOT do
 
@@ -83,10 +83,10 @@ Both the CLI and the MCP server are *clients* of the same registry - neither one
 
 ## How you actually use it
 
-Two modes, covered in depth elsewhere:
+Two modes are available:
 
-- **Local (working today)**: clone this repo, build it, point your MCP client at the local `dist/index.js`. Full walkthrough in [MCP-GUIDE.md](MCP-GUIDE.md).
-- **Global / `npx` (once published)**: anyone, anywhere, adds `"command": "npx", "args": ["-y", "hyperiux-mcp-server"]` to their MCP client config - no clone, no build. Full walkthrough in [MCP-PUBLISH-GUIDE.md](MCP-PUBLISH-GUIDE.md).
+- **Local development**: clone this repo, build it, and point your MCP client at the local `dist/index.js`.
+- **Standard `npx` setup**: add `"command": "npx", "args": ["-y", "hyperiux-mcp-server"]` to your MCP client config. [MCP-DOCUMENTATION.md](MCP-DOCUMENTATION.md) has client-specific instructions.
 
 ## Auth and Pro access, briefly
 
@@ -94,4 +94,4 @@ It reuses whatever the `hyperiux` CLI already has - a saved `hyperiux login` ses
 
 ## What's next for it
 
-See the roadmap section in [MCP-GUIDE.md](MCP-GUIDE.md#what-to-build-next-roadmap-ideas-roughly-in-priority-order) - in short: a props/usage tool, a constraints tool, fixing a known tier-reporting gap, a recommendation tool, and eventually publishing it to npm so this whole "global" story is real rather than aspirational.
+Potential next capabilities include structured props and usage information, component constraints, tier visibility in list results, and recommendations.

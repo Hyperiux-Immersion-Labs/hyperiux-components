@@ -1,0 +1,32 @@
+name: Publish MCP Registry
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish Hyperiux MCP Server
+    runs-on: ubuntu-latest
+    environment: mcp-registry-publish
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Check out the release source
+        uses: actions/checkout@v4
+
+      - name: Install mcp-publisher
+        run: |
+          curl --fail --location --retry 3 \
+            "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" \
+            | tar xz mcp-publisher
+
+      - name: Validate registry manifest
+        run: ./mcp-publisher validate packages/mcp-server/server.json
+
+      - name: Authenticate with GitHub Actions OIDC
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish to the Official MCP Registry
+        run: ./mcp-publisher publish packages/mcp-server/server.json
