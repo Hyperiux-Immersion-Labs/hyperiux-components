@@ -68,6 +68,6 @@
   },
   "devDependencies": {
     "eslint": "^9",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.11"
   }
 }
