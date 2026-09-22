@@ -28,10 +28,12 @@ function parseOutput(result: ToolResult) {
 }
 
 const sampleItems = [
-  { name: "dotted-grid", category: "backgrounds", categories: ["backgrounds"], dependencies: [], version: "1.1.1" },
-  { name: "spider-particles", category: "backgrounds", categories: ["backgrounds"], dependencies: [], version: "1.0.0" },
-  { name: "arrow-fill-button", category: "buttons", categories: ["buttons"], dependencies: [], version: "1.0.0" },
-  { name: "link-button", category: "buttons", categories: ["buttons"], dependencies: [], version: "1.0.0" },
+  { name: "dotted-grid", category: "backgrounds", categories: ["backgrounds"], dependencies: [], version: "1.1.1", tier: "free" },
+  { name: "spider-particles", category: "backgrounds", categories: ["backgrounds"], dependencies: [], version: "1.0.0", tier: "pro" },
+  { name: "arrow-fill-button", category: "buttons", categories: ["buttons"], dependencies: [], version: "1.0.0", tier: "free" },
+  { name: "link-button", category: "buttons", categories: ["buttons"], dependencies: [], version: "1.0.0", tier: "pro" },
+  // No tier field at all - simulates a stale/partial registry deployment;
+  // must fall back to "free" rather than omitting the field or crashing.
   { name: "zoom-slider", category: "carousels", categories: ["carousels"], dependencies: ["gsap"], version: "1.0.0" },
 ];
 
@@ -84,5 +86,21 @@ describe("hyperiux_list_effects", () => {
 
     expect(output.has_more).toBe(false);
     expect(output.next_offset).toBeUndefined();
+  });
+
+  // Regression test: hyperiux_list_effects used to omit tier entirely,
+  // forcing callers to guess at aggregate free/pro counts instead of
+  // reading them off the actual catalog data.
+  it("includes each effect's tier, defaulting missing tier to free", async () => {
+    const output = parseOutput(await handler({ limit: 30, offset: 0 }));
+
+    const byName = Object.fromEntries(output.effects.map((e: { name: string; tier: string }) => [e.name, e.tier]));
+    expect(byName).toEqual({
+      "dotted-grid": "free",
+      "spider-particles": "pro",
+      "arrow-fill-button": "free",
+      "link-button": "pro",
+      "zoom-slider": "free",
+    });
   });
 });

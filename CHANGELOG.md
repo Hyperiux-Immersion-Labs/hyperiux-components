@@ -70,6 +70,18 @@ npm publish --provenance --access public`.
   a request to `source: "mcp"` when that version header is present. No code
   change needed in this release - only the version bump, so CI actually
   publishes the fix that already exists in `main`.
+- `hyperiux_list_effects` now includes each effect's `tier` (`"free"` or
+  `"pro"`) in its response. The built registry index has carried a `tier`
+  field per item for a while, but the tool's output mapping and its
+  `RegistryIndexItem` type never picked it up, so the tool's own description
+  told callers "does NOT return which effects are Pro vs Free" - true when
+  first written, no longer true once the index gained the field, but never
+  updated. In practice this meant asking an MCP client "how many free vs Pro
+  effects are there" had no accurate data to answer from and would guess
+  (observed: 45/105 reported vs the real 55/95). Missing/stale `tier` values
+  still default to `"free"`, matching the same fallback convention already
+  used elsewhere (`fetchEffect`'s pro-check, and the admin dashboard's own
+  free/pro counting).
 
 ## [1.1.3] - 2026-09-08
 

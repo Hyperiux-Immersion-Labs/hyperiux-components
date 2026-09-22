@@ -33,7 +33,7 @@ export function registerListEffectsTool(server: McpServer) {
       title: "List Hyperiux Vault Effects",
       description: `Browse or search the Hyperiux Vault catalog of React/Next.js interaction effects (scroll systems, cursor trails, WebGL scenes, animated buttons, page transitions, etc).
 
-Does NOT return which effects are Pro vs Free - the catalog index this reads from doesn't carry that field today. Use hyperiux_get_effect on a specific slug to check its tier before assuming it's installable without a Hyperiux Pro account.
+Each result includes tier ("free" or "pro") - use this to answer "how many free/pro effects are there" or "which of these are free" directly from one call, by filtering/counting the returned list yourself. Don't estimate or guess these counts, and don't call hyperiux_get_effect per-item just to total them up - it's unnecessary here. hyperiux_get_effect is still the right call for one specific effect's full description/props/changelog.
 
 Args:
   - query (string, optional): substring match against effect name
@@ -41,12 +41,13 @@ Args:
   - limit (number, default 30, max 100)
   - offset (number, default 0)
 
-Returns JSON: { total, count, offset, effects: [{ name, category, categories, dependencies, version }], has_more, next_offset? }
+Returns JSON: { total, count, offset, effects: [{ name, category, categories, dependencies, version, tier }], has_more, next_offset? }
 
 Examples:
   - "What cursor effects are available?" -> category="cursor"
   - "Is there anything with 'particles' in the name?" -> query="particles"
-  - Don't use when: you need one effect's full description/props/tier - use hyperiux_get_effect instead.`,
+  - "How many free effects are there?" -> call with a limit high enough to cover total (check total/has_more first), then count tier === "free" yourself.
+  - Don't use when: you need one effect's full description/props/changelog - use hyperiux_get_effect instead.`,
       inputSchema: ListEffectsInputSchema.shape,
       annotations: {
         readOnlyHint: true,
@@ -85,6 +86,7 @@ Examples:
             categories: item.categories,
             dependencies: item.dependencies,
             version: item.version,
+            tier: item.tier ?? "free",
           })),
           has_more: hasMore,
           ...(hasMore ? { next_offset: params.offset + page.length } : {}),

@@ -8,6 +8,11 @@ export interface RegistryIndexItem {
   exportName: string;
   exportKind: string;
   version: string;
+  // Added to the built index after this type (and hyperiux_list_effects,
+  // which used to omit it entirely - see git history) were first written
+  // against an older index.json that didn't carry it - optional so a stale
+  // registry deployment lacking the field can't crash the response shape.
+  tier?: "free" | "pro" | string;
 }
 
 export interface RegistryIndex {
