@@ -1,5 +1,7 @@
 # hyperiux-mcp-server
 
+[![Listed on mcpservers.org](https://mcpservers.org/badge.svg)](https://mcpservers.org/servers/hyperiux-immersion-labs/hyperiux-components)
+
 An MCP (Model Context Protocol) server for the [Hyperiux Vault](https://vault.hyperiux.com) effect registry. Lets AI clients (Claude Code, Claude Desktop, Cursor, etc.) browse, search, and inspect React/Next.js interaction effects, and fetch installable source for effects they're entitled to.
 
 ## Install
