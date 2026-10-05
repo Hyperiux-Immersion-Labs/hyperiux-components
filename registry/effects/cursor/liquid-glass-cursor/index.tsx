@@ -1,6 +1,4 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
-
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
@@ -31,13 +29,13 @@ const BUTTON_SELECTOR =
 
 export default function LiquidGlassCursor({
   children,
-  size = 150,
-  magnification = 1.15,
-  textHoverSize = 130,
+  size = 217,
+  magnification = 1.06,
+  textHoverSize = 107,
   maxButtonWidth = 260,
   maxButtonHeight = 110,
-  distortion = 60,
-  aberration = 1,
+  distortion = 36,
+  aberration = 0.2,
   className = "",
 }: LiquidGlassCursorProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -50,7 +48,7 @@ export default function LiquidGlassCursor({
 
   // Displacement bitmap is generated once at the largest size any shape can
   // reach, then stretched (non-uniformly, via preserveAspectRatio="none") to
-  // match the live lens dimensions — regenerating pixels every frame would jank.
+  // match the live lens dimensions - regenerating pixels every frame would jank.
   const mapSize = Math.max(size, textHoverSize, maxButtonWidth, maxButtonHeight);
 
   const x = useMotionValue(0);
@@ -322,21 +320,6 @@ export default function LiquidGlassCursor({
         />
       </motion.div>
 
-      {reduceMotion && (
-        <div
-          aria-live="polite"
-          className="pointer-events-none absolute bottom-4 right-4 z-40 w-fit max-w-65 rounded-md bg-black/10 p-3 text-center backdrop-blur-md max-md:hidden"
-        >
-          <h2 className="text-sm leading-none text-black">
-            The lens keeps tracking.
-          </h2>
-          <p className="mt-2 text-xs leading-5 text-black">
-            Liquid Glass Cursor magnifies and refracts whatever your cursor
-            passes over. Since the lens is driven entirely by cursor motion,
-            there&apos;s no reduced motion version to fall back on.
-          </p>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,14 +1,15 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 'use client'
+import { useSyncExternalStore } from "react";
 
 import { TransitionRouter } from 'next-transition-router'
 import React, { useEffect, useRef, useState, type ReactNode } from 'react'
 import gsap from 'gsap'
 
 function prefersReducedMotion() {
-  if (typeof window === 'undefined') return false
-  return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
+  if (typeof window === "undefined") return false;
+
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 }
 
 const DEFAULT_GRID_SIZE = 8
@@ -27,6 +28,8 @@ interface ChessGridTransitionProps {
   color?: string
 }
 
+type TransitionPhase = 'leave' | 'enter'
+
 export default function ChessGridTransition({
   children,
   duration = 1,
@@ -35,6 +38,7 @@ export default function ChessGridTransition({
 }: ChessGridTransitionProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const gridRef = useRef<HTMLDivElement | null>(null)
+  const activeTimelineRef = useRef<gsap.core.Timeline | null>(null)
 
   const [mounted, setMounted] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -61,7 +65,13 @@ export default function ChessGridTransition({
 
   const rows = isMobile ? mobileRows : isTablet ? tabletRows : desktopRows
 
-  const getRowCells = (cells: HTMLCollection, rowIndex: number) => {
+
+  const geometryRef = useRef({ cols, rows, safeDuration })
+  const timelineRef = useRef<gsap.core.Timeline | null>(null)
+  const phaseRef = useRef<TransitionPhase | null>(null)
+  const doneRef = useRef<(() => void) | null>(null)
+
+  const getRowCells = (cells: HTMLCollection, rowIndex: number, cols: number) => {
     const rowCells = []
     for (let col = 0; col < cols; col++) {
       rowCells.push(cells[rowIndex * cols + col])
@@ -70,12 +80,15 @@ export default function ChessGridTransition({
   }
 
   const buildAnimation = (tl: gsap.core.Timeline, cells: HTMLCollection, direction = 1) => {
+    const { cols, rows, safeDuration } = geometryRef.current
     const rowsArr = Array.from({ length: rows }, (_, i) => i)
 
     rowsArr.forEach((rowIndex, rowOrderIndex) => {
-      const rowCells = getRowCells(cells, rowIndex)
+      const rowCells = getRowCells(cells, rowIndex, cols)
 
       rowCells.forEach((cell, colIndex) => {
+        if (!cell) return
+
         const delay = rowOrderIndex * 0.1 + colIndex * 0.1
 
         if (direction === 1) {
@@ -106,57 +119,104 @@ export default function ChessGridTransition({
     })
   }
 
-  useEffect(() => {
-    const cells = (gridRef.current as HTMLDivElement).children
+  const resetCells = () => {
+    const grid = gridRef.current
+    if (!grid) return
 
-    Array.from(cells).forEach((cell, i) => {
+    const { cols } = geometryRef.current
+
+    Array.from(grid.children).forEach((cell, i) => {
       const colIndex = i % cols
       gsap.set(cell, { xPercent: -(colIndex + 2) * 100 })
     })
+  }
+
+  const finishTransition = () => {
+    const done = doneRef.current
+    timelineRef.current = null
+    phaseRef.current = null
+    doneRef.current = null
+    done?.()
+  }
+
+  const runPhase = (phase: TransitionPhase) => {
+    const grid = gridRef.current
+    if (!grid) return
+
+    timelineRef.current?.kill()
+
+    const { safeDuration } = geometryRef.current
+    const tl = gsap.timeline({ onComplete: finishTransition })
+
+    timelineRef.current = tl
+    phaseRef.current = phase
+
+    if (prefersReducedMotion()) {
+      tl.to(
+        wrapperRef.current,
+        phase === 'leave'
+          ? { opacity: 0, duration: 0.2, ease: 'power1.out' }
+          : { opacity: 1, duration: 0.2, ease: 'power1.out', clearProps: 'all' },
+        0
+      )
+      return
+    }
+
+    const cells = grid.children
+
+    if (phase === 'leave') {
+      tl.to(wrapperRef.current, { opacity: 0, duration: 0.8 * safeDuration }, 0)
+      buildAnimation(tl, cells, 1)
+      return
+    }
+
+    gsap.set(cells, { xPercent: 0 })
+
+    tl.fromTo(
+      wrapperRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.8 * safeDuration, delay: safeDuration, clearProps: 'all' },
+      0
+    )
+    buildAnimation(tl, cells, -1)
+  }
+
+  const startTransition = (phase: TransitionPhase, next: () => void) => {
+    doneRef.current = next
+    runPhase(phase)
+
+    return () => {
+      timelineRef.current?.kill()
+      timelineRef.current = null
+      phaseRef.current = null
+      doneRef.current = null
+    }
+  }
+
+  useEffect(() => {
+    geometryRef.current = { cols, rows, safeDuration }
+
+    // A geometry change while a transition is running means the old cells are
+    // gone; replay the active phase on the new ones instead of parking them
+    // offscreen, which would strand the overlay and never call next().
+    if (phaseRef.current) {
+      runPhase(phaseRef.current)
+    } else {
+      resetCells()
+    }
+
 
     setMounted(true)
-  }, [cols, rows])
+
+  }, [cols, rows, safeDuration])
 
   const totalCells = cols * rows
 
   return (
     <TransitionRouter
       auto
-      leave={(next) => {
-        const tl = gsap.timeline({ onComplete: next })
-
-        if (prefersReducedMotion()) {
-          tl.to(wrapperRef.current, { opacity: 0, duration: 0.2, ease: 'power1.out' }, 0)
-          return () => tl.kill()
-        }
-
-        const cells = (gridRef.current as HTMLDivElement).children
-
-        tl.to(wrapperRef.current, { opacity: 0, duration: 0.8 * safeDuration }, 0)
-
-        buildAnimation(tl, cells, 1)
-        return () => tl.kill()
-      }}
-      enter={(next) => {
-        const tl = gsap.timeline({ onComplete: next })
-
-        if (prefersReducedMotion()) {
-          tl.to(wrapperRef.current, { opacity: 1, duration: 0.2, ease: 'power1.out', clearProps: 'all' }, 0)
-          return () => tl.kill()
-        }
-
-        const cells = (gridRef.current as HTMLDivElement).children
-
-        tl.fromTo(
-          wrapperRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.8 * safeDuration, delay: safeDuration, clearProps: 'all' },
-          0
-        )
-
-        buildAnimation(tl, cells, -1)
-        return () => tl.kill()
-      }}
+      leave={(next) => startTransition('leave', next)}
+      enter={(next) => startTransition('enter', next)}
     >
       <div
         ref={gridRef}

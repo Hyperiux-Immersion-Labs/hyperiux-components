@@ -1,11 +1,13 @@
 {
   "name": "border-beam",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "registry:component",
   "title": "Border Beam",
   "description": "Animated border beam effect for cards and surfaces",
   "category": "components",
-  "dependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
   "registryDependencies": [],
   "previewUrl": "/demo/border-beam",
   "tier": "free",
@@ -80,7 +82,7 @@
     {
       "name": "theme",
       "type": "string",
-      "default": "light",
+      "default": "auto",
       "description": "Sets the light, dark, or system-aware beam tuning.",
       "remixer": {
         "control": "select",
@@ -116,7 +118,7 @@
     {
       "name": "strength",
       "type": "number",
-      "default": 1,
+      "default": 2,
       "description": "Scales the beam intensity.",
       "remixer": {
         "control": "range",
@@ -131,7 +133,7 @@
       "name": "duration",
       "type": "number",
       "description": "Time for the beam to complete a loop.",
-      "default": 2,
+      "default": 3.3,
       "remixer": {
         "control": "range",
         "group": "motion",
@@ -145,7 +147,7 @@
       "name": "beamWidth",
       "type": "number",
       "description": "Thickness of the animated border beam.",
-      "default": 2,
+      "default": 9,
       "remixer": {
         "control": "range",
         "group": "style",
@@ -159,7 +161,7 @@
       "name": "backgroundColor",
       "type": "color",
       "description": "Card or container background color.",
-      "default": "#f4f5f7",
+      "default": "#212121",
       "remixer": {
         "control": "color",
         "group": "style",
@@ -182,25 +184,19 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/border-beam/index.tsx"
-    },
-    {
-      "path": "BorderBeam.tsx",
-      "target": "src/components/effects/border-beam/BorderBeam.tsx"
-    },
-    {
-      "path": "PulseDriver.ts",
-      "target": "src/components/effects/border-beam/PulseDriver.ts"
-    },
-    {
-      "path": "styles.ts",
-      "target": "src/components/effects/border-beam/styles.ts"
     }
   ],
   "changelog": [
     {
+      "version": "1.0.2",
+      "date": "2026-08-27",
+      "summary": "Internal refactor: derived render-phase state replaces sync effects; no API change.",
+      "breaking": false
+    },
+    {
       "version": "1.0.1",
       "date": "2026-07-31",
-      "summary": "Slowed the beam animation under reduced motion and added dynamic remixer props (size, colorVariant, theme, active, strength, duration, beamWidth, backgroundColor).",
+      "summary": "Added reduced motion support.",
       "breaking": false
     },
     {

@@ -1,5 +1,4 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -10,7 +9,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-type FillDirection = "up" | "right";
+type FillDirection = "up" | "down" | "left" | "right";
 type TextAlign = "left" | "center" | "right";
 
 type PixelTextFillProps = {
@@ -149,6 +148,10 @@ export default function PixelTextFill({
     const mediaQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
     if (!mediaQuery) return;
 
+    // matchMedia isn't available during SSR, so the real value can only be
+    // read after mount - this can't be a lazy useState initializer without
+    // risking a hydration mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrefersReducedMotion(mediaQuery.matches);
 
     const onReduceMotionChange = (event: MediaQueryListEvent) => {
@@ -325,7 +328,7 @@ export default function PixelTextFill({
       const head = progress * (total + stagger);
       const soft = Math.max(0.35, bandFraction) * Math.max(0.25, effectWidth);
       const settle = clamp01(settleBlend);
-      const horizontal = direction === "right";
+      const horizontal = direction === "right" || direction === "left";
       const dissolve = new Path2D();
       let hasDissolve = false;
       let hasFillMask = false;
@@ -355,7 +358,7 @@ export default function PixelTextFill({
           mctx.fillRect(char.x, char.top, char.width, char.height);
           hasFillMask = true;
         } else if (fillT > 0.001) {
-          if (horizontal) {
+          if (direction === "right") {
             const crestX = char.x + fillT * (char.width + fadePx * 0.95);
             const grad = mctx.createLinearGradient(crestX - fadePx, 0, crestX + fadePx * 0.2, 0);
 
@@ -365,6 +368,27 @@ export default function PixelTextFill({
 
             mctx.fillStyle = grad;
             mctx.fillRect(char.x, char.top, char.width, char.height);
+          } else if (direction === "left") {
+            const crestX = right - fillT * (char.width + fadePx * 0.95);
+            const grad = mctx.createLinearGradient(crestX - fadePx * 0.2, 0, crestX + fadePx, 0);
+
+            grad.addColorStop(0, "rgba(255,255,255,0)");
+            grad.addColorStop(0.35, "rgba(255,255,255,0.4)");
+            grad.addColorStop(1, "rgba(255,255,255,1)");
+
+            mctx.fillStyle = grad;
+            mctx.fillRect(char.x, char.top, char.width, char.height);
+          } else if (direction === "down") {
+            const crestY = char.top + fillT * (char.height + fadePx * 0.95);
+            const gradBottom = crestY + fadePx * 0.2;
+            const grad = mctx.createLinearGradient(0, crestY - fadePx, 0, gradBottom);
+
+            grad.addColorStop(0, "rgba(255,255,255,1)");
+            grad.addColorStop(0.65, "rgba(255,255,255,0.4)");
+            grad.addColorStop(1, "rgba(255,255,255,0)");
+
+            mctx.fillStyle = grad;
+            mctx.fillRect(char.x, char.top, char.width, Math.min(char.bottom, gradBottom) - char.top);
           } else {
             const crestY = char.bottom - fillT * (char.height + fadePx * 0.95);
             const gradTop = crestY - fadePx * 0.2;
@@ -401,7 +425,17 @@ export default function PixelTextFill({
             if (cellWidth <= 0) continue;
 
             const cx = x + cellWidth * 0.5;
-            const fromStart = horizontal ? (cx - char.x) * invAxis : (char.bottom - cy) * invAxis;
+            let fromStart: number;
+
+            if (direction === "right") {
+              fromStart = (cx - char.x) * invAxis;
+            } else if (direction === "left") {
+              fromStart = (right - cx) * invAxis;
+            } else if (direction === "down") {
+              fromStart = (cy - char.top) * invAxis;
+            } else {
+              fromStart = (char.bottom - cy) * invAxis;
+            }
             const coverage = clamp01((front + soft * 0.5 - fromStart) / soft);
 
             if (coverage <= 0.001) continue;
@@ -458,7 +492,8 @@ export default function PixelTextFill({
     const tickProgress = () => {
       if (disposed) return;
 
-      progress += (targetProgress - progress) * 0.18;
+      const lerpAmount = 0.18;
+      progress += (targetProgress - progress) * lerpAmount;
 
       if (Math.abs(targetProgress - progress) < 0.001) {
         progress = targetProgress;
@@ -542,7 +577,10 @@ export default function PixelTextFill({
     direction,
     end,
     effectWidth,
+    fontSize,
+    fontWeight,
     lineHeight,
+    maxWidth,
     pixelSize,
     prefersReducedMotion,
     primaryColor,
@@ -550,6 +588,7 @@ export default function PixelTextFill({
     stagger,
     start,
     text,
+    textAlign,
     textColor,
   ]);
 

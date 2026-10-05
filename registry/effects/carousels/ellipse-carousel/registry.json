@@ -39,7 +39,7 @@
     {
       "name": "centerLabel",
       "type": "string",
-      "default": "HYPERIUX",
+      "default": "Ellipse Carousel",
       "description": "Text shown at the center of the ellipse when enabled.",
       "remixer": {
         "enabled": false,
@@ -220,10 +220,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/ellipse-carousel/index.tsx"
-    },
-    {
-      "path": "EllipseCarousel.tsx",
-      "target": "src/components/effects/ellipse-carousel/EllipseCarousel.tsx"
     }
   ]
 }

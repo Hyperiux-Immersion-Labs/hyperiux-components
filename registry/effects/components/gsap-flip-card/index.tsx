@@ -90,13 +90,12 @@ const CAPTION_MOBILE_LINE_RATIO = 1.5;
 const CAPTION_MOBILE_LINE = `${3 * CAPTION_MOBILE_LINE_RATIO}vw`;
 const CAPTION_MOBILE_LINE_SM = `${4 * CAPTION_MOBILE_LINE_RATIO}vw`;
 
-const IMAGE_BASE =
-  "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/gsap-flip-card";
+const IMAGE_BASE = "https://picsum.photos/seed";
 
 const defaultItems: GsapFlipCardItem[] = [
   {
     id: 0,
-    image: `${IMAGE_BASE}/img01.png`,
+    image: `${IMAGE_BASE}/gsapflipcard1/1600/1200`,
     title: "The Backhand",
     meta: "Tennis / Studio Studies / 01",
     description: "A backhand cuts across a field of red. The player holds the frame in tension, turning a split-second swing into a study of balance, timing, and control.",
@@ -105,7 +104,7 @@ const defaultItems: GsapFlipCardItem[] = [
   },
   {
     id: 1,
-    image: `${IMAGE_BASE}/img02.png`,
+    image: `${IMAGE_BASE}/gsapflipcard2/1600/1200`,
     title: "Nothing but Net",
     meta: "Basketball / Court Details / 02",
     description: "An orange rim stands sharp against deep blue. The ball meets the net at the tipping point between anticipation and release, with the whole game distilled into one detail.",
@@ -114,7 +113,7 @@ const defaultItems: GsapFlipCardItem[] = [
   },
   {
     id: 2,
-    image: `${IMAGE_BASE}/img03.png`,
+    image: `${IMAGE_BASE}/gsapflipcard3/1600/1200`,
     title: "Above Ground",
     meta: "Running / Motion Studies / 03",
     description: "Seen from below, a runner stretches across an open sky. With the ground out of sight, each stride becomes a brief moment of flight, all reach, rhythm, and forward drive.",
@@ -123,7 +122,7 @@ const defaultItems: GsapFlipCardItem[] = [
   },
   {
     id: 3,
-    image: `${IMAGE_BASE}/img04.png`,
+    image: `${IMAGE_BASE}/gsapflipcard4/1600/1200`,
     title: "A Different Gear",
     meta: "Cycling / Style in Sport / 04",
     description: "A black suit and a road bike share an acid-green stage. Precise tailoring meets the clean geometry of carbon, bringing the poise of a fashion portrait to the world of cycling.",
@@ -132,7 +131,7 @@ const defaultItems: GsapFlipCardItem[] = [
   },
   {
     id: 4,
-    image: `${IMAGE_BASE}/img05.png`,
+    image: `${IMAGE_BASE}/gsapflipcard5/1600/1200`,
     title: "After Hours",
     meta: "Eyewear / Athlete Portraits / 05",
     description: "White shield lenses emerge from the shadows. A narrow band of light traces the athlete’s profile, drawing attention to the sculpted eyewear and the quiet focus behind it.",

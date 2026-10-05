@@ -1,11 +1,16 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 'use client';
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
+
+function prefersReducedMotion() {
+  if (typeof window === "undefined") return false;
+
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
 
 const BASE_HEIGHT_VH = 600;
 const MIN_HEIGHT_VH = 300;
@@ -18,13 +23,6 @@ const CHARACTER_Y_PERCENT_MAX = 200;
 const CHARACTER_EASE = "elastic.out(1,0.8)";
 
 const TEXT = "Build faster. Animate better. Ship smarter. Hyperiux Vault gives you the tools to create high-performance interfaces that look premium and feel effortless.";
-
-// True when the user has asked the OS to minimise animation. Safe to call
-// during render - returns false on the server.
-function prefersReducedMotion() {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-}
 
 // Reduced motion: keep the per-character assembly, just far weaker - the
 // main horizontal scroll (xPercent:-100) is left alone, it's the functional
@@ -50,14 +48,11 @@ interface TextConvergenceProps {
   text?: string;
   bgColor?: string;
   textColor?: string;
-  charRotation?: number;
 }
 
 export default function TextConvergence({
   text = TEXT,
   bgColor = "#111111",
-  textColor = "text-white",
-  charRotation = 20,
 }: TextConvergenceProps) {
   // State and refs
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -131,29 +126,45 @@ export default function TextConvergence({
       });
 
       split.chars.forEach((character) => {
-        gsap.from(character, {
-          yPercent:
-            gsap.utils.random(CHARACTER_Y_PERCENT_MIN, CHARACTER_Y_PERCENT_MAX) *
-            charScale,
-          rotation:
-            gsap.utils.random(-charRotation, charRotation) *
-            charScale,
-          ease: CHARACTER_EASE,
-          scrollTrigger: {
-            trigger: character,
-            containerAnimation: scrollTween,
-            start: "left 100%",
-            end: "left 30%",
-            scrub: 0.4,
-          },
+        // Kill any tween still in flight on this character (e.g. from a
+        // restart trigger firing mid-animation) so the new tween
+        // never starts from - or compounds onto - an unpredictable
+        // mid-playback transform.
+        gsap.killTweensOf(character);
+
+        const startYPercent =
+          gsap.utils.random(CHARACTER_Y_PERCENT_MIN, CHARACTER_Y_PERCENT_MAX) *
+          charScale;
+
+        // Explicitly snap back to the defined scattered starting state
+        // before animating, instead of relying on gsap.from() to infer
+        // the "end" state from whatever the DOM currently looks like.
+        gsap.set(character, {
+          yPercent: startYPercent,
         });
+
+        gsap.fromTo(
+          character,
+          { yPercent: startYPercent },
+          {
+            yPercent: 0,
+            ease: CHARACTER_EASE,
+            scrollTrigger: {
+              trigger: character,
+              containerAnimation: scrollTween,
+              start: "left 100%",
+              end: "left 30%",
+              scrub: 0.4,
+            },
+          }
+        );
       });
     }, sectionRef);
 
     return () => {
       context.revert();
     };
-  }, [text, charRotation]);
+  }, [text]);
 
   // Return
   return (
@@ -163,12 +174,12 @@ export default function TextConvergence({
       style={{ backgroundColor: bgColor }}
     >
       <div className="sticky top-0 flex h-screen items-center overflow-clip">
-        <h3
+        <h1
           ref={textRef}
-          className={`flex w-max whitespace-nowrap gap-[4vw] pl-[100vw] font-sans! text-4xl font-bold leading-[1.1] tracking-tighter ${textColor} sm:text-6xl lg:text-8xl xl:text-9xl`}
+          className="flex w-max whitespace-nowrap gap-[4vw] pl-[100vw] ! text-4xl font-bold leading-[1.1] tracking-tighter text-white sm:text-6xl lg:text-8xl xl:text-9xl"
         >
           {text}
-        </h3>
+        </h1>
 
         <div
           ref={introRef}
@@ -178,17 +189,7 @@ export default function TextConvergence({
             className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_52%,rgba(255,255,255,0.06)_0%,transparent_70%)]"
           />
 
-          <span
-            className="absolute top-[2.2rem] left-[2.4rem] font-mono text-xs uppercase tracking-[0.22vw] text-gray-400"
-          >
-            scroll experience
-          </span>
-
-          <span
-            className="absolute top-[2.2rem] right-[2.4rem] font-mono text-xs uppercase tracking-[0.22vw] text-gray-400"
-          >
-            v1.0
-          </span>
+         
 
           <div
             className="absolute inset-0 flex flex-col items-center justify-center gap-[2.4rem]"

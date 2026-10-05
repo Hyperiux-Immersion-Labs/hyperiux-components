@@ -1,5 +1,4 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -185,14 +184,11 @@ export default function FocusText({
       className={`relative flex min-h-screen w-full items-center overflow-hidden px-6 ${className}`}
       style={{
         backgroundColor,
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
       }}
     >
       <h1
         data-focus-heading
-        className="m-0 w-full font-sans font-black uppercase leading-none tracking-tight opacity-0"
+        className="m-0 w-full  font-black uppercase leading-none tracking-tight opacity-0"
         style={{
           fontSize: `clamp(2rem, ${fontSize}vw, 8rem)`,
           color: textColor,

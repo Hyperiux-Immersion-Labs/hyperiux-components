@@ -14,7 +14,6 @@
   "description": "Fullscreen image slider that reveals each slide through staggered vertical strips with a Ken-Burns zoom and a GSAP SplitText title reveal",
   "category": "carousels",
   "dependencies": [
-    "@gsap/react",
     "gsap"
   ],
   "registryDependencies": [],
@@ -140,6 +139,17 @@
       "type": "boolean",
       "default": true,
       "description": "Enable the click-to-navigate overlay and its circular cursor (left half = previous, right half = next).",
+      "remixer": {
+        "control": "checkbox",
+        "group": "ui",
+        "groupTitle": "UI"
+      }
+    },
+    {
+      "name": "mobNavButton",
+      "type": "boolean",
+      "default": true,
+      "description": "Show the manual previous/next buttons under the title on tablet and mobile. Requires showControls.",
       "remixer": {
         "control": "checkbox",
         "group": "ui",

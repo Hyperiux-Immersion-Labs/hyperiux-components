@@ -1,3 +1,4 @@
+// Built using Hyperiux Vault: https://vault.hyperiux.com
 "use client";
 
 import type React from "react";
@@ -100,6 +101,7 @@ export function ShinyButton({
       --transition: ${easeDuration}s cubic-bezier(0.25, 1, 0.5, 1);
 
       isolation: isolate;
+      width: fit-content;
       position: relative;
       overflow: hidden;
       cursor: pointer;

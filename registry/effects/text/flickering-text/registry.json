@@ -14,8 +14,8 @@
   "description": "Deterministic per-character text flicker with adjustable correlation and optional glow bloom.",
   "category": "text",
   "dependencies": [
-    "gsap",
-    "@gsap/react"
+    "@gsap/react",
+    "gsap"
   ],
   "registryDependencies": [],
   "previewUrl": "/demo/flickering-text",
@@ -30,7 +30,7 @@
     {
       "name": "backgroundColor",
       "type": "string",
-      "default": "#111844",
+      "default": "#0a0a0a",
       "description": "Background color behind the text.",
       "remixer": {
         "control": "color",
@@ -161,7 +161,7 @@
     {
       "name": "fontSize",
       "type": "number | string",
-      "default": "12vw",
+      "default": "10vw",
       "description": "Font size for the text.",
       "remixer": {
         "control": "text",

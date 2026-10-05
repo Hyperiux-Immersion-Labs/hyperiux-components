@@ -70,7 +70,7 @@
       "name": "cardRadius",
       "type": "number",
       "default": 8,
-      "description": "Corner radius on each card, in px (desktop only — tablet/mobile keep their responsive radius).",
+      "description": "Corner radius on each card, in px (desktop only - tablet/mobile keep their responsive radius).",
       "remixer": {
         "control": "range",
         "group": "style",

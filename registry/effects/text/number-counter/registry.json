@@ -5,7 +5,7 @@
     {
       "version": "1.0.1",
       "date": "2026-07-30",
-      "summary": "Added reduced-motion support and reworked the props API to working duration/stagger controls across all counter variants.",
+      "summary": "Added reduced-motion support and configurable animation timing.",
       "breaking": false
     },
     {
@@ -37,18 +37,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/number-counter/index.tsx"
-    },
-    {
-      "path": "NumberCounterOne.tsx",
-      "target": "src/components/effects/number-counter/NumberCounterOne.tsx"
-    },
-    {
-      "path": "NumberCounterTwo.tsx",
-      "target": "src/components/effects/number-counter/NumberCounterTwo.tsx"
-    },
-    {
-      "path": "NumberCounterThree.tsx",
-      "target": "src/components/effects/number-counter/NumberCounterThree.tsx"
     }
   ],
   "props": [

@@ -22,8 +22,8 @@
     {
       "name": "duration",
       "type": "number",
-      "default": 0.9,
-      "description": "Open and close animation duration in seconds.",
+      "default": 0.65,
+      "description": "Drawer panel and overlay slide duration in seconds.",
       "remixer": {
         "control": "range",
         "group": "timing",
@@ -34,23 +34,40 @@
       }
     },
     {
+      "name": "contentDuration",
+      "type": "number",
+      "default": 0.25,
+      "description": "Duration in seconds of the content fade, staged after the panel opens and before it closes.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0.05,
+        "max": 1,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "contentDelay",
+      "type": "number",
+      "default": 0.4,
+      "description": "Delay in seconds before the staged content fades in, measured from when the drawer starts opening.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
       "name": "ease",
       "type": "string",
       "default": "power2.inOut",
       "description": "GSAP easing used by the drawer panel and overlay.",
       "remixer": {
-        "control": "select",
-        "group": "timing",
-        "groupTitle": "Timing",
-        "options": [
-          "power1.out",
-          "power2.out",
-          "power2.in",
-          "power2.inOut",
-          "power3.inOut",
-          "expo.out",
-          "linear"
-        ]
+        "enabled": false
       }
     },
     {
@@ -133,17 +150,13 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/information-drawer/index.tsx"
-    },
-    {
-      "path": "InformationDrawerComp.tsx",
-      "target": "src/components/effects/information-drawer/InformationDrawerComp.tsx"
     }
   ],
   "changelog": [
     {
       "version": "1.0.0",
       "date": "2026-08-21",
-      "summary": "Initial registry release with working drawer motion, panel color, text color, width, and overlay controls.",
+      "summary": "Initial release",
       "breaking": false
     }
   ]

@@ -169,10 +169,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/spider-particles/index.tsx"
-    },
-    {
-      "path": "createSuspendedRaf.ts",
-      "target": "src/components/effects/spider-particles/createSuspendedRaf.ts"
     }
   ],
   "version": "1.0.1",

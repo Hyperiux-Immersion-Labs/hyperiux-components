@@ -14,8 +14,8 @@
   "description": "Slot-machine style text reveal where each character spins up a vertical reel of itself before landing.",
   "category": "text",
   "dependencies": [
-    "gsap",
-    "@gsap/react"
+    "@gsap/react",
+    "gsap"
   ],
   "registryDependencies": [],
   "previewUrl": "/demo/rolling-text",

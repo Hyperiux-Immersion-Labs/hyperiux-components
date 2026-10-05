@@ -19,17 +19,13 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/hover-stack/index.tsx"
-    },
-    {
-      "path": "HoverStackComp.tsx",
-      "target": "src/components/effects/hover-stack/HoverStackComp.tsx"
     }
   ],
   "changelog": [
     {
       "version": "1.0.1",
       "date": "2026-07-30",
-      "summary": "Added reduced-motion support, fixed the demo not rendering, and reworked the props API (items, spread, rotation, duration, accentColor) to match the real component.",
+      "summary": "Added reduced-motion support and configurable stack controls.",
       "breaking": false
     },
     {
@@ -153,9 +149,9 @@
       }
     },
     {
-      "name": "accentColor",
+      "name": "borderColor",
       "type": "color",
-      "description": "Outline color shown around the active card. Transparent by default.",
+      "description": "Border color shown around the active card. Transparent by default.",
       "default": "transparent",
       "remixer": {
         "control": "color",

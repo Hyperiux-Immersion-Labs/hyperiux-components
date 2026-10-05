@@ -21,8 +21,8 @@
   "category": "scroll",
   "dependencies": [
     "gsap",
-    "three",
-    "lenis"
+    "lenis",
+    "three"
   ],
   "registryDependencies": [],
   "previewUrl": "/demo/split-canvas",
@@ -37,22 +37,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/split-canvas/index.tsx"
-    },
-    {
-      "path": "PixelScrollCanvas.tsx",
-      "target": "src/components/effects/split-canvas/PixelScrollCanvas.tsx"
-    },
-    {
-      "path": "content.ts",
-      "target": "src/components/effects/split-canvas/content.ts"
-    },
-    {
-      "path": "pixel-transition.ts",
-      "target": "src/components/effects/split-canvas/pixel-transition.ts"
-    },
-    {
-      "path": "createSuspendedRaf.ts",
-      "target": "src/components/effects/split-canvas/createSuspendedRaf.ts"
     }
   ],
   "props": [
@@ -99,7 +83,7 @@
       "name": "canvasSize",
       "type": "number",
       "default": 599,
-      "description": "Size (px) of the central transitioning canvas panel on desktop \u2014 mobile/tablet sizes scale proportionally.",
+      "description": "Size (px) of the central transitioning canvas panel on desktop - mobile/tablet sizes scale proportionally.",
       "remixer": {
         "control": "range",
         "group": "shader",

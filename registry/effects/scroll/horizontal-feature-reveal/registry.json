@@ -35,10 +35,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/horizontal-feature-reveal/index.tsx"
-    },
-    {
-      "path": "HorizontalFeatureRevealComp.tsx",
-      "target": "src/components/effects/horizontal-feature-reveal/HorizontalFeatureRevealComp.tsx"
     }
   ],
   "props": [
@@ -47,21 +43,50 @@
       "type": "color",
       "default": "#ffffff",
       "description": "Background color of the section.",
-      "remixer": { "control": "color", "group": "style", "groupTitle": "Style" }
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
     },
     {
-      "name": "imageParallaxRange",
+      "name": "textColor",
+      "type": "color",
+      "default": "#000000",
+      "description": "Color of the section text.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "translateX",
       "type": "number",
       "default": 30,
-      "description": "Symmetric parallax shift range (%) each image travels as it scrolls past.",
-      "remixer": { "control": "range", "group": "motion", "groupTitle": "Motion", "min": 0, "max": 60, "step": 1 }
+      "description": "Image parallax travel as a percentage of the image width. Each image starts at -translateX% and scrolls to +translateX%.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 50,
+        "step": 1
+      }
     },
     {
       "name": "cardGap",
       "type": "number",
       "default": 15,
       "description": "Gap between industry cards, in vw.",
-      "remixer": { "control": "range", "group": "style", "groupTitle": "Style", "min": 0, "max": 30, "step": 1 }
+      "remixer": {
+        "control": "range",
+        "group": "style",
+        "groupTitle": "Style",
+        "min": 0,
+        "max": 30,
+        "step": 1
+      }
     }
   ],
   "remixer": {
@@ -71,6 +96,8 @@
       "buttonClassName": "right-4! top-25!",
       "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
     },
-    "copyCode": { "includeOnlyPublicProps": true }
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
   }
 }

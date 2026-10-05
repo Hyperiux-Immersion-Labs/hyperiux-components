@@ -1,12 +1,12 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
 import { useEffect, useRef, useState, type ComponentPropsWithoutRef, type CSSProperties, type PointerEvent } from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const DEFAULT_HREF = "#";
-const COMPACT_LAYOUT_BREAKPOINT = 1280;
+const COMPACT_LAYOUT_BREAKPOINT = 1025;
 const ANIMATION_DURATION_MS = 450;
 
 export interface ArrowFillButtonOwnProps {
@@ -25,25 +25,22 @@ export interface ArrowFillButtonOwnProps {
   fillOnHover?: boolean;
 }
 
-export type ArrowFillButtonProps = ArrowFillButtonOwnProps & Omit<ComponentPropsWithoutRef<'a'>, keyof ArrowFillButtonOwnProps>;
+export type ArrowFillButtonProps = ArrowFillButtonOwnProps & Omit<ComponentPropsWithoutRef<typeof Link>, keyof ArrowFillButtonOwnProps>;
 
 function ArrowFillButton({
-  btnText="Hover Me",
+  btnText = "Hover Me",
   href = DEFAULT_HREF,
   className = "",
-
   bgColor = "#ff5f00",
   textColor = "#ffffff",
-
   fillBgColor = "#ffffff",
   fillTextColor = "#ff5f00",
-
   hoverFillBgColor = "#ffffff",
   hoverFillTextColor = "#ff5f00",
-
   arrowColor,
   hoverArrowColor,
-
+  animationDuration = ANIMATION_DURATION_MS / 1000,
+  fillOnHover = true,
   ...props
 }: ArrowFillButtonProps) {
   const [isReady, setIsReady] = useState(false);
@@ -103,7 +100,7 @@ function ArrowFillButton({
     releaseTimeoutRef.current = window.setTimeout(() => {
       setIsPressed(false);
       releaseTimeoutRef.current = null;
-    }, ANIMATION_DURATION_MS);
+    }, animationDuration * 1000);
   };
 
   const handlePointerDown = (event: PointerEvent<HTMLAnchorElement>) => {
@@ -142,7 +139,7 @@ function ArrowFillButton({
   };
 
   return (
-    <a
+    <Link
       href={href}
       {...props}
       data-pressed={isPressed ? "true" : "false"}
@@ -161,6 +158,7 @@ function ArrowFillButton({
         "--btn-fill-text-hover": hoverFillTextColor,
         "--btn-arrow": arrowColor || fillTextColor,
         "--btn-arrow-hover": hoverArrowColor || hoverFillTextColor,
+        "--btn-duration": `${animationDuration}s`,
         visibility: isReady ? "visible" : "hidden",
       } as CSSProperties & Record<string, string | number>}
     >
@@ -216,7 +214,7 @@ function ArrowFillButton({
             strokeWidth={1.8}
           />
         </span>
-    </a>
+    </Link>
   );
 }
 

@@ -21,17 +21,13 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/interactive-list-preview/index.tsx"
-    },
-    {
-      "path": "InteractiveListPreviewComp.tsx",
-      "target": "src/components/effects/interactive-list-preview/InteractiveListPreviewComp.tsx"
     }
   ],
   "changelog": [
     {
       "version": "1.0.1",
       "date": "2026-07-30",
-      "summary": "Added reduced-motion support, renamed the component file to match production conventions, and reworked the props API to working imageSize/duration/smoothness/lerp controls.",
+      "summary": "Added reduced motion support.",
       "breaking": false
     },
     {

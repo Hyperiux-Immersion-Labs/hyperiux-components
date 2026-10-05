@@ -214,10 +214,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/arc-flow-carousel/index.tsx"
-    },
-    {
-      "path": "ArcFlowCarouselComp.tsx",
-      "target": "src/components/effects/arc-flow-carousel/ArcFlowCarouselComp.tsx"
     }
   ]
 }

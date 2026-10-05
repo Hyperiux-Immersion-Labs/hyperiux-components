@@ -1,5 +1,4 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
 import { useRef } from "react";
@@ -93,14 +92,14 @@ const noiseAt = (lane: number, time: number, seed: number) => {
 
 const FlickeringText = ({
   className = "",
-  backgroundColor = "#111844",
+  backgroundColor = "#0a0a0a",
   textColor = "#ffffff",
   wigglesPerSecond = 2,
   correlation = 0.5,
   minOpacity = 0,
   minAmount = -1,
   maxAmount = 1,
-  fontSize = "10vw",
+  fontSize = "9vw",
   fontWeight = 700,
   glow = true,
   glowColor,
@@ -211,20 +210,11 @@ const FlickeringText = ({
   return (
     <section
       className={`relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 sm:px-6 ${className}`}
-      style={{ backgroundColor: backgroundColor }}
+      style={{ backgroundColor }}
     >
       <div
-        aria-hidden="true"
-        className="absolute inset-0"
-        style={{
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-      />
-      <div
         ref={containerRef}
-        className="relative w-full  max-w-[1400px]"
+        className="relative w-full -translate-y-32 max-w-[1400px]"
         aria-label={DEFAULT_LINES.join(" ")}
       >
         {lines.map((line, lineIndex) => (

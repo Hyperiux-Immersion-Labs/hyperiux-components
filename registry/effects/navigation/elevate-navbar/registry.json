@@ -17,7 +17,7 @@
   ],
   "type": "registry:component",
   "title": "Elevate Navbar",
-  "description": "Responsive glass-morphism pill navigation with animated dropdowns, GSAP text-swap hover effects, and a collapsible mobile accordion menu",
+  "description": "A responsive glassmorphism navbar with animated dropdowns, text-swap hover effects, and a collapsible mobile menu.",
   "category": "navigation",
   "dependencies": [
     "gsap",
@@ -114,10 +114,22 @@
         "group": "motion",
         "groupTitle": "Motion",
         "options": [
-          { "value": "power2.out", "label": "Power 2 Out" },
-          { "value": "power3.out", "label": "Power 3 Out" },
-          { "value": "power4.out", "label": "Power 4 Out" },
-          { "value": "expo.out", "label": "Expo Out" }
+          {
+            "value": "power2.out",
+            "label": "Power 2 Out"
+          },
+          {
+            "value": "power3.out",
+            "label": "Power 3 Out"
+          },
+          {
+            "value": "power4.out",
+            "label": "Power 4 Out"
+          },
+          {
+            "value": "expo.out",
+            "label": "Expo Out"
+          }
         ]
       }
     },
@@ -148,18 +160,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/elevate-navbar/index.tsx"
-    },
-    {
-      "path": "ElevateMobileNav.tsx",
-      "target": "src/components/effects/elevate-navbar/ElevateMobileNav.tsx"
-    },
-    {
-      "path": "ElevateDesktopNav.tsx",
-      "target": "src/components/effects/elevate-navbar/ElevateDesktopNav.tsx"
-    },
-    {
-      "path": "useFocusTrap.ts",
-      "target": "src/components/effects/elevate-navbar/useFocusTrap.ts"
     }
   ]
 }

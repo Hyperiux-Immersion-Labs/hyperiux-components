@@ -5,7 +5,7 @@
     {
       "version": "1.0.1",
       "date": "2026-07-24",
-      "summary": "Fixed responsiveness issues and added a reduced-motion notice explaining the continuous scroll-driven rotation.",
+      "summary": "Added reduced motion support.",
       "breaking": false
     },
     {
@@ -105,10 +105,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/circular-split-roll/index.tsx"
-    },
-    {
-      "path": "CircularSplitRollComp.tsx",
-      "target": "src/components/effects/circular-split-roll/CircularSplitRollComp.tsx"
     }
   ]
 }

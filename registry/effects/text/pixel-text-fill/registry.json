@@ -41,6 +41,14 @@
             "label": "Up"
           },
           {
+            "value": "down",
+            "label": "Down"
+          },
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
             "value": "right",
             "label": "Right"
           }

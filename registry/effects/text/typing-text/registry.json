@@ -125,20 +125,6 @@
       }
     },
     {
-      "name": "letterSpacing",
-      "type": "number",
-      "default": 0,
-      "description": "Letter spacing in em units.",
-      "remixer": {
-        "control": "range",
-        "group": "type",
-        "groupTitle": "Type",
-        "min": 0,
-        "max": 0.18,
-        "step": 0.01
-      }
-    },
-    {
       "name": "textAlign",
       "type": "string",
       "default": "left",

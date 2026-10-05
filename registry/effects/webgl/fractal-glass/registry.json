@@ -139,10 +139,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/fractal-glass/index.tsx"
-    },
-    {
-      "path": "createSuspendedRaf.ts",
-      "target": "src/components/effects/fractal-glass/createSuspendedRaf.ts"
     }
   ]
 }

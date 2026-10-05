@@ -1,5 +1,4 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
@@ -45,6 +44,10 @@ const ChromaticText = ({
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+    // matchMedia isn't available during SSR, so the real value can only be
+    // read after mount - this can't be a lazy useState initializer without
+    // risking a hydration mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrefersReducedMotion(mediaQuery.matches);
 
     const handleChange = (event: MediaQueryListEvent) => {

@@ -34,7 +34,7 @@
     {
       "name": "size",
       "type": "number",
-      "default": 150,
+      "default": 217,
       "description": "Diameter of the lens in pixels.",
       "remixer": {
         "control": "range",
@@ -48,7 +48,7 @@
     {
       "name": "magnification",
       "type": "number",
-      "default": 1.15,
+      "default": 1.06,
       "description": "Zoom level applied to the content copy under the lens.",
       "remixer": {
         "control": "range",
@@ -62,7 +62,7 @@
     {
       "name": "textHoverSize",
       "type": "number",
-      "default": 130,
+      "default": 107,
       "description": "Lens diameter when hovering a data-cursor=\"text\" target.",
       "remixer": {
         "control": "range",
@@ -104,7 +104,7 @@
     {
       "name": "distortion",
       "type": "number",
-      "default": 60,
+      "default": 36,
       "description": "SVG displacement strength for the glass refraction.",
       "remixer": {
         "control": "range",
@@ -118,8 +118,8 @@
     {
       "name": "aberration",
       "type": "number",
-      "default": 1,
-      "description": "Chromatic aberration amount — how far the R/G/B channels split at the rim.",
+      "default": 0.2,
+      "description": "Chromatic aberration amount - how far the R/G/B channels split at the rim.",
       "remixer": {
         "control": "range",
         "group": "filter",

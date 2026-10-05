@@ -8,31 +8,26 @@ import {
   useScroll,
   useTransform,
   useReducedMotion,
+  useMotionValue,
+  useSpring,
+  useMotionValueEvent,
   type MotionValue,
 } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-// ---------------------------------------------------------------------------
-// Demo content
-// ---------------------------------------------------------------------------
+
+
+const IMG_BASE = "https://picsum.photos/seed";
 
 const IMG = {
-  plane:
-    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80",
-  painting:
-    "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=1200&q=80",
-  breaker:
-    "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1200&q=80",
-  dog:
-    "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80",
-  footballer:
-    "https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=1200&q=80",
-  jacket:
-    "https://images.unsplash.com/photo-1520975954732-35dd22299614?auto=format&fit=crop&w=1200&q=80",
-  meadow:
-    "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=80",
-  stripes:
-    "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=1200&q=80",
+  plane: `${IMG_BASE}/stackspread1/1600/1200`,
+  painting: `${IMG_BASE}/stackspread2/1600/1200`,
+  breaker: `${IMG_BASE}/stackspread3/1600/1200`,
+  dog: `${IMG_BASE}/stackspread4/1600/1200`,
+  footballer: `${IMG_BASE}/stackspread5/1600/1200`,
+  jacket: `${IMG_BASE}/stackspread6/1600/1200`,
+  meadow: `${IMG_BASE}/stackspread7/1600/1200`,
+  stripes: `${IMG_BASE}/stackspread8/1600/1200`,
 } as const;
 
 // per-image rest scale, keyed by img index (1-8). default 1, drop below to shrink.
@@ -50,7 +45,7 @@ const s = (i: number) => SCALE[i] ?? 1;
 
 // array order = stack order, back (z 2) -> front (z 9)
 const CARDS: StackSpreadCard[] = [
-  // top-left stripes (img08) — sm row 1 left
+  // top-left stripes (img08) - sm row 1 left
   {
     item: { src: IMG.stripes, alt: "Colour stripes" },
     stackOffset: { x: -8, y: -10 },
@@ -59,7 +54,7 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: -22, y: -40 },
     z: 2,
   },
-  // top-right meadow (img07) — sm row 1 right
+  // top-right meadow (img07) - sm row 1 right
   {
     item: { src: IMG.meadow, alt: "Wildflower meadow" },
     stackOffset: { x: 14, y: -10 },
@@ -68,7 +63,7 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: 22, y: -40 },
     z: 3,
   },
-  // mid-left jacket (img06) — sm row 2 left
+  // mid-left jacket (img06) - sm row 2 left
   {
     item: { src: IMG.jacket, alt: "Figure in a leather jacket" },
     stackOffset: { x: -16, y: 0 },
@@ -77,7 +72,7 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: -22, y: -19 },
     z: 4,
   },
-  // top-centre footballer (img05) — sm row 2 right
+  // top-centre footballer (img05) - sm row 2 right
   {
     item: { src: IMG.footballer, alt: "Footballer mid-kick" },
     stackOffset: { x: 1, y: -10 },
@@ -86,7 +81,7 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: 22, y: -19 },
     z: 5,
   },
-  // mid-right dog (img04) — sm row 3 left
+  // mid-right dog (img04) - sm row 3 left
   {
     item: { src: IMG.dog, alt: "Terrier in profile" },
     stackOffset: { x: 18, y: 1 },
@@ -95,7 +90,7 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: -22, y: 20 },
     z: 6,
   },
-  // bottom-left breaker (img03) — sm row 3 right
+  // bottom-left breaker (img03) - sm row 3 right
   {
     item: { src: IMG.breaker, alt: "Breakdancer holding a pose" },
     stackOffset: { x: -6, y: 10 },
@@ -104,7 +99,7 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: 22, y: 20 },
     z: 7,
   },
-  // bottom-centre painting (img02) — sm row 4 left
+  // bottom-centre painting (img02) - sm row 4 left
   {
     item: { src: IMG.painting, alt: "Renaissance fresco detail" },
     stackOffset: { x: 8, y: 7 },
@@ -113,7 +108,7 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: -22, y: 40 },
     z: 8,
   },
-  // bottom-right plane (img01) — sm row 4 right
+  // bottom-right plane (img01) - sm row 4 right
   {
     item: { src: IMG.plane, alt: "Vintage fighter plane" },
     stackOffset: { x: 20, y: 12 },
@@ -131,6 +126,24 @@ const CARDS: StackSpreadCard[] = [
 // Scroll progress where the cluster starts scattering and where it finishes.
 const SCATTER_START = 0.12;
 const SCATTER_END = 0.9;
+
+const PARALLAX_X = 2.6;
+const PARALLAX_Y = 2.2;
+const PARALLAX_SPRING = { stiffness: 90, damping: 22, mass: 0.6 };
+const parallaxDepth = (i: number, total: number) =>
+  total <= 1 ? 1 : 0.55 + (i / (total - 1)) * 0.75;
+
+// Deterministic pseudo-random in [0, 1) - keeps SSR and client in sync.
+const rand = (seed: number) => {
+  const v = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+  return v - Math.floor(v);
+};
+
+
+const parallaxDrift = (i: number) => ({
+  x: (rand(i + 1) < 0.5 ? -1 : 1) * (0.55 + rand(i + 11) * 0.9),
+  y: (rand(i + 21) < 0.5 ? -1 : 1) * (0.55 + rand(i + 31) * 0.9),
+});
 
 const SUB = "Digital products, interfaces, and experiences built around people.";
 
@@ -160,6 +173,42 @@ function useResponsive() {
     return () => window.removeEventListener("resize", read);
   }, []);
   return r;
+}
+
+function usePointerParallax(active: boolean, enabled: boolean) {
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const x = useSpring(rawX, PARALLAX_SPRING);
+  const y = useSpring(rawY, PARALLAX_SPRING);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    if (!active) {
+      rawX.set(0);
+      rawY.set(0);
+      return;
+    }
+
+    const onMove = (event: PointerEvent) => {
+      rawX.set((event.clientX / window.innerWidth) * 2 - 1);
+      rawY.set((event.clientY / window.innerHeight) * 2 - 1);
+    };
+    const onLeave = () => {
+      rawX.set(0);
+      rawY.set(0);
+    };
+
+    window.addEventListener("pointermove", onMove, { passive: true });
+    document.addEventListener("pointerleave", onLeave);
+
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerleave", onLeave);
+    };
+  }, [active, enabled, rawX, rawY]);
+
+  return { x, y };
 }
 
 export interface StackSpreadItem {
@@ -200,6 +249,9 @@ function Card({
   fixedCard,
   stackScale,
   cardRadius,
+  pointer,
+  depth,
+  drift,
 }: {
   card: StackSpreadCard;
   progress: MotionValue<number>;
@@ -214,6 +266,10 @@ function Card({
   stackScale: number;
   /** corner radius on each card, in px (desktop) */
   cardRadius: number;
+  pointer: { x: MotionValue<number>; y: MotionValue<number> };
+  depth: number;
+  /** signed per-axis pointer response, so each card drifts its own way */
+  drift: { x: number; y: number };
 }) {
   const { item, target } = card;
 
@@ -233,11 +289,17 @@ function Card({
   const endRotate = flat || isSmall ? 0 : target.rotate;
 
   // -50% keeps card centred on its anchor
-  const translate = useTransform(progress, (p) => {
-    const tx = stackOffset.x + (endX - stackOffset.x) * p;
-    const ty = stackOffset.y + (endY - stackOffset.y) * p;
-    return `calc(-50% + ${tx}vw) calc(-50% + ${ty}vh)`;
-  });
+  const translate = useTransform(
+    [progress, pointer.x, pointer.y],
+    ([p, px, py]: number[]) => {
+      const tx = stackOffset.x + (endX - stackOffset.x) * p;
+      const ty = stackOffset.y + (endY - stackOffset.y) * p;
+      const amount = depth * p;
+      const dx = tx - px * PARALLAX_X * amount * drift.x;
+      const dy = ty - py * PARALLAX_Y * amount * drift.y;
+      return `calc(-50% + ${dx}vw) calc(-50% + ${dy}vh)`;
+    },
+  );
   const rotate = useTransform(progress, [0, 1], [stackRotate, endRotate]);
   const scale = useTransform(progress, [0, 1], [stackScale, restScale]);
 
@@ -291,7 +353,7 @@ interface StackSpreadStageProps {
   clusterRotation?: boolean;
   /** scale of the cards while clustered, before the scatter */
   stackScale?: number;
-  /** corner radius on each card, in px (desktop only — mobile keeps its responsive radius) */
+  /** corner radius on each card, in px (desktop only - mobile keeps its responsive radius) */
   cardRadius?: number;
   /** color of the centre headline and subtitle */
   textColor?: string;
@@ -328,6 +390,13 @@ function StackSpreadStage({
 
   // centre text always fades in on scroll; the scale-in is dropped only when
   // reduced motion is confirmed (`true`), not on the null SSR value.
+  const [spread, setSpread] = useState(false);
+  useMotionValueEvent(progress, "change", (p) => {
+    setSpread((was) => (was ? p > 0.985 : p >= 0.999));
+  });
+  const parallaxEnabled = reduce !== true && !isSmall;
+  const pointer = usePointerParallax(spread, parallaxEnabled);
+
   const noScale = reduce === true;
   const copyOpacity = useTransform(progress, [textFadeStart, textFadeStart + 0.35], [0, 1]);
   const copyScale = useTransform(progress, [textFadeStart, 0.9], [0.85, 1]);
@@ -382,6 +451,9 @@ function StackSpreadStage({
               fixedCard={fixedCard}
               stackScale={stackScale}
               cardRadius={cardRadius}
+              pointer={pointer}
+              depth={parallaxEnabled ? parallaxDepth(i, cards.length) : 0}
+              drift={parallaxDrift(i)}
             />
           ))}
         </div>
@@ -390,9 +462,6 @@ function StackSpreadStage({
   );
 }
 
-// ---------------------------------------------------------------------------
-// Public component
-// ---------------------------------------------------------------------------
 
 export interface StackSpreadProps {
   /** scatter scroll distance, in vh */
@@ -402,7 +471,7 @@ export interface StackSpreadProps {
   clusterRotation?: boolean;
   /** scale of the cards while clustered, before the scatter */
   stackScale?: number;
-  /** corner radius on each card, in px (desktop only — mobile keeps its responsive radius) */
+  /** corner radius on each card, in px (desktop only - mobile keeps its responsive radius) */
   cardRadius?: number;
   /** color of the centre headline and subtitle */
   textColor?: string;

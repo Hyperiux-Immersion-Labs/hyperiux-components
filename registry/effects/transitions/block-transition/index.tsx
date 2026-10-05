@@ -1,15 +1,14 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
 import { TransitionRouter } from "next-transition-router";
-import React, { useLayoutEffect, useRef, type ReactNode } from "react";
+import React, { useCallback, useLayoutEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
+
 function prefersReducedMotion() {
   if (typeof window === "undefined") return false;
   return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 }
-
 
 const ROWS = 5;
 const COLOR = "#000000";
@@ -51,7 +50,12 @@ export default function BlockTransition({
   const safeRows = Math.round(clampNumber(rows, 2, 12, ROWS));
   const safeDuration = clampNumber(duration, 0.25, 3, 1);
 
-  const getRows = () => rowRefs.current.slice(0, safeRows).filter(Boolean) as HTMLDivElement[];
+  const getRows = useCallback(
+    () => rowRefs.current.slice(0, safeRows).filter(Boolean) as HTMLDivElement[],
+    [safeRows]
+  );
+
+
 
   const buildRowsAnimation = (timeline: gsap.core.Timeline, direction: 'cover' | 'reveal') => {
     const rows = getRows();
@@ -115,7 +119,7 @@ export default function BlockTransition({
         autoAlpha: 0,
       });
     });
-  }, [safeRows]);
+  }, [safeRows, getRows]);
 
 
   return (

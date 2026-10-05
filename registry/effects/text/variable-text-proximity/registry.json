@@ -11,7 +11,7 @@
   ],
   "type": "registry:component",
   "title": "Variable Hover",
-  "description": "Cursor-driven variable-font text where nearby letters gain weight and optical size",
+  "description": "Cursor-driven variable-font text where nearby letters gain weight",
   "category": "text",
   "dependencies": [
     "motion"
@@ -50,9 +50,18 @@
         "group": "motion",
         "groupTitle": "Motion",
         "options": [
-          { "value": "linear", "label": "Linear" },
-          { "value": "exponential", "label": "Exponential" },
-          { "value": "gaussian", "label": "Gaussian" }
+          {
+            "value": "linear",
+            "label": "Linear"
+          },
+          {
+            "value": "exponential",
+            "label": "Exponential"
+          },
+          {
+            "value": "gaussian",
+            "label": "Gaussian"
+          }
         ]
       }
     },
@@ -85,34 +94,6 @@
       }
     },
     {
-      "name": "baseOpticalSize",
-      "type": "number",
-      "default": 9,
-      "description": "Optical size away from the pointer.",
-      "remixer": {
-        "control": "range",
-        "group": "motion",
-        "groupTitle": "Motion",
-        "min": 8,
-        "max": 80,
-        "step": 1
-      }
-    },
-    {
-      "name": "hoverOpticalSize",
-      "type": "number",
-      "default": 40,
-      "description": "Optical size nearest the pointer.",
-      "remixer": {
-        "control": "range",
-        "group": "motion",
-        "groupTitle": "Motion",
-        "min": 8,
-        "max": 144,
-        "step": 1
-      }
-    },
-    {
       "name": "backgroundColor",
       "type": "string",
       "default": "#080808",
@@ -120,7 +101,7 @@
       "remixer": {
         "control": "color",
         "group": "colors",
-        "enabled":false,
+        "enabled": false,
         "groupTitle": "Colors"
       }
     },
@@ -164,31 +145,17 @@
       }
     },
     {
-      "name": "maxWidth",
+      "name": "width",
       "type": "number",
-      "default": 1040,
-      "description": "Maximum paragraph width in pixels.",
+      "default": 80,
+      "description": "Paragraph width as a percentage of its container.",
       "remixer": {
         "control": "range",
         "group": "type",
         "groupTitle": "Type",
-        "min": 520,
-        "max": 1320,
-        "step": 10
-      }
-    },
-    {
-      "name": "minWidth",
-      "type": "number",
-      "default": 920,
-      "description": "Minimum paragraph width in pixels.",
-      "remixer": {
-        "control": "range",
-        "group": "type",
-        "groupTitle": "Type",
-        "min": 420,
-        "max": 1320,
-        "step": 10
+        "min": 10,
+        "max": 100,
+        "step": 1
       }
     },
     {

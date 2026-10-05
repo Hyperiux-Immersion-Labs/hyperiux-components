@@ -5,7 +5,7 @@
     {
       "version": "1.0.1",
       "date": "2026-07-28",
-      "summary": "Added reduced-motion support and exposed title, subheading, and sliderData as public props.",
+      "summary": "Added reduced-motion support and customizable slider content.",
       "breaking": false
     },
     {
@@ -72,8 +72,9 @@
     },
     {
       "name": "easeScrollPercentage",
+      "label": "Zoom Travel",
       "type": "number",
-      "description": "Percentage of viewport distance used by the horizontal easing curve.",
+      "description": "Controls how much scroll distance the card uses to grow and shrink. Higher values make the zoom change more gradually.",
       "default": 100,
       "remixer": {
         "control": "range",
@@ -100,10 +101,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/zoom-slider/index.tsx"
-    },
-    {
-      "path": "ZoomSliderComp.tsx",
-      "target": "src/components/effects/zoom-slider/ZoomSliderComp.tsx"
     }
   ]
 }

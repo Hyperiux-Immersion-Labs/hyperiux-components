@@ -1,5 +1,4 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
 import { useMemo, type CSSProperties } from "react";
@@ -78,17 +77,33 @@ export default function GlowingText({
   const eyebrowTokens = useMemo(() => tokenizeWithOffsets(eyebrow), [eyebrow]);
   const lineTokens = useMemo(() => text.split("\n").map(tokenizeWithOffsets), [text]);
 
-  const lineCharDelays = useMemo(() => {
-    let elapsed = 0;
+  const lineCharDelays = useMemo(
+    () =>
+      lineTokens.reduce<{ result: number[][]; elapsed: number }>(
+        (state, tokens) => {
+          const charCount = tokens.reduce((total, token) => total + Array.from(token.text).length, 0);
+          const delays = Array.from({ length: charCount }, (_, index) => state.elapsed + index * stagger);
+          const lineDuration = charCount > 0 ? (charCount - 1) * stagger + duration : 0;
 
-    return lineTokens.map((tokens) => {
-      const charCount = tokens.reduce((total, token) => total + Array.from(token.text).length, 0);
-      const delays = Array.from({ length: charCount }, (_, index) => elapsed + index * stagger);
-      const lineDuration = charCount > 0 ? (charCount - 1) * stagger + duration : 0;
-      elapsed += lineDuration + Math.max(lineGap, 0);
-      return delays;
-    });
-  }, [lineTokens, stagger, duration, lineGap]);
+          return {
+            result: [...state.result, delays],
+            elapsed: state.elapsed + lineDuration + Math.max(lineGap, 0),
+          };
+        },
+        { result: [], elapsed: 0 }
+      ).result,
+    [lineTokens, stagger, duration, lineGap]
+  );
+
+  const animationKey = [
+    eyebrow,
+    text,
+    glowColor,
+    glowIntensity,
+    characterStagger,
+    revealDuration,
+    lineGap,
+  ].join("|");
 
   const renderTokens = (tokens: Token[], keyPrefix: string, delayFor: (charIndex: number) => number) =>
     tokens.map((token, tokenIndex) => {
@@ -119,6 +134,7 @@ export default function GlowingText({
 
   return (
     <section
+      key={animationKey}
       className={`glowing-text-root relative flex min-h-screen w-full items-center overflow-hidden px-6 py-24 ${className}`}
       style={
         {
@@ -128,9 +144,6 @@ export default function GlowingText({
           "--glow-hard": glowHard,
           "--glow-settled-weight": SETTLED_WEIGHT,
           backgroundColor,
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
         } as CSSProperties
       }
     >

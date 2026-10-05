@@ -1,5 +1,4 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -43,7 +42,7 @@ const DepthFlipText = ({
   className = "",
   backgroundColor = "#f6f5f2",
   textColor = "#050505",
-  loop = false,
+  loop = true,
   holdDuration = 0.4,
   transitionDuration = 1.4,
   charStagger = 0.02,
@@ -246,10 +245,6 @@ const DepthFlipText = ({
       style={{ backgroundColor }}
     >
       <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-black/35"
-      />
-      <div
         ref={containerRef}
         className="relative z-10 w-full max-w-[1400px] max-md:min-h-[18vw]"
         style={{ opacity: fontsReady ? 1 : 0 }}
@@ -282,7 +277,7 @@ interface PhraseProps {
 const Phrase = ({ ref, text, tone, secondary = false }: PhraseProps) => (
   <p
     ref={ref}
-    className={`m-0 w-full whitespace-nowrap max-md:whitespace-normal text-center  text-[6vw] max-md:text-[10vw] max-[1025px]:text-[8vw] font-medium text-white! tracking-[-0.08em]  ${secondary ? "absolute inset-0 opacity-0" : "relative"}`}
+    className={`m-0 w-full whitespace-nowrap max-md:whitespace-normal text-center  text-[6vw] max-md:text-[10vw] max-[1025px]:text-[8vw] font-medium  tracking-[-0.08em]  ${secondary ? "absolute inset-0 opacity-0" : "relative"}`}
     style={{ color: tone, lineHeight: LINE_HEIGHT }}
   >
     {text}

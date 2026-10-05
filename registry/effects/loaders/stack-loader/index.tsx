@@ -1,10 +1,9 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
+import Image from "next/image";
 import {
   forwardRef,
-  useCallback,
   useEffect,
   useId,
   useLayoutEffect,
@@ -29,13 +28,13 @@ const SPREAD_Y_PERCENT_STEP = 110;
 const IMAGE_FADE_STAGGER = 0.08;
 
 const STACK_IMAGE_SOURCES = [
-  "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-01.jpg",
-  "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-02.jpg",
-  "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-03.jpg",
-  "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-04.jpg",
-  "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-05.jpg",
-  "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-06.jpg",
-  "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/v-07.jpg",
+  "https://picsum.photos/seed/v01/1600/1200",
+  "https://picsum.photos/seed/v02/1600/1200",
+  "https://picsum.photos/seed/v03/1600/1200",
+  "https://picsum.photos/seed/v04/1600/1200",
+  "https://picsum.photos/seed/v05/1600/1200",
+  "https://picsum.photos/seed/v06/1600/1200",
+  "https://picsum.photos/seed/v07/1600/1200",
 ];
 
 function clampNumber(value: unknown, min: number, max: number, fallback: number) {
@@ -56,8 +55,7 @@ interface StackToSpreadIntroProps {
   onComplete?: () => void;
 }
 
-const StackToSpreadIntro = forwardRef<HTMLElement, StackToSpreadIntroProps>(
-  function StackToSpreadIntro(
+const StackToSpreadIntro = forwardRef<HTMLElement, StackToSpreadIntroProps>(function StackToSpreadIntro(
   {
     imageSize = 1,
     duration = 1,
@@ -72,7 +70,7 @@ const StackToSpreadIntro = forwardRef<HTMLElement, StackToSpreadIntroProps>(
   const imgsWrapperId = `imgs-wrapper-${uid}`;
   const rootRef = useRef<HTMLElement | null>(null);
   const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
-  const text1Ref = useRef<HTMLParagraphElement | null>(null);
+  const text1Ref = useRef<HTMLHeadingElement | null>(null);
   const text2Ref = useRef<HTMLParagraphElement | null>(null);
   const descriptionTextRef = useRef<HTMLParagraphElement | null>(null);
   const onCompleteRef = useRef(onComplete);
@@ -374,16 +372,16 @@ const StackToSpreadIntro = forwardRef<HTMLElement, StackToSpreadIntroProps>(
       style={{ backgroundColor }}
     >
       <div className="flex w-full items-center justify-between max-[1025px]:flex-col max-[1025px]:justify-center max-[1025px]:gap-[33vh] max-md:gap-[70vw]">
-        <p
+        <h1
           ref={text1Ref}
           className="opacity-0 max-[1025px]:text-[2.8vw] max-md:text-[5vw]"
         >
           HUMAN THINKERS
-        </p>
+        </h1>
 
         <div
           id={imgsWrapperId}
-          className="relative max-[1025px]:z-99"
+          className="relative max-md:z-99"
           style={{
             width: `clamp(4rem, ${6.5 * safeImageSize}vw, 18rem)`,
             height: `clamp(4rem, ${6.5 * safeImageSize}vw, 18rem)`,
@@ -397,12 +395,13 @@ const StackToSpreadIntro = forwardRef<HTMLElement, StackToSpreadIntroProps>(
               }}
               className="absolute top-0 left-0 size-full overflow-hidden rounded-sm opacity-0"
             >
-              <img
+              <Image
                 src={src}
                 width={1000}
                 height={1000}
                 className="h-full w-full object-cover"
-                alt="loader-img"
+                alt="asset-image"
+                priority={index === 0}
               />
             </div>
           ))}
@@ -424,14 +423,14 @@ const StackToSpreadIntro = forwardRef<HTMLElement, StackToSpreadIntroProps>(
       </p>
     </section>
   );
-  }
-);
+});
 
 interface StackLoaderProps {
   imageSize?: number;
   duration?: number;
   fadeOutDuration?: number;
   backgroundColor?: string;
+  onComplete?: () => void;
 }
 
 export default function StackLoader({
@@ -439,25 +438,15 @@ export default function StackLoader({
   duration = 1,
   fadeOutDuration = 0.8,
   backgroundColor = "#fcfcfc",
+  onComplete,
 }: StackLoaderProps) {
-  const uid = useId().replace(/:/g, "");
-  const demoUiId = `demo-ui-${uid}`;
-  const [isLoaderComplete, setIsLoaderComplete] = useState(false);
   const [introInstance, setIntroInstance] = useState(0);
   const stackToSpreadIntroRef = useRef<HTMLElement | null>(null);
-  const previousRemixerPropsRef = useRef<Required<StackLoaderProps> | null>(null);
+  const previousRemixerPropsRef = useRef<Required<Omit<StackLoaderProps, "onComplete">> | null>(null);
 
-  const handleLoaderComplete = useCallback(() => {
-    setIsLoaderComplete(true);
-  }, []);
-
-  const handleReplay = useCallback(() => {
-    setIsLoaderComplete(false);
-    setIntroInstance((currentInstance) => currentInstance + 1);
-  }, []);
-
+  // Replays the intro whenever a visual prop changes (e.g. live remixer edits).
   useEffect(() => {
-    const remixerProps: Required<StackLoaderProps> = {
+    const remixerProps = {
       imageSize,
       duration,
       fadeOutDuration,
@@ -470,49 +459,18 @@ export default function StackLoader({
     }
 
     const previousRemixerProps = previousRemixerPropsRef.current;
-    const hasChanged = (Object.keys(remixerProps) as (keyof StackLoaderProps)[]).some(
+    const hasChanged = (Object.keys(remixerProps) as (keyof typeof remixerProps)[]).some(
       (key) => previousRemixerProps[key] !== remixerProps[key]
     );
 
     if (!hasChanged) return;
 
     previousRemixerPropsRef.current = remixerProps;
-    setIsLoaderComplete(false);
     setIntroInstance((currentInstance) => currentInstance + 1);
   }, [backgroundColor, duration, fadeOutDuration, imageSize]);
 
   return (
-    <div
-      id={demoUiId}
-      className="relative h-screen w-screen overflow-hidden bg-zinc-900"
-    >
-      <p
-        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-neutral-300 transition-opacity duration-300 text-center ${
-          isLoaderComplete ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        HYPERIUX VAULT
-      </p>
-
-     <button
-  type="button"
-  onClick={handleReplay}
-  className={`absolute top-[calc(50%+4.5rem)] left-1/2 -translate-x-1/2 -translate-y-1/2
-    rounded-full border border-white/15 bg-white/5 px-5 py-2
-    text-sm font-medium text-white backdrop-blur-md
-
-    transition-all duration-300 cursor-pointer
-    hover:scale-105 hover:border-white/30 hover:bg-white/10
-    active:scale-95
-    ${
-      isLoaderComplete
-        ? "opacity-100"
-        : "pointer-events-none opacity-0"
-    }`}
->
-  ↻ Replay
-</button>
-
+    <div className="relative h-screen w-screen overflow-hidden">
       <StackToSpreadIntro
         key={introInstance}
         ref={stackToSpreadIntroRef}
@@ -520,7 +478,7 @@ export default function StackLoader({
         duration={duration}
         fadeOutDuration={fadeOutDuration}
         backgroundColor={backgroundColor}
-        onComplete={handleLoaderComplete}
+        onComplete={onComplete}
       />
     </div>
   );

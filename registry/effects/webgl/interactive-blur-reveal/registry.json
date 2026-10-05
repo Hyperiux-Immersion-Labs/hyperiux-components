@@ -5,7 +5,7 @@
     {
       "version": "1.0.1",
       "date": "2026-07-31",
-      "summary": "Added a reduced-motion notice and reworked the remixer panel (removed the image-texture control, changed mouse interaction to a checkbox).",
+      "summary": "Documented the lack of a reduced-motion fallback and reworked the remixer controls.",
       "breaking": false
     },
     {
@@ -89,14 +89,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/interactive-blur-reveal/index.tsx"
-    },
-    {
-      "path": "webgl-context-recovery.ts",
-      "target": "src/components/effects/interactive-blur-reveal/webgl-context-recovery.ts"
-    },
-    {
-      "path": "createSuspendedRaf.ts",
-      "target": "src/components/effects/interactive-blur-reveal/createSuspendedRaf.ts"
     }
   ]
 }

@@ -63,20 +63,6 @@
         "group": "style",
         "groupTitle": "Style"
       }
-    },
-    {
-      "name": "duration",
-      "type": "number",
-      "default": 1.2,
-      "description": "Reveal animation and Lenis smoothing duration in seconds.",
-      "remixer": {
-        "control": "range",
-        "group": "scroll",
-        "groupTitle": "Scroll",
-        "min": 0.4,
-        "max": 3,
-        "step": 0.1
-      }
     }
   ],
   "remixer": {
@@ -100,7 +86,7 @@
     {
       "version": "1.0.0",
       "date": "2026-08-21",
-      "summary": "Initial timeline registry release with configurable colors, Lenis scroll tuning, and reduced-motion support.",
+      "summary": "Initial release",
       "breaking": false
     }
   ]

@@ -1,5 +1,4 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
 import { useRef } from "react";
@@ -8,7 +7,10 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
 
-
+// Tile height of the reel, in em. Also hardcoded as 0.8 inside three Tailwind
+// arbitrary-value classes below (h3 leading, reel translate, glyph height),
+// since arbitrary values must be literal strings for Tailwind to pick them
+// up statically - keep all three in sync if this changes.
 const LINE_HEIGHT = 0.8;
 
 const FONT_FAMILY = "Helvetica Neue, Arial Narrow, system-ui, sans-serif";
@@ -106,9 +108,8 @@ const RollingText = ({
   return (
     <div
       ref={containerRef}
-      className="relative grid place-items-center min-h-dvh bg-[#2a0e5f] bg-cover bg-center"
+      className="relative grid place-items-center min-h-dvh bg-[#0a0a0a]"
     >
-      <div className="absolute inset-0 bg-black/40" aria-hidden />
       {/*
         globals.css has an UNLAYERED `h1,h2,h3,h4 { font-weight: 400;
         line-height: 1.2 }` rule. Unlayered CSS always beats anything in

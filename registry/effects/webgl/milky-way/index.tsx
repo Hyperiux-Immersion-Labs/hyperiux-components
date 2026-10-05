@@ -1,28 +1,635 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
+'use client';
+import { Center } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { EffectComposer, Vignette } from "@react-three/postprocessing";
+import gsap from "gsap";
+import { Stars } from "lucide-react";
+import { Effect } from "postprocessing";
+import React, { type ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
+import { type WebGLRenderer, Uniform, Vector2 } from "three";
 
-'use client'
 
-import React, { useRef, useMemo, useEffect, useLayoutEffect, useState, type ReactNode } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Center } from '@react-three/drei'
-import * as THREE from 'three'
-import { EffectComposer, Vignette } from '@react-three/postprocessing'
-import { Stars } from 'lucide-react'
-import EdgeBlurEffect from './edge-blur-effect'
-import CircularText from './circular-text'
-import { createVisibilityGate } from './createSuspendedRaf'
+
+
+
+const classicBlurFragmentShader = /* glsl */ `
+uniform float uBlurStrength;
+uniform float uBlurStart;
+uniform vec2 uResolution;
+
+void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
+ vec2 center = uv - 0.5;
+ float dist = length(center);
+
+ float blurAmount = smoothstep(uBlurStart, 0.75, dist) * uBlurStrength;
+
+ if (blurAmount < 0.001) {
+ outputColor = inputColor;
+ return;
+ }
+
+ float aspect = uResolution.x / uResolution.y;
+ vec2 texelSize = vec2(1.0 / uResolution.x, 1.0 / uResolution.y);
+
+ const int TAPS = 12;
+ vec2 offsets[12];
+ offsets[0] = vec2(-0.326, -0.406);
+ offsets[1] = vec2(-0.840, -0.074);
+ offsets[2] = vec2(-0.696, 0.457);
+ offsets[3] = vec2(-0.203, 0.621);
+ offsets[4] = vec2( 0.962, -0.195);
+ offsets[5] = vec2( 0.473, -0.480);
+ offsets[6] = vec2( 0.519, 0.767);
+ offsets[7] = vec2( 0.185, -0.893);
+ offsets[8] = vec2( 0.507, 0.064);
+ offsets[9] = vec2( 0.896, 0.412);
+ offsets[10] = vec2(-0.322, -0.933);
+ offsets[11] = vec2(-0.792, -0.598);
+
+ float radius = blurAmount * 12.0;
+
+ vec4 blurred = inputColor;
+ float totalWeight = 1.0;
+
+ for (int i = 0; i < TAPS; i++) {
+ vec2 offset = offsets[i] * radius * texelSize;
+ vec4 s = texture2D(inputBuffer, uv + offset);
+ blurred += s;
+ totalWeight += 1.0;
+ }
+
+ blurred /= totalWeight;
+
+ outputColor = blurred;
+}
+`;
+
+const frostedBlurFragmentShader = /* glsl */ `
+uniform float uBlurStrength;
+uniform float uBlurStart;
+uniform vec2 uResolution;
+
+void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
+ vec2 center = uv - 0.5;
+ float dist = length(center);
+
+ float blurAmount = smoothstep(uBlurStart, 0.75, dist) * uBlurStrength;
+
+ if (blurAmount < 0.001) {
+ outputColor = inputColor;
+ return;
+ }
+
+ float aspect = uResolution.x / uResolution.y;
+ vec2 texelSize = vec2(1.0 / uResolution.x, 1.0 / uResolution.y);
+
+ const int TAPS = 12;
+ vec2 offsets[12];
+ offsets[0] = vec2(-0.326, -0.406);
+ offsets[1] = vec2(-0.840, -0.074);
+ offsets[2] = vec2(-0.696, 0.457);
+ offsets[3] = vec2(-0.203, 0.621);
+ offsets[4] = vec2( 0.962, -0.195);
+ offsets[5] = vec2( 0.473, -0.480);
+ offsets[6] = vec2( 0.519, 0.767);
+ offsets[7] = vec2( 0.185, -0.893);
+ offsets[8] = vec2( 0.507, 0.064);
+ offsets[9] = vec2( 0.896, 0.412);
+ offsets[10] = vec2(-0.322, -0.933);
+ offsets[11] = vec2(-0.792, -0.598);
+
+ float radius = blurAmount * 12.0;
+
+ vec4 blurred = inputColor;
+ float totalWeight = 1.0;
+
+ for (int i = 0; i < TAPS; i++) {
+ vec2 offset = offsets[i] * radius * texelSize;
+ vec4 s = texture2D(inputBuffer, uv + offset);
+ blurred += s;
+ totalWeight += 1.0;
+ }
+
+ blurred /= totalWeight;
+
+ // White, semi-transparent veil for frosted-edge effect.
+ vec3 white = vec3(1.0, 1.0, 1.0);
+ float veilAlpha = 0.4 * blurAmount; // Max 0.4 opacity at the strongest blur
+
+ // Correct GLSL: mix(vec3, vec3, float)
+ vec3 outRgb = mix(blurred.rgb, white, veilAlpha);
+ float outAlpha = blurred.a;
+
+ outputColor = vec4(outRgb, outAlpha);
+}
+`;
+
+interface EdgeBlurEffectImplOptions {
+ blurStrength?: number
+ blurStart?: number
+ resolution?: [number, number]
+ frag?: string
+}
+
+class EdgeBlurEffectImpl extends Effect {
+ constructor({
+ blurStrength = 1.0,
+ blurStart = 0.25,
+ resolution = [1280, 720],
+ frag = frostedBlurFragmentShader,
+ }: EdgeBlurEffectImplOptions = {}) {
+ const uniforms = new Map<string, Uniform<any>>([
+ ["uBlurStrength", new Uniform(blurStrength)],
+ ["uBlurStart", new Uniform(blurStart)],
+ ["uResolution", new Uniform(new Vector2(resolution[0], resolution[1]))],
+ ]);
+ super("EdgeBlurEffect", frag, { uniforms });
+ }
+
+ setResolution(width: number, height: number) {
+ const uRes = this.uniforms.get("uResolution");
+ if (uRes) uRes.value.set(width, height);
+ }
+
+ update(renderer: WebGLRenderer) {
+ if (renderer && renderer.getSize) {
+ const size = renderer.getSize(new Vector2());
+ this.setResolution(size.x, size.y);
+ }
+ }
+}
+
+interface EdgeBlurEffectProps {
+ blurType?: 'classic' | 'frosted'
+ blurStrength?: number
+ blurStart?: number
+}
+
+function EdgeBlurEffect({
+ blurType ="classic", //"frosted" |"classic"
+ blurStrength = 1.0,
+ blurStart = 0.25,
+}: EdgeBlurEffectProps) {
+ const frag =
+ blurType ==="classic"
+ ? classicBlurFragmentShader
+ : frostedBlurFragmentShader;
+
+ const effect = useMemo(() => {
+ let width = 1280,
+ height = 720;
+ if (typeof window !=="undefined") {
+ width = window.innerWidth;
+ height = window.innerHeight;
+ }
+ return new EdgeBlurEffectImpl({
+ blurStrength,
+ blurStart,
+ resolution: [width, height],
+ frag,
+ });
+ // eslint-disable-next-line react-hooks/exhaustive-deps
+ }, [blurStrength, blurStart, frag]);
+
+ useEffect(() => {
+ if (typeof window ==="undefined") return;
+ const update = () => effect.setResolution(window.innerWidth, window.innerHeight);
+ window.addEventListener("resize", update);
+ update();
+ return () => window.removeEventListener("resize", update);
+ }, [effect]);
+
+ return <primitive object={effect} dispose={null} />;
+}
+
+
+// ---- circular-text.tsx ----
+
+
+
+interface CircularTextProps {
+ text?: string
+ spinDuration?: number
+ onHover?: 'slowDown' | 'speedUp' | 'pause' | 'goBonkers'
+ className?: string
+ radius?: number
+}
+
+const CircularText = ({
+ text ='',
+ spinDuration = 20,
+ onHover ='speedUp',
+ className ='',
+ radius = 80,
+}: CircularTextProps) => {
+ const containerRef = useRef<HTMLDivElement | null>(null)
+ const tweenRef = useRef<gsap.core.Tween | null>(null)
+
+ const letters = Array.from(text)
+
+ useEffect(() => {
+ if (!containerRef.current) return
+
+ tweenRef.current?.kill()
+
+ // Reduced-motion: keep the ring static - no continuous spin.
+ if (
+ window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+ ) {
+ return
+ }
+
+ tweenRef.current = gsap.to(containerRef.current, {
+ rotation: 360,
+ duration: spinDuration,
+ ease:'none',
+ repeat: -1,
+ transformOrigin:'50% 50%',
+ })
+
+ return () => { tweenRef.current?.kill() }
+ }, [spinDuration, text])
+ const handleEnter = () => {
+ if (
+ window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+ ) {
+ return
+ }
+ if (!tweenRef.current) return
+
+ switch (onHover) {
+ case'slowDown':
+ gsap.to(tweenRef.current, { timeScale: 0.5, duration: 0.3 })
+ break
+ case'speedUp':
+ gsap.to(tweenRef.current, { timeScale: 2, duration: 0.3 })
+ break
+ case'pause':
+ tweenRef.current.pause()
+ break
+ case'goBonkers':
+ gsap.to(tweenRef.current, { timeScale: 6, duration: 0.3 })
+ gsap.to(containerRef.current, {
+ scale: 0.85,
+ duration: 0.3,
+ ease:'power2.out',
+ })
+ break
+ }
+ }
+
+ const handleLeave = () => {
+ if (
+ window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+ ) {
+ return
+ }
+ if (!tweenRef.current) return
+
+ tweenRef.current.resume()
+ gsap.to(tweenRef.current, { timeScale: 1, duration: 0.3 })
+
+ gsap.to(containerRef.current, {
+ scale: 1,
+ duration: 0.3,
+ ease:'power2.out',
+ })
+ }
+
+ return (
+ <div>
+
+ <span
+ style={{
+ position:'absolute',
+ left:'50%',
+ top:'50%',
+ width: 56,
+ height: 56,
+ transform:'translate(-50%, -50%)',
+ zIndex: 2,
+ userSelect:'none',
+ pointerEvents:'none',
+ display:'flex',
+ alignItems:'center',
+ justifyContent:'center',
+ }}
+ >
+ {/* Replace with your preferred Lucide icon below */}
+ {/* Make sure to import { CupSoda } from'lucide-react' at the top of this file */}
+ <Stars size={32} strokeWidth={1} />
+ </span>
+
+ <div
+ ref={containerRef}
+ className={className}
+ onMouseEnter={handleEnter}
+ onMouseLeave={handleLeave}
+ style={{
+ width: 180,
+ height: 180,
+ position:'relative',
+ }}
+ >
+
+
+ {letters.map((letter, i) => {
+ const angle = (360 / letters.length) * i
+
+ return (
+ <span
+ key={i}
+ style={{
+ position:'absolute',
+ left:'50%',
+ top:'50%',
+ transform: `
+ rotate(${angle}deg)
+ translate(${radius}px)
+ rotate(90deg)
+ `,
+ transformOrigin:'0 0', 
+ fontSize: 20,
+ fontWeight: 600,
+ whiteSpace:'pre',
+ pointerEvents:'none',
+ zIndex: 3,
+ }}
+ >
+ {letter}
+ </span>
+ )
+ })}
+ </div>
+ </div>
+ )
+}
+
+
+// ---- createSuspendedRaf.ts ----
+const DEFAULT_ROOT_MARGIN = "256px";
+
+type RafRoot = Element | null | { current: Element | null } | (() => Element | null);
+
+function resolveElement(root: RafRoot): Element | null {
+  if (!root) return null;
+  if (typeof root === "function") return root() ?? null;
+  if (typeof root === "object" && "current" in root) return root.current ?? null;
+  return root;
+}
+
+interface VisibilityGateOptions {
+  root?: RafRoot;
+  rootMargin?: string;
+  threshold?: number;
+  observeTab?: boolean;
+  observeOffscreen?: boolean;
+  onChange?: (active: boolean) => void;
+}
+
+interface VisibilityGate {
+  readonly isActive: boolean;
+  observe: (nextRoot?: RafRoot) => void;
+  destroy: () => void;
+}
+
+function createVisibilityGate({
+  root = null,
+  rootMargin = DEFAULT_ROOT_MARGIN,
+  threshold = 0,
+  observeTab = true,
+  observeOffscreen = true,
+  onChange,
+}: VisibilityGateOptions = {}): VisibilityGate {
+  let tabVisible =
+    typeof document === "undefined" ? true : !document.hidden;
+  // Match border-beam: assume onscreen until the observer reports otherwise.
+  let onscreen = true;
+  let destroyed = false;
+  let observer: IntersectionObserver | null = null;
+
+  const isActive = () => {
+    if (destroyed) return false;
+    if (observeTab && !tabVisible) return false;
+    if (observeOffscreen && resolveElement(root) && !onscreen) return false;
+    return true;
+  };
+
+  let lastActive = isActive();
+
+  const emit = () => {
+    if (destroyed) return;
+    const next = isActive();
+    if (next === lastActive) return;
+    lastActive = next;
+    onChange?.(next);
+  };
+
+  const onVisibilityChange = () => {
+    tabVisible = !document.hidden;
+    emit();
+  };
+
+  if (observeTab && typeof document !== "undefined") {
+    document.addEventListener("visibilitychange", onVisibilityChange);
+  }
+
+  const bindObserver = () => {
+    if (!observeOffscreen || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    const el = resolveElement(root);
+    if (!el) return;
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          onscreen = entry.isIntersecting;
+        }
+        emit();
+      },
+      { rootMargin, threshold },
+    );
+
+    observer.observe(el);
+  };
+
+  bindObserver();
+
+  return {
+    /** Whether the animation should currently run. */
+    get isActive() {
+      return isActive();
+    },
+
+    /**
+     * Re-bind IntersectionObserver after the root element mounts late
+     * (e.g. ref not ready on first call). Safe to call multiple times.
+     */
+    observe(nextRoot?: RafRoot) {
+      if (destroyed) return;
+      if (nextRoot != null) root = nextRoot;
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      onscreen = true;
+      bindObserver();
+      emit();
+    },
+
+    destroy() {
+      if (destroyed) return;
+      destroyed = true;
+      if (observeTab && typeof document !== "undefined") {
+        document.removeEventListener("visibilitychange", onVisibilityChange);
+      }
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+    },
+  };
+}
+
+interface SuspendedRafOptions {
+  onFrame: (time: number) => void;
+  root?: RafRoot;
+  rootMargin?: string;
+  threshold?: number;
+  observeTab?: boolean;
+  observeOffscreen?: boolean;
+}
+
+interface SuspendedRaf {
+  start: () => void;
+  stop: () => void;
+  readonly isRunning: boolean;
+  readonly isActive: boolean;
+  observe: (nextRoot?: RafRoot) => void;
+  destroy: () => void;
+}
+
+/**
+ * Owns a requestAnimationFrame loop that auto-pauses when the tab is hidden
+ * or the root element is offscreen.
+ */
+function createSuspendedRaf({
+  onFrame,
+  root = null,
+  rootMargin = DEFAULT_ROOT_MARGIN,
+  threshold = 0,
+  observeTab = true,
+  observeOffscreen = true,
+}: SuspendedRafOptions): SuspendedRaf {
+  if (typeof onFrame !== "function") {
+    throw new TypeError("createSuspendedRaf: onFrame is required");
+  }
+
+  let rafId: number | null = null;
+  let running = false;
+  let destroyed = false;
+
+  const stopRaf = () => {
+    if (rafId != null) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  };
+
+  const tick = (time: number) => {
+    rafId = null;
+    if (destroyed || !running || !gate.isActive) return;
+    onFrame(time);
+    if (!destroyed && running && gate.isActive) {
+      rafId = requestAnimationFrame(tick);
+    }
+  };
+
+  const sync = () => {
+    if (destroyed) return;
+    if (running && gate.isActive) {
+      if (rafId == null) {
+        rafId = requestAnimationFrame(tick);
+      }
+    } else {
+      stopRaf();
+    }
+  };
+
+  const gate = createVisibilityGate({
+    root,
+    rootMargin,
+    threshold,
+    observeTab,
+    observeOffscreen,
+    onChange: sync,
+  });
+
+  return {
+    /** Start (or resume) the loop when visibility allows. */
+    start() {
+      if (destroyed) return;
+      running = true;
+      sync();
+    },
+
+    /** Stop requesting frames (visibility listeners stay attached until destroy). */
+    stop() {
+      running = false;
+      stopRaf();
+    },
+
+    /** Whether the caller has started the loop (may still be paused by visibility). */
+    get isRunning() {
+      return running;
+    },
+
+    /** Whether a frame is currently allowed to schedule. */
+    get isActive() {
+      return gate.isActive;
+    },
+
+    /** Re-attach offscreen observer to a (new) root element. */
+    observe(nextRoot?: RafRoot) {
+      gate.observe(nextRoot);
+      sync();
+    },
+
+    /** Tear down listeners and cancel any pending frame. */
+    destroy() {
+      if (destroyed) return;
+      destroyed = true;
+      running = false;
+      stopRaf();
+      gate.destroy();
+    },
+  };
+}
+
+
+// ---- index.tsx ----
+// Built using Hyperiux Vault: https://vault.hyperiux.com
+
+
+
+
+
 
 const { degToRad } = THREE.MathUtils
 
 
-const DEFAULT_PARTICLE_SIZE = 1
-const DEFAULT_CORE_COLOR = '#f5f5ff'
-const DEFAULT_ACCENT_COLOR = '#ffe6ad'
-const DEFAULT_OUTER_COLOR = '#e05c12'
-const DEFAULT_BACKGROUND_COLOR = '#000000'
+const DEFAULT_PARTICLE_SIZE = 2
+const DEFAULT_CORE_COLOR = '#ffbb00'
+const DEFAULT_ACCENT_COLOR = '#ffffff'
+const DEFAULT_OUTER_COLOR = '#4400ff'
+const DEFAULT_BACKGROUND_COLOR = '#000114'
 const DEFAULT_MOUSE_INFLUENCE = true
-const DEFAULT_ROTATION = 1
-const DEFAULT_ROTATION_SPEED = 0.2
+const DEFAULT_ROTATION = 1.6
+const DEFAULT_ROTATION_SPEED = 0.9
 
 function clampNumber(value: unknown, min: number, max: number, fallback: number) {
    const number = Number(value)
@@ -187,14 +794,19 @@ void main(){
  aSeed
  );
  float sz = mix(normalSz, specialSz, isSpecial);
- sz *= uParticleSize;
+ // Grows linearly up to 0.5, then with sqrt: each star's pixel cost rises
+ // with size^2 across ~160k additive sprites, so big sizes must stay cheap.
+ float starScale = uParticleSize <= 0.5 ? uParticleSize : 0.5 * sqrt(uParticleSize / 0.5);
+ sz *= starScale;
  sz *= (420.0 / max(depth, 0.1)) * uPixelRatio;
  float maxSize = mix(
  (${CFG.baseSize.toFixed(1)} * (2.0 + aSeed * 1.0)),
  (${CFG.sparkleSize.toFixed(1)} * (2.0 + aSeed * 1.0)),
  isSpecial
- ) * uParticleSize;
- gl_PointSize = clamp(sz, 0.4, maxSize);
+ ) * starScale;
+ // Hard pixel cap so large particle sizes don't flood the GPU with
+ // overlapping additive sprites (the source of the lag).
+ gl_PointSize = clamp(sz, 0.4, min(maxSize, 10.0 * uPixelRatio));
  gl_Position = projectionMatrix * mvPos;
 }
 `
@@ -388,9 +1000,10 @@ void main(){
  vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
  float depth = -mvPos.z;
  float sizeFactor = mix(0.6, 1.0, 1.0 - aRadiusFrac);
- float sz = ${SMOKE_CFG.particleSize.toFixed(1)} * uParticleSize * sizeFactor * (0.7 + aSeed * 0.6);
+ float sizeScale = sqrt(max(uParticleSize, 0.0));
+ float sz = ${SMOKE_CFG.particleSize.toFixed(1)} * sizeScale * sizeFactor * (0.7 + aSeed * 0.6);
  sz *= (420.0 / max(depth, 0.1)) * uPixelRatio;
- gl_PointSize = clamp(sz, 2.0, ${SMOKE_CFG.particleSize.toFixed(1)} * uParticleSize * 3.0);
+ gl_PointSize = clamp(sz, 2.0, min(${SMOKE_CFG.particleSize.toFixed(1)} * sizeScale * 3.0, 60.0 * uPixelRatio));
  gl_Position = projectionMatrix * mvPos;
 }
 `
@@ -888,11 +1501,13 @@ function GalaxyMouseGroup({ children, mouseInfluence, rotation, rotationSpeed }:
       const t = 1 - Math.exp(-MOUSE_LERP_LAMBDA * dt)
       s.x = THREE.MathUtils.lerp(s.x, m.x, t)
       s.y = THREE.MathUtils.lerp(s.y, m.y, t)
-      autoRotationRef.current += dt * rotationSpeed * 0.18
+      // The galaxy itself stays fixed on its axis; only the particles orbit
+      // (driven by rotationSpeed in the GPU simulation). Spinning this whole
+      // group as well turned it around the wrong (outer) axis and wobbled.
       const mouseRotation = mouseInfluence ? rotation : 0
       g.rotation.x = GALAXY_BASE_ROT[0] - s.y * MOUSE_TILT.x * mouseRotation
       g.rotation.y = GALAXY_BASE_ROT[1] - s.x * MOUSE_TILT.y * mouseRotation
-      g.rotation.z = autoRotationRef.current + s.x * s.y * MOUSE_TILT.z * mouseRotation
+      g.rotation.z = GALAXY_BASE_ROT[2] + s.x * s.y * MOUSE_TILT.z * mouseRotation
    })
 
    return (
@@ -905,7 +1520,7 @@ function GalaxyMouseGroup({ children, mouseInfluence, rotation, rotationSpeed }:
 }
 
 
-const MilkyWayGPGPU = React.memo(function MilkyWayGPGPU({ particleSize, coreColor, accentColor, outerColor, rotationSpeed }: GalaxyParticleProps) {
+const MilkyWayGPGPU = React.memo(function MilkyWayGPGPU({ particleSize, coreColor, accentColor, outerColor, rotationSpeed, texSize = CFG.texSize }: GalaxyParticleProps & { texSize?: number }) {
    const { gl } = useThree()
    const groupRef = useRef<THREE.Group | null>(null)
    const gpuRef = useRef<GPUCompute | null>(null)
@@ -915,11 +1530,13 @@ const MilkyWayGPGPU = React.memo(function MilkyWayGPGPU({ particleSize, coreColo
       typeof window !== 'undefined' &&
          window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
    )
+   // texSize x texSize particles (numberOfParticles). Rebuilt when it changes.
    const { geo, posTex, dataTex } = useMemo(() => {
-      const { posTex, dataTex } = buildTextures(CFG)
-      const geo = buildGeo(CFG)
+      const cfg = { ...CFG, texSize }
+      const { posTex, dataTex } = buildTextures(cfg)
+      const geo = buildGeo(cfg)
       return { geo, posTex, dataTex }
-   }, [])
+   }, [texSize])
 
    const mat = useMemo(() => new THREE.ShaderMaterial({
       uniforms: {
@@ -956,7 +1573,7 @@ const MilkyWayGPGPU = React.memo(function MilkyWayGPGPU({ particleSize, coreColo
    }, [])
 
    useEffect(() => {
-      const gpu = new GPUCompute(CFG.texSize, CFG.texSize, gl)
+      const gpu = new GPUCompute(texSize, texSize, gl)
       gpu.addVar('pos', SIM_FRAG, posTex)
       gpuRef.current = gpu
       dataRef.current = dataTex
@@ -970,7 +1587,7 @@ const MilkyWayGPGPU = React.memo(function MilkyWayGPGPU({ particleSize, coreColo
          mat.dispose()
          matRef.current = null
       }
-   }, [gl]) // eslint-disable-line react-hooks/exhaustive-deps
+   }, [gl, texSize, posTex, dataTex, geo, mat]) // eslint-disable-line react-hooks/exhaustive-deps
 
    useFrame((state, rawDelta) => {
       if (reduceMotionRef.current) return
@@ -1056,6 +1673,8 @@ interface MilkyWayProps {
    mouseInfluence?: boolean | number
    rotation?: number
    rotationSpeed?: number
+   /** Number of star particles (rounded to a square GPU grid). */
+   numberOfParticles?: number
 }
 
 export default function MilkyWay({
@@ -1067,7 +1686,12 @@ export default function MilkyWay({
    mouseInfluence = DEFAULT_MOUSE_INFLUENCE,
    rotation = typeof mouseInfluence === 'number' ? mouseInfluence : DEFAULT_ROTATION,
    rotationSpeed = DEFAULT_ROTATION_SPEED,
+   numberOfParticles = 80000,
 }: MilkyWayProps = {}) {
+   // Particles live on a square GPU texture, so the count snaps to size^2.
+   const particleTexSize = Math.round(
+      Math.sqrt(THREE.MathUtils.clamp(Number(numberOfParticles) || CFG.texSize ** 2, 10000, 250000))
+   )
    const resolvedProps = useMemo(
       () =>
          resolveMilkyWayProps({
@@ -1177,6 +1801,7 @@ export default function MilkyWay({
                         accentColor={resolvedProps.accentColor}
                         outerColor={resolvedProps.outerColor}
                         rotationSpeed={resolvedProps.rotationSpeed}
+                        texSize={particleTexSize}
                      />
                      {isSceneReady && (
                         <SmokeFlow
@@ -1223,7 +1848,7 @@ export default function MilkyWay({
             
             <div className="pointer-events-none h-screen w-full absolute left-0 top-0 max-[1025px]:top-5 z-20 flex items-center justify-center max-[1025px]:hidden">
                <div className='h-full w-full relative'>
-                  <div className='absolute top-0 left-[70%] pt-[10vw] px-[2vw] flex items-center max-[1025px]:flex-col max-[1025px]:gap-5 justify-between h-fit'>
+                  <div className='absolute bottom-7 left-[3vw] pt-[10vw] px-[2vw] flex items-center max-[1025px]:flex-col max-[1025px]:gap-5 justify-between h-fit'>
                         <p className='leading-[1.2] '>
                            Move your cursor around and watch the scene respond.
                         </p>

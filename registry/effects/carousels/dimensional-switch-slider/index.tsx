@@ -1,4 +1,3 @@
-// Built using Hyperiux Vault: https://vault.hyperiux.com
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -16,14 +15,15 @@ const prefersReducedMotion = () =>
 type SlideItem = { image: string; text: string };
 type CSSLength = string | number;
 
-const R2_BASE = "https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images";
+const imageUrl = (seed: string, portrait = false) =>
+  `https://picsum.photos/seed/assetsimages-${seed}/${portrait ? "1200/1600" : "1600/1200"}`;
 
 const ITEMS: SlideItem[] = [
-  { image: `${R2_BASE}/h-06.jpg`, text: "Dimensional Switch" },
-  { image: `${R2_BASE}/h-18.jpg`, text: "Hyperiux Vault" },
-  { image: `${R2_BASE}/h-20.jpg`, text: "Motion Systems" },
-  { image: `${R2_BASE}/h-11.jpg`, text: "Interaction Design" },
-  { image: `${R2_BASE}/h-15.jpg`, text: "Source-First" },
+  { image: imageUrl("h-06"), text: "Dimensional Switch" },
+  { image: imageUrl("h-18"), text: "Hyperiux Vault" },
+  { image: imageUrl("h-20"), text: "Motion Systems" },
+  { image: imageUrl("h-11"), text: "Interaction Design" },
+  { image: imageUrl("h-15"), text: "Source-First" },
 ];
 
 const DEFAULT_EASE = "cubic-bezier(1, -0.001, 0.159, 0.838)";
@@ -56,6 +56,7 @@ const VERTICAL_OUTGOING_DURATION = DURATION * 0.45;
 const TEXT_Z = 60;
 
 export interface DimensionalSwitchSliderProps {
+  className?: string;
   infinite?: boolean;
   ease?: string;
   textColor?: string;
@@ -70,6 +71,7 @@ export interface DimensionalSwitchSliderProps {
 }
 
 const DimensionalSwitchSlider = ({
+  className = "",
   infinite = true,
   ease = DEFAULT_EASE,
   textColor = "#ffffff",
@@ -294,7 +296,7 @@ const DimensionalSwitchSlider = ({
   return (
     <>
       <div
-        className="flex flex-col items-center justify-center w-full h-full gap-4"
+        className={`relative flex flex-col items-center justify-center w-full h-screen overflow-hidden gap-4 ${className}`}
       >
         <div
           className={`dimensional-card relative ${cardClassName}`}
@@ -356,7 +358,7 @@ const DimensionalSwitchSlider = ({
             onClick={() => switchTo("prev")}
             aria-label="Previous"
             disabled={!infinite && currentIndex === 0}
-            className="flex h-12 w-12 max-[1024px]:h-20 max-[1024px]:w-20 max-md:h-16 max-md:w-16 items-center justify-center rounded-full border border-white/20 bg-transparent text-white backdrop-blur-[10px] transition-colors duration-300 ease-in-out hover:bg-[#ff5f00] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+            className="flex h-12 w-12 max-[1024px]:h-20 max-[1024px]:w-20 max-md:h-16 max-md:w-16 items-center justify-center rounded-full border border-white/40 bg-black/50 text-white backdrop-blur-[10px] transition-colors duration-300 ease-in-out hover:bg-[#ff5f00] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black/50"
           >
             <ArrowLeft />
           </button>
@@ -365,7 +367,7 @@ const DimensionalSwitchSlider = ({
             onClick={() => switchTo("next")}
             aria-label="Next"
             disabled={!infinite && currentIndex === ITEMS.length - 1}
-            className="flex h-12 w-12 max-[1024px]:h-20 max-[1024px]:w-20 max-md:h-16 max-md:w-16 items-center justify-center rounded-full border border-white/20 bg-transparent text-white backdrop-blur-[10px] transition-colors duration-300 ease-in-out hover:bg-[#ff5f00] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+            className="flex h-12 w-12 max-[1024px]:h-20 max-[1024px]:w-20 max-md:h-16 max-md:w-16 items-center justify-center rounded-full border border-white/40 bg-black/50 text-white backdrop-blur-[10px] transition-colors duration-300 ease-in-out hover:bg-[#ff5f00] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black/50"
           >
             <ArrowRight />
           </button>
@@ -382,7 +384,7 @@ const DimensionalSwitchSlider = ({
               className={`h-2 max-[1024px]:h-4 max-md:h-3 rounded-full transition-all duration-300 ease-in-out ${
                 idx === currentIndex
                   ? "w-6 max-[1024px]:w-8  bg-[#ff5f00]"
-                  : "w-2 max-[1024px]:w-4 max-md:w-3 bg-white/30 hover:bg-white/50"
+                  : "w-2 max-[1024px]:w-4 max-md:w-3 bg-black/40 ring-1 ring-white/40 hover:bg-black/60"
               }`}
             />
           ))}

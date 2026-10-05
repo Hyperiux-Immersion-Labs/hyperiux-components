@@ -20,8 +20,7 @@
   "description": "Scroll-pinned horizontal slider with 3D card rotation, vertical drift, and SplitText caption reveals.",
   "category": "scroll",
   "dependencies": [
-    "gsap",
-    "lucide-react"
+    "gsap"
   ],
   "registryDependencies": [],
   "previewUrl": "/demo/rotation-slider",
@@ -36,10 +35,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/rotation-slider/index.tsx"
-    },
-    {
-      "path": "RotationSliderComp.tsx",
-      "target": "src/components/effects/rotation-slider/RotationSliderComp.tsx"
     }
   ],
   "props": [
@@ -47,7 +42,7 @@
       "name": "rotationAmount",
       "type": "number",
       "default": 1,
-      "description": "Multiplier on the built-in per-breakpoint rotateY entrance/exit strength as cards scroll by.",
+      "description": "How far each card rotates as it scrolls past.",
       "remixer": {
         "control": "range",
         "group": "motion",
@@ -61,7 +56,7 @@
       "name": "verticalDrift",
       "type": "number",
       "default": 1,
-      "description": "Multiplier on the built-in per-breakpoint vertical offset each card travels while scrolling past.",
+      "description": "How far each card drifts vertically as it scrolls past.",
       "remixer": {
         "control": "range",
         "group": "motion",
@@ -75,7 +70,7 @@
       "name": "scrollSmoothing",
       "type": "number",
       "default": 1,
-      "description": "GSAP ScrollTrigger scrub value on the main horizontal track \u2014 higher lags/smooths more, lower tracks scroll 1:1.",
+      "description": "Scroll lag on the track; higher is smoother.",
       "remixer": {
         "control": "range",
         "group": "motion",
@@ -89,7 +84,7 @@
       "name": "perspective",
       "type": "number",
       "default": 1200,
-      "description": "3D perspective distance, in pixels, applied to the sticky track \u2014 lower values look deeper/more distorted.",
+      "description": "Perspective depth in pixels; lower looks deeper.",
       "remixer": {
         "control": "range",
         "group": "motion",

@@ -252,14 +252,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/phantom-image-trail/index.tsx"
-    },
-    {
-      "path": "useMouse.ts",
-      "target": "src/components/effects/phantom-image-trail/useMouse.ts"
-    },
-    {
-      "path": "createSuspendedRaf.ts",
-      "target": "src/components/effects/phantom-image-trail/createSuspendedRaf.ts"
     }
   ]
 }

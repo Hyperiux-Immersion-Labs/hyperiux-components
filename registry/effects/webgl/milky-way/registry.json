@@ -6,13 +6,13 @@
   "description": "GPU-accelerated GPGPU particle galaxy with spiral arms, curl-noise nebula smoke, twinkling sparkle stars, background starfield, and post-processing vignette + edge blur.",
   "category": "webgl",
   "dependencies": [
-    "@react-three/fiber",
     "@react-three/drei",
+    "@react-three/fiber",
     "@react-three/postprocessing",
-    "postprocessing",
-    "three",
+    "gsap",
     "lucide-react",
-    "gsap"
+    "postprocessing",
+    "three"
   ],
   "registryDependencies": [],
   "previewUrl": "/demo/milky-way",
@@ -27,18 +27,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/milky-way/index.tsx"
-    },
-    {
-      "path": "circular-text.tsx",
-      "target": "src/components/effects/milky-way/circular-text.tsx"
-    },
-    {
-      "path": "edge-blur-effect.tsx",
-      "target": "src/components/effects/milky-way/edge-blur-effect.tsx"
-    },
-    {
-      "path": "createSuspendedRaf.ts",
-      "target": "src/components/effects/milky-way/createSuspendedRaf.ts"
     }
   ],
   "changelog": [
@@ -59,42 +47,48 @@
     {
       "name": "particleSize",
       "type": "number",
-      "default": 1,
+      "default": 2,
       "description": "Particle and nebula point size multiplier.",
       "suggested": true
     },
     {
+      "name": "numberOfParticles",
+      "type": "number",
+      "default": 80000,
+      "description": "Number of star particles in the galaxy."
+    },
+    {
       "name": "coreColor",
       "type": "string",
-      "default": "#f5f5ff",
+      "default": "#ffbb00",
       "description": "Bright inner galaxy and starfield color.",
       "suggested": true
     },
     {
       "name": "accentColor",
       "type": "string",
-      "default": "#ffe6ad",
+      "default": "#ffffff",
       "description": "Nebula and sparkle accent color.",
       "suggested": true
     },
     {
       "name": "outerColor",
       "type": "string",
-      "default": "#e05c12",
+      "default": "#4400ff",
       "description": "Outer arm and warm sparkle color.",
       "suggested": true
     },
     {
       "name": "backgroundColor",
       "type": "string",
-      "default": "#000000",
+      "default": "#000114",
       "description": "Canvas background color.",
       "suggested": true
     },
     {
       "name": "rotation",
       "type": "number",
-      "default": 1,
+      "default": 1.6,
       "description": "How strongly the galaxy tilts with mouse movement.",
       "suggested": true
     },
@@ -108,8 +102,8 @@
     {
       "name": "rotationSpeed",
       "type": "number",
-      "default": 0.2,
-      "description": "Galaxy simulation and auto-rotation speed.",
+      "default": 0.9,
+      "description": "Speed the particles orbit around the galaxy centre.",
       "suggested": true
     }
   ],
@@ -133,6 +127,16 @@
         "min": 0.2,
         "max": 3,
         "step": 0.05
+      },
+      {
+        "name": "numberOfParticles",
+        "label": "Number of Particles",
+        "type": "range",
+        "group": "controls",
+        "copyable": true,
+        "min": 10000,
+        "max": 250000,
+        "step": 5000
       },
       {
         "name": "coreColor",
@@ -170,7 +174,11 @@
         "copyable": true,
         "min": 0,
         "max": 2,
-        "step": 0.05
+        "step": 0.05,
+        "visibleWhen": {
+          "name": "mouseInfluence",
+          "eq": true
+        }
       },
       {
         "name": "mouseInfluence",

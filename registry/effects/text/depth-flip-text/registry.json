@@ -14,8 +14,8 @@
   "description": "Vault-themed perspective text flip with staggered character motion and optional crossfade.",
   "category": "text",
   "dependencies": [
-    "gsap",
-    "@gsap/react"
+    "@gsap/react",
+    "gsap"
   ],
   "registryDependencies": [],
   "previewUrl": "/demo/depth-flip-text",
@@ -51,7 +51,7 @@
       "description": "Background color behind the effect.",
       "remixer": {
         "control": "color",
-        "enabled":false,
+        "enabled": false,
         "group": "colors",
         "groupTitle": "Colors"
       }
@@ -70,7 +70,7 @@
     {
       "name": "loop",
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description": "Restarts the phrase sequence after the last entry.",
       "remixer": {
         "control": "checkbox",

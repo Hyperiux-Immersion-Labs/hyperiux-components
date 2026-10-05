@@ -40,7 +40,19 @@
       "remixer": {
         "control": "text",
         "group": "content",
-        "groupTitle": "Content"
+        "groupTitle": "Content",
+        "enabled": false
+      }
+    },
+    {
+      "name": "textColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Default text color.",
+      "remixer": {
+        "control": "color",
+        "group": "appearance",
+        "groupTitle": "Appearance"
       }
     },
     {

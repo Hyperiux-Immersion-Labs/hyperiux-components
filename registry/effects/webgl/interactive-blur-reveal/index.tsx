@@ -1,24 +1,310 @@
 // Built using Hyperiux Vault: https://vault.hyperiux.com
-
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
-import { attachWebGLContextRecovery } from "./webgl-context-recovery";
-import { createSuspendedRaf } from "./createSuspendedRaf";
+import { useEffect, useRef, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 
-function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setPrefersReducedMotion(mediaQuery.matches);
-    update();
-    mediaQuery.addEventListener("change", update);
-    return () => mediaQuery.removeEventListener("change", update);
-  }, []);
-
-  return prefersReducedMotion;
+/**
+ * Shared WebGL context-loss recovery helper.
+ *
+ * A WebGL context can be dropped by the browser at any time - commonly on
+ * mobile under GPU memory pressure, or after a laptop sleeps and resumes. When
+ * that happens the canvas fires `webglcontextlost`; unless the handler calls
+ * `event.preventDefault()`, the browser will NEVER fire `webglcontextrestored`,
+ * leaving the effect permanently blank until a full page reload.
+ *
+ * This helper wires both events on a canvas:
+ *   - on `webglcontextlost`   -> preventDefault() (required), then `onLost`,
+ *                                where the caller stops its render loop and
+ *                                drops the now-invalid GPU handles.
+ *   - on `webglcontextrestored` -> `onRestored`, where the caller rebuilds its
+ *                                GPU resources (programs, buffers, textures)
+ *                                and resumes rendering.
+ *
+ * Returns a detach function - call it from your effect cleanup.
+ *
+ * NOTE: `THREE.WebGLRenderer` already performs this internally (it calls
+ * preventDefault on loss and re-initializes the GL context on restore), so
+ * Three.js / react-three-fiber effects do not need this helper. It exists for
+ * effects that drive a raw WebGL context directly via
+ * `canvas.getContext("webgl" | "webgl2")`, which get no automatic recovery.
+ *
+ * @returns detach function
+ */
+interface WebGLContextRecoveryHandlers {
+  onLost?: (event: Event) => void
+  onRestored?: (event: Event) => void
 }
+
+export function attachWebGLContextRecovery(canvas: HTMLCanvasElement | null | undefined, handlers: WebGLContextRecoveryHandlers = {}) {
+  if (!canvas) return () => {};
+
+  const { onLost, onRestored } = handlers;
+
+  const handleLost = (event: Event) => {
+    // Required so the browser will later fire `webglcontextrestored`.
+    event.preventDefault();
+    if (onLost) onLost(event);
+  };
+
+  const handleRestored = (event: Event) => {
+    if (onRestored) onRestored(event);
+  };
+
+  canvas.addEventListener("webglcontextlost", handleLost, false);
+  canvas.addEventListener("webglcontextrestored", handleRestored, false);
+
+  return () => {
+    canvas.removeEventListener("webglcontextlost", handleLost, false);
+    canvas.removeEventListener("webglcontextrestored", handleRestored, false);
+  };
+}
+
+const DEFAULT_ROOT_MARGIN = "256px";
+
+type RafRoot = Element | null | { current: Element | null } | (() => Element | null);
+
+function resolveElement(root: RafRoot): Element | null {
+  if (!root) return null;
+  if (typeof root === "function") return root() ?? null;
+  if (typeof root === "object" && "current" in root) return root.current ?? null;
+  return root;
+}
+
+interface VisibilityGateOptions {
+  root?: RafRoot;
+  rootMargin?: string;
+  threshold?: number;
+  observeTab?: boolean;
+  observeOffscreen?: boolean;
+  onChange?: (active: boolean) => void;
+}
+
+interface VisibilityGate {
+  readonly isActive: boolean;
+  observe: (nextRoot?: RafRoot) => void;
+  destroy: () => void;
+}
+
+function createVisibilityGate({
+  root = null,
+  rootMargin = DEFAULT_ROOT_MARGIN,
+  threshold = 0,
+  observeTab = true,
+  observeOffscreen = true,
+  onChange,
+}: VisibilityGateOptions = {}): VisibilityGate {
+  let tabVisible =
+    typeof document === "undefined" ? true : !document.hidden;
+  // Match border-beam: assume onscreen until the observer reports otherwise.
+  let onscreen = true;
+  let destroyed = false;
+  let observer: IntersectionObserver | null = null;
+
+  const isActive = () => {
+    if (destroyed) return false;
+    if (observeTab && !tabVisible) return false;
+    if (observeOffscreen && resolveElement(root) && !onscreen) return false;
+    return true;
+  };
+
+  let lastActive = isActive();
+
+  const emit = () => {
+    if (destroyed) return;
+    const next = isActive();
+    if (next === lastActive) return;
+    lastActive = next;
+    onChange?.(next);
+  };
+
+  const onVisibilityChange = () => {
+    tabVisible = !document.hidden;
+    emit();
+  };
+
+  if (observeTab && typeof document !== "undefined") {
+    document.addEventListener("visibilitychange", onVisibilityChange);
+  }
+
+  const bindObserver = () => {
+    if (!observeOffscreen || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    const el = resolveElement(root);
+    if (!el) return;
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          onscreen = entry.isIntersecting;
+        }
+        emit();
+      },
+      { rootMargin, threshold },
+    );
+
+    observer.observe(el);
+  };
+
+  bindObserver();
+
+  return {
+    /** Whether the animation should currently run. */
+    get isActive() {
+      return isActive();
+    },
+
+    /**
+     * Re-bind IntersectionObserver after the root element mounts late
+     * (e.g. ref not ready on first call). Safe to call multiple times.
+     */
+    observe(nextRoot?: RafRoot) {
+      if (destroyed) return;
+      if (nextRoot != null) root = nextRoot;
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      onscreen = true;
+      bindObserver();
+      emit();
+    },
+
+    destroy() {
+      if (destroyed) return;
+      destroyed = true;
+      if (observeTab && typeof document !== "undefined") {
+        document.removeEventListener("visibilitychange", onVisibilityChange);
+      }
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+    },
+  };
+}
+
+interface SuspendedRafOptions {
+  onFrame: (time: number) => void;
+  root?: RafRoot;
+  rootMargin?: string;
+  threshold?: number;
+  observeTab?: boolean;
+  observeOffscreen?: boolean;
+}
+
+interface SuspendedRaf {
+  start: () => void;
+  stop: () => void;
+  readonly isRunning: boolean;
+  readonly isActive: boolean;
+  observe: (nextRoot?: RafRoot) => void;
+  destroy: () => void;
+}
+
+/**
+ * Owns a requestAnimationFrame loop that auto-pauses when the tab is hidden
+ * or the root element is offscreen.
+ */
+function createSuspendedRaf({
+  onFrame,
+  root = null,
+  rootMargin = DEFAULT_ROOT_MARGIN,
+  threshold = 0,
+  observeTab = true,
+  observeOffscreen = true,
+}: SuspendedRafOptions): SuspendedRaf {
+  if (typeof onFrame !== "function") {
+    throw new TypeError("createSuspendedRaf: onFrame is required");
+  }
+
+  let rafId: number | null = null;
+  let running = false;
+  let destroyed = false;
+
+  const stopRaf = () => {
+    if (rafId != null) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  };
+
+  const tick = (time: number) => {
+    rafId = null;
+    if (destroyed || !running || !gate.isActive) return;
+    onFrame(time);
+    if (!destroyed && running && gate.isActive) {
+      rafId = requestAnimationFrame(tick);
+    }
+  };
+
+  const sync = () => {
+    if (destroyed) return;
+    if (running && gate.isActive) {
+      if (rafId == null) {
+        rafId = requestAnimationFrame(tick);
+      }
+    } else {
+      stopRaf();
+    }
+  };
+
+  const gate = createVisibilityGate({
+    root,
+    rootMargin,
+    threshold,
+    observeTab,
+    observeOffscreen,
+    onChange: sync,
+  });
+
+  return {
+    /** Start (or resume) the loop when visibility allows. */
+    start() {
+      if (destroyed) return;
+      running = true;
+      sync();
+    },
+
+    /** Stop requesting frames (visibility listeners stay attached until destroy). */
+    stop() {
+      running = false;
+      stopRaf();
+    },
+
+    /** Whether the caller has started the loop (may still be paused by visibility). */
+    get isRunning() {
+      return running;
+    },
+
+    /** Whether a frame is currently allowed to schedule. */
+    get isActive() {
+      return gate.isActive;
+    },
+
+    /** Re-attach offscreen observer to a (new) root element. */
+    observe(nextRoot?: RafRoot) {
+      gate.observe(nextRoot);
+      sync();
+    },
+
+    /** Tear down listeners and cancel any pending frame. */
+    destroy() {
+      if (destroyed) return;
+      destroyed = true;
+      running = false;
+      stopRaf();
+      gate.destroy();
+    },
+  };
+}
+
+export {
+  createSuspendedRaf,
+  createVisibilityGate,
+  DEFAULT_ROOT_MARGIN,
+};
 
 const FULLSCREEN_TRIANGLE_VERTICES = new Float32Array([
   -1, -1,
@@ -367,7 +653,6 @@ interface InteractiveBlurRevealProps {
 
 function InteractiveBlurReveal({ iChannel0="https://picsum.photos/seed/hover7/800/1000", iChannel1="https://pub-8abee449136941f5b0a1cd2c014534e9.r2.dev/vault-listing-images/assets-images/interactive-blur-reveal-noise.png", mouseRadius = DEFAULT_MOUSE_RADIUS, mouseInteraction = true, duration = DEFAULT_DURATION, className, style }: InteractiveBlurRevealProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const prefersReducedMotion = usePrefersReducedMotion();
   const configRef = useRef({
     mouseRadius: DEFAULT_MOUSE_RADIUS,
     mouseInteraction: true,
@@ -785,22 +1070,6 @@ function InteractiveBlurReveal({ iChannel0="https://picsum.photos/seed/hover7/80
         }}
       />
 
-      {prefersReducedMotion && (
-        <div
-          aria-live="polite"
-          className="pointer-events-none fixed top-26 right-4 z-40 w-fit max-w-65 rounded-md border border-white/15 bg-white/5 p-3 text-center backdrop-blur-sm max-md:hidden"
-        >
-          <h2 className="text-sm leading-none text-white">
-            The reveal keeps trailing.
-          </h2>
-          <p className="mt-2 text-xs leading-5 text-white/65">
-            Interactive Blur Reveal clears the blur only where your cursor
-            has recently moved, redrawing continuously. Since the reveal is
-            driven entirely by motion, reduced motion can&apos;t be applied
-            here.
-          </p>
-        </div>
-      )}
     </>
   );
 }

@@ -133,14 +133,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/infinite-perspective-slider/index.tsx"
-    },
-    {
-      "path": "InfinitePerspectiveSliderComp.tsx",
-      "target": "src/components/effects/infinite-perspective-slider/InfinitePerspectiveSliderComp.tsx"
-    },
-    {
-      "path": "createSuspendedRaf.ts",
-      "target": "src/components/effects/infinite-perspective-slider/createSuspendedRaf.ts"
     }
   ]
 }

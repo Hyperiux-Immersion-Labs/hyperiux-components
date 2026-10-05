@@ -6,9 +6,9 @@
   "description": "WebGL loader with a 3D numeric tunnel that crossfades into a chromatic aberration warp effect",
   "category": "loaders",
   "dependencies": [
-    "gsap",
-    "@react-three/fiber",
     "@react-three/drei",
+    "@react-three/fiber",
+    "gsap",
     "three"
   ],
   "registryDependencies": [],
@@ -24,10 +24,6 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/numeric-tunnel/index.tsx"
-    },
-    {
-      "path": "NumericTunnelLoader.tsx",
-      "target": "src/components/effects/numeric-tunnel/NumericTunnelLoader.tsx"
     }
   ],
   "changelog": [
@@ -119,6 +115,7 @@
         "group": "controls",
         "copyable": true,
         "min": 0,
+
         "max": 2700,
         "step": 0.1
       },

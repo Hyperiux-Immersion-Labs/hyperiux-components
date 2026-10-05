@@ -42,20 +42,6 @@
         "group": "style",
         "groupTitle": "Style"
       }
-    },
-    {
-      "name": "charRotation",
-      "type": "number",
-      "default": 20,
-      "description": "Max random rotation (degrees, plus or minus) each character starts from before flying into place.",
-      "remixer": {
-        "control": "range",
-        "group": "motion",
-        "groupTitle": "Motion",
-        "min": 0,
-        "max": 90,
-        "step": 1
-      }
     }
   ],
   "remixer": {

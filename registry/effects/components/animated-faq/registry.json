@@ -113,17 +113,13 @@
     {
       "path": "index.tsx",
       "target": "src/components/effects/animated-faq/index.tsx"
-    },
-    {
-      "path": "AnimatedFaqComp.tsx",
-      "target": "src/components/effects/animated-faq/AnimatedFaqComp.tsx"
     }
   ],
   "changelog": [
     {
       "version": "1.0.1",
       "date": "2026-07-28",
-      "summary": "Synced the registry copy with production (iconMode prop, array-based controlled-mode detection, height-based open/close animation) and documented its existing reduced-motion behavior.",
+      "summary": "Updated accordion behavior and documented reduced-motion support.",
       "breaking": false
     },
     {
