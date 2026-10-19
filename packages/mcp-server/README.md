@@ -19,20 +19,16 @@ Add to your MCP client's config (e.g. `claude_desktop_config.json` or Claude Cod
 }
 ```
 
-## Pro effect access
+## Signing in
 
-Pro effect source is only returned if a Hyperiux Pro token is available. This server automatically reuses a token from either:
+Every effect's source needs a signed-in Hyperiux account - free effects too. This server reuses a token from either:
 
 - A `hyperiux login` session already saved by the [Hyperiux CLI](../cli) (`~/.hyperiux/auth.json`), or
-- the `HYPERIUX_TOKEN` environment variable
+- the `HYPERIUX_TOKEN` environment variable (generate one at `/cli-auth`)
 
-Without a token, Pro effect lookups still return full metadata (description, dependencies, changelog) - just no source, with a clear note explaining why.
+Without a token, `hyperiux_get_effect` with `include_source: true` returns the metadata (description, dependencies, changelog) and `sign_in_required`, telling you to run `npx hyperiux login`. Listing, searching and details lookups (`include_source: false`) need no token and never count as installs.
 
-A token isn't Pro-only, though - any signed-in Hyperiux account (free or Pro) can
-generate one at `/cli-auth`. Without a token, `hyperiux_get_effect` calls are
-tracked as anonymous (1 effect/day, device+IP based); with a free account's
-token they count against that account's real 3/day limit instead, shared with
-its website and CLI usage. Pro raises it to 10/day and unlocks Pro source.
+Fetching source counts against the account's daily install limit, shared with its website and CLI usage: 3 a day on Free, 5 on Pro, 10 on Pro+. Pro effects also need a Pro subscription; on a free account they return `source_locked`.
 
 ## Tools
 

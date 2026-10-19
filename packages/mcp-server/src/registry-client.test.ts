@@ -88,9 +88,9 @@ describe("fetchEffect", () => {
     vi.unstubAllGlobals();
   });
 
-  it("routes a free effect through the metered API too, not just the public JSON (Stage 1.7)", async () => {
-    getAuthTokenMock.mockReturnValue(null);
-    const publicEffect = { name: "dotted-grid", tier: "free", files: [{ path: "index.jsx", content: "public copy" }] };
+  it("sends the saved token for a free effect too - every install needs an account", async () => {
+    getAuthTokenMock.mockReturnValue("test-token");
+    const publicEffect = { name: "dotted-grid", tier: "free", files: [{ path: "index.jsx", content: "// Sign in to install this effect" }] };
     const meteredEffect = { name: "dotted-grid", tier: "free", files: [{ path: "index.jsx", content: "metered copy" }] };
 
     vi.mocked(fetch)
@@ -107,34 +107,74 @@ describe("fetchEffect", () => {
     const headers = (meteredOptions as RequestInit).headers as Record<string, string>;
     expect(headers["x-hyperiux-device-id"]).toBe("device-abc-123");
     expect(headers["x-hyperiux-mcp-version"]).toEqual(expect.any(String));
-    expect(headers.Authorization).toBeUndefined(); // no token needed for a free effect
+    expect(headers.Authorization).toBe("Bearer test-token");
   });
 
-  it("falls back to the public JSON for a free effect when the metered call fails - never breaks a lookup", async () => {
+  it("asks for sign-in with no token - no metered call, no public content", async () => {
     getAuthTokenMock.mockReturnValue(null);
+    const publicEffect = { name: "dotted-grid", tier: "free", files: [{ path: "index.jsx", content: "// Sign in to install this effect" }] };
+    vi.mocked(fetch).mockResolvedValueOnce(jsonResponse(publicEffect));
+
+    const result = await fetchEffect("dotted-grid");
+
+    expect(result?.signInRequired).toBe(true);
+    expect(result?.files.every((f) => typeof f.content !== "string")).toBe(true);
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("asks for sign-in when the server refuses the token (401)", async () => {
+    getAuthTokenMock.mockReturnValue("stale-token");
+    const publicEffect = { name: "dotted-grid", tier: "free", files: [{ path: "index.jsx", content: "// stub" }] };
+
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(jsonResponse(publicEffect))
+      .mockResolvedValueOnce(jsonResponse({ error: "Sign in to install effects.", reason: "sign-in-required" }, { ok: false, status: 401 }));
+
+    const result = await fetchEffect("dotted-grid");
+
+    expect(result?.signInRequired).toBe(true);
+    expect(result?.files.every((f) => typeof f.content !== "string")).toBe(true);
+  });
+
+  it("never falls back to the public JSON when the metered call fails", async () => {
+    getAuthTokenMock.mockReturnValue("test-token");
     const publicEffect = { name: "dotted-grid", tier: "free", files: [{ path: "index.jsx", content: "public copy" }] };
 
     vi.mocked(fetch)
       .mockResolvedValueOnce(jsonResponse(publicEffect))
       .mockRejectedValueOnce(new Error("network down"));
 
-    const result = await fetchEffect("dotted-grid");
-    expect(result).toEqual(publicEffect);
+    await expect(fetchEffect("dotted-grid")).rejects.toBeInstanceOf(RegistryError);
   });
 
-  it("falls back to the public effect for a Pro effect with no token available", async () => {
-    getAuthTokenMock.mockReturnValue(null);
-    const effect = { name: "circle-text-reveal", tier: "pro", files: [{ path: "index.jsx" }] };
-    vi.mocked(fetch).mockResolvedValue(jsonResponse(effect));
+  it("reads only the public metadata when source isn't asked for - no install used", async () => {
+    getAuthTokenMock.mockReturnValue("test-token");
+    const publicEffect = { name: "dotted-grid", tier: "free", version: "1.2.0", files: [{ path: "index.jsx", content: "// stub" }] };
+    vi.mocked(fetch).mockResolvedValueOnce(jsonResponse(publicEffect));
 
-    const result = await fetchEffect("circle-text-reveal");
-    expect(result).toEqual(effect);
-    // No second call attempted against the protected route without a token.
+    const result = await fetchEffect("dotted-grid", { includeSource: false });
+
+    expect(result?.version).toBe("1.2.0");
+    expect(result?.files.every((f) => typeof f.content !== "string")).toBe(true);
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
+  it("returns metadata only for a Pro effect the account can't open (403)", async () => {
+    getAuthTokenMock.mockReturnValue("free-user-token");
+    const publicEffect = { name: "circle-text-reveal", tier: "pro", files: [{ path: "index.jsx" }] };
+
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(jsonResponse(publicEffect))
+      .mockResolvedValueOnce(jsonResponse({ error: "Pro subscription required.", requiresPro: true }, { ok: false, status: 403 }));
+
+    const result = await fetchEffect("circle-text-reveal");
+
+    expect(result?.signInRequired).toBeUndefined();
+    expect(result?.files.every((f) => typeof f.content !== "string")).toBe(true);
+  });
+
   it("does NOT fall back to the public JSON's content on a genuine 429 (Stage 3) - returns a rateLimited marker instead", async () => {
-    getAuthTokenMock.mockReturnValue(null);
+    getAuthTokenMock.mockReturnValue("test-token");
     const publicEffect = { name: "dotted-grid", tier: "free", files: [{ path: "index.jsx", content: "public copy" }] };
 
     vi.mocked(fetch)

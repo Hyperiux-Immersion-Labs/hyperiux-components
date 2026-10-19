@@ -14,7 +14,7 @@ const GetEffectInputSchema = z
       .boolean()
       .default(false)
       .describe(
-        "Include full component source in the response. Free-tier effects always include it; Pro-tier effects only include it if a Hyperiux token is available (HYPERIUX_TOKEN env var, or a saved `hyperiux login` session)."
+        "Include full component source in the response. Needs a signed-in Hyperiux account for every effect, free ones included (HYPERIUX_TOKEN env var, or a saved `hyperiux login` session); Pro effects also need a Pro subscription. Fetching source counts as one of the day's installs; leave it false for a details-only lookup."
       ),
   })
   .strict();
@@ -30,15 +30,17 @@ export function registerGetEffectTool(server: McpServer) {
 
 Args:
   - name (string): exact effect slug
-  - include_source (boolean, default false): also return component source. Free effects: always available. Pro effects: only if authenticated (see below).
+  - include_source (boolean, default false): also return component source. Needs a signed-in account for every effect (see below) and counts as one of the day's installs; details-only lookups (false) don't.
 
 Returns JSON: { name, title, description, tier, version, dependencies, changelog, install_command, preview_url, import_path, target, main, import_statement, files: [{ path, content? }] }
   - changelog: array of { version, date, summary, breaking }, newest first
-  - files[].content is omitted unless include_source=true AND the effect is accessible (free, or Pro with a valid token)
+  - files[].content is omitted unless include_source=true AND the caller is signed in (and on Pro, for a Pro effect)
   - import_statement is the exact import line to use after installing (e.g. \`import { DottedGrid } from "@/components/effects/dotted-grid";\`), built from exportKind/exportName/import_path the same way the CLI's own \`hyperiux add\` output does - omitted if the registry entry has no import_path
   - install_limit/install_remaining: present on a normal (non-rate-limited) lookup, telling you how many more distinct effects this identity can fetch today - mention this to the user when remaining is low, same as the website's copy toast and the CLI's own "N of M daily installs left" line
 
-Pro effects without a token: the response still includes metadata (description, dependencies, changelog) but files have no content, and a note explains the effect requires a Hyperiux Pro account - don't treat this as an error, it's expected for unauthenticated Pro lookups.
+No token (or an invalid one) with include_source=true: the response still includes metadata, but files have no content and sign_in_required/sign_in_required_reason tell the user to run \`npx hyperiux login\` - every install needs a free account. Don't retry; ask the user to sign in.
+
+Pro effects without a Pro subscription: metadata only, and source_locked explains the effect needs Hyperiux Pro - expected, not an error.
 
 Free effects past the caller's daily install cap: the response still includes metadata but files have no content, and rate_limited/rate_limit_reason explain the daily limit and when to retry - also not an error, it's expected once the cap is hit.
 
@@ -59,7 +61,7 @@ Error Handling:
     },
     async (params: GetEffectInput) => {
       try {
-        const effect = await fetchEffect(params.name);
+        const effect = await fetchEffect(params.name, { includeSource: params.include_source });
 
         if (!effect) {
           return {
@@ -74,8 +76,9 @@ Error Handling:
 
         const isPro = effect.tier === "pro" || effect.tier === "paid";
         const hasSource = effect.files.some((f) => typeof f.content === "string");
-        const sourceLocked = isPro && !hasSource;
         const rateLimited = Boolean(effect.rateLimited);
+        const signInRequired = Boolean(effect.signInRequired);
+        const sourceLocked = params.include_source && isPro && !hasSource && !rateLimited && !signInRequired;
 
         const importStatement = buildImportStatement(effect);
 
@@ -102,8 +105,14 @@ Error Handling:
           ...(sourceLocked
             ? {
                 source_locked: true,
-                source_locked_reason:
-                  "This is a Pro effect and no Hyperiux Pro token is available. Run `hyperiux login` in a terminal, or set HYPERIUX_TOKEN, to fetch its source.",
+                source_locked_reason: `This is a Pro effect and this account isn't on Hyperiux Pro. Upgrade at ${API_URL}/pricing to fetch its source.`,
+              }
+            : {}),
+          ...(signInRequired
+            ? {
+                sign_in_required: true,
+                sign_in_required_reason:
+                  `Sign in to install Hyperiux effects - free ones need a free account too. Create one at ${API_URL}, then run \`npx hyperiux login\` in a terminal (or set HYPERIUX_TOKEN) and try again.`,
               }
             : {}),
           ...(rateLimited
@@ -112,8 +121,8 @@ Error Handling:
                 rate_limit_reason: buildRateLimitReason(effect),
               }
             : {}),
-          // Only present on a genuine metered delivery (not the Pro-without-token
-          // fallback, which never calls the metered route at all) - lets an
+          // Only present on a genuine metered delivery (not a details lookup or a
+          // refusal, which return no source) - lets an
           // agent tell the user "N of M installs left today" the same way the
           // website's copy toast does.
           ...(!rateLimited && typeof effect.installLimit === "number"

@@ -3,7 +3,7 @@
   "name": "io.github.Hyperiux-Immersion-Labs/hyperiux-mcp-server",
   "title": "Hyperiux Vault",
   "description": "Browse, inspect, and retrieve installable React and Next.js interaction effects from Hyperiux Vault.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "websiteUrl": "https://vault.hyperiux.com",
   "repository": {
     "url": "https://github.com/Hyperiux-Immersion-Labs/hyperiux-components.git",
@@ -14,7 +14,7 @@
     {
       "registryType": "npm",
       "identifier": "hyperiux-mcp-server",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"

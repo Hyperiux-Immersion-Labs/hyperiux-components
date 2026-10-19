@@ -154,6 +154,27 @@ describe("hyperiux_get_effect", () => {
     expect(output.source_locked).toBeUndefined();
   });
 
+  it("returns a structured sign_in_required result without content when there's no usable token", async () => {
+    fetchEffectMock.mockResolvedValue(baseEffect({ files: [{ path: "index.jsx" }], signInRequired: true }));
+
+    const output = parseOutput(await handler({ name: "dotted-grid", include_source: true }));
+
+    expect(output.sign_in_required).toBe(true);
+    expect(output.sign_in_required_reason).toMatch(/npx hyperiux login/);
+    expect(output.source_locked).toBeUndefined();
+    expect(JSON.stringify(output)).not.toContain("content");
+  });
+
+  it("asks fetchEffect for source only when include_source is true", async () => {
+    fetchEffectMock.mockResolvedValue(baseEffect());
+
+    await handler({ name: "dotted-grid", include_source: false });
+    expect(fetchEffectMock).toHaveBeenLastCalledWith("dotted-grid", { includeSource: false });
+
+    await handler({ name: "dotted-grid", include_source: true });
+    expect(fetchEffectMock).toHaveBeenLastCalledWith("dotted-grid", { includeSource: true });
+  });
+
   it("surfaces install_limit/install_remaining on a normal (non-rate-limited) lookup", async () => {
     fetchEffectMock.mockResolvedValue(baseEffect({ installLimit: 3, installRemaining: 1 }));
 

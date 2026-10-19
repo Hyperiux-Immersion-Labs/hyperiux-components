@@ -46,6 +46,7 @@ function createRegistryError(message, options = {}) {
   error.status = options.status;
   error.requiresPro = Boolean(options.requiresPro);
   error.rateLimited = Boolean(options.rateLimited);
+  error.signInRequired = Boolean(options.signInRequired);
   error.retryAfter = options.retryAfter;
   error.limit = options.limit;
 
@@ -57,16 +58,16 @@ async function parseJsonResponse(response) {
 }
 
 /**
- * Main registry fetcher used by `hyperiux add <effect>`.
+ * Main registry fetcher used by `hyperiux add <effect>` (and `diff`, which needs
+ * the code too).
  *
- * Flow:
- * 1. Fetch the public registry JSON to check tier.
- * 2. If free → route through the metered API too (Installation-SyncUp.md
- *    §2: this used to bypass all server code, which meant free installs
- *    could never be tracked or limited), falling back to the public JSON's
- *    own embedded content if that call fails so an API hiccup never blocks
- *    a free install.
- * 3. If pro → go through the protected API with the CLI token (unchanged).
+ * Every effect's code - free ones included - comes only from the signed-in,
+ * metered API (/api/cli/effects/<name>), with the saved CLI token. The public
+ * registry JSON carries no source any more, and there's no fallback to it: an
+ * API failure is an error, never a reason to install something else.
+ *
+ * Signed out: the API answers 401 "sign-in-required", surfaced as
+ * `error.signInRequired` so `add` can say "run npx hyperiux login".
  */
 export async function fetchRegistry(name, options = {}) {
   const { local = false, cwd = process.cwd(), token = null, isDependency = false } = options;
@@ -75,32 +76,16 @@ export async function fetchRegistry(name, options = {}) {
     return fetchLocalRegistry(name, cwd, token);
   }
 
-  // First, check what tier this effect is via the public registry index.
-  const publicData = await fetchPublicEffect(name);
-
-  if (!isProEffect(publicData)) {
-    try {
-      return await fetchProtectedEffect(name, token, { isDependency });
-    } catch (error) {
-      // A genuine rate-limit denial must not be swallowed by the
-      // resilience fallback below - falling back to the public JSON here
-      // would silently bypass Stage 3 enforcement for every free effect.
-      // Only connectivity/server issues (no rateLimited flag) fall back.
-      if (error.rateLimited) throw error;
-
-      if (process.env.HYPERIUX_DEBUG === "1") {
-        console.log(
-          "[Hyperiux CLI] Metered fetch failed for free effect, falling back to public JSON:",
-          error.message,
-        );
-      }
-
-      return publicData;
-    }
-  }
-
-  // Pro effect - go through the authenticated API.
   return fetchProtectedEffect(name, token, { isDependency });
+}
+
+/**
+ * An effect's public metadata - tier, version, changelog, dependencies, file
+ * paths, no source. For `outdated` / `versions`, which only compare versions:
+ * no sign-in needed, and it never counts as an install.
+ */
+export async function fetchRegistryMetadata(name) {
+  return fetchPublicEffect(name);
 }
 
 async function fetchPublicEffect(name) {
@@ -187,9 +172,10 @@ async function fetchProtectedEffect(name, token, options = {}) {
 
   if (!response.ok) {
     throw createRegistryError(
-      data?.error || `Failed to fetch Pro effect: ${response.statusText}`,
+      data?.error || `Failed to fetch effect: ${response.statusText}`,
       {
         status: response.status,
+        signInRequired: data?.reason === "sign-in-required" || (response.status === 401 && !token),
         requiresPro: Boolean(data?.requiresPro),
         rateLimited: Boolean(data?.rateLimited),
         retryAfter: data?.retryAfter,

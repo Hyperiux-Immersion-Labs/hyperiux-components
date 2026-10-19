@@ -31,6 +31,40 @@ npm publish --provenance --access public`.
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-19
+
+### Changed
+- **Every install needs a signed-in account, free effects included.** `add` (and
+  `diff`) fetch code only from the metered `/api/cli/effects/<name>` route with
+  your CLI token; the public registry JSON no longer carries source.
+- `outdated` / `versions` read only the public metadata (versions, changelog),
+  so checking for updates needs no sign-in and never counts as an install.
+
+### Removed
+- The fallback to the public registry JSON when the metered API failed or
+  refused a free effect. A failure is now an error, never a quiet install of
+  something else.
+
+### Added
+- `add` signed out: "Sign in first" with `npx hyperiux login` steps (the API's
+  401 `sign-in-required`), exit code 1.
+
+## [mcp-server 0.3.0] - 2026-10-19
+
+### Changed
+- `hyperiux_get_effect` with `include_source: true` sends your Hyperiux token for
+  free effects too (it used to send none, so signed-in users showed up as
+  anonymous). Without a usable token it returns metadata plus
+  `sign_in_required` / `sign_in_required_reason` - every install needs a free
+  account.
+- `include_source: false` reads only the public metadata: no request to the
+  metered route, so a details lookup no longer uses one of the day's installs.
+- A Pro effect on a free account (403) returns metadata with `source_locked`.
+
+### Removed
+- Both fallbacks to the public registry JSON (free effects on any error; Pro
+  effects on 401/403 or with no token).
+
 ## [1.1.4] - 2026-09-21
 
 ### Changed

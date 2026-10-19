@@ -56,6 +56,9 @@ export interface RegistryEffect {
   rateLimited?: boolean;
   retryAfter?: number;
   installLimit?: number | null;
+  // Set by fetchEffect() when source was asked for without a usable Hyperiux
+  // token - every effect's code needs a signed-in account, free ones too
+  signInRequired?: boolean;
   // Present on a successful (non-rate-limited) delivery too - null for
   // admins, whose fetches never consume a slot.
   installRemaining?: number | null;

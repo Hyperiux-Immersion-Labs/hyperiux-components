@@ -51,7 +51,7 @@ export default function Page() {
 | `npx hyperiux init` | Initialize config in your project |
 | `npx hyperiux add <effect>` | Add an effect to your project |
 | `npx hyperiux list` | List all available effects |
-| `npx hyperiux login` | Connect your Pro account |
+| `npx hyperiux login` | Sign in (needed for every install, free effects too) |
 | `npx hyperiux logout` | Remove saved credentials |
 | `npx hyperiux whoami` | Show login status |
 
@@ -64,7 +64,12 @@ export default function Page() {
 
 ## Free vs Pro
 
-**50+ free effects** - install without any account:
+Every install needs a Hyperiux account - [create a free one](https://vault.hyperiux.com), then sign in once:
+```bash
+npx hyperiux login
+```
+
+**50+ free effects** - any account (3 a day on Free):
 ```bash
 npx hyperiux add rotation-slider
 npx hyperiux add spider-particles
@@ -73,7 +78,6 @@ npx hyperiux add phantom-image-trail
 
 **100+ pro effects** - require a [Pro subscription](https://vault.hyperiux.com/pricing):
 ```bash
-npx hyperiux login       # authenticate once
 npx hyperiux add grid-tunnel
 ```
 

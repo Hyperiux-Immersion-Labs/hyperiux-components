@@ -74,14 +74,13 @@ export async function add(effectName, options = {}) {
   const spinner = ora("Fetching effect from registry...").start();
 
   /*
-    We read the saved CLI token here and pass it to fetchRegistry().
-    fetchRegistry() should call your protected API:
-    /api/cli/effects/[effectSlug]
+    We read the saved CLI token here and pass it to fetchRegistry(), which
+    calls the protected API: /api/cli/effects/[effectSlug]
 
-    That API should decide:
-    - free effect: return files
-    - pro effect without token: return 403 with requiresPro: true
-    - pro effect with valid token: return files
+    That API decides:
+    - no token (any effect, free included): 401 with reason "sign-in-required"
+    - pro effect on a free account: 403 with requiresPro: true
+    - otherwise: the files, counted against the daily install limit
   */
   const authToken = getAuthToken();
 
@@ -99,7 +98,18 @@ export async function add(effectName, options = {}) {
 
     console.log();
 
-    if (error.rateLimited) {
+    if (error.signInRequired) {
+      console.log(chalk.red("Sign in first - every effect needs a Hyperiux account, free ones included."));
+      console.log();
+      console.log(chalk.yellow("Create a free account, then log in:"));
+      console.log(chalk.cyan("  npx hyperiux login"));
+      console.log();
+      console.log(chalk.dim(`Generate your CLI token here:`));
+      console.log(chalk.dim(`  ${APP_URL}/cli-auth`));
+      console.log();
+      console.log(chalk.dim("After login, run:"));
+      console.log(chalk.cyan(`  npx hyperiux add ${effectName}`));
+    } else if (error.rateLimited) {
       const limitText = error.limit ? ` (${error.limit}/day)` : "";
       console.log(chalk.red(`Daily install limit reached${limitText}.`));
       console.log();

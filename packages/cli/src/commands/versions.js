@@ -1,8 +1,7 @@
 import chalk from "chalk";
 import { configExists } from "../utils/config.js";
 import { readLockfile } from "../utils/lockfile.js";
-import { fetchRegistry } from "../utils/registry.js";
-import { getAuthToken } from "../utils/auth.js";
+import { fetchRegistryMetadata } from "../utils/registry.js";
 import { getBumpType } from "../utils/semver.js";
 
 const BUMP_COLOR = {
@@ -35,8 +34,6 @@ export async function versions() {
     return;
   }
 
-  const authToken = getAuthToken();
-
   console.log();
   console.log(chalk.bold(`Installed effects (${names.length}):`));
   console.log();
@@ -47,7 +44,7 @@ export async function versions() {
     const entry = lock.components[name];
 
     try {
-      const registryItem = await fetchRegistry(name, { token: authToken });
+      const registryItem = await fetchRegistryMetadata(name);
       const latestVersion = registryItem.version || "1.0.0";
       const bump = getBumpType(entry.version, latestVersion);
 

@@ -24,13 +24,18 @@ vi.mock("../utils/auth.js", () => ({
 
 const registryState = { versions: {} };
 
+// outdated / versions read public metadata (fetchRegistryMetadata); diff needs the
+// code (fetchRegistry) - both answer from registryState here
+const fakeRegistryItem = async (name) => {
+  if (!(name in registryState.versions)) {
+    throw new Error(`"${name}" not found in registry`);
+  }
+  return { name, version: registryState.versions[name] };
+};
+
 vi.mock("../utils/registry.js", () => ({
-  fetchRegistry: async (name) => {
-    if (!(name in registryState.versions)) {
-      throw new Error(`"${name}" not found in registry`);
-    }
-    return { name, version: registryState.versions[name] };
-  },
+  fetchRegistry: fakeRegistryItem,
+  fetchRegistryMetadata: fakeRegistryItem,
   getFileContent: async (file) => file.content ?? "",
   getRegistryItemFiles: (item) => item.files || [],
 }));

@@ -72,10 +72,10 @@ export async function fetchPublicEffect(name: string): Promise<RegistryEffect | 
 
 /**
  * Fetches an effect through the same metered CLI API route packages/cli
- * uses (Installation-SyncUp.md Stage 1.7). `token` is only required for Pro
- * effects - see getAuthToken() (reuses `hyperiux login`'s saved token, or
- * HYPERIUX_TOKEN); free effects can call this with `token: null` since the
- * route grants free tier unconditionally.
+ * uses (Installation-SyncUp.md Stage 1.7). `token` is required for every
+ * effect, free included - see getAuthToken() (reuses `hyperiux login`'s saved
+ * token, or HYPERIUX_TOKEN); without one the route answers 401
+ * "sign-in-required".
  */
 export async function fetchProtectedEffect(
   name: string,
@@ -116,53 +116,50 @@ export async function fetchProtectedEffect(
 }
 
 /**
- * Fetches an effect's full metadata, transparently including Pro source when
- * a token is available (env var or a saved `hyperiux login` session) and the
- * effect requires it. Falls back to the public (source-stripped) response
- * when no token is available or the request isn't authorized.
+ * Fetches one effect for hyperiux_get_effect.
  *
- * Free effects also route through the metered API now (Installation-SyncUp.md
- * §2/Stage 1.7: the public JSON bypassed all server code, so a free fetch
- * could never be tracked or limited), falling back to the public JSON's own
- * embedded content if that call fails - an API hiccup should never break a
- * free effect lookup.
+ * Every effect's code needs a signed-in account, free effects included
+ * (NO_ANONYMOUS_INSTALLS.md in hyperiux-pro-components): the public JSON
+ * carries no source, so code only comes from the metered API route, always
+ * with the token from getAuthToken() (HYPERIUX_TOKEN or `hyperiux login`).
+ * There is no fallback to the public JSON - a failure is a failure.
  *
- * A genuine rate-limit denial (Stage 3) is the one failure that must NOT
- * fall back to the public JSON's embedded content - that would silently
- * bypass enforcement for every free effect (mirrors the same fix in the
- * CLI's registry.js). Instead the metadata is still returned, but with
- * `rateLimited: true` and no file content, so hyperiux_get_effect can
- * surface a structured "limit reached" result instead of source.
+ * `includeSource: false` (a details lookup) reads only the public metadata:
+ * no request to the metered route, so it never uses one of the day's installs.
+ *
+ * With source asked for, a refusal still returns the metadata, with no file
+ * content and a marker hyperiux_get_effect turns into a structured result:
+ *   - signInRequired: no token, or the server didn't accept it (401)
+ *   - rateLimited: the daily install limit is used up (429)
+ *   - neither (a 403): a Pro effect without a Pro subscription
  */
-export async function fetchEffect(name: string): Promise<RegistryEffect | null> {
+export async function fetchEffect(
+  name: string,
+  options: { includeSource?: boolean } = {}
+): Promise<RegistryEffect | null> {
+  const { includeSource = true } = options;
   const publicEffect = await fetchPublicEffect(name);
   if (!publicEffect) return null;
 
-  if (publicEffect.tier !== "pro" && publicEffect.tier !== "paid") {
-    try {
-      return await fetchProtectedEffect(name, null);
-    } catch (error) {
-      if (error instanceof RegistryError && error.rateLimited) {
-        return {
-          ...publicEffect,
-          files: publicEffect.files.map((file) => ({ ...file, content: undefined })),
-          rateLimited: true,
-          retryAfter: error.retryAfter,
-          installLimit: error.limit ?? null,
-        };
-      }
-      return publicEffect;
-    }
-  }
+  const metadata: RegistryEffect = {
+    ...publicEffect,
+    files: publicEffect.files.map((file) => ({ ...file, content: undefined })),
+  };
+
+  if (!includeSource) return metadata;
 
   const token = getAuthToken();
-  if (!token) return publicEffect;
+  if (!token) return { ...metadata, signInRequired: true };
 
   try {
     return await fetchProtectedEffect(name, token);
   } catch (error) {
-    if (error instanceof RegistryError && (error.status === 401 || error.status === 403)) {
-      return publicEffect;
+    if (error instanceof RegistryError) {
+      if (error.rateLimited) {
+        return { ...metadata, rateLimited: true, retryAfter: error.retryAfter, installLimit: error.limit ?? null };
+      }
+      if (error.status === 401) return { ...metadata, signInRequired: true };
+      if (error.status === 403) return metadata;
     }
     throw error;
   }
