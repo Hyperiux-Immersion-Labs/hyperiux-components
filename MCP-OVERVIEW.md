@@ -8,7 +8,7 @@ For setup, tool reference, and client-specific configuration, see [MCP-DOCUMENTA
 
 ## What it is, in one sentence
 
-**`hyperiux-mcp-server` is an MCP (Model Context Protocol) server that teaches AI coding assistants what's actually in the Hyperiux Vault effect catalog - 150+ effects, 50+ free - so they can help you find, understand, and install the right effect without guessing.**
+**`hyperiux-mcp-server` is an MCP (Model Context Protocol) server that teaches AI coding assistants what's actually in the Hyperiux Vault effect catalog - 150+ effects, 50+ free and 90+ Pro - so they can help you find, understand, and install the right effect without guessing.**
 
 ## Why it exists
 
@@ -46,7 +46,7 @@ Just as important as what it does:
 - **It does not install anything.** It never writes a file. Installing is still the `hyperiux` CLI's job (`npx hyperiux add <effect>`) - this server just makes sure whoever (or whatever) is calling that command knows the right slug, dependencies, and import path first.
 - **It does not leak Pro source.** If an effect requires a Hyperiux Pro subscription and no valid token is available, it says so plainly instead of returning fake or partial code.
 - **It does not run arbitrary code or touch your filesystem.** It only ever reads from the public Hyperiux registry over HTTPS and, optionally, a saved auth token from a `hyperiux login` session.
-- **It does not require an account to use for free effects.** Anyone can query metadata and source for all 50+ free effects with zero setup beyond connecting the server.
+- **It does not require an account to browse.** Anyone can query catalog metadata with zero setup beyond connecting the server. Fetching source for any effect, including the 50+ free ones, needs a free Hyperiux account (a `hyperiux login` session or `HYPERIUX_TOKEN`).
 
 ## Why an MCP server instead of just... docs?
 
@@ -90,8 +90,8 @@ Two modes are available:
 
 ## Auth and Pro access, briefly
 
-It reuses whatever the `hyperiux` CLI already has - a saved `hyperiux login` session (`~/.hyperiux/auth.json`) or a `HYPERIUX_TOKEN` environment variable. If you're logged in with a Pro subscription, Pro effect source becomes available through the same tool calls. If not, you still get full metadata for every effect (description, dependencies, changelog, tier) - just not the Pro source itself, with a plain explanation of why.
+It reuses whatever the `hyperiux` CLI already has - a `HYPERIUX_TOKEN` environment variable first, then a saved `hyperiux login` session (`~/.hyperiux/auth.json`). If you're logged in with a Pro subscription, Pro effect source becomes available through the same tool calls. If not, you still get full metadata for every effect (description, dependencies, changelog, tier) - just not the Pro source itself, with a plain explanation of why.
 
 ## What's next for it
 
-Potential next capabilities include structured props and usage information, component constraints, tier visibility in list results, and recommendations.
+Potential next capabilities include returning props (the registry already has them; the tools just don't return them yet), filtering by tier, usage information, effect constraints, and recommendations.

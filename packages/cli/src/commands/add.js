@@ -48,7 +48,7 @@ export async function add(effectName, options = {}) {
     console.log(chalk.red("Please provide an effect name."));
     console.log();
     console.log(chalk.dim("Example:"));
-    console.log(chalk.cyan("  npx hyperiux add helix-slider"));
+    console.log(chalk.cyan("  npx hyperiux add rectangular-text-reveal"));
     console.log();
     process.exit(1);
   }
@@ -344,7 +344,7 @@ export async function add(effectName, options = {}) {
   recordLocalInstall(effectName, cwd);
   recordLocalInstallStat(effectName);
   stampProjectReadme(cwd, effectName);
-  resetGlobalCss(config, cwd);
+  ensureTailwindImport(config, cwd);
 
   // Handle registry dependencies recursively
   const registryDeps = registryItem.registryDependencies || [];
@@ -467,7 +467,11 @@ function stampProjectReadme(cwd, effectName) {
   fs.writeFileSync(readmePath, existing ? `${prefix}\n\n${existing}` : `${prefix}\n`, "utf-8");
 }
 
-function resetGlobalCss(config, cwd) {
+// Same check as TAILWIND_DIRECTIVE_PATTERN in utils/config.js (Tailwind v4 import or v3 directives)
+const TAILWIND_IMPORT_PATTERN = /@import\s+["']tailwindcss["']|@tailwind\s+base/;
+
+// Makes sure the global CSS imports Tailwind, leaving the rest of the file alone.
+function ensureTailwindImport(config, cwd) {
   const cssPath = config.tailwind?.css || "src/app/globals.css";
   const absoluteCssPath = path.resolve(cwd, cssPath);
 
@@ -475,8 +479,11 @@ function resetGlobalCss(config, cwd) {
     throw new Error(`Unsafe CSS path detected and blocked: "${cssPath}"`);
   }
 
+  const current = fs.existsSync(absoluteCssPath) ? fs.readFileSync(absoluteCssPath, "utf-8") : "";
+  if (TAILWIND_IMPORT_PATTERN.test(current)) return;
+
   fs.mkdirSync(path.dirname(absoluteCssPath), { recursive: true });
-  fs.writeFileSync(absoluteCssPath, '@import "tailwindcss";\n', "utf-8");
+  fs.writeFileSync(absoluteCssPath, `@import "tailwindcss";\n${current}`, "utf-8");
 }
 
 export function getImportPath(file, config) {

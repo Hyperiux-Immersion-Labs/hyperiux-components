@@ -425,7 +425,7 @@ export async function init(options) {
     console.log(chalk.dim(describeDetection(framework, router)));
     console.log();
     console.log("You can now add effects with:");
-    console.log(chalk.cyan("  npx hyperiux add blur-text"));
+    console.log(chalk.cyan("  npx hyperiux add rectangular-text-reveal"));
     console.log();
   } catch (error) {
     spinner.fail("Failed to create configuration");

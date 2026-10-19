@@ -207,6 +207,15 @@
     "target": "src/components/effects/liquid-glass-cursor"
   },
   {
+    "name": "dotted-trail",
+    "title": "Dotted Trail",
+    "category": "cursor",
+    "type": "registry:component",
+    "registryPath": "registry/effects/cursor/dotted-trail/registry.json",
+    "importPath": "@/components/effects/dotted-trail",
+    "target": "src/components/effects/dotted-trail"
+  },
+  {
     "name": "numeric-tunnel",
     "title": "Numeric Tunnel",
     "category": "loaders",

@@ -1,0 +1,298 @@
+{
+  "name": "dotted-trail",
+  "version": "1.0.1",
+  "type": "registry:component",
+  "title": "Dotted Trail",
+  "description": "Interactive dotted grid with a soft two-color cursor trail",
+  "category": "cursor",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/demo/dotted-trail",
+  "tier": "free",
+  "main": "index.tsx",
+  "exportName": "DottedTrail",
+  "exportKind": "default",
+  "importPath": "@/components/effects/dotted-trail",
+  "target": "src/components/effects/dotted-trail",
+  "props": [
+    {
+      "name": "colorA",
+      "type": "color",
+      "default": "#ff4fd8",
+      "description": "Core color at the cursor.",
+      "remixer": {
+        "control": "color",
+        "group": "trail",
+        "groupTitle": "Trail"
+      }
+    },
+    {
+      "name": "colorB",
+      "type": "color",
+      "default": "#8b5cf6",
+      "description": "Outer color the blend runs toward.",
+      "remixer": {
+        "control": "color",
+        "group": "trail",
+        "groupTitle": "Trail"
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Page color behind the grid.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "dotColor",
+      "type": "color",
+      "default": "#d1d1d1",
+      "description": "Dot color at rest.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "activeDotColor",
+      "type": "color",
+      "default": "#ffffff",
+      "description": "Dot color under the trail.",
+      "remixer": {
+        "control": "color",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "headRadius",
+      "type": "number",
+      "default": 80,
+      "description": "Radius of the blob at the cursor.",
+      "remixer": {
+        "control": "range",
+        "group": "trail",
+        "groupTitle": "Trail",
+        "min": 30,
+        "max": 200,
+        "step": 5
+      }
+    },
+    {
+      "name": "glowRadius",
+      "type": "number",
+      "default": 300,
+      "description": "Reach of the soft glow around the cursor.",
+      "remixer": {
+        "control": "range",
+        "group": "trail",
+        "groupTitle": "Trail",
+        "min": 80,
+        "max": 600,
+        "step": 10
+      }
+    },
+    {
+      "name": "followSpeed",
+      "type": "number",
+      "default": 0.22,
+      "description": "How quickly the trail chases the cursor.",
+      "remixer": {
+        "control": "range",
+        "group": "trail",
+        "groupTitle": "Trail",
+        "min": 0.02,
+        "max": 1,
+        "step": 0.02
+      }
+    },
+    {
+      "name": "trailLength",
+      "type": "number",
+      "default": 18,
+      "description": "How many nodes the tail trails behind.",
+      "remixer": {
+        "control": "range",
+        "group": "trail",
+        "groupTitle": "Trail",
+        "min": 2,
+        "max": 48,
+        "step": 1
+      }
+    },
+    {
+      "name": "fadeOnIdle",
+      "type": "boolean",
+      "default": true,
+      "description": "Fade the cursor out when it rests.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "idle",
+        "groupTitle": "Idle"
+      }
+    },
+    {
+      "name": "idleDelay",
+      "type": "number",
+      "default": 100,
+      "description": "Stillness before the fade starts, ms.",
+      "remixer": {
+        "control": "range",
+        "group": "idle",
+        "groupTitle": "Idle",
+        "min": 0,
+        "max": 3000,
+        "step": 50
+      }
+    },
+    {
+      "name": "idleFade",
+      "type": "number",
+      "default": 1100,
+      "description": "How long the fade takes, ms.",
+      "remixer": {
+        "control": "range",
+        "group": "idle",
+        "groupTitle": "Idle",
+        "min": 100,
+        "max": 4000,
+        "step": 50
+      }
+    },
+    {
+      "name": "rimInner",
+      "type": "number",
+      "default": 2.1,
+      "description": "Where the blend starts, inside the shape.",
+      "remixer": {
+        "control": "range",
+        "group": "blend",
+        "groupTitle": "Blend",
+        "min": 0.2,
+        "max": 3.5,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "rimOuter",
+      "type": "number",
+      "default": 1.5,
+      "description": "Where the blend finishes, past the edge.",
+      "remixer": {
+        "control": "range",
+        "group": "blend",
+        "groupTitle": "Blend",
+        "min": 0.1,
+        "max": 3,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "edgeDesaturate",
+      "type": "number",
+      "default": 0.3,
+      "description": "Pulls the fading edge back toward colorA.",
+      "remixer": {
+        "control": "range",
+        "group": "blend",
+        "groupTitle": "Blend",
+        "min": 0,
+        "max": 1,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "edgeDesaturateSpan",
+      "type": "number",
+      "default": 2.1,
+      "description": "Band width that desaturation acts over.",
+      "remixer": {
+        "control": "range",
+        "group": "blend",
+        "groupTitle": "Blend",
+        "min": 0.2,
+        "max": 3.5,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "tailTilt",
+      "type": "number",
+      "default": 0.18,
+      "description": "Extra drift toward colorB along the tail.",
+      "remixer": {
+        "control": "range",
+        "group": "blend",
+        "groupTitle": "Blend",
+        "min": 0,
+        "max": 1,
+        "step": 0.02
+      }
+    },
+    {
+      "name": "dotSpacing",
+      "type": "number",
+      "default": 34,
+      "description": "Distance between dots in the grid.",
+      "remixer": {
+        "control": "range",
+        "group": "grid",
+        "groupTitle": "Grid",
+        "min": 20,
+        "max": 80,
+        "step": 2
+      }
+    },
+    {
+      "name": "dotRadius",
+      "type": "number",
+      "default": 1.2,
+      "description": "Radius of an idle dot.",
+      "remixer": {
+        "control": "range",
+        "group": "grid",
+        "groupTitle": "Grid",
+        "min": 0.4,
+        "max": 4,
+        "step": 0.1
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "defaultOpenGroupId": "blend",
+    "layout": {
+      "buttonClassName": "right-4! top-25!",
+      "panelClassName": "right-0! top-[132px]! h-[calc(100%-132px)]! w-[344px]!"
+    },
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/dotted-trail/index.tsx"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-10-16",
+      "summary": "Filed under Cursor Effects, matching its docs page",
+      "breaking": false
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-09-21",
+      "summary": "Initial release: WebGL dotted grid with an SDF cursor trail, radial two-color blend, and remixer controls.",
+      "breaking": false
+    }
+  ]
+}

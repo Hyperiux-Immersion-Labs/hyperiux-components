@@ -49,6 +49,11 @@ npm publish --provenance --access public`.
 - `add` signed out: "Sign in first" with `npx hyperiux login` steps (the API's
   401 `sign-in-required`), exit code 1.
 
+### Fixed
+- `add` no longer replaces your global CSS file. It used to overwrite it with
+  only `@import "tailwindcss";` on every install; it now adds that import only
+  when the file doesn't already have it, and leaves the rest untouched.
+
 ## [mcp-server 0.3.0] - 2026-10-19
 
 ### Changed
@@ -87,6 +92,20 @@ npm publish --provenance --access public`.
 - `add-rate-limited.test.js` asserted the old (pre-`add.js` change) logged-out
   rate-limit message, which broke release CI's quality-gate step for both
   packages even though only the CLI's messaging had changed.
+
+## [mcp-server 0.2.1] - 2026-09-21
+
+### Added
+- Official MCP Registry publishing: `mcpName`
+  (`io.github.Hyperiux-Immersion-Labs/hyperiux-mcp-server`) in
+  `package.json`, a `server.json` manifest, and a
+  `publish-mcp-registry.yml` workflow. A new test
+  (`registry-manifest.test.ts`) keeps `server.json`'s name and version in
+  step with `package.json`.
+
+### Fixed
+- The server reported a hardcoded version of `0.1.0` to MCP clients; it now
+  reads its version from `package.json`.
 
 ## [mcp-server 0.2.0] - 2026-09-18
 
@@ -162,7 +181,7 @@ npm publish --provenance --access public`.
 ## [1.1.0-beta.2] - 2026-08-07
 
 ### Added
-- Anonymous CLI telemetry (`src/utils/telemetry.js`): tracks `init` and `add`/`add_blocked` events (CLI version, platform, Node version, an anonymized per-project ID - a truncated SHA-256 hash of the project path and hostname, not the path itself) to help prioritize framework/registry support. Non-blocking (1.5s timeout, silently no-ops on failure) and off by default in respect of privacy - opt out anytime with `HYPERIUX_TELEMETRY_DISABLED=1` or the standard `DO_NOT_TRACK=1`.
+- Anonymous CLI telemetry (`src/utils/telemetry.js`): tracks `init` and `add`/`add_blocked` events (CLI version, platform, Node version, an anonymized per-project ID - a truncated SHA-256 hash of the project path and hostname, not the path itself) to help prioritize framework/registry support. Non-blocking (1.5s timeout, silently no-ops on failure) and on by default (corrected: this entry originally said "off by default"; telemetry has always been opt-out) - opt out anytime with `HYPERIUX_TELEMETRY_DISABLED=1` or the standard `DO_NOT_TRACK=1`.
 - `whoami` and `logout` commands, alongside the existing `login`.
 - Framework and router detection, plus Tailwind/alias preflight checks, during `init` - surfaces mismatches before they turn into broken installs instead of after.
 - Local install counter and registry domain migration support.

@@ -17,7 +17,7 @@ const ListEffectsInputSchema = z
       .string()
       .optional()
       .describe(
-        "Filter to one category, e.g. 'text', 'cursor', 'webgl', 'buttons', 'carousels', 'components', 'navigation', 'backgrounds', 'loaders', 'transitions'. Use hyperiux_list_categories to see all valid values with counts."
+        "Filter to one category, e.g. 'text', 'cursor', 'scroll', 'webgl', 'buttons', 'carousels', 'components', 'navigation', 'backgrounds', 'loaders', 'transitions'. Use hyperiux_list_categories to see all valid values with counts."
       ),
     limit: z.number().int().min(1).max(100).default(30).describe("Maximum results to return."),
     offset: z.number().int().min(0).default(0).describe("Number of results to skip for pagination."),

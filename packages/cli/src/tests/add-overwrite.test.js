@@ -145,7 +145,7 @@ describe("add - overwrite safety of --yes", () => {
     expect(fs.readFileSync(target, "utf8")).toBe(REGISTRY_CONTENT);
   });
 
-  it("stamps README and resets global CSS after a successful install", async () => {
+  it("stamps README and keeps the existing global CSS after a successful install", async () => {
     const add = await importAdd();
     const readmePath = path.join(tmpDir, "README.md");
     const cssPath = path.join(tmpDir, "src/app/globals.css");
@@ -158,13 +158,25 @@ describe("add - overwrite safety of --yes", () => {
     expect(fs.readFileSync(readmePath, "utf8")).toBe(
       "// Built using Hyperiux Vault: [https://vault.hyperiux.com](https://vault.hyperiux.com)\n// Installed Effect:foo\n\n# Demo\n"
     );
-    expect(fs.readFileSync(cssPath, "utf8")).toBe('@import "tailwindcss";\n');
+    expect(fs.readFileSync(cssPath, "utf8")).toBe('@import "tailwindcss";\n.custom { color: red; }\n');
 
     await add("foo", { yes: true, overwrite: true });
 
     expect(fs.readFileSync(readmePath, "utf8")).toBe(
       "// Built using Hyperiux Vault: [https://vault.hyperiux.com](https://vault.hyperiux.com)\n// Installed Effect:foo\n\n# Demo\n"
     );
+    expect(fs.readFileSync(cssPath, "utf8")).toBe('@import "tailwindcss";\n.custom { color: red; }\n');
+  });
+
+  it("adds the Tailwind import above existing global CSS that lacks it", async () => {
+    const add = await importAdd();
+    const cssPath = path.join(tmpDir, "src/app/globals.css");
+    fs.mkdirSync(path.dirname(cssPath), { recursive: true });
+    fs.writeFileSync(cssPath, ".custom { color: red; }\n");
+
+    await add("foo", { yes: true });
+
+    expect(fs.readFileSync(cssPath, "utf8")).toBe('@import "tailwindcss";\n.custom { color: red; }\n');
   });
 });
 

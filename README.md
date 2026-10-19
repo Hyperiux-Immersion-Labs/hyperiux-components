@@ -4,9 +4,9 @@
 [![npm downloads](https://img.shields.io/npm/dm/hyperiux.svg?style=flat-square&color=777777)](https://www.npmjs.com/package/hyperiux)
 [![Listed on mcpservers.org](https://mcpservers.org/badge.svg)](https://mcpservers.org/servers/hyperiux-immersion-labs/hyperiux-components)
 
-**A collection of high-quality animation effects and interactive components for Next.js - designed by [Hyperiux](https://hyperiux.com).**
+**A collection of high-quality animation and interaction effects for Next.js - designed by [Hyperiux](https://hyperiux.com).**
 
-150+ effects in total - 50+ free and open source, 100+ pro effects available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project - you own what you install.
+150+ effects in total - 50+ free and open source, 90+ pro effects available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project - you own what you install.
 
 <table>
   <tr>
@@ -28,12 +28,17 @@
 npx hyperiux init
 ```
 
-### 2. Add a free effect
+### 2. Sign in (free account)
+```bash
+npx hyperiux login
+```
+
+### 3. Add a free effect
 ```bash
 npx hyperiux add rectangular-text-reveal
 ```
 
-### 3. Use it
+### 4. Use it
 ```jsx
 import RectangularTextReveal from "@/components/effects/rectangular-text-reveal";
 
@@ -51,13 +56,16 @@ export default function Page() {
 | `npx hyperiux init` | Initialize config in your project |
 | `npx hyperiux add <effect>` | Add an effect to your project |
 | `npx hyperiux list` | List all available effects |
+| `npx hyperiux outdated` | Check installed effects for available updates |
+| `npx hyperiux versions` | List installed effects and their versions |
+| `npx hyperiux diff [effect]` | Show what changed upstream for an installed effect (all installed effects if omitted) |
 | `npx hyperiux login` | Sign in (needed for every install, free effects too) |
 | `npx hyperiux logout` | Remove saved credentials |
 | `npx hyperiux whoami` | Show login status |
 
 ### Options for `add`
-- `--overwrite` - overwrite existing files
-- `--yes` - skip confirmation prompts
+- `-o, --overwrite` - overwrite existing files
+- `-y, --yes` - skip confirmation prompts
 - `--dry-run` - preview without writing files
 
 ---
@@ -76,7 +84,7 @@ npx hyperiux add spider-particles
 npx hyperiux add phantom-image-trail
 ```
 
-**100+ pro effects** - require a [Pro subscription](https://vault.hyperiux.com/pricing):
+**90+ pro effects** - require a [Pro subscription](https://vault.hyperiux.com/pricing):
 ```bash
 npx hyperiux add grid-tunnel
 ```
@@ -87,10 +95,12 @@ npx hyperiux add grid-tunnel
 
 ## Effects
 
+Effects marked **(Pro)** need a [Pro subscription](https://vault.hyperiux.com/pricing); the rest are free.
+
 ### Text
 Letter-level and line-level reveal animations - blur, scramble, stagger, perspective flip, mask wipe.
 
-`rectangular-text-reveal` · `blur-text` · `text-fill-animation` · `scramble-text` · [+more](https://vault.hyperiux.com/effects/text-animations)
+`rectangular-text-reveal` · `blur-text` (Pro) · `text-fill-animation` (Pro) · `scramble-text` (Pro) · [+more](https://vault.hyperiux.com/effects/text-animations)
 
 ### Backgrounds
 Ambient canvas and particle backgrounds that sit behind content without competing for attention.
@@ -125,7 +135,7 @@ Menus and navbars with desktop and mobile interaction patterns.
 ### Cursor
 Canvas 2D and Three.js cursor effects - image trails, rope followers, liquid glass, character grids.
 
-`phantom-image-trail` · `pixelated-image-effect` · `liquid-glass-cursor` · `magnetic-image-trail` · `character-trail` · `rope-cursor` · [+more](https://vault.hyperiux.com/effects/cursor-effects)
+`phantom-image-trail` · `pixelated-image-effect` · `liquid-glass-cursor` · `magnetic-image-trail` (Pro) · `character-trail` (Pro) · `rope-cursor` (Pro) · [+more](https://vault.hyperiux.com/effects/cursor-effects)
 
 ### Transitions
 Page and section transitions built from animated grids and block-based motion.
@@ -140,7 +150,7 @@ Animated loading indicators for numeric, stacked, and motion-heavy states.
 ### WebGL
 Three.js and R3F scenes with custom GLSL shaders - image carousels, pixel grids, frosted glass, GPU particle galaxies, and 3D heroes.
 
-`interactive-blur-reveal` · `mouse-pixelation` · `grid-tunnel` · `draggable-canvas` · `milky-way` · `fractal-glass`
+`interactive-blur-reveal` · `mouse-pixelation` (Pro) · `grid-tunnel` (Pro) · `draggable-canvas` (Pro) · `milky-way` · `fractal-glass`
 
 [Browse all →](https://vault.hyperiux.com/effects)
 
@@ -177,6 +187,13 @@ Three.js and R3F scenes with custom GLSL shaders - image carousels, pixel grids,
 | `HYPERIUX_API_URL` | Override the API URL independently of the app URL |
 | `HYPERIUX_REGISTRY_URL` | Override the registry URL for local development |
 | `HYPERIUX_DEBUG` | Set to `1` to enable verbose request logs - do not use in shared CI |
+| `HYPERIUX_TELEMETRY_DISABLED` | Set to `1` (or `true`) to turn off anonymous usage telemetry |
+| `DO_NOT_TRACK` | Set to `1` to turn off anonymous usage telemetry (standard opt-out) |
+| `HYPERIUX_TELEMETRY_URL` | Override the telemetry endpoint |
+
+### Telemetry
+
+The CLI sends anonymous usage telemetry by default (`init` and `add` events, CLI version, platform, Node version and a hashed per-project ID - never your project path; if you're signed in, your saved token is attached so installs are credited to your account). It is non-blocking and never interrupts an install. Opt out with `HYPERIUX_TELEMETRY_DISABLED=1` or `DO_NOT_TRACK=1`.
 
 ---
 
@@ -185,10 +202,10 @@ Three.js and R3F scenes with custom GLSL shaders - image carousels, pixel grids,
 This is a pnpm monorepo with Turborepo:
 
 - **`packages/cli`** - `npx hyperiux` CLI tool, published to npm as `hyperiux`
-- **`packages/mcp-server`** - MCP (Model Context Protocol) server that lets AI clients (Claude, Cursor, etc.) browse and install Vault effects; published to npm as `hyperiux-mcp-server`
+- **`packages/mcp-server`** - MCP (Model Context Protocol) server that lets AI clients (Claude, Cursor, etc.) browse, inspect and fetch installable source for Vault effects (read-only - your AI client writes the files); published to npm as `hyperiux-mcp-server`
 - **`registry/effects`** - Free effect source, organized by category
 
-Pro effect source lives in a private repository and is served via a protected API. The registry index (`registry/index.json`) lists all effects with metadata - pro file contents are not publicly accessible.
+The registry index (`registry/index.json`) lists the free effects in this repo. The full catalogue, free and Pro, is served from `https://vault.hyperiux.com/r`. Pro effect source lives in a private repository and is served via a protected API - pro file contents are not publicly accessible.
 
 ### Running the MCP server
 
@@ -207,7 +224,7 @@ Add it to your client's MCP config via `npx`:
 
 Contributing to the server itself? Point your MCP client at a local build instead - see [packages/mcp-server](packages/mcp-server).
 
-See [packages/mcp-server/README.md](packages/mcp-server/README.md) for the full tool list and Pro-effect auth behavior.
+See [packages/mcp-server/README.md](packages/mcp-server/README.md) for the full tool list and auth behavior.
 
 ---
 
@@ -219,7 +236,8 @@ Found a bug or want to contribute a free effect? Pull requests are welcome.
 git clone https://github.com/Hyperiux-Immersion-Labs/hyperiux-components
 cd hyperiux-components
 pnpm install
-pnpm dev
+pnpm build
+pnpm -r test
 ```
 
 To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-new-effect--checklist) checklist in CLAUDE.md.
@@ -228,9 +246,12 @@ To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-ne
 
 ## Requirements
 
-- **Node.js** 18+
-- **Next.js** (App Router)
-- **Tailwind CSS**
+- **React** 18+ or **Next.js** 14+ (App Router or Pages Router). Vite + React projects work too.
+- **WebGL / 3D effects** use React Three Fiber 9, which needs React 19 (Next.js 15+).
+- **Page transitions** built on `next-transition-router` need the Next.js App Router.
+- **Tailwind CSS** v3 or v4
+- **Node.js** 18.17+ (20+ recommended)
+- **Package manager:** npm, pnpm, yarn or bun
 
 ---
 
@@ -246,4 +267,6 @@ To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-ne
 
 ## License
 
-The `hyperiux` CLI and the `hyperiux-mcp-server` are licensed under the [MIT License](./LICENSE). Free effects installed through the CLI are provided under the [Hyperiux Effects License](./LICENSE_EFFECTS). Pro effects require an active Hyperiux Pro subscription and are proprietary - not open source, not redistributable.
+- The `hyperiux` CLI and the `hyperiux-mcp-server` are licensed under the [MIT License](./LICENSE).
+- Free effects in `registry/` are licensed under the [Mozilla Public License 2.0](./LICENSE_EFFECTS) (MPL 2.0). No attribution is required.
+- Pro effects are proprietary, licensed under the Hyperiux Pro License, and not included in this repo. They require an active Pro or Pro+ subscription - not open source, not redistributable.

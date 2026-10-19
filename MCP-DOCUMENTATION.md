@@ -8,7 +8,7 @@
 
 ## Overview
 
-Hyperiux Vault ships over a hundred production-quality animation and interaction effects for Next.js, installed one at a time with the `hyperiux` CLI (`npx hyperiux add <effect>`). This MCP server sits alongside that CLI as a companion tool built for AI assistants specifically: instead of guessing at effect names, props, or dependencies from training data, your assistant can query this server directly and get back real, current answers - pulled live from the same registry the CLI itself uses.
+Hyperiux Vault ships 150+ production-quality animation and interaction effects for Next.js, installed one at a time with the `hyperiux` CLI (`npx hyperiux add <effect>`). This MCP server sits alongside that CLI as a companion tool built for AI assistants specifically: instead of guessing at effect names, props, or dependencies from training data, your assistant can query this server directly and get back real, current answers - pulled live from the same registry the CLI itself uses.
 
 You still talk to your AI assistant normally. This server just makes sure what it tells you about Hyperiux is true.
 
@@ -22,7 +22,7 @@ This server closes that gap with a live, read-only interface into the actual reg
 
 - Node.js 18 or later (Codex CLI itself additionally requires Node.js 22+)
 - An MCP-compatible client that supports **local/stdio servers**: [Claude Code](https://claude.com/product/claude-code), [Claude Desktop](https://claude.ai/download), [Cursor](https://cursor.com), [Codex CLI](https://developers.openai.com/codex/mcp), [Google Antigravity](https://antigravity.google), or any other client that supports the MCP standard's local server transport. (The ChatGPT web app is a notable exception - see [ChatGPT (web app) - not currently supported](#chatgpt-web-app--not-currently-supported).)
-- No account or subscription required to use it for free effects. A [Hyperiux Pro](https://vault.hyperiux.com/pricing) subscription is only needed to retrieve Pro effect source code.
+- A free Hyperiux account to fetch any effect's source code, free or Pro (browsing and inspecting metadata works without one). A [Hyperiux Pro or Pro+](https://vault.hyperiux.com/pricing) subscription is also needed to retrieve Pro effect source code.
 
 ---
 
@@ -217,13 +217,13 @@ If clicking **Open MCP Config** shows **"MCP Configuration Error: No workspace w
 **2. Add the `hyperiux` entry.** If you want a command instead of editing JSON by hand, run this from the project folder you opened in Antigravity:
 ```bash
 mkdir -p .agents
-node -e 'const fs=require("fs"); const file=".agents/mcp_config.json"; const config=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,"utf8")):{}; config.mcpServers ||= {}; config.mcpServers.hyperiux={command:"/usr/local/bin/node",args:["/Users/harshgoyal/Documents/GitHub/hyperiux-components/packages/mcp-server/dist/index.js"]}; fs.writeFileSync(file, JSON.stringify(config,null,2)+"\n");'
+node -e 'const fs=require("fs"); const file=".agents/mcp_config.json"; const config=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,"utf8")):{}; config.mcpServers ||= {}; config.mcpServers.hyperiux={command:"npx",args:["-y","hyperiux-mcp-server"]}; fs.writeFileSync(file, JSON.stringify(config,null,2)+"\n");'
 ```
 
 For a global Antigravity config that applies to every project, run:
 ```bash
 mkdir -p ~/.gemini/config
-node -e 'const fs=require("fs"); const os=require("os"); const file=os.homedir()+"/.gemini/config/mcp_config.json"; const config=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,"utf8")):{}; config.mcpServers ||= {}; config.mcpServers.hyperiux={command:"/usr/local/bin/node",args:["/Users/harshgoyal/Documents/GitHub/hyperiux-components/packages/mcp-server/dist/index.js"]}; fs.writeFileSync(file, JSON.stringify(config,null,2)+"\n");'
+node -e 'const fs=require("fs"); const os=require("os"); const file=os.homedir()+"/.gemini/config/mcp_config.json"; const config=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,"utf8")):{}; config.mcpServers ||= {}; config.mcpServers.hyperiux={command:"npx",args:["-y","hyperiux-mcp-server"]}; fs.writeFileSync(file, JSON.stringify(config,null,2)+"\n");'
 ```
 
 If you're editing by hand instead, add this inside the `mcpServers` object:
@@ -231,10 +231,8 @@ If you're editing by hand instead, add this inside the `mcpServers` object:
 {
   "mcpServers": {
     "hyperiux": {
-      "command": "/usr/local/bin/node",
-      "args": [
-        "/Users/harshgoyal/Documents/GitHub/hyperiux-components/packages/mcp-server/dist/index.js"
-      ]
+      "command": "npx",
+      "args": ["-y", "hyperiux-mcp-server"]
     }
   }
 }
@@ -272,12 +270,12 @@ You should get back a real, specific list (things like `scroll`, `webgl`, `curso
 
 ## Authentication and Pro effects
 
-No setup is required to query metadata or source for any of the **free** effects in the catalog.
+No setup is required to browse the catalog or query an effect's metadata.
 
-To retrieve source code for a **Pro** effect, the server needs a Hyperiux Pro CLI token. It automatically picks one up from either of these, in order:
+To retrieve source code for **any** effect, free or Pro, the server needs a token from a free Hyperiux account; **Pro** effect source also needs an active Pro or Pro+ subscription. Daily install limits are shared with the website and CLI: Free 3/day, Pro 5/day, Pro+ 10/day. The server automatically picks up a token from either of these, in order:
 
-1. A saved session from running `hyperiux login` (the same login the `hyperiux` CLI itself uses) - this is the recommended way, since it's a one-time setup done directly in your own terminal.
-2. A `HYPERIUX_TOKEN` environment variable - useful for CI or scripted environments.
+1. A `HYPERIUX_TOKEN` environment variable - useful for CI or scripted environments.
+2. A saved session from running `hyperiux login` (the same login the `hyperiux` CLI itself uses) - this is the recommended way, since it's a one-time setup done directly in your own terminal.
 
 **Never share your token directly with an AI assistant in a chat.** Run `hyperiux login` yourself, in your own terminal, and let the server pick up the saved session automatically.
 
@@ -307,13 +305,13 @@ Browse or search the catalog.
   "count": 12,
   "offset": 0,
   "effects": [
-    { "name": "dotted-grid", "category": "backgrounds", "categories": ["backgrounds"], "dependencies": [], "version": "1.1.1" }
+    { "name": "dotted-grid", "category": "backgrounds", "categories": ["backgrounds"], "dependencies": [], "version": "1.0.1", "tier": "free" }
   ],
   "has_more": false
 }
 ```
 
-> **Note:** this tool does not report tier (free vs. Pro) - use `hyperiux_get_effect` on a specific slug to check.
+> **Note:** each result includes `tier` (`"free"` or `"pro"`). The tool can't filter by tier, so count or filter the returned list yourself.
 
 ### `hyperiux_get_effect`
 
@@ -331,25 +329,26 @@ Full detail for one effect, by its exact slug.
   "title": "Dotted Grid",
   "description": "Canvas 2D fullscreen dot grid that autonomously cycles through five geometric shapes...",
   "tier": "free",
-  "version": "1.1.1",
+  "version": "1.0.1",
   "dependencies": [],
   "changelog": [
-    { "version": "1.1.1", "date": "2026-07-22", "summary": "Added a reduced-motion notice...", "breaking": false }
+    { "version": "1.0.1", "date": "2026-07-22", "summary": "Added prefers-reduced-motion support with a static canvas fallback.", "breaking": false },
+    { "version": "1.0.0", "date": "2026-02-10", "summary": "Initial release", "breaking": false }
   ],
   "install_command": "npx hyperiux add dotted-grid",
   "preview_url": "/demo/dotted-grid",
   "import_path": "@/components/effects/dotted-grid",
   "target": "src/components/effects/dotted-grid",
-  "main": "index.jsx",
-  "import_statement": "import { DottedGrid } from \"@/components/effects/dotted-grid\";",
+  "main": "index.tsx",
+  "import_statement": "import DottedGrid from \"@/components/effects/dotted-grid\";",
   "files": [
-    { "path": "index.jsx" },
-    { "path": "createSuspendedRaf.js" }
+    { "path": "index.tsx" },
+    { "path": "createSuspendedRaf.ts" }
   ]
 }
 ```
 
-When `include_source: true` and you're entitled to the source (always true for free effects; for Pro effects, only with a valid token), each file in `files[]` also includes a `content` field with the full source.
+When `include_source: true` and you're entitled to the source (free effects with a signed-in account's token, within your daily limit; Pro effects only with a valid Pro or Pro+ token), each file in `files[]` also includes a `content` field with the full source.
 
 If a Pro effect is requested without a valid token, the response includes `"source_locked": true` and a `source_locked_reason` explaining why - metadata is still returned in full.
 
@@ -389,8 +388,8 @@ For actually installing an effect into your project, your assistant will use the
 ## What this server does not do
 
 - **It does not install effects.** Installing is handled entirely by the `hyperiux` CLI. This server's job is making sure the right effect, dependencies, and import path are known before that install happens.
-- **It does not expose component props.** There is currently no structured props schema in the registry, so the server cannot yet answer "what props does this component accept?" in a reliable, structured way.
-- **It does not currently report tier at the list level.** `hyperiux_list_effects` and `hyperiux_list_categories` cannot distinguish free from Pro effects - only `hyperiux_get_effect` on a specific slug can. Always verify tier before assuming an effect is installable without a Pro subscription.
+- **It does not return effect props yet.** The registry has each effect's props, but the tools don't return them yet, so the server cannot yet answer "what props does this effect accept?" in a structured way.
+- **It can't filter by tier.** `hyperiux_list_effects` returns each effect's `tier`, but has no tier filter, and `hyperiux_list_categories` counts don't split by tier.
 - **It never returns Pro source without a valid, authenticated token.** There is no way to bypass this from a client - it's enforced by the same protected API the CLI itself uses.
 
 ---

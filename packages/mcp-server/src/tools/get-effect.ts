@@ -9,7 +9,7 @@ const GetEffectInputSchema = z
     name: z
       .string()
       .min(1)
-      .describe("Exact effect slug, e.g. 'dotted-grid', 'circle-text-reveal'. Get this from hyperiux_list_effects."),
+      .describe("Exact effect slug, e.g. 'dotted-grid', 'rectangular-text-reveal'. Get this from hyperiux_list_effects."),
     include_source: z
       .boolean()
       .default(false)
@@ -35,7 +35,7 @@ Args:
 Returns JSON: { name, title, description, tier, version, dependencies, changelog, install_command, preview_url, import_path, target, main, import_statement, files: [{ path, content? }] }
   - changelog: array of { version, date, summary, breaking }, newest first
   - files[].content is omitted unless include_source=true AND the caller is signed in (and on Pro, for a Pro effect)
-  - import_statement is the exact import line to use after installing (e.g. \`import { DottedGrid } from "@/components/effects/dotted-grid";\`), built from exportKind/exportName/import_path the same way the CLI's own \`hyperiux add\` output does - omitted if the registry entry has no import_path
+  - import_statement is the exact import line to use after installing (e.g. \`import DottedGrid from "@/components/effects/dotted-grid";\`), built from exportKind/exportName/import_path the same way the CLI's own \`hyperiux add\` output does - omitted if the registry entry has no import_path
   - install_limit/install_remaining: present on a normal (non-rate-limited) lookup, telling you how many more distinct effects this identity can fetch today - mention this to the user when remaining is low, same as the website's copy toast and the CLI's own "N of M daily installs left" line
 
 No token (or an invalid one) with include_source=true: the response still includes metadata, but files have no content and sign_in_required/sign_in_required_reason tell the user to run \`npx hyperiux login\` - every install needs a free account. Don't retry; ask the user to sign in.
@@ -46,7 +46,7 @@ Free effects past the caller's daily install cap: the response still includes me
 
 Examples:
   - "What does the dotted-grid effect need?" -> name="dotted-grid" (dependencies field)
-  - "Show me the code for circle-text-reveal" -> name="circle-text-reveal", include_source=true
+  - "Show me the code for dotted-grid" -> name="dotted-grid", include_source=true
   - Don't use when: you don't have an exact slug yet - use hyperiux_list_effects first.
 
 Error Handling:

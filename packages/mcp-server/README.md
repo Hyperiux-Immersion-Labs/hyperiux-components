@@ -21,10 +21,10 @@ Add to your MCP client's config (e.g. `claude_desktop_config.json` or Claude Cod
 
 ## Signing in
 
-Every effect's source needs a signed-in Hyperiux account - free effects too. This server reuses a token from either:
+Every effect's source needs a signed-in Hyperiux account - free effects too. This server reuses a token, checked in this order:
 
-- A `hyperiux login` session already saved by the [Hyperiux CLI](../cli) (`~/.hyperiux/auth.json`), or
-- the `HYPERIUX_TOKEN` environment variable (generate one at `/cli-auth`)
+1. the `HYPERIUX_TOKEN` environment variable (generate one at `/cli-auth`), then
+2. a `hyperiux login` session already saved by the [Hyperiux CLI](../cli) (`~/.hyperiux/auth.json`)
 
 Without a token, `hyperiux_get_effect` with `include_source: true` returns the metadata (description, dependencies, changelog) and `sign_in_required`, telling you to run `npx hyperiux login`. Listing, searching and details lookups (`include_source: false`) need no token and never count as installs.
 
@@ -32,7 +32,7 @@ Fetching source counts against the account's daily install limit, shared with it
 
 ## Tools
 
-- **`hyperiux_list_effects`** - browse/search the catalog by name substring and/or category, paginated. Does not include tier (free/pro) - the catalog index doesn't carry that field.
+- **`hyperiux_list_effects`** - browse/search the catalog by name substring and/or category, paginated. Each result includes its tier (free/pro).
 - **`hyperiux_get_effect`** - full detail for one effect by exact slug: description, tier, dependencies, version, changelog, install command, and optionally full source.
 - **`hyperiux_list_categories`** - every category with effect counts, for narrowing a `hyperiux_list_effects` search.
 
@@ -54,4 +54,4 @@ npx @modelcontextprotocol/inspector --cli node dist/index.js --method tools/call
 
 ## Known limitation
 
-`hyperiux_list_effects` can't filter or report tier (free/pro) - the live `index.json` this reads from doesn't carry that field today (a pre-existing gap shared with the CLI's own `hyperiux list`, which silently shows every effect as "free" for the same reason). Use `hyperiux_get_effect` to check a specific effect's real tier before assuming it's installable without a Pro account.
+None of the tools return an effect's props yet - the registry has them, the tools just don't expose them today. `hyperiux_list_effects` reports each effect's tier but can't filter by it; count or filter the returned list yourself.
