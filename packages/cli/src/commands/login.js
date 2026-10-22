@@ -10,9 +10,7 @@ import {
   getAuthFilePath,
   getTokenPreview,
 } from "../utils/auth.js";
-
-const APP_URL =
-  process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
+import { APP_URL } from "../utils/urls.js";
 
 export async function login() {
   console.log();

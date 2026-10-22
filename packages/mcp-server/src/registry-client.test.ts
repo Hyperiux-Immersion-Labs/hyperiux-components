@@ -217,3 +217,26 @@ describe("fetchEffect", () => {
     );
   });
 });
+
+describe("effect names in request URLs", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    getAuthTokenMock.mockReset();
+  });
+
+  it("URL-encodes the name in both the public and the metered request", async () => {
+    getAuthTokenMock.mockReturnValue("hpx_sometoken");
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse({ name: "x", files: [] })));
+
+    await fetchEffect("../secret?a=b#c");
+
+    const urls = vi.mocked(fetch).mock.calls.map(([url]) => new URL(String(url)));
+    expect(urls).toHaveLength(2);
+    expect(urls[0].pathname.endsWith("/..%2Fsecret%3Fa%3Db%23c.json")).toBe(true);
+    expect(urls[1].pathname.endsWith("/api/cli/effects/..%2Fsecret%3Fa%3Db%23c")).toBe(true);
+    for (const url of urls) {
+      expect(url.search).toBe("");
+      expect(url.hash).toBe("");
+    }
+  });
+});

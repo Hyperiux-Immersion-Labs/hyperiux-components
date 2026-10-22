@@ -26,7 +26,7 @@ export function detectPackageManager(cwd = process.cwd()) {
   return "npm";
 }
 
-export function getInstallArgs(packageManager, packages, options = {}) {
+function getInstallArgs(packageManager, packages, options = {}) {
   const verb = packageManager === "npm" ? "install" : "add";
   return options.dev ? [verb, "-D", ...packages] : [verb, ...packages];
 }

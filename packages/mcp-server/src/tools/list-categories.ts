@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { fetchRegistryIndex } from "../registry-client.js";
-import { RegistryError } from "../types.js";
+import { formatToolError } from "./format-error.js";
 
 const ListCategoriesInputSchema = z.object({}).strict();
 
@@ -52,10 +52,7 @@ Examples:
           content: [
             {
               type: "text" as const,
-              text:
-                error instanceof RegistryError
-                  ? `Error: ${error.message}`
-                  : `Error: ${error instanceof Error ? error.message : String(error)}`,
+              text: formatToolError(error),
             },
           ],
         };

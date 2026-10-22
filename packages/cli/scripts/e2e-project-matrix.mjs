@@ -7,7 +7,7 @@
 // unit tests assert against our own model of what the transform should
 // produce, this runs real source through the real parser.
 //
-// ponytail: package manager (npm/pnpm/yarn/bun) is detected by lockfile
+// The package manager (npm/pnpm/yarn/bun) is detected by lockfile
 // presence alone (see package-manager.js) and doesn't touch file content,
 // so it's unit-tested, not matrixed here - add a combo if that ever stops
 // being true.
@@ -23,9 +23,8 @@ const CLI_ENTRY = resolve(__dirname, "../src/index.js");
 
 // A handful of real, diverse free effects: multi-file, single-file, webgl
 // (heavy generics - this is what broke), different dependency sets.
-// Pro effects can't be verified here (add refuses without a valid Pro
-// token, correctly - see whoami/pro-gating tests) so this is the full free
-// catalog, not a curated sample: real build coverage over guesswork about
+// Pro effects can't be verified here (add refuses them without a Pro
+// token) so this is the full free catalog, not a curated sample: real build coverage over guesswork about
 // which effects are "representative".
 const EFFECTS = [
   "animated-faq",
@@ -208,9 +207,7 @@ function scaffoldVite(dir, { typescript }) {
   // starts deliberately alias-less here, same as a real `npm create vite`.
   writeFileSync(
     join(dir, `vite.config.${configExt}`),
-    typescript
-      ? `import { defineConfig } from "vite";\nimport react from "@vitejs/plugin-react";\nimport tailwindcss from "@tailwindcss/vite";\n\nexport default defineConfig({\n  plugins: [react(), tailwindcss()],\n});\n`
-      : `import { defineConfig } from "vite";\nimport react from "@vitejs/plugin-react";\nimport tailwindcss from "@tailwindcss/vite";\n\nexport default defineConfig({\n  plugins: [react(), tailwindcss()],\n});\n`
+    `import { defineConfig } from "vite";\nimport react from "@vitejs/plugin-react";\nimport tailwindcss from "@tailwindcss/vite";\n\nexport default defineConfig({\n  plugins: [react(), tailwindcss()],\n});\n`
   );
 
   if (typescript) {

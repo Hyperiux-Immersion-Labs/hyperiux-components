@@ -5,7 +5,7 @@ import { Buffer } from "buffer";
 
 const LOCKFILE_NAME = "hyperiux.lock.json";
 
-export function getLockfilePath(cwd = process.cwd()) {
+function getLockfilePath(cwd = process.cwd()) {
   return path.join(cwd, LOCKFILE_NAME);
 }
 
@@ -22,13 +22,13 @@ export function readLockfile(cwd = process.cwd()) {
   return { components: {}, ...parsed };
 }
 
-export function writeLockfile(lock, cwd = process.cwd()) {
+function writeLockfile(lock, cwd = process.cwd()) {
   const lockfilePath = getLockfilePath(cwd);
 
   fs.writeFileSync(lockfilePath, JSON.stringify(lock, null, 2) + "\n");
 }
 
-export function hashContent(content) {
+function hashContent(content) {
   const buffer = Buffer.isBuffer(content) ? content : Buffer.from(content ?? "");
 
   return "sha256:" + crypto.createHash("sha256").update(buffer).digest("hex");
@@ -57,19 +57,4 @@ export function upsertLockEntry(cwd, name, { version, files }) {
   writeLockfile(lock, cwd);
 
   return lock.components[name];
-}
-
-export function getLockEntry(cwd, name) {
-  const lock = readLockfile(cwd);
-
-  return lock.components[name] || null;
-}
-
-export function removeLockEntry(cwd, name) {
-  const lock = readLockfile(cwd);
-
-  if (!(name in lock.components)) return;
-
-  delete lock.components[name];
-  writeLockfile(lock, cwd);
 }

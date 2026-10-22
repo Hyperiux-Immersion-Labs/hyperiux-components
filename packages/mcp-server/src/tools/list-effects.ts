@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { fetchRegistryIndex } from "../registry-client.js";
 import { CHARACTER_LIMIT } from "../constants.js";
-import { RegistryError } from "../types.js";
+import { formatToolError } from "./format-error.js";
 
 const ListEffectsInputSchema = z
   .object({
@@ -107,16 +107,9 @@ Examples:
         };
       } catch (error) {
         return {
-          content: [{ type: "text" as const, text: formatError(error) }],
+          content: [{ type: "text" as const, text: formatToolError(error) }],
         };
       }
     }
   );
-}
-
-function formatError(error: unknown): string {
-  if (error instanceof RegistryError) {
-    return `Error: ${error.message}`;
-  }
-  return `Error: ${error instanceof Error ? error.message : String(error)}`;
 }

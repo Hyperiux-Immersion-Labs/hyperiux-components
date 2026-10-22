@@ -57,7 +57,7 @@ Requires Node 18.17+ (20+ recommended) and pnpm 9+.
    - `name` is the CLI install slug (`npx hyperiux add your-effect-slug`) - lowercase, hyphenated, no `tier` ambiguity (this file only ever produces free effects; Pro effects are added through the private registry).
    - `dependencies` are npm packages the CLI installs alongside the effect (GSAP, Three.js, etc.) - only list what's actually imported.
    - If the effect is more than one file, list every file under `files`, each with its own `target`.
-4. Add an entry to `registry/index.json` at the repo root (it lists the free effects in this repo - there's no build step for it, just add the entry by hand, matching the shape of existing entries). Note that `hyperiux add` does not read this file: the CLI reads the built dev registry at `apps/docs/public/r`, which only exists in the private repo, and otherwise fetches from `https://vault.hyperiux.com/r`. A new effect becomes installable once maintainers build it into that registry:
+4. Add an entry to `registry/index.json` at the repo root (it lists the free effects in this repo - there's no build step for it, just add the entry by hand, matching the shape of existing entries). Note that `hyperiux add` does not read this file: the CLI fetches from `https://vault.hyperiux.com/r`. A new effect becomes installable once maintainers build it into that registry:
 
    ```json
    {

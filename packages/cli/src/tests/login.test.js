@@ -1,8 +1,6 @@
 /* SPDX-License-Identifier: MIT */
 
-// login.js had zero test coverage before this. whoami previously reported
-// "logged in" from local file presence alone, with no server check - it
-// now calls the same /api/cli/validate endpoint login() already used, so
+// login() and whoami() both check the token against /api/cli/validate;
 // these tests cover both call sites' response handling.
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";

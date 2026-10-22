@@ -12,10 +12,8 @@ async function parseJsonResponse(response: Response): Promise<unknown> {
 }
 
 /**
- * Fetches the lightweight catalog index (name/category/dependencies/version
- * per effect). Does NOT include `tier` - the live index.json this reads from
- * doesn't carry it (a pre-existing gap in build-registry.js, shared with the
- * CLI's own `hyperiux list`). Use fetchEffect() for a specific slug's tier.
+ * Fetches the lightweight catalog index (name/category/dependencies/version/
+ * tier per effect).
  */
 export async function fetchRegistryIndex(): Promise<RegistryIndex> {
   const url = `${REGISTRY_URL.replace(/\/$/, "")}/index.json`;
@@ -44,13 +42,12 @@ export async function fetchRegistryIndex(): Promise<RegistryIndex> {
 }
 
 /**
- * Fetches one effect's public metadata by slug. For free-tier effects this
- * already includes full source in `files[].content`; for pro-tier effects
- * `files[].content` is stripped (public JSON never carries Pro source) - use
- * fetchProtectedEffect() with a token to get Pro source.
+ * Fetches one effect's public metadata by slug: tier, version, changelog,
+ * dependencies and file paths, but no source - use fetchProtectedEffect()
+ * with a token for that.
  */
 export async function fetchPublicEffect(name: string): Promise<RegistryEffect | null> {
-  const url = `${REGISTRY_URL.replace(/\/$/, "")}/${name}.json`;
+  const url = `${REGISTRY_URL.replace(/\/$/, "")}/${encodeURIComponent(name)}.json`;
 
   let response: Response;
   try {
@@ -71,19 +68,17 @@ export async function fetchPublicEffect(name: string): Promise<RegistryEffect | 
 }
 
 /**
- * Fetches an effect through the same metered CLI API route packages/cli
- * uses (Installation-SyncUp.md Stage 1.7). `token` is required for every
+ * Fetches an effect through the same metered API route the `hyperiux` CLI
+ * uses. `token` is required for every
  * effect, free included - see getAuthToken() (reuses `hyperiux login`'s saved
  * token, or HYPERIUX_TOKEN); without one the route answers 401
  * "sign-in-required".
  */
 export async function fetchProtectedEffect(
   name: string,
-  token: string | null,
-  options: { isDependency?: boolean } = {}
+  token: string | null
 ): Promise<RegistryEffect> {
-  const baseUrl = `${API_URL.replace(/\/$/, "")}/api/cli/effects/${name}`;
-  const url = options.isDependency ? `${baseUrl}?dependency=1` : baseUrl;
+  const url = `${API_URL.replace(/\/$/, "")}/api/cli/effects/${encodeURIComponent(name)}`;
 
   let response: Response;
   try {
@@ -103,7 +98,7 @@ export async function fetchProtectedEffect(
     | null;
 
   if (!response.ok) {
-    throw new RegistryError(data?.error || `Failed to fetch Pro effect: ${response.statusText}`, {
+    throw new RegistryError(data?.error || `Failed to fetch effect "${name}": ${response.statusText}`, {
       status: response.status,
       requiresPro: Boolean(data?.requiresPro),
       rateLimited: Boolean(data?.rateLimited),
@@ -118,9 +113,8 @@ export async function fetchProtectedEffect(
 /**
  * Fetches one effect for hyperiux_get_effect.
  *
- * Every effect's code needs a signed-in account, free effects included
- * (NO_ANONYMOUS_INSTALLS.md in hyperiux-pro-components): the public JSON
- * carries no source, so code only comes from the metered API route, always
+ * Every effect's code needs a signed-in account, free effects included:
+ * the public JSON carries no source, so code only comes from the metered API route, always
  * with the token from getAuthToken() (HYPERIUX_TOKEN or `hyperiux login`).
  * There is no fallback to the public JSON - a failure is a failure.
  *

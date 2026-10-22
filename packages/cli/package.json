@@ -1,7 +1,7 @@
 {
   "name": "hyperiux",
   "version": "1.2.0",
-  "description": "CLI for adding Hyperiux Vault effects to your Next.js project. This package is a CLI installer only - it is not an importable JavaScript/TypeScript library.",
+  "description": "CLI for adding Hyperiux Vault effects to your Next.js or React (Vite) project. This package is a CLI installer only - it is not an importable JavaScript/TypeScript library.",
   "type": "module",
   "bin": {
     "hyperiux": "src/index.js"
@@ -14,15 +14,14 @@
     "src/utils",
     "src/index.js",
     "README.md",
-    "LICENSE",
-    "scripts/smoke-packed-package.mjs"
+    "LICENSE"
   ],
   "scripts": {
-    "build": "node --check src/index.js && node --check src/commands/add.js && node --check src/commands/init.js && node --check src/commands/list.js && node --check src/commands/login.js && node --check src/commands/logout.js && node --check src/commands/whoami.js && node --check src/commands/diff.js && node --check src/commands/outdated.js && node --check src/commands/versions.js && node --check src/utils/auth.js && node --check src/utils/cli-state.js && node --check src/utils/config.js && node --check src/utils/package-manager.js && node --check src/utils/registry.js && node --check src/utils/telemetry.js",
+    "build": "node --check src/index.js && node --check src/commands/add.js && node --check src/commands/init.js && node --check src/commands/list.js && node --check src/commands/login.js && node --check src/commands/diff.js && node --check src/commands/outdated.js && node --check src/commands/versions.js && node --check src/utils/auth.js && node --check src/utils/cli-state.js && node --check src/utils/config.js && node --check src/utils/lockfile.js && node --check src/utils/package-manager.js && node --check src/utils/registry.js && node --check src/utils/semver.js && node --check src/utils/telemetry.js && node --check src/utils/urls.js",
     "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
+    "test:e2e": "node scripts/e2e-project-matrix.mjs",
     "smoke:bin": "node src/index.js --help",
     "smoke:pack": "node scripts/smoke-packed-package.mjs",
     "pack:dry": "npm pack --dry-run",
@@ -67,7 +66,9 @@
     "provenance": true
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "eslint": "^9",
-    "vitest": "^4.1.11"
+    "vite": "^8.1.6",
+    "vitest": "^4.1.12"
   }
 }

@@ -4,16 +4,14 @@ import { createHash } from "crypto";
 import { createRequire } from "module";
 import os from "os";
 import { getAuthToken } from "./auth.js";
+import { APP_URL } from "./urls.js";
 
 const require = createRequire(import.meta.url);
 const { version } = require("../../package.json");
 
-const APP_URL =
-  process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
-
 const TELEMETRY_URL =
   process.env.HYPERIUX_TELEMETRY_URL ||
-  `${APP_URL.replace(/\/$/, "")}/api/cli/telemetry`;
+  `${APP_URL}/api/cli/telemetry`;
 
 const TELEMETRY_TIMEOUT_MS = 1500;
 

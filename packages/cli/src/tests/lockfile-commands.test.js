@@ -1,11 +1,8 @@
 /* SPDX-License-Identifier: MIT */
 
-// outdated/versions/diff all read hyperiux.lock.json. Previously nothing
-// wrote to it (add() never called upsertLockEntry), so these three
-// commands were silently dead against every real install - "No effects
-// installed" forever. Uses the real lockfile.js against a real temp dir
-// (not mocked) so a regression there - like the original missing wiring -
-// shows up here instead of only in a live project.
+// outdated/versions/diff all read hyperiux.lock.json, which add() writes via
+// upsertLockEntry. Uses the real lockfile.js against a real temp dir (not
+// mocked) so a break in that wiring shows up here, not only in a live project.
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import fs from "fs";

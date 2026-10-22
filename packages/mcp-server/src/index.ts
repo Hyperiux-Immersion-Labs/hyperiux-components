@@ -2,9 +2,9 @@
 /**
  * MCP server for the Hyperiux Vault effect registry - lets AI clients browse,
  * search, and inspect React/Next.js interaction effects, and fetch
- * installable source for effects the caller is entitled to (free effects
- * always; Pro effects if a `hyperiux login` session or HYPERIUX_TOKEN is
- * available).
+ * installable source for effects the caller is entitled to. Source needs a
+ * `hyperiux login` session or HYPERIUX_TOKEN for every effect (Pro effects
+ * also need a Pro plan).
  */
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";

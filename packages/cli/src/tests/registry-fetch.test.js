@@ -2,9 +2,9 @@
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
-// Every effect - free ones included - comes only from the signed-in, metered API
-// (NO_ANONYMOUS_INSTALLS.md in hyperiux-pro-components): one request, the CLI token
-// attached, no fallback to the public JSON (which carries no source any more).
+// Every effect - free ones included - comes only from the signed-in, metered API:
+// one request, the CLI token attached, no fallback to the public JSON (which
+// carries no source).
 // registry.test.js covers the pure functions (normalizeRegistryIndex,
 // getRegistryItemFiles, TS stripping); this file covers fetchRegistry's
 // network-facing branching, which needs fetch/cli-state mocked.

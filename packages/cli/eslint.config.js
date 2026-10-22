@@ -9,7 +9,6 @@ export default [
       globals: {
         process: "readonly",
         console: "readonly",
-        __dirname: "readonly",
         fetch: "readonly"
       }
     },

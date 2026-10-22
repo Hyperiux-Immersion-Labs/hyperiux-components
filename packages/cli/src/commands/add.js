@@ -7,7 +7,6 @@ import ora from "ora";
 import prompts from "prompts";
 import {
   readConfig,
-  writeConfig,
   configExists,
   detectProjectEnvironment,
   detectNextRouter,
@@ -25,19 +24,14 @@ import {
 } from "../utils/package-manager.js";
 import { getAuthToken } from "../utils/auth.js";
 import { trackCliEvent } from "../utils/telemetry.js";
-import { recordLocalInstallStat } from "../utils/cli-state.js";
 import { upsertLockEntry } from "../utils/lockfile.js";
-
-const APP_URL =
-  process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
+import { APP_URL } from "../utils/urls.js";
 
 function formatRetryAfter(seconds) {
   if (!seconds || seconds < 60) return "a few minutes";
+  if (seconds < 3600) return `${Math.ceil(seconds / 60)}m`;
 
-  const hours = Math.ceil(seconds / 3600);
-  if (hours < 1) return `${Math.ceil(seconds / 60)}m`;
-
-  return `${hours}h`;
+  return `${Math.ceil(seconds / 3600)}h`;
 }
 
 export async function add(effectName, options = {}) {
@@ -316,6 +310,8 @@ export async function add(effectName, options = {}) {
         );
       }
 
+      assertNoSymlinkEscape(cwd, targetPath, file.targetPath);
+
       const targetDir = path.dirname(targetPath);
 
       if (!fs.existsSync(targetDir)) {
@@ -341,8 +337,6 @@ export async function add(effectName, options = {}) {
     version: registryItem.version || "1.0.0",
     files: writtenFiles,
   });
-  recordLocalInstall(effectName, cwd);
-  recordLocalInstallStat(effectName);
   stampProjectReadme(cwd, effectName);
   ensureTailwindImport(config, cwd);
 
@@ -422,21 +416,6 @@ export async function add(effectName, options = {}) {
   console.log();
 }
 
-function recordLocalInstall(effectName, cwd) {
-  const currentConfig = readConfig(cwd);
-
-  if (!currentConfig) {
-    return;
-  }
-
-  currentConfig.installedEffects = currentConfig.installedEffects || {};
-  currentConfig.installedEffects[effectName] = {
-    installedAt: new Date().toISOString(),
-  };
-
-  writeConfig(currentConfig, cwd);
-}
-
 function stampProjectReadme(cwd, effectName) {
   const readmePath = path.join(cwd, "README.md");
   const stamp =
@@ -465,6 +444,38 @@ function stampProjectReadme(cwd, effectName) {
 
   const prefix = `${stamp}\n${effectStamp}`;
   fs.writeFileSync(readmePath, existing ? `${prefix}\n\n${existing}` : `${prefix}\n`, "utf-8");
+}
+
+// The lexical check above can't see symlinks: an in-project `components/`
+// could link to a folder outside the project. Resolve the deepest part of the
+// path that already exists and require it to still be inside the real project
+// root, and never write through a symlinked file.
+function assertNoSymlinkEscape(cwd, targetPath, displayPath) {
+  const blocked = () =>
+    new Error(`Unsafe file path detected and blocked: "${displayPath}" (symlink outside the project)`);
+
+  if (lstatOrNull(targetPath)?.isSymbolicLink()) throw blocked();
+
+  let existing = path.dirname(targetPath);
+  while (!lstatOrNull(existing)) existing = path.dirname(existing);
+
+  let realExisting;
+  try {
+    realExisting = fs.realpathSync(existing);
+  } catch {
+    throw blocked();
+  }
+
+  const root = fs.realpathSync(cwd);
+  if (realExisting !== root && !realExisting.startsWith(root + path.sep)) throw blocked();
+}
+
+function lstatOrNull(p) {
+  try {
+    return fs.lstatSync(p);
+  } catch {
+    return null;
+  }
 }
 
 // Same check as TAILWIND_DIRECTIVE_PATTERN in utils/config.js (Tailwind v4 import or v3 directives)

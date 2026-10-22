@@ -1,7 +1,6 @@
 # Builds packages/mcp-server (hyperiux-mcp-server) for Glama's release/deployment
 # check. Scoped to this package only — npm install/build instead of pnpm, so the
 # rest of the monorepo workspace is never pulled in.
-# ponytail: no --omit=dev multi-arch/caching tricks, just a correct two-stage build.
 
 FROM node:20-alpine AS build
 WORKDIR /app

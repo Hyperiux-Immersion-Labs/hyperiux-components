@@ -2,7 +2,8 @@ import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { fetchEffect } from "../registry-client.js";
 import { API_URL, CHARACTER_LIMIT } from "../constants.js";
-import { RegistryError, type RegistryEffect } from "../types.js";
+import type { RegistryEffect } from "../types.js";
+import { formatToolError } from "./format-error.js";
 
 const GetEffectInputSchema = z
   .object({
@@ -144,7 +145,7 @@ Error Handling:
         };
       } catch (error) {
         return {
-          content: [{ type: "text" as const, text: formatError(error) }],
+          content: [{ type: "text" as const, text: formatToolError(error) }],
         };
       }
     }
@@ -173,16 +174,7 @@ function buildRateLimitReason(effect: RegistryEffect): string {
 
 function formatRetryAfter(seconds: number | undefined): string {
   if (!seconds || seconds < 60) return "a few minutes";
+  if (seconds < 3600) return `${Math.ceil(seconds / 60)}m`;
 
-  const hours = Math.ceil(seconds / 3600);
-  if (hours < 1) return `${Math.ceil(seconds / 60)}m`;
-
-  return `${hours}h`;
-}
-
-function formatError(error: unknown): string {
-  if (error instanceof RegistryError) {
-    return `Error: ${error.message}`;
-  }
-  return `Error: ${error instanceof Error ? error.message : String(error)}`;
+  return `${Math.ceil(seconds / 3600)}h`;
 }

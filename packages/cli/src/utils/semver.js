@@ -16,7 +16,7 @@ function parse(version) {
 }
 
 /** Returns -1, 0, or 1, like Array.prototype.sort comparators. */
-export function compareVersions(a, b) {
+function compareVersions(a, b) {
   const va = parse(a);
   const vb = parse(b);
 
@@ -27,7 +27,7 @@ export function compareVersions(a, b) {
   return 0;
 }
 
-export function isOutdated(installedVersion, latestVersion) {
+function isOutdated(installedVersion, latestVersion) {
   return compareVersions(installedVersion, latestVersion) < 0;
 }
 

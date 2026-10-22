@@ -55,10 +55,6 @@ vi.mock("../utils/lockfile.js", () => ({
   upsertLockEntry: () => {},
 }));
 
-vi.mock("../utils/cli-state.js", () => ({
-  recordLocalInstallStat: () => {},
-}));
-
 vi.mock("../utils/registry.js", () => ({
   fetchRegistry: async () => ({
     title: "Foo",

@@ -2,33 +2,21 @@
 
 import fs from "fs";
 import path from "path";
-import { fileURLToPath, URL } from "url";
+import { URL } from "url";
 import { Buffer } from "buffer";
 import { createRequire } from "module";
 import ts from "typescript";
 import { detectProjectLanguage } from "./config.js";
 import { getOrCreateDeviceId } from "./cli-state.js";
+import { APP_URL } from "./urls.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const require = createRequire(import.meta.url);
 const { version: CLI_VERSION } = require("../../package.json");
 
 const REGISTRY_URL =
   process.env.HYPERIUX_REGISTRY_URL || "https://vault.hyperiux.com/r";
 
-const APP_URL =
-  process.env.HYPERIUX_APP_URL || "https://vault.hyperiux.com";
-
 const API_URL = process.env.HYPERIUX_API_URL || APP_URL;
-
-const LOCAL_REGISTRY_PATH = "public/r";
-
-// Path to local registry in the monorepo for development
-const DEV_REGISTRY_PATH = path.join(
-  __dirname,
-  "../../../../apps/docs/public/r",
-);
 
 function isProEffect(item) {
   const tier = item?.tier || "free";
@@ -70,11 +58,7 @@ async function parseJsonResponse(response) {
  * `error.signInRequired` so `add` can say "run npx hyperiux login".
  */
 export async function fetchRegistry(name, options = {}) {
-  const { local = false, cwd = process.cwd(), token = null, isDependency = false } = options;
-
-  if (local) {
-    return fetchLocalRegistry(name, cwd, token);
-  }
+  const { token = null, isDependency = false } = options;
 
   return fetchProtectedEffect(name, token, { isDependency });
 }
@@ -89,7 +73,7 @@ export async function fetchRegistryMetadata(name) {
 }
 
 async function fetchPublicEffect(name) {
-  const url = `${REGISTRY_URL.replace(/\/$/, "")}/${name}.json`;
+  const url = `${REGISTRY_URL.replace(/\/$/, "")}/${encodeURIComponent(name)}.json`;
 
   let response;
 
@@ -115,31 +99,9 @@ async function fetchPublicEffect(name) {
   return data;
 }
 
-async function fetchLocalRegistry(name, cwd, token) {
-  const registryPath = path.join(cwd, LOCAL_REGISTRY_PATH, `${name}.json`);
-
-  if (!fs.existsSync(registryPath)) {
-    throw createRegistryError(`Effect "${name}" not found in local registry`, {
-      status: 404,
-    });
-  }
-
-  const content = fs.readFileSync(registryPath, "utf-8");
-  const meta = JSON.parse(content);
-
-  /**
-   * If the local registry item is Pro, still enforce token access.
-   */
-  if (isProEffect(meta)) {
-    return fetchProtectedEffect(name, token);
-  }
-
-  return meta;
-}
-
 async function fetchProtectedEffect(name, token, options = {}) {
   const { isDependency = false } = options;
-  const baseUrl = `${API_URL.replace(/\/$/, "")}/api/cli/effects/${name}`;
+  const baseUrl = `${API_URL.replace(/\/$/, "")}/api/cli/effects/${encodeURIComponent(name)}`;
   const url = isDependency ? `${baseUrl}?dependency=1` : baseUrl;
   const deviceId = getOrCreateDeviceId();
 
@@ -220,39 +182,8 @@ function validateRegistryPayload(name, data) {
   }
 }
 
-export async function fetchRegistryIndex(options = {}) {
-  const { local = false, cwd = process.cwd() } = options;
-
-  if (local) {
-    return normalizeRegistryIndex(await fetchLocalRegistryIndex(cwd));
-  }
-
-  if (fs.existsSync(path.join(DEV_REGISTRY_PATH, "index.json"))) {
-    return normalizeRegistryIndex(await fetchDevRegistryIndex());
-  }
-
+export async function fetchRegistryIndex() {
   return normalizeRegistryIndex(await fetchRemoteRegistryIndex());
-}
-
-async function fetchDevRegistryIndex() {
-  const indexPath = path.join(DEV_REGISTRY_PATH, "index.json");
-  const content = fs.readFileSync(indexPath, "utf-8");
-
-  return JSON.parse(content);
-}
-
-async function fetchLocalRegistryIndex(cwd) {
-  const indexPath = path.join(cwd, LOCAL_REGISTRY_PATH, "index.json");
-
-  if (!fs.existsSync(indexPath)) {
-    throw createRegistryError("Registry index not found locally", {
-      status: 404,
-    });
-  }
-
-  const content = fs.readFileSync(indexPath, "utf-8");
-
-  return JSON.parse(content);
 }
 
 export function normalizeRegistryIndex(index) {
@@ -312,6 +243,12 @@ export async function fetchRegistryAsset(source) {
   if (!ALLOWED_ASSET_HOSTS.has(resolvedUrl.hostname)) {
     throw createRegistryError(
       `Refusing to fetch asset from untrusted host: ${resolvedUrl.hostname}`
+    );
+  }
+
+  if (resolvedUrl.protocol !== "https:") {
+    throw createRegistryError(
+      `Refusing to fetch asset over ${resolvedUrl.protocol.replace(":", "")}: ${source}`
     );
   }
 
@@ -407,9 +344,8 @@ function toJsxTargetPath(targetPath) {
   return targetPath.replace(/\.tsx$/, ".jsx").replace(/\.ts$/, ".js");
 }
 
-// ponytail: regex can't reliably strip TS (nested generics, no-initializer
-// declarations, etc. all broke it in the field - see hyperiux-pro-components
-// commit history). TypeScript's own transpiler can't get this wrong.
+// TypeScript's own transpiler, not a regex: regexes can't reliably strip TS
+// (nested generics, declarations without initializers, ...).
 export function stripTypeScriptFromReactSource(source) {
   const { outputText } = ts.transpileModule(source, {
     compilerOptions: {

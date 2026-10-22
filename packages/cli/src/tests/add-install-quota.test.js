@@ -5,10 +5,9 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 
-// installLimit/installRemaining are now on every successful delivery
-// response (Installation-SyncUp.md Stage 3 follow-up), not just 429s -
-// `add` should print "N of M daily installs left today" from them. Harness
-// copied from add-rate-limited.test.js's mock set.
+// installLimit/installRemaining come back on every successful delivery
+// response, not just 429s - `add` prints "N of M daily installs left today"
+// from them. Same mock set as add-rate-limited.test.js.
 
 vi.mock("ora", () => {
   const spinner = {
@@ -51,10 +50,6 @@ vi.mock("../utils/package-manager.js", () => ({
 
 vi.mock("../utils/lockfile.js", () => ({
   upsertLockEntry: () => {},
-}));
-
-vi.mock("../utils/cli-state.js", () => ({
-  recordLocalInstallStat: () => {},
 }));
 
 function baseRegistryItem(overrides = {}) {

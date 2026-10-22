@@ -12,8 +12,11 @@ export function saveAuthToken(token) {
     throw new Error("Invalid CLI token.");
   }
 
-  // 0o700 - only owner can read/write/execute the config directory
+  // 0o700 - only owner can read/write/execute the config directory. The
+  // mode only applies on creation, so tighten one that already exists too
+  // (an older CLI version may have made it world-readable).
   fs.mkdirSync(CONFIG_DIR, { recursive: true, mode: 0o700 });
+  fs.chmodSync(CONFIG_DIR, 0o700);
 
   // 0o600 - only owner can read/write the token file
   fs.writeFileSync(
@@ -28,6 +31,7 @@ export function saveAuthToken(token) {
     ) + "\n",
     { encoding: "utf-8", mode: 0o600 }
   );
+  fs.chmodSync(AUTH_FILE, 0o600);
 }
 
 export function getAuthToken() {

@@ -221,9 +221,9 @@ Add it to your client's MCP config via `npx`:
 }
 ```
 
-Contributing to the server itself? Point your MCP client at a local build instead - see [packages/mcp-server](../mcp-server).
+Contributing to the server itself? Point your MCP client at a local build instead - see [packages/mcp-server](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/tree/main/packages/mcp-server).
 
-See [packages/mcp-server/README.md](../mcp-server/README.md) for the full tool list and auth behavior.
+See [packages/mcp-server/README.md](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/blob/main/packages/mcp-server/README.md) for the full tool list and auth behavior.
 
 ---
 
@@ -239,7 +239,7 @@ pnpm build
 pnpm -r test
 ```
 
-To add a new free effect, follow the [Adding a New Effect](../../CLAUDE.md#adding-a-new-effect--checklist) checklist in CLAUDE.md.
+To add a new free effect, follow [Adding a free effect](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/blob/main/CONTRIBUTING.md#adding-a-free-effect) in CONTRIBUTING.md.
 
 ---
 
@@ -266,6 +266,6 @@ To add a new free effect, follow the [Adding a New Effect](../../CLAUDE.md#addin
 
 ## License
 
-- The `hyperiux` CLI and the `hyperiux-mcp-server` are licensed under the [MIT License](../../LICENSE).
-- Free effects in `registry/` are licensed under the [Mozilla Public License 2.0](../../LICENSE_EFFECTS) (MPL 2.0). No attribution is required.
+- The `hyperiux` CLI and the `hyperiux-mcp-server` are licensed under the [MIT License](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/blob/main/LICENSE).
+- Free effects in `registry/` are licensed under the [Mozilla Public License 2.0](https://github.com/Hyperiux-Immersion-Labs/hyperiux-components/blob/main/LICENSE_EFFECTS) (MPL 2.0). No attribution is required.
 - Pro effects are proprietary, licensed under the Hyperiux Pro License, and not included in this repo. They require an active Pro or Pro+ subscription - not open source, not redistributable.

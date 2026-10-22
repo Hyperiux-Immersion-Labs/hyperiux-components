@@ -19,10 +19,9 @@ const DEFAULT_CONFIG = {
     hooks: "@/hooks",
     lib: "@/lib",
   },
-  installedEffects: {},
 };
 
-export function getConfigPath(cwd = process.cwd()) {
+function getConfigPath(cwd = process.cwd()) {
   return path.join(cwd, CONFIG_FILE);
 }
 

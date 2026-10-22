@@ -5,9 +5,8 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 
-// Installation-SyncUp.md §9: "mock ../utils/registry.js to reject with a
-// {status: 429}-shaped error and assert the message + exit." Harness copied
-// from add-overwrite.test.js's mock set, only fetchRegistry's behavior differs.
+// A 429 from the effects API: `add` prints the limit message and exits.
+// Same mock set as add-overwrite.test.js; only fetchRegistry differs.
 
 vi.mock("ora", () => {
   const spinner = {
@@ -50,10 +49,6 @@ vi.mock("../utils/package-manager.js", () => ({
 
 vi.mock("../utils/lockfile.js", () => ({
   upsertLockEntry: () => {},
-}));
-
-vi.mock("../utils/cli-state.js", () => ({
-  recordLocalInstallStat: () => {},
 }));
 
 function makeRateLimitedError({ limit = 3, retryAfter = 3600 * 5 } = {}) {

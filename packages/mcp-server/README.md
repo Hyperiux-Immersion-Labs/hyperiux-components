@@ -24,7 +24,7 @@ Add to your MCP client's config (e.g. `claude_desktop_config.json` or Claude Cod
 Every effect's source needs a signed-in Hyperiux account - free effects too. This server reuses a token, checked in this order:
 
 1. the `HYPERIUX_TOKEN` environment variable (generate one at `/cli-auth`), then
-2. a `hyperiux login` session already saved by the [Hyperiux CLI](../cli) (`~/.hyperiux/auth.json`)
+2. a `hyperiux login` session already saved by the [Hyperiux CLI](https://www.npmjs.com/package/hyperiux) (`~/.hyperiux/auth.json`)
 
 Without a token, `hyperiux_get_effect` with `include_source: true` returns the metadata (description, dependencies, changelog) and `sign_in_required`, telling you to run `npx hyperiux login`. Listing, searching and details lookups (`include_source: false`) need no token and never count as installs.
 

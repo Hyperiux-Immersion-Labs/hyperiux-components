@@ -240,7 +240,7 @@ pnpm build
 pnpm -r test
 ```
 
-To add a new free effect, follow the [Adding a New Effect](CLAUDE.md#adding-a-new-effect--checklist) checklist in CLAUDE.md.
+To add a new free effect, follow [Adding a free effect](CONTRIBUTING.md#adding-a-free-effect) in CONTRIBUTING.md.
 
 ---
 
