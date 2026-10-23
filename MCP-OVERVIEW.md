@@ -8,7 +8,7 @@ For setup, tool reference, and client-specific configuration, see [MCP-DOCUMENTA
 
 ## What it is, in one sentence
 
-**`hyperiux-mcp-server` is an MCP (Model Context Protocol) server that teaches AI coding assistants what's actually in the Hyperiux Vault effect catalog - 150+ effects, 50+ free and 90+ Pro - so they can help you find, understand, and install the right effect without guessing.**
+**`hyperiux-mcp-server` is an MCP (Model Context Protocol) server that teaches AI coding assistants what's actually in the Hyperiux Vault effect catalog - 170+ effects, 80+ free and 90+ Pro - so they can help you find, understand, and install the right effect without guessing.**
 
 ## Why it exists
 
@@ -46,7 +46,7 @@ Just as important as what it does:
 - **It does not install anything.** It never writes a file. Installing is still the `hyperiux` CLI's job (`npx hyperiux add <effect>`) - this server just makes sure whoever (or whatever) is calling that command knows the right slug, dependencies, and import path first.
 - **It does not leak Pro source.** If an effect requires a Hyperiux Pro subscription and no valid token is available, it says so plainly instead of returning fake or partial code.
 - **It does not run arbitrary code or touch your filesystem.** It only ever reads from the public Hyperiux registry over HTTPS and, optionally, a saved auth token from a `hyperiux login` session.
-- **It does not require an account to browse.** Anyone can query catalog metadata with zero setup beyond connecting the server. Fetching source for any effect, including the 50+ free ones, needs a free Hyperiux account (a `hyperiux login` session or `HYPERIUX_TOKEN`).
+- **It does not require an account to browse.** Anyone can query catalog metadata with zero setup beyond connecting the server. Fetching source for any effect, including the 80+ free ones, needs a free Hyperiux account (a `hyperiux login` session or `HYPERIUX_TOKEN`).
 
 ## Why an MCP server instead of just... docs?
 
@@ -75,7 +75,7 @@ Documentation is for humans reading linearly. An MCP server is for an AI agent t
      commands              on your behalf
 ```
 
-Both the CLI and the MCP server are *clients* of the same registry - neither one hosts or owns the actual effect source (except the 50+ free effects, which are public in this repo). Pro effect source lives in a private repository and is only ever served through an authenticated API call, whether the caller is the CLI or this MCP server.
+Both the CLI and the MCP server are *clients* of the same registry - neither one hosts or owns the actual effect source (except the 80+ free effects, which are public in this repo). Pro effect source lives in a private repository and is only ever served through an authenticated API call, whether the caller is the CLI or this MCP server.
 
 ## Where it lives, and why
 

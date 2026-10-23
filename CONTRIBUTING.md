@@ -1,6 +1,6 @@
 # Contributing to Hyperiux Vault
 
-Thanks for considering a contribution. This covers the free, open-source side of the repo - `packages/cli` (the `hyperiux` CLI) and `packages/mcp-server` (the `hyperiux-mcp-server` MCP server), both MIT, and `registry/effects` (the 50+ free effects, open source under MPL 2.0). Pro effect source lives in a private repository and isn't part of this repo.
+Thanks for considering a contribution. This covers the free, open-source side of the repo - `packages/cli` (the `hyperiux` CLI) and `packages/mcp-server` (the `hyperiux-mcp-server` MCP server), both MIT, and `registry/effects` (the 80+ free effects, open source under MPL 2.0). Pro effect source lives in a private repository and isn't part of this repo.
 
 ## Ways to contribute
 

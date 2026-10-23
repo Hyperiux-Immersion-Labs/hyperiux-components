@@ -6,7 +6,7 @@
 
 **A collection of high-quality animation and interaction effects for Next.js - designed by [Hyperiux](https://hyperiux.com).**
 
-150+ effects in total - 50+ free and open source, 90+ pro effects available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project - you own what you install.
+170+ effects in total - 80+ free and open source, 90+ pro effects available with a [Pro subscription](https://vault.hyperiux.com/pricing). The CLI installs source code directly into your project - you own what you install.
 
 <table>
   <tr>
@@ -77,7 +77,7 @@ Every install needs a Hyperiux account - [create a free one](https://vault.hyper
 npx hyperiux login
 ```
 
-**50+ free effects** - any account (3 a day on Free):
+**80+ free effects** - any account (3 a day on Free):
 ```bash
 npx hyperiux add rotation-slider
 npx hyperiux add spider-particles
@@ -123,9 +123,9 @@ Scroll-driven animations built on GSAP ScrollTrigger - parallax galleries, pinne
 `sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `circular-split-roll` · `split-canvas` · [+more](https://vault.hyperiux.com/effects/scroll-effects)
 
 ### Components
-Small, self-contained UI pieces - accordions, counters, timelines, and hover-driven lists.
+Small, self-contained UI pieces - accordions, counters, timelines, hover-driven lists, and animated takes on the everyday UI kit (dialogs, drawers, tooltips, date pickers, toasts and more).
 
-`animated-faq` · `border-beam` · `gooey-counter` · `gsap-flip-card` · [+more](https://vault.hyperiux.com/effects/components)
+`animated-faq` · `border-beam` · `gooey-counter` · `gsap-flip-card` · `animated-dialog` · `animated-date-picker` · `animated-command-menu` · `animated-toast` · [+more](https://vault.hyperiux.com/effects/components)
 
 ### Navigation
 Menus and navbars with desktop and mobile interaction patterns.

@@ -1,0 +1,459 @@
+{
+  "name": "animated-checkbox-group",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-10-23",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Animated Checkbox Group",
+  "description": "Tick any number of options. Shift-click ticks a range.",
+  "category": "components",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/animated-checkbox-group",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "AnimatedCheckboxGroup",
+  "exportKind": "default",
+  "importPath": "@/components/effects/animated-checkbox-group",
+  "target": "src/components/effects/animated-checkbox-group",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/animated-checkbox-group/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "theme",
+      "label": "Theme",
+      "type": "string",
+      "default": "vscode",
+      "description": "Colour palette. Any theme but Default also puts ticked labels in its accent colour.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Default",
+            "value": "default"
+          },
+          {
+            "label": "Caffeine",
+            "value": "caffeine"
+          },
+          {
+            "label": "Claude",
+            "value": "claude"
+          },
+          {
+            "label": "Ghibli",
+            "value": "ghibli"
+          },
+          {
+            "label": "Spotify",
+            "value": "spotify"
+          },
+          {
+            "label": "Valorant",
+            "value": "valorant"
+          },
+          {
+            "label": "Vscode",
+            "value": "vscode"
+          }
+        ]
+      }
+    },
+    {
+      "name": "mode",
+      "label": "Mode",
+      "type": "string",
+      "default": "dark",
+      "description": "Light or dark version of the chosen palette.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Light",
+            "value": "light"
+          },
+          {
+            "label": "Dark",
+            "value": "dark"
+          }
+        ]
+      }
+    },
+    {
+      "name": "variant",
+      "label": "Style",
+      "type": "string",
+      "default": "card",
+      "description": "Inline checkboxes or bordered cards.",
+      "remixer": {
+        "control": "select",
+        "group": "style",
+        "groupTitle": "Style",
+        "options": [
+          {
+            "label": "Inline",
+            "value": "default"
+          },
+          {
+            "label": "Cards",
+            "value": "card"
+          }
+        ]
+      }
+    },
+    {
+      "name": "cardFillColor",
+      "label": "Card fill color",
+      "type": "string",
+      "default": "accent",
+      "description": "Fill of ticked cards: muted tint or solid accent. Needs the Cards style.",
+      "remixer": {
+        "control": "select",
+        "group": "style",
+        "groupTitle": "Style",
+        "disabledWhen": {
+          "prop": "variant",
+          "notEquals": "card"
+        },
+        "options": [
+          {
+            "label": "Muted",
+            "value": "muted"
+          },
+          {
+            "label": "Accent",
+            "value": "accent"
+          }
+        ]
+      }
+    },
+    {
+      "name": "showIcon",
+      "label": "Icon",
+      "type": "boolean",
+      "default": true,
+      "description": "Show the box next to each label.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "showDescription",
+      "label": "Description",
+      "type": "boolean",
+      "default": true,
+      "description": "Show each option's description line.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "style",
+        "groupTitle": "Style"
+      }
+    },
+    {
+      "name": "fill",
+      "label": "Fill from centre",
+      "type": "boolean",
+      "default": true,
+      "description": "Box and card fill grow from the centre.",
+      "remixer": {
+        "hideWhenReducedMotion": true,
+        "control": "checkbox",
+        "group": "ticking",
+        "groupTitle": "Ticking"
+      }
+    },
+    {
+      "name": "elastic",
+      "label": "Elastic",
+      "type": "boolean",
+      "default": true,
+      "description": "Springy squash when a box is ticked. Needs Icon on.",
+      "remixer": {
+        "hideWhenReducedMotion": true,
+        "disabledWhen": {
+          "prop": "showIcon",
+          "equals": false
+        },
+        "control": "checkbox",
+        "group": "ticking",
+        "groupTitle": "Ticking"
+      }
+    },
+    {
+      "name": "mark",
+      "label": "Mark",
+      "type": "string",
+      "default": "check",
+      "description": "What appears in a ticked box. Needs Icon on.",
+      "remixer": {
+        "control": "select",
+        "group": "box",
+        "groupTitle": "Box",
+        "disabledWhen": {
+          "prop": "showIcon",
+          "equals": false
+        },
+        "options": [
+          {
+            "label": "Check",
+            "value": "check"
+          },
+          {
+            "label": "Filled circle",
+            "value": "circle-filled"
+          },
+          {
+            "label": "Outline circle",
+            "value": "circle-outline"
+          }
+        ]
+      }
+    },
+    {
+      "name": "appearance",
+      "label": "Look",
+      "type": "string",
+      "default": "filled",
+      "description": "Filled or outline box when ticked. Needs Icon on.",
+      "remixer": {
+        "control": "select",
+        "group": "box",
+        "groupTitle": "Box",
+        "disabledWhen": {
+          "prop": "showIcon",
+          "equals": false
+        },
+        "options": [
+          {
+            "label": "Filled",
+            "value": "filled"
+          },
+          {
+            "label": "Outline",
+            "value": "outline"
+          }
+        ]
+      }
+    },
+    {
+      "name": "rounded",
+      "label": "Roundness",
+      "type": "string",
+      "default": "md",
+      "description": "Box corner radius. Needs Icon on.",
+      "remixer": {
+        "control": "select",
+        "group": "box",
+        "groupTitle": "Box",
+        "disabledWhen": {
+          "prop": "showIcon",
+          "equals": false
+        },
+        "options": [
+          {
+            "label": "None",
+            "value": "none"
+          },
+          {
+            "label": "XS",
+            "value": "xs"
+          },
+          {
+            "label": "SM",
+            "value": "sm"
+          },
+          {
+            "label": "MD",
+            "value": "md"
+          },
+          {
+            "label": "LG",
+            "value": "lg"
+          },
+          {
+            "label": "Full",
+            "value": "full"
+          }
+        ]
+      }
+    },
+    {
+      "name": "strike",
+      "label": "Strike-through",
+      "type": "boolean",
+      "default": true,
+      "description": "Strike through ticked labels.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "label",
+        "groupTitle": "Label"
+      }
+    },
+    {
+      "name": "showSelectAll",
+      "label": "Show select all",
+      "type": "boolean",
+      "default": true,
+      "description": "Show the Select all button.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "multiple",
+        "groupTitle": "Multiple select"
+      }
+    },
+    {
+      "name": "showDeselectAll",
+      "label": "Show deselect all",
+      "type": "boolean",
+      "default": true,
+      "description": "Show the Deselect all button.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "multiple",
+        "groupTitle": "Multiple select"
+      }
+    },
+    {
+      "name": "showCounter",
+      "label": "Show counter",
+      "type": "boolean",
+      "default": true,
+      "description": "Show the rolling selected counter.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "multiple",
+        "groupTitle": "Multiple select"
+      }
+    },
+    {
+      "name": "rangeSelect",
+      "label": "Shift-click ranges",
+      "type": "boolean",
+      "default": true,
+      "description": "Shift-click ticks a range of options.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "multiple",
+        "groupTitle": "Multiple select"
+      }
+    },
+    {
+      "name": "min",
+      "label": "At least",
+      "type": "number",
+      "default": 0,
+      "description": "Fewest options that should be ticked: below this it shows an error and shakes, but doesn't stop unticking. Capped at At most.",
+      "remixer": {
+        "control": "select",
+        "group": "multiple",
+        "groupTitle": "Multiple select",
+        "options": [
+          {
+            "label": "None",
+            "value": 0
+          },
+          {
+            "label": "1",
+            "value": 1
+          },
+          {
+            "label": "2",
+            "value": 2
+          },
+          {
+            "label": "3",
+            "value": 3
+          }
+        ]
+      }
+    },
+    {
+      "name": "max",
+      "label": "At most",
+      "type": "number",
+      "default": 0,
+      "description": "Most options that can be ticked; 0 means no limit.",
+      "remixer": {
+        "control": "select",
+        "group": "multiple",
+        "groupTitle": "Multiple select",
+        "options": [
+          {
+            "label": "Any",
+            "value": 0
+          },
+          {
+            "label": "1",
+            "value": 1
+          },
+          {
+            "label": "2",
+            "value": 2
+          },
+          {
+            "label": "3",
+            "value": 3
+          },
+          {
+            "label": "4",
+            "value": 4
+          },
+          {
+            "label": "5",
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "name": "reorder",
+      "label": "Drag to reorder",
+      "type": "boolean",
+      "default": true,
+      "description": "Drag options up and down to reorder them.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "multiple",
+        "groupTitle": "Multiple select"
+      }
+    },
+    {
+      "name": "colorful",
+      "label": "Colour per option",
+      "type": "boolean",
+      "default": true,
+      "description": "Use each option's own accent colour. In Cards this replaces the Card fill colour's muted tint.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "multiple",
+        "groupTitle": "Multiple select"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "layout": "panel",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}
