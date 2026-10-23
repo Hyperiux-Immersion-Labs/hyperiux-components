@@ -190,6 +190,12 @@
         "group": "behavior",
         "groupTitle": "Behavior"
       }
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "default": "Built for seamless interactions.\nDesigned with thoughtful motion.\nMade to feel unforgettable.",
+      "description": "Text to reveal; \\n starts a new line."
     }
   ],
   "remixer": {

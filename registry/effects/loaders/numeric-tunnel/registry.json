@@ -115,7 +115,6 @@
         "group": "controls",
         "copyable": true,
         "min": 0,
-
         "max": 2700,
         "step": 0.1
       },

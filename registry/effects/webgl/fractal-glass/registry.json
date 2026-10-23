@@ -67,6 +67,12 @@
       "type": "number",
       "default": 0.12,
       "description": "Softens distortion near the media edges."
+    },
+    {
+      "name": "imageSrc",
+      "type": "string",
+      "default": "https://picsum.photos/seed/h13/1600/1200",
+      "description": "Image URL refracted through the glass strips (needs CORS)."
     }
   ],
   "remixer": {

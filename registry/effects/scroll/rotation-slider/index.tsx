@@ -216,9 +216,9 @@ export function RotationSliderComp({
                     ref={trackRef}
                     className="
             flex h-full items-center will-change-transform
-            gap-[5vw] max-[1025px]:gap-[8vw] max-md:gap-[12vw]
+            gap-[5vw] max-lg:gap-[8vw] max-md:gap-[12vw]
             pl-[31vw] pr-[31vw]
-            max-[1025px]:pl-[22vw] max-[1025px]:pr-[22vw]
+            max-lg:pl-[22vw] max-lg:pr-[22vw]
             max-md:pl-[12vw] max-md:pr-[12.5vw]
           "
                     style={{ transformStyle: "preserve-3d" }}
@@ -231,9 +231,9 @@ export function RotationSliderComp({
                             }}
                             className="
                 relative flex h-[45vh] w-[38vw] shrink-0 items-center justify-center
-                max-[1025px]:h-[40vh] max-[1025px]:w-[55vw]
+                max-lg:h-[40vh] max-lg:w-[55vw]
                 max-md:h-[35vh] max-md:w-[75vw]
-                max-[1025px]:[&>div]:h-[40vh] max-[1025px]:[&>div]:w-[50vw]
+                max-lg:[&>div]:h-[40vh] max-lg:[&>div]:w-[50vw]
                 max-md:[&>div]:h-[35vh] max-md:[&>div]:w-[75vw]
               "
                             style={{ transformStyle: "preserve-3d" }}
@@ -292,7 +292,7 @@ const RotationCard = forwardRef<HTMLDivElement, RotationCardProps>(({ src, index
 
             {showCaptions && text && (
                 <div
-                    className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center text-[1.4vw] font-medium max-[1025px]:text-[2.4vw] max-md:text-[4vw]"
+                    className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center text-[1.4vw] font-medium max-lg:text-[2.4vw] max-md:text-[4vw]"
                     style={{
                         color: textColor,
                         textShadow:

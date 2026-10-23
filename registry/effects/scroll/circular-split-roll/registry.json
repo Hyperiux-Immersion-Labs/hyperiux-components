@@ -1,7 +1,13 @@
 {
   "name": "circular-split-roll",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "2026-10-15",
+      "summary": "Rebuilt as a single-file CSS sticky layout, moved the reduced-motion notice to the demo page, and aligned the tablet breakpoint to max-lg (below 1025px).",
+      "breaking": false
+    },
     {
       "version": "1.0.1",
       "date": "2026-07-24",

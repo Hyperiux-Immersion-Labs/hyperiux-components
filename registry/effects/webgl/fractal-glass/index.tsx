@@ -609,7 +609,7 @@ export default function FractalGlass({
       <div
         className="
         hidden
-        max-[1025px]:flex
+        max-lg:flex
         fixed
         bottom-6
         left-1/2

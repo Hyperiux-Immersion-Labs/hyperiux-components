@@ -49,6 +49,10 @@
       "description": "Trail persistence and fade duration in seconds."
     }
   ],
+  "undocumentedProps": [
+    "iChannel0",
+    "iChannel1"
+  ],
   "remixer": {
     "enabled": true,
     "defaultOpenGroupId": "interaction",

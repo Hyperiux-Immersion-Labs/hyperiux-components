@@ -707,7 +707,7 @@ export default function SpiderParticles({
         {/* Top row */}
         <div className="flex items-start pt-15 justify-between">
           <div className="flex flex-col gap-1.5">
-            <div className="flex items-center gap-2 max-[1025px]:hidden">
+            <div className="flex items-center gap-2 max-lg:hidden">
               <span
                 className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
                   active ? "bg-emerald-400 shadow-[0_0_8px_#34d399]" : "bg-white/20"
@@ -729,7 +729,7 @@ export default function SpiderParticles({
             </p>
           </div>
 
-          <div className="flex gap-6 max-[1025px]:hidden">
+          <div className="flex gap-6 max-lg:hidden">
             {stats.map(({ label, value }) => (
               <div key={label} className="flex flex-col gap-0.5 text-right">
                 <span className="text-sm uppercase tracking-widest text-white/25">
@@ -744,7 +744,7 @@ export default function SpiderParticles({
         </div>
 
         {/* Mobile overlay - desktop-only effect notice */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3 pointer-events-none select-none z-20 hidden max-[1025px]:flex w-full px-14 text-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3 pointer-events-none select-none z-20 hidden max-lg:flex w-full px-14 text-center">
           <p className="text-white text-3xl font-light tracking-tight">
             Open on desktop
           </p>
@@ -754,7 +754,7 @@ export default function SpiderParticles({
         </div>
 
         {/* Bottom row */}
-        <div className="flex items-end justify-between max-[1025px]:hidden">
+        <div className="flex items-end justify-between max-lg:hidden">
           <div
             className={`transition-opacity duration-700 ${active ? "opacity-0" : "opacity-40"}`}
           >

@@ -2,7 +2,6 @@
 "use client";
 
 import { gsap } from "gsap";
-import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const MOBILE_BREAKPOINT = 768;
@@ -334,13 +333,11 @@ const EllipseCarouselComp = ({
             className="absolute left-0 top-0 overflow-hidden shadow-xl will-change-transform"
           >
             {item.src ? (
-              <Image
+              <img
                 src={item.src}
                 alt={item.alt ?? ""}
-                fill
-                sizes={`${Math.round(cardWidth * (isMobile ? MOBILE_CARD_SCALE : 1))}px`}
                 draggable={false}
-                className="pointer-events-none select-none object-cover"
+                className="absolute inset-0 h-full w-full pointer-events-none select-none object-cover"
               />
             ) : (
               <div

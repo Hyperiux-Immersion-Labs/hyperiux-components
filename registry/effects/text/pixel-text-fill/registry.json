@@ -250,6 +250,12 @@
         "max": 100,
         "step": 1
       }
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "default": "Build with calm motion.\nKeep the rhythm crisp and clear.\nMake each screen feel alive.\nLet every detail guide focus.",
+      "description": "Text drawn and filled on canvas; \\n forces line breaks."
     }
   ],
   "remixer": {

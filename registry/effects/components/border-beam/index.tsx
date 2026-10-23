@@ -3,28 +3,9 @@
 "use client";
 
 import { ShoppingCart } from "lucide-react";
-import Image from "next/image";
 import { forwardRef, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type AnimationEvent, type CSSProperties, type ComponentPropsWithoutRef, type ReactNode } from "react";
 
-// @ts-nocheck
-// Pure data/CSS-string-generation utility module (no React types involved).
-// Left untyped per the pragmatic-typing policy in typescript-migration-plan.md:
-// hundreds of internal helper params here would need `any` anyway, so a
-// per-file escape is more honest than sprinkling explicit `any` everywhere.
-/**
- * BeamBorder styles - presets, color palettes, and per-instance CSS generation.
- *
- * NOTE ON TAILWIND: the wrapper's static layout (position, isolation, overflow,
- * pointer-events) is applied with Tailwind utility classes inside BorderBeam.jsx.
- * Everything in this file is *runtime-generated, per-instance* CSS - dynamic
- * conic/radial gradients, `@property` registrations, per-id keyframes, and CSS
- * custom properties driven from JS - which Tailwind cannot express, so it must
- * remain as injected CSS.
- */
 
-/**
- * Size presets for border radius and dimensions
- */
 export const dimensionPresets = {
   sm: {
     borderRadius: 32,
@@ -50,9 +31,6 @@ export const dimensionPresets = {
   },
 };
 
-/**
- * Per-size theme presets tuned per size and theme
- */
 export const themePresets = {
   sm: {
     dark: {
@@ -103,7 +81,6 @@ export const themePresets = {
       saturation: 1.95,
     },
   },
-  // Pulse Outside - outward-blooming breathe
   'pulse-outside': {
     dark: {
       strokeOpacity: 0.94,
@@ -112,10 +89,6 @@ export const themePresets = {
       innerShadow: 'transparent',
       saturation: 1.2,
       brightness: 1.9,
-      // The outward variant frames the card with a single 1px hairline (its box-shadow at
-      // 0.3). Wrapped components here already supply their own ~equivalent 1px
-      // border, so the beam must NOT add a second hairline on top or the edge
-      // reads brighter than intended. Kept at 0 for a single-hairline look.
       hairlineOpacity: 0,
     },
     light: {
@@ -128,7 +101,6 @@ export const themePresets = {
       hairlineOpacity: 0,
     },
   },
-  // Pulse Inner - contained breathe
   'pulse-inner': {
     dark: {
       strokeOpacity: 1.54,
@@ -149,34 +121,21 @@ export const themePresets = {
   },
 };
 
-/**
- * @deprecated Use `themePresets` for per-size theme values.
- * Retained for backward compatibility - maps to `md` size presets.
- */
 export const legacyThemeColors = {
   dark: { ...themePresets.md.dark },
   light: { ...themePresets.md.light },
 };
 
-/**
- * Color palettes for each color variant
- */
 const hueSets = {
   colorful: {
     border: [
-      // Top edge → elongate on X (wide ovals), sat ON the edge so they reach inward.
-      // Spaced ~20% apart with overlapping widths so the top glow stays continuous.
       { color: 'rgb(40, 140, 255)', pos: '12% 1%', size: '130px 65px' },
       { color: 'rgb(255, 50, 100)', pos: '33% 0%', size: '150px 75px' },
-      // Left edge → elongate on Y (tall, narrow ovals)
       { color: 'rgb(50, 200, 80)', pos: '2.1% 68.3%', size: '46px 130px' },
       { color: 'rgb(30, 185, 170)', pos: '2.1% 68.3%', size: '24px 68px' },
-      // Bottom edge → elongate on X
       { color: 'rgb(100, 70, 255)', pos: '74.4% 100%', size: '280px 56px' },
       { color: 'rgb(40, 140, 255)', pos: '55% 100%', size: '150px 50px' },
-      // Top-right → elongate on X
       { color: 'rgb(255, 120, 40)', pos: '93.9% 1%', size: '150px 82px' },
-      // Right edge → elongate on Y
       { color: 'rgb(240, 50, 180)', pos: '100% 27.1%', size: '30px 80px' },
       { color: 'rgb(180, 40, 240)', pos: '100% 27.1%', size: '56px 92px' },
     ],
@@ -230,9 +189,6 @@ const hueSets = {
   },
 };
 
-/**
- * Small size color palettes (compact gradients for button-sized elements)
- */
 const compactSets = {
   colorful: {
     border: [
@@ -347,7 +303,6 @@ function edgeLayer(colorVariant) {
 
 function coreLayer(colorVariant) {
   const palette = hueSets[colorVariant];
-  // Mono variant gets 50% lower opacity
   const baseOpacity = colorVariant === 'mono' ? 0.225 : 0.45;
   return palette.border
     .map(c => {
@@ -476,7 +431,6 @@ function traceEdge(colorVariant, isDark, id) {
     .join(',\n       ');
 }
 
-// Inner gradient data for the trace variant
 const traceInnerSets = {
   colorful: [
     { color: 'rgba(255, 50, 100, 0.48)', sizeW: 33, sizeH: 30, offsetX: 0, offsetY: 0 },
@@ -539,20 +493,20 @@ const traceBloomSets = {
   colorful: {
     dark: {
       spikes: [
-        { color1: 'rgb(100, 70, 255)', color2: 'rgba(100, 70, 255, 1)' },              // 36%
-        { color1: 'rgba(255, 170, 40, 0.59)', color2: 'rgba(255, 170, 40, 0.29)' },    // 50%
-        { color1: 'rgb(50, 200, 100)', color2: 'rgba(50, 200, 100, 1)' },              // 64%
-        { color1: 'rgba(200, 50, 240, 0.91)', color2: 'rgba(200, 50, 240, 0.45)' },    // 78%
-        { color1: 'rgb(40, 140, 255)', color2: 'rgba(40, 140, 255, 1)' },              // 92%
+        { color1: 'rgb(100, 70, 255)', color2: 'rgba(100, 70, 255, 1)' },
+        { color1: 'rgba(255, 170, 40, 0.59)', color2: 'rgba(255, 170, 40, 0.29)' },
+        { color1: 'rgb(50, 200, 100)', color2: 'rgba(50, 200, 100, 1)' },
+        { color1: 'rgba(200, 50, 240, 0.91)', color2: 'rgba(200, 50, 240, 0.45)' },
+        { color1: 'rgb(40, 140, 255)', color2: 'rgba(40, 140, 255, 1)' },
       ],
     },
     light: {
       spikes: [
-        { color1: 'rgb(80, 50, 200)', color2: 'rgba(80, 50, 200, 0.8)' },      // 36%
-        { color1: 'rgba(210, 130, 0, 0.7)', color2: 'rgba(210, 130, 0, 0.46)' }, // 50%
-        { color1: 'rgb(30, 160, 70)', color2: 'rgba(30, 160, 70, 0.82)' },     // 64%
-        { color1: 'rgb(160, 30, 190)', color2: 'rgba(160, 30, 190, 0.7)' },    // 78%
-        { color1: 'rgb(30, 100, 200)', color2: 'rgba(30, 100, 200, 0.78)' },   // 92%
+        { color1: 'rgb(80, 50, 200)', color2: 'rgba(80, 50, 200, 0.8)' },
+        { color1: 'rgba(210, 130, 0, 0.7)', color2: 'rgba(210, 130, 0, 0.46)' },
+        { color1: 'rgb(30, 160, 70)', color2: 'rgba(30, 160, 70, 0.82)' },
+        { color1: 'rgb(160, 30, 190)', color2: 'rgba(160, 30, 190, 0.7)' },
+        { color1: 'rgb(30, 100, 200)', color2: 'rgba(30, 100, 200, 0.78)' },
       ],
     },
   },
@@ -639,8 +593,6 @@ function traceBloom(colorVariant, isDark, id) {
   const bloomData = traceBloomSets[colorVariant][isDark ? 'dark' : 'light'];
   const isMono = colorVariant === 'mono';
 
-  // Mono uses uniform gray so thin spikes at full opacity look like harsh bars.
-  // Attenuate opacity and widen the thin gradients so they appear as soft glows.
   const att = isMono ? 0.14 : 1;
   const sc1     = isMono ? fadeColor(spikeColors.primary, 0.14) : spikeColors.primary;
   const sc1_mid = isMono ? fadeColor(spikeColors.primary, 0.09) : spikeColors.primary;
@@ -652,7 +604,6 @@ function traceBloom(colorVariant, isDark, id) {
     : s
   );
 
-  // Mono: wide, blurred soft spikes; shortened heights
   const thinW1 = isMono ? '12px'  : '0.8px';
   const thinW2 = isMono ? '14px'  : '2px';
   const thinW3 = isMono ? '12px'  : '1.2px';
@@ -663,7 +614,6 @@ function traceBloom(colorVariant, isDark, id) {
   const thinH4 = isMono ? '32px'  : '60px';
   const thinLW = isMono ? '12px'  : '1px';
 
-  // Main glow: center dot + ambient - mono gets 50% lower opacity
   const glowDotC   = isMono ? 'rgba(255, 255, 255, 0.5)'  : 'rgba(255, 255, 255, 1)';
   const glowDot20  = isMono ? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.9)';
   const glowDot50  = isMono ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.5)';
@@ -695,19 +645,7 @@ function traceBloom(colorVariant, isDark, id) {
   }
 }
 
-/* ──────────────────────────────────────────────────────────────────────────
- * Pulse family (breathing glow, no rotation)
- * "pulse-inner" (contained) and "pulse-outside" (outward bloom).
- *
- * Both effects animate three independent size/drift regions (g1/g2/g3) and four
- * per-quadrant opacity oscillators (tl/tr/bl/br) on desynced periods, plus a
- * global height oscillator (gh) and a hue-shift filter. The gradient COLORS come
- * from the shared `hueSets` (so every color variant + strength works), while
- * the geometry below (sizes/positions/region/quadrant) is identical across colors.
- * ──────────────────────────────────────────────────────────────────────────*/
 
-// Which size-region (g1/g2/g3) and opacity-quadrant each of the 9 palette
-// gradients belongs to (matches the perimeter ::after ordering).
 const BREATHE_RING_MAP = [
   { region: 1, quad: 'tl' },
   { region: 2, quad: 'tl' },
@@ -720,12 +658,10 @@ const BREATHE_RING_MAP = [
   { region: 3, quad: 'tr' },
 ];
 
-// Inner-perimeter (::before) gradient sizes - slightly smaller than the ring.
 const BREATHE_INNER_SIZES = [
   [65, 35], [55, 30], [35, 65], [15, 30], [173, 28], [80, 22], [69, 28], [22, 38], [47, 44],
 ];
 
-// Inner bloom - 7 of the 9 colors, expanded sizes (positions come from palette).
 const BREATHE_INNER_BLOOM = [
   { ci: 0, region: 1, quad: 'tl', w: 84, h: 48 },
   { ci: 1, region: 2, quad: 'tl', w: 72, h: 42 },
@@ -736,7 +672,6 @@ const BREATHE_INNER_BLOOM = [
   { ci: 8, region: 3, quad: 'tr', w: 62, h: 58 },
 ];
 
-// Outward core (::after hairline + ::before glow share this edge-positioned set).
 const BREATHE_OUTER_CORE = [
   { ci: 0, region: 1, quad: 'tl', w: 80, h: 19, x: '27%', y: '0%' },
   { ci: 6, region: 2, quad: 'tr', w: 74, h: 11, x: '73%', y: '-1%' },
@@ -748,7 +683,6 @@ const BREATHE_OUTER_CORE = [
   { ci: 3, region: 2, quad: 'tl', w: 13, h: 32, x: '-1%', y: '28%' },
 ];
 
-// Outward bloom - wider/blurred halo (7 gradients).
 const BREATHE_OUTER_BLOOM = [
   { ci: 0, region: 1, quad: 'tl', w: 110, h: 30, x: '27%', y: '3%' },
   { ci: 6, region: 2, quad: 'tr', w: 100, h: 20, x: '73%', y: '1%' },
@@ -759,8 +693,6 @@ const BREATHE_OUTER_BLOOM = [
   { ci: 2, region: 1, quad: 'bl', w: 28, h: 58, x: '0%', y: '60%' },
 ];
 
-// Convert an `rgb()` palette color into `rgba()` whose alpha is the live quadrant
-// opacity custom property, so the gradient breathes per-quadrant.
 function setAlphaVar(color, quad, id) {
   const m = color.match(/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/);
   const rgb = m ? `${m[1]}, ${m[2]}, ${m[3]}` : '255, 255, 255';
@@ -768,17 +700,9 @@ function setAlphaVar(color, quad, id) {
 }
 
 function breatheGrad(color, w, h, region, quad, x, y, id) {
-  // `--pulse-scale-x/-y` (set inline by the component for pulse-outside) scale the
-  // blob WIDTH/HEIGHT to the measured element size, so the glow fits any component.
-  // Positions stay percentage-based, so blobs keep hugging the element's edges.
-  // Defaults to 1 (e.g. pulse-inner never sets them), leaving geometry unchanged.
-  // `--pulse-boost` is a consumer hook: a relative multiplier on top of the
-  // measured scale, so the glow can be intensified proportionally on any element.
   return `radial-gradient(ellipse calc(${w}px * var(--qw${region}-${id}) * var(--pulse-scale-x, 1) * var(--pulse-boost, 1)) calc(${h}px * var(--qh${region}-${id}) * var(--qgh-${id}) * var(--pulse-scale-y, 1) * var(--pulse-boost, 1)) at calc(${x} + var(--qx${region}-${id})) calc(${y} + var(--qy${region}-${id})), ${setAlphaVar(color, quad, id)}, transparent)`;
 }
 
-// The 9-gradient perimeter ring (shared by the perimeter ::after and the stroke) -
-// positions + sizes come straight from the palette, region/quad from BREATHE_RING_MAP.
 function breatheRing(variant, id) {
   return hueSets[variant].border
     .map((c, i) => {
@@ -790,7 +714,6 @@ function breatheRing(variant, id) {
     .join(',\n    ');
 }
 
-// Inner-perimeter gradients (smaller sizes) plus the bright corner accents.
 function breatheInner(variant, id, isDark) {
   const palette = hueSets[variant].border;
   const grads = palette.map((c, i) => {
@@ -814,7 +737,6 @@ function breatheInner(variant, id, isDark) {
   return [...grads, ...cornerGrads].join(',\n    ');
 }
 
-// Emit a fixed gradient table (used by inner bloom + both outer layers).
 function breatheTable(table, variant, id) {
   const palette = hueSets[variant].border;
   return table
@@ -826,12 +748,6 @@ function breatheTable(table, variant, id) {
     .join(',\n    ');
 }
 
-// Frozen variant of the bloom gradients: emits literal sizes/positions with a
-// fixed per-blob alpha (the time-average of the breathing range) instead of the
-// live `var(--qw…/--qop…)` custom properties. Because the bloom's background no
-// longer changes per frame, its heavily-blurred bitmap is painted ONCE and cached
-// by the compositor rather than re-rasterized 60–120×/sec - the single biggest
-// per-frame cost in the pulse effect.
 function breatheTableStatic(table, variant, frozenAlpha) {
   const palette = hueSets[variant].border;
   const a = +frozenAlpha.toFixed(3);
@@ -843,24 +759,13 @@ function breatheTableStatic(table, variant, frozenAlpha) {
       const y = e.y ?? py;
       const m = c.color.match(/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/);
       const rgb = m ? `${m[1]}, ${m[2]}, ${m[3]}` : '255, 255, 255';
-      // Scale the blob to the measured element via `--pulse-scale-x/-y` (same as
-      // the live stroke/core layers). The var only changes on resize, so the
-      // blurred bloom bitmap is still painted once and cached between resizes.
-      // Defaults to 1 (pulse-inner never sets it), leaving inner geometry as-is.
       return `radial-gradient(ellipse calc(${e.w}px * var(--pulse-scale-x, 1) * var(--pulse-boost, 1)) calc(${e.h}px * var(--pulse-scale-y, 1) * var(--pulse-boost, 1)) at ${x} ${y}, rgba(${rgb}, ${a}), transparent)`;
     })
     .join(',\n    ');
 }
 
-/**
- * Under prefers-reduced-motion, stretch animation durations (and pulse periods)
- * by this factor instead of freezing the beam entirely.
- */
 export const REDUCED_MOTION_SCALE = 3;
 
-// Pauses every animation on an instance (wrapper + pseudo layers + bloom) when it
-// carries the `data-paused` attribute. Driven by an IntersectionObserver so beams
-// that are scrolled offscreen stop doing per-frame paint work entirely.
 function frozenAnimRule(id) {
   return `
 [data-rim="${id}"][data-paused],
@@ -871,7 +776,6 @@ function frozenAnimRule(id) {
 }`;
 }
 
-/** Slow continuous motion under prefers-reduced-motion (scale durations, don't freeze). */
 function reducedMotionRule(id) {
   return `
 @media (prefers-reduced-motion: reduce) {
@@ -885,7 +789,6 @@ function motionDur(seconds) {
   return `calc(${seconds}s * var(--rim-motion-scale, 1))`;
 }
 
-// @property registrations for all per-instance pulse custom properties.
 function breathePropertyRegs(id) {
   const numbers = ['bw1', 'bh1', 'bw2', 'bh2', 'bw3', 'bh3', 'bgh', 'bop-tl', 'bop-tr', 'bop-bl', 'bop-br'];
   const lengths = ['bx1', 'by1', 'bx2', 'by2', 'bx3', 'by3'];
@@ -902,17 +805,7 @@ function breathePropertyRegs(id) {
   return `${numReg}\n\n${lenReg}\n\n@property --rim-opacity-${id} {\n  syntax: "<number>";\n  initial-value: 0;\n  inherits: true;\n}\n\n@property --rim-hue-${id} {\n  syntax: "<angle>";\n  initial-value: 0deg;\n  inherits: true;\n}`;
 }
 
-// ── Pulse breathing driver ───────────────────────────────────────────────────
-// The breathing motion (size/drift/quadrant-opacity/height) and the slow hue
-// drift used to run as ~15 per-instance CSS `@property` keyframe animations at
-// the display refresh rate (60–120 Hz). Because each value feeds the painted
-// gradients/filters, that meant repainting the breathing layers 60–120×/sec.
-// The motion is very slow (1.6–6.4 s periods), so we instead drive the same CSS
-// vars from a single shared requestAnimationFrame loop throttled to ~30 fps
-// (see pulseDriver.js). This halves the paint frequency on 60 Hz displays and
-// quarters it on 120 Hz, with no perceptible change to the breathing.
 
-/** Theme/size/duration-tuned breathing parameters (shared by CSS + JS driver). */
 function breatheParams(size, theme, duration) {
   const isDark = theme === 'dark';
   const durScale = duration / 2.3;
@@ -925,7 +818,6 @@ function breatheParams(size, theme, duration) {
       bs: (isDark ? 1.9 : 2.6) * durScale,
       ss: (isDark ? 2.6 : 4.6) * durScale,
       ghs: (isDark ? 2.4 : 5.5) * durScale,
-      // Full hue revolution period (seconds) - colors continuously cycle.
       huePeriod: 16,
     };
   }
@@ -937,12 +829,10 @@ function breatheParams(size, theme, duration) {
     bs: (isDark ? 2.3 : 3.7) * durScale,
     ss: (isDark ? 6.4 : 4.6) * durScale,
     ghs: (isDark ? 2.4 : 3.8) * durScale,
-    // Full hue revolution period (seconds) - colors continuously cycle.
     huePeriod: 14,
   };
 }
 
-/** Build the oscillator table for an instance (matches the former keyframes). */
 function breatheOscillators(id, p) {
   const { sp, dr, op, gh, bs, ss, ghs } = p;
   return [
@@ -966,32 +856,21 @@ function breatheOscillators(id, p) {
   ];
 }
 
-/**
- * Returns the runtime config the JS driver needs to animate a pulse instance,
- * or null for non-pulse sizes. Kept in sync with the CSS by sharing breatheParams.
- */
 export function buildPulseConfig(size, theme, duration, hueRange, staticColors, id) {
   if (size !== 'pulse-inner' && size !== 'pulse-outside') return null;
   const p = breatheParams(size, theme, duration);
   return {
     oscillators: breatheOscillators(id, p),
-    // Pulse colors continuously rotate a full hue circle so the palette is never
-    // pinned to fixed edges (no more "always red top-right / green left").
     hue: staticColors
       ? null
       : { prop: `--rim-hue-${id}`, range: 360, period: p.huePeriod, continuous: true },
   };
 }
 
-// Only the (short, one-shot) fade is still a CSS animation; the breathing is
-// driven from JS so it can be frame-rate capped and paused offscreen.
 function breatheWrapperAnim(id, fadeName, fadeDur) {
   return `  animation: ${fadeName}-${id} ${motionDur(fadeDur)} ease forwards;`;
 }
 
-/**
- * Generate complete CSS for a BeamBorder instance
- */
 export function buildRimCSS(options) {
   const { size } = options;
 
@@ -1113,7 +992,6 @@ function smallVariantCSS(options) {
         transparent 82%
       )`;
 
-  // Small variant uses wider mask to show more of the beam around the smaller element
   const smallMask = `conic-gradient(
     from var(--rim-angle-${id}),
     transparent 0%, transparent 22%,
@@ -1273,7 +1151,6 @@ function borderVariantCSS(options) {
 
   const innerRadius = Math.max(0, borderRadius - borderWidth);
 
-  // Mono variant gets 50% lower opacity
   const monoOpacityMultiplier = colorVariant === 'mono' ? 0.5 : 1.0;
   const finalStrokeOpacity = strokeOpacity * monoOpacityMultiplier;
   const finalInnerOpacity = innerOpacity * monoOpacityMultiplier;
@@ -1503,11 +1380,6 @@ ${reducedMotionRule(id)}
 `;
 }
 
-/**
- * Pulse Inner - contained breathing glow.
- * A full colorful perimeter ring (::after), an inner perimeter glow with corner
- * accents (::before), and a soft blurred bloom, all clipped inside the element.
- */
 function breatheInnerVariantCSS(options) {
   const {
     id, borderRadius, borderWidth, duration,
@@ -1522,29 +1394,21 @@ function breatheInnerVariantCSS(options) {
   const sInner = (innerOpacity * monoMul).toFixed(2);
   const sBloom = (bloomOpacity * monoMul).toFixed(2);
 
-  // Breathing parameters (theme-tuned). The motion itself is now driven from JS
-  // (see buildPulseConfig / pulseDriver.js); only `op` is needed here to set
-  // the frozen bloom's average alpha.
   const { op } = breatheParams('pulse-inner', theme, duration);
   const bloomBlur = 8;
 
   const b = brightness.toFixed(2);
   const s = saturation.toFixed(2);
 
-  // Slow hue drift is driven into --rim-hue-<id> by the JS loop (capped fps),
-  // so the breathing layers no longer repaint at the display refresh rate.
   const ringAnim = staticColors
     ? `filter: brightness(${b}) saturate(${s});`
     : `filter: hue-rotate(calc(var(--rim-hue-base, 0deg) + var(--rim-hue-${id}))) brightness(${b}) saturate(${s});`;
-  // Bloom shares the SAME hue rotation as the ring so the wide glow and the tight
-  // ring stay color-synced. Gradients keep frozen opacity; only hue-rotate varies.
   const bloomAnim = staticColors
     ? `filter: blur(${bloomBlur}px) brightness(${b}) saturate(${s});`
     : `filter: blur(${bloomBlur}px) hue-rotate(calc(var(--rim-hue-base, 0deg) + var(--rim-hue-${id}))) brightness(${b}) saturate(${s});`;
 
   const ringGradients = breatheRing(colorVariant, id);
   const innerGradients = breatheInner(colorVariant, id, isDark);
-  // Frozen at the breathing time-average (midpoint of the [1-op, 1] opacity range).
   const bloomGradients = breatheTableStatic(BREATHE_INNER_BLOOM, colorVariant, 1 - op * 0.5);
 
   return `
@@ -1640,15 +1504,6 @@ ${reducedMotionRule(id)}
 `;
 }
 
-/**
- * Pulse Outside - outward-blooming breathing glow.
- * A crisp 1px colored stroke hugs the outer edge (::after), while the colorful
- * core (::before) and soft halo (bloom) radiate OUTWARD behind the element
- * (z-index:-1), so the glow spills outside and is never cropped.
- *
- * Requires the wrapped child to be opaque so the inner part is covered and only
- * the outward halo shows.
- */
 function breatheOuterVariantCSS(options) {
   const {
     id, borderRadius, duration,
@@ -1664,53 +1519,34 @@ function breatheOuterVariantCSS(options) {
   const sInner = (innerOpacity * monoMul).toFixed(2);
   const sBloom = (bloomOpacity * monoMul).toFixed(2);
 
-  // A constant 1px hairline frames the element. It is painted on the inner 1px
-  // ring of the border-box (same place a standard `inset 0 0 0 1px` component
-  // border sits) so the beam hairline/stroke align with the wrapped element's
-  // own hairline instead of floating 1px outside it.
   const hairRGB = isDark ? '70, 70, 70' : '0, 0, 0';
   const hairOp = hairlineOpacity.toFixed(2);
   const hairlineLine = `linear-gradient(rgba(${hairRGB}, ${hairOp}), rgba(${hairRGB}, ${hairOp}))`;
 
-  // Breathing parameters (theme-tuned). The motion is driven from JS now
-  // (buildPulseConfig / pulseDriver.js); only `op` is needed here for the
-  // frozen bloom's average alpha.
   const { op } = breatheParams('pulse-outside', theme, duration);
 
-  // Theme-dependent outward-glow constants.
-  const sw = 0.95; // glow width size
-  const sh = 0.9; // glow height size (same in both themes)
+  const sw = 0.95;
+  const sh = 0.9;
   const glowBlur = isDark ? 3 : 6;
   const bloomBlur = isDark ? 22.5 : 15;
 
   const b = brightness.toFixed(2);
   const s = saturation.toFixed(2);
 
-  // Slow hue drift is driven into --rim-hue-<id> by the JS loop (capped fps).
   const strokeAnim = staticColors
     ? `filter: brightness(${b}) saturate(${s});`
     : `filter: hue-rotate(calc(var(--rim-hue-base, 0deg) + var(--rim-hue-${id}))) brightness(${b}) saturate(${s});`;
-  // Consumer hooks (--rim-core-blur / --rim-bloom-blur / --rim-glow-brightness /
-  // --rim-glow-saturate) let integrators tune the glow WITHOUT overriding the whole
-  // `filter` - replacing it externally would drop the hue-rotate term and desync the
-  // glow colors from the stroke ring.
   const glowBright = `brightness(var(--rim-glow-brightness, ${b})) saturate(var(--rim-glow-saturate, ${s}))`;
   const coreAnim = staticColors
     ? `filter: blur(var(--rim-core-blur, ${glowBlur}px)) ${glowBright};`
     : `filter: blur(var(--rim-core-blur, ${glowBlur}px)) hue-rotate(calc(var(--rim-hue-base, 0deg) + var(--rim-hue-${id}))) ${glowBright};`;
-  // Bloom (large halo) shares the SAME hue rotation as the core/stroke so the
-  // wide glow and the tight glow stay in color sync (most visible on blue/green).
-  // Its gradients keep frozen opacity, so only the cheap hue-rotate varies.
   const bloomAnim = staticColors
     ? `filter: blur(var(--rim-bloom-blur, ${bloomBlur}px)) ${glowBright};`
     : `filter: blur(var(--rim-bloom-blur, ${bloomBlur}px)) hue-rotate(calc(var(--rim-hue-base, 0deg) + var(--rim-hue-${id}))) ${glowBright};`;
 
   const strokeGradients = breatheTable(BREATHE_OUTER_CORE, colorVariant, id);
   const coreGradients = breatheTable(BREATHE_OUTER_CORE, colorVariant, id);
-  // Frozen at the breathing time-average (midpoint of the [1-op, 1] opacity range).
   const bloomGradients = breatheTableStatic(BREATHE_OUTER_BLOOM, colorVariant, 1 - op * 0.5);
-  // Paint a static hairline in the SAME masked ring as the stroke glow so their
-  // position and anti-aliasing always match exactly.
   const strokeBackground = hairlineOpacity > 0
     ? `${strokeGradients},
     ${hairlineLine}`
@@ -2102,24 +1938,6 @@ ${reducedMotionRule(id)}
 `;
 }
 
-/**
- * Shared breathing driver for the Pulse effects.
- *
- * The pulse breathing (size / drift / per-quadrant opacity / height) and the
- * slow hue drift used to run as ~15 per-instance CSS `@property` keyframe
- * animations at the display refresh rate (60–120 Hz). Because each value feeds
- * the painted gradients/filters, that repainted the breathing layers 60–120×/s.
- *
- * The motion is very slow (1.6–6.4 s periods), so instead every registered
- * instance is driven from a SINGLE shared requestAnimationFrame loop throttled
- * to ~30 fps. This halves the paint frequency on 60 Hz displays and quarters it
- * on 120 Hz, with no perceptible change to the breathing.
- *
- * Each oscillator ping-pongs a CSS custom property between `a` and `b` with an
- * ease-in-out (cosine) curve over `period` seconds, offset by `delay` seconds so
- * otherwise-identical oscillators desync (matching the former CSS keyframes +
- * animation-delay).
- */
 
 export interface PulseOscillator {
   prop: string;
@@ -2145,11 +1963,9 @@ const activeSet = new Set<PulseEntry>();
 let frameHandle: number | null = null;
 let lastTick = 0;
 
-// ~30 fps. Subtract a small slack so a tick that lands a hair early still runs.
 const MIN_TICK_GAP = 1000 / 30 - 2;
 const TAU = Math.PI * 2;
 
-/** Cosine ease-in-out factor in [0, 1]: 0 at phase 0/1, 1 at phase 0.5. */
 function easeCycle(phase: number): number {
   return (1 - Math.cos(TAU * phase)) / 2;
 }
@@ -2163,7 +1979,6 @@ function tick(ts: number) {
 
   activeSet.forEach(({ el, config }) => {
     for (const osc of config.oscillators) {
-      // Match CSS animation-delay semantics: a positive delay starts later.
       const phase = (tSec - osc.delay) / osc.period;
       const value = osc.a + (osc.b - osc.a) * easeCycle(phase);
       el.style.setProperty(
@@ -2174,8 +1989,6 @@ function tick(ts: number) {
 
     if (config.hue) {
       const { prop, range, period, continuous } = config.hue;
-      // `continuous` rotates a full circle (0→range, looping) so every color
-      // sweeps through every edge; otherwise drift between -range and +range.
       const value = continuous
         ? ((tSec / period) % 1) * range
         : -range + 2 * range * easeCycle(tSec / period);
@@ -2198,13 +2011,6 @@ function haltIfEmpty() {
   }
 }
 
-/**
- * Register an element to be driven by the shared pulse loop.
- *
- * @param config - config from buildPulseConfig() in styles.js
- * @returns cleanup function that unregisters the entry (and
- *          stops the shared loop once no entries remain).
- */
 export function attachPulse(el: HTMLElement, config: PulseDriverConfig): () => void {
   const entry = { el, config };
   activeSet.add(entry);
@@ -2215,8 +2021,6 @@ export function attachPulse(el: HTMLElement, config: PulseDriverConfig): () => v
   };
 }
 
-// Runs synchronously before the browser paints on the client, but degrades to a
-// no-op-safe useEffect on the server (avoids the SSR useLayoutEffect warning).
 const useBrowserLayoutEffect = typeof document !== 'undefined' ? useLayoutEffect : useEffect;
 
 function usePreferredScheme(): 'dark' | 'light' {
@@ -2252,10 +2056,6 @@ function usePrefersReducedMotion(): boolean {
     if (!mq) return;
 
     const onChange = (event: MediaQueryListEvent) => setReduceMotion(event.matches);
-    // matchMedia isn't available during SSR, so the real value can only be
-    // read after mount - this can't be a lazy useState initializer without
-    // risking a hydration mismatch.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setReduceMotion(mq.matches);
     mq.addEventListener?.('change', onChange);
     return () => mq.removeEventListener?.('change', onChange);
@@ -2268,26 +2068,6 @@ function pickTheme(theme: 'dark' | 'light' | 'auto', schemeName: 'dark' | 'light
   return theme === 'auto' ? schemeName : theme;
 }
 
-/**
- * BeamBorder component - Animated border beam effect for React (JSX + Tailwind)
- *
- * Sizes:
- *   Rotate family: 'sm' | 'md' (default) | 'line'
- *   Pulse family:  'pulse-outside' | 'pulse-inner'
- * Color variants: 'colorful' (default) | 'mono' | 'ocean' | 'sunset'
- * Theme: 'dark' (default) | 'light' | 'auto'
- *
- * Static layout on the wrapper/bloom is handled with Tailwind utilities below;
- * the animated gradient system is per-instance generated CSS (see styles.js) -
- * that part cannot be expressed with Tailwind classes.
- *
- * @example
- * ```jsx
- * <BeamBorder>
- *   <Card>Content</Card>
- * </BeamBorder>
- * ```
- */
 export type BeamBorderProps = {
   children?: ReactNode;
   size?: 'sm' | 'md' | 'line' | 'pulse-outside' | 'pulse-inner';
@@ -2343,10 +2123,6 @@ export const BeamBorder = forwardRef<HTMLDivElement, BeamBorderProps>(function B
   const [autoRadius, setAutoRadius] = useState<number | null>(null);
   const [glowScale, setGlowScale] = useState({ x: 1, y: 1 });
 
-  // Auto-detect child border radius when no explicit value is provided.
-  // useLayoutEffect so the detected radius is applied before the browser paints
-  // the first frame - otherwise the beam paints square, then snaps to the child's
-  // radius a frame later (a visible corner "glitch" on reload).
   useBrowserLayoutEffect(() => {
     if (customBorderRadius != null) return;
     const el = hostRef.current;
@@ -2364,23 +2140,17 @@ export const BeamBorder = forwardRef<HTMLDivElement, BeamBorderProps>(function B
 
     detect();
 
-    // Re-detect if child layout changes (e.g. CSS loaded late)
     const observer = new MutationObserver(detect);
     observer.observe(el, { childList: true, subtree: false });
     return () => observer.disconnect();
   }, [customBorderRadius, children]);
 
-  // Sync isOn/isClosing to the active prop. Pure derived state (no browser
-  // API), so it's adjusted directly during render instead of via an effect.
   if (active && !isOn && !isClosing) {
     setIsOn(true);
   } else if (!active && isOn && !isClosing) {
     setIsClosing(true);
   }
 
-  // Pause the (paint-heavy) animations while the element is scrolled offscreen.
-  // This stops per-frame painting entirely for hidden instances without changing
-  // their logical active/fading state, so it never fires onActivate/onDeactivate.
   useEffect(() => {
     const el = hostRef.current;
     if (!el || typeof IntersectionObserver === 'undefined') return;
@@ -2389,7 +2159,6 @@ export const BeamBorder = forwardRef<HTMLDivElement, BeamBorderProps>(function B
       entries => {
         for (const entry of entries) setOnScreen(entry.isIntersecting);
       },
-      // Start animating slightly before the element scrolls into view.
       { rootMargin: '256px' }
     );
 
@@ -2397,16 +2166,10 @@ export const BeamBorder = forwardRef<HTMLDivElement, BeamBorderProps>(function B
     return () => observer.disconnect();
   }, []);
 
-  // Reset glowScale when leaving pulse-outside. Pure derived state (no
-  // browser API), so it's adjusted directly during render instead of via an
-  // effect.
   if (size !== 'pulse-outside' && (glowScale.x !== 1 || glowScale.y !== 1)) {
     setGlowScale({ x: 1, y: 1 });
   }
 
-  // Pulse Outside glow geometry is authored in fixed pixels for a reference
-  // element (~350x140). Measure the actual wrapped element and scale the glow
-  // per-axis so the halo grows/shrinks to fit any component it's applied to.
   useEffect(() => {
     if (size !== 'pulse-outside') {
       return;
@@ -2417,8 +2180,6 @@ export const BeamBorder = forwardRef<HTMLDivElement, BeamBorderProps>(function B
 
     const REF_WIDTH = 350;
     const REF_HEIGHT = 140;
-    // Allow the glow to both shrink (small buttons) and grow (large cards),
-    // with generous bounds to avoid degenerate geometry at the extremes.
     const MIN_SCALE = 0.35;
     const MAX_SCALE = 4;
     const clamp = (value: number) => Math.max(MIN_SCALE, Math.min(MAX_SCALE, value));
@@ -2462,16 +2223,11 @@ export const BeamBorder = forwardRef<HTMLDivElement, BeamBorderProps>(function B
   );
 
   const activeTheme = pickTheme(theme, schemeName);
-  // Preset shapes differ slightly per size (not every size defines
-  // brightness/hairlineOpacity), so this is treated as an honest loose bag.
   const finish = themePresets[size][activeTheme] as Record<string, number | string | undefined>;
   const dims = dimensionPresets[size];
 
   const isBreathe = size === 'pulse-inner' || size === 'pulse-outside';
 
-  // Radius is driven solely by the wrapped child (its Tailwind `rounded-*`),
-  // detected at runtime - the beam no longer imposes its own preset radius.
-  // Falls back to 0 only for the pre-detection frame.
   const radius = customBorderRadius ?? autoRadius ?? 0;
   const cycle = duration ?? (size === 'line' ? 3.1 : isBreathe ? 2.3 : 1.96);
   const finalBorderWidth = beamWidth ?? dims.borderWidth;
@@ -2520,8 +2276,6 @@ export const BeamBorder = forwardRef<HTMLDivElement, BeamBorderProps>(function B
     ]
   );
 
-  // Runtime config for the JS breathing driver (null for non-pulse sizes).
-  // Under reduced motion, stretch oscillator/hue periods instead of freezing.
   const pulseConfig = useMemo(() => {
     if (!isBreathe) return null;
     const base = buildPulseConfig(size, activeTheme, cycle, hueSpan, frozen, id);
@@ -2538,8 +2292,6 @@ export const BeamBorder = forwardRef<HTMLDivElement, BeamBorderProps>(function B
     };
   }, [isBreathe, size, activeTheme, cycle, hueSpan, frozen, id, reduceMotion]);
 
-  // Drive the Pulse breathing from the shared, fps-capped rAF loop while the
-  // instance is on and onscreen.
   useEffect(() => {
     if (!pulseConfig) return;
     if (!(isOn || isClosing) || !onScreen) return;
@@ -2570,8 +2322,6 @@ export const BeamBorder = forwardRef<HTMLDivElement, BeamBorderProps>(function B
       : {}),
   } as CSSProperties & Record<string, string | number>;
 
-  // Static layout via Tailwind. The dynamic border-radius, gradients, masks, and
-  // keyframes live in the generated <style> (they can't be Tailwind utilities).
   const layoutClasses =
     size === 'pulse-outside'
       ? 'relative isolate overflow-visible'
@@ -2644,31 +2394,28 @@ export default function BorderBeam({
         style={{ backgroundColor }}
       >
         <div className="relative z-10 flex flex-col">
-          <p className="text-[0.9vw] max-md:text-[3vw] font-bold uppercase tracking-[0.12em] text-[#66D933] max-[1025px]:text-[3vw]">
+          <p className="text-[0.9vw] max-md:text-[3vw] font-bold uppercase tracking-[0.12em] text-[#66D933] max-lg:text-[3vw]">
             {cardData.label}
           </p>
-          <h2 className="mt-4 text-[4.5vw] max-w-[60%] font-normal leading-[1.14] text-white max-sm:text-[6vw] max-[1025px]:text-[7vw]">
+          <h2 className="mt-4 text-[4.5vw] max-w-[60%] font-normal leading-[1.14] text-white max-sm:text-[6vw] max-lg:text-[7vw]">
             {cardData.title}
           </h2>
         </div>
 
-        <div className="absolute bottom-0 right-[-20%] h-[30vw] w-[40vw]  max-sm:right-[-44px] max-sm:scale-90 max-md:h-[50vw] max-md:w-[60vw] max-[1025px]:h-[50vw] max-[1025px]:w-[60vw] max-[1025px]:right-[-10%]">
-          <Image
+        <div className="absolute bottom-0 right-[-20%] h-[30vw] w-[40vw]  max-sm:right-[-44px] max-sm:scale-90 max-md:h-[50vw] max-md:w-[60vw] max-lg:h-[50vw] max-lg:w-[60vw] max-lg:right-[-10%]">
+          <img
             src="/assets/img/earbud.png"
             alt="earbud"
-            fill
-            sizes="(max-width: 1024px) 280px, 250px"
-            className="object-contain object-bottom"
-            priority
+            className="absolute inset-0 h-full w-full object-contain object-bottom"
           />
         </div>
 
         <button className="absolute bottom-8 left-9 z-10 flex min-w-[158px] items-center justify-between rounded-[12px] bg-white px-4 py-3 text-left text-black shadow-[0_18px_35px_rgba(0,0,0,0.16)] max-sm:left-7">
           <span>
-            <span className="block text-[0.75vw] uppercase tracking-[0.04em] text-[#8E8E93] max-md:text-[2.5vw] max-[1025px]:text-[1.5vw]">
+            <span className="block text-[0.75vw] uppercase tracking-[0.04em] text-[#8E8E93] max-md:text-[2.5vw] max-lg:text-[1.5vw]">
               {cardData.buttonLabel}
             </span>
-            <span className="block text-[1.5vw] leading-tight text-[#1C1C1E] max-md:text-[3vw] max-[1025px]:text-[2.5vw]">
+            <span className="block text-[1.5vw] leading-tight text-[#1C1C1E] max-md:text-[3vw] max-lg:text-[2.5vw]">
               {cardData.buttonValue}
             </span>
           </span>

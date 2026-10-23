@@ -105,11 +105,11 @@ const StatItem = memo(({ stat, textColor, textSize, fontWeight, trigger, duratio
  const { prefix, value, suffix, superSuffix } = stat;
 
  return (
- <div className="flex gap-[2vw] h-fit w-fit max-[1025px]:gap-0 max-md:flex-col">
+ <div className="flex gap-[2vw] h-fit w-fit max-lg:gap-0 max-md:flex-col">
  <div className="flex flex-col items-center justify-start h-fit gap-[1vw] w-fit max-md:flex-row max-md:justify-between max-md:pl-[4vw] max-md:gap-[4vw]">
  <h3
  dir="ltr"
- className={`${(fontWeight && __NumberCounterOne_FONT_WEIGHTS[fontWeight]) ||"font-normal"} leading-[1.2] flex items-center max-[1025px]:text-[7vw] max-md:text-[12vw] ${textSize}`}
+ className={`${(fontWeight && __NumberCounterOne_FONT_WEIGHTS[fontWeight]) ||"font-normal"} leading-[1.2] flex items-center max-lg:text-[7vw] max-md:text-[12vw] ${textSize}`}
  >
  {prefix && <span style={{ color: textColor }}>{prefix}</span>}
  {renderDigits(value, textColor, trigger, duration, stagger, reducedMotion)}
@@ -150,7 +150,7 @@ function NumberCounterOne({
  return (
  <section id={sectionId} className="h-fit w-fit">
  <div className="p-[1vw]">
- <div className="flex text-center gap-[2vw] w-fit h-fit max-[1025px]:flex-wrap max-[1025px]:gap-x-0 max-[1025px]:gap-y-12 max-md:flex-col max-md:text-left">
+ <div className="flex text-center gap-[2vw] w-fit h-fit max-lg:flex-wrap max-lg:gap-x-0 max-lg:gap-y-12 max-md:flex-col max-md:text-left">
  {items.map((stat, index) => (
  <StatItem
  key={index}
@@ -254,7 +254,7 @@ interface NumberCounterTwoProps {
 
 const NumberCounterTwo = ({
  value ='0',
- textSize ='text-[8vw] max-[1025px]:text-[7vw] max-md:text-[12vw]',
+ textSize ='text-[8vw] max-lg:text-[7vw] max-md:text-[12vw]',
  color ='#111111',
  fontWeight ='normal',
  duration = 1.5,
@@ -264,7 +264,7 @@ const NumberCounterTwo = ({
  const cleanValue = value.replace('+','');
 
  return (
- <div ref={containerRef} className="flex items-end gap-[2vw] w-fit max-[1025px]:gap-0">
+ <div ref={containerRef} className="flex items-end gap-[2vw] w-fit max-lg:gap-0">
  <div
  className={`flex items-end font-display leading-none ${textSize} ${(fontWeight && __NumberCounterTwo_FONT_WEIGHTS[fontWeight]) ||'font-normal'}`}
  style={{ color }}
@@ -373,7 +373,7 @@ const NumberCounterThree = ({
  stagger = 0.1,
  fontWeight = 600,
  textColor ='#FF5100',
- textSize ='text-[5vw] max-[1025px]:text-[7vw] max-md:text-[12vw]',
+ textSize ='text-[5vw] max-lg:text-[7vw] max-md:text-[12vw]',
  trigger,
  suffix ='',
  reducedMotion = false,
@@ -406,7 +406,7 @@ const NumberCounterThree = ({
 
  return (
  <div
- className={`flex items-end gap-[0.05em] max-[1025px]:gap-0 ${textSize}`}
+ className={`flex items-end gap-[0.05em] max-lg:gap-0 ${textSize}`}
  style={{
  fontWeight,
  color: textColor,
@@ -457,7 +457,7 @@ export default function NumberCounter({
         <>
             <div className="min-h-screen w-screen bg-white flex items-center justify-center p-10">
                 <div className="w-full max-w-6xl max-md:pt-10 flex flex-col items-center gap-10">
-                    <h1 className="text-[3vw] max-[1025px]:text-[4vw] max-md:text-[7vw] text-[#111111] text-center">
+                    <h1 className="text-[3vw] max-lg:text-[4vw] max-md:text-[7vw] text-[#111111] text-center">
                         Numbers That Speak for Themselves
                     </h1>
 
@@ -479,7 +479,7 @@ export default function NumberCounter({
                                 type="button"
                                 onClick={handleReplayOne}
                                 disabled={prefersReducedMotion}
-                                className="mt-6 px-5 py-2 rounded-full bg-[#111111] text-white text-sm max-md:text-sm max-[1025px]:text-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-45"
+                                className="mt-6 px-5 py-2 rounded-full bg-[#111111] text-white text-sm max-md:text-sm max-lg:text-lg cursor-pointer disabled:cursor-not-allowed disabled:opacity-45"
                             >
                                 Replay
                             </button>
@@ -490,7 +490,7 @@ export default function NumberCounter({
                                 <NumberCounterTwo
                                     key={`${replayTwoKey}-${duration}-${stagger}-${textColor}`}
                                     value="594"
-                                    textSize="text-[5vw] max-[1025px]:text-[7vw] max-md:text-[12vw] md:text-[3.2vw]"
+                                    textSize="text-[5vw] max-lg:text-[7vw] max-md:text-[12vw] md:text-[3.2vw]"
                                     color={textColor}
                                     fontWeight="normal"
                                     duration={duration}
@@ -502,7 +502,7 @@ export default function NumberCounter({
                                 type="button"
                                 onClick={handleReplayTwo}
                                 disabled={prefersReducedMotion}
-                                className="mt-6 px-5 py-2 max-md:text-sm max-[1025px]:text-lg rounded-full bg-[#111111] text-white text-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-45"
+                                className="mt-6 px-5 py-2 max-md:text-sm max-lg:text-lg rounded-full bg-[#111111] text-white text-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-45"
                             >
                                 Replay
                             </button>
@@ -517,7 +517,7 @@ export default function NumberCounter({
                                     stagger={stagger}
                                     fontWeight="medium"
                                     textColor={textColor}
-                                    textSize="text-[5vw] max-[1025px]:text-[7vw] max-md:text-[12vw] md:text-[3.2vw]"
+                                    textSize="text-[5vw] max-lg:text-[7vw] max-md:text-[12vw] md:text-[3.2vw]"
                                     reducedMotion={prefersReducedMotion}
                                 />
                             </div>
@@ -525,7 +525,7 @@ export default function NumberCounter({
                                 type="button"
                                 onClick={handleReplayThree}
                                 disabled={prefersReducedMotion}
-                                className="mt-6 px-5 py-2 max-md:text-sm max-[1025px]:text-lg rounded-full bg-[#111111] text-white text-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-45"
+                                className="mt-6 px-5 py-2 max-md:text-sm max-lg:text-lg rounded-full bg-[#111111] text-white text-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-45"
                             >
                                 Replay
                             </button>

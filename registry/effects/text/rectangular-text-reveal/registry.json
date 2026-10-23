@@ -132,6 +132,18 @@
           }
         ]
       }
+    },
+    {
+      "name": "overlayEnterDuration",
+      "type": "number",
+      "default": 0.24,
+      "description": "Overlay rectangle cover duration in seconds."
+    },
+    {
+      "name": "overlayExitDuration",
+      "type": "number",
+      "default": 0.28,
+      "description": "Overlay rectangle uncover duration in seconds."
     }
   ],
   "remixer": {
