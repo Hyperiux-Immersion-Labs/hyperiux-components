@@ -11,7 +11,7 @@
     {
       "version": "1.0.0",
       "date": "2026-08-20",
-      "summary": "Initial release",
+      "summary": "Initial release: 3D card-flip carousel with a configurable horizontal (Y-axis) or vertical (X-axis) flip direction, directional text slide/tilt/fade transitions, custom-ease card flip via GSAP CustomEase, pagination dots, infinite wrap or clamped ends, and prefers-reduced-motion support - under reduced motion the flip/text tweens are skipped entirely and each click swaps content and settles the card to its end rotation instantly, with no rotation, slide, tilt, or fade animation.",
       "breaking": false
     }
   ],
@@ -172,7 +172,7 @@
     {
       "name": "cardClassName",
       "type": "string",
-      "default": "max-md:w-[85vw]! max-md:h-[75vw]! max-[1024px]:w-[85vw]! max-[1024px]:h-[55vw]!",
+      "default": "max-md:w-[85vw]! max-md:h-[75vw]! max-lg:w-[85vw]! max-lg:h-[55vw]!",
       "description": "Extra classes appended to the card's own wrapper div."
     }
   ],

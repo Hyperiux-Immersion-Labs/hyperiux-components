@@ -33,7 +33,7 @@
   "target": "src/components/effects/scramble-link-button",
   "props": [
     {
-      "name": "btnText",
+      "name": "text",
       "type": "string",
       "default": "Hover me",
       "description": "Button label text.",
@@ -129,6 +129,12 @@
         "max": 3,
         "step": 0.1
       }
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "default": "#",
+      "description": "Link destination URL for the anchor."
     }
   ],
   "remixer": {

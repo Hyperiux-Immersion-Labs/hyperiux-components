@@ -42,6 +42,12 @@
         "group": "style",
         "groupTitle": "Style"
       }
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "default": "Build faster. Animate better. Ship smarter. Hyperiux Vault gives you the tools to create high-performance interfaces that look premium and feel effortless.",
+      "description": "Headline text; word count also sets the scroll section height."
     }
   ],
   "remixer": {

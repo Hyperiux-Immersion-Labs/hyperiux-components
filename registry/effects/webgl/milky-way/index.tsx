@@ -1803,15 +1803,6 @@ export default function MilkyWay({
                         rotationSpeed={resolvedProps.rotationSpeed}
                         texSize={particleTexSize}
                      />
-                     {isSceneReady && (
-                        <SmokeFlow
-                           particleSize={resolvedProps.particleSize}
-                           coreColor={resolvedProps.coreColor}
-                           accentColor={resolvedProps.accentColor}
-                           outerColor={resolvedProps.outerColor}
-                           rotationSpeed={resolvedProps.rotationSpeed}
-                        />
-                     )}
                   </GalaxyMouseGroup>
                </Center>
                <EffectComposer>
@@ -1830,7 +1821,7 @@ export default function MilkyWay({
             <>
             <div className='absolute inset-0 flex items-center justify-center px-6 text-center text-white'>
                <div className='flex flex-col items-center gap-6'>
-                  <p className='rounded-full bg-white/10 px-5 py-3 w-full max-w-[60vw] max-[1025px]:max-w-[70vw] max-md:max-w-full text-2xl max-md:text-base backdrop-blur-sm'>
+                  <p className='rounded-full bg-white/10 px-5 py-3 w-full max-w-[60vw] max-lg:max-w-[70vw] max-md:max-w-full text-2xl max-md:text-base backdrop-blur-sm'>
                      Open in desktop to experience this effect.
                   </p>
                   <a
@@ -1846,16 +1837,16 @@ export default function MilkyWay({
 
          {(showDesktopContent || showMobileContent ) && (
             
-            <div className="pointer-events-none h-screen w-full absolute left-0 top-0 max-[1025px]:top-5 z-20 flex items-center justify-center max-[1025px]:hidden">
+            <div className="pointer-events-none h-screen w-full absolute left-0 top-0 max-lg:top-5 z-20 flex items-center justify-center max-lg:hidden">
                <div className='h-full w-full relative'>
-                  <div className='absolute bottom-7 left-[3vw] pt-[10vw] px-[2vw] flex items-center max-[1025px]:flex-col max-[1025px]:gap-5 justify-between h-fit'>
+                  <div className='absolute bottom-7 left-[3vw] pt-[10vw] px-[2vw] flex items-center max-lg:flex-col max-lg:gap-5 justify-between h-fit'>
                         <p className='leading-[1.2] '>
                            Move your cursor around and watch the scene respond.
                         </p>
                   </div>
-                  <div className="absolute bottom-[4vw] max-[1025px]:bottom-[12vw] left-[4vw] max-w-[70vw]">
-                     <p className='flex items-center bg-white/20  max-[1025px]:text-sm backdrop-blur-sm rounded-full text-xs px-[1vw] py-[.5vw] w-fit gap-2'><Stars size={12} />Data Driven And Creative</p>
-                     <h1 className="text-[7vw] mt-[1vw] max-[1025px]:mt-[3vw] font leading-[1.1] text-white drop-shadow-[0_0_32px_rgba(100,96,255,0.17)]">
+                  <div className="absolute bottom-[4vw] max-lg:bottom-[12vw] left-[4vw] max-w-[70vw]">
+                     <p className='flex items-center bg-white/20  max-lg:text-sm backdrop-blur-sm rounded-full text-xs px-[1vw] py-[.5vw] w-fit gap-2'><Stars size={12} />Data Driven And Creative</p>
+                     <h1 className="text-[7vw] mt-[1vw] max-lg:mt-[3vw] font leading-[1.1] text-white drop-shadow-[0_0_32px_rgba(100,96,255,0.17)]">
                         Particles Galaxy
 
                      </h1>

@@ -3,7 +3,6 @@
 
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
-import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const DEFAULT_ROOT_MARGIN = "256px";
@@ -42,7 +41,6 @@ function createVisibilityGate({
 }: VisibilityGateOptions = {}): VisibilityGate {
   let tabVisible =
     typeof document === "undefined" ? true : !document.hidden;
-  // Match border-beam: assume onscreen until the observer reports otherwise.
   let onscreen = true;
   let destroyed = false;
   let observer: IntersectionObserver | null = null;
@@ -97,15 +95,10 @@ function createVisibilityGate({
   bindObserver();
 
   return {
-    /** Whether the animation should currently run. */
     get isActive() {
       return isActive();
     },
 
-    /**
-     * Re-bind IntersectionObserver after the root element mounts late
-     * (e.g. ref not ready on first call). Safe to call multiple times.
-     */
     observe(nextRoot?: RafRoot) {
       if (destroyed) return;
       if (nextRoot != null) root = nextRoot;
@@ -150,10 +143,6 @@ interface SuspendedRaf {
   destroy: () => void;
 }
 
-/**
- * Owns a requestAnimationFrame loop that auto-pauses when the tab is hidden
- * or the root element is offscreen.
- */
 function createSuspendedRaf({
   onFrame,
   root = null,
@@ -207,36 +196,30 @@ function createSuspendedRaf({
   });
 
   return {
-    /** Start (or resume) the loop when visibility allows. */
     start() {
       if (destroyed) return;
       running = true;
       sync();
     },
 
-    /** Stop requesting frames (visibility listeners stay attached until destroy). */
     stop() {
       running = false;
       stopRaf();
     },
 
-    /** Whether the caller has started the loop (may still be paused by visibility). */
     get isRunning() {
       return running;
     },
 
-    /** Whether a frame is currently allowed to schedule. */
     get isActive() {
       return gate.isActive;
     },
 
-    /** Re-attach offscreen observer to a (new) root element. */
     observe(nextRoot?: RafRoot) {
       gate.observe(nextRoot);
       sync();
     },
 
-    /** Tear down listeners and cancel any pending frame. */
     destroy() {
       if (destroyed) return;
       destroyed = true;
@@ -255,8 +238,6 @@ export {
 
 gsap.registerPlugin(SplitText);
 
-// True when the user has asked the OS to minimise animation. Safe to call
-// during render - returns false on the server.
 function prefersReducedMotion() {
   if (typeof window === "undefined") return false;
   return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
@@ -486,9 +467,6 @@ export function InfinitePerspectiveSliderComp({
     initSetters();
 
     const tick = () => {
-      // Reduced motion: snap straight to the target (no lerp smoothing) and
-      // never build up rotation velocity, so cards never tilt while
-      // scrolling or dragging - they just track the pointer/wheel directly.
       if (reducedMotion) {
         state.current = state.target;
         state.velocity = 0;
@@ -535,7 +513,6 @@ export function InfinitePerspectiveSliderComp({
     };
 
     const onWheel = (event: WheelEvent) => {
-      // Use whichever axis moved more so trackpads scroll it both ways.
       const delta =
         Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
 
@@ -555,8 +532,6 @@ export function InfinitePerspectiveSliderComp({
       markScrolling();
     };
 
-    // Horizontal drag, or - on touch - a vertical swipe (scroll gesture).
-    // Whichever axis moved more drives the slider.
     const onMove = (clientX: number, clientY?: number) => {
       if (!state.isDragging) return;
 
@@ -857,7 +832,7 @@ export function InfinitePerspectiveSliderComp({
   return (
     <div className="h-screen w-screen overflow-hidden touch-none">
       <div
-        className="pointer-events-none relative flex h-full items-center overflow-hidden max-[1025px]:items-center "
+        className="pointer-events-none relative flex h-full items-center overflow-hidden max-lg:items-center "
         style={{ perspective: `${perspective}px` }}
       >
         <div
@@ -886,7 +861,7 @@ export function InfinitePerspectiveSliderComp({
                   ref={(element) => {
                     numberRefs.current[index] = element;
                   }}
-                  className="mb-2 text-2xl leading-none tracking-tight text-black opacity-0 max-[1025px]:text-xl max-md:mb-1 max-md:text-lg"
+                  className="mb-2 text-2xl leading-none tracking-tight text-black opacity-0 max-lg:text-xl max-md:mb-1 max-md:text-lg"
                 >
                   {number}
                 </div>
@@ -895,15 +870,13 @@ export function InfinitePerspectiveSliderComp({
                   ref={(element) => {
                     imageRefs.current[index] = element;
                   }}
-                  className="relative h-[50vh] w-full overflow-hidden bg-white max-[1025px]:h-[45vh] max-md:h-[40vh]"
+                  className="relative h-[50vh] w-full overflow-hidden bg-white max-lg:h-[45vh] max-md:h-[40vh]"
                 >
                   {src ? (
-                    <Image
-                      fill
-                      sizes="(max-width: 640px) 240px, (max-width: 1025px) 380px, 320px"
+                    <img
                       src={src}
                       alt={`slide-${index}`}
-                      className="object-cover"
+                      className="absolute inset-0 h-full w-full object-cover"
                       draggable={false}
                     />
                   ) : null}
@@ -914,7 +887,7 @@ export function InfinitePerspectiveSliderComp({
                     ref={(element) => {
                       titleRefs.current[index] = element;
                     }}
-                    className="text-xl uppercase leading-none tracking-[0.04em] text-black opacity-0 max-[1025px]:text-lg max-md:text-base"
+                    className="text-xl uppercase leading-none tracking-[0.04em] text-black opacity-0 max-lg:text-lg max-md:text-base"
                   >
                     {title}
                   </div>
@@ -923,7 +896,7 @@ export function InfinitePerspectiveSliderComp({
                     ref={(element) => {
                       descriptionRefs.current[index] = element;
                     }}
-                    className="text-sm leading-none text-black/70 opacity-0 max-[1025px]:text-xs max-md:text-xs"
+                    className="text-sm leading-none text-black/70 opacity-0 max-lg:text-xs max-md:text-xs"
                   >
                     {desc || description || ""}
                   </div>

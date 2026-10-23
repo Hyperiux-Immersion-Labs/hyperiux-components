@@ -348,7 +348,7 @@ function InteractiveListPreviewComp({
   return (
     <>
       <div
-        className="relative min-h-[50vh] w-full overflow-hidden bg-neutral-900 font-mono text-white max-[1025px]:hidden"
+        className="relative min-h-[50vh] w-full overflow-hidden bg-neutral-900 font-mono text-white max-lg:hidden"
         onMouseMove={onMouseMove}
       >
         <div
@@ -426,22 +426,22 @@ function InteractiveListPreviewComp({
         </div>
       </div>
 
-      <div className="hidden w-full bg-neutral-900 font-mono text-white max-[1025px]:block">
+      <div className="hidden w-full bg-neutral-900 font-mono text-white max-lg:block">
         {items.map((item: any, index: number) => (
           <div key={`${item.client}-${index}`} className="flex border-b border-white/10">
             <div className="flex w-1/2 flex-col justify-between gap-3 p-4">
               <div className="flex flex-col gap-1">
-                <p className="font-bold uppercase tracking-widest max-md:text-sm max-[1025px]:text-xl">
+                <p className="font-bold uppercase tracking-widest max-md:text-sm max-lg:text-xl">
                   {item.client}
                 </p>
 
                 {item.platform && (
-                  <p className="uppercase tracking-widest text-white/60 max-md:text-xs max-[1025px]:text-lg">
+                  <p className="uppercase tracking-widest text-white/60 max-md:text-xs max-lg:text-lg">
                     {item.platform}
                   </p>
                 )}
 
-                <p className="leading-relaxed text-white/50 max-md:text-xs max-[1025px]:text-base">
+                <p className="leading-relaxed text-white/50 max-md:text-xs max-lg:text-base">
                   {item.services}
                 </p>
               </div>
@@ -449,7 +449,7 @@ function InteractiveListPreviewComp({
              
             </div>
 
-            <div className="relative aspect-3/4 h-full w-1/2 max-[1025px]:h-[30vh]">
+            <div className="relative aspect-3/4 h-full w-1/2 max-lg:h-[30vh]">
               <img
                 src={item.img}
                 alt={item.client}
@@ -473,10 +473,10 @@ const InteractiveListPreview = ({
 }: InteractiveListPreviewProps) => {
   return (
     <>
-      <div className='flex items-center flex-col gap-20 max-md:gap-20 max-md:py-[15%] max-[1025px]:py-[10%] justify-center h-screen max-[1025px]:h-full bg-neutral-900'>
+      <div className='flex items-center flex-col gap-20 max-md:gap-20 max-md:py-[15%] max-lg:py-[10%] justify-center h-screen max-lg:h-full bg-neutral-900'>
 
-        <div className='text-center space-y-[1vw] max-[1025px]:space-y-[4vw]'>
-          <h2 className='font-mono text-[3vw] max-[1025px]:text-center  max-md:px-10  text-white max-[1025px]:text-5xl max-md:text-4xl capitalize'>
+        <div className='text-center space-y-[1vw] max-lg:space-y-[4vw]'>
+          <h2 className='font-mono text-[3vw] max-lg:text-center  max-md:px-10  text-white max-lg:text-5xl max-md:text-4xl capitalize'>
             Elevating interaction through motion
           </h2>
           <p>

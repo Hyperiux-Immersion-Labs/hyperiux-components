@@ -3,7 +3,6 @@
 
 import React, { useEffect, useRef, useState, type ComponentPropsWithoutRef, type ComponentType, type CSSProperties, type MouseEventHandler, type PointerEvent, type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 
 const DEFAULT_TEXT = "Hover me";
 const DEFAULT_HREF = "#";
@@ -56,7 +55,7 @@ export interface ScrambleLinkButtonOwnProps {
   href?: string;
   className?: string;
   textClassName?: string;
-  linkProps?: Partial<ComponentPropsWithoutRef<typeof Link>>;
+  linkProps?: Partial<ComponentPropsWithoutRef<"a">>;
   children?: ReactNode;
   textColor?: string;
   hoverColor?: string;
@@ -71,7 +70,7 @@ export interface ScrambleLinkButtonOwnProps {
   onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
-export type ScrambleLinkButtonProps = ScrambleLinkButtonOwnProps & Omit<ComponentPropsWithoutRef<typeof Link>, 'href' | 'onClick' | keyof ScrambleLinkButtonOwnProps>;
+export type ScrambleLinkButtonProps = ScrambleLinkButtonOwnProps & Omit<ComponentPropsWithoutRef<"a">, 'href' | 'onClick' | keyof ScrambleLinkButtonOwnProps>;
 
 export default function ScrambleLinkButton({
   text = DEFAULT_TEXT,
@@ -98,7 +97,6 @@ export default function ScrambleLinkButton({
   const [isCompactLayout, setIsCompactLayout] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
 
-  // Derived values
   const finalText = typeof children === "string" ? children : text;
   const activeTextStyle =
     isCompactLayout && isPressed ? { color: hoverColor } : undefined;
@@ -111,12 +109,10 @@ export default function ScrambleLinkButton({
   }`;
 
   useEffect(() => {
-    // Text sync
     if (scrambleRef.current) {
       scrambleRef.current.textContent = finalText;
     }
 
-    // Cleanup
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -209,7 +205,7 @@ export default function ScrambleLinkButton({
   };
 
   return (
-    <Link
+    <a
       href={href}
       {...linkProps}
       {...props}
@@ -219,7 +215,7 @@ export default function ScrambleLinkButton({
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerCancel}
-      className={`group inline-flex w-fit items-center gap-2 cursor-pointer text-[1.1vw] ${textColor ? "text-(--scramble-text-color)" : "text-inherit"} no-underline transition-colors duration-350 ease-in-out motion-reduce:transition-none hover:text-(--scramble-hover-color) group-data-[pressed=true]:text-(--scramble-hover-color) max-[1025px]:text-[3vw] max-md:text-[4.2vw] ${className}`}
+      className={`group inline-flex w-fit items-center gap-2 cursor-pointer text-[1.1vw] ${textColor ? "text-(--scramble-text-color)" : "text-inherit"} no-underline transition-colors duration-350 ease-in-out motion-reduce:transition-none hover:text-(--scramble-hover-color) group-data-[pressed=true]:text-(--scramble-hover-color) max-lg:text-[3vw] max-md:text-[4.2vw] ${className}`}
       style={{ "--scramble-hover-color": hoverColor, ...(textColor ? { "--scramble-text-color": textColor } : {}) } as CSSProperties & Record<string, string>}
     >
       <span className={innerClassName} style={activeLineStyle}>
@@ -245,6 +241,6 @@ export default function ScrambleLinkButton({
           <Icon className="transition-transform duration-300 ease-in-out motion-reduce:rotate-0 motion-reduce:transition-none motion-safe:group-hover:-rotate-45 motion-safe:group-data-[pressed=true]:-rotate-45" />
         </span>
       )}
-    </Link>
+    </a>
   );
 }

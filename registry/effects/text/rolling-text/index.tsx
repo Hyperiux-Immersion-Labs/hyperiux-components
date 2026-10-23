@@ -120,7 +120,7 @@ const RollingText = ({
       <h3
         aria-label={text}
         style={{ color: textColor, fontFamily: FONT_FAMILY }}
-        className="relative z-10 m-0 text-9xl max-[1025px]:text-6xl max-md:text-5xl font-light! leading-[0.8]! tracking-[0.02em] whitespace-nowrap select-none"
+        className="relative z-10 m-0 text-9xl max-lg:text-6xl max-md:text-5xl font-light! leading-[0.8]! tracking-[0.02em] whitespace-nowrap select-none"
       >
         {text.split("").map((char, charIndex) => {
           if (char === " ") {

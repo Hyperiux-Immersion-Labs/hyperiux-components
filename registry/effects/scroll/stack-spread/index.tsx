@@ -2,7 +2,6 @@
 
 "use client";
 
-import Image from "next/image";
 import {
   motion,
   useScroll,
@@ -30,7 +29,6 @@ const IMG = {
   stripes: `${IMG_BASE}/stackspread8/1600/1200`,
 } as const;
 
-// per-image rest scale, keyed by img index (1-8). default 1, drop below to shrink.
 const SCALE: Partial<Record<number, number>> = {
   1: 0.9,
   2: 0.8,
@@ -43,9 +41,7 @@ const SCALE: Partial<Record<number, number>> = {
 };
 const s = (i: number) => SCALE[i] ?? 1;
 
-// array order = stack order, back (z 2) -> front (z 9)
 const CARDS: StackSpreadCard[] = [
-  // top-left stripes (img08) - sm row 1 left
   {
     item: { src: IMG.stripes, alt: "Colour stripes" },
     stackOffset: { x: -8, y: -10 },
@@ -54,7 +50,6 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: -22, y: -40 },
     z: 2,
   },
-  // top-right meadow (img07) - sm row 1 right
   {
     item: { src: IMG.meadow, alt: "Wildflower meadow" },
     stackOffset: { x: 14, y: -10 },
@@ -63,7 +58,6 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: 22, y: -40 },
     z: 3,
   },
-  // mid-left jacket (img06) - sm row 2 left
   {
     item: { src: IMG.jacket, alt: "Figure in a leather jacket" },
     stackOffset: { x: -16, y: 0 },
@@ -72,7 +66,6 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: -22, y: -19 },
     z: 4,
   },
-  // top-centre footballer (img05) - sm row 2 right
   {
     item: { src: IMG.footballer, alt: "Footballer mid-kick" },
     stackOffset: { x: 1, y: -10 },
@@ -81,7 +74,6 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: 22, y: -19 },
     z: 5,
   },
-  // mid-right dog (img04) - sm row 3 left
   {
     item: { src: IMG.dog, alt: "Terrier in profile" },
     stackOffset: { x: 18, y: 1 },
@@ -90,7 +82,6 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: -22, y: 20 },
     z: 6,
   },
-  // bottom-left breaker (img03) - sm row 3 right
   {
     item: { src: IMG.breaker, alt: "Breakdancer holding a pose" },
     stackOffset: { x: -6, y: 10 },
@@ -99,7 +90,6 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: 22, y: 20 },
     z: 7,
   },
-  // bottom-centre painting (img02) - sm row 4 left
   {
     item: { src: IMG.painting, alt: "Renaissance fresco detail" },
     stackOffset: { x: 8, y: 7 },
@@ -108,7 +98,6 @@ const CARDS: StackSpreadCard[] = [
     targetSm: { x: -22, y: 40 },
     z: 8,
   },
-  // bottom-right plane (img01) - sm row 4 right
   {
     item: { src: IMG.plane, alt: "Vintage fighter plane" },
     stackOffset: { x: 20, y: 12 },
@@ -119,11 +108,7 @@ const CARDS: StackSpreadCard[] = [
   },
 ];
 
-// ---------------------------------------------------------------------------
-// Mechanism
-// ---------------------------------------------------------------------------
 
-// Scroll progress where the cluster starts scattering and where it finishes.
 const SCATTER_START = 0.12;
 const SCATTER_END = 0.9;
 
@@ -133,7 +118,6 @@ const PARALLAX_SPRING = { stiffness: 90, damping: 22, mass: 0.6 };
 const parallaxDepth = (i: number, total: number) =>
   total <= 1 ? 1 : 0.55 + (i / (total - 1)) * 0.75;
 
-// Deterministic pseudo-random in [0, 1) - keeps SSR and client in sync.
 const rand = (seed: number) => {
   const v = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
   return v - Math.floor(v);
@@ -228,13 +212,9 @@ export interface StackSpreadTarget {
 export interface StackSpreadCard {
   item: StackSpreadItem;
   target: StackSpreadTarget;
-  /** final x/y (vw/vh) for tablet + mobile; falls back to `target` */
   targetSm?: { x: number; y: number };
-  /** angle while clustered */
   stackRotate?: number;
-  /** offset while clustered (vw/vh) */
   stackOffset?: { x: number; y: number };
-  /** paint order, higher on top */
   z?: number;
 }
 
@@ -257,18 +237,14 @@ function Card({
   progress: MotionValue<number>;
   reduce: boolean | null;
   clusterRotation: boolean;
-  /** uniform rest-scale for every card; null = use each card's own scale */
   scaleMul: number | null;
   isSmall: boolean;
   colX: number | null;
   fixedCard: { w: number; h: number } | null;
-  /** scale of the cards while clustered, before the scatter */
   stackScale: number;
-  /** corner radius on each card, in px (desktop) */
   cardRadius: number;
   pointer: { x: MotionValue<number>; y: MotionValue<number> };
   depth: number;
-  /** signed per-axis pointer response, so each card drifts its own way */
   drift: { x: number; y: number };
 }) {
   const { item, target } = card;
@@ -278,7 +254,6 @@ function Card({
   const stackOffset = card.stackOffset ?? { x: 0, y: 0 };
   const restScale = scaleMul ?? target.scale ?? 1;
 
-  // final resting spot: column grid on small screens, scatter on desktop
   const sm = isSmall && card.targetSm ? card.targetSm : null;
   const endX = sm
     ? colX != null
@@ -288,7 +263,6 @@ function Card({
   const endY = sm ? sm.y : target.y;
   const endRotate = flat || isSmall ? 0 : target.rotate;
 
-  // -50% keeps card centred on its anchor
   const translate = useTransform(
     [progress, pointer.x, pointer.y],
     ([p, px, py]: number[]) => {
@@ -332,12 +306,10 @@ function CardFace({
       className="relative h-full w-full overflow-hidden max-md:rounded-[4vw]"
       style={{ borderRadius: `${cardRadius}px` }}
     >
-      <Image
+      <img
         src={item.src}
         alt={item.alt ?? ""}
-        fill
-        sizes="(max-width: 1025px) 40vw, 25vw"
-        className="object-cover"
+        className="absolute inset-0 h-full w-full object-cover"
         draggable={false}
       />
     </div>
@@ -346,18 +318,12 @@ function CardFace({
 
 interface StackSpreadStageProps {
   cards: StackSpreadCard[];
-  /** scatter scroll distance, in vh */
   scrollLength?: number;
   bgColor?: string;
-  /** fan the clustered stack (default) or start flat */
   clusterRotation?: boolean;
-  /** scale of the cards while clustered, before the scatter */
   stackScale?: number;
-  /** corner radius on each card, in px (desktop only - mobile keeps its responsive radius) */
   cardRadius?: number;
-  /** color of the centre headline and subtitle */
   textColor?: string;
-  /** scroll progress (0-1) where the centre text starts fading in */
   textFadeStart?: number;
 }
 
@@ -381,15 +347,12 @@ function StackSpreadStage({
     offset: ["start start", "end end"],
   });
 
-  // hold, scatter, then settle
   const progress = useTransform(
     scrollYProgress,
     [0, SCATTER_START, SCATTER_END, 1],
     [0, 0, 1, 1],
   );
 
-  // centre text always fades in on scroll; the scale-in is dropped only when
-  // reduced motion is confirmed (`true`), not on the null SSR value.
   const [spread, setSpread] = useState(false);
   useMotionValueEvent(progress, "change", (p) => {
     setSpread((was) => (was ? p > 0.985 : p >= 0.999));
@@ -408,7 +371,6 @@ function StackSpreadStage({
       style={{ height: `${scrollLength}vh`, backgroundColor: bgColor }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* centre text */}
         <motion.div
           className="pointer-events-none absolute inset-0 z-5 flex flex-col items-center justify-center px-6 text-center max-md:px-8"
           style={{
@@ -436,7 +398,6 @@ function StackSpreadStage({
           </p>
         </motion.div>
 
-        {/* scattering cards */}
         <div className="absolute inset-0 z-10">
           {cards.map((card, i) => (
             <Card
@@ -464,18 +425,12 @@ function StackSpreadStage({
 
 
 export interface StackSpreadProps {
-  /** scatter scroll distance, in vh */
   scrollLength?: number;
   bgColor?: string;
-  /** fan the clustered stack (default) or start flat */
   clusterRotation?: boolean;
-  /** scale of the cards while clustered, before the scatter */
   stackScale?: number;
-  /** corner radius on each card, in px (desktop only - mobile keeps its responsive radius) */
   cardRadius?: number;
-  /** color of the centre headline and subtitle */
   textColor?: string;
-  /** scroll progress (0-1) where the centre text starts fading in */
   textFadeStart?: number;
 }
 

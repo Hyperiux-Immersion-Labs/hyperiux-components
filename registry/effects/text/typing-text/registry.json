@@ -353,6 +353,17 @@
         "group": "cursor",
         "groupTitle": "Cursor"
       }
+    },
+    {
+      "name": "lines",
+      "type": "string[]",
+      "default": [
+        "Opening the vault handshake...",
+        "Verifying encrypted component keys.",
+        "Loading protected motion presets.",
+        "Vault access granted. Hyperiux assets are ready."
+      ],
+      "description": "Lines to type, one string per line."
     }
   ],
   "remixer": {

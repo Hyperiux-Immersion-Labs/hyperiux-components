@@ -354,6 +354,12 @@
         "enabled": false,
         "groupTitle": "Colors"
       }
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "default": "Motion Makes Spaces Move",
+      "description": "Text to animate; use \\n for line breaks with splitBy lines."
     }
   ],
   "remixer": {

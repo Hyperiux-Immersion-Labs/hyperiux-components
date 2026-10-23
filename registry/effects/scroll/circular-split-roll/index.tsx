@@ -7,7 +7,7 @@ import { ReactLenis } from "lenis/react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const DESKTOP_WIDTH = 1200;
-const TABLET_MIN_WIDTH = 768;
+const TABLET_MIN_WIDTH = 1025;
 
 const LEFT_DEPTH_MAX = 30;
 const RIGHT_DEPTH_MAX = 40;
@@ -78,7 +78,6 @@ interface CircularSplitRollCompProps {
   imageCardWidth?: number;
   imageCardHeight?: number;
   titleSize?: string;
-  pinSpacing?: boolean;
   scrub?: number;
   textCenterScale?: number;
   textSideScale?: number;
@@ -111,7 +110,6 @@ export function CircularSplitRollComp({
   imageCardHeight = 210,
   titleSize = "clamp(28px, 3vw, 56px)",
 
-  pinSpacing = true,
   scrub = 1.2,
 
   textCenterScale = 1,
@@ -134,7 +132,6 @@ export function CircularSplitRollComp({
   gridTitleClassName = "",
 }: CircularSplitRollCompProps) {
   const rootRef = useRef<HTMLElement | null>(null);
-  const stickyRef = useRef<HTMLDivElement | null>(null);
   const progressRef = useRef(0);
 
   const safeItems = useMemo(() => {
@@ -147,11 +144,11 @@ export function CircularSplitRollComp({
   }, [items]);
 
   useEffect(() => {
-    if (!rootRef.current || !stickyRef.current) return;
+    if (!rootRef.current) return;
 
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 769px)", () => {
+    mm.add("(min-width: 1025px)", () => {
       const ctx = gsap.context(() => {
         const leftNodes = gsap.utils.toArray(
           ".circular-scroll-showcase__left-item"
@@ -287,10 +284,8 @@ export function CircularSplitRollComp({
         const scrollTrigger = ScrollTrigger.create({
           trigger: rootRef.current,
           start: "top top",
-          end: `+=${sectionHeight * safeItems.length}%`,
-          pin: stickyRef.current,
+          end: "bottom bottom",
           scrub,
-          pinSpacing,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             render(self.progress);
@@ -317,7 +312,6 @@ export function CircularSplitRollComp({
   }, [
     safeItems,
     scrub,
-    pinSpacing,
     sectionHeight,
     leftRadiusX,
     leftRadiusY,
@@ -342,16 +336,16 @@ export function CircularSplitRollComp({
   return (
     <section
       ref={rootRef}
-      className={`relative min-h-screen w-full overflow-clip bg-black text-white ${className}`}
+      className={`relative h-[calc(100vh+var(--css-scroll-distance))] min-h-screen w-full overflow-clip bg-black text-white max-lg:h-auto ${className}`}
       style={{
         "--css-title-size": titleSize,
+        "--css-scroll-distance": `${sectionHeight * safeItems.length}vh`,
         "--css-card-width": `${imageCardWidth}px`,
         "--css-card-height": `${imageCardHeight}px`,
       } as React.CSSProperties & Record<string, string | number>}
     >
       <div
-        ref={stickyRef}
-        className="relative h-screen w-full overflow-hidden max-[1025px]:hidden"
+        className="sticky top-0 h-screen w-full overflow-hidden max-lg:hidden"
       >
         <div className="relative mx-auto flex h-full w-full">
           <div className="relative flex h-full w-[50vw] translate-x-[-60%] items-center justify-center">
@@ -389,7 +383,7 @@ export function CircularSplitRollComp({
         </div>
       </div>
 
-      <div className="hidden w-full px-5 py-10 max-[1025px]:block max-md:px-4 max-md:py-8">
+      <div className="hidden w-full px-5 py-10 max-lg:block max-md:px-4 max-md:py-8">
         <div className="mx-auto grid w-full max-w-5xl grid-cols-3 gap-5 max-md:grid-cols-2 max-md:gap-4">
           {safeItems.map((item) => (
             <article

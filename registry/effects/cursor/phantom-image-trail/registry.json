@@ -235,6 +235,24 @@
         "max": 4,
         "step": 0.1
       }
+    },
+    {
+      "name": "images",
+      "type": "object[]",
+      "default": null,
+      "description": "Trail images as URL strings or { src, alt? } objects; empty falls back to built-in set."
+    },
+    {
+      "name": "cursorOffsetX",
+      "type": "number",
+      "default": -12,
+      "description": "Horizontal offset of spawned images from the cursor, in pixels."
+    },
+    {
+      "name": "cursorOffsetY",
+      "type": "number",
+      "default": -12,
+      "description": "Vertical offset of spawned images from the cursor, in pixels."
     }
   ],
   "remixer": {

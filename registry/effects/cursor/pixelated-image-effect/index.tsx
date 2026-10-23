@@ -249,11 +249,11 @@ export default function PixelatedImageEffect({
   return (
     <div className="relative flex h-dvh w-dvw pt-6 flex-col gap-15 items-center justify-center">
 
-      <h1 className="text-5xl text-center max-[1025px]:hidden w-[45%] mt-10">
+      <h1 className="text-5xl text-center max-lg:hidden w-[45%] mt-10">
         Move cursor left in the image block for a clear image, right for more pixelation.
       </h1>
 
-      <h2 className="hidden max-[1025px]:block  w-[60%] text-center mx-auto text-2xl">
+      <h2 className="hidden max-lg:block  w-[60%] text-center mx-auto text-2xl">
         Click left in image block for clear image, right for more pixelated
 
       </h2>
@@ -266,7 +266,7 @@ export default function PixelatedImageEffect({
 
       <div
         ref={imageRef}
-        className="relative h-[55vh] w-full max-md:max-w-[90%] overflow-hidden max-[1025px]:max-w-[90%] max-w-lg touch-none"
+        className="relative h-[55vh] w-full max-md:max-w-[90%] overflow-hidden max-lg:max-w-[90%] max-w-lg touch-none"
         style={{ filter: `url(#${pixelateFilterId})` }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -276,7 +276,7 @@ export default function PixelatedImageEffect({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={resolvedSrc}
-          alt=""
+          alt="pixelates-image"
           className={`object-cover absolute inset-0 ${imageClassName}`.trim()}
         />
       </div>
