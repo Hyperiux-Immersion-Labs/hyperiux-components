@@ -1,0 +1,385 @@
+{
+  "name": "animated-chat-bubble",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-10-23",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Animated Chat Bubble",
+  "description": "Chat bubbles with streaming replies, reactions and swipe to reply.",
+  "category": "components",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "lucide-react",
+    "motion",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/animated-chat-bubble",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "AnimatedChatBubble",
+  "exportKind": "default",
+  "importPath": "@/components/effects/animated-chat-bubble",
+  "target": "src/components/effects/animated-chat-bubble",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/animated-chat-bubble/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "theme",
+      "label": "Theme",
+      "type": "string",
+      "default": "valorant",
+      "description": "Colour palette. Sent bubbles take its primary colour, replies its muted colour.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Default",
+            "value": "default"
+          },
+          {
+            "label": "Caffeine",
+            "value": "caffeine"
+          },
+          {
+            "label": "Claude",
+            "value": "claude"
+          },
+          {
+            "label": "Ghibli",
+            "value": "ghibli"
+          },
+          {
+            "label": "Spotify",
+            "value": "spotify"
+          },
+          {
+            "label": "Valorant",
+            "value": "valorant"
+          },
+          {
+            "label": "Vscode",
+            "value": "vscode"
+          }
+        ]
+      }
+    },
+    {
+      "name": "mode",
+      "label": "Mode",
+      "type": "string",
+      "default": "dark",
+      "description": "Light or dark version of the chosen palette.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Light",
+            "value": "light"
+          },
+          {
+            "label": "Dark",
+            "value": "dark"
+          }
+        ]
+      }
+    },
+    {
+      "name": "animateEnter",
+      "label": "Animate enter",
+      "type": "boolean",
+      "default": true,
+      "description": "New messages slide and fade in as they arrive.",
+      "remixer": {
+        "hideWhenReducedMotion": true,
+        "control": "checkbox",
+        "group": "arriving",
+        "groupTitle": "Arriving"
+      }
+    },
+    {
+      "name": "typing",
+      "label": "Typing indicator",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows typing dots before each reply appears.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "arriving",
+        "groupTitle": "Arriving"
+      }
+    },
+    {
+      "name": "streamText",
+      "label": "Stream text",
+      "type": "boolean",
+      "default": false,
+      "description": "Replies type themselves out word by word.",
+      "remixer": {
+        "hideWhenReducedMotion": true,
+        "control": "checkbox",
+        "group": "arriving",
+        "groupTitle": "Arriving"
+      }
+    },
+    {
+      "name": "flyIn",
+      "label": "Fly from input",
+      "type": "boolean",
+      "default": true,
+      "description": "A sent message flies up from the input box into the chat.",
+      "remixer": {
+        "hideWhenReducedMotion": true,
+        "control": "checkbox",
+        "group": "sending",
+        "groupTitle": "Sending"
+      }
+    },
+    {
+      "name": "showDeliveryStatus",
+      "label": "Show delivery status",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows sending, sent and failed under your messages.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "sending",
+        "groupTitle": "Sending"
+      }
+    },
+    {
+      "name": "shakeOnError",
+      "label": "Shake on error",
+      "type": "boolean",
+      "default": true,
+      "description": "A message that fails to send shakes. Needs Simulate failures on.",
+      "remixer": {
+        "hideWhenReducedMotion": true,
+        "control": "checkbox",
+        "group": "sending",
+        "groupTitle": "Sending",
+        "disabledWhen": {
+          "prop": "simulateFailures",
+          "equals": false
+        }
+      }
+    },
+    {
+      "name": "simulateFailures",
+      "label": "Simulate failures",
+      "type": "boolean",
+      "default": true,
+      "description": "Some sends fail at random, to preview the error state.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "sending",
+        "groupTitle": "Sending"
+      }
+    },
+    {
+      "name": "popOnChange",
+      "label": "Pop on change",
+      "type": "boolean",
+      "default": true,
+      "description": "Reaction pills pop in and out as they change.",
+      "remixer": {
+        "hideWhenReducedMotion": true,
+        "control": "checkbox",
+        "group": "reactions",
+        "groupTitle": "Reactions"
+      }
+    },
+    {
+      "name": "rollingNumbers",
+      "label": "Rolling numbers",
+      "type": "boolean",
+      "default": true,
+      "description": "Reaction counts roll to their new number.",
+      "remixer": {
+        "hideWhenReducedMotion": true,
+        "control": "checkbox",
+        "group": "reactions",
+        "groupTitle": "Reactions"
+      }
+    },
+    {
+      "name": "doubleClickToReact",
+      "label": "Double click to react",
+      "type": "boolean",
+      "default": true,
+      "description": "Double-clicking a bubble adds a heart, or takes it off again.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "reactions",
+        "groupTitle": "Reactions"
+      }
+    },
+    {
+      "name": "showReactionPicker",
+      "label": "Show reaction picker",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows a row of emoji to react with on each bubble.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "reactions",
+        "groupTitle": "Reactions"
+      }
+    },
+    {
+      "name": "magnifyEmojis",
+      "label": "Magnify emojis",
+      "type": "boolean",
+      "default": true,
+      "description": "Emoji in the picker grow as the pointer passes over them. Needs Show reaction picker on.",
+      "remixer": {
+        "hideWhenReducedMotion": true,
+        "control": "checkbox",
+        "group": "reactions",
+        "groupTitle": "Reactions",
+        "disabledWhen": {
+          "prop": "showReactionPicker",
+          "equals": false
+        }
+      }
+    },
+    {
+      "name": "liftOnHover",
+      "label": "Lift on hover",
+      "type": "boolean",
+      "default": true,
+      "description": "Bubbles rise slightly on hover and press in on click.",
+      "remixer": {
+        "hideWhenReducedMotion": true,
+        "control": "checkbox",
+        "group": "interaction",
+        "groupTitle": "Interaction"
+      }
+    },
+    {
+      "name": "selectable",
+      "label": "Selectable text",
+      "type": "boolean",
+      "default": true,
+      "description": "Lets message text be selected and copied.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "interaction",
+        "groupTitle": "Interaction"
+      }
+    },
+    {
+      "name": "swipeToReply",
+      "label": "Swipe to reply",
+      "type": "boolean",
+      "default": true,
+      "description": "Drag a bubble sideways to reply to it.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "interaction",
+        "groupTitle": "Interaction"
+      }
+    },
+    {
+      "name": "showSuggestions",
+      "label": "Show suggestions",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows suggested replies you can tap to send.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "interaction",
+        "groupTitle": "Interaction"
+      }
+    },
+    {
+      "name": "collapsible",
+      "label": "Collapsible",
+      "type": "boolean",
+      "default": true,
+      "description": "Long messages are clipped with a Show more toggle.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "interaction",
+        "groupTitle": "Interaction"
+      }
+    },
+    {
+      "name": "joined",
+      "label": "Joined corners",
+      "type": "boolean",
+      "default": true,
+      "description": "Bubbles in a run from the same person share tighter corners.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "grouping",
+        "groupTitle": "Grouping"
+      }
+    },
+    {
+      "name": "sendStyle",
+      "label": "Sent bubble style",
+      "type": "string",
+      "default": "default",
+      "description": "Look of the messages you send.",
+      "remixer": {
+        "control": "select",
+        "group": "grouping",
+        "groupTitle": "Grouping",
+        "options": [
+          {
+            "label": "Default",
+            "value": "default"
+          },
+          {
+            "label": "Secondary",
+            "value": "secondary"
+          },
+          {
+            "label": "Muted",
+            "value": "muted"
+          },
+          {
+            "label": "Tinted",
+            "value": "tinted"
+          },
+          {
+            "label": "Outline",
+            "value": "outline"
+          },
+          {
+            "label": "Ghost",
+            "value": "ghost"
+          },
+          {
+            "label": "Destructive",
+            "value": "destructive"
+          }
+        ]
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "layout": "panel",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}

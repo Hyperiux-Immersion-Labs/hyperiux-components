@@ -1,0 +1,594 @@
+{
+  "name": "animated-data-table",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-10-23",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Animated Data Table",
+  "description": "Sort, filter, select and reorder rows that glide into place.",
+  "category": "components",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "gsap",
+    "lucide-react",
+    "motion",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/animated-data-table",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "AnimatedDataTable",
+  "exportKind": "default",
+  "importPath": "@/components/effects/animated-data-table",
+  "target": "src/components/effects/animated-data-table",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/animated-data-table/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "theme",
+      "label": "Theme",
+      "type": "string",
+      "default": "ghibli",
+      "description": "Colour palette for the table, its menus and the action bar. Selected rows and primary buttons take its primary colour.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Default",
+            "value": "default"
+          },
+          {
+            "label": "Caffeine",
+            "value": "caffeine"
+          },
+          {
+            "label": "Claude",
+            "value": "claude"
+          },
+          {
+            "label": "Ghibli",
+            "value": "ghibli"
+          },
+          {
+            "label": "Spotify",
+            "value": "spotify"
+          },
+          {
+            "label": "Valorant",
+            "value": "valorant"
+          },
+          {
+            "label": "Vscode",
+            "value": "vscode"
+          }
+        ]
+      }
+    },
+    {
+      "name": "mode",
+      "label": "Mode",
+      "type": "string",
+      "default": "dark",
+      "description": "Light or dark version of the palette. Starts dark.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Light",
+            "value": "light"
+          },
+          {
+            "label": "Dark",
+            "value": "dark"
+          }
+        ]
+      }
+    },
+    {
+      "name": "staggerRows",
+      "label": "Stagger rows",
+      "type": "boolean",
+      "default": true,
+      "description": "Rows appear one after another when the table loads or changes.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "entrance",
+        "groupTitle": "Entrance",
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "staggerCells",
+      "label": "Stagger cells",
+      "type": "boolean",
+      "default": false,
+      "description": "Cells inside each row also appear one after another.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "entrance",
+        "groupTitle": "Entrance",
+        "disabledWhen": {
+          "prop": "staggerRows",
+          "equals": false
+        },
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "numberAnimation",
+      "label": "Number animation",
+      "type": "string",
+      "default": "roll",
+      "description": "How numbers change: roll digit by digit, count up, or switch instantly.",
+      "remixer": {
+        "control": "select",
+        "group": "entrance",
+        "groupTitle": "Entrance",
+        "options": [
+          {
+            "label": "Roll",
+            "value": "roll"
+          },
+          {
+            "label": "Count up",
+            "value": "on"
+          },
+          {
+            "label": "Off",
+            "value": "off"
+          }
+        ],
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "duration",
+      "label": "Duration",
+      "type": "number",
+      "default": 0.4,
+      "description": "How long each animation takes, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0.1,
+        "max": 1,
+        "step": 0.05,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "stagger",
+      "label": "Stagger",
+      "type": "number",
+      "default": 0.04,
+      "description": "Delay between each row or cell appearing, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0,
+        "max": 0.15,
+        "step": 0.01,
+        "disabledWhen": {
+          "prop": "staggerRows",
+          "equals": false
+        },
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "rowHighlight",
+      "label": "Row highlight",
+      "type": "string",
+      "default": "slide",
+      "description": "How the hover highlight moves between rows: slides, fills from the top, or none.",
+      "remixer": {
+        "control": "select",
+        "group": "hover",
+        "groupTitle": "Hover",
+        "options": [
+          {
+            "label": "Slide",
+            "value": "slide"
+          },
+          {
+            "label": "Fill from top",
+            "value": "fill"
+          },
+          {
+            "label": "None",
+            "value": "none"
+          }
+        ],
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "rowHighlightColor",
+      "label": "Row highlight color",
+      "type": "string",
+      "default": "primary",
+      "description": "Colour of the row highlight: soft grey or the theme's primary colour.",
+      "remixer": {
+        "control": "select",
+        "group": "hover",
+        "groupTitle": "Hover",
+        "options": [
+          {
+            "label": "Muted",
+            "value": "muted"
+          },
+          {
+            "label": "Primary",
+            "value": "primary"
+          }
+        ],
+        "disabledWhen": {
+          "prop": "rowHighlight",
+          "equals": "none"
+        }
+      }
+    },
+    {
+      "name": "rollingText",
+      "label": "Rolling text",
+      "type": "boolean",
+      "default": false,
+      "description": "Header and button labels roll to a second copy on hover.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "hover",
+        "groupTitle": "Hover",
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "showStatusFilter",
+      "label": "Show status filter",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows the status filter above the table.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "data",
+        "groupTitle": "Data"
+      }
+    },
+    {
+      "name": "highlightTotal",
+      "label": "Highlight total",
+      "type": "boolean",
+      "default": false,
+      "description": "Highlights the total figure in the footer.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "data",
+        "groupTitle": "Data"
+      }
+    },
+    {
+      "name": "showPagination",
+      "label": "Show pagination",
+      "type": "boolean",
+      "default": false,
+      "description": "Splits the rows into pages with next and previous buttons.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "data",
+        "groupTitle": "Data"
+      }
+    },
+    {
+      "name": "selectable",
+      "label": "Row checkboxes",
+      "type": "boolean",
+      "default": false,
+      "description": "Adds a checkbox to every row.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "selection",
+        "groupTitle": "Selection"
+      }
+    },
+    {
+      "name": "showSelectAll",
+      "label": "Show select all",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows the select-all checkbox in the header. Needs Row checkboxes on.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "selection",
+        "groupTitle": "Selection",
+        "disabledWhen": {
+          "prop": "selectable",
+          "equals": false
+        }
+      }
+    },
+    {
+      "name": "selectMark",
+      "label": "Select mark",
+      "type": "string",
+      "default": "check",
+      "description": "Mark shown in a selected row's checkbox: checkmark or filled circle. Needs Row checkboxes on.",
+      "remixer": {
+        "control": "select",
+        "group": "selection",
+        "groupTitle": "Selection",
+        "options": [
+          {
+            "label": "Checkmark",
+            "value": "check"
+          },
+          {
+            "label": "Filled circle",
+            "value": "circle"
+          }
+        ],
+        "disabledWhen": {
+          "prop": "selectable",
+          "equals": false
+        }
+      }
+    },
+    {
+      "name": "showActionBar",
+      "label": "Show action bar",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows a floating action bar when rows are selected. Needs Row checkboxes on.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "selection",
+        "groupTitle": "Selection",
+        "disabledWhen": {
+          "prop": "selectable",
+          "equals": false
+        }
+      }
+    },
+    {
+      "name": "dragMode",
+      "label": "Drag mode",
+      "type": "boolean",
+      "default": false,
+      "description": "Lets you drag rows up and down to reorder them.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "rows",
+        "groupTitle": "Rows"
+      }
+    },
+    {
+      "name": "showStatusBadges",
+      "label": "Show status badges",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows status as coloured badges instead of plain text.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "rows",
+        "groupTitle": "Rows"
+      }
+    },
+    {
+      "name": "expandable",
+      "label": "Expandable preview",
+      "type": "boolean",
+      "default": false,
+      "description": "Rows open to reveal a preview underneath.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "rows",
+        "groupTitle": "Rows"
+      }
+    },
+    {
+      "name": "removable",
+      "label": "Delete column",
+      "type": "boolean",
+      "default": false,
+      "description": "Adds a button to delete a column.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "rows",
+        "groupTitle": "Rows"
+      }
+    },
+    {
+      "name": "addable",
+      "label": "Add rows",
+      "type": "boolean",
+      "default": true,
+      "description": "Adds a button to add new rows.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "rows",
+        "groupTitle": "Rows"
+      }
+    },
+    {
+      "name": "textAlign",
+      "label": "Text alignment",
+      "type": "string",
+      "default": "left",
+      "description": "Alignment of the text in the cells.",
+      "remixer": {
+        "control": "select",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      }
+    },
+    {
+      "name": "bordered",
+      "label": "Border",
+      "type": "boolean",
+      "default": true,
+      "description": "Draws a border around the table.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "layout",
+        "groupTitle": "Layout"
+      }
+    },
+    {
+      "name": "showHorizontalLines",
+      "label": "Show horizontal lines",
+      "type": "boolean",
+      "default": true,
+      "description": "Draws a line between rows.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "layout",
+        "groupTitle": "Layout"
+      }
+    },
+    {
+      "name": "showVerticalLines",
+      "label": "Show vertical lines",
+      "type": "boolean",
+      "default": true,
+      "description": "Draws a line between columns.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "layout",
+        "groupTitle": "Layout"
+      }
+    },
+    {
+      "name": "showHeaderBorder",
+      "label": "Show header border",
+      "type": "boolean",
+      "default": true,
+      "description": "Draws a line under the header row.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "layout",
+        "groupTitle": "Layout"
+      }
+    },
+    {
+      "name": "boldHeader",
+      "label": "Bold header",
+      "type": "boolean",
+      "default": true,
+      "description": "Makes the header text bold.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "layout",
+        "groupTitle": "Layout"
+      }
+    },
+    {
+      "name": "stickyHeader",
+      "label": "Sticky header",
+      "type": "boolean",
+      "default": true,
+      "description": "Keeps the header in view while the rows scroll.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "layout",
+        "groupTitle": "Layout"
+      }
+    },
+    {
+      "name": "expandFullTable",
+      "label": "Expand full table",
+      "type": "boolean",
+      "default": false,
+      "description": "Grows the table to show every row instead of scrolling inside it.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "layout",
+        "groupTitle": "Layout"
+      }
+    },
+    {
+      "name": "height",
+      "label": "Table height",
+      "type": "number",
+      "default": 40,
+      "description": "Height of the table, as a percentage of the viewport. Ignored when Expand full table is on.",
+      "remixer": {
+        "control": "range",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "min": 20,
+        "max": 100,
+        "step": 5,
+        "disabledWhen": {
+          "prop": "expandFullTable",
+          "equals": true
+        }
+      }
+    },
+    {
+      "name": "stickyFooter",
+      "label": "Sticky last row",
+      "type": "boolean",
+      "default": true,
+      "description": "Keeps the last row pinned at the bottom while the rows scroll.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "layout",
+        "groupTitle": "Layout",
+        "disabledWhen": {
+          "prop": "highlightTotal",
+          "equals": false
+        }
+      }
+    },
+    {
+      "name": "loadingSkeleton",
+      "label": "Loading skeleton",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows shimmering placeholders for a moment before the rows appear.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "layout",
+        "groupTitle": "Layout"
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "layout": "panel",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}

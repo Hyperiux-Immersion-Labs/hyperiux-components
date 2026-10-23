@@ -1,0 +1,431 @@
+{
+  "name": "animated-tooltip",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-10-23",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Animated Tooltip",
+  "description": "A label that follows the pointer or appears on hover.",
+  "category": "components",
+  "dependencies": [
+    "lucide-react",
+    "motion",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/animated-tooltip",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "AnimatedTooltip",
+  "exportKind": "default",
+  "importPath": "@/components/effects/animated-tooltip",
+  "target": "src/components/effects/animated-tooltip",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/animated-tooltip/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "theme",
+      "label": "Theme",
+      "type": "string",
+      "default": "valorant",
+      "description": "Colour palette. The Filled style always uses its primary colour; any theme but Default also tints the Outline style's text and border.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Default",
+            "value": "default"
+          },
+          {
+            "label": "Caffeine",
+            "value": "caffeine"
+          },
+          {
+            "label": "Claude",
+            "value": "claude"
+          },
+          {
+            "label": "Ghibli",
+            "value": "ghibli"
+          },
+          {
+            "label": "Spotify",
+            "value": "spotify"
+          },
+          {
+            "label": "Valorant",
+            "value": "valorant"
+          },
+          {
+            "label": "Vscode",
+            "value": "vscode"
+          }
+        ]
+      }
+    },
+    {
+      "name": "mode",
+      "label": "Mode",
+      "type": "string",
+      "default": "dark",
+      "description": "Light or dark version of the palette. Starts dark.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Light",
+            "value": "light"
+          },
+          {
+            "label": "Dark",
+            "value": "dark"
+          }
+        ]
+      }
+    },
+    {
+      "name": "variant",
+      "label": "Style",
+      "type": "string",
+      "default": "default",
+      "description": "Filled background or an outline.",
+      "remixer": {
+        "control": "select",
+        "group": "look",
+        "groupTitle": "Look",
+        "options": [
+          {
+            "label": "Filled",
+            "value": "default"
+          },
+          {
+            "label": "Outline",
+            "value": "outline"
+          }
+        ]
+      }
+    },
+    {
+      "name": "rounded",
+      "label": "Roundness",
+      "type": "string",
+      "default": "md",
+      "description": "Corner radius of the tooltip.",
+      "remixer": {
+        "control": "select",
+        "group": "look",
+        "groupTitle": "Look",
+        "options": [
+          {
+            "label": "None",
+            "value": "none"
+          },
+          {
+            "label": "sm",
+            "value": "sm"
+          },
+          {
+            "label": "md",
+            "value": "md"
+          },
+          {
+            "label": "lg",
+            "value": "lg"
+          },
+          {
+            "label": "xl",
+            "value": "xl"
+          },
+          {
+            "label": "Full",
+            "value": "full"
+          }
+        ]
+      }
+    },
+    {
+      "name": "follow",
+      "label": "Position",
+      "type": "string",
+      "default": "anchor",
+      "description": "The tooltip trails the cursor, or stays put next to the element.",
+      "remixer": {
+        "control": "select",
+        "group": "position",
+        "groupTitle": "Position",
+        "options": [
+          {
+            "label": "Trails the cursor",
+            "value": "cursor"
+          },
+          {
+            "label": "Sits on the element",
+            "value": "anchor"
+          }
+        ]
+      }
+    },
+    {
+      "name": "side",
+      "label": "Side",
+      "type": "string",
+      "default": "top",
+      "description": "Which side of the element or cursor the tooltip sits on.",
+      "remixer": {
+        "control": "select",
+        "group": "position",
+        "groupTitle": "Position",
+        "options": [
+          {
+            "label": "Top",
+            "value": "top"
+          },
+          {
+            "label": "Bottom",
+            "value": "bottom"
+          },
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      }
+    },
+    {
+      "name": "sideOffset",
+      "label": "Side offset",
+      "type": "string",
+      "default": "4",
+      "description": "Gap between the tooltip and what it points at, in Tailwind spacing units.",
+      "remixer": {
+        "control": "select",
+        "group": "position",
+        "groupTitle": "Position",
+        "options": [
+          {
+            "label": "1",
+            "value": "1"
+          },
+          {
+            "label": "2",
+            "value": "2"
+          },
+          {
+            "label": "3",
+            "value": "3"
+          },
+          {
+            "label": "4",
+            "value": "4"
+          },
+          {
+            "label": "6",
+            "value": "6"
+          },
+          {
+            "label": "8",
+            "value": "8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "changeAnimation",
+      "label": "Change animation",
+      "type": "string",
+      "default": "slide",
+      "description": "What happens when you move straight to another element: the text swaps, or the tooltip morphs to the new size.",
+      "remixer": {
+        "control": "select",
+        "group": "moving-between",
+        "groupTitle": "Moving between",
+        "options": [
+          {
+            "label": "Swap text",
+            "value": "instant"
+          },
+          {
+            "label": "Morph and fade",
+            "value": "fade"
+          },
+          {
+            "label": "Morph and slide",
+            "value": "slide"
+          },
+          {
+            "label": "Morph and roll",
+            "value": "roll"
+          }
+        ],
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "duration",
+      "label": "Duration",
+      "type": "number",
+      "default": 0.35,
+      "description": "How long the change between elements takes, in seconds. Not used by Swap text.",
+      "remixer": {
+        "control": "range",
+        "group": "moving-between",
+        "groupTitle": "Moving between",
+        "min": 0.1,
+        "max": 1,
+        "step": 0.05,
+        "disabledWhen": {
+          "prop": "changeAnimation",
+          "equals": "instant"
+        },
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "elastic",
+      "label": "Elastic",
+      "type": "boolean",
+      "default": true,
+      "description": "The tooltip moves on a spring that can overshoot.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "feel",
+        "groupTitle": "Feel",
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "bounce",
+      "label": "Bounce",
+      "type": "number",
+      "default": 0.1,
+      "description": "Springiness of the movement. Does nothing with Elastic off and Change animation set to Swap text.",
+      "remixer": {
+        "control": "range",
+        "group": "feel",
+        "groupTitle": "Feel",
+        "min": 0,
+        "max": 0.6,
+        "step": 0.05,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "stretchOnMove",
+      "label": "Stretch on move",
+      "type": "boolean",
+      "default": true,
+      "description": "The tooltip stretches in the direction it moves. Needs Elastic on.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "feel",
+        "groupTitle": "Feel",
+        "disabledWhen": {
+          "prop": "elastic",
+          "equals": false
+        },
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "tiltOnMove",
+      "label": "Tilt on move",
+      "type": "boolean",
+      "default": true,
+      "description": "The tooltip leans into the direction it moves. Needs Elastic on.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "feel",
+        "groupTitle": "Feel",
+        "disabledWhen": {
+          "prop": "elastic",
+          "equals": false
+        },
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "stiffness",
+      "label": "Follow speed",
+      "type": "number",
+      "default": 750,
+      "description": "How tightly the tooltip follows the cursor or glides between elements. Higher is snappier.",
+      "remixer": {
+        "control": "range",
+        "group": "feel",
+        "groupTitle": "Feel",
+        "min": 100,
+        "max": 1500,
+        "step": 50,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "appearAnimation",
+      "label": "Appear animation",
+      "type": "string",
+      "default": "scale",
+      "description": "How the tooltip appears and disappears.",
+      "remixer": {
+        "control": "select",
+        "group": "show-and-hide",
+        "groupTitle": "Show and hide",
+        "options": [
+          {
+            "label": "Scale + fade",
+            "value": "scale"
+          },
+          {
+            "label": "Fade",
+            "value": "fade"
+          },
+          {
+            "label": "Nothing",
+            "value": "none"
+          }
+        ],
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "closeDelay",
+      "label": "Close delay",
+      "type": "number",
+      "default": 0.1,
+      "description": "How long the tooltip stays after the pointer leaves, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "show-and-hide",
+        "groupTitle": "Show and hide",
+        "min": 0,
+        "max": 0.6,
+        "step": 0.05
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "layout": "panel",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}

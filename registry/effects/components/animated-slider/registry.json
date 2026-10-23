@@ -1,0 +1,485 @@
+{
+  "name": "animated-slider",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-10-23",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Animated Slider",
+  "description": "Drag a thumb to pick a value or a range.",
+  "category": "components",
+  "dependencies": [
+    "@base-ui/react",
+    "motion",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/animated-slider",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "AnimatedSlider",
+  "exportKind": "default",
+  "importPath": "@/components/effects/animated-slider",
+  "target": "src/components/effects/animated-slider",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/animated-slider/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "theme",
+      "label": "Theme",
+      "type": "string",
+      "default": "caffeine",
+      "description": "Colour palette. The fill, the handle and the value bubble take its primary colour.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Default",
+            "value": "default"
+          },
+          {
+            "label": "Caffeine",
+            "value": "caffeine"
+          },
+          {
+            "label": "Claude",
+            "value": "claude"
+          },
+          {
+            "label": "Ghibli",
+            "value": "ghibli"
+          },
+          {
+            "label": "Spotify",
+            "value": "spotify"
+          },
+          {
+            "label": "Valorant",
+            "value": "valorant"
+          },
+          {
+            "label": "Vscode",
+            "value": "vscode"
+          }
+        ]
+      }
+    },
+    {
+      "name": "mode",
+      "label": "Mode",
+      "type": "string",
+      "default": "dark",
+      "description": "Light or dark version of the palette. Starts dark.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Light",
+            "value": "light"
+          },
+          {
+            "label": "Dark",
+            "value": "dark"
+          }
+        ]
+      }
+    },
+    {
+      "name": "smooth",
+      "label": "Smooth",
+      "type": "boolean",
+      "default": false,
+      "description": "The thumb moves in fine steps while dragging instead of jumping from step to step.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "track",
+        "groupTitle": "Track"
+      }
+    },
+    {
+      "name": "duration",
+      "label": "Duration",
+      "type": "number",
+      "default": 0.35,
+      "description": "How long the fill takes to catch up when you click the track, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "track",
+        "groupTitle": "Track",
+        "min": 0.1,
+        "max": 1,
+        "step": 0.05,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "bounce",
+      "label": "Bounce",
+      "type": "number",
+      "default": 0.35,
+      "description": "Springiness of the fill catching up. 0 means no overshoot.",
+      "remixer": {
+        "control": "range",
+        "group": "track",
+        "groupTitle": "Track",
+        "min": 0,
+        "max": 0.6,
+        "step": 0.05,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "thickenOn",
+      "label": "Thicken on",
+      "type": "string",
+      "default": "hover",
+      "description": "When the track grows thicker.",
+      "remixer": {
+        "control": "select",
+        "group": "track",
+        "groupTitle": "Track",
+        "options": [
+          {
+            "label": "Hover",
+            "value": "hover"
+          },
+          {
+            "label": "Drag",
+            "value": "drag"
+          },
+          {
+            "label": "Never",
+            "value": "none"
+          }
+        ]
+      }
+    },
+    {
+      "name": "elastic",
+      "label": "Elastic",
+      "type": "boolean",
+      "default": true,
+      "description": "The track stretches when you drag past either end, then springs back.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "track",
+        "groupTitle": "Track",
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "stretchAmount",
+      "label": "Stretch amount",
+      "type": "number",
+      "default": 10,
+      "description": "How far the track stretches past its ends, in percent of the track width. Needs Elastic on.",
+      "remixer": {
+        "control": "range",
+        "group": "track",
+        "groupTitle": "Track",
+        "min": 2,
+        "max": 30,
+        "step": 1,
+        "disabledWhen": {
+          "prop": "elastic",
+          "equals": false
+        },
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "labels",
+      "label": "Values on rail",
+      "type": "string",
+      "default": "rail",
+      "description": "Shows the current value and the maximum on the rail.",
+      "remixer": {
+        "control": "select",
+        "group": "track",
+        "groupTitle": "Track",
+        "options": [
+          {
+            "label": "Show",
+            "value": "rail"
+          },
+          {
+            "label": "Hide",
+            "value": "none"
+          }
+        ]
+      }
+    },
+    {
+      "name": "thickenedSize",
+      "label": "Thickened size",
+      "type": "string",
+      "default": "13",
+      "description": "Track thickness while thickened, in Tailwind spacing units. Not used when Thicken on is Never.",
+      "remixer": {
+        "control": "select",
+        "group": "track",
+        "groupTitle": "Track",
+        "options": [
+          {
+            "label": "0.5",
+            "value": "0.5"
+          },
+          {
+            "label": "1",
+            "value": "1"
+          },
+          {
+            "label": "1.5",
+            "value": "1.5"
+          },
+          {
+            "label": "2.5",
+            "value": "2.5"
+          },
+          {
+            "label": "4",
+            "value": "4"
+          },
+          {
+            "label": "13",
+            "value": "13"
+          }
+        ],
+        "disabledWhen": {
+          "prop": "thickenOn",
+          "equals": "none"
+        }
+      }
+    },
+    {
+      "name": "rounded",
+      "label": "Roundness",
+      "type": "string",
+      "default": "md",
+      "description": "Corner radius of the track and fill.",
+      "remixer": {
+        "control": "select",
+        "group": "track",
+        "groupTitle": "Track",
+        "options": [
+          {
+            "label": "None",
+            "value": "none"
+          },
+          {
+            "label": "sm",
+            "value": "sm"
+          },
+          {
+            "label": "md",
+            "value": "md"
+          },
+          {
+            "label": "lg",
+            "value": "lg"
+          },
+          {
+            "label": "xl",
+            "value": "xl"
+          },
+          {
+            "label": "Full",
+            "value": "full"
+          }
+        ]
+      }
+    },
+    {
+      "name": "marks",
+      "label": "Step marks",
+      "type": "string",
+      "default": "dots",
+      "description": "Marks drawn at each step along the track.",
+      "remixer": {
+        "control": "select",
+        "group": "track",
+        "groupTitle": "Track",
+        "options": [
+          {
+            "label": "None",
+            "value": "none"
+          },
+          {
+            "label": "Dots",
+            "value": "dots"
+          },
+          {
+            "label": "Lines",
+            "value": "lines"
+          }
+        ]
+      }
+    },
+    {
+      "name": "showEdge",
+      "label": "Show edge",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows a handle at the end of the fill.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "edge",
+        "groupTitle": "Edge"
+      }
+    },
+    {
+      "name": "edgePress",
+      "label": "While dragging",
+      "type": "string",
+      "default": "shrink",
+      "description": "What the handle does while you drag it. Needs Show edge on.",
+      "remixer": {
+        "control": "select",
+        "group": "edge",
+        "groupTitle": "Edge",
+        "options": [
+          {
+            "label": "Grows",
+            "value": "grow"
+          },
+          {
+            "label": "Shrinks",
+            "value": "shrink"
+          },
+          {
+            "label": "Stays put",
+            "value": "none"
+          }
+        ],
+        "disabledWhen": {
+          "prop": "showEdge",
+          "equals": false
+        }
+      }
+    },
+    {
+      "name": "edgeVariant",
+      "label": "Style",
+      "type": "string",
+      "default": "bar",
+      "description": "Shape of the handle. Needs Show edge on.",
+      "remixer": {
+        "control": "select",
+        "group": "edge",
+        "groupTitle": "Edge",
+        "options": [
+          {
+            "label": "Bar",
+            "value": "bar"
+          },
+          {
+            "label": "Filled",
+            "value": "filled"
+          },
+          {
+            "label": "Outline",
+            "value": "outline"
+          }
+        ],
+        "disabledWhen": {
+          "prop": "showEdge",
+          "equals": false
+        }
+      }
+    },
+    {
+      "name": "bubble",
+      "label": "Value bubble",
+      "type": "string",
+      "default": "hover",
+      "description": "When a bubble with the current value shows above the handle.",
+      "remixer": {
+        "control": "select",
+        "group": "edge",
+        "groupTitle": "Edge",
+        "options": [
+          {
+            "label": "Follows cursor",
+            "value": "hover"
+          },
+          {
+            "label": "While dragging",
+            "value": "dragging"
+          },
+          {
+            "label": "Always",
+            "value": "always"
+          },
+          {
+            "label": "Never",
+            "value": "none"
+          }
+        ]
+      }
+    },
+    {
+      "name": "rollingNumbers",
+      "label": "Rolling numbers",
+      "type": "boolean",
+      "default": true,
+      "description": "Numbers in the bubble, on the rail and in the readouts roll to the new value.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "edge",
+        "groupTitle": "Edge",
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "edgeSize",
+      "label": "Edge size",
+      "type": "string",
+      "default": "sm",
+      "description": "Size of the handle. Needs Show edge on.",
+      "remixer": {
+        "control": "select",
+        "group": "style",
+        "groupTitle": "Style",
+        "options": [
+          {
+            "label": "sm",
+            "value": "sm"
+          },
+          {
+            "label": "md",
+            "value": "md"
+          },
+          {
+            "label": "lg",
+            "value": "lg"
+          }
+        ],
+        "disabledWhen": {
+          "prop": "showEdge",
+          "equals": false
+        }
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "layout": "panel",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}

@@ -8,7 +8,7 @@
 
 ## Overview
 
-Hyperiux Vault ships 150+ production-quality animation and interaction effects for Next.js, installed one at a time with the `hyperiux` CLI (`npx hyperiux add <effect>`). This MCP server sits alongside that CLI as a companion tool built for AI assistants specifically: instead of guessing at effect names, props, or dependencies from training data, your assistant can query this server directly and get back real, current answers - pulled live from the same registry the CLI itself uses.
+Hyperiux Vault ships 170+ production-quality animation and interaction effects for Next.js, installed one at a time with the `hyperiux` CLI (`npx hyperiux add <effect>`). This MCP server sits alongside that CLI as a companion tool built for AI assistants specifically: instead of guessing at effect names, props, or dependencies from training data, your assistant can query this server directly and get back real, current answers - pulled live from the same registry the CLI itself uses.
 
 You still talk to your AI assistant normally. This server just makes sure what it tells you about Hyperiux is true.
 

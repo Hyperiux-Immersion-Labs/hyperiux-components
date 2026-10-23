@@ -1,0 +1,574 @@
+{
+  "name": "animated-menubar",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-10-23",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Animated Menubar",
+  "description": "A row of menus, like an app’s File and Edit menus.",
+  "category": "components",
+  "dependencies": [
+    "@base-ui/react",
+    "lucide-react",
+    "motion",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/animated-menubar",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "AnimatedMenubar",
+  "exportKind": "default",
+  "importPath": "@/components/effects/animated-menubar",
+  "target": "src/components/effects/animated-menubar",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/animated-menubar/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "theme",
+      "label": "Theme",
+      "type": "string",
+      "default": "caffeine",
+      "description": "Colour palette, menus included. With a Primary fill, the bar and item highlights take its primary colour.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Default",
+            "value": "default"
+          },
+          {
+            "label": "Caffeine",
+            "value": "caffeine"
+          },
+          {
+            "label": "Claude",
+            "value": "claude"
+          },
+          {
+            "label": "Ghibli",
+            "value": "ghibli"
+          },
+          {
+            "label": "Spotify",
+            "value": "spotify"
+          },
+          {
+            "label": "Valorant",
+            "value": "valorant"
+          },
+          {
+            "label": "Vscode",
+            "value": "vscode"
+          }
+        ]
+      }
+    },
+    {
+      "name": "mode",
+      "label": "Mode",
+      "type": "string",
+      "default": "dark",
+      "description": "Light or dark version of the palette. Starts dark.",
+      "remixer": {
+        "control": "select",
+        "group": "theme",
+        "groupTitle": "Theme",
+        "options": [
+          {
+            "label": "Light",
+            "value": "light"
+          },
+          {
+            "label": "Dark",
+            "value": "dark"
+          }
+        ]
+      }
+    },
+    {
+      "name": "animation",
+      "label": "Opening",
+      "type": "string",
+      "default": "slide",
+      "description": "How a menu opens from its trigger.",
+      "remixer": {
+        "control": "select",
+        "group": "panel",
+        "groupTitle": "Panel",
+        "options": [
+          {
+            "label": "Scale",
+            "value": "scale"
+          },
+          {
+            "label": "Slide",
+            "value": "slide"
+          },
+          {
+            "label": "Collapse",
+            "value": "collapse"
+          },
+          {
+            "label": "Reveal",
+            "value": "reveal"
+          }
+        ],
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "exitFast",
+      "label": "Exit fast",
+      "type": "boolean",
+      "default": false,
+      "description": "Menus close faster than they open (60% of Duration).",
+      "remixer": {
+        "control": "checkbox",
+        "group": "panel",
+        "groupTitle": "Panel",
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "switchAnimation",
+      "label": "Moving over",
+      "type": "string",
+      "default": "glide",
+      "description": "What happens when you move to the next menu while one is open: the panel glides across, or closes and reopens.",
+      "remixer": {
+        "control": "select",
+        "group": "between-menus",
+        "groupTitle": "Between menus",
+        "options": [
+          {
+            "label": "Glide",
+            "value": "glide"
+          },
+          {
+            "label": "Replay",
+            "value": "replay"
+          }
+        ],
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "contentAnimation",
+      "label": "Content animation",
+      "type": "string",
+      "default": "slide",
+      "description": "How the new menu's items appear while the panel glides. Needs Moving over set to Glide.",
+      "remixer": {
+        "control": "select",
+        "group": "between-menus",
+        "groupTitle": "Between menus",
+        "options": [
+          {
+            "label": "Slides in",
+            "value": "slide"
+          },
+          {
+            "label": "Fades in",
+            "value": "fade"
+          },
+          {
+            "label": "At once",
+            "value": "none"
+          }
+        ],
+        "disabledWhen": {
+          "prop": "switchAnimation",
+          "notEquals": "glide"
+        },
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "slideDistance",
+      "label": "Slide distance",
+      "type": "string",
+      "default": "lg",
+      "description": "How far items slide in when switching menus. Needs Moving over set to Glide and Content animation set to Slides in.",
+      "remixer": {
+        "control": "select",
+        "group": "between-menus",
+        "groupTitle": "Between menus",
+        "options": [
+          {
+            "label": "Small",
+            "value": "sm"
+          },
+          {
+            "label": "Medium",
+            "value": "md"
+          },
+          {
+            "label": "Large",
+            "value": "lg"
+          }
+        ],
+        "disabledWhen": [
+          {
+            "prop": "switchAnimation",
+            "notEquals": "glide"
+          },
+          {
+            "prop": "contentAnimation",
+            "notEquals": "slide"
+          }
+        ],
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "duration",
+      "label": "Duration",
+      "type": "number",
+      "default": 0.3,
+      "description": "How long opening, closing and gliding take, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0.1,
+        "max": 1,
+        "step": 0.05,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "delay",
+      "label": "Delay",
+      "type": "number",
+      "default": 0.05,
+      "description": "Wait before the items start to appear, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0,
+        "max": 0.5,
+        "step": 0.01,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "stagger",
+      "label": "Stagger",
+      "type": "number",
+      "default": 0.03,
+      "description": "Delay between one item appearing and the next, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "timing",
+        "groupTitle": "Timing",
+        "min": 0,
+        "max": 0.2,
+        "step": 0.01,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "triggerHighlight",
+      "label": "Menu highlight",
+      "type": "string",
+      "default": "pill",
+      "description": "Highlight that follows the pointer along the menu bar.",
+      "remixer": {
+        "control": "select",
+        "group": "bar",
+        "groupTitle": "Bar",
+        "options": [
+          {
+            "label": "Gliding pill",
+            "value": "pill"
+          },
+          {
+            "label": "Gliding underline",
+            "value": "underline"
+          },
+          {
+            "label": "None",
+            "value": "none"
+          }
+        ]
+      }
+    },
+    {
+      "name": "triggerHighlightColor",
+      "label": "Highlight fill",
+      "type": "string",
+      "default": "primary",
+      "description": "Colour of the bar highlight. Not used when Menu highlight is None.",
+      "remixer": {
+        "control": "select",
+        "group": "bar",
+        "groupTitle": "Bar",
+        "options": [
+          {
+            "label": "Primary",
+            "value": "primary"
+          },
+          {
+            "label": "Muted",
+            "value": "muted"
+          }
+        ],
+        "disabledWhen": {
+          "prop": "triggerHighlight",
+          "equals": "none"
+        }
+      }
+    },
+    {
+      "name": "showChevrons",
+      "label": "Chevrons",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows a chevron next to each menu name that turns when it opens.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "bar",
+        "groupTitle": "Bar"
+      }
+    },
+    {
+      "name": "triggerRollingText",
+      "label": "Rolling trigger text",
+      "type": "boolean",
+      "default": true,
+      "description": "Menu names roll to a second copy of themselves on hover.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "bar",
+        "groupTitle": "Bar",
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "openOnClick",
+      "label": "Open on click",
+      "type": "boolean",
+      "default": false,
+      "description": "Menus open on click only; hovering the bar doesn't open them.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "bar",
+        "groupTitle": "Bar"
+      }
+    },
+    {
+      "name": "pressFeedback",
+      "label": "Press feedback",
+      "type": "boolean",
+      "default": true,
+      "description": "Menu names squeeze slightly when pressed.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "bar",
+        "groupTitle": "Bar",
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "itemHighlight",
+      "label": "Item highlight",
+      "type": "string",
+      "default": "slide",
+      "description": "Highlight on the item under the pointer inside a menu.",
+      "remixer": {
+        "control": "select",
+        "group": "items",
+        "groupTitle": "Items",
+        "options": [
+          {
+            "label": "Slide",
+            "value": "slide"
+          },
+          {
+            "label": "Fill from top",
+            "value": "fill"
+          },
+          {
+            "label": "None",
+            "value": "none"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itemHighlightColor",
+      "label": "Item highlight color",
+      "type": "string",
+      "default": "primary",
+      "description": "Colour of the item highlight. Not used when Item highlight is None.",
+      "remixer": {
+        "control": "select",
+        "group": "items",
+        "groupTitle": "Items",
+        "options": [
+          {
+            "label": "Primary",
+            "value": "primary"
+          },
+          {
+            "label": "Muted",
+            "value": "muted"
+          }
+        ],
+        "disabledWhen": {
+          "prop": "itemHighlight",
+          "equals": "none"
+        }
+      }
+    },
+    {
+      "name": "selectionIndicator",
+      "label": "Selection indicator",
+      "type": "string",
+      "default": "check",
+      "description": "Mark shown next to chosen options in checkbox and radio items.",
+      "remixer": {
+        "control": "select",
+        "group": "items",
+        "groupTitle": "Items",
+        "options": [
+          {
+            "label": "Check",
+            "value": "check"
+          },
+          {
+            "label": "Dot",
+            "value": "dot"
+          },
+          {
+            "label": "Bar",
+            "value": "bar"
+          }
+        ]
+      }
+    },
+    {
+      "name": "showIcons",
+      "label": "Icons",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows an icon before each item.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "items",
+        "groupTitle": "Items"
+      }
+    },
+    {
+      "name": "showDescriptions",
+      "label": "Descriptions",
+      "type": "boolean",
+      "default": true,
+      "description": "Shows a second line of help text under items that have one.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "items",
+        "groupTitle": "Items"
+      }
+    },
+    {
+      "name": "rollingText",
+      "label": "Rolling text",
+      "type": "boolean",
+      "default": true,
+      "description": "Item labels roll to a second copy on hover.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "items",
+        "groupTitle": "Items",
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "size",
+      "label": "Size",
+      "type": "string",
+      "default": "lg",
+      "description": "Text and padding size of the bar and menus.",
+      "remixer": {
+        "control": "select",
+        "group": "style",
+        "groupTitle": "Style",
+        "options": [
+          {
+            "label": "sm",
+            "value": "sm"
+          },
+          {
+            "label": "md",
+            "value": "md"
+          },
+          {
+            "label": "lg",
+            "value": "lg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "rounded",
+      "label": "Roundness",
+      "type": "string",
+      "default": "md",
+      "description": "Corner radius of the bar, the menus and their items.",
+      "remixer": {
+        "control": "select",
+        "group": "style",
+        "groupTitle": "Style",
+        "options": [
+          {
+            "label": "None",
+            "value": "none"
+          },
+          {
+            "label": "sm",
+            "value": "sm"
+          },
+          {
+            "label": "md",
+            "value": "md"
+          },
+          {
+            "label": "lg",
+            "value": "lg"
+          },
+          {
+            "label": "xl",
+            "value": "xl"
+          },
+          {
+            "label": "2xl",
+            "value": "2xl"
+          }
+        ]
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "layout": "panel",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}
