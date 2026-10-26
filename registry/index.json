@@ -279,15 +279,6 @@
     "target": "src/components/effects/interactive-list-preview"
   },
   {
-    "name": "animated-accordion",
-    "title": "Animated Accordion",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-accordion/registry.json",
-    "importPath": "@/components/effects/animated-accordion",
-    "target": "src/components/effects/animated-accordion"
-  },
-  {
     "name": "animated-button",
     "title": "Animated Button",
     "category": "components",
@@ -394,15 +385,6 @@
     "registryPath": "registry/effects/components/animated-switch/registry.json",
     "importPath": "@/components/effects/animated-switch",
     "target": "src/components/effects/animated-switch"
-  },
-  {
-    "name": "animated-tabs-bar",
-    "title": "Animated Tabs Bar",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-tabs-bar/registry.json",
-    "importPath": "@/components/effects/animated-tabs-bar",
-    "target": "src/components/effects/animated-tabs-bar"
   },
   {
     "name": "circular-split-roll",
@@ -628,5 +610,23 @@
     "registryPath": "registry/effects/webgl/milky-way/registry.json",
     "importPath": "@/components/effects/milky-way",
     "target": "src/components/effects/milky-way"
+  },
+  {
+    "name": "portal-carousel",
+    "title": "Portal Carousel",
+    "category": "carousels",
+    "type": "registry:component",
+    "registryPath": "registry/effects/carousels/portal-carousel/registry.json",
+    "importPath": "@/components/effects/portal-carousel",
+    "target": "src/components/effects/portal-carousel"
+  },
+  {
+    "name": "image-pixel-reveal",
+    "title": "Image Pixel Reveal",
+    "category": "scroll",
+    "type": "registry:component",
+    "registryPath": "registry/effects/scroll/image-pixel-reveal/registry.json",
+    "importPath": "@/components/effects/image-pixel-reveal",
+    "target": "src/components/effects/image-pixel-reveal"
   }
 ]

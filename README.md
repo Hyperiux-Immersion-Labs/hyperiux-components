@@ -115,12 +115,12 @@ Interactive button treatments - fill sweeps, metallic sheens, shiny highlights, 
 ### Carousels
 Slider and carousel patterns beyond a plain swipe - arc paths, 3D flips, parallax strips, and zoom transitions.
 
-`arc-flow-carousel` · `dimensional-switch-slider` · `ellipse-carousel` · `orbit-flip-slider` · [+more](https://vault.hyperiux.com/effects/carousels)
+`arc-flow-carousel` · `dimensional-switch-slider` · `ellipse-carousel` · `orbit-flip-slider` · `portal-carousel` · [+more](https://vault.hyperiux.com/effects/carousels)
 
 ### Scroll
 Scroll-driven animations built on GSAP ScrollTrigger - parallax galleries, pinned sequences, horizontal storytelling, and stacking cards.
 
-`sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `circular-split-roll` · `split-canvas` · [+more](https://vault.hyperiux.com/effects/scroll-effects)
+`sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `circular-split-roll` · `split-canvas` · `image-pixel-reveal` · [+more](https://vault.hyperiux.com/effects/scroll-effects)
 
 ### Components
 Small, self-contained UI pieces - accordions, counters, timelines, and hover-driven lists.
