@@ -123,9 +123,9 @@ Scroll-driven animations built on GSAP ScrollTrigger - parallax galleries, pinne
 `sticky-content-wrapper` · `horizontal-feature-reveal` · `infinite-perspective-slider` · `rotation-slider` · `circular-split-roll` · `split-canvas` · [+more](https://vault.hyperiux.com/effects/scroll-effects)
 
 ### Components
-Small, self-contained UI pieces - accordions, counters, timelines, hover-driven lists, and animated takes on the everyday UI kit (dialogs, drawers, date pickers, tabs and more).
+Small, self-contained UI pieces - accordions, counters, timelines, and hover-driven lists.
 
-`animated-faq` · `border-beam` · `gooey-counter` · `gsap-flip-card` · `animated-dialog` · `animated-date-picker` · `animated-drawer` · `animated-tabs-bar` · [+more](https://vault.hyperiux.com/effects/components)
+`animated-faq` · `border-beam` · `gooey-counter` · `gsap-flip-card` · [+more](https://vault.hyperiux.com/effects/components)
 
 ### Navigation
 Menus and navbars with desktop and mobile interaction patterns.
