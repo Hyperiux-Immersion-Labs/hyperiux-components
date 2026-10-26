@@ -1,0 +1,147 @@
+{
+  "name": "portal-carousel",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-10-26",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Portal Carousel",
+  "description": "Fullscreen carousel where a cursor-following preview expands into the next image on click.",
+  "category": "carousels",
+  "dependencies": [
+    "gsap"
+  ],
+  "registryDependencies": [],
+  "previewUrl": "/demo/portal-carousel",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "PortalCarousel",
+  "exportKind": "default",
+  "importPath": "@/components/effects/portal-carousel",
+  "target": "src/components/effects/portal-carousel",
+  "props": [
+    {
+      "name": "images",
+      "type": "array",
+      "default": "5 built-in images",
+      "description": "Images shown in order and looping: { src, alt?, title? }. Needs at least two.",
+      "copyable": false
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "default": "Next",
+      "description": "Text on the tag that sits at the cursor.",
+      "remixer": {
+        "control": "text",
+        "group": "preview",
+        "groupTitle": "Preview"
+      }
+    },
+    {
+      "name": "thumbWidth",
+      "type": "number",
+      "default": 200,
+      "description": "Size of the square preview, in px. Capped at 42vw.",
+      "remixer": {
+        "control": "range",
+        "group": "preview",
+        "groupTitle": "Preview",
+        "min": 80,
+        "max": 400,
+        "step": 10
+      }
+    },
+    {
+      "name": "followSpeed",
+      "type": "number",
+      "default": 0.14,
+      "description": "How quickly the preview chases the cursor, from 0.02 (lazy) to 1 (locked on).",
+      "remixer": {
+        "control": "range",
+        "group": "preview",
+        "groupTitle": "Preview",
+        "min": 0.02,
+        "max": 1,
+        "step": 0.01,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": 1.2,
+      "description": "Time for the preview to expand to fullscreen, in seconds.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0.3,
+        "max": 3,
+        "step": 0.1,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "ease",
+      "type": "string",
+      "default": "expo.out",
+      "description": "GSAP ease for the expansion.",
+      "remixer": {
+        "control": "select",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "options": [
+          {
+            "label": "expo.out",
+            "value": "expo.out"
+          },
+          {
+            "label": "power4.out",
+            "value": "power4.out"
+          },
+          {
+            "label": "power2.inOut",
+            "value": "power2.inOut"
+          },
+          {
+            "label": "circ.out",
+            "value": "circ.out"
+          },
+          {
+            "label": "back.out(1.4)",
+            "value": "back.out(1.4)"
+          },
+          {
+            "label": "none",
+            "value": "none"
+          }
+        ],
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "default": "",
+      "description": "Extra classes on the carousel root."
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "layout": {},
+    "panel": {}
+  },
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/portal-carousel/index.tsx"
+    }
+  ]
+}
