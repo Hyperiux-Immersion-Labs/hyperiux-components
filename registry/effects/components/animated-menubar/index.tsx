@@ -2314,7 +2314,9 @@ function MobileMenubar({ children }: { children: React.ReactNode }) {
               id={id}
               aria-label="Menu"
               data-slot="menubar-mobile-panel"
-              className="absolute top-full left-1/2 z-50 my-2 flex h-96 w-xl -translate-x-1/2 flex-col gap-0.5 overflow-y-auto overscroll-contain rounded-md bg-(--hx-popover) p-2 text-(--hx-popover-foreground) shadow-md ring-1 ring-[color-mix(in_oklch,var(--hx-foreground)_25%,transparent)] max-md:w-80"
+              // Pages with smooth scrolling (Lenis) would take the wheel; the menu scrolls itself
+              data-lenis-prevent
+              className="absolute top-full left-1/2 z-50 my-2 flex h-96 w-xl -translate-x-1/2 flex-col gap-0.5 overflow-y-auto overscroll-contain touch-pan-y rounded-md bg-(--hx-popover) p-2 text-(--hx-popover-foreground) shadow-md ring-1 ring-[color-mix(in_oklch,var(--hx-foreground)_25%,transparent)] max-md:w-80"
               initial="closed"
               animate="open"
               exit="closed"

@@ -605,6 +605,8 @@ export function CheckboxItem({
   const root = React.useRef<HTMLLabelElement>(null);
   const visual = React.useRef<HTMLSpanElement>(null);
   const dragged = React.useRef(false);
+  // While lifted, the option frosts what it passes over
+  const [dragging, setDragging] = React.useState(false);
   const shift = React.useRef(false);
   const [standalone, setStandalone] = React.useState(defaultChecked);
   const [entered, setEntered] = React.useState(false);
@@ -709,12 +711,14 @@ export function CheckboxItem({
   const rootProps = {
     ref: root,
     "data-slot": "checkbox-item",
+    "data-dragging": dragging || undefined,
     "data-value": value,
     "data-checked": checked || undefined,
     "data-indeterminate": mixed || undefined,
     "data-disabled": disabled || undefined,
     className: cx(
       "group/checkbox relative flex cursor-pointer gap-3 text-lg select-none data-disabled:cursor-not-allowed",
+      "data-dragging:rounded-md data-dragging:bg-[color-mix(in_oklab,var(--hx-background)_55%,transparent)] data-dragging:shadow-lg data-dragging:backdrop-blur-md",
       description !== undefined ? "items-start" : "items-center",
       !showControl &&
         "rounded-md has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-(--checkbox-accent)/50",
@@ -891,7 +895,11 @@ export function CheckboxItem({
         dragConstraints={group?.dragBox}
         dragElastic={0.08}
         whileDrag={{ scale: 1.03, zIndex: 10 }}
-        onDragStart={() => (dragged.current = true)}
+        onDragStart={() => {
+          dragged.current = true;
+          setDragging(true);
+        }}
+        onDragEnd={() => setDragging(false)}
         onClickCapture={(event) => {
           if (!dragged.current) return;
           event.preventDefault();

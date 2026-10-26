@@ -626,6 +626,9 @@ function DialogTrigger({
         // Remember origin for grow-from-trigger.
         const rect = event.currentTarget.getBoundingClientRect()
         setOrigin({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 })
+        // The backdrop covers the trigger, so it never hears the pointer leave: put the fill
+        // away now, or it stays filled after closing and the next hover can't fill it again.
+        hover.onPointerLeave(event as unknown as React.PointerEvent<HTMLElement>)
         onClick?.(event)
       }}
       onPointerEnter={(event) => {
@@ -759,9 +762,9 @@ function DialogContent({
                     ? { duration: 0.2, ease: "easeOut" }
                     : originFromTrigger
                     ? {
-                        type: "spring",
-                        visualDuration: options.duration * 0.8,
-                        bounce: 0,
+                        // An eased glide back into the trigger; the quicker spring read as a jump.
+                        duration: Math.max(options.duration, 0.3) * 1.1,
+                        ease: [0.4, 0, 0.2, 1],
                         delay: exitDelay,
                       }
                     : { duration: 0.2, ease: [0.4, 0, 1, 1], delay: exitDelay },

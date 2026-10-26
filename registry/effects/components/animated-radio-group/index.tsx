@@ -420,6 +420,8 @@ export function RadioGroupItem({
   const reduceMotion = group.reduceMotion;
   const visual = React.useRef<HTMLSpanElement>(null);
   const dragged = React.useRef(false);
+  // While lifted, the option frosts what it passes over
+  const [dragging, setDragging] = React.useState(false);
   const [entered, setEntered] = React.useState(false);
 
   const checked = group.selected === value;
@@ -465,7 +467,11 @@ export function RadioGroupItem({
       value={value}
       drag={draggable}
       whileDrag={{ scale: reduceMotion ? 1 : 1.03, zIndex: 10 }}
-      onDragStart={() => (dragged.current = true)}
+      onDragStart={() => {
+        dragged.current = true;
+        setDragging(true);
+      }}
+      onDragEnd={() => setDragging(false)}
       onPointerDown={() => (dragged.current = false)}
       onClickCapture={(event) => {
         if (!dragged.current) return;
@@ -473,11 +479,13 @@ export function RadioGroupItem({
         event.stopPropagation();
       }}
       data-slot="radio-item"
+      data-dragging={dragging || undefined}
       data-value={value}
       data-checked={checked || undefined}
       data-disabled={disabled || undefined}
       className={cx(
         "group/radio relative flex cursor-pointer gap-3 text-lg select-none data-disabled:cursor-not-allowed",
+        "data-dragging:rounded-md data-dragging:bg-[color-mix(in_oklab,var(--hx-background)_55%,transparent)] data-dragging:shadow-lg data-dragging:backdrop-blur-md",
         description !== undefined ? "items-start" : "items-center",
         // Plain rows only react (hover, cursor) over their own content, not the full row
         !card && "w-fit self-start",

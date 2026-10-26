@@ -1485,11 +1485,15 @@ function DatePicker({
     return () => observer.disconnect()
   }, [reduceMotion])
 
-  // The right-hand month starts on the range's end, or the month after the start.
-  const startMonth = anchorDate ?? new Date()
-  const endMonth =
-    range?.to && differenceInCalendarMonths(range.to, startMonth) > 0 ? range.to : addMonths(startMonth, 1)
-  const panels = twoMonths ? [startMonth, endMonth] : [startMonth]
+  // The right-hand month starts on the range's end, or the month after the start. Only worked
+  // out while open: reading today's date during render breaks prerendering (cacheComponents).
+  const panels: Date[] = []
+  if (open) {
+    const startMonth = anchorDate ?? new Date()
+    const endMonth =
+      range?.to && differenceInCalendarMonths(range.to, startMonth) > 0 ? range.to : addMonths(startMonth, 1)
+    panels.push(...(twoMonths ? [startMonth, endMonth] : [startMonth]))
+  }
 
   const animateTrigger = () => {
     if (reduceMotion) return

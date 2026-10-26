@@ -1,7 +1,13 @@
 {
   "name": "animated-menubar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-10-26",
+      "summary": "The tablet and phone menu panel scrolls reliably, even on pages with smooth scrolling.",
+      "breaking": false
+    },
     {
       "version": "1.0.0",
       "date": "2026-10-23",

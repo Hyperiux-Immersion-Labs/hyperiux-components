@@ -1,7 +1,13 @@
 {
   "name": "animated-dialog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-10-26",
+      "summary": "The trigger's hover fill no longer sticks after the dialog closes, and closing glides smoothly back into the trigger.",
+      "breaking": false
+    },
     {
       "version": "1.0.0",
       "date": "2026-10-23",

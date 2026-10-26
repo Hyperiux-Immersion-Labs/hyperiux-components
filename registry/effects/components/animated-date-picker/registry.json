@@ -1,7 +1,13 @@
 {
   "name": "animated-date-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-10-26",
+      "summary": "Fixed the build failing on Next.js projects with cacheComponents (the default for new apps): the calendar no longer reads today's date while rendering closed.",
+      "breaking": false
+    },
     {
       "version": "1.0.0",
       "date": "2026-10-23",

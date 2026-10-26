@@ -1,7 +1,13 @@
 {
   "name": "animated-radio-group",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "2026-10-26",
+      "summary": "A dragged option gets a frosted backdrop blur, so the options behind it blur while it moves.",
+      "breaking": false
+    },
     {
       "version": "1.0.0",
       "date": "2026-10-23",
