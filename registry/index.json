@@ -288,15 +288,6 @@
     "target": "src/components/effects/animated-accordion"
   },
   {
-    "name": "animated-attachment",
-    "title": "Animated Attachment",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-attachment/registry.json",
-    "importPath": "@/components/effects/animated-attachment",
-    "target": "src/components/effects/animated-attachment"
-  },
-  {
     "name": "animated-button",
     "title": "Animated Button",
     "category": "components",
@@ -306,15 +297,6 @@
     "target": "src/components/effects/animated-button"
   },
   {
-    "name": "animated-chat-bubble",
-    "title": "Animated Chat Bubble",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-chat-bubble/registry.json",
-    "importPath": "@/components/effects/animated-chat-bubble",
-    "target": "src/components/effects/animated-chat-bubble"
-  },
-  {
     "name": "animated-checkbox-group",
     "title": "Animated Checkbox Group",
     "category": "components",
@@ -322,24 +304,6 @@
     "registryPath": "registry/effects/components/animated-checkbox-group/registry.json",
     "importPath": "@/components/effects/animated-checkbox-group",
     "target": "src/components/effects/animated-checkbox-group"
-  },
-  {
-    "name": "animated-command-menu",
-    "title": "Animated Command Menu",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-command-menu/registry.json",
-    "importPath": "@/components/effects/animated-command-menu",
-    "target": "src/components/effects/animated-command-menu"
-  },
-  {
-    "name": "animated-data-table",
-    "title": "Animated Data Table",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-data-table/registry.json",
-    "importPath": "@/components/effects/animated-data-table",
-    "target": "src/components/effects/animated-data-table"
   },
   {
     "name": "animated-date-picker",
@@ -378,15 +342,6 @@
     "target": "src/components/effects/animated-dropdown-menu"
   },
   {
-    "name": "animated-hover-card",
-    "title": "Animated Hover Card",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-hover-card/registry.json",
-    "importPath": "@/components/effects/animated-hover-card",
-    "target": "src/components/effects/animated-hover-card"
-  },
-  {
     "name": "animated-input-otp",
     "title": "Animated Input OTP",
     "category": "components",
@@ -403,15 +358,6 @@
     "registryPath": "registry/effects/components/animated-menubar/registry.json",
     "importPath": "@/components/effects/animated-menubar",
     "target": "src/components/effects/animated-menubar"
-  },
-  {
-    "name": "animated-questionnaire",
-    "title": "Animated Questionnaire",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-questionnaire/registry.json",
-    "importPath": "@/components/effects/animated-questionnaire",
-    "target": "src/components/effects/animated-questionnaire"
   },
   {
     "name": "animated-radio-group",
@@ -441,15 +387,6 @@
     "target": "src/components/effects/animated-skeleton"
   },
   {
-    "name": "animated-slider",
-    "title": "Animated Slider",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-slider/registry.json",
-    "importPath": "@/components/effects/animated-slider",
-    "target": "src/components/effects/animated-slider"
-  },
-  {
     "name": "animated-switch",
     "title": "Animated Switch",
     "category": "components",
@@ -466,33 +403,6 @@
     "registryPath": "registry/effects/components/animated-tabs-bar/registry.json",
     "importPath": "@/components/effects/animated-tabs-bar",
     "target": "src/components/effects/animated-tabs-bar"
-  },
-  {
-    "name": "animated-theme-switch",
-    "title": "Animated Theme Switch",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-theme-switch/registry.json",
-    "importPath": "@/components/effects/animated-theme-switch",
-    "target": "src/components/effects/animated-theme-switch"
-  },
-  {
-    "name": "animated-toast",
-    "title": "Animated Toast",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-toast/registry.json",
-    "importPath": "@/components/effects/animated-toast",
-    "target": "src/components/effects/animated-toast"
-  },
-  {
-    "name": "animated-tooltip",
-    "title": "Animated Tooltip",
-    "category": "components",
-    "type": "registry:component",
-    "registryPath": "registry/effects/components/animated-tooltip/registry.json",
-    "importPath": "@/components/effects/animated-tooltip",
-    "target": "src/components/effects/animated-tooltip"
   },
   {
     "name": "circular-split-roll",
