@@ -105,7 +105,7 @@ Letter-level and line-level reveal animations - blur, scramble, stagger, perspec
 ### Backgrounds
 Ambient canvas and particle backgrounds that sit behind content without competing for attention.
 
-`dot-transition` · `dotted-grid` · `spider-particles`
+`arc-light` · `ascii-band` · `aurora-ribbon` · `dot-transition` · `dotted-grid` · `moss-grid` · `opal-flow` · `spider-particles`
 
 ### Buttons
 Interactive button treatments - fill sweeps, metallic sheens, shiny highlights, and scramble-on-hover text.

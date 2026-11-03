@@ -1,13 +1,13 @@
 {
   "name": "animated-faq",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "type": "registry:component",
   "title": "Animated FAQ",
-  "description": "Accessible accordion-style FAQ component with smooth GSAP animations",
+  "description": "Accessible FAQ accordion with smooth or elastic Motion animations, staggered answers and fills",
   "category": "components",
   "dependencies": [
-    "gsap",
-    "lucide-react"
+    "lucide-react",
+    "motion"
   ],
   "registryDependencies": [],
   "previewUrl": "/demo/animated-faq",
@@ -31,17 +31,126 @@
       }
     },
     {
+      "name": "openOnHover",
+      "type": "boolean",
+      "default": false,
+      "description": "Answers open while a mouse rests on them and close when it leaves. Touch still uses taps.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "behavior",
+        "groupTitle": "Behavior"
+      }
+    },
+    {
+      "name": "fill",
+      "type": "string",
+      "default": "none",
+      "description": "A background that grows down from the top while an item is open.",
+      "remixer": {
+        "control": "select",
+        "group": "item",
+        "groupTitle": "Item",
+        "options": [
+          {
+            "label": "None",
+            "value": "none"
+          },
+          {
+            "label": "Muted",
+            "value": "muted"
+          },
+          {
+            "label": "Accent",
+            "value": "accent"
+          }
+        ]
+      }
+    },
+    {
+      "name": "accentColor",
+      "type": "color",
+      "default": "#ff6b00",
+      "description": "Colour of the accent fill.",
+      "remixer": {
+        "control": "color",
+        "group": "item",
+        "groupTitle": "Item"
+      }
+    },
+    {
       "name": "duration",
       "type": "number",
-      "default": 0.5,
+      "default": 0.45,
       "description": "Open and close animation duration.",
       "remixer": {
         "control": "range",
-        "group": "behavior",
-        "groupTitle": "Behavior",
+        "group": "motion",
+        "groupTitle": "Motion",
         "min": 0.1,
         "max": 1.5,
-        "step": 0.05
+        "step": 0.05,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "elastic",
+      "type": "boolean",
+      "default": false,
+      "description": "Springs instead of easing for the panel, fill, line and content.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "bounce",
+      "type": "number",
+      "default": 0.3,
+      "description": "How much the springs overshoot. Needs Elastic.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 0.8,
+        "step": 0.05,
+        "disabledWhen": {
+          "prop": "elastic",
+          "equals": false
+        },
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "delay",
+      "type": "number",
+      "default": 0.1,
+      "description": "Seconds before the answer starts to appear.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 1,
+        "step": 0.05,
+        "hideWhenReducedMotion": true
+      }
+    },
+    {
+      "name": "stagger",
+      "type": "number",
+      "default": 0.05,
+      "description": "Seconds between each part of the answer appearing.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 0.3,
+        "step": 0.01,
+        "hideWhenReducedMotion": true
       }
     },
     {
@@ -80,7 +189,7 @@
       "name": "iconMode",
       "type": "string",
       "default": "rotate",
-      "description": "Chevron rotation style used by the trigger icon.",
+      "description": "Icon animation: a chevron that turns down or right, or a plus that turns into a minus.",
       "remixer": {
         "control": "select",
         "group": "icon",
@@ -93,6 +202,10 @@
           {
             "value": "rotate-left-down",
             "label": "Rotate Right"
+          },
+          {
+            "value": "plus",
+            "label": "Plus / minus"
           }
         ]
       }
@@ -116,6 +229,12 @@
     }
   ],
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "2026-10-28",
+      "breaking": true,
+      "summary": "Rebuilt on Motion with the Animated Accordion features: open on hover, elastic springs, delayed and staggered answers, muted or accent fill and a plus/minus icon. Replaces gsap with motion."
+    },
     {
       "version": "1.0.1",
       "date": "2026-07-28",

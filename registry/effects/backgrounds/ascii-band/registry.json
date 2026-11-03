@@ -1,0 +1,272 @@
+{
+  "name": "ascii-band",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-02",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "ASCII Band",
+  "description": "A band of light drawn in flickering ASCII characters.",
+  "category": "backgrounds",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/demo/ascii-band",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "AsciiBand",
+  "exportKind": "default",
+  "importPath": "@/components/effects/ascii-band",
+  "target": "src/components/effects/ascii-band",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/ascii-band/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "backgroundColor",
+      "label": "Background",
+      "type": "color",
+      "default": "#000000",
+      "description": "Canvas colour behind the light.",
+      "remixer": {
+        "control": "color",
+        "group": "colour",
+        "groupTitle": "Colour"
+      }
+    },
+    {
+      "name": "hue",
+      "label": "Hue",
+      "type": "number",
+      "default": 0,
+      "description": "Turns every colour around the colour wheel, in degrees. 0 is the reference violet.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": -180,
+        "max": 180,
+        "step": 1
+      }
+    },
+    {
+      "name": "saturation",
+      "label": "Saturation",
+      "type": "number",
+      "default": 1,
+      "description": "Colour strength. 0 is greyscale, 1 matches the reference.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0,
+        "max": 1.6,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "intensity",
+      "label": "Intensity",
+      "type": "number",
+      "default": 1,
+      "description": "Overall brightness. 1 matches the reference.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0.2,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "softness",
+      "label": "Softness",
+      "type": "number",
+      "default": 1,
+      "description": "How diffuse the light is. Above 1 spreads the band wider and softer.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0.5,
+        "max": 2.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "grain",
+      "label": "Grain",
+      "type": "number",
+      "default": 0.03,
+      "description": "Film grain strength. 0 turns it off.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0,
+        "max": 0.2,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "characters",
+      "label": "Characters",
+      "type": "string",
+      "default": " =+xX80S#@",
+      "description": "Characters from darkest to brightest. The first is usually a space.",
+      "remixer": {
+        "control": "text",
+        "group": "glyphs",
+        "groupTitle": "Characters"
+      }
+    },
+    {
+      "name": "cellSize",
+      "label": "Cell size",
+      "type": "number",
+      "default": 16,
+      "description": "Width of one character cell, in px.",
+      "remixer": {
+        "control": "range",
+        "group": "glyphs",
+        "groupTitle": "Characters",
+        "min": 6,
+        "max": 40,
+        "step": 1
+      }
+    },
+    {
+      "name": "glyphOpacity",
+      "label": "Opacity",
+      "type": "number",
+      "default": 1,
+      "description": "Strength of the character layer. 0 hides it.",
+      "remixer": {
+        "control": "range",
+        "group": "glyphs",
+        "groupTitle": "Characters",
+        "min": 0,
+        "max": 1,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "gaps",
+      "label": "Gaps",
+      "type": "number",
+      "default": 0.22,
+      "description": "Share of cells left empty, 0 to 1.",
+      "remixer": {
+        "control": "range",
+        "group": "glyphs",
+        "groupTitle": "Characters",
+        "min": 0,
+        "max": 0.9,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "flicker",
+      "label": "Flicker",
+      "type": "number",
+      "default": 1.5,
+      "description": "How often each character re-rolls, per second. 0 freezes the grid.",
+      "remixer": {
+        "control": "range",
+        "group": "glyphs",
+        "groupTitle": "Characters",
+        "min": 0,
+        "max": 8,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "speed",
+      "label": "Speed",
+      "type": "number",
+      "default": 1,
+      "description": "How fast the band drifts. 0 holds it still.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "flow",
+      "label": "Flow",
+      "type": "number",
+      "default": 1,
+      "description": "How far the band sways and breathes while it drifts.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 2.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "interactive",
+      "label": "Smear",
+      "type": "boolean",
+      "default": true,
+      "description": "Let the pointer stir the light like ink in water.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "cursor",
+        "groupTitle": "Cursor"
+      }
+    },
+    {
+      "name": "smearStrength",
+      "label": "Strength",
+      "type": "number",
+      "default": 1,
+      "description": "How far a stroke drags the light.",
+      "remixer": {
+        "control": "range",
+        "group": "cursor",
+        "groupTitle": "Cursor",
+        "min": 0,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "smearRadius",
+      "label": "Brush size",
+      "type": "number",
+      "default": 0.1,
+      "description": "Width of the stroke, in canvas heights.",
+      "remixer": {
+        "control": "range",
+        "group": "cursor",
+        "groupTitle": "Cursor",
+        "min": 0.04,
+        "max": 0.4,
+        "step": 0.01
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "layout": "panel",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "name": "aurora-ribbon",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-02",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Aurora Ribbon",
+  "description": "A drifting ribbon of aurora light with film grain that the pointer stirs.",
+  "category": "backgrounds",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/demo/aurora-ribbon",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "AuroraRibbon",
+  "exportKind": "default",
+  "importPath": "@/components/effects/aurora-ribbon",
+  "target": "src/components/effects/aurora-ribbon",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/aurora-ribbon/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "backgroundColor",
+      "label": "Background",
+      "type": "color",
+      "default": "#0c1218",
+      "description": "Canvas colour behind the light.",
+      "remixer": {
+        "control": "color",
+        "group": "colour",
+        "groupTitle": "Colour"
+      }
+    },
+    {
+      "name": "haloColor",
+      "label": "Halo",
+      "type": "color",
+      "default": "#13605d",
+      "description": "The wide, dim glow at the ribbon's edges.",
+      "remixer": {
+        "control": "color",
+        "group": "colour",
+        "groupTitle": "Colour"
+      }
+    },
+    {
+      "name": "glowColor",
+      "label": "Glow",
+      "type": "color",
+      "default": "#73bea1",
+      "description": "The soft body of the ribbon.",
+      "remixer": {
+        "control": "color",
+        "group": "colour",
+        "groupTitle": "Colour"
+      }
+    },
+    {
+      "name": "coreColor",
+      "label": "Core",
+      "type": "color",
+      "default": "#b8bc5b",
+      "description": "Light added along the centre line, on top of the glow.",
+      "remixer": {
+        "control": "color",
+        "group": "colour",
+        "groupTitle": "Colour"
+      }
+    },
+    {
+      "name": "intensity",
+      "label": "Intensity",
+      "type": "number",
+      "default": 1,
+      "description": "Overall brightness. 1 matches the reference.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0.2,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "softness",
+      "label": "Softness",
+      "type": "number",
+      "default": 1,
+      "description": "How diffuse the light is. Above 1 spreads it wider and softer.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0.5,
+        "max": 2.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "grain",
+      "label": "Grain",
+      "type": "number",
+      "default": 0.06,
+      "description": "Film grain strength. 0 turns it off.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0,
+        "max": 0.2,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "speed",
+      "label": "Speed",
+      "type": "number",
+      "default": 1,
+      "description": "How fast the ribbon drifts. 0 holds it still.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "flow",
+      "label": "Flow",
+      "type": "number",
+      "default": 1,
+      "description": "How far the ribbon sways while it drifts.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 2.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "interactive",
+      "label": "Smear",
+      "type": "boolean",
+      "default": true,
+      "description": "Let the pointer stir the light like ink in water.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "cursor",
+        "groupTitle": "Cursor"
+      }
+    },
+    {
+      "name": "smearStrength",
+      "label": "Strength",
+      "type": "number",
+      "default": 1,
+      "description": "How far a stroke drags the light.",
+      "remixer": {
+        "control": "range",
+        "group": "cursor",
+        "groupTitle": "Cursor",
+        "min": 0,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "smearRadius",
+      "label": "Brush size",
+      "type": "number",
+      "default": 0.1,
+      "description": "Width of the stroke, in canvas heights.",
+      "remixer": {
+        "control": "range",
+        "group": "cursor",
+        "groupTitle": "Cursor",
+        "min": 0.04,
+        "max": 0.4,
+        "step": 0.01
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "layout": "panel",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}

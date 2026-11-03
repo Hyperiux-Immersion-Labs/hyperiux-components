@@ -628,5 +628,50 @@
     "registryPath": "registry/effects/scroll/image-pixel-reveal/registry.json",
     "importPath": "@/components/effects/image-pixel-reveal",
     "target": "src/components/effects/image-pixel-reveal"
+  },
+  {
+    "name": "arc-light",
+    "title": "Arc Light",
+    "category": "backgrounds",
+    "type": "registry:component",
+    "registryPath": "registry/effects/backgrounds/arc-light/registry.json",
+    "importPath": "@/components/effects/arc-light",
+    "target": "src/components/effects/arc-light"
+  },
+  {
+    "name": "ascii-band",
+    "title": "ASCII Band",
+    "category": "backgrounds",
+    "type": "registry:component",
+    "registryPath": "registry/effects/backgrounds/ascii-band/registry.json",
+    "importPath": "@/components/effects/ascii-band",
+    "target": "src/components/effects/ascii-band"
+  },
+  {
+    "name": "aurora-ribbon",
+    "title": "Aurora Ribbon",
+    "category": "backgrounds",
+    "type": "registry:component",
+    "registryPath": "registry/effects/backgrounds/aurora-ribbon/registry.json",
+    "importPath": "@/components/effects/aurora-ribbon",
+    "target": "src/components/effects/aurora-ribbon"
+  },
+  {
+    "name": "moss-grid",
+    "title": "Moss Grid",
+    "category": "backgrounds",
+    "type": "registry:component",
+    "registryPath": "registry/effects/backgrounds/moss-grid/registry.json",
+    "importPath": "@/components/effects/moss-grid",
+    "target": "src/components/effects/moss-grid"
+  },
+  {
+    "name": "opal-flow",
+    "title": "Opal Flow",
+    "category": "backgrounds",
+    "type": "registry:component",
+    "registryPath": "registry/effects/backgrounds/opal-flow/registry.json",
+    "importPath": "@/components/effects/opal-flow",
+    "target": "src/components/effects/opal-flow"
   }
 ]

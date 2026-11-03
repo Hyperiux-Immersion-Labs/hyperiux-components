@@ -1,0 +1,197 @@
+{
+  "name": "arc-light",
+  "version": "1.0.0",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-02",
+      "summary": "Initial release",
+      "breaking": false
+    }
+  ],
+  "type": "registry:component",
+  "title": "Arc Light",
+  "description": "A soft arc of light that the pointer stirs like ink in water.",
+  "category": "backgrounds",
+  "dependencies": [],
+  "registryDependencies": [],
+  "previewUrl": "/demo/arc-light",
+  "tier": "free",
+  "subfolder": true,
+  "main": "index.tsx",
+  "exportName": "ArcLight",
+  "exportKind": "default",
+  "importPath": "@/components/effects/arc-light",
+  "target": "src/components/effects/arc-light",
+  "files": [
+    {
+      "path": "index.tsx",
+      "target": "src/components/effects/arc-light/index.tsx"
+    }
+  ],
+  "props": [
+    {
+      "name": "color",
+      "label": "Colour",
+      "type": "color",
+      "default": "#ff5f00",
+      "description": "Colour of the light. The arcs keep their shading and take on this hue.",
+      "remixer": {
+        "control": "color",
+        "group": "colour",
+        "groupTitle": "Colour"
+      }
+    },
+    {
+      "name": "backgroundColor",
+      "label": "Background",
+      "type": "color",
+      "default": "#07060f",
+      "description": "Canvas colour behind the light.",
+      "remixer": {
+        "control": "color",
+        "group": "colour",
+        "groupTitle": "Colour"
+      }
+    },
+    {
+      "name": "saturation",
+      "label": "Saturation",
+      "type": "number",
+      "default": 1,
+      "description": "Colour strength. 0 is greyscale, 1 is the picked colour.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0,
+        "max": 1.6,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "intensity",
+      "label": "Intensity",
+      "type": "number",
+      "default": 1,
+      "description": "Overall brightness. 1 matches the reference.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0.2,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "softness",
+      "label": "Softness",
+      "type": "number",
+      "default": 1,
+      "description": "How diffuse the light is. Above 1 spreads it wider and softer.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0.5,
+        "max": 2.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "grain",
+      "label": "Grain",
+      "type": "number",
+      "default": 0.06,
+      "description": "Film grain strength. 0 turns it off.",
+      "remixer": {
+        "control": "range",
+        "group": "colour",
+        "groupTitle": "Colour",
+        "min": 0,
+        "max": 0.2,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "speed",
+      "label": "Speed",
+      "type": "number",
+      "default": 1,
+      "description": "How fast the arcs drift. 0 holds them still.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "flow",
+      "label": "Flow",
+      "type": "number",
+      "default": 1,
+      "description": "How far the arcs sway while they drift.",
+      "remixer": {
+        "control": "range",
+        "group": "motion",
+        "groupTitle": "Motion",
+        "min": 0,
+        "max": 2.5,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "interactive",
+      "label": "Smear",
+      "type": "boolean",
+      "default": true,
+      "description": "Let the pointer stir the light like ink in water.",
+      "remixer": {
+        "control": "checkbox",
+        "group": "cursor",
+        "groupTitle": "Cursor"
+      }
+    },
+    {
+      "name": "smearStrength",
+      "label": "Strength",
+      "type": "number",
+      "default": 1,
+      "description": "How far a stroke drags the light.",
+      "remixer": {
+        "control": "range",
+        "group": "cursor",
+        "groupTitle": "Cursor",
+        "min": 0,
+        "max": 3,
+        "step": 0.05
+      }
+    },
+    {
+      "name": "smearRadius",
+      "label": "Brush size",
+      "type": "number",
+      "default": 0.1,
+      "description": "Width of the stroke, in canvas heights.",
+      "remixer": {
+        "control": "range",
+        "group": "cursor",
+        "groupTitle": "Cursor",
+        "min": 0.04,
+        "max": 0.4,
+        "step": 0.01
+      }
+    }
+  ],
+  "remixer": {
+    "enabled": true,
+    "layout": "panel",
+    "copyCode": {
+      "includeOnlyPublicProps": true
+    }
+  }
+}
